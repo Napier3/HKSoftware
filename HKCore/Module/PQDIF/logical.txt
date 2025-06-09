@@ -1,0 +1,123 @@
+tagContainer	1	18	1	*.	tagVersionInfo	3	11	1	4.					.					.					.					.
+tagContainer	1	18	1	*.	tagFileName	3	4	1	*.					.					.					.					.
+tagContainer	1	18	1	*.	tagCreation	2	16	1	.					.					.					.					.
+tagContainer	1	18	1	*.	tagLastSaved	2	16	2	.					.					.					.					.
+tagContainer	1	18	1	*.	tagTimesSaved	2	11	2	.					.					.					.					.
+tagContainer	1	18	1	*.	tagLanguage	3	4	2	*.					.					.					.					.
+tagContainer	1	18	1	*.	tagTitle	3	4	2	*.					.					.					.					.
+tagContainer	1	18	1	*.	tagSubject	3	4	2	*.					.					.					.					.
+tagContainer	1	18	1	*.	tagAuthor	3	4	2	*.					.					.					.					.
+tagContainer	1	18	1	*.	tagKeywords	3	4	2	*.					.					.					.					.
+tagContainer	1	18	1	*.	tagComments	3	4	2	*.					.					.					.					.
+tagContainer	1	18	1	*.	tagLastSavedBy	3	4	2	*.					.					.					.					.
+tagContainer	1	18	1	*.	tagApplication	3	4	2	*.					.					.					.					.
+tagContainer	1	18	1	*.	tagSecurity	3	4	2	*.					.					.					.					.
+tagContainer	1	18	1	*.	tagOwner	3	4	2	*.					.					.					.					.
+tagContainer	1	18	1	*.	tagCopyright	3	4	2	*.					.					.					.					.
+tagContainer	1	18	1	*.	tagTrademarks	3	4	2	*.					.					.					.					.
+tagContainer	1	18	1	*.	tagNotes	3	4	2	*.					.					.					.					.
+tagContainer	1	18	1	*.	tagCompressionStyleID	2	11	2	.					.					.					.					.
+tagContainer	1	18	1	*.	tagCompressionAlgorithmID	2	11	2	.					.					.					.					.
+tagContainer	1	18	1	*.	tagCompressionChecksum	2	11	2	.					.					.					.					.
+tagContainer	1	18	1	*.	tagName	2	11	2	.					.					.					.					.
+tagContainer	1	18	1	*.	tagAddress1	2	11	2	.					.					.					.					.
+tagContainer	1	18	1	*.	tagAddress2	2	11	2	.					.					.					.					.
+tagContainer	1	18	1	*.	tagCity	2	11	2	.					.					.					.					.
+tagContainer	1	18	1	*.	tagState	2	11	2	.					.					.					.					.
+tagContainer	1	18	1	*.	tagPostalCode	2	11	2	.					.					.					.					.
+tagContainer	1	18	1	*.	tagCountry	2	11	2	.					.					.					.					.
+tagContainer	1	18	1	*.	tagPhoneVoice	2	11	2	.					.					.					.					.
+tagContainer	1	18	1	*.	tagPhoneFAX	2	11	2	.					.					.					.					.
+tagContainer	1	18	1	*.	tagEMail	2	11	2	.					.					.					.					.
+tagRecDataSource	1	18	1	*.	tagDataSourceTypeID	2	17	1	.					.					.					.					.
+tagRecDataSource	1	18	1	*.	tagVendorID	2	17	2	.					.					.					.					.
+tagRecDataSource	1	18	1	*.	tagEquipmentID	2	17	2	.					.					.					.					.
+tagRecDataSource	1	18	1	*.	tagCustomSourceInfo	1	18	2	.	tagInstrumentTypeID	2	17	2	.					.					.					.
+tagRecDataSource	1	18	1	*.	tagCustomSourceInfo	1	18	2	.	tagInstrumentModelName	3	4	2	*.					.					.					.
+tagRecDataSource	1	18	1	*.	tagCustomSourceInfo	1	18	2	.	tagInstrumentModelNumber	3	4	2	*.					.					.					.
+tagRecDataSource	1	18	1	*.	tagSerialNumberDS	3	4	2	*.					.					.					.					.
+tagRecDataSource	1	18	1	*.	tagVersionDS	3	4	2	*.					.					.					.					.
+tagRecDataSource	1	18	1	*.	tagNameDS	3	4	1	*.					.					.					.					.
+tagRecDataSource	1	18	1	*.	tagOwnerDS	3	4	2	*.					.					.					.					.
+tagRecDataSource	1	18	1	*.	tagLocationDS	3	4	2	*.					.					.					.					.
+tagRecDataSource	1	18	1	*.	tagTimeZoneDS	3	4	2	*.					.					.					.					.
+tagRecDataSource	1	18	1	*.	tagCoordinatesDS	3	11	2	2.					.					.					.					.
+tagRecDataSource	1	18	1	*.	tagChannelDefns	1	18	1	# defs.	tagOneChannelDefn	1	18	1	*.	tagChannelName	3	4	2	*.					.					.
+tagRecDataSource	1	18	1	*.	tagChannelDefns	1	18	1	# defs.	tagOneChannelDefn	1	18	1	*.	tagPhaseID	2	11	1	.					.					.
+tagRecDataSource	1	18	1	*.	tagChannelDefns	1	18	1	# defs.	tagOneChannelDefn	1	18	1	*.	tagOtherChannelIdentifier	3	4	2	*.					.					.
+tagRecDataSource	1	18	1	*.	tagChannelDefns	1	18	1	# defs.	tagOneChannelDefn	1	18	1	*.	tagGroupName	3	4	2	*.					.					.
+tagRecDataSource	1	18	1	*.	tagChannelDefns	1	18	1	# defs.	tagOneChannelDefn	1	18	1	*.	tagQuantityTypeID	2	17	1	.					.					.
+tagRecDataSource	1	18	1	*.	tagChannelDefns	1	18	1	# defs.	tagOneChannelDefn	1	18	1	*.	tagQuantityMeasuredID	2	11	1	.					.					.
+tagRecDataSource	1	18	1	*.	tagChannelDefns	1	18	1	# defs.	tagOneChannelDefn	1	18	1	*.	tagPhysicalChannel	2	11	2	.					.					.
+tagRecDataSource	1	18	1	*.	tagChannelDefns	1	18	1	# defs.	tagOneChannelDefn	1	18	1	*.	tagQuantityName	3	4	2	*.					.					.
+tagRecDataSource	1	18	1	*.	tagChannelDefns	1	18	1	# defs.	tagOneChannelDefn	1	18	1	*.	tagPrimarySeriesIdx	2	11	2	.					.					.
+tagRecDataSource	1	18	1	*.	tagChannelDefns	1	18	1	# defs.	tagOneChannelDefn	1	18	1	*.	tagSeriesDefns	1	18	1	# sers.	tagOneSeriesDefn	1	18	1	*.	tagValueTypeID	2	17	1	.
+tagRecDataSource	1	18	1	*.	tagChannelDefns	1	18	1	# defs.	tagOneChannelDefn	1	18	1	*.	tagSeriesDefns	1	18	1	# sers.	tagOneSeriesDefn	1	18	1	*.	tagQuantityUnitsID	2	11	1	.
+tagRecDataSource	1	18	1	*.	tagChannelDefns	1	18	1	# defs.	tagOneChannelDefn	1	18	1	*.	tagSeriesDefns	1	18	1	# sers.	tagOneSeriesDefn	1	18	1	*.	tagQuantityCharacteristicID	2	17	1	.
+tagRecDataSource	1	18	1	*.	tagChannelDefns	1	18	1	# defs.	tagOneChannelDefn	1	18	1	*.	tagSeriesDefns	1	18	1	# sers.	tagOneSeriesDefn	1	18	1	*.	tagQuantitySignificantDigitsID	2	11	2	.
+tagRecDataSource	1	18	1	*.	tagChannelDefns	1	18	1	# defs.	tagOneChannelDefn	1	18	1	*.	tagSeriesDefns	1	18	1	# sers.	tagOneSeriesDefn	1	18	1	*.	tagQuantityResolutionID	2	13	2	.
+tagRecDataSource	1	18	1	*.	tagChannelDefns	1	18	1	# defs.	tagOneChannelDefn	1	18	1	*.	tagSeriesDefns	1	18	1	# sers.	tagOneSeriesDefn	1	18	1	*.	tagStorageMethodID	2	11	1	.
+tagRecDataSource	1	18	1	*.	tagChannelDefns	1	18	1	# defs.	tagOneChannelDefn	1	18	1	*.	tagSeriesDefns	1	18	1	# sers.	tagOneSeriesDefn	1	18	1	*.	tagValueTypeName	3	4	2	*.
+tagRecDataSource	1	18	1	*.	tagChannelDefns	1	18	1	# defs.	tagOneChannelDefn	1	18	1	*.	tagSeriesDefns	1	18	1	# sers.	tagOneSeriesDefn	1	18	1	*.	tagHintGreekPrefixID	2	11	2	.
+tagRecDataSource	1	18	1	*.	tagChannelDefns	1	18	1	# defs.	tagOneChannelDefn	1	18	1	*.	tagSeriesDefns	1	18	1	# sers.	tagOneSeriesDefn	1	18	1	*.	tagHintPreferredUnitsID	2	11	2	.
+tagRecDataSource	1	18	1	*.	tagChannelDefns	1	18	1	# defs.	tagOneChannelDefn	1	18	1	*.	tagSeriesDefns	1	18	1	# sers.	tagOneSeriesDefn	1	18	1	*.	tagHintDefaultDisplayID	2	11	2	.
+tagRecDataSource	1	18	1	*.	tagChannelDefns	1	18	1	# defs.	tagOneChannelDefn	1	18	1	*.	tagSeriesDefns	1	18	1	# sers.	tagOneSeriesDefn	1	18	1	*.	tagProbInterval	2	13	2	.
+tagRecDataSource	1	18	1	*.	tagChannelDefns	1	18	1	# defs.	tagOneChannelDefn	1	18	1	*.	tagSeriesDefns	1	18	1	# sers.	tagOneSeriesDefn	1	18	1	*.	tagProbPercentile	2	13	2	.
+tagRecDataSource	1	18	1	*.	tagChannelDefns	1	18	1	# defs.	tagOneChannelDefn	1	18	1	*.	tagSeriesDefns	1	18	1	# sers.	tagOneSeriesDefn	1	18	1	*.	tagSeriesNominalQuantity	2	13	2	.
+tagRecDataSource	1	18	1	*.	tagEffective	2	16	1	.					.					.					.					.
+tagRecMonitorSettings	1	18	2	*.	tagEffective	2	16	1	.					.					.					.					.
+tagRecMonitorSettings	1	18	2	*.	tagTimeInstalled	2	16	1	.					.					.					.					.
+tagRecMonitorSettings	1	18	2	*.	tagTimeRemoved	2	16	2	.					.					.					.					.
+tagRecMonitorSettings	1	18	2	*.	tagUseCalibration	2	3	1	.					.					.					.					.
+tagRecMonitorSettings	1	18	2	*.	tagUseTransducer	2	3	1	.					.					.					.					.
+tagRecMonitorSettings	1	18	2	*.	tagChannelSettingsArray	1	18	1	# chan.	tagOneChannelSetting	1	18	1	*.	tagChannelDefnIdx	2	11	1	.					.					.
+tagRecMonitorSettings	1	18	2	*.	tagChannelSettingsArray	1	18	1	# chan.	tagOneChannelSetting	1	18	1	*.	tagTriggerTypeID	2	11	2	.					.					.
+tagRecMonitorSettings	1	18	2	*.	tagChannelSettingsArray	1	18	1	# chan.	tagOneChannelSetting	1	18	1	*.	tagFullScale	2	13	2	.					.					.
+tagRecMonitorSettings	1	18	2	*.	tagChannelSettingsArray	1	18	1	# chan.	tagOneChannelSetting	1	18	1	*.	tagNoiseFloor	2	13	2	.					.					.
+tagRecMonitorSettings	1	18	2	*.	tagChannelSettingsArray	1	18	1	# chan.	tagOneChannelSetting	1	18	1	*.	tagTriggerShapeParam	3	13	2	3.					.					.
+tagRecMonitorSettings	1	18	2	*.	tagChannelSettingsArray	1	18	1	# chan.	tagOneChannelSetting	1	18	1	*.	tagXDTransformerTypeID	2	11	2	.					.					.
+tagRecMonitorSettings	1	18	2	*.	tagChannelSettingsArray	1	18	1	# chan.	tagOneChannelSetting	1	18	1	*.	tagXDSystemSideRatio	2	13	2	.					.					.
+tagRecMonitorSettings	1	18	2	*.	tagChannelSettingsArray	1	18	1	# chan.	tagOneChannelSetting	1	18	1	*.	tagXDMonitorSideRatio	2	13	2	.					.					.
+tagRecMonitorSettings	1	18	2	*.	tagChannelSettingsArray	1	18	1	# chan.	tagOneChannelSetting	1	18	1	*.	tagXDFrequencyResponse	3	13	2	# freq.					.					.
+tagRecMonitorSettings	1	18	2	*.	tagChannelSettingsArray	1	18	1	# chan.	tagOneChannelSetting	1	18	1	*.	tagCalTimeSkew	2	13	2	.					.					.
+tagRecMonitorSettings	1	18	2	*.	tagChannelSettingsArray	1	18	1	# chan.	tagOneChannelSetting	1	18	1	*.	tagCalOffset	2	13	2	.					.					.
+tagRecMonitorSettings	1	18	2	*.	tagChannelSettingsArray	1	18	1	# chan.	tagOneChannelSetting	1	18	1	*.	tagCalRatio	2	13	2	.					.					.
+tagRecMonitorSettings	1	18	2	*.	tagChannelSettingsArray	1	18	1	# chan.	tagOneChannelSetting	1	18	1	*.	tagCalMustUseARCal	2	3	2	.					.					.
+tagRecMonitorSettings	1	18	2	*.	tagChannelSettingsArray	1	18	1	# chan.	tagOneChannelSetting	1	18	1	*.	tagCalApplied	3	13	2	# cal.					.					.
+tagRecMonitorSettings	1	18	2	*.	tagChannelSettingsArray	1	18	1	# chan.	tagOneChannelSetting	1	18	1	*.	tagCalRecorded	3	13	2	# cal.					.					.
+tagRecMonitorSettings	1	18	2	*.	tagChannelSettingsArray	1	18	1	# chan.	tagOneChannelSetting	1	18	1	*.	tagTriggerHighHigh	2	13	2	.					.					.
+tagRecMonitorSettings	1	18	2	*.	tagChannelSettingsArray	1	18	1	# chan.	tagOneChannelSetting	1	18	1	*.	tagTriggerHigh	2	13	2	.					.					.
+tagRecMonitorSettings	1	18	2	*.	tagChannelSettingsArray	1	18	1	# chan.	tagOneChannelSetting	1	18	1	*.	tagTriggerLow	2	13	2	.					.					.
+tagRecMonitorSettings	1	18	2	*.	tagChannelSettingsArray	1	18	1	# chan.	tagOneChannelSetting	1	18	1	*.	tagTriggerLowLow	2	13	2	.					.					.
+tagRecMonitorSettings	1	18	2	*.	tagChannelSettingsArray	1	18	1	# chan.	tagOneChannelSetting	1	18	1	*.	tagTriggerDeadBand	2	13	2	.					.					.
+tagRecMonitorSettings	1	18	2	*.	tagChannelSettingsArray	1	18	1	# chan.	tagOneChannelSetting	1	18	1	*.	tagTriggerRate	2	13	2	.					.					.
+tagRecMonitorSettings	1	18	2	*.	tagNominalFrequency	2	13	2	.					.					.					.					.
+tagRecMonitorSettings	1	18	2	*.	tagSettingPhysicalConnection	2	11	2	.					.					.					.					.
+tagRecObservation	1	18	1	*.	tagObservationName	3	4	1	*.					.					.					.					.
+tagRecObservation	1	18	1	*.	tagTimeCreate	2	16	1	.					.					.					.					.
+tagRecObservation	1	18	1	*.	tagTimeStart	2	16	1	.					.					.					.					.
+tagRecObservation	1	18	1	*.	tagTriggerMethodID	2	11	1	.					.					.					.					.
+tagRecObservation	1	18	1	*.	tagTimeTriggered	2	16	2	.					.					.					.					.
+tagRecObservation	1	18	1	*.	tagChannelTriggerIdx	3	11	2	.					.					.					.					.
+tagRecObservation	1	18	1	*.	tagObservationSerial	2	11	2	.					.					.					.					.
+tagRecObservation	1	18	1	*.	tagObservationAggregationSerial	2	11	2	.					.					.					.					.
+tagRecObservation	1	18	1	*.	tagDisturbanceCategoryID	2	17	2	.					.					.					.					.
+tagRecObservation	1	18	1	*.	tagChannelInstances	1	18	1	# chan.	tagOneChannelInst	1	18	1	*.	tagChannelDefnIdx	2	11	1	.					.					.
+tagRecObservation	1	18	1	*.	tagChannelInstances	1	18	1	# chan.	tagOneChannelInst	1	18	1	*.	tagSeriesInstances	1	18	1	# sers.	tagOneSeriesInstance	1	18	1	*.	tagSeriesBaseQuantity	2	13	2	.
+tagRecObservation	1	18	1	*.	tagChannelInstances	1	18	1	# chan.	tagOneChannelInst	1	18	1	*.	tagSeriesInstances	1	18	1	# sers.	tagOneSeriesInstance	1	18	1	*.	tagSeriesScale	2	19	2	.
+tagRecObservation	1	18	1	*.	tagChannelInstances	1	18	1	# chan.	tagOneChannelInst	1	18	1	*.	tagSeriesInstances	1	18	1	# sers.	tagOneSeriesInstance	1	18	1	*.	tagSeriesOffset	2	19	2	.
+tagRecObservation	1	18	1	*.	tagChannelInstances	1	18	1	# chan.	tagOneChannelInst	1	18	1	*.	tagSeriesInstances	1	18	1	# sers.	tagOneSeriesInstance	1	18	1	*.	tagSeriesShareChannelIdx	2	11	2	.
+tagRecObservation	1	18	1	*.	tagChannelInstances	1	18	1	# chan.	tagOneChannelInst	1	18	1	*.	tagSeriesInstances	1	18	1	# sers.	tagOneSeriesInstance	1	18	1	*.	tagSeriesShareSeriesIdx	2	11	2	.
+tagRecObservation	1	18	1	*.	tagChannelInstances	1	18	1	# chan.	tagOneChannelInst	1	18	1	*.	tagSeriesInstances	1	18	1	# sers.	tagOneSeriesInstance	1	18	1	*.	tagSeriesValues	3	19	1	*.
+tagRecObservation	1	18	1	*.	tagChannelInstances	1	18	1	# chan.	tagOneChannelInst	1	18	1	*.	tagCharactMagnitude	2	13	2	.					.					.
+tagRecObservation	1	18	1	*.	tagChannelInstances	1	18	1	# chan.	tagOneChannelInst	1	18	1	*.	tagCharactFrequency	2	13	2	.					.					.
+tagRecObservation	1	18	1	*.	tagChannelInstances	1	18	1	# chan.	tagOneChannelInst	1	18	1	*.	tagChanTriggerModuleInfo	2	11	2	.					.					.
+tagRecObservation	1	18	1	*.	tagChannelInstances	1	18	1	# chan.	tagOneChannelInst	1	18	1	*.	tagChanTriggerModuleName	3	4	2	*.					.					.
+tagRecObservation	1	18	1	*.	tagChannelInstances	1	18	1	# chan.	tagOneChannelInst	1	18	1	*.	tagCrossTriggerDeviceName	3	4	2	*.					.					.
+tagRecObservation	1	18	1	*.	tagChannelInstances	1	18	1	# chan.	tagOneChannelInst	1	18	1	*.	tagCrossTriggerChanIdx	2	11	2	.					.					.
+tagRecObservation	1	18	1	*.	tagChannelInstances	1	18	1	# chan.	tagOneChannelInst	1	18	1	*.	tagChanTriggerTypeID	2	11	2	.					.					.
+tagRecObservation	1	18	1	*.	tagChannelInstances	1	18	1	# chan.	tagOneChannelInst	1	18	1	*.	tagChannelGroupID	2	7	2	.					.					.
+tagRecObservation	1	18	1	*.	tagChannelInstances	1	18	1	# chan.	tagOneChannelInst	1	18	1	*.	tagChannelFrequency	2	13	2	.					.					.
+tagRecObservation	1	18	1	*.	tagChannelInstances	1	18	1	# chan.	tagCharactDuration	2	13	2	.					.					.					.
+tagRecObservation	1	18	1	*.	tagCharactDisturbDirection	2	11	2	.					.					.					.					.
+tagRecObservation	1	18	1	*.	tagCharactDisturbDirectionQuality	2	11	2	.					.					.					.					.

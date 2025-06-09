@@ -1,0 +1,116 @@
+
+
+***********************************************************
+          LOGGING STARTED Mon Apr 16 19:24:13 2012
+***********************************************************
+
+2012-04-16 19:24:13.388 SLOGALWAYS (iec_main.c 413) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-16 19:24:13.388 SLOGALWAYS (iec_main.c 438) 
+  Initializing ...
+
+2012-04-16 19:24:14.091 MVLLOG_ERR (sclproc.c 1868) 
+  Cannot find GSE element to set address for GSSE Control 'GsseTest'. DstAddress NOT INITIALIZED.
+
+2012-04-16 19:24:14.091 SLOGALWAYS (iec_main.c 270) 
+  ERROR: GSSE not supported by this application
+
+2012-04-16 19:24:14.091 SLOGALWAYS (iec_main.c 326) 
+  ERROR: GSSE not supported by this application
+
+***********************************************************
+          LOGGING STARTED Mon Apr 16 20:46:26 2012
+***********************************************************
+
+2012-04-16 20:46:26.091 SLOGALWAYS (iec_main.c 413) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-16 20:46:26.091 SLOGALWAYS (iec_main.c 438) 
+  Initializing ...
+
+2012-04-16 20:46:26.998 MVLLOG_ERR (sclproc.c 1868) 
+  Cannot find GSE element to set address for GSSE Control 'GsseTest'. DstAddress NOT INITIALIZED.
+
+2012-04-16 20:46:26.998 SLOGALWAYS (iec_main.c 270) 
+  ERROR: GSSE not supported by this application
+
+2012-04-16 20:46:26.998 SLOGALWAYS (iec_main.c 326) 
+  ERROR: GSSE not supported by this application
+
+***********************************************************
+          LOGGING STARTED Mon Apr 16 21:17:33 2012
+***********************************************************
+
+2012-04-16 21:17:33.716 SLOGALWAYS (iec_main.c 413) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-16 21:17:33.716 SLOGALWAYS (iec_main.c 438) 
+  Initializing ...
+
+2012-04-16 21:17:34.263 MVLLOG_ERR (sclproc.c 1868) 
+  Cannot find GSE element to set address for GSSE Control 'GsseTest'. DstAddress NOT INITIALIZED.
+
+2012-04-16 21:17:34.263 SLOGALWAYS (iec_main.c 270) 
+  ERROR: GSSE not supported by this application
+
+2012-04-16 21:17:34.263 SLOGALWAYS (iec_main.c 326) 
+  ERROR: GSSE not supported by this application
+
+***********************************************************
+          LOGGING STARTED Mon Apr 16 21:18:28 2012
+***********************************************************
+
+2012-04-16 21:18:28.888 SLOGALWAYS (iec_main.c 413) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-16 21:18:28.888 SLOGALWAYS (iec_main.c 438) 
+  Initializing ...
+
+2012-04-16 21:18:29.419 MVLLOG_ERR (sclproc.c 1868) 
+  Cannot find GSE element to set address for GSSE Control 'GsseTest'. DstAddress NOT INITIALIZED.
+
+2012-04-16 21:18:29.419 SLOGALWAYS (iec_main.c 270) 
+  ERROR: GSSE not supported by this application
+
+2012-04-16 21:18:29.419 SLOGALWAYS (iec_main.c 326) 
+  ERROR: GSSE not supported by this application
+
+***********************************************************
+          LOGGING STARTED Mon Apr 16 21:34:39 2012
+***********************************************************
+
+2012-04-16 21:34:39.716 SLOGALWAYS (iec_main.c 413) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-16 21:34:39.716 SLOGALWAYS (iec_main.c 438) 
+  Initializing ...
+
+***********************************************************
+          LOGGING STARTED Mon Apr 16 21:39:45 2012
+***********************************************************
+
+2012-04-16 21:39:45.701 SLOGALWAYS (iec_main.c 413) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-16 21:39:45.701 SLOGALWAYS (iec_main.c 438) 
+  Initializing ...
+
+2012-04-16 21:39:53.904 MVLLOG_ERR (sclproc.c 1868) 
+  Cannot find GSE element to set address for GSSE Control 'GsseTest'. DstAddress NOT INITIALIZED.
+
+2012-04-16 21:39:53.904 SLOGALWAYS (iec_main.c 270) 
+  ERROR: GSSE not supported by this application
+
+2012-04-16 21:39:53.904 SLOGALWAYS (iec_main.c 326) 
+  ERROR: GSSE not supported by this application
+
+***********************************************************
+          LOGGING STARTED Sat Apr 21 18:35:17 2012
+***********************************************************
+
+2012-04-21 18:35:17.390 SLOGALWAYS (iec_main.c 413) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-21 18:35:17.406 SLOGALWAYS (iec_main.c 438) 
+  Initializing ...

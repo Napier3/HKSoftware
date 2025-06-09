@@ -1,0 +1,190 @@
+#include "StdAfx.h"
+#include "StringCmp.h"
+#include "StringCmpBlock.h"
+
+class _CStringCmpTempBuffer_
+{
+public:
+	_CStringCmpTempBuffer_()
+	{
+		g_pStrCmpBuf1 = NULL;
+		g_pStrCmpBuf2 = NULL;
+		m_nLength = 0;
+	}
+
+	virtual ~_CStringCmpTempBuffer_()
+	{
+		Free();
+	}
+
+private:
+	BYTE *g_pStrCmpBuf1, *g_pStrCmpBuf2;
+	long m_nLength;
+
+	void Free()
+	{
+		if (g_pStrCmpBuf1 != NULL)
+		{
+			delete g_pStrCmpBuf1;
+			g_pStrCmpBuf1 = NULL;
+		}
+
+		if (g_pStrCmpBuf2 != NULL)
+		{
+			delete g_pStrCmpBuf2;
+			g_pStrCmpBuf2 = NULL;
+		}
+	}
+
+public:
+	void InitStrCmpBuf(long nLen, BYTE **ppBuffer1, BYTE **ppBuffer2)
+	{
+		if (m_nLength >= nLen)
+		{
+			*ppBuffer1 = g_pStrCmpBuf1;
+			*ppBuffer2 = g_pStrCmpBuf2;
+			return;
+		}
+		
+		Free();
+
+		g_pStrCmpBuf1 = new BYTE[nLen+5];
+		g_pStrCmpBuf2 = new BYTE[nLen+5];
+
+		*ppBuffer1 = g_pStrCmpBuf1;
+		*ppBuffer2 = g_pStrCmpBuf2;
+	}
+};
+
+_CStringCmpTempBuffer_ g_o_CStringCmpTempBuffer_;
+
+void _strcmp_init_buffer(long nLen, BYTE **ppBuffer1, BYTE **ppBuffer2)
+{
+	g_o_CStringCmpTempBuffer_.InitStrCmpBuf(nLen, ppBuffer1, ppBuffer2);
+}
+
+CStringCmp::CStringCmp()
+{ 
+
+}
+
+CStringCmp::~CStringCmp()
+{
+	m_oStrCmpBlks1.DeleteAll();
+	m_oStrCmpBlks2.DeleteAll();
+}
+BOOL CStringCmp::IsSameStrCmp(CString *pStr1,CString *pStr2)
+{   
+	if (m_pStrRef1 == pStr1 && m_pStrRef2 == pStr2)
+	{
+		return TRUE;
+	}
+	else
+	{
+		return FALSE;
+	}
+}
+
+void CStringCmp::StrCmp(CString *pStr1,CString *pStr2)
+{   
+	m_pStrRef1 = pStr1;
+	m_pStrRef2 = pStr2;
+	m_oStrCmpBlks1.m_pStringRef = pStr1;
+	m_oStrCmpBlks2.m_pStringRef = pStr2;
+
+	m_oStrCmpBlks1.DeleteAll();
+	m_oStrCmpBlks2.DeleteAll();
+
+	int nStrLength1=pStr1->GetLength();
+	int nStrLength2=pStr2->GetLength();
+
+	if (nStrLength1 == 0 && nStrLength2 == 0)
+	{
+		return;
+	}
+
+	CString *pSource,*pSubString;
+	
+	pSource=(nStrLength1>=nStrLength2)? pStr1 :pStr2;
+	pSubString=(nStrLength1>=nStrLength2)? pStr2 :pStr1;
+
+	int nSourceArry =(nStrLength1>=nStrLength2)? nStrLength1 :nStrLength2;                                     //主串的长度
+	int nSubArry =(nStrLength1>=nStrLength2)? nStrLength2 :nStrLength1;                                     //子串的长度
+	BYTE *pnSourceSz = NULL;
+	BYTE *pnSubSz    = NULL;
+	_strcmp_init_buffer(nSourceArry, &pnSourceSz, &pnSubSz);
+	memset(pnSourceSz, 0xFF, nSourceArry*sizeof(BYTE));
+	memset(pnSubSz, 0xFF, nSourceArry*sizeof(BYTE));
+
+	int SourceBegin=0,Findnext=0;
+	CString StrTemp1;
+
+	for (int i=0;i<nSubArry;i++)
+	{ 
+		for (int j=nSubArry-i;j>=2;j--)
+		{
+			StrTemp1 = pSubString->Mid(i,j);
+			SourceBegin = pSource->Find(StrTemp1,Findnext);
+			
+			if (SourceBegin != -1)
+			{
+				for (int i1=SourceBegin;i1<(SourceBegin+j);i1++)
+				{
+					pnSourceSz[i1]=1;
+				}
+
+				for (int i2=i;i2<(i+j);i2++)
+				{
+					pnSubSz[i2]=1;
+				}
+
+				Findnext=SourceBegin+j;
+				i=i+j-1;
+
+				break;
+			} 
+		}
+	}
+
+	BYTE *pBuf_a, *pBuf_b;
+
+	if (nSourceArry==nStrLength1)
+	{
+		pBuf_a = pnSourceSz;
+		pBuf_b = pnSubSz;
+	} 
+	else 
+	{
+		pBuf_b = pnSourceSz;
+		pBuf_a = pnSubSz;
+	}
+
+	InitBlocks(&m_oStrCmpBlks1, pBuf_a, nStrLength1, pStr1);
+	InitBlocks(&m_oStrCmpBlks2, pBuf_b, nStrLength2, pStr2);
+}
+
+void CStringCmp::InitBlocks(CStringCmpBlocks *pBlocks, BYTE *pBuff, long nLen, CString *pStr)
+{
+	long nBegin = 0;
+	CStringCmpBlock *pStringCmpBlock = NULL;
+	long j2 = 0;
+
+	for (j2=0;j2<nLen-1;j2++)
+	{
+		if (pBuff[j2] != pBuff[j2+1])
+		{
+			pStringCmpBlock = pBlocks->AddNew(nBegin, j2-nBegin+1, pBuff[j2], pStr);
+			nBegin=j2+1;
+		}
+	}
+
+	if (nBegin != nLen)
+	{
+		pStringCmpBlock = pBlocks->AddNew(nBegin, j2-nBegin+1, pBuff[j2], pStr);
+	}
+
+	if (pBlocks->GetCount() == 0)
+	{
+		CLogPrint::LogFormatString(LOGLEVEL_ERROR, _T("%s  none blocks"), *pStr);
+	}
+}

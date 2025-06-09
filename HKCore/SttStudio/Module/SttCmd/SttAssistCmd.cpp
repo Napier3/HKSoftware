@@ -1,0 +1,120 @@
+//这段源代码由ClassGenerator创建
+//版权所有 LiJunqing  lijunqing1224@126.com
+//保留所有权利
+
+//SttAssistCmd.cpp  CSttAssistCmd
+
+
+#include "stdafx.h"
+#include "SttAssistCmd.h"
+
+#ifdef _DEBUG
+#undef THIS_FILE
+	static char THIS_FILE[]=__FILE__;
+#define new DEBUG_NEW
+#endif
+
+CSttAssistCmd::CSttAssistCmd()
+{
+	//初始化属性
+
+	//初始化成员变量
+	m_strTestor = g_strIDSoft;
+}
+
+CSttAssistCmd::~CSttAssistCmd()
+{
+}
+
+long CSttAssistCmd::XmlReadOwn(CXmlRWNodeBase &oNode, CXmlRWKeys *pXmlRWKeys)
+{
+	CSttCmdBase::XmlReadOwn(oNode, pXmlRWKeys);
+	CSttCmdDefineXmlRWKeys *pXmlKeys = (CSttCmdDefineXmlRWKeys*)pXmlRWKeys;
+
+	xml_GetAttibuteValue(pXmlKeys->m_strTestorKey, oNode, m_strTestor);
+	return 0;
+}
+
+long CSttAssistCmd::XmlWriteOwn(CXmlRWDocBase &oXMLDoc, CXmlRWElementBase &oElement, CXmlRWKeys *pXmlRWKeys)
+{
+	CSttCmdBase::XmlWriteOwn(oXMLDoc, oElement, pXmlRWKeys);
+	CSttCmdDefineXmlRWKeys *pXmlKeys = (CSttCmdDefineXmlRWKeys*)pXmlRWKeys;
+
+	xml_SetAttributeValue(pXmlKeys->m_strTestorKey, oElement, m_strTestor);
+	return 0;
+}
+
+long CSttAssistCmd::SerializeOwn(CBinarySerialBuffer &oBinaryBuffer)
+{
+	CSttCmdBase::SerializeOwn(oBinaryBuffer);
+	if(oBinaryBuffer.IsCalSizeMode())
+	{
+		BinarySerializeCalLen(oBinaryBuffer, m_strTestor);
+	}
+	else if(oBinaryBuffer.IsReadMode())
+	{
+		BinarySerializeRead(oBinaryBuffer, m_strTestor);
+	}
+	else if(oBinaryBuffer.IsWriteMode())
+	{
+		BinarySerializeWrite(oBinaryBuffer, m_strTestor);
+	}
+	return 0;
+}
+
+BOOL CSttAssistCmd::IsEqualOwn(CBaseObject* pObj)
+{
+	if(this == pObj)
+	{
+		return TRUE;
+	}
+
+	if (!CSttCmdBase::IsEqualOwn(pObj))
+	{
+		return FALSE;
+	}
+
+	CSttAssistCmd *p = (CSttAssistCmd*)pObj;
+
+	if(m_strTestor != p->m_strTestor)
+	{
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
+BOOL CSttAssistCmd::CopyOwn(CBaseObject* pDest)
+{
+	if(this == pDest)
+	{
+		return TRUE;
+	}
+
+	CSttCmdBase::CopyOwn(pDest);
+
+	CSttAssistCmd *p = (CSttAssistCmd*)pDest;
+
+	p->m_strTestor = m_strTestor;
+	return TRUE;
+}
+
+CBaseObject* CSttAssistCmd::Clone()
+{
+	CSttAssistCmd *p = new CSttAssistCmd();
+	Copy(p);
+	return p;
+}
+
+CBaseObject* CSttAssistCmd::CloneEx(BOOL bCopyOwn/*=TRUE*/, BOOL bCopyChildren/*=FALSE*/)
+{
+	CSttAssistCmd *p = new CSttAssistCmd();
+	CopyEx(p, bCopyOwn, bCopyChildren);
+	return p;
+}
+
+BOOL CSttAssistCmd::CanPaste(UINT nClassID)
+{
+	return FALSE;
+}
+

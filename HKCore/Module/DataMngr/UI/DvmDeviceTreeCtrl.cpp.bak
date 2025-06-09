@@ -1,0 +1,473 @@
+// GuideBookEditTreeCtrl.cpp : 实现文件
+//
+
+#include "stdafx.h"
+#include "GuideBookDev.h"
+#include "GuideBookEditTreeCtrl.h"
+#include "MainFrm.h"
+#include "GbNodeClassMngr/GbNodeClassMngr.h"
+// CGuideBookEditTreeCtrl
+
+IMPLEMENT_DYNAMIC(CGuideBookEditTreeCtrl, CTreeCtrl)
+
+CGuideBookEditTreeCtrl::CGuideBookEditTreeCtrl()
+{
+	m_pGuideBook = NULL;
+	m_pFrameWnd = NULL;
+	m_bChangeChild = TRUE;
+	m_pTreeSelNode = NULL;
+	m_pTreeSelNodePrev = NULL;
+}
+
+CGuideBookEditTreeCtrl::~CGuideBookEditTreeCtrl()
+{
+}
+
+void CGuideBookEditTreeCtrl::InitShowGuideBook(CGuideBook* pGuideBook)
+{
+	m_pGuideBook = pGuideBook;
+	DeleteAllItems();
+
+	if(m_pGuideBook == NULL)
+	{
+		return;
+	}
+
+	InsertGbItemToTreeCtrl(m_pGuideBook, NULL);
+	m_pTreeSelNode = m_pGuideBook;
+	Expand((HTREEITEM)m_pTreeSelNode->m_dwItemData,TVE_EXPAND);
+	SelChanged((HTREEITEM)m_pGuideBook->m_dwItemData);
+}
+
+UINT CGuideBookEditTreeCtrl::GetImgIndex(CExBaseObject* pGbNode)
+{
+	UINT nClassID = pGbNode->GetClassID();
+
+	switch (nClassID)
+	{
+	case GBCLASSID_GUIDEBOOK:
+		nClassID = 0;
+		break;
+	case GBCLASSID_JOBGUIDE:
+		nClassID = 1;
+		break;
+	case GBCLASSID_DEVICE:
+		nClassID = 2;
+		break;
+	case GBCLASSID_ITEMS:
+		nClassID = 3;
+		break;
+	case GBCLASSID_CPU:
+		nClassID = 4;
+		break;
+	case GBCLASSID_MACROTEST:
+		nClassID = 5;
+		break;
+	case GBCLASSID_SAFETY:
+		nClassID = 6;
+		break;
+	case GBCLASSID_COMMCMD:
+		nClassID = 7;
+		break;
+	case GBCLASSID_DEVICE_SYSPARAS:
+		nClassID = 8;
+		break;
+	default:
+		nClassID = 9;
+		break;
+	}
+
+	return nClassID;
+}
+void CGuideBookEditTreeCtrl::UpdateGbItemToTreeCtrl(CExBaseObject*pItem)
+{
+	HTREEITEM hCurr = (HTREEITEM)pItem->m_dwItemData;
+	
+	if (hCurr != NULL)
+	{
+		if (ItemHasChildren(hCurr))
+		{
+			HTREEITEM hNextItem;
+			HTREEITEM hChildItem = GetChildItem(hCurr);
+
+			while (hChildItem != NULL)
+			{
+				hNextItem = GetNextItem(hChildItem, TVGN_NEXT);
+				DeleteItem(hChildItem);
+				hChildItem = hNextItem;
+			}
+		}
+	}
+	else
+	{
+		CExBaseList *pParent = (CExBaseList*)pItem->GetParent();
+		HTREEITEM hParent = NULL;
+		ASSERT (pParent != NULL);
+		hParent = (HTREEITEM)pParent->m_dwItemData;
+		ASSERT (hParent != NULL);
+		InsertGbItemToTreeCtrl(pItem, hParent, NULL, FALSE);
+	}
+
+	if (Gb_IsItemExpandInTree(pItem->GetClassID()))
+	{
+		InsertGbItemChildrenToTreeCtrl((CExBaseList*)pItem, hCurr);
+	}
+}
+
+void CGuideBookEditTreeCtrl::InsertGbItemToTreeCtrl(CExBaseObject*pItem,HTREEITEM htiParent,HTREEITEM hAfter, BOOL bSelect)
+{
+	HTREEITEM hTreeItem = NULL;
+
+	if (pItem == NULL)
+	{
+		return;
+	}
+
+	//CCPUs进行特殊处理
+// 	if (pItem->GetClassID() == GBCLASSID_CPUS)
+// 	{
+// 		InsertGbItemChildrenToTreeCtrl((CExBaseList*)pItem, htiParent);
+// 	}
+
+	//显示可显示的项；显示子元素
+	if (Gb_IsItemVisibleInTree(pItem->GetClassID()))
+	{
+		UINT nImg = GetImgIndex(pItem);
+		hTreeItem = InsertItem(pItem->m_strName, nImg, nImg, htiParent,hAfter);
+		pItem->m_dwItemData = (DWORD)hTreeItem;
+		SetItemData(hTreeItem, (DWORD)pItem);
+		
+		//判断其是否为可扩展项
+		if (Gb_IsItemExpandInTree(pItem->GetClassID()))
+		{
+			InsertGbItemChildrenToTreeCtrl((CExBaseList*)pItem, hTreeItem);
+		}
+
+		if (bSelect)
+		{
+			HTREEITEM hCurrItem = (HTREEITEM)pItem->m_dwItemData;
+			CExBaseObject* pParent = (CExBaseObject*)pItem->GetParent();
+			if(pParent != NULL)
+			{
+				Expand((HTREEITEM)pParent->m_dwItemData,TVE_EXPAND);
+			}
+
+//			SelectItem(hCurrItem);
+
+// 			{
+// 				CWnd* pWnd = ((CGbNodePathOptrBar*)GetParent())->GetMainFrame();
+// 				SetTreeSelNode(pItem);
+// 				pWnd->PostMessage(WM_GBNODE_SELCHANGED,(WPARAM)pItem->m_dwItemData,(LPARAM)pItem);
+// 			}
+		}
+	}
+
+}
+
+void CGuideBookEditTreeCtrl::InsertGbItemChildrenToTreeCtrl(CExBaseList* pItem,HTREEITEM htiParent)
+{
+	ASSERT(pItem != NULL);
+	CGbItemBase* pObj = NULL;
+	POS pos = pItem->GetHeadPosition();
+
+	while(pos != NULL)
+	{
+		pObj = (CGbItemBase*)pItem->GetNext(pos);
+		InsertGbItemToTreeCtrl(pObj,htiParent);
+	}
+}
+
+CGbItemBase* CGuideBookEditTreeCtrl::GetTestItemByTreeItem(long hTreeItem)
+{
+	if (m_pGuideBook != NULL)
+	{
+		return (CGbItemBase*)GetItemData((HTREEITEM)hTreeItem);
+	}
+
+	return NULL;
+}
+
+BEGIN_MESSAGE_MAP(CGuideBookEditTreeCtrl, CTreeCtrl)
+	ON_WM_LBUTTONDOWN()
+	ON_WM_RBUTTONDOWN()
+	ON_NOTIFY_REFLECT(TVN_SELCHANGED, &CGuideBookEditTreeCtrl::OnTvnSelchanged)
+	ON_WM_KEYDOWN()
+	ON_MESSAGE(WM_USER+1055,&CGuideBookEditTreeCtrl::OnGbNodeSelect)
+	ON_MESSAGE(WM_USER+1056,&CGuideBookEditTreeCtrl::OnGbNodesInsert)
+	ON_MESSAGE(WM_USER+1057,&CGuideBookEditTreeCtrl::OnGbNodesUpdate)
+END_MESSAGE_MAP()
+
+// CGuideBookEditTreeCtrl 消息处理程序
+
+void CGuideBookEditTreeCtrl::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	SetFocus();
+	UINT uFlags;
+	HTREEITEM hItem = HitTest(point,&uFlags);
+
+	if( (hItem != NULL) && (TVHT_ONITEM & uFlags) )
+	{
+		//Expand(hItem, TVE_EXPAND);
+		SelChanged(hItem);
+	}
+
+	CTreeCtrl::OnLButtonDown(nFlags, point);
+}
+
+void CGuideBookEditTreeCtrl::OnRButtonDown(UINT nFlags, CPoint point)
+{
+	SetFocus();
+	UINT uFlags;
+	HTREEITEM hItem = HitTest(point,&uFlags);
+	
+	CExBaseObject* pGbNode = NULL;
+	if( (hItem != NULL) && (TVHT_ONITEM & uFlags) )
+	{
+		//Expand(hItem, TVE_EXPAND);
+		SelChanged(hItem);
+	}
+
+	CTreeCtrl::OnRButtonDown(nFlags, point);
+
+	if(m_pTreeSelNode != NULL)
+	{
+		OnContextMenuTree(NULL,point,m_pTreeSelNode);
+	}
+}
+
+void CGuideBookEditTreeCtrl::OnContextMenuTree(CWnd* pWnd,CPoint point,CExBaseObject* pGbNode)
+{
+	if (m_pFrameWnd == NULL)
+	{
+		return;
+	}
+
+	if (point.x == -1 && point.y == -1)
+	{
+		CRect rect;
+		GetClientRect(rect);
+		ClientToScreen(rect);
+
+		point = rect.TopLeft();
+		point.Offset(5, 5);
+	}
+	ClientToScreen(&point);
+
+	CMenu menu;
+	menu.CreatePopupMenu();
+	CGbNodeClass* pNode = CGbNodeClassMngr::g_pGbNodeClassMngr->FindByGbNodeClass(pGbNode);
+	
+
+	if(pNode != NULL)
+	{
+		if (!Gb_IsGuideBookTemplate(pGbNode))
+		{
+			if (Gb_IsDeviceChildNode(pGbNode))
+			{
+				menu.AppendMenu(MF_STRING, ID_VARUABLE_REPLACE, _T("变量替换"));
+			}
+		}
+
+		menu.AppendMenu(MF_STRING, ID_EXPAND_ALL_CHILDREN, _T("展开全部子节点"));
+		menu.AppendMenu(MF_SEPARATOR);
+
+		CGbNodeOwnPopMenuItems* pMenuItems = pNode->m_pMenuItems;
+		CGbNodeOwnPopMenuItem* pMenuItem = NULL;
+		ASSERT(pMenuItems != NULL);
+		pMenuItems->InitMenu(&menu);
+		menu.TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON,point.x,point.y,m_pFrameWnd);
+	}	
+}
+
+CExBaseObject* CGuideBookEditTreeCtrl::SelChanged(HTREEITEM hItem)
+{
+	CExBaseObject* pGbNode  = (CExBaseObject*)GetItemData(hItem);
+	ASSERT(pGbNode != NULL);
+//	ASSERT(m_pFrameWnd != NULL);
+
+	SelectItem(hItem);
+	m_pTreeSelNode = pGbNode;
+
+	if (m_pFrameWnd != NULL)
+	{
+		if(m_pTreeSelNodePrev != m_pTreeSelNode)
+		{
+			m_pFrameWnd->SendMessage(WM_GBNODE_SELCHANGED, (WPARAM)this, (LPARAM)m_pTreeSelNode);
+		}
+	}
+
+	m_pTreeSelNodePrev = pGbNode;
+	return pGbNode;
+}
+
+LRESULT CGuideBookEditTreeCtrl::OnGbNodeSelect(WPARAM wParam,LPARAM lParam)
+{
+	CExBaseObject *pGbObj = (CExBaseObject*)wParam;
+
+	HTREEITEM hItem = (HTREEITEM)pGbObj->m_dwItemData;
+	ASSERT(hItem != NULL);
+	SelectItem(hItem);
+	SelChanged(hItem);
+
+	return 0;
+}
+
+LRESULT CGuideBookEditTreeCtrl::OnGbNodesInsert(WPARAM wParam,LPARAM lParam)
+{
+	CExBaseList *pList = (CExBaseList*)wParam;
+	POS pos = pList->GetHeadPosition();
+	CExBaseObject *p = NULL;
+	CExBaseObject *pParent = NULL;
+
+	while (pos != NULL)
+	{
+		p = pList->GetNext(pos);
+		pParent = (CExBaseObject *)p->GetParent();
+		InsertGbItemToTreeCtrl(p, (HTREEITEM)pParent->m_dwItemData);
+	}
+
+	if (pParent != NULL)
+	{
+		Expand((HTREEITEM)pParent->m_dwItemData, TVE_EXPAND);
+	}
+
+	return 0;
+}
+
+LRESULT CGuideBookEditTreeCtrl::OnGbNodesUpdate(WPARAM wParam,LPARAM lParam)
+{
+	CExBaseList *pList = (CExBaseList*)wParam;
+	UpdateGbItemToTreeCtrl(pList);
+	return 0;
+}
+
+void CGuideBookEditTreeCtrl::OnTvnSelchanged(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
+
+	
+
+	*pResult = 0;
+}
+
+void CGuideBookEditTreeCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+ 	CTreeCtrl::OnKeyDown(nChar, nRepCnt, nFlags);
+
+	HTREEITEM hItem = NULL;
+
+	switch (nChar)
+	{
+	case VK_UP:
+	case VK_DOWN:
+		hItem = GetSelectedItem();
+		ASSERT(hItem != NULL);
+		SelChanged(hItem);
+		break;
+
+	case VK_DELETE:
+	case VK_BACK:
+		hItem = GetSelectedItem();
+
+		if (hItem != NULL)
+		{
+			CExBaseObject* pGbNode  = (CExBaseObject*)GetItemData(hItem);
+			ASSERT(pGbNode != NULL);
+
+			if (GBUI_NodeCanDelete(pGbNode))
+			{
+				CMainFrame *pFrame = GbUI_GetMainFrame(this);
+				pFrame->OnBaseMenuDelete();
+			}
+		}
+		break;
+
+	}	
+
+	SetFocus();
+}
+
+BOOL CGuideBookEditTreeCtrl::ChangeTreePosition(CExBaseObject* p1,CExBaseObject* p2)
+{
+	if(p1 != NULL && p2 != NULL)
+	{
+		if( Gb_IsItemVisibleInTree(p1->GetClassID()) && Gb_IsItemVisibleInTree(p2->GetClassID()) )
+		{
+			CExBaseList* pParent = (CExBaseList*)p1->GetParent();
+			if(pParent == (CExBaseList*)p2->GetParent() && Gb_IsItemVisibleInTree(pParent->GetClassID()))
+			{
+				HTREEITEM hItem = NULL;
+				
+				POS pos1 = pParent->Find(p1);
+				POS pos2 = pParent->Find(p2);
+				int nIndex1 = -1;
+				int nIndex2 = -1;
+				if(pos1 != NULL && pos2 != NULL)
+				{
+					nIndex1 = pParent->FindIndex(pos1);
+					nIndex2 = pParent->FindIndex(pos2);
+				}
+				else
+				{
+					return FALSE;
+				}
+				
+				if(nIndex1 != -1 && nIndex2 != -1)
+				{
+					if(nIndex2 > nIndex1)
+					{
+						this->DeleteItem((HTREEITEM)p2->m_dwItemData);
+						UINT nImg = GetImgIndex(p2);
+						hItem = this->InsertItem(p2->m_strName,nImg , nImg,(HTREEITEM)pParent->m_dwItemData,(HTREEITEM)p1->m_dwItemData);
+						if(p2->IsBaseList())
+						{
+							InsertGbItemChildrenToTreeCtrl((CExBaseList*)p2,hItem);
+						}
+						p2->m_dwItemData = (DWORD)hItem;
+						SetItemData(hItem,(DWORD_PTR)p2);
+					}
+				}
+
+			}
+		}
+	}
+
+	return FALSE;
+}
+
+void CGuideBookEditTreeCtrl::DeleteGbNode(CExBaseObject *pGbNode)
+{
+	if( !Gb_IsItemVisibleInTree(pGbNode->GetClassID()) )
+	{
+		return;
+	}
+
+	HTREEITEM hItem = (HTREEITEM)pGbNode->m_dwItemData;
+	HTREEITEM hPrev = GetPrevSiblingItem(hItem);
+	HTREEITEM hNext = GetNextSiblingItem(hItem);
+	HTREEITEM hParent = GetParentItem(hItem);
+	DeleteItem(hItem);
+
+	HTREEITEM hNewItem = GetSelectedItem();
+
+	if (hNewItem != NULL)
+	{
+		SelChanged(hNewItem);
+	}
+	else
+	{
+		if (hNext != NULL)
+		{
+			SelChanged(hNext);
+		}
+		else if (hPrev != NULL)
+		{
+			SelChanged(hPrev);
+		}
+		else if (hParent != NULL)
+		{
+			SelChanged(hParent);
+		}
+	}
+}

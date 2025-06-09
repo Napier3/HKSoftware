@@ -1,0 +1,223 @@
+//这段源代码由ClassGenerator创建
+//版权所有 LiJunqing  lijunqing1224@126.com
+//保留所有权利
+
+//XUser.cpp  CXUser
+
+
+#include "stdafx.h"
+#include "XUser.h"
+
+CString CXUser::g_strAdminID;
+CString CXUser::g_strAdminPSW;
+
+void CXUser::InitAdminUserAndPSW()
+{
+// 	CXAes oXAes;
+
+	CString strTemp;
+	strTemp  = _T("A");
+	strTemp += _T("d");
+	strTemp += _T("m");
+	strTemp += _T("i");
+	strTemp += _T("n");
+	g_strAdminID = xdes_Encrypt(strTemp);
+
+	strTemp  = _T("p");
+	strTemp += _T("o");
+	strTemp += _T("w");
+	strTemp += _T("e");
+	strTemp += _T("r");
+	strTemp += _T("s");
+	strTemp += _T("k");
+	strTemp += _T("y");
+	g_strAdminPSW = xdes_Encrypt(strTemp);
+}
+
+CXUser::CXUser()
+{
+	//初始化属性
+
+	//初始化成员变量
+}
+
+CXUser::~CXUser()
+{
+}
+
+long CXUser::XmlReadOwn(CXmlRWNodeBase &oNode, CXmlRWKeys *pXmlRWKeys)
+{
+	CExBaseObject::XmlReadOwn(oNode, pXmlRWKeys);
+
+	CUserDBXmlRWKeys *pXmlKeys = (CUserDBXmlRWKeys*)pXmlRWKeys;
+
+	xml_GetAttibuteValue(pXmlKeys->m_strPSWKey, oNode, m_strPSW);
+	return 0;
+}
+
+long CXUser::XmlWriteOwn(CXmlRWDocBase &oXMLDoc, CXmlRWElementBase &oElement, CXmlRWKeys *pXmlRWKeys)
+{
+	CExBaseObject::XmlWriteOwn(oXMLDoc, oElement, pXmlRWKeys);
+
+	CUserDBXmlRWKeys *pXmlKeys = (CUserDBXmlRWKeys*)pXmlRWKeys;
+
+	xml_SetAttributeValue(pXmlKeys->m_strPSWKey, oElement, m_strPSW);
+	return 0;
+}
+
+long CXUser::SerializeOwn(CBinarySerialBuffer &oBinaryBuffer)
+{
+	CExBaseObject::SerializeOwn(oBinaryBuffer);
+
+	if(oBinaryBuffer.IsCalSizeMode())
+	{
+		BinarySerializeCalLen(oBinaryBuffer, m_strPSW);
+	}
+	else if(oBinaryBuffer.IsReadMode())
+	{
+		BinarySerializeRead(oBinaryBuffer, m_strPSW);
+	}
+	else if(oBinaryBuffer.IsWriteMode())
+	{
+		BinarySerializeWrite(oBinaryBuffer, m_strPSW);
+	}
+	return 0;
+}
+
+void CXUser::InitAfterRead()
+{
+}
+
+BOOL CXUser::IsEqualOwn(CBaseObject* pObj)
+{
+	if(this == pObj)
+	{
+		return TRUE;
+	}
+
+	if (!CExBaseObject::IsEqualOwn(pObj))
+	{
+		return FALSE;
+	}
+
+	CXUser *p = (CXUser*)pObj;
+
+	if(m_strPSW != p->m_strPSW)
+	{
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
+BOOL CXUser::CopyOwn(CBaseObject* pDest)
+{
+	if(this == pDest)
+	{
+		return TRUE;
+	}
+
+	CExBaseObject::CopyOwn(pDest);
+
+	CXUser *p = (CXUser*)pDest;
+
+	p->m_strPSW = m_strPSW;
+	return TRUE;
+}
+
+CBaseObject* CXUser::Clone()
+{
+	CXUser *p = new CXUser();
+	Copy(p);
+	return p;
+}
+
+BOOL CXUser::CanPaste(UINT nClassID)
+{
+	return FALSE;
+}
+
+CExBaseObject* CXUser::CreateNewChild(const CString &strClassID, BOOL &bAddToTail, CXmlRWKeys *pXmlRWKeys)
+{
+	CExBaseObject *pNew  = NULL;
+	CUserDBXmlRWKeys *pXmlKeys = (CUserDBXmlRWKeys*)pXmlRWKeys;
+
+
+
+	return pNew;
+}
+
+CExBaseObject* CXUser::CreateNewChild(long nClassID/*, BOOL &bAddToTail*/)
+{
+	CExBaseObject *pNew  = NULL;
+
+
+
+	return pNew;
+}
+
+CString CXUser::GetName()
+{
+// 	CXAes oXAes;
+// 	return oXAes.InvCipher(m_strName);
+	return xdes_Decrypt(m_strName);
+}
+
+void CXUser::SetName(const CString &strName)
+{
+	//CXAes oXAes;
+	//m_strName = oXAes.Cipher(strName);
+	m_strName = xdes_Encrypt(strName);
+}
+
+CString CXUser::GetID()
+{
+// 	CXAes oXAes;
+// 	return oXAes.InvCipher(m_strID);
+	return xdes_Decrypt(m_strID);
+}
+
+void CXUser::SetID(const CString &strID)
+{
+// 	CXAes oXAes;
+// 	m_strID = oXAes.Cipher(strID);
+	m_strID = xdes_Encrypt(strID);
+}
+
+CString CXUser::GetPSW()
+{
+// 	CXAes oXAes;
+// 	return oXAes.InvCipher(m_strPSW);
+	return xdes_Decrypt(m_strPSW);
+}
+
+void CXUser::SetPSW(const CString &strPsw)
+{
+// 	CXAes oXAes;
+// 	m_strPSW = oXAes.Cipher(strPsw);
+	m_strPSW = xdes_Encrypt(strPsw);
+}
+
+
+long CXUser::UpdateListCtrl(CListCtrl *pListCtrl, long lItemIndex)
+{
+	CString strTemp;
+	strTemp.Format(_T("%d"), lItemIndex+1);
+	pListCtrl->SetItemText(lItemIndex, 0, strTemp);
+	pListCtrl->SetItemText(lItemIndex, 1, GetName());
+	pListCtrl->SetItemText(lItemIndex, 2, GetID());
+	pListCtrl->SetItemText(lItemIndex, 3, GetPSW());
+
+	pListCtrl->SetItemData(lItemIndex, (DWORD)this);
+	return 0;
+}
+
+long CXUser::InsertComboBox(CComboBox *pComboBox)
+{
+	long nIndex = pComboBox->AddString(GetName());
+
+	pComboBox->SetItemDataPtr(nIndex, this);
+
+	return nIndex;
+}
+

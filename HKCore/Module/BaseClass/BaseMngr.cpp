@@ -1,0 +1,26 @@
+// BaseMngr.cpp: implementation of the CBaseMngr class.
+//
+//////////////////////////////////////////////////////////////////////
+
+#include "stdafx.h"
+#include "BaseMngr.h"
+
+#ifdef _DEBUG
+#undef THIS_FILE
+static char THIS_FILE[]=__FILE__;
+#define new DEBUG_NEW
+#endif
+
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+
+CBaseMngr::CBaseMngr()
+{
+
+}
+
+CBaseMngr::~CBaseMngr()
+{
+
+}

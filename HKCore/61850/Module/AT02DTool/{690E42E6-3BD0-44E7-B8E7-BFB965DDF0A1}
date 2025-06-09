@@ -1,0 +1,111 @@
+#pragma once
+
+#include "../CfgDataMngr/IecCfgDevice.h"
+
+
+#define  AT02D_DATASET_dsIecfg                   _T("dsIecfg")
+#define  AT02D_DATASET_dsSV                      _T("dsSV")
+#define  AT02D_DATASET_dsGout                    _T("dsGout")
+#define  AT02D_DATASET_dsGin                    _T("dsGin")
+#define  AT02D_DATASET_dsSVCstc                 _T("dsSVCstc")
+#define  AT02D_DATASET_dsGoCstc                 _T("dsGoCstc")
+#define  AT02D_DATASET_dsGsIn                   _T("dsGsIn")
+#define  AT02D_DATASET_dsLinkState              _T("dsLinkState")
+#define  AT02D_DATASET_dsSVErr                  _T("dsSVErr")
+#define  AT02D_DATASET_dsGooseErr               _T("dsGooseErr")
+#define  AT02D_DATASET_dsDiscrete               _T("dsDiscrete")
+#define  AT02D_DATASET_dsSVDelay                _T("dsSVDelay")
+#define  AT02D_DATASET_dsTHD                    _T("dsTHD")
+#define  AT02D_DATASET_dsRcdStep6U6IRlt         _T("dsRcdStep6U6IRlt")
+#define  AT02D_DATASET_dsCBlockSV               _T("dsCBlockSV")
+#define  AT02D_DATASET_dsCBlockGin              _T("dsCBlockGin")
+#define  AT02D_DATASET_dsCBlockGout             _T("dsCBlockGout")
+#define  AT02D_DATASET_dsSVSyn                  _T("dsSVSyn")
+
+#define  AT02D_DATA_ID_SV                          _T("SV")   //在采样值一致性数据集中添加SV   Data对象时，其m_strID的标识部分
+#define  AT02D_DATA_ID_GOOSE                       _T("Goose")
+#define  AT02D_DATA_ID_GSIN                        _T("GsIn")
+#define  AT02D_DATA_ID_RCD_FILE                       _T("_Rcd_file")
+
+#define AT02D_FUNC_ID_SVAccuracyTest               _T("SVAccuracyTest")
+#define AT02D_FUNC_ID_ThdTest                      _T("ThdTest")
+#define AT02D_FUNC_ID_DispersionTest               _T("DispersionTest")
+#define AT02D_FUNC_ID_SVSnyTest                    _T("SVSnyTest")
+#define AT02D_FUNC_ID_GooseSnyTest                 _T("GooseSnyTest")
+#define AT02D_FUNC_ID_SVDelayTest                  _T("SVDelayTest")
+#define AT02D_FUNC_ID_TimeControlTest              _T("TimeControlTest")
+#define AT02D_FUNC_ID_TimeMeasureTest              _T("TimeMeasureTest")
+#define AT02D_FUNC_ID_GooseSendTest                _T("GooseSendTest")
+#define AT02D_FUNC_ID_GooseAcceptTest1             _T("GooseAcceptTest1")
+#define AT02D_FUNC_ID_GooseAcceptTest2             _T("GooseAcceptTest2")
+#define AT02D_FUNC_ID_SVCstcTest                   _T("SVCstcTest")
+#define AT02D_FUNC_ID_GooseCstcTest                _T("GooseCstcTest")
+#define AT02D_FUNC_ID_SVErrorTest                  _T("SVErrorTest")
+#define AT02D_FUNC_ID_GooseErrorTest               _T("GooseErrorTest")
+#define AT02D_FUNC_ID_BoutTimeTest                 _T("BoutTimeTest")
+#define AT02D_FUNC_ID_MultiSVAccuracyTest          _T("MultiSVAccuracyTest")
+
+
+#define AT02D_FIRST_FIBER_Index                     2 
+
+
+class CAT02D_Tool
+{
+public:
+	CAT02D_Tool(void);
+	virtual ~CAT02D_Tool(void);
+
+#ifdef _USE_IN_AT02D_MODE_
+	BOOL ExportDeviceModel(CIecCfgDatasMngr *pIecCfgDatasMngr,const CString &strAT02D_CfgPath,const CString &strSaveFilePath ,BOOL bUseHarm);
+	BOOL ExportDeviceModel(CIecCfgDevice *pIecCfgDevice,const CString &strAT02D_CfgPath,const CString &strSaveFilePath ,BOOL bUseHarm);
+//	BOOL ExportDeviceModel(CIecCfgFile *pIecCfgFile,const CString &strAT02D_CfgPath,const CString &strSaveFilePath ,BOOL bUseHarm);
+	void GenerateAT02D_Iecfg(CIecCfgDevice *pIecfgDevice ,long nMaxFiberNum);
+
+	BOOL GenDeviceModel(CIecCfgDevice *pIecCfgDevice, CDvmLogicDevice *pDvmLogicDevice, BOOL bUseHarm);
+	BOOL GenDeviceModel(CIecCfgDatasMngr *pCfgDatasMngr, CDvmLogicDevice *pDvmLogicDevice, BOOL bUseHarm);
+
+protected:
+	BOOL AT02D_ADD_SV_GOOSE_ControlBlocks(CDvmLogicDevice *pDvmLogicDevice);
+	void AT02D_SortDataset(CDvmLogicDevice *pDvmLogicDevice,const CString &strDatasetID);
+	void AT02D_Add_SV_GS_ContrlBlock_Dataset(CDvmLogicDevice *pDvmLogicDevice,const CString &strDatasetID);//添加SV、Gs控制块数据集，该数据集中包含用到的所有SV、GOOSE控制块的AppID，DvmData对象的Value中
+	CDvmData *AT02D_FindAppIDDataFromDataset(CDvmDataset *pDs);
+	void AT02D_AddSV_THD_Datas(CDvmDataset *pDsTHD,CDvmDataset *pDsSV);
+	void AT02D_AddSVSyn(CDvmDataset *pDs_SVSyn,long nControlBlockIndex);
+	CDvmData*  AT02D_CloneSVGooseData(CDvmDataset *pDs,CDvmData *pData,const CString &strAppID,const CString &strContrlName,const long &nControlBlockIndex);	
+	void AT02D_CloneRcdFileData(CDvmDataset *pDs,CDvmData *pData,const CString &strAppID,const CString &strContrlName,const long &nControlBlockIndex);	
+	void AT02D_DeleteDataFromDataset(CDvmDataset *pDs,CDvmData *pData);
+
+	BOOL IsSV_Dataset(const CString &strDatasetName,CString &strAppID,long &nControlBlockIndex);
+	BOOL IsGin_Dataset(const CString &strDatasetName,CString &strAppID,long &nControlBlockIndex);
+	BOOL IsGout_Dataset(const CString &strDatasetName,CString &strAppID,long &nControlBlockIndex);
+
+	void AddIecfgDatasMngr_SVAccuracyTest(CIecCfgDevice *pIecfgDevice,CIecCfgDatasMngr *pSTD_IecfgDatasMngr,
+		long nTestIndex,long nMaxSVControlNum,long nTotalFiberNum);//配置文件编号(同一功能的第几个配置)、最大SV控制块数量、测试仪光口总数量
+	void AddIecfgDatasMngr_ThdTest(CIecCfgDevice *pIecfgDevice,CIecCfgDatasMngr *pSTD_IecfgDatasMngr,
+		long nTestIndex,long nMaxSVControlNum,long nTotalFiberNum);
+	void AddIecfgDatasMngr_DispersionTest(CIecCfgDevice *pIecfgDevice,CIecCfgDatasMngr *pSTD_IecfgDatasMngr,
+		long nTestIndex,long nMaxSVControlNum,long nTotalFiberNum);
+	void AddIecfgDatasMngr_SVSnyTest(CIecCfgDevice *pIecfgDevice,CIecCfgDatasMngr *pSTD_IecfgDatasMngr,
+		long nTestIndex,long nMaxSVControlNum,long nTotalFiberNum);
+	void AddIecfgDatasMngr_GooseSnyTest(CIecCfgDevice *pIecfgDevice,CIecCfgDatasMngr *pSTD_IecfgDatasMngr,
+		long nTestIndex,long nMaxSVControlNum,long nTotalFiberNum);
+	void AddIecfgDatasMngr_SVDelayTest(CIecCfgDevice *pIecfgDevice,CIecCfgDatasMngr *pSTD_IecfgDatasMngr,
+		long nTestIndex,long nMaxSVControlNum,long nTotalFiberNum);
+	void AddIecfgDatasMngr_TimeControlTest(CIecCfgDevice *pIecfgDevice,CIecCfgDatasMngr *pSTD_IecfgDatasMngr,
+		long nTestIndex,long nMaxSVControlNum,long nTotalFiberNum);
+	void AddIecfgDatasMngr_TimeMeasureTest(CIecCfgDevice *pIecfgDevice,CIecCfgDatasMngr *pSTD_IecfgDatasMngr,
+		long nTestIndex,long nMaxSVControlNum,long nTotalFiberNum);
+	void AddIecfgDatasMngr_GooseSendTest(CIecCfgDevice *pIecfgDevice,CIecCfgDatasMngr *pSTD_IecfgDatasMngr);
+	void AddIecfgDatasMngr_GooseAcceptTest1(CIecCfgDevice *pIecfgDevice,CIecCfgDatasMngr *pSTD_IecfgDatasMngr);
+	void AddIecfgDatasMngr_GooseAcceptTest2(CIecCfgDevice *pIecfgDevice,CIecCfgDatasMngr *pSTD_IecfgDatasMngr);
+	void AddIecfgDatasMngr_SVCstcTest(CIecCfgDevice *pIecfgDevice,CIecCfgDatasMngr *pSTD_IecfgDatasMngr);
+	void AddIecfgDatasMngr_GooseCstcTest(CIecCfgDevice *pIecfgDevice,CIecCfgDatasMngr *pSTD_IecfgDatasMngr);
+	void AddIecfgDatasMngr_SVErrorTest(CIecCfgDevice *pIecfgDevice,CIecCfgDatasMngr *pSTD_IecfgDatasMngr);
+	void AddIecfgDatasMngr_GooseErrorTest(CIecCfgDevice *pIecfgDevice,CIecCfgDatasMngr *pSTD_IecfgDatasMngr);
+	void AddIecfgDatasMngr_BoutTimeTest(CIecCfgDevice *pIecfgDevice,CIecCfgDatasMngr *pSTD_IecfgDatasMngr);
+	void AddIecfgDatasMngr_MultiFiberSVAccuracyTest(CIecCfgDevice *pIecfgDevice,CIecCfgDatasMngr *pSTD_IecfgDatasMngr);
+#endif
+};
+
+BOOL iec_GenDeviceModel(CIecCfgDevice *pIecCfgDevice, CDvmLogicDevice *pDvmLogicDevice, BOOL bUseHarm);
+BOOL iec_GenDeviceModel(CIecCfgDatasMngr *pCfgDatasMngr, CDvmLogicDevice *pDvmLogicDevice, BOOL bUseHarm);

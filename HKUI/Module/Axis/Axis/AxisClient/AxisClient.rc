@@ -1,0 +1,566 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (P.R.C.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\AxisClient.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""l.chs\\afxres.rc""          // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\AxisClient.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_AXISCLIENT_DIALOG DIALOGEX 0, 0, 199, 200
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "AxisClient"
+FONT 9, "宋体", 0, 0, 0x1
+BEGIN
+    PUSHBUTTON      "DescartesAxis",IDC_DESCARTESAXIS,58,7,82,18
+    PUSHBUTTON      "PolarAxis",IDC_POLARAXIS,58,45,82,18
+    PUSHBUTTON      "LogarithmAxis",IDC_LOGARITHMAXIS,57,83,82,18
+    PUSHBUTTON      "RulerAxis",IDC_RULERAXIS,57,121,82,18
+END
+
+IDD_DIALOG_DESCARTES DIALOG DISCARDABLE  0, 0, 513, 342
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "DescartesAxis"
+FONT 9, "宋体"
+BEGIN
+    CONTROL         "",IDC_FRAME,"Static",SS_BLACKFRAME | NOT WS_VISIBLE,7,7,
+                    254,281
+    CONTROL         "边框",IDC_DRAWBORDER,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,263,7,32,10
+    CONTROL         "坐标系标题",IDC_AXISTITLE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,263,20,56,10
+    CONTROL         "X轴标题",IDC_XAXISTITLE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,263,48,44,10
+    CONTROL         "Y轴标题",IDC_YAXISTITLE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,264,62,44,10
+    CONTROL         "X轴1/10刻度",IDC_XAXISTENITH,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,264,76,60,10
+    CONTROL         "X轴刻度注释",IDC_XAXISSCALETEXT,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,264,131,60,10
+    CONTROL         "Y轴1/10刻度",IDC_YAXISTENITH,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,264,90,60,10
+    CONTROL         "坐标系中心轴",IDC_AXISCENTER,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,263,33,64,10
+    CONTROL         "Y轴刻度注释",IDC_YAXISSCALETEXT,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,264,145,60,10
+    CONTROL         "X轴大刻度",IDC_XAXISHALFUNITSCALE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,264,104,52,10
+    CONTROL         "Y轴大刻度",IDC_YAXISHALFUNITSCALE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,264,117,52,10
+    PUSHBUTTON      "工作区底色",IDC_BTN_COLORWORKAREA,264,160,50,14
+    LTEXT           "标题",IDC_STATIC,307,7,17,8
+    EDITTEXT        IDC_EDIT_AXISTITLE,325,7,40,14,ES_CENTER | 
+                    ES_AUTOHSCROLL
+    PUSHBUTTON      "标题颜色",IDC_BTN_COLOR_DESAXISTITLE,326,27,50,14
+    PUSHBUTTON      "标题字体",IDC_BTN_FONT_DESAXISTITLE,326,45,50,14
+    PUSHBUTTON      "背景颜色",IDC_BTN_COLOR_DESAXISBACK,264,178,50,14
+    PUSHBUTTON      "左上边界颜色",IDC_BTN_COLOR_DESLEFTTOPBORDER,264,197,60,
+                    14
+    PUSHBUTTON      "右下边界颜色",IDC_BTN_COLOR_DESRIGHTBOTTOMBORDER,264,
+                    216,59,14
+    COMBOBOX        IDC_COMBO_DESBORDERSHADOW,463,161,43,56,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "边界阴影宽度",IDC_STATIC,413,162,49,8
+    PUSHBUTTON      "左上边框颜色",IDC_BTN_COLOR_DESFRAMELEFTTOP,264,234,58,
+                    14
+    PUSHBUTTON      "右下边框颜色",IDC_BTN_COLOR_DESFRAMERIGHTBOTTOM,264,253,
+                    58,14
+    LTEXT           "边框阴影宽度",IDC_STATIC,413,181,49,8
+    COMBOBOX        IDC_COMBO_DESFRAMESHADOW,464,180,42,55,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Y轴单位刻度颜色",IDC_BTN_COLOR_DESYUNITSCALE,325,159,77,
+                    14
+    PUSHBUTTON      "Y轴单位刻度阴影颜色",IDC_BTN_COLOR_DESYUNITSCALESHADOW,
+                    326,177,77,14
+    PUSHBUTTON      "Y轴名称字体",IDC_BTN_FONT_DESYAXISNAME,387,45,50,14
+    PUSHBUTTON      "X轴名称字体",IDC_BTN_FONT_DESXAXISNAME,447,45,50,14
+    PUSHBUTTON      "Y轴标注字体",IDC_BTN_FONT_DESYSCALE,388,86,50,14
+    PUSHBUTTON      "X轴标注字体",IDC_BTN_FONT_DESXSCALE,448,86,50,14
+    LTEXT           "Y轴名称",IDC_STATIC,367,7,29,8
+    LTEXT           "X轴名称",IDC_STATIC,435,7,29,8
+    EDITTEXT        IDC_EDIT_DESYAXISNAME,395,7,37,14,ES_CENTER | 
+                    ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_DESXAXISNAME,468,7,38,14,ES_CENTER | 
+                    ES_AUTOHSCROLL
+    PUSHBUTTON      "Y轴名称颜色",IDC_BTN_COLOR_DESYAXISNAME,387,27,50,14
+    PUSHBUTTON      "X轴名称颜色",IDC_BTN_COLOR_DESXAXISNAME,447,26,50,14
+    PUSHBUTTON      "Y轴标注颜色",IDC_BTN_COLOR_DESYSCALEFONT,388,65,50,14
+    PUSHBUTTON      "X轴标注颜色",IDC_BTN_COLOR_DESXSCALEFONT,448,65,50,14
+    PUSHBUTTON      "Y轴网格线颜色",IDC_BTN_COLOR_DESYGRID,385,106,56,14
+    PUSHBUTTON      "X轴网格线颜色",IDC_BTN_COLOR_DESXGRID,446,105,53,14
+    PUSHBUTTON      "Y轴1/10刻度颜色",IDC_BTN_COLOR_DESYTENTH,379,126,64,14
+    PUSHBUTTON      "X轴1/10刻度颜色",IDC_BTN_COLOR_DESXTENTH,444,125,62,14
+    LTEXT           "Y轴网格线型",IDC_STATIC,415,201,45,8
+    LTEXT           "X轴网格线型",IDC_STATIC,414,218,45,8
+    COMBOBOX        IDC_COMBO_DESYGIRDSTYLE,463,199,43,30,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO_DESXGRIDSTYLE,462,219,44,30,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Y坐标系宽度",IDC_STATIC,412,279,45,8
+    LTEXT           "X坐标系宽度",IDC_STATIC,413,301,45,8
+    EDITTEXT        IDC_EDIT_DESYAXISWIDTH,462,279,44,14,ES_CENTER | 
+                    ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_DESXAXISWIDTH,463,301,43,14,ES_CENTER | 
+                    ES_AUTOHSCROLL
+    PUSHBUTTON      "X轴单位刻度颜色",IDC_BTN_COLOR_DESXUNITSCALE,329,197,75,
+                    14
+    PUSHBUTTON      "X轴单位刻度阴影颜色",IDC_BTN_COLOR_DESXUNITSCALESHADOW,
+                    329,215,76,14
+    LTEXT           "Y轴单位刻度长度",IDC_STATIC,7,293,61,8
+    LTEXT           "X轴单位刻度长度",IDC_STATIC,7,313,61,8
+    LTEXT           "Y轴1/2刻度长度",IDC_STATIC,125,293,57,8
+    LTEXT           "X轴1/2刻度长度",IDC_STATIC,125,314,57,8
+    LTEXT           "Y轴1/10刻度长度",IDC_STATIC,237,293,61,8
+    LTEXT           "X轴1/10刻度长度",IDC_STATIC,235,313,61,8
+    EDITTEXT        IDC_EDIT_DESYUNITSCALELEN,73,290,43,14,ES_CENTER | 
+                    ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_DESXUNITSCALELEN,73,313,43,14,ES_CENTER | 
+                    ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_DESYHALFSCALELEN,184,291,43,14,ES_CENTER | 
+                    ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_DESXHALFSCALELEN,184,313,43,14,ES_CENTER | 
+                    ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_DESYTENTHSCALELEN,303,289,43,14,ES_CENTER | 
+                    ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_DESXTENTHSCALELEN,303,311,43,14,ES_CENTER | 
+                    ES_AUTOHSCROLL
+    PUSHBUTTON      "中心轴颜色",IDC_BTN_COLOR_CENTERLINE,264,271,50,14
+    LTEXT           "中心轴线型",IDC_STATIC,416,237,41,8
+    LTEXT           "中心轴宽度",IDC_STATIC,415,257,41,8
+    COMBOBOX        IDC_COMBO_DESCENTERLINESTYLE,462,238,44,30,
+                    CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EDIT_DESCENTERLINEWIDTH,462,258,44,14,ES_CENTER | 
+                    ES_AUTOHSCROLL
+    PUSHBUTTON      "缩小",IDC_BTN_ZOOMIN,337,233,50,14
+    PUSHBUTTON      "放大",IDC_BTN_ZOOMOUT,337,253,50,14
+END
+
+IDD_DIALOG_POLAR DIALOG DISCARDABLE  0, 0, 435, 294
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "PolarAxis"
+FONT 10, "宋体"
+BEGIN
+    CONTROL         "",IDC_FRAME,"Static",SS_BLACKFRAME | NOT WS_VISIBLE,7,7,
+                    209,251
+    CONTROL         "工作区",IDC_WORKAREA,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,219,14,40,10
+    CONTROL         "工作区边框",IDC_WORKAREAFRAME,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,219,30,56,10
+    CONTROL         "中心轴",IDC_AXISCENTER,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,219,46,40,10
+    CONTROL         "边框",IDC_AXISBORDER,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,219,62,32,10
+    CONTROL         "角度刻度网格线",IDC_ANGLEUNITLINE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,219,79,72,10
+    CONTROL         "圆刻度网格线",IDC_CIRCLEUNIT,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,219,96,64,10
+    PUSHBUTTON      "工作区底色",IDC_BTN_COLOR_WORKAREA,292,13,43,10
+    CONTROL         "坐标系名称",IDC_AXISTITLE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,218,113,64,10
+    PUSHBUTTON      "标题颜色",IDC_BTN_COLOR_AXISTITLE,292,29,44,11
+    PUSHBUTTON      "背景颜色",IDC_BTN_COLOR_AXISBACK,292,47,44,11
+    PUSHBUTTON      "左上边框颜色",IDC_BTN_COLOR_LEFTTOPFRAME,292,66,50,11
+    PUSHBUTTON      "右下边框颜色",IDC_BTN_COLOR_RIGHTBOTTOMFRAME,292,84,50,
+                    11
+    COMBOBOX        IDC_COMBO_FRAMESHADOW,267,179,40,63,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "边界阴影宽度",IDC_STATIC,218,182,45,8
+    LTEXT           "角度线线型",IDC_STATIC,219,200,38,8
+    COMBOBOX        IDC_COMBO_ANGLELINE,267,197,41,61,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "幅值线线型",IDC_STATIC,219,218,38,8
+    COMBOBOX        IDC_COMBO_CIRCLELINE,267,215,41,61,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "角度线颜色",IDC_BTN_COLOR_ANGLELINE,292,103,50,11
+    PUSHBUTTON      "幅值线颜色",IDC_BTN_COLOR_CIRCLELINE,292,122,50,11
+    LTEXT           "角度线线宽",IDC_STATIC,315,199,38,8
+    LTEXT           "幅值线线宽",IDC_STATIC,314,218,38,8
+    EDITTEXT        IDC_EDIT_ANGLELINE,354,195,40,14,ES_CENTER | 
+                    ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_CIRCLELINE,355,215,40,14,ES_CENTER | 
+                    ES_AUTOHSCROLL
+    PUSHBUTTON      "标题字体",IDC_BTN_FONT,354,13,50,14
+    PUSHBUTTON      "角度刻度线字体",IDC_BTN_FONTANGLELINE,355,36,56,14
+    LTEXT           "标题",IDC_STATIC,330,181,16,8
+    EDITTEXT        IDC_EDIT_TITLE,354,175,40,14,ES_CENTER | ES_AUTOHSCROLL
+    PUSHBUTTON      "角度线字体颜色",IDC_BTN_COLOR_ANGLEFONT,355,62,56,14
+    LTEXT           "角度线个数",IDC_STATIC,218,238,38,8
+    EDITTEXT        IDC_EDIT_ANGLEUNIT,267,235,40,14,ES_CENTER | 
+                    ES_AUTOHSCROLL
+    LTEXT           "幅值线个数",IDC_STATIC,314,238,38,8
+    EDITTEXT        IDC_EDIT_CIRCLEUNIT,355,235,40,14,ES_CENTER | 
+                    ES_AUTOHSCROLL
+    PUSHBUTTON      "缩小",IDC_BTN_ZOOMIN,218,159,50,14
+    PUSHBUTTON      "放大",IDC_BTN_ZOOMOUT,279,160,50,14
+END
+
+IDD_DIALOG_LOGARITHM DIALOG DISCARDABLE  0, 0, 447, 241
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "LogarithmAxis"
+FONT 10, "System"
+BEGIN
+    CONTROL         "",IDC_FRAME,"Static",SS_BLACKFRAME,7,7,299,227
+    CONTROL         "工作区",IDC_WORKAREA,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,317,13,40,10
+    CONTROL         "坐标系中心轴",IDC_AXISCENTER,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,317,28,64,10
+    CONTROL         "边框",IDC_AXISBORDER,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,317,45,32,10
+    CONTROL         "X坐标轴横向网格线",IDC_XAXISLINE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,317,63,85,10
+    CONTROL         "X坐标轴标注",IDC_XSCALETEXT,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,317,81,61,10
+    CONTROL         "X坐标轴1/10刻度绘制控制",IDC_XTENTHSCALE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,317,96,107,10
+    CONTROL         "X坐标轴1/2刻度绘制控制",IDC_XHALFSCALE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,317,113,103,10
+    CONTROL         "Y坐标轴横向网格线",IDC_YAXISLINE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,317,130,85,10
+    CONTROL         "Y坐标轴标注",IDC_YSCALETEXT,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,317,147,61,10
+    CONTROL         "Y坐标轴1/10刻度绘制控制",IDC_YTENTHSCALE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,317,164,107,10
+    CONTROL         "Y坐标轴1/2刻度绘制控制",IDC_YHALFSCALE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,317,183,103,10
+END
+
+IDD_DIALOG_RULER DIALOG DISCARDABLE  0, 0, 307, 238
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "RulerAxis"
+FONT 10, "System"
+BEGIN
+    CONTROL         "",IDC_HORZFRAME,"Static",SS_BLACKFRAME,7,211,289,13
+    CONTROL         "",IDC_VERTFRAME,"Static",SS_BLACKFRAME,7,7,12,196
+    CONTROL         "边框",IDC_BORDER,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    223,15,32,10
+    CONTROL         "工作区",IDC_WORKAREA,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,223,28,40,10
+    CONTROL         "标注",IDC_SCALETEXT,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,223,42,32,10
+    CONTROL         "1/10刻度绘制控制",IDC_TENTHSCALE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,223,57,78,10
+    CONTROL         "1/2刻度绘制控制",IDC_HALFSCALE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,223,72,74,10
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080404B0"
+        BEGIN
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "AxisClient Microsoft 基础类应用程序\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "AxisClient\0"
+            VALUE "LegalCopyright", "版权所有 (C) 2005\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "AxisClient.EXE\0"
+            VALUE "ProductName", "AxisClient 应用程序\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_AXISCLIENT_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 192
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 193
+    END
+
+    IDD_DIALOG_DESCARTES, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 506
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 335
+    END
+
+    IDD_DIALOG_POLAR, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 428
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 287
+    END
+
+    IDD_DIALOG_LOGARITHM, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 440
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 234
+    END
+
+    IDD_DIALOG_RULER, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 300
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 231
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_DIALOG_POLAR DLGINIT
+BEGIN
+    IDC_COMBO_FRAMESHADOW, 0x403, 2, 0
+0x0030, 
+    IDC_COMBO_FRAMESHADOW, 0x403, 2, 0
+0x0031, 
+    IDC_COMBO_FRAMESHADOW, 0x403, 2, 0
+0x0032, 
+    IDC_COMBO_FRAMESHADOW, 0x403, 2, 0
+0x0033, 
+    IDC_COMBO_FRAMESHADOW, 0x403, 2, 0
+0x0034, 
+    IDC_COMBO_FRAMESHADOW, 0x403, 2, 0
+0x0035, 
+    IDC_COMBO_FRAMESHADOW, 0x403, 2, 0
+0x0036, 
+    IDC_COMBO_FRAMESHADOW, 0x403, 2, 0
+0x0037, 
+    IDC_COMBO_FRAMESHADOW, 0x403, 2, 0
+0x0038, 
+    IDC_COMBO_FRAMESHADOW, 0x403, 2, 0
+0x0039, 
+    IDC_COMBO_ANGLELINE, 0x403, 9, 0
+0x5350, 0x535f, 0x4c4f, 0x4449, "\000" 
+    IDC_COMBO_ANGLELINE, 0x403, 8, 0
+0x5350, 0x445f, 0x5341, 0x0048, 
+    IDC_COMBO_ANGLELINE, 0x403, 7, 0
+0x5350, 0x445f, 0x544f, "\000" 
+    IDC_COMBO_ANGLELINE, 0x403, 11, 0
+0x5350, 0x445f, 0x5341, 0x4448, 0x544f, "\000" 
+    IDC_COMBO_ANGLELINE, 0x403, 14, 0
+0x5350, 0x445f, 0x5341, 0x4448, 0x544f, 0x4f44, 0x0054, 
+    IDC_COMBO_CIRCLELINE, 0x403, 9, 0
+0x5350, 0x535f, 0x4c4f, 0x4449, "\000" 
+    IDC_COMBO_CIRCLELINE, 0x403, 8, 0
+0x5350, 0x445f, 0x5341, 0x0048, 
+    IDC_COMBO_CIRCLELINE, 0x403, 7, 0
+0x5350, 0x445f, 0x544f, "\000" 
+    IDC_COMBO_CIRCLELINE, 0x403, 11, 0
+0x5350, 0x445f, 0x5341, 0x4448, 0x544f, "\000" 
+    IDC_COMBO_CIRCLELINE, 0x403, 14, 0
+0x5350, 0x445f, 0x5341, 0x4448, 0x544f, 0x4f44, 0x0054, 
+    0
+END
+
+IDD_DIALOG_DESCARTES DLGINIT
+BEGIN
+    IDC_COMBO_DESBORDERSHADOW, 0x403, 2, 0
+0x0030, 
+    IDC_COMBO_DESBORDERSHADOW, 0x403, 2, 0
+0x0031, 
+    IDC_COMBO_DESBORDERSHADOW, 0x403, 2, 0
+0x0032, 
+    IDC_COMBO_DESBORDERSHADOW, 0x403, 2, 0
+0x0033, 
+    IDC_COMBO_DESBORDERSHADOW, 0x403, 2, 0
+0x0034, 
+    IDC_COMBO_DESBORDERSHADOW, 0x403, 2, 0
+0x0035, 
+    IDC_COMBO_DESBORDERSHADOW, 0x403, 2, 0
+0x0036, 
+    IDC_COMBO_DESBORDERSHADOW, 0x403, 2, 0
+0x0037, 
+    IDC_COMBO_DESBORDERSHADOW, 0x403, 2, 0
+0x0038, 
+    IDC_COMBO_DESBORDERSHADOW, 0x403, 2, 0
+0x0039, 
+    IDC_COMBO_DESFRAMESHADOW, 0x403, 2, 0
+0x0030, 
+    IDC_COMBO_DESFRAMESHADOW, 0x403, 2, 0
+0x0031, 
+    IDC_COMBO_DESFRAMESHADOW, 0x403, 2, 0
+0x0032, 
+    IDC_COMBO_DESFRAMESHADOW, 0x403, 2, 0
+0x0033, 
+    IDC_COMBO_DESFRAMESHADOW, 0x403, 2, 0
+0x0034, 
+    IDC_COMBO_DESFRAMESHADOW, 0x403, 2, 0
+0x0035, 
+    IDC_COMBO_DESFRAMESHADOW, 0x403, 2, 0
+0x0036, 
+    IDC_COMBO_DESFRAMESHADOW, 0x403, 2, 0
+0x0037, 
+    IDC_COMBO_DESFRAMESHADOW, 0x403, 2, 0
+0x0038, 
+    IDC_COMBO_DESFRAMESHADOW, 0x403, 2, 0
+0x0039, 
+    IDC_COMBO_DESYGIRDSTYLE, 0x403, 9, 0
+0x5350, 0x535f, 0x4c4f, 0x4449, "\000" 
+    IDC_COMBO_DESYGIRDSTYLE, 0x403, 8, 0
+0x5350, 0x445f, 0x5341, 0x0048, 
+    IDC_COMBO_DESYGIRDSTYLE, 0x403, 7, 0
+0x5350, 0x445f, 0x544f, "\000" 
+    IDC_COMBO_DESYGIRDSTYLE, 0x403, 11, 0
+0x5350, 0x445f, 0x5341, 0x4448, 0x544f, "\000" 
+    IDC_COMBO_DESYGIRDSTYLE, 0x403, 14, 0
+0x5350, 0x445f, 0x5341, 0x4448, 0x544f, 0x4f44, 0x0054, 
+    IDC_COMBO_DESXGRIDSTYLE, 0x403, 9, 0
+0x5350, 0x535f, 0x4c4f, 0x4449, "\000" 
+    IDC_COMBO_DESXGRIDSTYLE, 0x403, 8, 0
+0x5350, 0x445f, 0x5341, 0x0048, 
+    IDC_COMBO_DESXGRIDSTYLE, 0x403, 7, 0
+0x5350, 0x445f, 0x544f, "\000" 
+    IDC_COMBO_DESXGRIDSTYLE, 0x403, 11, 0
+0x5350, 0x445f, 0x5341, 0x4448, 0x544f, "\000" 
+    IDC_COMBO_DESXGRIDSTYLE, 0x403, 14, 0
+0x5350, 0x445f, 0x5341, 0x4448, 0x544f, 0x4f44, 0x0054, 
+    IDC_COMBO_DESCENTERLINESTYLE, 0x403, 9, 0
+0x5350, 0x535f, 0x4c4f, 0x4449, "\000" 
+    IDC_COMBO_DESCENTERLINESTYLE, 0x403, 8, 0
+0x5350, 0x445f, 0x5341, 0x0048, 
+    IDC_COMBO_DESCENTERLINESTYLE, 0x403, 7, 0
+0x5350, 0x445f, 0x544f, "\000" 
+    IDC_COMBO_DESCENTERLINESTYLE, 0x403, 11, 0
+0x5350, 0x445f, 0x5341, 0x4448, 0x544f, "\000" 
+    IDC_COMBO_DESCENTERLINESTYLE, 0x403, 14, 0
+0x5350, 0x445f, 0x5341, 0x4448, 0x544f, 0x4f44, 0x0054, 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Cursor
+//
+
+IDC_CURSOR1             CURSOR  DISCARDABLE     "res\\cursor1.cur"
+#endif    // Chinese (P.R.C.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE 4, 2
+#pragma code_page(936)
+#endif //_WIN32
+#include "res\AxisClient.rc2"  // non-Microsoft Visual C++ edited resources
+#include "l.chs\afxres.rc"          // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

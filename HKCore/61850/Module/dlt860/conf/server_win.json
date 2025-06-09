@@ -1,0 +1,12 @@
+{
+  "model": "D:\\code\\ngsp\\scd\\PE1001.cid",
+  "debug": true,
+  "file_root": "D:\\code\\ngsp\\scd",
+  "sg_storage": "D:\\sg1.db",
+  "network": {
+    "bind": "0.0.0.0",
+    "port": 8102
+  },
+  "ignore_ied": [
+  ]
+}

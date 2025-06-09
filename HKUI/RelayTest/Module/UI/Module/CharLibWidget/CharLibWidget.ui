@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QCharLibWidget</class>
+ <widget class="QWidget" name="QCharLibWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>998</width>
+    <height>792</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>微软雅黑</family>
+    <pointsize>10</pointsize>
+   </font>
+  </property>
+  <property name="focusPolicy">
+   <enum>Qt::TabFocus</enum>
+  </property>
+  <property name="windowTitle">
+   <string>ParaSetWidget</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout" stretch="6,7">
+   <item>
+    <layout class="QVBoxLayout" name="m_layoutLeft">
+     <item>
+      <widget class="QTableWidget" name="tableWidget_ZK"/>
+     </item>
+     <item>
+      <widget class="QTableWidget" name="tableWidget_Info"/>
+     </item>
+     <item>
+      <widget class="QTableWidget" name="tableWidget_Info2"/>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QPushButton" name="m_btnAdd">
+         <property name="text">
+          <string>添加</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="m_btnDel">
+         <property name="text">
+          <string>删除</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="m_layoutRight">
+     <item row="0" column="0">
+      <widget class="QTabWidget" name="m_wgtCharLib">
+       <property name="currentIndex">
+        <number>-1</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

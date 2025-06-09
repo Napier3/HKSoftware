@@ -1,0 +1,145 @@
+// EpDevPointButton.cpp : 实现文件
+//
+
+#include "stdafx.h"
+#include "EpDevPointButton.h"
+#include "EpDevWnd.h"
+
+// CEpDevPointButton
+
+IMPLEMENT_DYNAMIC(CEpDevPointButton, CStatic)
+
+CEpDevPointButton::CEpDevPointButton()
+{
+
+}
+
+CEpDevPointButton::~CEpDevPointButton()
+{
+}
+
+
+BEGIN_MESSAGE_MAP(CEpDevPointButton, CStatic)
+	ON_WM_LBUTTONDOWN()
+	ON_WM_PAINT()
+	ON_WM_CREATE()
+	ON_WM_SIZE()
+END_MESSAGE_MAP()
+
+
+
+// CEpDevPointButton 消息处理程序
+
+long CEpDevPointButton::Expand(long nExpand)
+{
+	nExpand = CEpDevPoint::Expand(nExpand);
+	Invalidate();
+	return nExpand;
+}
+
+void CEpDevPointButton::SetExpand(long nExpand/* =EPDES_EXPAND */)
+{
+	Invalidate();
+	BeginWaitCursor();
+	Expand(nExpand);
+	CWnd* pWnd = CWnd::GetParent()->GetParent();
+	pWnd->SendMessage(WM_DEV_WND_SIZE_CHANGED, (WPARAM)this, (LPARAM)nExpand);
+	EndWaitCursor();
+}
+
+void CEpDevPointButton::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	m_bExpand = !m_bExpand;
+	SetExpand(m_bExpand);
+	
+	CStatic::OnLButtonDown(nFlags, point);
+}
+
+void CEpDevPointButton::PreSubclassWindow()
+{
+	CStatic::PreSubclassWindow();
+}
+
+void CEpDevPointButton::OnPaint()
+{
+	CPaintDC dc(this); // device context for painting
+	// TODO: 在此处添加消息处理程序代码
+	// 不为绘图消息调用 __super::OnPaint()
+	
+	CRect rect;
+	GetClientRect(&rect);
+	
+	dc.Rectangle(rect);
+
+	CPoint pt1,pt2,pt3,pt4;
+	pt1 = CPoint(rect.left+2,rect.CenterPoint().y);
+	pt2 = CPoint(rect.right-2,rect.CenterPoint().y);
+	pt3 = CPoint(rect.CenterPoint().x,rect.top+2);
+	pt4 = CPoint(rect.CenterPoint().x,rect.bottom-2);
+	
+	dc.MoveTo(pt1);
+	dc.LineTo(pt2);
+
+	if(m_bExpand)
+	{
+		//画减号
+	}
+	else
+	{
+		//画加号
+		dc.MoveTo(pt3);
+		dc.LineTo(pt4);
+	}
+
+}
+
+int CEpDevPointButton::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+	if (__super::OnCreate(lpCreateStruct) == -1)
+		return -1;
+
+	m_pWindow = this;
+
+	return 0;
+}
+
+void CEpDevPointButton::OnSize(UINT nType, int cx, int cy)
+{
+	__super::OnSize(nType, cx, cy);
+}
+
+CPoint CEpDevPointButton::GetConnectPoint()
+{
+	CRect rect;
+	GetWindowRect(&rect);
+	CWnd* pParent = CWnd::GetParent()->GetParent();
+	pParent->ScreenToClient(rect);
+
+	CPoint ptRet(0,0);
+	ptRet.x = rect.right + 3;
+	ptRet.y = rect.top + rect.Height()/2;
+
+	return ptRet;
+}
+
+void CEpDevPointButton::Show(UINT nShow)
+{
+	CEpDevWnd* pDevWnd = (CEpDevWnd*)CEpDevBase::GetParent();
+	ASSERT(pDevWnd != NULL);
+	
+	if(pDevWnd == NULL)
+	{
+		return;
+	}
+	
+	//如果自身是展开的且父窗口也是展开的
+	if(m_bExpand && pDevWnd->IsExpand())
+	{
+		ShowChildren(nShow);
+	}
+	else
+	{
+		ShowChildren(EPDES_HIDE);
+	}
+}
+

@@ -1,0 +1,38 @@
+// StringTokenizerU.h: interface for the CStringTokenizerU class.
+//
+//////////////////////////////////////////////////////////////////////
+
+#if !defined(STRINGTOKENIZER_H__)
+#define STRINGTOKENIZER_H__
+
+#if _MSC_VER > 1000
+#pragma once
+#endif // _MSC_VER > 1000
+
+class CStringTokenizerU  
+{
+private:
+	char *m_pData;
+	char m_chDelimiter;
+	char *m_pIndex;
+	long m_nLength;
+	
+public:
+	CStringTokenizerU();
+	CStringTokenizerU(const char *pszDataLine);
+	CStringTokenizerU(const char *pszDataLine,char chDelimiter);
+	virtual ~CStringTokenizerU();
+
+	void Init(const char *pszDataLine,char chDelimiter);
+	void Init(const CString &strDataLine,char chDelimiter);
+	BOOL HasMoreElements();
+	const char* NextToken();
+	void ResetIndexPointer();
+	long GetStringsCount();
+
+private:
+	void Free();
+	void Format(char chDelimiter);
+};
+
+#endif // !defined(STRINGTOKENIZER_H__)

@@ -1,0 +1,1645 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QDistanceAddMultDlg</class>
+ <widget class="QWidget" name="QDistanceAddMultDlg">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1029</width>
+    <height>673</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>11</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>添加系列</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_3">
+   <item row="0" column="0" colspan="3">
+    <widget class="QGroupBox" name="m_group">
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="2" column="6">
+       <widget class="QCheckBox" name="m_checkFaultTypeB_N2">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>BN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QCheckBox" name="m_checkLNZone1">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>Ⅰ</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="7">
+       <widget class="QCheckBox" name="m_checkFaultTypeC_N1">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>CN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="7">
+       <widget class="QCheckBox" name="m_checkFaultTypeC_N2">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>CN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="5">
+       <widget class="QCheckBox" name="m_checkFaultTypeA_N2">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>AN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="8">
+       <widget class="QCheckBox" name="m_checkFaultTypeABC_N2">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>ABC</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="9">
+       <widget class="QRadioButton" name="m_btnDirectionN2_1">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>正向</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QLineEdit" name="m_txtZAngLN1">
+        <property name="font">
+         <font>
+          <pointsize>15</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="4">
+       <widget class="QLineEdit" name="m_txtTSetingLN1">
+        <property name="font">
+         <font>
+          <pointsize>15</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QLabel" name="m_labZAng">
+        <property name="font">
+         <font>
+          <pointsize>18</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>角阻抗(°)</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QCheckBox" name="m_checkLNZone2">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Ⅱ</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QLineEdit" name="m_txtZSetingLN2">
+        <property name="font">
+         <font>
+          <pointsize>15</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QLineEdit" name="m_txtZSetingLN1">
+        <property name="font">
+         <font>
+          <pointsize>15</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="m_labZSeting">
+        <property name="font">
+         <font>
+          <pointsize>18</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>整定阻抗(Ω)</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5" colspan="2">
+       <widget class="QLabel" name="label_6">
+        <property name="baseSize">
+         <size>
+          <width>0</width>
+          <height>55</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>故障类型</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="label_3">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>区段</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" rowspan="4">
+       <widget class="QLabel" name="label">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>接
+地
+故
+障</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="5">
+       <widget class="QCheckBox" name="m_checkFaultTypeA_N1">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>AN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="6">
+       <widget class="QCheckBox" name="m_checkFaultTypeB_N1">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>BN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="8">
+       <widget class="QCheckBox" name="m_checkFaultTypeABC_N1">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>ABC</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="9">
+       <widget class="QRadioButton" name="m_btnDirectionN1_1">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>正向</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="9">
+       <widget class="QLabel" name="label_7">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>方向</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="10">
+       <widget class="QRadioButton" name="m_btnDirectionN1_0">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>反向</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="4">
+       <widget class="QLineEdit" name="m_txtTSetingLN2">
+        <property name="font">
+         <font>
+          <pointsize>15</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="3">
+       <widget class="QLineEdit" name="m_txtZAngLN2">
+        <property name="font">
+         <font>
+          <pointsize>15</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QLabel" name="m_labTSeting">
+        <property name="font">
+         <font>
+          <pointsize>18</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>整定动作时间(s)</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="7">
+       <widget class="QCheckBox" name="m_checkFaultTypeC_N3">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>CN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="3">
+       <widget class="QLineEdit" name="m_txtZAngLN4">
+        <property name="font">
+         <font>
+          <pointsize>15</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
+       <widget class="QLineEdit" name="m_txtZSetingLN3">
+        <property name="font">
+         <font>
+          <pointsize>15</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QCheckBox" name="m_checkLNZone3">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Ⅲ</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="5">
+       <widget class="QCheckBox" name="m_checkFaultTypeA_N3">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>AN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="8">
+       <widget class="QCheckBox" name="m_checkFaultTypeABC_N3">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>ABC</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="10">
+       <widget class="QRadioButton" name="m_btnDirectionN3_0">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>反向</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0" rowspan="3">
+       <widget class="QLabel" name="label_2">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>相
+间
+故
+障</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="3">
+       <widget class="QLineEdit" name="m_txtZAngLL1">
+        <property name="font">
+         <font>
+          <pointsize>15</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="8">
+       <widget class="QCheckBox" name="m_checkFaultTypeABC_L1">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>ABC</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="6">
+       <widget class="QCheckBox" name="m_checkFaultTypeB_N3">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>BN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="9">
+       <widget class="QRadioButton" name="m_btnDirectionN3_1">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>正向</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="2">
+       <widget class="QLineEdit" name="m_txtZSetingLN4">
+        <property name="font">
+         <font>
+          <pointsize>15</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QCheckBox" name="m_checkLNZone4">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Ⅳ</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="5">
+       <widget class="QCheckBox" name="m_checkFaultTypeA_N4">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>AN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="4">
+       <widget class="QLineEdit" name="m_txtTSetingLN3">
+        <property name="font">
+         <font>
+          <pointsize>15</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="6">
+       <widget class="QCheckBox" name="m_checkFaultTypeB_N4">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>31</height>
+         </size>
+        </property>
+        <property name="sizeIncrement">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="locale">
+         <locale language="Chinese" country="China"/>
+        </property>
+        <property name="text">
+         <string>BN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="10">
+       <widget class="QRadioButton" name="m_btnDirectionN2_0">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>反向</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="8">
+       <widget class="QCheckBox" name="m_checkFaultTypeABC_N4">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>ABC</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="10">
+       <widget class="QRadioButton" name="m_btnDirectionN4_0">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>反向</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="9">
+       <widget class="QRadioButton" name="m_btnDirectionN4_1">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>正向</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="3">
+       <widget class="QLineEdit" name="m_txtZAngLN3">
+        <property name="font">
+         <font>
+          <pointsize>15</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QCheckBox" name="m_checkLLZone1">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Ⅰ</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="7">
+       <widget class="QCheckBox" name="m_checkFaultTypeC_N4">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>CN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="4">
+       <widget class="QLineEdit" name="m_txtTSetingLN4">
+        <property name="font">
+         <font>
+          <pointsize>15</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="2">
+       <widget class="QLineEdit" name="m_txtZSetingLL1">
+        <property name="font">
+         <font>
+          <pointsize>15</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="4">
+       <widget class="QLineEdit" name="m_txtTSetingLL1">
+        <property name="font">
+         <font>
+          <pointsize>15</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="7">
+       <widget class="QCheckBox" name="m_checkFaultTypeC_L1">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>CN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="5">
+       <widget class="QCheckBox" name="m_checkFaultTypeA_L1">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>AN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="9">
+       <widget class="QRadioButton" name="m_btnDirectionL1_1">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>正向</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="6">
+       <widget class="QCheckBox" name="m_checkFaultTypeB_L1">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>BN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="10">
+       <widget class="QRadioButton" name="m_btnDirectionL1_0">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>反向</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="2">
+       <widget class="QLineEdit" name="m_txtZSetingLL3">
+        <property name="font">
+         <font>
+          <pointsize>15</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="10">
+       <widget class="QRadioButton" name="m_btnDirectionL3_0">
+        <property name="font">
+         <font>
+          <pointsize>19</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>反向</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="8">
+       <widget class="QCheckBox" name="m_checkFaultTypeABC_L4">
+        <property name="font">
+         <font>
+          <pointsize>19</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>ABC</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="2">
+       <widget class="QLineEdit" name="m_txtZSetingLL4">
+        <property name="font">
+         <font>
+          <pointsize>15</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="10">
+       <widget class="QRadioButton" name="m_btnDirectionL2_0">
+        <property name="font">
+         <font>
+          <pointsize>19</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>反向</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="3">
+       <widget class="QLineEdit" name="m_txtZAngLL2">
+        <property name="font">
+         <font>
+          <pointsize>15</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="8">
+       <widget class="QCheckBox" name="m_checkFaultTypeABC_L2">
+        <property name="font">
+         <font>
+          <pointsize>19</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>ABC</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="6">
+       <widget class="QCheckBox" name="m_checkFaultTypeB_L3">
+        <property name="font">
+         <font>
+          <pointsize>19</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>BN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="6">
+       <widget class="QCheckBox" name="m_checkFaultTypeB_L4">
+        <property name="font">
+         <font>
+          <pointsize>19</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>BN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="7">
+       <widget class="QCheckBox" name="m_checkFaultTypeC_L3">
+        <property name="font">
+         <font>
+          <pointsize>19</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>CN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="5">
+       <widget class="QCheckBox" name="m_checkFaultTypeA_L3">
+        <property name="font">
+         <font>
+          <pointsize>19</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>AN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="QCheckBox" name="m_checkLLZone2">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Ⅱ</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="6">
+       <widget class="QCheckBox" name="m_checkFaultTypeB_L2">
+        <property name="font">
+         <font>
+          <pointsize>19</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>BN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="3">
+       <widget class="QLineEdit" name="m_txtZAngLL3">
+        <property name="font">
+         <font>
+          <pointsize>15</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="4">
+       <widget class="QLineEdit" name="m_txtTSetingLL2">
+        <property name="font">
+         <font>
+          <pointsize>15</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="9">
+       <widget class="QRadioButton" name="m_btnDirectionL3_1">
+        <property name="font">
+         <font>
+          <pointsize>19</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>正向</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="7">
+       <widget class="QCheckBox" name="m_checkFaultTypeC_L2">
+        <property name="font">
+         <font>
+          <pointsize>19</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>CN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="8">
+       <widget class="QCheckBox" name="m_checkFaultTypeABC_L3">
+        <property name="font">
+         <font>
+          <pointsize>19</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>ABC</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="2">
+       <widget class="QLineEdit" name="m_txtZSetingLL2">
+        <property name="font">
+         <font>
+          <pointsize>15</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="3">
+       <widget class="QLineEdit" name="m_txtZAngLL4">
+        <property name="font">
+         <font>
+          <pointsize>15</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="5">
+       <widget class="QCheckBox" name="m_checkFaultTypeA_L2">
+        <property name="font">
+         <font>
+          <pointsize>19</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>AN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="1">
+       <widget class="QCheckBox" name="m_checkLLZone4">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Ⅳ</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="5">
+       <widget class="QCheckBox" name="m_checkFaultTypeA_L4">
+        <property name="font">
+         <font>
+          <pointsize>19</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>AN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="7">
+       <widget class="QCheckBox" name="m_checkFaultTypeC_L4">
+        <property name="font">
+         <font>
+          <pointsize>19</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>CN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="10">
+       <widget class="QRadioButton" name="m_btnDirectionL4_0">
+        <property name="font">
+         <font>
+          <pointsize>19</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>反向</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="9">
+       <widget class="QRadioButton" name="m_btnDirectionL2_1">
+        <property name="font">
+         <font>
+          <pointsize>19</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>正向</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="9">
+       <widget class="QRadioButton" name="m_btnDirectionL4_1">
+        <property name="font">
+         <font>
+          <pointsize>19</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>正向</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QCheckBox" name="m_checkLLZone3">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Ⅲ</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="4">
+       <widget class="QLineEdit" name="m_txtTSetingLL3">
+        <property name="font">
+         <font>
+          <pointsize>15</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="4">
+       <widget class="QLineEdit" name="m_txtTSetingLL4">
+        <property name="font">
+         <font>
+          <pointsize>15</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="minimumSize">
+      <size>
+       <width>280</width>
+       <height>180</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>20</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QGroupBox{border:2px groove black;border-radius:10px;}
+
+
+</string>
+     </property>
+     <property name="title">
+      <string>倍数选择</string>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+     <property name="checkable">
+      <bool>false</bool>
+     </property>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>15</x>
+        <y>133</y>
+        <width>91</width>
+        <height>29</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QCheckBox" name="m_checkRate_100">
+         <property name="font">
+          <font>
+           <pointsize>15</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="m_txtRate_100">
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="m_labRate_100">
+         <property name="font">
+          <font>
+           <pointsize>15</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>倍</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QCheckBox" name="m_checkRate_105">
+      <property name="geometry">
+       <rect>
+        <x>15</x>
+        <y>43</y>
+        <width>83</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>1.05倍</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="m_checkRate_070">
+      <property name="geometry">
+       <rect>
+        <x>15</x>
+        <y>103</y>
+        <width>83</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>0.70倍</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="m_checkRate_095">
+      <property name="geometry">
+       <rect>
+        <x>15</x>
+        <y>73</y>
+        <width>83</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>0.95倍</string>
+      </property>
+     </widget>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="minimumSize">
+      <size>
+       <width>280</width>
+       <height>180</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>20</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QGroupBox{border:2px groove black;border-radius:10px;}</string>
+     </property>
+     <property name="title">
+      <string>时间及其他参数</string>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+     <property name="checkable">
+      <bool>false</bool>
+     </property>
+     <widget class="QLineEdit" name="m_txtPreFaultTime">
+      <property name="geometry">
+       <rect>
+        <x>167</x>
+        <y>31</y>
+        <width>103</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+     </widget>
+     <widget class="QLabel" name="m_labPreFaultTime">
+      <property name="geometry">
+       <rect>
+        <x>11</x>
+        <y>31</y>
+        <width>130</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>故障前时间(s)</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="m_txtFaultTime">
+      <property name="geometry">
+       <rect>
+        <x>167</x>
+        <y>64</y>
+        <width>103</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+     </widget>
+     <widget class="QLabel" name="m_labFaultTime">
+      <property name="geometry">
+       <rect>
+        <x>11</x>
+        <y>64</y>
+        <width>150</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>故障时间裕度(s)</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="m_labFaultAngle">
+      <property name="geometry">
+       <rect>
+        <x>11</x>
+        <y>97</y>
+        <width>140</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>整定阻抗角(°)</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="m_txtFaultAngle">
+      <property name="geometry">
+       <rect>
+        <x>167</x>
+        <y>97</y>
+        <width>103</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+     </widget>
+     <widget class="QLabel" name="m_labFaultCur">
+      <property name="geometry">
+       <rect>
+        <x>11</x>
+        <y>130</y>
+        <width>110</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>短路电流(A)</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="m_txtFaultCur">
+      <property name="geometry">
+       <rect>
+        <x>167</x>
+        <y>130</y>
+        <width>103</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+     </widget>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="minimumSize">
+      <size>
+       <width>280</width>
+       <height>180</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>20</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QGroupBox{border:2px groove black;border-radius:10px;}</string>
+     </property>
+     <property name="title">
+      <string>零序补偿系数</string>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+     <property name="checkable">
+      <bool>false</bool>
+     </property>
+     <widget class="QLabel" name="m_labK0Mode">
+      <property name="geometry">
+       <rect>
+        <x>11</x>
+        <y>31</y>
+        <width>100</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>100</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>表达方式</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="m_cmbK0Mode">
+      <property name="geometry">
+       <rect>
+        <x>117</x>
+        <y>31</y>
+        <width>151</width>
+        <height>26</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="editable">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="m_labMode1">
+      <property name="geometry">
+       <rect>
+        <x>11</x>
+        <y>63</y>
+        <width>100</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>100</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="m_txtK0">
+      <property name="geometry">
+       <rect>
+        <x>117</x>
+        <y>63</y>
+        <width>153</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="m_txtPhi">
+      <property name="geometry">
+       <rect>
+        <x>117</x>
+        <y>96</y>
+        <width>153</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+     </widget>
+     <widget class="QLabel" name="m_labMode2">
+      <property name="geometry">
+       <rect>
+        <x>11</x>
+        <y>96</y>
+        <width>100</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>100</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="3">
+    <widget class="QGroupBox" name="m_group1">
+     <layout class="QGridLayout" name="gridLayout_4">
+      <item row="0" column="0">
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QLabel" name="m_lab_RSC">
+            <property name="text">
+             <string>阻抗表达方式</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="m_cmb_RSC">
+            <property name="minimumSize">
+             <size>
+              <width>150</width>
+              <height>0</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="0" column="1">
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="m_labTips">
+          <property name="minimumSize">
+           <size>
+            <width>280</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>20</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel{border:2px groove rgb(0,0,255);border-radius:10px;background-color: rgb(255,242,204)}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QPushButton" name="m_btnResEvaluat">
+          <property name="font">
+           <font>
+            <pointsize>9</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>结果评估</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2" colspan="2">
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QPushButton" name="m_btnSave">
+            <property name="minimumSize">
+             <size>
+              <width>150</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>确定</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="m_btnClose">
+            <property name="text">
+             <string>取消</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,9 @@
+-exe \mmslite\mvl\usr\server\pharlap\sositpxe.exe
+\mmslite\mvl\usr\server\win32\sositpxe\debug\log_cfg
+\mmslite\mvl\usr\server\win32\sositpxe\debug\ml_init
+\mmslite\mvl\usr\server\win32\sositpxe\debug\mmslvar
+\mmslite\mvl\usr\server\win32\sositpxe\debug\mmsop_en
+\mmslite\mvl\usr\server\win32\sositpxe\debug\mvl_acse
+\mmslite\mvl\usr\server\win32\sositpxe\debug\mvlop_en
+\mmslite\mvl\usr\server\win32\sositpxe\debug\server
+\mmslite\mvl\usr\server\win32\sositpxe\debug\srvrobj

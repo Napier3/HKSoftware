@@ -1,0 +1,127 @@
+#include "StdAfx.h"
+#include "GbDvmComboBox.h"
+
+CGbDvmComboBox::CGbDvmComboBox(void)
+{
+}
+
+CGbDvmComboBox::~CGbDvmComboBox(void)
+{
+}
+
+void CGbDvmComboBox::ShowDvmTree(CDevice *pDevice)
+{
+	ResetContent();
+
+	CExBaseList listCpus;
+	pDevice->GetCpusList(listCpus, TRUE);
+	POS pos = listCpus.GetHeadPosition();
+	CCpus *pCpus = NULL;
+
+	while (pos != NULL)
+	{
+		pCpus = (CCpus *)listCpus.GetNext(pos);
+		ShowDvmTree(pCpus);
+	}
+
+	listCpus.RemoveAll();
+}
+
+
+void CGbDvmComboBox::ShowDvmTree(CCpus *pCpus)
+{
+	CString strText;
+	long nIndex = 0;
+
+	strText = pCpus->m_strName;
+
+	if (strText.GetLength() == 0)
+	{
+		strText = pCpus->m_strID;
+	}
+
+	nIndex = m_cmbDvm.AddString(strText);
+	m_cmbDvm.SetItemDataPtr(nIndex, pCpus);
+	CString strPrev = PREV_STRING;
+
+	POS pos = pCpus->GetHeadPosition();
+	CCpu *pCpu = NULL;
+
+	while (pos != NULL)
+	{
+		pCpu = (CCpu *)pCpus->GetNext(pos);
+		strText = strPrev + pCpu->m_strName;
+		nIndex = m_cmbDvm.AddString(strText);
+		m_cmbDvm.SetItemDataPtr(nIndex, pCpu);
+		ShowDvmTree(pCpu);
+	}
+}
+
+void CGbDvmComboBox::ShowDvmTree(CCpu *pCpu)
+{
+	long nIndex = 0;
+	POS pos = pCpu->GetHeadPosition();
+	CDataSet *pDataset = NULL;
+	CString strText;
+	CString strPrev = PREV_STRING;
+	strPrev += PREV_STRING;
+
+	while (pos != NULL)
+	{
+		pDataset = (CDataSet *)pCpu->GetNext(pos);
+		strText = strPrev + pDataset->m_strName;
+		nIndex = m_cmbDvm.AddString(strText);
+		m_cmbDvm.SetItemDataPtr(nIndex, pDataset);
+	}
+}
+
+
+CDataSet* CGbDvmComboBox::GetCurrSelDataset()
+{
+	long nItemCount = m_cmbDvm.GetCount();
+
+	if (nItemCount == 0)
+	{
+		return NULL;
+	}
+
+	long nSel = m_cmbDvm.GetCurSel();
+	CDataSet *pDataset = NULL;
+	CDataSet *pDatasetFind = NULL;
+	long nIndex = nSel;
+
+	if (nIndex == CB_ERR)
+	{
+		nIndex = 0;
+	}
+
+	while (TRUE)
+	{
+		pDataset = (CDataSet *)m_cmbDvm.GetItemDataPtr(nIndex);
+
+		if (pDataset == NULL)
+		{
+			break;
+		}
+
+		if (pDataset->GetClassID() == GBCLASSID_DATASET)
+		{
+			pDatasetFind = pDataset;
+			break;
+		}
+
+		nIndex++;
+
+		if (nIndex >= nItemCount)
+		{
+			break;
+		}
+	}
+
+	if (nIndex != nSel)
+	{
+		m_cmbDvm.SetCurSel(nIndex);
+	}
+
+	return pDatasetFind;
+}

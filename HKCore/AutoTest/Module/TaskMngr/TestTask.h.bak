@@ -1,0 +1,39 @@
+#pragma once
+
+#include "../../../Module/BaseClass/ExBaseList.h"
+#include "TestProject.h"
+
+class CTestTask : public CExBaseList
+{
+public:
+	CTestTask(void);
+	virtual ~CTestTask(void);
+
+public:
+	CString m_strLocalID;	//在本地创建任务时，设置此变量
+	SYSTEMTIME m_tmPlanBegin;
+	SYSTEMTIME m_tmPlanFinish;
+	SYSTEMTIME m_tmTestBegin;
+	SYSTEMTIME m_tmTestFinish;
+	CString m_strLocation;
+	CString m_strTestType;
+	CString m_strTestState;
+
+public:
+	//基本方法
+	virtual void Init();
+	virtual long InitAfterSerialize();
+	virtual UINT GetClassID();
+	//串行化
+	virtual long SerializeOwn(CBinarySerialBuffer &oBinaryBuffer);
+	virtual long XmlReadOwn(const MSXML2::IXMLDOMNodePtr &oNode, CXmlRWKeys *pXmlRWKeys);
+	virtual long XmlWriteOwn(const MSXML2::IXMLDOMDocumentPtr &oXMLDoc, const MSXML2::IXMLDOMElementPtr &oElement, CXmlRWKeys *pXmlRWKeys);
+	virtual BSTR GetXmlElementKey();
+	//编辑
+	virtual long IsEqual(CExBaseObject* pObj);
+	virtual long Copy(CExBaseObject* pDesObj);
+	virtual CExBaseObject* Clone();
+	//创建子对象
+	virtual CExBaseObject* CreateNewChild(const MSXML2::IXMLDOMNodePtr &oNode, BOOL &bAddToTail, CXmlRWKeys *pXmlRWKeys);
+	virtual CExBaseObject* CreateNewChild(long nClassID);
+};

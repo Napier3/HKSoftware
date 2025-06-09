@@ -1,0 +1,291 @@
+
+
+***********************************************************
+          LOGGING STARTED Sat Apr 21 19:13:46 2012
+***********************************************************
+
+2012-04-21 19:13:46.406 SLOGALWAYS (Fo_main.c 268) 
+  Executing '..\..\bin\foundry'
+  Input TDL file         : '..\..\mvl\usr\scl_srvr\uca_obj.odf'
+  Configuration file     : '..\..\mvl\util\foundry\win32\align.cfg'
+  Output 'C' file        : '..\..\mvl\usr\scl_srvr\uca_obj.c'
+  Output 'H' file        : '..\..\mvl\usr\scl_srvr\uca_obj.h'
+  Output 'LAP XML' file  : '..\..\mvl\usr\scl_srvr\lap_out.xml'
+  Output 'Lefttodo' file : '..\..\mvl\usr\scl_srvr\lefttodo.txt'
+
+2012-04-21 19:13:46.437 SLOGALWAYS (Fo_parse.c 157) 
+  Searching for object definitions: 
+  String 2 = '../../mvl/util/foundry/iec61850'
+  
+    currFile = '..\..\mvl\usr\scl_srvr\uca_obj.odf'
+  String 2 = '../../mvl/util/foundry/uca09'
+  
+    currFile = '..\..\mvl\usr\scl_srvr\uca_obj.odf'
+  String 2 = 'MVL_UCA'
+  
+    currFile = '..\..\mvl\usr\scl_srvr\uca_obj.odf'
+  String 2 = 'MVLU_USE_REF'
+  
+    currFile = '..\..\mvl\usr\scl_srvr\uca_obj.odf'
+  String 2 = 'MVLU_NO_DUMMY'
+  
+    currFile = '..\..\mvl\usr\scl_srvr\uca_obj.odf'
+  
+    userIncIn = 'uca_srvr.h'
+  String 2 = ':TV'
+  Type Unique Flag = 'FALSE'
+  Type Unique Flag = 'FALSE'
+  Type Base Flag = 'FALSE'
+  Type Delete Unused Flag = 'TRUE'
+  Type UCA Flag = 'FALSE'
+  
+    currFile = '..\..\mvl\usr\scl_srvr\uca_obj.odf'
+
+2012-04-21 19:13:46.437 SLOGALWAYS (Fo_opt.c 62) 
+  Removing transient and unreferenced base types ...
+
+2012-04-21 19:13:46.437 SLOGALWAYS (Fo_opt.c 109) 
+  Eliminating Twins
+
+2012-04-21 19:13:46.437 SLOGALWAYS (Fo_write.c 167) 
+  Writing output files ...
+
+2012-04-21 19:13:46.437 SLOGALWAYS (Fo_write.c 919) 
+  WRITING VARIABLE INITIALIZATION CODE
+
+2012-04-21 19:13:46.437 SLOGALWAYS (Fo_write.c 560) 
+  WRITING DOMAIN INITIALIZATION CODE
+
+2012-04-21 19:13:46.437 SLOGALWAYS (Fo_write.c 721) 
+  WRITING AA INITIALIZATION CODE
+
+2012-04-21 19:13:46.437 SLOGALWAYS (Fo_write.c 1019) 
+  WRITING VARIABLE LIST INITIALIZATION CODE
+
+2012-04-21 19:13:46.437 SLOGALWAYS (Fo_write.c 654) 
+  WRITING DOMAIN INITIALIZATION CODE
+
+2012-04-21 19:13:46.437 SLOGALWAYS (Fo_write.c 829) 
+  WRITING AA VARIABLE LIST INITIALIZATION CODE
+
+2012-04-21 19:13:46.437 SLOGALWAYS (Fo_write.c 1361) 
+  WRITING JOURNAL INITIALIZATION CODE
+
+2012-04-21 19:13:46.437 SLOGALWAYS (Fo_write.c 1204) 
+  WRITING RUNTIME TYPES
+
+2012-04-21 19:13:46.453 MEM_LOG_DUMP (Mem_chks.c 1299) 
+  DYNAMIC MEMORY POINTER TABLE
+----------------------------  
+  Ptr 00a2959c  Size    27  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a2955c  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a2951c  Size    21  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a294cc  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a29484  Size    27  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a29444  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a29404  Size    21  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a293b4  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a2936c  Size    28  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a2932c  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a292ec  Size    22  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a2929c  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a29254  Size    28  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a29214  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a291d4  Size    22  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a29184  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a2913c  Size    27  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a290fc  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a290bc  Size    21  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a2906c  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a29024  Size    27  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a28fe4  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a28fa4  Size    21  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a28f54  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a28f0c  Size    30  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a28ecc  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a28e8c  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a28e3c  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a28df4  Size    26  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a28db4  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a28d74  Size    20  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a28d24  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a28cdc  Size    26  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a28c9c  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a28c5c  Size    20  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a28c0c  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a28bc4  Size    27  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a28b84  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a28b44  Size    21  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a28af4  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a28aac  Size    27  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a28a6c  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a28a2c  Size    21  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a289dc  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a2899c  Size    21  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a2895c  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a28924  Size    15  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a288d4  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a28894  Size    21  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a28854  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a2881c  Size    15  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a287cc  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a28784  Size    29  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a28744  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a28704  Size    23  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a286b4  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a2866c  Size    29  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a2862c  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a285ec  Size    23  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a2859c  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a28554  Size    29  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a28514  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a284d4  Size    23  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a28484  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a2843c  Size    29  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a283fc  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a283bc  Size    23  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a2836c  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a2831c  Size    35  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a282dc  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a28294  Size    29  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a28244  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a281fc  Size    28  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a281bc  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a2817c  Size    22  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a2812c  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a280e4  Size    28  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a280a4  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a28064  Size    22  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a28014  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a27fcc  Size    29  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a27f8c  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a27f4c  Size    23  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a27efc  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a27eb4  Size    29  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a27e74  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a27e34  Size    23  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a27de4  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a27d9c  Size    30  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a27d5c  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a27d1c  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a27ccc  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a27c84  Size    30  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a27c44  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a27c04  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a27bb4  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a27b6c  Size    26  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a27b2c  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a27aec  Size    20  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a27a9c  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a27a54  Size    29  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a27a14  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a279d4  Size    23  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a27984  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a2793c  Size    31  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a278fc  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a278b4  Size    25  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a27864  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a2781c  Size    28  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a277dc  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a2779c  Size    22  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a2774c  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a27704  Size    28  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a276c4  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a27684  Size    22  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a27634  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a275ec  Size    29  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a275ac  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a2756c  Size    23  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a2751c  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a274d4  Size    29  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a27494  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a27454  Size    23  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a27404  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a273bc  Size    27  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a2737c  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a2733c  Size    21  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a272ec  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a272a4  Size    30  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a27264  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a27224  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a271d4  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a2718c  Size    31  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a2714c  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a27104  Size    25  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a270b4  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a2706c  Size    32  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a2702c  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a26fe4  Size    26  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a26f94  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a26f4c  Size    29  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a26f0c  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a26ecc  Size    23  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a26e7c  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a26e34  Size    25  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a26df4  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a26db4  Size    19  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a26d64  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a26d24  Size    23  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a26ce4  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a26ca4  Size    17  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a26c54  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a26c14  Size    22  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a26bd4  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a26b9c  Size    16  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a26b4c  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a26b0c  Size    22  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 00a26acc  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 00a26a94  Size    16  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 00a26a44  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 00a2393c  Size   200  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1449
+  Ptr 003c3984  Size    11  File : ..\..\Mvl\Util\foundry\Fo_parse.c #0701
+  Ptr 00a235e4  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 00a2328c  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 00a22f34  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 00a22bdc  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 00a22884  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 00a2252c  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 00a221d4  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 00a21e7c  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 00a21b24  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 00a217cc  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 00a21474  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 00a2111c  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 00a20dc4  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 00a20a6c  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 00a20714  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 00a203bc  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 00a20064  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 003cfc64  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 003cf90c  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 003cf5b4  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 003cf25c  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 003cef04  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 003cebac  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 003ce854  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 003ce4fc  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 003ce1a4  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 003cde4c  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 003cdaf4  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 003cd79c  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 003cd444  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 003cd0ec  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 003ccd94  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 003cca3c  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 003cc6e4  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 003cc38c  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 003cc034  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 003cbcdc  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 003cb984  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 003cb62c  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 003cb2d4  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 003caf7c  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 003cac24  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 003ca8cc  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 003ca574  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 003c9214  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  ---- END OF MEMORY POINTER TABLE ----------
+  Total number of allocated pointers:   207
+  Total amount of memory allocated:     41307 bytes 
+  Maximum number of pointers allocated: 208
+  Maximum amount of memory allocated:   291307 bytes

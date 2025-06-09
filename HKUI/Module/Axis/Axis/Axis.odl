@@ -1,0 +1,185 @@
+// Axis.odl : type library source for Axis.dll
+
+// This file will be processed by the MIDL compiler to produce the
+// type library (Axis.tlb).
+
+[ uuid(9EF2FE69-1C9A-4F0F-89CF-B86972AE1BC8), version(1.0) ]
+library Axis
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+
+
+
+	//  Primary dispatch interface for CDescartesAxis
+	
+	[ uuid(9045AF09-D6CF-4413-A251-703E2D0C4BCB) ]
+	dispinterface IDescartesAxis
+	{
+		properties:
+			// NOTE - ClassWizard will maintain property information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_PROP(CDescartesAxis)
+			//}}AFX_ODL_PROP
+			
+		methods:
+			// NOTE - ClassWizard will maintain method information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_METHOD(CDescartesAxis)
+			//}}AFX_ODL_METHOD
+
+	};
+
+	//  Class information for CDescartesAxis
+
+	[ uuid(8A2C36AE-3BC2-4902-8CB8-7ECDAB1843C7) ]
+	coclass DescartesAxis
+	{
+		[default] dispinterface IDescartesAxis;
+	};
+
+
+
+	//  Primary dispatch interface for CPolarAxis
+	
+	[ uuid(16C5278D-06DC-4117-A420-57C105B29FA0) ]
+	dispinterface IPolarAxis
+	{
+		properties:
+			// NOTE - ClassWizard will maintain property information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_PROP(CPolarAxis)
+			//}}AFX_ODL_PROP
+			
+		methods:
+			// NOTE - ClassWizard will maintain method information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_METHOD(CPolarAxis)
+			//}}AFX_ODL_METHOD
+
+	};
+
+	//  Class information for CPolarAxis
+
+	[ uuid(91300EAE-559E-4DC0-90E0-4B7F5B161456) ]
+	coclass PolarAxis
+	{
+		[default] dispinterface IPolarAxis;
+	};
+
+
+	//  Primary dispatch interface for CLogarithmAxis
+	
+	[ uuid(91CE65B6-3E07-488B-B22D-1A41D4B83ADD) ]
+	dispinterface ILogarithmAxis
+	{
+		properties:
+			// NOTE - ClassWizard will maintain property information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_PROP(CLogarithmAxis)
+			//}}AFX_ODL_PROP
+			
+		methods:
+			// NOTE - ClassWizard will maintain method information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_METHOD(CLogarithmAxis)
+			//}}AFX_ODL_METHOD
+
+	};
+
+	//  Class information for CLogarithmAxis
+
+	[ uuid(CA9C9D73-51CF-4978-89E4-A56E57CD8C37) ]
+	coclass LogarithmAxis
+	{
+		[default] dispinterface ILogarithmAxis;
+	};
+
+
+	//  Primary dispatch interface for CAxisBaseInterface
+	
+	[ uuid(6196642F-B43C-45A4-BD78-2D56D086A78C) ]
+	dispinterface IAxisBaseInterface
+	{
+		properties:
+			// NOTE - ClassWizard will maintain property information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_PROP(CAxisBaseInterface)
+			//}}AFX_ODL_PROP
+			
+		methods:
+			// NOTE - ClassWizard will maintain method information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_METHOD(CAxisBaseInterface)
+			//}}AFX_ODL_METHOD
+
+	};
+
+	//  Class information for CAxisBaseInterface
+
+	[ uuid(31CA4D56-3704-4465-94C8-22EA4B218339) ]
+	coclass AxisBaseInterface
+	{
+		[default] dispinterface IAxisBaseInterface;
+	};
+
+
+	//  Primary dispatch interface for CAxisBase
+	
+	[ uuid(D54AE866-1FA2-411B-8062-8C7A22058E82) ]
+	dispinterface IAxisBase
+	{
+		properties:
+			// NOTE - ClassWizard will maintain property information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_PROP(CAxisBase)
+			//}}AFX_ODL_PROP
+			
+		methods:
+			// NOTE - ClassWizard will maintain method information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_METHOD(CAxisBase)
+			//}}AFX_ODL_METHOD
+
+	};
+
+	//  Class information for CAxisBase
+
+	[ uuid(EC4F8AE9-08BF-479F-9F73-3EEF5595D581) ]
+	coclass AxisBase
+	{
+		[default] dispinterface IAxisBase;
+	};
+
+
+	//  Primary dispatch interface for CRulerAxis
+	
+	[ uuid(ABDD3E52-C6B2-4956-91A1-8DBFA846ECB3) ]
+	dispinterface IRulerAxis
+	{
+		properties:
+			// NOTE - ClassWizard will maintain property information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_PROP(CRulerAxis)
+			//}}AFX_ODL_PROP
+			
+		methods:
+			// NOTE - ClassWizard will maintain method information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_METHOD(CRulerAxis)
+			//}}AFX_ODL_METHOD
+
+	};
+
+	//  Class information for CRulerAxis
+
+	[ uuid(355D7CF1-ABC6-4743-833C-E0897B261020) ]
+	coclass RulerAxis
+	{
+		[default] dispinterface IRulerAxis;
+	};
+
+	//{{AFX_APPEND_ODL}}
+	//}}AFX_APPEND_ODL}}
+};

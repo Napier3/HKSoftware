@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SmvAbnormalMessageSet</class>
+ <widget class="QDialog" name="SmvAbnormalMessageSet">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>693</width>
+    <height>328</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>异常报文设置</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2" rowstretch="7,1">
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>SV原始报文</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>源MAC</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QSttLineEdit" name="lne_sourceMac"/>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="label_8">
+        <property name="text">
+         <string>同步方式</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QScrollComboBox" name="cmb_synchro">
+        <item>
+         <property name="text">
+          <string>不同步</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>本地同步</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>全局同步</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>目的MAC</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QSttLineEdit" name="lne_destMAC"/>
+      </item>
+      <item row="1" column="2">
+       <widget class="QLabel" name="label_9">
+        <property name="text">
+         <string>版本号</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QSttLineEdit" name="lne_version"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Vlan ID    0x</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QSttLineEdit" name="lne_VIanID"/>
+      </item>
+      <item row="2" column="2">
+       <widget class="QLabel" name="label_10">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>采样延时</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="3">
+       <widget class="QSttLineEdit" name="lne_sampledelay">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Vlan Priority</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QSttLineEdit" name="lne_VIanPriority"/>
+      </item>
+      <item row="3" column="2">
+       <widget class="QLabel" name="label_11">
+        <property name="text">
+         <string>DatSet</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="3">
+       <widget class="QSttLineEdit" name="lne_datset"/>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>网络标识   0x</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QSttLineEdit" name="lne_nettype"/>
+      </item>
+      <item row="4" column="2">
+       <widget class="QLabel" name="label_12">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>RefrTm</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="3">
+       <widget class="QSttLineEdit" name="lne_RefrTm">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>APPID      0x</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QSttLineEdit" name="lne_APPID"/>
+      </item>
+      <item row="5" column="2">
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string>SVID</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="3">
+       <widget class="QSttLineEdit" name="lne_SVID"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pbn_Ok">
+       <property name="text">
+        <string>确定</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pbn_Cancle">
+       <property name="text">
+        <string>取消</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QSttLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header location="global">../../../Module/UI/Controls/SttLineEdit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QScrollComboBox</class>
+   <extends>QComboBox</extends>
+   <header>../../Module/ScrollCtrl/ScrollComboBox.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

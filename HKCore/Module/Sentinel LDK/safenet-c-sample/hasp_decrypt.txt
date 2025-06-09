@@ -1,0 +1,25 @@
+hasp_size_t len = 16;
+
+unsigned char data[] = {
+    0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 
+    0x99, 0xaa, 0xbb, 0xcc, 0xdd, 0xee, 0xff, 0x00};
+
+status = hasp_decrypt(handle, data, len);
+
+/* check if operation was successful */
+if (status != HASP_STATUS_OK)
+{
+    switch (status)
+    {
+        case HASP_FEATURE_NOT_FOUND:
+            break;
+        case HASP_INV_HND:
+            break;
+        case HASP_TOO_SHORT:
+            break;
+        case HASP_ENC_NOT_SUPP:
+            break;
+        default:
+            break;
+    }
+}

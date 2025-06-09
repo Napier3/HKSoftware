@@ -1,0 +1,1413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ChineseKeyboard</class>
+ <widget class="QWidget" name="ChineseKeyboard">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1019</width>
+    <height>350</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>Arial</family>
+    <pointsize>30</pointsize>
+    <weight>50</weight>
+    <bold>false</bold>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Virtual Keyboard</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: #979797;</string>
+  </property>
+  <widget class="QToolButton" name="btnBackSpace">
+   <property name="geometry">
+    <rect>
+     <x>880</x>
+     <y>0</y>
+     <width>131</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x4d</string>
+   </property>
+   <property name="text">
+    <string>Backspace</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>0</y>
+     <width>851</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(230, 230, 230);</string>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnQ">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>120</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x51</string>
+   </property>
+   <property name="text">
+    <string>Q</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnW">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>120</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x57</string>
+   </property>
+   <property name="text">
+    <string>W</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnE">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>120</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x45</string>
+   </property>
+   <property name="text">
+    <string>E</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnR">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>120</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x52</string>
+   </property>
+   <property name="text">
+    <string>R</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnT">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>120</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x54</string>
+   </property>
+   <property name="text">
+    <string>T</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnY">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>120</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x59</string>
+   </property>
+   <property name="text">
+    <string>Y</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnU">
+   <property name="geometry">
+    <rect>
+     <x>440</x>
+     <y>120</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x55</string>
+   </property>
+   <property name="text">
+    <string>U</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnI">
+   <property name="geometry">
+    <rect>
+     <x>510</x>
+     <y>120</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x49</string>
+   </property>
+   <property name="text">
+    <string>I</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnO">
+   <property name="geometry">
+    <rect>
+     <x>580</x>
+     <y>120</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x4f</string>
+   </property>
+   <property name="text">
+    <string>O</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnP">
+   <property name="geometry">
+    <rect>
+     <x>650</x>
+     <y>120</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x50</string>
+   </property>
+   <property name="text">
+    <string>P</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnK">
+   <property name="geometry">
+    <rect>
+     <x>510</x>
+     <y>180</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x4b</string>
+   </property>
+   <property name="text">
+    <string>K</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnL">
+   <property name="geometry">
+    <rect>
+     <x>580</x>
+     <y>180</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x4c</string>
+   </property>
+   <property name="text">
+    <string>L</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnA">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>180</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x41</string>
+   </property>
+   <property name="text">
+    <string>A</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnS">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>180</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x53</string>
+   </property>
+   <property name="text">
+    <string>S</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnD">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>180</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x44</string>
+   </property>
+   <property name="text">
+    <string>D</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnF">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>180</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x46</string>
+   </property>
+   <property name="text">
+    <string>F</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnG">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>180</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x47</string>
+   </property>
+   <property name="text">
+    <string>G</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnH">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>180</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x48</string>
+   </property>
+   <property name="text">
+    <string>H</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnJ">
+   <property name="geometry">
+    <rect>
+     <x>440</x>
+     <y>180</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x4a</string>
+   </property>
+   <property name="text">
+    <string>J</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnSpace">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>300</y>
+     <width>641</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x20</string>
+   </property>
+   <property name="text">
+    <string>Space</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnB">
+   <property name="geometry">
+    <rect>
+     <x>440</x>
+     <y>240</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x42</string>
+   </property>
+   <property name="text">
+    <string>B</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnM">
+   <property name="geometry">
+    <rect>
+     <x>580</x>
+     <y>240</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x4d</string>
+   </property>
+   <property name="text">
+    <string>M</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnX">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>240</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x58</string>
+   </property>
+   <property name="text">
+    <string>X</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnV">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>240</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x56</string>
+   </property>
+   <property name="text">
+    <string>V</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnN">
+   <property name="geometry">
+    <rect>
+     <x>510</x>
+     <y>240</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x4e</string>
+   </property>
+   <property name="text">
+    <string>N</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnZ">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>240</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x5a</string>
+   </property>
+   <property name="text">
+    <string>Z</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnC">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>240</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x43</string>
+   </property>
+   <property name="text">
+    <string>C</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnCaps">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>240</y>
+     <width>131</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x01000024</string>
+   </property>
+   <property name="text">
+    <string>Caps</string>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnChinese">
+   <property name="geometry">
+    <rect>
+     <x>19</x>
+     <y>300</y>
+     <width>131</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x01000020</string>
+   </property>
+   <property name="text">
+    <string>英/中</string>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnFuhao">
+   <property name="geometry">
+    <rect>
+     <x>650</x>
+     <y>240</y>
+     <width>151</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x23</string>
+   </property>
+   <property name="text">
+    <string>#+%</string>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnEsc">
+   <property name="geometry">
+    <rect>
+     <x>880</x>
+     <y>300</y>
+     <width>131</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x01000023</string>
+   </property>
+   <property name="text">
+    <string>ESC</string>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnReturn">
+   <property name="geometry">
+    <rect>
+     <x>650</x>
+     <y>180</y>
+     <width>151</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x01000004</string>
+   </property>
+   <property name="text">
+    <string>Enter</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QScrollListWidget" name="listChinese">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>60</y>
+     <width>991</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
+   <property name="verticalScrollBarPolicy">
+    <enum>Qt::ScrollBarAlwaysOff</enum>
+   </property>
+   <property name="horizontalScrollBarPolicy">
+    <enum>Qt::ScrollBarAlwaysOff</enum>
+   </property>
+   <property name="horizontalScrollMode">
+    <enum>QAbstractItemView::ScrollPerPixel</enum>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnClear">
+   <property name="geometry">
+    <rect>
+     <x>720</x>
+     <y>120</y>
+     <width>81</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x4d</string>
+   </property>
+   <property name="text">
+    <string>清空</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btn1">
+   <property name="geometry">
+    <rect>
+     <x>810</x>
+     <y>120</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x31</string>
+   </property>
+   <property name="text">
+    <string>1</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btn2">
+   <property name="geometry">
+    <rect>
+     <x>880</x>
+     <y>120</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x32</string>
+   </property>
+   <property name="text">
+    <string>2</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btn3">
+   <property name="geometry">
+    <rect>
+     <x>950</x>
+     <y>120</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x33</string>
+   </property>
+   <property name="text">
+    <string>3</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btn4">
+   <property name="geometry">
+    <rect>
+     <x>810</x>
+     <y>180</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x34</string>
+   </property>
+   <property name="text">
+    <string>4</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btn5">
+   <property name="geometry">
+    <rect>
+     <x>880</x>
+     <y>180</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x35</string>
+   </property>
+   <property name="text">
+    <string>5</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btn6">
+   <property name="geometry">
+    <rect>
+     <x>950</x>
+     <y>180</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x36</string>
+   </property>
+   <property name="text">
+    <string>6</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btn7">
+   <property name="geometry">
+    <rect>
+     <x>810</x>
+     <y>240</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x37</string>
+   </property>
+   <property name="text">
+    <string>7</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btn8">
+   <property name="geometry">
+    <rect>
+     <x>880</x>
+     <y>240</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x38</string>
+   </property>
+   <property name="text">
+    <string>8</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btn9">
+   <property name="geometry">
+    <rect>
+     <x>950</x>
+     <y>240</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x39</string>
+   </property>
+   <property name="text">
+    <string>9</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btn0">
+   <property name="geometry">
+    <rect>
+     <x>810</x>
+     <y>300</y>
+     <width>60</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="accessibleName">
+    <string>0x30</string>
+   </property>
+   <property name="text">
+    <string>0</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>true</bool>
+   </property>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QScrollListWidget</class>
+   <extends>QListWidget</extends>
+   <header>../../../Module/UI/Module/ScrollCtrl/ScrollListWidget.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

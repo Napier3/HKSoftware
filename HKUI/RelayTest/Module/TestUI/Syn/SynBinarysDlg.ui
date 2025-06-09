@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QSynBinarysDlg</class>
+ <widget class="QDialog" name="QSynBinarysDlg">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>439</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>开关量设置</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_3">
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>开出量</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="m_labKStart">
+        <property name="text">
+         <string>开出4输出方式</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="m_cmbKStart"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="m_labCloseTime">
+        <property name="text">
+         <string>开出4保持时间(s)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="m_lineCloseTime"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="m_labBout1">
+        <property name="text">
+         <string>开出1状态</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QComboBox" name="m_cmbBout1"/>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="m_labBout2">
+        <property name="text">
+         <string>开出2状态</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QComboBox" name="m_cmbBout2"/>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="m_labBout3">
+        <property name="text">
+         <string>开出3状态</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QComboBox" name="m_cmbBout3"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>开入量</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <widget class="QLabel" name="m_labBinSyn">
+        <property name="text">
+         <string>保护出口信号</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="m_cmbBinSyn"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="m_labBinIncV">
+        <property name="text">
+         <string>增压信号</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="m_cmbBinIncV"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="m_labBinDecV">
+        <property name="text">
+         <string>减压信号</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QComboBox" name="m_cmbBinDecV"/>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="m_labBinIncF">
+        <property name="text">
+         <string>增速信号</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QComboBox" name="m_cmbBinIncF"/>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="m_labBinDecF">
+        <property name="text">
+         <string>减速信号</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QComboBox" name="m_cmbBinDecF"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="m_btnOK">
+       <property name="text">
+        <string>确定</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="m_btnCancel">
+       <property name="text">
+        <string>取消</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

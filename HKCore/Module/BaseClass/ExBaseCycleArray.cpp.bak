@@ -1,0 +1,233 @@
+#include "StdAfx.h"
+#include "ExBaseCycleArray.h"
+
+
+CExBaseCycleArray::CExBaseCycleArray(void)
+{
+	m_pdwExBaseObject = NULL;
+	m_nMaxCount = 0;
+	m_nCurrIndex = 0;
+	m_nCurrCount = 0;
+	m_n64CapIndex = 0;
+
+	m_nCurrReadIndex = 0;  
+	m_nCurrFreeIndex = 0;  
+	m_nAllocPos = 0;
+}
+
+CExBaseCycleArray::~CExBaseCycleArray(void)
+{
+	Free();
+}
+
+void CExBaseCycleArray::Free()
+{
+	if (m_pdwExBaseObject != NULL)
+	{
+		long nIndex = 0;
+
+		if (m_bAddNewExBaseObject)
+		{
+			for (nIndex=0; nIndex<m_nMaxCount; nIndex++)
+			{
+				CExBaseObject *pBuffer = (CExBaseObject*)m_pdwExBaseObject[nIndex];
+				delete pBuffer;
+			}
+		}
+
+		delete m_pdwExBaseObject;
+		m_pdwExBaseObject = NULL;
+	}
+}
+
+void CExBaseCycleArray::FreeBuffer(long nIndexFrom)
+{
+	if (m_nCurrCount == m_nMaxCount)
+	{
+		if (nIndexFrom < m_nCurrIndex)
+		{
+			FreeBuffer(nIndexFrom, m_nCurrIndex-1);
+		}
+		else
+		{
+			FreeBuffer(nIndexFrom, m_nCurrCount-1);
+			FreeBuffer(0, m_nCurrIndex-1);
+		}
+	}
+	else
+	{
+		FreeBuffer(nIndexFrom, m_nCurrIndex-1);
+	}
+}
+
+void CExBaseCycleArray::FreeBuffer()
+{
+	long nBegin1 = -1, nEnd1 = -1, nBegin2 = -1, nEnd2 = -1;
+	GetFreeIndexRange(nBegin1, nEnd1, nBegin2, nEnd2);
+
+	if (nEnd1 > nBegin1)
+	{
+		if (!FreeBuffer(nBegin1, nEnd1))
+		{
+			return;
+		}
+	}
+
+	if (nBegin2 >= 0)
+	{
+		FreeBuffer(nBegin2, nEnd2);
+	}
+}
+
+BOOL CExBaseCycleArray::FreeBuffer(long nBeginIndex, long nEndIndex)
+{
+	if (m_pBuffer != NULL)
+	{
+		m_nCurrFreeIndex = nEndIndex + 1;
+		return TRUE;
+	}
+
+	long nIndex = 0;
+
+	for (nIndex=nBeginIndex; nIndex<= nEndIndex; nIndex++)
+	{
+		CExBaseObject *pObj = (CExBaseObject*)GetExBaseObject(nIndex);
+
+		if (m_bAddNewExBaseObject)
+		{
+			delete pObj;
+		}
+		
+		m_pdwExBaseObject[nIndex] = NULL;
+		m_nCurrFreeIndex = nIndex+1; //下一次free的位置
+	}
+
+	return TRUE;
+}
+
+void CExBaseCycleArray::SetMaxCount(long nMaxCount)
+{
+	if (m_nMaxCount == nMaxCount)
+	{
+		return;
+	}
+
+	m_nMaxCount = nMaxCount;
+	long nLen = m_nMaxCount + 10;
+	m_pdwExBaseObject = new DWORD[nLen];
+	ZeroMemory(m_pdwExBaseObject, m_nMaxCount * sizeof(DWORD));
+}
+
+long CExBaseCycleArray::GetCount(long nIndexFrom)
+{
+	if (m_nCurrCount == m_nMaxCount)
+	{
+		if (m_nCurrIndex >= nIndexFrom)
+		{
+			return m_nCurrIndex - nIndexFrom;
+		}
+		else
+		{
+			return m_nCurrCount - nIndexFrom + m_nCurrIndex;
+		}
+	}
+	else
+	{
+		return m_nCurrIndex - nIndexFrom;
+	}
+}
+
+void CExBaseCycleArray::InitExBaseCycleArray ()
+{
+	SetMaxCount(ExBaseCycleArray_Count);
+}
+
+CExBaseObject* CExBaseCycleArray::AddExBaseObject(CExBaseObject *pObj)
+{
+	CExBaseObject *pExBaseObject = GetExBaseObject(m_nCurrIndex);
+	
+	if (m_bAddNewExBaseObject)
+	{
+		delete pExBaseObject;
+	}
+	
+	pExBaseObject = NewExBaseObject(pObj);
+	m_pdwExBaseObject[m_nCurrIndex] = pExBaseObject;
+	m_nCurrIndex++;
+
+	if (m_nCurrIndex >= m_nMaxCount)
+	{
+		m_nCurrIndex = 0;
+	}
+
+	m_nCurrCount++;
+	if (m_nCurrCount >= m_nMaxCount)
+	{
+		m_nCurrCount = m_nMaxCount;
+	}
+
+	return pExBaseObject;
+}
+
+
+void CExBaseCycleArray::GetReadIndexIRange(long &nBegin1, long &nEnd1, long &nBegin2, long &nEnd2)
+{
+	long nCurrCount = m_nCurrCount;
+	long nCurrIndex = m_nCurrIndex;
+
+	xmem_get_cycle_range_index(m_nMaxCount, nCurrCount, nCurrIndex
+		,m_nCurrReadIndexx
+		, nBegin1, nEnd1, nBegin2, nEnd2);
+}
+
+void CExBaseCycleArray::GetFreeIndexRange(long &nBegin1, long &nEnd1, long &nBegin2, long &nEnd2)
+{
+	long nCurrCount = m_nCurrCount;
+	long nCurrIndex = m_nCurrIndex;
+
+	xmem_get_cycle_range_index(m_nMaxCount, nCurrCount, nCurrIndex
+		, m_nCurrFreeIndex
+		, nBegin1, nEnd1, nBegin2, nEnd2);
+}
+
+void CExBaseCycleArray::DeleteAll()
+{
+	CExBaseObject *pExBaseObject = NULL;
+	long nIndex = 0;
+	m_nCurrIndex = 0;
+
+	for (nIndex=0; nIndex<m_nMaxCount; nIndex++)
+	{
+		pExBaseObject = (CExBaseObject*)m_pdwExBaseObject[nIndex];
+		
+		if (m_bAddNewExBaseObject)
+		{
+			delete pExBaseObject;
+			m_pdwExBaseObject[nIndex] = 0;
+		}
+	}
+
+	m_nCurrIndex = 0;
+	m_nCurrCount = 0;
+}
+
+
+//////////////////////////////////////////////////////////////////////////
+//
+BYTE* CExBaseCycleArray::AllocBuffer(long nLen)
+{
+	BYTE *pBuffer = NULL;
+	
+	if (m_nAllocPos + nLen >= m_nBufferLength)
+	{//剩余的缓存不够分配，则回到缓冲区的首位置
+		pBuffer = m_pBuffer;
+		m_nAllocPos = nLen;//下一次分配的位置
+	}
+	else
+	{
+		pBuffer = m_pBuffer + m_nAllocPos;
+		m_nAllocPos += nLen;//下一次分配的位置
+	}
+
+	return pBuffer;
+}

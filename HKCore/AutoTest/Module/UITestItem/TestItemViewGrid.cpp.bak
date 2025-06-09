@@ -1,0 +1,117 @@
+#include "StdAfx.h"
+#include "CommCmdAttrGrid.h"
+
+IMPLEMENT_DYNAMIC(CCommCmdAttrGrid, CListCtrl)
+
+CCommCmdAttrGrid::CCommCmdAttrGrid(void)
+{
+	
+}
+
+CCommCmdAttrGrid::~CCommCmdAttrGrid(void)
+{
+}
+
+void CCommCmdAttrGrid::CreateGrid(CWnd *pParent, CRect rcWnd, UINT nID)
+{
+	const DWORD dwStyle = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_VSCROLL | LVS_REPORT | LVS_SHOWSELALWAYS;
+	BOOL bTrue = Create(dwStyle, rcWnd, pParent, nID);
+
+	ModifyStyle(LVS_SORTASCENDING | LVS_SORTDESCENDING, NULL);
+	SendMessage(LVM_SETEXTENDEDLISTVIEWSTYLE, 0, LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
+
+	SetExtendedStyle( LVS_EX_GRIDLINES | LVS_EX_FULLROWSELECT);
+	InsertColumn(0,_T("名称"),LVCFMT_LEFT,150);
+	InsertColumn(1,_T("值"),LVCFMT_LEFT,200);
+}
+
+void CCommCmdAttrGrid::ShowCommCmdAttr(CExBaseObject *pItem)
+{
+	m_pCurrItem = pItem;
+	CCommCmd *pCommCmd = (CCommCmd*)pItem;
+	CCmd *pCmd = pCommCmd->GetCmd();
+
+	CDevice *pDevice = (CDevice *)pItem->GetAncestor(GBCLASSID_DEVICE);
+	CSysParas *pSysParas = NULL;
+	CShortData *pData = NULL;
+	
+	if (pDevice != NULL)
+	{
+		pSysParas = pDevice->m_pSysParas;
+	}
+
+	DeleteAllItems();
+	m_nCurrRowIndex = 0;
+	ShowAttr(_T("名称"), pCommCmd->m_strName);
+	ShowAttr(_T("通讯命令"), pCommCmd->m_strCommCmdID);
+	ShowAttr(_T("CPU"), pCmd->m_strDatasetPath);
+
+	if (IsStringNumber(pCmd->m_strDelayBeforeCmd))
+	{
+		ShowAttr(_T("通讯前延时"), pCmd->m_strDelayBeforeCmd);
+	}
+	else
+	{
+		pData = (CShortData *)pSysParas->FindByID(pCmd->m_strDelayBeforeCmd);
+
+		if (pData != NULL)
+		{
+			ShowAttr(_T("通讯前延时"), pCmd->m_strDelayBeforeCmd);
+		}
+		else
+		{
+			ShowAttr(_T("通讯前延时"), pCmd->m_strDelayBeforeCmd);
+		}
+	}
+
+	if (IsStringNumber(pCmd->m_strDelayBeforeCmd))
+	{
+		ShowAttr(_T("通讯后延时"), pCmd->m_strDelayAfterCmd);
+	}
+	else
+	{
+		pData = (CShortData *)pSysParas->FindByID(pCmd->m_strDelayBeforeCmd);
+
+		if (pData != NULL)
+		{
+			ShowAttr(_T("通讯后延时"), pCmd->m_strDelayAfterCmd);
+		}
+		else
+		{
+			ShowAttr(_T("通讯后延时"), pCmd->m_strDelayAfterCmd);
+		}
+	}
+
+	ShowAttr(_T("计算模式"), pCmd->m_strCalMode);
+	ShowAttr(_T("通讯次数"), pCmd->m_nCommTimes);
+}
+
+void CCommCmdAttrGrid::ShowAttr(const CString &strName,const CString &strValue)
+{
+	InsertItem(m_nCurrRowIndex, _T(""));
+	SetItemText(m_nCurrRowIndex, 0, strName);
+	SetItemText(m_nCurrRowIndex, 1, strValue);
+	m_nCurrRowIndex++;
+}
+
+void CCommCmdAttrGrid::ShowAttr(const CString &strName,long nValue)
+{
+	CString strValue;
+	strValue.Format(_T("%d"), nValue);
+	ShowAttr(strName, strValue);
+}
+
+void CCommCmdAttrGrid::ShowAttr(const CString &strName,float fValue)
+{
+	CString strValue;
+	strValue.Format(_T("%.f"), fValue);
+	ShowAttr(strName, strValue);
+}
+
+void CCommCmdAttrGrid::ShowAttr(const CString &strName,double dValue)
+{
+	CString strValue;
+	strValue.Format(_T("%.f"), dValue);
+	ShowAttr(strName, strValue);
+}
+

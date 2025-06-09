@@ -1,0 +1,200 @@
+// StringTokenizerU.cpp: implementation of the CStringTokenizerU class.
+//
+//////////////////////////////////////////////////////////////////////
+
+#include "stdafx.h"
+#include "StringTokenizerU.h"
+
+#ifdef _DEBUG
+#undef THIS_FILE
+static char THIS_FILE[]=__FILE__;
+#define new DEBUG_NEW
+#endif
+
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+
+CStringTokenizerU::CStringTokenizerU()
+{
+	m_pData = NULL;
+	m_chDelimiter = ' ';
+	m_pIndex = NULL;
+	m_nLength = 0;
+}
+
+CStringTokenizerU::CStringTokenizerU(const char *pszDataLine)
+{
+	m_pData = NULL;
+	m_chDelimiter = ' ';
+	m_pIndex = NULL;
+	m_nLength = 0;
+	
+	Init(pszDataLine,' ');
+}
+
+CStringTokenizerU::CStringTokenizerU(const char *pszDataLine,char chDelimiter)
+{
+	m_pData = NULL;
+	m_chDelimiter = ' ';
+	m_pIndex = NULL;
+	m_nLength = 0;
+	Init(pszDataLine,chDelimiter);
+}
+
+CStringTokenizerU::~CStringTokenizerU()
+{
+	Free();
+}
+
+void CStringTokenizerU::Free()
+{
+	if (m_pData != NULL)
+	{
+		delete m_pData;
+		m_pData = NULL;
+	}
+
+	m_pIndex = NULL;
+	m_nLength = 0;
+}
+
+void CStringTokenizerU::Format(char chDelimiter)
+{
+	m_pData[m_nLength] = chDelimiter;
+	m_pData[m_nLength+1] = 0;
+
+	char *pTemp = m_pData;
+	while (*pTemp != 0)
+	{
+		if (*pTemp == chDelimiter)
+		{
+			*pTemp = 0;
+		}
+		pTemp++;
+	}
+
+	m_pIndex = m_pData;
+}
+
+void CStringTokenizerU::Init(const char *pszDataLine,char chDelimiter)
+{
+	Free();
+
+	if (pszDataLine == NULL)
+	{
+		return;
+	}
+
+	m_chDelimiter = chDelimiter;
+	m_nLength = strlen(pszDataLine) + 1;
+	m_pData = new char [m_nLength+1];
+	memcpy(m_pData,pszDataLine,m_nLength);
+
+	Format(chDelimiter);
+// 	m_pData[m_nLength-1] = chDelimiter;
+// 	m_pData[m_nLength] = 0;
+// 
+// 	char *pTemp = m_pData;
+// 	while (*pTemp != 0)
+// 	{
+// 		if (*pTemp == chDelimiter)
+// 		{
+// 			*pTemp = 0;
+// 		}
+// 		pTemp++;
+// 	}
+// 
+// 	m_pIndex = m_pData;
+}
+
+void CStringTokenizerU::Init(const CString &strDataLine,char chDelimiter)
+{
+	Free();
+
+	m_nLength = strDataLine.GetLength();
+
+#ifdef _UNICODE
+	m_nLength = m_nLength * 2 + 2;
+	m_pData = new char[m_nLength];
+	_wsetlocale(LC_ALL,_T("chs"));
+	size_t sz=0;
+	wcstombs_s(&sz, m_pData, m_nLength, strDataLine,_TRUNCATE);
+	_wsetlocale(LC_ALL,_T("eng"));
+#else
+	m_pData = new char [m_nLength+10];
+	strcpy(m_pData, strDataLine);
+#endif
+
+	Format(chDelimiter);
+}
+
+BOOL CStringTokenizerU::HasMoreElements()
+{
+	BOOL bTrue = TRUE;
+	if (m_pIndex == NULL || m_pData == NULL || m_nLength <= 0)
+	{
+		bTrue = FALSE;
+	}
+
+	if (bTrue)
+	{
+		if (m_pIndex >= m_pData && m_pIndex < m_pData + m_nLength)
+		{
+			bTrue = TRUE;
+		}
+		else
+		{
+			bTrue = FALSE;
+		}
+	}
+
+	return bTrue;
+}
+
+const char* CStringTokenizerU::NextToken()
+{
+	if (m_pIndex == NULL || m_pData == NULL)
+		return NULL;
+	
+	char *pString = NULL;
+	char *pTemp = m_pIndex;
+	char *pEnd = m_pData + m_nLength;
+
+	//get current string and move to next string
+	if (pTemp != pEnd)
+	{
+		pString = pTemp;
+		m_pIndex = pString + strlen(pString) + 1;
+	}
+	else
+	{
+		m_pIndex = pEnd;
+	}
+
+	return pString;
+}
+
+void CStringTokenizerU::ResetIndexPointer()
+{
+	m_pIndex = m_pData;
+}
+
+long CStringTokenizerU::GetStringsCount()
+{
+	long nCount = 0;
+	char *pTemp = m_pData;
+	char *pEnd = m_pData + m_nLength;
+	
+	//get current string and move to next string
+	while (pTemp < pEnd)
+	{
+		if (*pTemp == 0)
+		{
+			nCount++;
+		}
+		pTemp++;
+	}
+	return nCount;
+}
+

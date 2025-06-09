@@ -1,0 +1,30 @@
+syntax="proto3";
+
+package DeviceInnerPara;
+
+message DeviceInnerSetting
+{
+    DASetting oDASetting = 1;
+    AmplifierVolt oAmplifierVolt = 2;
+}
+
+message DASetting
+{
+        repeated float fVolt = 1;//4 volt DA setting value
+	repeated float fcurrent = 2;//4 volt DA setting value   
+}
+
+message AmplifierVolt
+{
+    repeated float fVolt = 1;//12 volt amplifier monitor volt;
+    repeated float fcurrent = 2;//12 current amplifier monitor volt;
+    repeated bool bVoltOverLoad = 3;//6 amplifier overload
+    repeated bool bCurrentOverLoad = 4;//6 amplifier overload;
+    bool bVoltOverHot = 5;//volt amplifier overhot;
+    bool bCurrentOverHot = 6;//current amplifier overhot;
+}
+
+
+
+
+

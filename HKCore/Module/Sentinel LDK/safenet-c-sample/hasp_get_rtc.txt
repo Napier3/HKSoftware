@@ -1,0 +1,25 @@
+hasp_time_t time;
+unsigned int day, month, year, hour, minute, second;
+
+status = hasp_get_rtc(handle, &time);
+
+/* check if operation was successful */
+if (status != HASP_STATUS_OK)
+{
+    switch (status)
+    {
+        case HASP_INV_HND:
+            break;
+        case HASP_NO_TIME:
+            break;
+        default:
+            break;
+    }
+}
+status = hasp_hasptime_to_datetime(time, &day, &month, &year, &hour, &minute, &second);
+
+if(status == HASP_INV_TIME)
+{
+    /* handle error */
+}
+

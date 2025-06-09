@@ -1,0 +1,17 @@
+{
+    "model": "/home/sduept/sdom/兴隆变.scd",
+    "debug": true,
+    "file_root": "/root/code/ngsp/scd",
+    "sg_storage": "/tmp/sg1.db",
+    "network": {
+        "bind": "0.0.0.0",
+        "port": 8103
+    },
+    "ignore_ied": [
+        "A_V0001X",
+        "A_V0002X",
+        "A_V0003X",
+        "A_V0004X",
+        "A_V0005X"
+    ]
+}

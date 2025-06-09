@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QDistanceCommonParasDlg</class>
+ <widget class="QDialog" name="QDistanceCommonParasDlg">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>848</width>
+    <height>377</height>
+   </rect>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1059</width>
+    <height>486</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>通用参数设置</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="6" column="5">
+    <widget class="QLabel" name="m_labCloseTime">
+     <property name="text">
+      <string>合闸时间(ms):</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="7">
+    <widget class="QSettingLineEdit" name="m_txtBreakTime">
+     <property name="maximumSize">
+      <size>
+       <width>200</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="17" column="1">
+    <spacer name="verticalSpacer_8">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="6" column="3">
+    <widget class="QSettingLineEdit" name="m_txtTimeAfter">
+     <property name="maximumSize">
+      <size>
+       <width>200</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="5">
+    <widget class="QLabel" name="m_labBreakTime">
+     <property name="text">
+      <string>分闸时间(ms):</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1">
+    <widget class="QLabel" name="m_labTimeAfter">
+     <property name="text">
+      <string>保护动作后持续时间(s):</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="7">
+    <widget class="QSettingLineEdit" name="m_txtCloseTime">
+     <property name="maximumSize">
+      <size>
+       <width>200</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="3">
+    <widget class="QSettingLineEdit" name="m_txtLine">
+     <property name="minimumSize">
+      <size>
+       <width>200</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>200</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="1">
+    <widget class="QLabel" name="m_labLine">
+     <property name="minimumSize">
+      <size>
+       <width>150</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>线路阻抗(Ω):</string>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="5">
+    <widget class="QLabel" name="m_labVzDefine">
+     <property name="text">
+      <string>抽取电压输出定义:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="7">
+    <widget class="QComboBox" name="m_cmbVzDefine">
+     <property name="maximumSize">
+      <size>
+       <width>200</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="4">
+    <spacer name="horizontalSpacer_6">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="6" column="2">
+    <spacer name="horizontalSpacer_7">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="1">
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="16" column="0">
+    <spacer name="horizontalSpacer_4">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="7" column="1">
+    <spacer name="verticalSpacer_4">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="12" column="3">
+    <widget class="QComboBox" name="m_cmbPTPos">
+     <property name="maximumSize">
+      <size>
+       <width>200</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="13" column="1">
+    <spacer name="verticalSpacer_6">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="12" column="5">
+    <widget class="QLabel" name="m_labPsuVzRef">
+     <property name="text">
+      <string>抽取电压参考相定义:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <spacer name="verticalSpacer_3">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="11" column="1">
+    <spacer name="verticalSpacer_5">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="14" column="1">
+    <widget class="QLabel" name="m_labCTPos">
+     <property name="text">
+      <string>TA正极性:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="14" column="5">
+    <widget class="QLabel" name="m_labVzPh">
+     <property name="minimumSize">
+      <size>
+       <width>150</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>抽取电压相角(相对参考相):</string>
+     </property>
+    </widget>
+   </item>
+   <item row="15" column="1">
+    <spacer name="verticalSpacer_7">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="1">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="12" column="1">
+    <widget class="QLabel" name="m_labPTPos">
+     <property name="text">
+      <string>TV安装位置:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="7">
+    <widget class="QComboBox" name="m_cmbPsuVzRef">
+     <property name="maximumSize">
+      <size>
+       <width>200</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="18" column="1">
+    <widget class="QLabel" name="m_labILoadPh">
+     <property name="text">
+      <string>负荷功角:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="16" column="1">
+    <widget class="QLabel" name="m_labILoad">
+     <property name="text">
+      <string>负荷电流(A):</string>
+     </property>
+    </widget>
+   </item>
+   <item row="18" column="3">
+    <widget class="QSettingLineEdit" name="m_txtILoadPh">
+     <property name="maximumSize">
+      <size>
+       <width>200</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="14" column="7" colspan="2">
+    <widget class="QSettingLineEdit" name="m_txtVzPh">
+     <property name="minimumSize">
+      <size>
+       <width>200</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>200</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="14" column="3">
+    <widget class="QComboBox" name="m_cmbCTPos">
+     <property name="maximumSize">
+      <size>
+       <width>200</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="8">
+    <spacer name="horizontalSpacer_5">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="19" column="0" colspan="9">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="m_btnOK">
+       <property name="text">
+        <string>确认</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>70</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="m_btnCancel">
+       <property name="text">
+        <string>取消</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item row="16" column="3">
+    <widget class="QSettingLineEdit" name="m_txtILoad">
+     <property name="maximumSize">
+      <size>
+       <width>200</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLabel" name="m_labPreFaultTime">
+     <property name="text">
+      <string>故障前时间(s):</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QSettingLineEdit" name="m_txtPreFaultTime">
+     <property name="minimumSize">
+      <size>
+       <width>200</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>200</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="7">
+    <widget class="QComboBox" name="m_cmbFaultTrig">
+     <property name="minimumSize">
+      <size>
+       <width>200</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>200</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="5">
+    <widget class="QLabel" name="m_labFaultTrig">
+     <property name="text">
+      <string>故障触发方式:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QLabel" name="m_labFaultTime">
+     <property name="text">
+      <string>故障时间裕度(s):</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="3">
+    <widget class="QSettingLineEdit" name="m_txtMinTime">
+     <property name="maximumSize">
+      <size>
+       <width>200</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="5">
+    <widget class="QLabel" name="m_labBreaker">
+     <property name="text">
+      <string>断路器模拟:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="3">
+    <widget class="QSettingLineEdit" name="m_txtFaultTime">
+     <property name="maximumSize">
+      <size>
+       <width>200</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="7">
+    <widget class="QComboBox" name="m_cmbBreaker">
+     <property name="maximumSize">
+      <size>
+       <width>200</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QLabel" name="m_labMinTime">
+     <property name="text">
+      <string>最小动作时间(s):</string>
+     </property>
+    </widget>
+   </item>
+   <item row="14" column="6">
+    <spacer name="horizontalSpacer_8">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QSettingLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>../../UI/Controls/SettingCtrls/qsettinglineedit.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

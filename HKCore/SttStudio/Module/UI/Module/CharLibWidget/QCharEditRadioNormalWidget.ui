@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QCharEditRadioNormalWidget</class>
+ <widget class="QWidget" name="QCharEditRadioNormalWidget">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>447</width>
+    <height>519</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>5</y>
+     <width>441</width>
+     <height>511</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="m_mainVerticalLayout">
+    <item>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="2">
+       <widget class="QLabel" name="m_lbInSet">
+        <property name="font">
+         <font>
+          <family>HP Simplified Hans Light</family>
+          <pointsize>10</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>基准电流(A/Ie)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QSttLineEdit" name="m_editInSet">
+        <property name="font">
+         <font>
+          <family>Agency FB</family>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1" alignment="Qt::AlignLeft">
+       <widget class="QDataTypeComboBox" name="m_cbSettingMinAxis"/>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="m_lbSettingMinAxis">
+        <property name="font">
+         <font>
+          <family>HP Simplified Hans Light</family>
+          <pointsize>10</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>定值整定方式</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2" colspan="2">
+       <widget class="QDataTypeComboBox" name="m_cmb_TranSort">
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="2">
+       <widget class="QLabel" name="m_lbTranSort">
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>变压器接线形式</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" colspan="4">
+       <widget class="QLabel" name="m_label_Func">
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="4" column="2">
+       <widget class="QLabel" name="m_lblTitleLine2">
+        <property name="font">
+         <font>
+          <family>HP Simplified Hans Light</family>
+          <pointsize>10</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>拐点2</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="3">
+       <widget class="QSttLineEdit" name="m_edtSet_Ip1">
+        <property name="font">
+         <font>
+          <family>Agency FB</family>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="2">
+       <widget class="QLabel" name="m_lblTitleLineSd">
+        <property name="font">
+         <font>
+          <family>HP Simplified Hans Light</family>
+          <pointsize>10</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>差动速断</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="4">
+       <widget class="QSttLineEdit" name="m_edtSet_K1">
+        <property name="font">
+         <font>
+          <family>Agency FB</family>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QCheckBox" name="m_chkStart">
+        <property name="text">
+         <string>启动门槛</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QCheckBox" name="m_chkLine2">
+        <property name="text">
+         <string>第二段</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QLabel" name="m_lblTitleCurr">
+        <property name="font">
+         <font>
+          <family>HP Simplified Hans Light</family>
+          <pointsize>10</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>电流（A/Ie）</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="m_lbSetting">
+        <property name="font">
+         <font>
+          <family>HP Simplified Hans Light</family>
+          <pointsize>10</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>定值</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="3">
+       <widget class="QSttLineEdit" name="m_edtSet_Istart">
+        <property name="font">
+         <font>
+          <family>Agency FB</family>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="m_lbName">
+        <property name="font">
+         <font>
+          <family>HP Simplified Hans Light</family>
+          <pointsize>10</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>名称</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QCheckBox" name="m_chkLine1">
+        <property name="text">
+         <string>第一段</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QLabel" name="m_lblTitleStart">
+        <property name="font">
+         <font>
+          <family>HP Simplified Hans Light</family>
+          <pointsize>10</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>启动电流</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QLabel" name="m_lblTitleK">
+        <property name="font">
+         <font>
+          <family>HP Simplified Hans Light</family>
+          <pointsize>10</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>比率制动系数</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
+       <widget class="QLabel" name="m_lblTitleLine1">
+        <property name="font">
+         <font>
+          <family>HP Simplified Hans Light</family>
+          <pointsize>10</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>拐点1</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="4">
+       <widget class="QLabel" name="m_lblSet_K">
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>0</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="4">
+       <widget class="QSttLineEdit" name="m_edtSet_K2">
+        <property name="font">
+         <font>
+          <family>Agency FB</family>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="4">
+       <widget class="QSttLineEdit" name="m_edtSet_Kstart">
+        <property name="font">
+         <font>
+          <family>Agency FB</family>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="3">
+       <widget class="QSttLineEdit" name="m_edtSet_Ip2">
+        <property name="font">
+         <font>
+          <family>Agency FB</family>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="3">
+       <widget class="QSttLineEdit" name="m_edtSet_Isd">
+        <property name="font">
+         <font>
+          <family>Agency FB</family>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QCheckBox" name="m_chkLineSd">
+        <property name="text">
+         <string>速断电流</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="m_lbIdValue">
+        <property name="font">
+         <font>
+          <family>HP Simplified Hans Light</family>
+          <pointsize>10</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>制动电流</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSttLineEdit" name="m_editSet_IdValue">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="font">
+         <font>
+          <family>Agency FB</family>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+        <property name="acceptDrops">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="m_btnUserAdd">
+        <property name="font">
+         <font>
+          <family>HP Simplified Hans Light</family>
+          <pointsize>10</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+        <property name="acceptDrops">
+         <bool>true</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>添加自定义点</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="m_btnUserClear">
+        <property name="font">
+         <font>
+          <family>HP Simplified Hans Light</family>
+          <pointsize>10</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>清空自定义点</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QSttLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>../../Controls/SttLineEdit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QDataTypeComboBox</class>
+   <extends>QComboBox</extends>
+   <header>../../Module/CommonCtrl_QT/QDataTypeComboBox.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

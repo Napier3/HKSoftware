@@ -1,0 +1,82 @@
+// XMemBufferBse.h: interface for the CXMemBufferBse class.
+//
+//////////////////////////////////////////////////////////////////////
+
+#if !defined(_XMemBufferBse_h__)
+#define _XMemBufferBse_h__
+
+#if _MSC_VER > 1000
+#pragma once
+#endif // _MSC_VER > 1000
+
+typedef struct XMemBufferBsePos
+{
+	BYTE *pBuffer;
+	long nBufLength;
+}* PXMemBufferBsePOS, XMemBufferBsePOS;
+
+class CXMemBufferBse
+{
+public:	
+	CXMemBufferBse();
+	virtual ~CXMemBufferBse();
+
+public:
+	//初始化
+	virtual void Init();
+	virtual void Init(BYTE *pBuffer, long nLength);
+	virtual void SetBufferLength(long nBufferLen, BOOL bAllocAlways=TRUE);
+	virtual void SetBuffer(BYTE *pBuffer, long nLen);
+
+	//内存释放
+	virtual void FreeBuffer(BOOL bOnlyDeleteBuffer=FALSE);
+
+	//缓存关联
+	virtual void AttachBuffer(CXMemBufferBse *pBuffer, BOOL bClearScr=FALSE);
+	virtual void AttachBuffer(BYTE *pBuffer, long nLen);
+	virtual void SetAttach(bool bAttach)	{		m_bAttach = bAttach;	}
+	virtual void ClearBuffer();
+
+	//缓存相关参数的获取
+	virtual long GetBufferLength()                     {    return m_nBufferLength;                                }
+	virtual BYTE* GetBuffer()                          {    return m_pBuffer;                                      }
+	
+	virtual long GetBufferPos(XMemBufferBsePOS &oBufPos)
+	{
+		oBufPos.nBufLength = m_nBufferLength;
+		oBufPos.pBuffer = m_pBuffer;
+		return m_nBufferLength;
+	}
+
+	virtual long GetBufferPos(long nBeginPos, long nLen, XMemBufferBsePOS &oBufPos)
+	{
+		GetBufferPos(nBeginPos, nLen, oBufPos.nBuf1BeginPos, oBufPos.nBuf1EndPos, oBufPos.nBuf2BeginPos, oBufPos.nBuf2EndPos);
+		oBufPos.nBufLength = oBufPos.nBuf1EndPos - oBufPos.nBuf1BeginPos + 1;
+		oBufPos.pBuffer = m_pBuffer;
+		
+		if (oBufPos.nBuf2BeginPos >= 0)
+		{
+			oBufPos.nBufLength += oBufPos.nBuf2EndPos - oBufPos.nBuf2BeginPos;
+		}
+
+		return oBufPos.nBufLength;
+	}
+	virtual long GetBufferPos(long nBeginPos, long nLen, PXMemBufferBsePOS pBufPos)
+	{
+		return GetBufferPos(nBeginPos, nLen, *pBufPos);
+	}
+	virtual long GetDataLength(long nBeginPos);
+	virtual BOOL GetBuffer(BYTE *pDestBuffer, long nBeginPos, long nLen);
+	virtual void ResetOffsetDataFillBeginPosition()  {    m_nDataFillBeginPos = 0;    m_nDataLength = 0;    }
+	virtual void ResetOffsetDataFillBeginPosition(long nDataFillBeginPos, long nDataLength);
+	
+protected:
+	long m_nBufferLength;	
+	long m_nDataFillBeginPos;
+	long m_nDataLength;
+	BYTE *m_pBuffer;
+	BOOL m_bAttach;
+};
+
+
+#endif // !defined(_XMemBufferBse_h__)

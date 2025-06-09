@@ -1,0 +1,269 @@
+/*
+ * config.h 配置模板
+ */
+
+#ifndef STACK_CONFIG_H_
+#define STACK_CONFIG_H_
+
+// 0 --> 小端 1 --> 大端
+#cmakedefine01 PLATFORM_IS_BIGENDIAN
+
+// 是否支持 clock_gettime
+#cmakedefine CONFIG_SYSTEM_HAS_CLOCK_GETTIME
+
+// 是否开启调试
+#cmakedefine01 DEBUG_SERVER
+#cmakedefine01 DEBUG_CLIENT
+
+// 具体的调试打印项目
+#cmakedefine01 DEBUG_APER
+#cmakedefine01 DEBUG_SOCKET
+#cmakedefine01 DEBUG_COTP
+#cmakedefine01 DEBUG_ISO_SERVER
+#cmakedefine01 DEBUG_ISO_CLIENT
+#cmakedefine01 DEBUG_IED_SERVER
+#cmakedefine01 DEBUG_IED_CLIENT
+#cmakedefine01 DEBUG_MMS_CLIENT
+#cmakedefine01 DEBUG_MMS_SERVER
+#cmakedefine01 DEBUG_GOOSE_SUBSCRIBER
+#cmakedefine01 DEBUG_GOOSE_PUBLISHER
+#cmakedefine01 DEBUG_SV_SUBSCRIBER
+#cmakedefine01 DEBUG_SV_PUBLISHER
+#cmakedefine01 DEBUG_HAL_ETHERNET
+
+// 错误时仅仅打印
+#cmakedefine01 ERROR_JUST_LOG
+
+/*
+ * 线程模式
+ * 1 ==> server runs in single threaded mode (one dedicated thread for the server)
+ * 0 ==> server runs in multi threaded mode (one thread for each connection and one server background thread )
+ */
+#cmakedefine01 CONFIG_MMS_SINGLE_THREADED
+
+// 采用非线程方式, 不使用信号量
+#cmakedefine01 CONFIG_MMS_THREADLESS_STACK
+
+// 最大 MMS PDU 尺寸
+#cmakedefine CONFIG_MMS_MAXIMUM_APDU_SIZE @CONFIG_MMS_MAXIMUM_APDU_SIZE@
+
+// 最大 MMS SDU 尺寸
+#cmakedefine CONFIG_MMS_MAXIMUM_ASDU_SIZE @CONFIG_MMS_MAXIMUM_ASDU_SIZE@
+
+// 最大的客户端链接数量 -1 代表不做限制
+#cmakedefine CONFIG_MAXIMUM_TCP_CLIENT_CONNECTIONS @CONFIG_MAXIMUM_TCP_CLIENT_CONNECTIONS@
+
+// 是否启用 TCP keep alive
+#cmakedefine01 CONFIG_ACTIVATE_TCP_KEEPALIVE
+
+// keepalive 第一次等待时间
+#define CONFIG_TCP_KEEPALIVE_IDLE 5
+
+// keepalive 两次 ack 之间的时间间隔
+#define CONFIG_TCP_KEEPALIVE_INTERVAL 2
+
+// keepalive 请求次数
+#define CONFIG_TCP_KEEPALIVE_CNT 2
+
+// 最大 COTP (ISO 8073) TPDU size - valid range is 1024 - 8192
+#define CONFIG_COTP_MAX_TPDU_SIZE 65535
+
+// Ethernet interface ID for GOOSE and SV
+#define CONFIG_ETHERNET_INTERFACE_ID "eth0"
+//#define CONFIG_ETHERNET_INTERFACE_ID "vboxnet0"
+// OS X uses enX in place of ethX as ethernet NIC names.
+//#define CONFIG_ETHERNET_INTERFACE_ID "en0"
+
+// 是否启用 GOOSE 特性
+#cmakedefine01 CONFIG_INCLUDE_GOOSE_SUPPORT
+
+// 是否启用 SV 特性
+#define CONFIG_DLT860_SAMPLED_VALUES_SUPPORT 1
+
+// 协议版本
+#define CONFIG_DLT860_EDITION_1 0
+
+#ifdef _WIN32
+// 如果网卡不支持 winpcap 那么 GOOSE 将不被支持
+#ifdef EXCLUDE_ETHERNET_WINDOWS
+#ifdef CONFIG_INCLUDE_GOOSE_SUPPORT
+#undef CONFIG_INCLUDE_GOOSE_SUPPORT
+#endif
+#define CONFIG_INCLUDE_GOOSE_SUPPORT 0
+#define CONFIG_INCUDE_ETHERNET_WINDOWS 0
+#else
+#define CONFIG_INCLUDE_ETHERNET_WINDOWS 1
+#undef CONFIG_ETHERNET_INTERFACE_ID
+#define CONFIG_ETHERNET_INTERFACE_ID "0"
+#endif
+#endif
+
+// GOOSE 在没有数值变动情况稳态情况下重传间隔(单位毫秒)
+#define CONFIG_GOOSE_STABLE_STATE_TRANSMISSION_INTERVAL 5000
+
+// GOOSE 在事件变动情况下重传间隔(单位毫秒)
+#define CONFIG_GOOSE_EVENT_RETRANSMISSION_INTERVAL 500
+
+// GOOSE 在事件变动情况下重传次数
+#define CONFIG_GOOSE_EVENT_RETRANSMISSION_COUNT 2
+
+// Define if GOOSE control block elements are writable (1) or read-only (0)
+
+// 定义 GOOSE 控制快元素是否可写（1） 还是 只读（0）
+#define CONFIG_GOOSE_GOID_WRITABLE 0
+#define CONFIG_GOOSE_DATSET_WRITABLE 0
+#define CONFIG_GOOSE_CONFREV_WRITABLE 0
+#define CONFIG_GOOSE_NDSCOM_WRITABLE 0
+#define CONFIG_GOOSE_DSTADDRESS_WRITABLE 0
+#define CONFIG_GOOSE_MINTIME_WRITABLE 0
+#define CONFIG_GOOSE_MAXTIME_WRITABLE 0
+#define CONFIG_GOOSE_FIXEDOFFS_WRITABLE 0
+
+// The default value for the priority field of the 802.1Q header (allowed range 0-7)
+#define CONFIG_GOOSE_DEFAULT_PRIORITY 4
+
+// The default value for the VLAN ID field of the 802.1Q header - the allowed range is 2-4096 or 0 if VLAN/priority is not used
+#define CONFIG_GOOSE_DEFAULT_VLAN_ID 0
+
+// 配置 16 bit 的 APPID
+#define CONFIG_GOOSE_DEFAULT_APPID 0x1000
+
+// 默认的 GOOSE MAC 地址
+#define CONFIG_GOOSE_DEFAULT_DST_ADDRESS {0x01, 0x0c, 0xcd, 0x01, 0x00, 0x01}
+
+// 是否启用控制服务
+#cmakedefine01 CONFIG_DLT860_CONTROL_SERVICE
+
+// SBO 控制时默认超时时间
+#define CONFIG_CONTROL_DEFAULT_SBO_TIMEOUT 15000
+
+// 是否启用报告服务
+#cmakedefine01 CONFIG_DLT860_REPORT_SERVICE
+
+// 是否支持缓存报告的 ResvTms 字段
+#define CONFIG_DLT860_BRCB_WITH_RESVTMS 1
+
+// allow only configured clients (when pre-configured by ClientLN) - note behavior in PIXIT Rp13
+#define CONFIG_DLT860_RCB_ALLOW_ONLY_PRECONFIGURED_CLIENT 0
+
+// 缓存报告控制块默认的缓存大小
+#cmakedefine CONFIG_REPORTING_DEFAULT_REPORT_BUFFER_SIZE @CONFIG_REPORTING_DEFAULT_REPORT_BUFFER_SIZE@
+
+// 是否启用定值组服务
+#cmakedefine01 CONFIG_DLT860_SETTING_GROUPS
+
+// 默认控制服务接受超时时间
+#define CONFIG_DLT860_SG_RESVTMS 100
+
+// 是否启用日志服务
+#cmakedefine01 CONFIG_DLT860_LOG_SERVICE
+
+// 是否启用读回调
+#cmakedefine01 CONFIG_DLT860_SUPPORT_USER_READ_ACCESS_CONTROL
+
+// 是否允许支持运行时修改服务标识
+#define CONFIG_DLT860_SUPPORT_SERVER_IDENTITY 1
+
+// 是否强制内存对齐
+#define CONFIG_DLT860_FORCE_MEMORY_ALIGNMENT 1
+
+// 服务的默认标识信息
+#define CONFIG_DEFAULT_MMS_VENDOR_NAME "libDLT860.com"
+#define CONFIG_DEFAULT_MMS_MODEL_NAME "LIBDLT860"
+#define CONFIG_DEFAULT_MMS_REVISION "${LIB_VERSION_MAJOR}.${LIB_VERSION_MINOR}.${LIB_VERSION_PATCH}"
+
+// support flatted named variable name space required by IEC 61850-8-1 MMS mapping
+#define CONFIG_MMS_SUPPORT_FLATTED_NAME_SPACE 1
+
+// VMD scope named variables are not used by IEC 61850
+#define CONFIG_MMS_SUPPORT_VMD_SCOPE_NAMED_VARIABLES 0
+
+// MMS virtual file store base path - where file services are looking for files
+#define CONFIG_VIRTUAL_FILESTORE_BASEPATH "./vmd-filestore/"
+
+// Maximum number of open file per MMS connection (for MMS file read service)
+#define CONFIG_MMS_MAX_NUMBER_OF_OPEN_FILES_PER_CONNECTION 5
+
+#define CONFIG_MMS_MAX_NUMBER_OF_DOMAIN_SPECIFIC_DATA_SETS 10
+
+#define CONFIG_MMS_MAX_NUMBER_OF_ASSOCIATION_SPECIFIC_DATA_SETS 10
+
+#define CONFIG_MMS_MAX_NUMBER_OF_VMD_SPECIFIC_DATA_SETS 10
+
+// Maximum number of the members in a data set (named variable list)
+#define CONFIG_MMS_MAX_NUMBER_OF_DATA_SET_MEMBERS 50
+
+// Definition of supported services
+#define MMS_DEFAULT_PROFILE 1
+
+#if MMS_DEFAULT_PROFILE
+#define MMS_READ_SERVICE 1
+#define MMS_WRITE_SERVICE 1
+#define MMS_GET_NAME_LIST 1
+#define MMS_JOURNAL_SERVICE 1
+#define MMS_GET_VARIABLE_ACCESS_ATTRIBUTES 1
+#define MMS_DATA_SET_SERVICE 1
+#define MMS_DYNAMIC_DATA_SETS 1
+#define MMS_GET_DATA_SET_ATTRIBUTES 1
+#define MMS_STATUS_SERVICE 1
+#define MMS_IDENTIFY_SERVICE 1
+#define MMS_FILE_SERVICE 1
+#define MMS_OBTAIN_FILE_SERVICE 1
+#endif
+
+// Sort getNameList response according to the MMS specified collation order - this is required by the standard
+// Set to 0 only for performance reasons and when no certification is required!
+#define CONFIG_MMS_SORT_NAME_LIST 1
+
+#define CONFIG_INCLUDE_PLATFORM_SPECIFIC_HEADERS 0
+
+// 是否使用老式功能约束
+#define CONFIG_PROVIDE_OLD_FC_DEFINES 0
+
+// 是否允许查看原始报文信息
+#cmakedefine01 CONFIG_MMS_RAW_MESSAGE_LOGGING
+
+/* Allow to set the virtual filestore basepath for MMS file services at runtime with the
+ * MmsServer_setFilestoreBasepath function
+ */
+#define CONFIG_SET_FILESTORE_BASEPATH_AT_RUNTIME 1
+
+// 是否允许服务运行期间进行配置
+#define CONFIG_MMS_SERVER_CONFIG_SERVICES_AT_RUNTIME 1
+
+/************************************************************************************
+ * 检查配置的一致性
+ ************************************************************************************/
+
+#if (MMS_JOURNAL_SERVICE != 1)
+
+#if (CONFIG_DLT860_LOG_SERVICE == 1)
+#warning "Invalid configuration: CONFIG_DLT860_LOG_SERVICE requires MMS_JOURNAL_SERVICE!"
+#endif
+
+#undef CONFIG_DLT860_LOG_SERVICE
+#define CONFIG_DLT860_LOG_SERVICE 0
+
+#endif
+
+#if (MMS_WRITE_SERVICE != 1)
+
+#if (CONFIG_DLT860_CONTROL_SERVICE == 1)
+#warning "Invalid configuration: CONFIG_DLT860_CONTROL_SERVICE requires MMS_WRITE_SERVICE!"
+#endif
+
+#undef CONFIG_DLT860_CONTROL_SERVICE
+#define CONFIG_DLT860_CONTROL_SERVICE 0
+#endif
+
+#if (MMS_FILE_SERVICE != 1)
+
+#if (MMS_OBTAIN_FILE_SERVICE == 1)
+#warning "Invalid configuration: MMS_OBTAIN_FILE_SERVICE requires MMS_FILE_SERVICE!"
+#endif
+
+#undef MMS_OBTAIN_FILE_SERVICE
+#define MMS_OBTAIN_FILE_SERVICE 0
+#endif
+
+#endif /* STACK_CONFIG_H_ */

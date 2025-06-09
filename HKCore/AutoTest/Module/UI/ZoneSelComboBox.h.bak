@@ -1,0 +1,16 @@
+#pragma once
+#include "..\..\..\module\mfcctrlex\numbercombobox.h"
+
+class CZoneSelComboBox :	public CNumberComboBox
+{
+public:
+	CZoneSelComboBox(void);
+	~CZoneSelComboBox(void);
+
+	long m_nZoneSelCount;
+	;
+public:
+	void InitComboBox(CExBaseObject *pGbItem);
+	void InitComboBox(long nZoneSelCount, const CString &strCalMode);
+	long GetZoneSelIndex();
+};

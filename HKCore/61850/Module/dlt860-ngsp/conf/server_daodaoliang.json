@@ -1,0 +1,13 @@
+{
+    "model": "/root/code/ngsp/scd/PL1001.cid",
+    "debug": true,
+    "file_root": "/root/code/ngsp/scd",
+    "sg_storage": "/tmp/sg1.db",
+    "log_storage": "/tmp/log.db",
+    "network": {
+        "bind": "0.0.0.0",
+        "port": 8102
+    },
+    "ignore_ied": [
+    ]
+}

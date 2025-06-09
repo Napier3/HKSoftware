@@ -1,0 +1,112 @@
+﻿syntax="proto3";
+
+package hqyPudPara;
+
+enum para_type
+{
+  manual_type = 0;//手动实验
+  state_type = 1;
+  iec_type = 2;
+}
+message chanelpara
+{
+	 float famptitude = 1;//幅值
+	 float fphase = 2;//相位
+	 float ffre = 3;//频率
+}
+
+message acanalogpara
+{
+        repeated chanelpara analogcurrentchanelvalue = 1;//电流模拟量通道 
+        repeated chanelpara analogvoltchangelvalue = 2;//模拟量电压通道值
+        repeated float fVoltDC = 3;//直流电压通道
+        repeated float fCurrentDC = 4;//直流电流通道
+        repeated chanelpara smallsignalchanelvalue = 5;
+
+}
+
+message acdigitalpara
+{
+        repeated chanelpara analogcurrentchanelvalue = 1;//电流数字量通道值 
+        repeated chanelpara analogvoltchangelvalue = 2;//电压数字量通道值
+}
+
+
+message acpara
+{
+	 acanalogpara oacanlogpara = 1;
+	 acdigitalpara oacdigitalpara = 2;
+         uint32 nbinaryout = 3;
+}
+
+message manualpara
+{
+     acpara oacpara = 1;
+     bool sendzeroafterstop = 2;// 电流大档位开关。ture大电流输出  false小电流输出
+     uint32 ndelaytime = 3;//接收到开入后延时多长时间停止
+     uint32 nIsStopBiChanged = 4;//开入变位后是否停止
+     uint32 nUtap = 5;
+     uint32 nItap = 6;
+     bool   isslowstart = 7;//软启动，电压步长启动
+     float  slowtime = 8;//步长总时间
+     bool keepsend = 9;//保持发送
+     bool bAgingTest = 10;//老化试验
+}
+
+
+message TestItem
+{
+     para_type otesttype = 1;
+     manualpara omanual = 2;
+     states     ostatepara = 3;
+}
+
+//电压通道映射
+message state
+{
+	 uint32 nIndex = 1;
+	 acpara oacpara = 2;
+         uint32 nTrigerType = 3;//0: 手动触发 1:时间触发单位ms 2:开入变位触发 3:GPS触发 4:开关量或时间触发
+	 uint32 nTrigerLogic = 4;//1：逻辑或   0：逻辑与
+	 uint32 nTirgerTime = 5;//时间触发参数或 GPS触发秒数
+	 uint32 sGpstime = 6;
+	 uint32 nsGpsTime = 7;//GPS时间 hour:minute:second.ns;
+	 uint32 nBiValide = 8;//开入有效位
+         float fDelaytime = 9;//触发后延时
+         uint32 nBireversal = 10;//0:翻转 1:高电平2:低电平
+}
+
+message states
+{
+
+    repeated state ostates = 1;
+     uint32 nisloop = 2;//is loops
+     uint32 nDC = 3;
+     float  fDCtime = 4;
+     uint32 loopcount = 5; //总循环次数
+     bool isLargecurrent = 6;//是否是大电流 true 是 false 不是
+}
+
+//   activetype_start = 1;//开始测试
+//   activetype_stop = 2;//停止
+//   activetype_stateChange开始 = 3;
+//   activetype_bichanged = 4;//开入变位
+//   activetype_GOOSEInChanged = 5;//GOOGSE变位
+
+
+message StateResultItem
+{
+     uint32 nindex = 1;
+     uint32 secondtime = 2;   // 时间
+     uint32 nstime = 3;   // 时间
+     uint32 oactivetype = 4;   // 类型
+     uint32 nBinstate = 5;//开入量
+     uint32 ncurrentstateIndex = 6;//当前状态序号，从0开始
+}
+
+message stateResult
+{
+    repeated StateResultItem oitem = 1;
+}
+
+

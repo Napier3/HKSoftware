@@ -1,0 +1,223 @@
+<!-- edited with XML Spy v4.0.1 U (http://www.xmlspy.com) by Michael Eick (SISCO/Engineering) -->
+<!--
+05/05/05  JRB  For "brcbST$SqNum" chg WrIndFun from mvlu_sqnum_int16u_wr_ind_fun to u_no_write_allowed.
+	       For "urcbST$SqNum" chg WrIndFun from mvlu_sqnum_wr_ind_fun to u_no_write_allowed.
+	       In UCA GLOBE, SqNum is INT8U. Chg to use mvlu_sqnum_rd(wr)_ind_fun.
+07/02/04  JRB  Fix BufTm spelling for IEC-61850 urcb & brcb.
+05/13/04  JRB  Chg rd/wr leaf functions for BRCB SqNum to mvlu_sqnum_int16u...
+12/17/03  JRB  For 61850-8-1 FDIS, add mvlu_timeofentry_rd_ind.
+09/22/03  JRB  Chg POPF to IEC_POPF. Add "$dynamic" example.
+               Add some IEC_MHAN leafs to demonstrate array of Vectors.
+               Chg _mvlu_null_read_ind to mvlu_null_rd_ind
+               Chg _mvlu_null_write_ind to mvlu_null_wr_ind
+01/24/03  JRB  Deleted GLOBE$RP$brcbMX Leafs. Added POPF$RP$urcbST Leafs
+12/16/02  JRB  Added POPF$BR Leafs
+-->
+<Leafmap>
+	<Leaf Name="$dynamic" RdIndFun="u_int32_offset_rd_ind_fun" WrIndFun="u_int32_offset_wr_ind_fun" Ref=""/>
+	<Leaf Name="DI$Name" RdIndFun="u_string_offset_rd_ind_fun" WrIndFun="u_no_write_allowed" Ref=""/>
+	<Leaf Name="DI$Class" RdIndFun="u_string_offset_rd_ind_fun" WrIndFun="u_no_write_allowed" Ref=""/>
+	<Leaf Name="DI$d" RdIndFun="u_string_offset_rd_ind_fun" WrIndFun="u_no_write_allowed" Ref=""/>
+	<Leaf Name="DI$Own" RdIndFun="u_string_offset_rd_ind_fun" WrIndFun="u_no_write_allowed" Ref=""/>
+	<Leaf Name="DI$Loc" RdIndFun="u_string_offset_rd_ind_fun" WrIndFun="u_no_write_allowed" Ref=""/>
+	<Leaf Name="DI$VndID$Vnd" RdIndFun="u_string_offset_rd_ind_fun" WrIndFun="u_no_write_allowed" Ref=""/>
+	<Leaf Name="DI$VndID$Mdl" RdIndFun="u_string_offset_rd_ind_fun" WrIndFun="u_no_write_allowed" Ref=""/>
+	<Leaf Name="DI$VndID$DevMdls" RdIndFun="u_string_offset_rd_ind_fun" WrIndFun="u_no_write_allowed" Ref=""/>
+	<Leaf Name="DI$VndID$SerNum" RdIndFun="u_string_offset_rd_ind_fun" WrIndFun="u_no_write_allowed" Ref=""/>
+	<Leaf Name="DI$VndID$HwRev" RdIndFun="u_string_offset_rd_ind_fun" WrIndFun="u_no_write_allowed" Ref=""/>
+	<Leaf Name="DI$VndID$SftRev" RdIndFun="u_string_offset_rd_ind_fun" WrIndFun="u_no_write_allowed" Ref=""/>
+	<Leaf Name="DI$CommID$CommAdr" RdIndFun="u_string_offset_rd_ind_fun" WrIndFun="u_no_write_allowed" Ref=""/>
+	<Leaf Name="DI$CommID$CommRev" RdIndFun="u_string_offset_rd_ind_fun" WrIndFun="u_no_write_allowed" Ref=""/>
+	<Leaf Name="DI$CommID$Pro" RdIndFun="u_uint8_offset_rd_ind_fun" WrIndFun="u_no_write_allowed" Ref=""/>
+	<Leaf Name="DI$CommID$Med" RdIndFun="u_uint8_offset_rd_ind_fun" WrIndFun="u_no_write_allowed" Ref=""/>
+	<Leaf Name="DI$CommID$MAC" RdIndFun="u_uint8_offset_rd_ind_fun" WrIndFun="u_no_write_allowed" Ref=""/>
+	<Leaf Name="GLOBE$ST$ModeDS$b2" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$ST$ModeDS$q" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$ST$ModeDS$t" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$ST$LocRemDS$b2" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$ST$LocRemDS$q" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$ST$LocRemDS$t" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$ST$ActSG" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$ST$EditSG" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$ST$AuxIn01" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$SP$PreSetDNA" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$SP$ForDNA" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$SP$DefDNA" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$CO$CopySG" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$CO$SaveSG" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$CO$ActSG" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$CO$IndRs" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$CO$AuxOut16" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$CF$Img$BLOB" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$CF$Img$State" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$CF$Img$TimOut" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$CF$Img$Fmt" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$CF$ClockTOD" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$CF$SelOutDNA" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$CF$SelInDNA" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$CF$NeutRef" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$CF$CTRat$Prif" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$CF$CTRat$Secf" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$CF$CTRat$Ratiof" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$CF$VTRat$Prif" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$CF$VTRat$Secf" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$CF$VTRat$Ratiof" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$DC$ModeDS$d" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$DC$LocRemDS$d" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$DC$ActSG$d" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$DC$EditSG$d" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$DC$AuxIn01$d" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$AX$SGEditor$TagID" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$AX$SGEditor$TagTyp" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$AX$SGEditor$TagD" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$AX$SGEditor$TagOwn" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$RP$brcbST$RptEna" RdIndFun="mvlu_rptena_rd_ind_fun" WrIndFun="mvlu_rptena_wr_ind_fun" Ref=""/>
+	<Leaf Name="GLOBE$RP$brcbST$RptID" RdIndFun="mvlu_rptid_rd_ind_fun" WrIndFun="mvlu_rptid_wr_ind_fun" Ref=""/>
+	<Leaf Name="GLOBE$RP$brcbST$DatSet" RdIndFun="mvlu_datsetna_rd_ind_fun" WrIndFun="u_no_write_allowed" Ref=""/>
+	<Leaf Name="GLOBE$RP$brcbST$OptFlds" RdIndFun="mvlu_optflds_rd_ind_fun" WrIndFun="mvlu_optflds_wr_ind_fun" Ref=""/>
+	<Leaf Name="GLOBE$RP$brcbST$BufTim" RdIndFun="mvlu_buftim_rd_ind_fun" WrIndFun="mvlu_buftim_wr_ind_fun" Ref=""/>
+	<Leaf Name="GLOBE$RP$brcbST$Trgs" RdIndFun="mvlu_trgs_rd_ind_fun" WrIndFun="mvlu_trgs_wr_ind_fun" Ref=""/>
+	<Leaf Name="GLOBE$RP$brcbST$SqNum" RdIndFun="mvlu_sqnum_rd_ind_fun" WrIndFun="mvlu_sqnum_wr_ind_fun" Ref=""/>
+	<Leaf Name="GLOBE$RP$brcbST$TrgOps" RdIndFun="mvlu_trgops_rd_ind_fun" WrIndFun="mvlu_trgops_wr_ind_fun" Ref=""/>
+	<Leaf Name="GLOBE$RP$brcbST$RBEPd" RdIndFun="mvlu_rbepd_rd_ind_fun" WrIndFun="mvlu_rbepd_wr_ind_fun" Ref=""/>
+	<Leaf Name="GLOBE$RP$brcbST$IntgPd" RdIndFun="mvlu_intgpd_rd_ind_fun" WrIndFun="mvlu_intgpd_wr_ind_fun" Ref=""/>
+	<Leaf Name="GLOBE$RP$GOOSE$SendingIED" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$RP$GOOSE$t" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$RP$GOOSE$SqNum" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$RP$GOOSE$StNum" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$RP$GOOSE$HoldTim" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$RP$GOOSE$BackTim" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$RP$GOOSE$PhsID" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$RP$GOOSE$DNA" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="GLOBE$RP$GOOSE$UserSt" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$ST$Out" RdIndFun="u_pbro_st_out_rd_ind_fun" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$ST$Tar" RdIndFun="u_pbro_st_tar_rd_ind_fun" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$ST$FctDS$b2" RdIndFun="u_pbro_st_fctds_b2_rd_ind_fun" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$ST$FctDS$q" RdIndFun="u_pbro_st_fctds_q_rd_ind_fun" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$ST$FctDS$t" RdIndFun="u_pbro_st_fctds_t_rd_ind_fun" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$ST$AuxIn1" RdIndFun="u_pbro_st_auxin1_rd_ind_fun" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$ST$PuGrp" RdIndFun="u_pbro_st_pugrp_rd_ind_fun" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$SG$Pu$Phsi" RdIndFun="u_pbro_sg_pu_phsi_rd_ind_fun" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$SG$Pu$Phsf" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$SG$Pu$Neuti" RdIndFun="u_pbro_sg_pu_neuti_rd_ind_fun" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$SG$Pu$Neutf" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$SG$Pu$CldLodi" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$SG$Pu$CldLodf" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$SG$Pu$Hzi" RdIndFun="u_pbro_sg_pu_hzi_rd_ind_fun" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$SG$Pu$Hzf" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$SG$PuDelTim" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$SG$DODelTim" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CO$EnaDisFct$OperDev" RdIndFun="u_no_read_allowed" WrIndFun="mvlu_sbo_operate_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CO$EnaDisFct$SBO" RdIndFun="mvlu_sbo_select_rd_ind" WrIndFun="u_no_write_allowed" Ref="MVLU_STR:OperDev"/>
+	<Leaf Name="PBRO$CO$RsTar$b1" RdIndFun="u_no_read_allowed" WrIndFun="mvlu_sbo_operate_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CO$RsTar$SBO" RdIndFun="mvlu_sbo_select_rd_ind" WrIndFun="u_no_write_allowed" Ref="MVLU_STR:b1"/>
+	<Leaf Name="PBRO$CO$RsLat$b1" RdIndFun="u_no_read_allowed" WrIndFun="mvlu_sbo_operate_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CO$RsLat$SBO" RdIndFun="mvlu_sbo_select_rd_ind" WrIndFun="u_no_write_allowed" Ref="MVLU_STR:b1"/>
+	<Leaf Name="PBRO$CO$EnaLatRs$b1" RdIndFun="u_no_read_allowed" WrIndFun="mvlu_sbo_operate_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CO$EnaLatRs$SBO" RdIndFun="mvlu_sbo_select_rd_ind" WrIndFun="u_no_write_allowed" Ref="MVLU_STR:b1"/>
+	<Leaf Name="PBRO$CO$AuxOut1" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$Pu$s" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$Pu$o" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$Pu$u" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$Pu$db" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$Pu$min" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$Pu$max" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$Pu$Incr" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$Pu$MxTyp" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$Pu$MxRef" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$Pu$MxLoc" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$Pu$SmpRate" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$Pu$NumSmp" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$Pu$pp" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$PuDelTim$s" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$PuDelTim$o" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$PuDelTim$u" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$PuDelTim$db" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$PuDelTim$min" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$PuDelTim$max" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$PuDelTim$Incr" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$PuDelTim$MxTyp" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$PuDelTim$MxRef" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$PuDelTim$MxLoc" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$PuDelTim$SmpRate" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$PuDelTim$NumSmp" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$PuDelTim$pp" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$DODelTim$s" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$DODelTim$o" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$DODelTim$u" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$DODelTim$db" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$DODelTim$min" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$DODelTim$max" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$DODelTim$Incr" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$DODelTim$MxTyp" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$DODelTim$MxRef" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$DODelTim$MxLoc" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$DODelTim$SmpRate" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$DODelTim$NumSmp" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$DODelTim$pp" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$EnaDisFct$OnDur" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$EnaDisFct$OffDur" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$RsTar$OnDur" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$RsTar$OffDur" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$RsLat$OnDur" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$RsLat$OffDur" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$EnaLatRs$OnDur" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$EnaLatRs$OffDur" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$AuxOut1$OnDur" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$CF$AuxOut1$OffDur" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$DC$Out$d" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$DC$Tar$d" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$DC$FctDS$d" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$DC$AuxIn1$d" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$DC$PuGrp$d" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$DC$EnaDisFct$d" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$DC$RsTar$d" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$DC$RsLat$d" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$DC$EnaLatRs$d" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="PBRO$DC$AuxOut1$d" RdIndFun="mvlu_null_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="IEC_POPF$BR$brcbST$RptEna" RdIndFun="mvlu_rptena_rd_ind_fun" WrIndFun="mvlu_rptena_wr_ind_fun" Ref=""/>
+	<Leaf Name="IEC_POPF$BR$brcbST$RptID" RdIndFun="mvlu_rptid_rd_ind_fun" WrIndFun="mvlu_rptid_wr_ind_fun" Ref=""/>
+	<Leaf Name="IEC_POPF$BR$brcbST$DatSet" RdIndFun="mvlu_datsetna_rd_ind_fun" WrIndFun="u_no_write_allowed" Ref=""/>
+	<Leaf Name="IEC_POPF$BR$brcbST$ConfRev" RdIndFun="mvlu_confrev_rd_ind" WrIndFun="u_no_write_allowed" Ref=""/>
+	<Leaf Name="IEC_POPF$BR$brcbST$OptFlds" RdIndFun="mvlu_optflds_rd_ind_fun" WrIndFun="mvlu_optflds_wr_ind_fun" Ref=""/>
+	<Leaf Name="IEC_POPF$BR$brcbST$BufTm" RdIndFun="mvlu_buftim_rd_ind_fun" WrIndFun="mvlu_buftim_wr_ind_fun" Ref=""/>
+	<Leaf Name="IEC_POPF$BR$brcbST$SqNum" RdIndFun="mvlu_sqnum_int16u_rd_ind_fun" WrIndFun="u_no_write_allowed" Ref=""/>
+	<Leaf Name="IEC_POPF$BR$brcbST$TrgOps" RdIndFun="mvlu_trgops_rd_ind_fun" WrIndFun="mvlu_trgops_wr_ind_fun" Ref=""/>
+	<Leaf Name="IEC_POPF$BR$brcbST$IntgPd" RdIndFun="mvlu_intgpd_rd_ind_fun" WrIndFun="mvlu_intgpd_wr_ind_fun" Ref=""/>
+	<Leaf Name="IEC_POPF$BR$brcbST$GI" RdIndFun="mvlu_gi_rd_ind" WrIndFun="mvlu_gi_wr_ind" Ref=""/>
+	<Leaf Name="IEC_POPF$BR$brcbST$PurgeBuf" RdIndFun="mvlu_purgebuf_rd_ind" WrIndFun="mvlu_purgebuf_wr_ind" Ref=""/>
+	<Leaf Name="IEC_POPF$BR$brcbST$EntryID" RdIndFun="mvlu_entryid_rd_ind" WrIndFun="mvlu_entryid_wr_ind" Ref=""/>
+	<Leaf Name="IEC_POPF$BR$brcbST$TimeofEntry" RdIndFun="mvlu_timeofentry_rd_ind" WrIndFun="u_no_write_allowed" Ref=""/>
+
+	<Leaf Name="IEC_POPF$RP$urcbST$RptEna" RdIndFun="mvlu_rptena_rd_ind_fun" WrIndFun="mvlu_rptena_wr_ind_fun" Ref=""/>
+	<Leaf Name="IEC_POPF$RP$urcbST$RptID" RdIndFun="mvlu_rptid_rd_ind_fun" WrIndFun="mvlu_rptid_wr_ind_fun" Ref=""/>
+	<Leaf Name="IEC_POPF$RP$urcbST$Resv" RdIndFun="mvlu_resv_rd_ind_fun" WrIndFun="mvlu_resv_wr_ind_fun" Ref=""/>
+	<Leaf Name="IEC_POPF$RP$urcbST$DatSet" RdIndFun="mvlu_datsetna_rd_ind_fun" WrIndFun="u_no_write_allowed" Ref=""/>
+	<Leaf Name="IEC_POPF$RP$urcbST$ConfRev" RdIndFun="mvlu_confrev_rd_ind" WrIndFun="u_no_write_allowed" Ref=""/>
+	<Leaf Name="IEC_POPF$RP$urcbST$OptFlds" RdIndFun="mvlu_optflds_rd_ind_fun" WrIndFun="mvlu_optflds_wr_ind_fun" Ref=""/>
+	<Leaf Name="IEC_POPF$RP$urcbST$BufTm" RdIndFun="mvlu_buftim_rd_ind_fun" WrIndFun="mvlu_buftim_wr_ind_fun" Ref=""/>
+	<Leaf Name="IEC_POPF$RP$urcbST$SqNum" RdIndFun="mvlu_sqnum_rd_ind_fun" WrIndFun="u_no_write_allowed" Ref=""/>
+	<Leaf Name="IEC_POPF$RP$urcbST$TrgOps" RdIndFun="mvlu_trgops_rd_ind_fun" WrIndFun="mvlu_trgops_wr_ind_fun" Ref=""/>
+	<Leaf Name="IEC_POPF$RP$urcbST$IntgPd" RdIndFun="mvlu_intgpd_rd_ind_fun" WrIndFun="mvlu_intgpd_wr_ind_fun" Ref=""/>
+	<Leaf Name="IEC_POPF$RP$urcbST$GI" RdIndFun="mvlu_gi_rd_ind" WrIndFun="mvlu_gi_wr_ind" Ref=""/>
+
+	<Leaf Name="IEC_MHAN$MX$HaAmp$har$mag$i" RdIndFun="har_mag_i_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="IEC_MHAN$MX$HaAmp$har$mag$f" RdIndFun="har_mag_f_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="IEC_MHAN$MX$HaAmp$har$ang$i" RdIndFun="har_ang_i_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="IEC_MHAN$MX$HaAmp$har$ang$f" RdIndFun="har_ang_f_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+
+	<Leaf Name="IEC_MHAN$MX$HaWatt$har$mag$i" RdIndFun="har_mag_i_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="IEC_MHAN$MX$HaWatt$har$mag$f" RdIndFun="har_mag_f_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="IEC_MHAN$MX$HaWatt$har$ang$i" RdIndFun="har_ang_i_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="IEC_MHAN$MX$HaWatt$har$ang$f" RdIndFun="har_ang_f_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+
+	<Leaf Name="IEC_MHAN$MX$HaVolAmpr$har$mag$i" RdIndFun="har_mag_i_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="IEC_MHAN$MX$HaVolAmpr$har$mag$f" RdIndFun="har_mag_f_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="IEC_MHAN$MX$HaVolAmpr$har$ang$i" RdIndFun="har_ang_i_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="IEC_MHAN$MX$HaVolAmpr$har$ang$f" RdIndFun="har_ang_f_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+
+	<Leaf Name="IEC_MHAN$MX$HaVolAmp$har$mag$i" RdIndFun="har_mag_i_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="IEC_MHAN$MX$HaVolAmp$har$mag$f" RdIndFun="har_mag_f_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="IEC_MHAN$MX$HaVolAmp$har$ang$i" RdIndFun="har_ang_i_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+	<Leaf Name="IEC_MHAN$MX$HaVolAmp$har$ang$f" RdIndFun="har_ang_f_rd_ind" WrIndFun="mvlu_null_wr_ind" Ref=""/>
+</Leafmap>

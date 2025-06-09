@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QPpSttIotEngineDebugWidget</class>
+ <widget class="QDialog" name="QPpSttIotEngineDebugWidget">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>488</width>
+    <height>384</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>IotProtcoClient</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <layout class="QGridLayout" name="gridLayoutNameID">
+       <item row="0" column="1">
+        <widget class="QRadioButton" name="m_btnMmsEngine">
+         <property name="text">
+          <string>MMS Engine</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QRadioButton" name="m_btnCmsEngine">
+         <property name="text">
+          <string>CMS Engine</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QRadioButton" name="m_btnPpEngine">
+         <property name="text">
+          <string>PpEngine</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QGridLayout" name="gridLayoutNameID_3">
+       <item row="0" column="0">
+        <widget class="QPushButton" name="m_btnCreateDevice">
+         <property name="text">
+          <string>CreateDevice</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QPushButton" name="m_btnConnectDevice">
+         <property name="text">
+          <string>ConnectDevice</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QPushButton" name="m_btnCloseDevice">
+         <property name="text">
+          <string>CloseDevice</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="4">
+        <widget class="QPushButton" name="m_btnReadAin">
+         <property name="text">
+          <string>ReadAin</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QGridLayout" name="gridLayoutNameID_2">
+       <item row="0" column="2">
+        <widget class="QPushButton" name="m_btnReadSetting">
+         <property name="text">
+          <string>ReadSetting</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QPushButton" name="m_btnReadEna">
+         <property name="text">
+          <string>ReadEna</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="5">
+        <widget class="QPushButton" name="m_btnWriteSetting">
+         <property name="text">
+          <string>WriteSetting</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="6">
+        <widget class="QPushButton" name="m_btnWriteEna">
+         <property name="text">
+          <string>WriteEna</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="gridLayoutNameID_4">
+     <item row="0" column="2">
+      <widget class="QListWidget" name="m_listLog"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="gridLayoutNameID_5">
+     <item row="0" column="1">
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="0">
+      <widget class="QCheckBox" name="m_chkSttFormat">
+       <property name="text">
+        <string>JSON</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QPushButton" name="m_btnClose">
+       <property name="text">
+        <string>Close</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

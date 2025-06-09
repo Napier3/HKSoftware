@@ -1,0 +1,52 @@
+//这段源代码由ClassGenerator创建
+//版权所有 LiJunqing  lijunqing1224@126.com
+//保留所有权利
+
+//PpEngineConfig.h  CPpEngineConfig
+
+#pragma once
+
+#include "PpEngineConfigGlobal.h"
+
+
+#include "PpEngineDsCfg.h"
+
+class CPpEngineConfig : public CExBaseList
+{
+public:
+	CPpEngineConfig();
+	virtual ~CPpEngineConfig();
+
+	long m_nDebugMode;
+	long m_nEnumLDAfterReadXml;
+	long m_nPpEnumLogCtrl;
+	long m_nExitAppForException;
+	long m_nUseDvmMapFile;
+
+//重载函数
+public:
+	virtual UINT GetClassID() {    return MSCFGCLASSID_CPPENGINECONFIG;   }
+	virtual BSTR GetXmlElementKey()  {      return CPpEngineConfigXmlRWKeys::CPpEngineConfigKey();     }
+	virtual long XmlReadOwn(const MSXML2::IXMLDOMNodePtr &oNode, CXmlRWKeys *pXmlRWKeys);
+	virtual long XmlWriteOwn(const MSXML2::IXMLDOMDocumentPtr &oXMLDoc, const MSXML2::IXMLDOMElementPtr &oElement, CXmlRWKeys *pXmlRWKeys);
+	virtual CBaseObject* Clone();
+	virtual BOOL CopyOwn(CBaseObject* pDest);
+	virtual BOOL IsEqualOwn(CBaseObject* pObj);
+	virtual CExBaseObject* CreateNewChild(const CString &strClassID, BOOL &bAddToTail, CXmlRWKeys *pXmlRWKeys);
+	virtual CExBaseObject* CreateNewChild(long nClassID/*, BOOL &bAddToTail*/);
+
+//私有成员变量
+private:
+	CString GetPpEngineConfigFile();
+
+//私有成员变量访问方法
+public:
+	BOOL IsDatasetUse(const CString &strDsName);
+	BOOL IsDatasetUse(const char *pDsName);
+
+	void ReadPpEngineConfig();
+	void SavePpEngineConfig();
+
+	char* Pp_GetDatasetKey(const CString &strDatasetID);
+};
+

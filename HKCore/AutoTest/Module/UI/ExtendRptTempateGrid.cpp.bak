@@ -1,0 +1,180 @@
+// D:\WorkLiJQ\Source\AutoTest\GuideBookDev\UI\Device\GbUIGuidebookExtendRptTempateDialog.cpp : 实现文件
+//
+
+#include "stdafx.h"
+#include "..\..\GuideBookDev.h"
+#include "GbUIGuidebookExtendRptTempateDialog.h"
+
+//////////////////////////////////////////////////////////////////////////
+//
+#define EXTEND_RPT_TEMPLATE_COL_INDEX  0
+#define EXTEND_RPT_TEMPLATE_COL_NAME   1
+#define EXTEND_RPT_TEMPLATE_COL_ADDED  2
+#define EXTEND_RPT_TEMPLATE_COLS  3
+
+CGridExtendRptTempalte::CGridExtendRptTempalte()
+{
+	
+}
+
+CGridExtendRptTempalte::~CGridExtendRptTempalte()
+{
+
+}
+
+
+void CGridExtendRptTempalte::InitGridTitle()
+{
+	CString cTempStr[EXTEND_RPT_TEMPLATE_COLS]={CXLanguageResourceAts_GbDev::g_sLangTxt_SerNumber
+		,CXLanguageResourceAts_GbDev::g_sLangTxt_ReportTemplateFile
+		,CXLanguageResourceAts_GbDev::g_sLangTxt_Add};
+	int iWidth[EXTEND_RPT_TEMPLATE_COLS]={60,250, 150};
+
+	CExBaseListGrid::InitGridTitle(cTempStr, iWidth, EXTEND_RPT_TEMPLATE_COLS);
+}
+
+void CGridExtendRptTempalte::InitGrid()
+{
+	SetListMode(TRUE);
+	SetTextBkColor(RGB(0x0FF, 0x0FF, 0x0E0));
+	DeleteAllItems();
+	SetRowCount(1);
+	SetColumnCount(3);
+	SetFixedRowCount(1);
+	SetFixedColumnCount(1);
+
+	InitGridTitle();
+
+	ResetScrollBars();
+}
+
+void CGridExtendRptTempalte::ShowData(CExBaseObject *pData, int& nRow, BOOL bInsertRow)
+{
+	CDvmData *pExtRptTtt = (CDvmData*)pData;
+
+	Show_Index(pData, nRow, EXTEND_RPT_TEMPLATE_COL_INDEX);
+
+	Show_String(pData, nRow, EXTEND_RPT_TEMPLATE_COL_NAME, &pExtRptTtt->m_strName, EndEditCell_String_NameAndID);
+	Show_String(pData, nRow, EXTEND_RPT_TEMPLATE_COL_ADDED, &pExtRptTtt->m_strFormat);
+
+	nRow++;
+}
+
+void CGridExtendRptTempalte::SetMidifiedFlag(CExBaseObject *pData, BOOL bModified)
+{
+	Gb_SetGbModifiedFlag(pData);
+}
+
+// CGbUIGuidebookExtendRptTempateDialog 对话框
+
+IMPLEMENT_DYNAMIC(CGbUIGuidebookExtendRptTempateDialog, CDialog)
+
+CGbUIGuidebookExtendRptTempateDialog::CGbUIGuidebookExtendRptTempateDialog(CExBaseObject* pNode,CWnd* pParent /*=NULL*/)
+	: CDialog(CGbUIGuidebookExtendRptTempateDialog::IDD, pParent)
+	,CGbNodeAttrEditWndInterface(pNode,pParent)
+{
+	m_pExtendRptTemplate = NULL;
+}
+
+CGbUIGuidebookExtendRptTempateDialog::CGbUIGuidebookExtendRptTempateDialog()
+: CDialog(CGbUIGuidebookExtendRptTempateDialog::IDD, NULL),CGbNodeAttrEditWndInterface(NULL,NULL)
+{
+	m_pExtendRptTemplate = NULL;
+}
+
+CGbUIGuidebookExtendRptTempateDialog::~CGbUIGuidebookExtendRptTempateDialog()
+{
+}
+
+void CGbUIGuidebookExtendRptTempateDialog::DoDataExchange(CDataExchange* pDX)
+{
+	CDialog::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_XMATCH_EDITGRIDCTRL, m_gridExtendRptTtt);
+}
+
+
+BEGIN_MESSAGE_MAP(CGbUIGuidebookExtendRptTempateDialog, CDialog)
+	ON_BN_CLICKED(IDC_BTN_ADD, &CGbUIGuidebookExtendRptTempateDialog::OnBnClickedBtnAdd)
+	ON_BN_CLICKED(IDC_BTN_DELETE, &CGbUIGuidebookExtendRptTempateDialog::OnBnClickedBtnDelete)
+END_MESSAGE_MAP()
+
+
+// CGbUIGuidebookExtendRptTempateDialog 消息处理程序
+void CGbUIGuidebookExtendRptTempateDialog::UICreate(CExBaseObject* pObj, CWnd* pParent)
+{
+	m_pItem = pObj;
+	m_pParent = pParent;
+	Create(IDD, pParent);
+}
+
+void CGbUIGuidebookExtendRptTempateDialog::ShowGbNode(CExBaseObject* pObj)
+{
+/*
+	if (pObj == NULL)
+	{
+		return;
+	}
+
+	m_pItem = pObj;
+	ShowAllScriptLib();
+	EnableAllButtons();
+
+	m_cmbScriptMngrType.InitComboBox(pObj);*/
+}
+
+void CGbUIGuidebookExtendRptTempateDialog::Show()
+{
+	ShowWindow(SW_SHOW);
+}
+
+void CGbUIGuidebookExtendRptTempateDialog::Hide()
+{
+	ShowWindow(SW_HIDE);
+}
+
+void CGbUIGuidebookExtendRptTempateDialog::AdjustSize(CRect rect)
+{
+	MoveWindow(rect);
+}
+
+void CGbUIGuidebookExtendRptTempateDialog::CreateEx()
+{
+	Create(IDD,m_pParent);
+}
+
+BOOL CGbUIGuidebookExtendRptTempateDialog::Save()
+{
+	UpdateData(TRUE);
+
+	return TRUE;
+}
+
+
+BOOL CGbUIGuidebookExtendRptTempateDialog::OnInitDialog()
+{
+	__super::OnInitDialog();
+
+	m_gridExtendRptTtt.InitGrid();
+
+	return TRUE;  // return TRUE unless you set the focus to a control
+	// 异常: OCX 属性页应返回 FALSE
+}
+
+void CGbUIGuidebookExtendRptTempateDialog::OnBnClickedBtnAdd()
+{
+	if (m_pExtendRptTemplate == NULL)
+	{
+		CGuideBook *pGuideBook = (CGuideBook *)m_pItem;
+		m_pExtendRptTemplate = pGuideBook->GetExtendRptTemplateDef(TRUE);
+	}
+	
+	CDvmData *pData = new CDvmData();
+	m_pExtendRptTemplate->AddNewChild(pData);
+	m_gridExtendRptTtt.InsertData(pData);
+	Gb_SetGbModifiedFlag(m_pExtendRptTemplate);
+}
+
+void CGbUIGuidebookExtendRptTempateDialog::OnBnClickedBtnDelete()
+{
+	m_gridExtendRptTtt.DeleteSelRow();
+}

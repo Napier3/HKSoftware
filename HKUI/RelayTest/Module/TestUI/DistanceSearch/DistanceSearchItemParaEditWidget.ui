@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QDistanceSearchItemParaEditWidget</class>
+ <widget class="QWidget" name="QDistanceSearchItemParaEditWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>670</width>
+    <height>407</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>QRecloseAccItemParaEditWidget</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <layout class="QGridLayout" name="m_gridLayout">
+     <property name="rightMargin">
+      <number>10</number>
+     </property>
+     <item row="0" column="0">
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="7" column="1">
+      <widget class="QLabel" name="m_labEndZAng">
+       <property name="text">
+        <string>末端阻抗角(°):</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1">
+      <widget class="QLabel" name="m_labEndZ">
+       <property name="text">
+        <string>末端阻抗(Ω):</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="5">
+      <widget class="QLineEdit" name="m_editAbsErr"/>
+     </item>
+     <item row="7" column="4">
+      <widget class="QLabel" name="m_labRelErr">
+       <property name="text">
+        <string>相对误差(％):</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="5">
+      <widget class="QLineEdit" name="m_editFaultVf"/>
+     </item>
+     <item row="4" column="5">
+      <widget class="QLineEdit" name="m_editTSetting"/>
+     </item>
+     <item row="6" column="2">
+      <widget class="QLineEdit" name="m_editEndVal"/>
+     </item>
+     <item row="6" column="4">
+      <widget class="QLabel" name="m_labAbsErr">
+       <property name="text">
+        <string>绝对误差(Ω):</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="2">
+      <widget class="QLineEdit" name="m_editEndValAng"/>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="m_labFaultType">
+       <property name="text">
+        <string>故障类型:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="5">
+      <widget class="QLineEdit" name="m_editRelErr"/>
+     </item>
+     <item row="0" column="2">
+      <widget class="CExBaseListComboBox" name="m_cbbFaultType">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="5">
+      <widget class="QLineEdit" name="m_editFaultIf"/>
+     </item>
+     <item row="1" column="4">
+      <widget class="QLabel" name="m_labFaultCur">
+       <property name="text">
+        <string>短路电流(A):</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="4">
+      <widget class="QLabel" name="m_labFaultVol">
+       <property name="text">
+        <string>短路电压(V):</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="4">
+      <widget class="QLabel" name="m_labTSetting">
+       <property name="text">
+        <string>时间定值(s):</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="4">
+      <widget class="QLabel" name="m_labStep">
+       <property name="text">
+        <string>阻抗步长(Ω):</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="2">
+      <widget class="QLineEdit" name="m_editBeginVal"/>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLabel" name="m_labBegZ">
+       <property name="text">
+        <string>首端阻抗(Ω):</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLabel" name="m_labBegZAng">
+       <property name="text">
+        <string>首端阻抗角(°):</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="5">
+      <widget class="QLineEdit" name="m_editStep"/>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLabel" name="m_labZoneType">
+       <property name="text">
+        <string>区段:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="CExBaseListComboBox" name="m_cbbZoneType"/>
+     </item>
+     <item row="4" column="2">
+      <widget class="QLineEdit" name="m_editBeginValAng"/>
+     </item>
+     <item row="0" column="6">
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>CExBaseListComboBox</class>
+   <extends>QComboBox</extends>
+   <header>../../../../Module/BaseClass/QT/QExBaseListComboBox.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,925 @@
+
+
+***********************************************************
+          LOGGING STARTED Sun Dec 05 19:20:53 2010
+***********************************************************
+
+2010-12-05 19:20:53.656 SLOGALWAYS (scl_srvr.c 395) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2010-12-05 19:20:53.671 SLOGALWAYS (scl_srvr.c 397) 
+  Initializing ...
+
+2010-12-05 19:20:54.406 SLOGALWAYS (scl_srvr.c 425) 
+  Initialization complete, entering service loop
+
+***********************************************************
+          LOGGING STARTED Sat Apr 21 19:14:12 2012
+***********************************************************
+
+2012-04-21 19:14:12.171 SLOGALWAYS (scl_srvr.c 395) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-21 19:14:12.187 SLOGALWAYS (scl_srvr.c 397) 
+  Initializing ...
+
+2012-04-21 19:14:12.781 SLOGALWAYS (scl_srvr.c 425) 
+  Initialization complete, entering service loop
+
+2012-04-21 19:15:22.484 SLOGALWAYS (scl_srvr.c 552) 
+  DEBUG: Number of types in use after cleanup=0
+
+2012-04-21 19:15:22.484 MEM_LOG_DUMP (Mem_chks.c 1299) 
+  DYNAMIC MEMORY POINTER TABLE
+----------------------------  
+  Ptr 00fe7ff4  Size     1  File : ..\..\mvl\usr\scl_srvr\scl_srvr.c #0486
+  Ptr 01174fd4  Size 120010  File : ..\..\mvl\Src\Acse\Mvl_acse.c #0445
+  Ptr 00b4551c  Size   200  File : ..\..\mvl\Src\Acse\Mvl_acse.c #0525
+  Ptr 00f1dd24  Size     8  File : ..\..\uca\leant\osicfgx.c #1664
+  Ptr 00ef2e74  Size   128  File : ..\..\uca\leant\osicfgx.c #1637
+  Ptr 00efafdc  Size     9  File : ..\..\uca\leant\osicfgx.c #1664
+  Ptr 00e38a74  Size     7  File : ..\..\uca\leant\osicfgx.c #1664
+  Ptr 00b4332c  Size   256  File : ..\..\uca\leant\osicfgx.c #1621
+  Ptr 00aa6854  Size    40  File : ..\..\Mvl\Usr\scl_srvr\uca_obj.c #0272
+  Ptr 00aa2cec  Size    40  File : ..\..\Mvl\Usr\scl_srvr\uca_obj.c #0218
+  Ptr 00aa2c9c  Size    40  File : ..\..\Mvl\Usr\scl_srvr\uca_obj.c #0169
+  Ptr 00aa669c  Size   400  File : ..\..\Mvl\Usr\scl_srvr\uca_obj.c #0157
+  Ptr 00ab0064  Size 440000  File : ..\..\Mvl\Usr\scl_srvr\uca_obj.c #0293
+  Ptr 00aa54f4  Size   372  File : ..\..\src\gensock2.c #1890
+  Ptr 00aa2c14  Size    56  File : ..\..\src\gensock2.c #0994
+  Ptr 00aa2b84  Size   100  File : ..\..\src\gensock2.c #0298
+  Ptr 00aa2b4c  Size    10  File : ..\..\src\sx_dec.c #0897
+  Ptr 00aa2b04  Size    26  File : ..\..\src\sx_dec.c #0897
+  Ptr 00aa2ad4  Size     8  File : ..\..\mvl\usr\logcfgx.c #1227
+  ---- END OF MEMORY POINTER TABLE ----------
+  Total number of allocated pointers:   19
+  Total amount of memory allocated:     561711 bytes 
+  Maximum number of pointers allocated: 5029
+  Maximum amount of memory allocated:   5276361 bytes
+
+***********************************************************
+          LOGGING STARTED Sat Apr 21 19:17:02 2012
+***********************************************************
+
+2012-04-21 19:17:02.328 SLOGALWAYS (scl_srvr.c 395) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-21 19:17:02.328 SLOGALWAYS (scl_srvr.c 397) 
+  Initializing ...
+
+2012-04-21 19:17:02.765 CLNP_LOG_ERR (clnp_pcap.c 164) 
+  Subnetwork initialization error: 'network_device' not set.
+
+2012-04-21 19:17:02.765 CLNP_LOG_ERR (Clnp_usr.c 247) 
+  CLNP-ERROR: initialization failed ret=1
+
+2012-04-21 19:17:02.765 MVLLOG_ERR (Mvl_acse.c 609) 
+  Error: copp_initialize returned error '0x1'
+
+***********************************************************
+          LOGGING STARTED Sat Apr 21 19:17:04 2012
+***********************************************************
+
+2012-04-21 19:17:04.906 SLOGALWAYS (scl_srvr.c 395) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-21 19:17:04.906 SLOGALWAYS (scl_srvr.c 397) 
+  Initializing ...
+
+2012-04-21 19:17:05.515 SLOGALWAYS (scl_srvr.c 425) 
+  Initialization complete, entering service loop
+
+***********************************************************
+          LOGGING STARTED Sat Apr 21 19:20:27 2012
+***********************************************************
+
+2012-04-21 19:20:27.187 SLOGALWAYS (scl_srvr.c 395) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-21 19:20:27.187 SLOGALWAYS (scl_srvr.c 397) 
+  Initializing ...
+
+2012-04-21 19:20:27.593 SLOGALWAYS (scl_srvr.c 425) 
+  Initialization complete, entering service loop
+
+***********************************************************
+          LOGGING STARTED Sat Apr 21 19:23:29 2012
+***********************************************************
+
+2012-04-21 19:23:29.812 SLOGALWAYS (scl_srvr.c 395) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-21 19:23:29.812 SLOGALWAYS (scl_srvr.c 397) 
+  Initializing ...
+
+2012-04-21 19:23:30.343 SLOGALWAYS (scl_srvr.c 425) 
+  Initialization complete, entering service loop
+
+2012-04-21 19:23:34.578 SLOGALWAYS (scl_srvr.c 552) 
+  DEBUG: Number of types in use after cleanup=0
+
+2012-04-21 19:23:34.578 MEM_LOG_DUMP (Mem_chks.c 1299) 
+  DYNAMIC MEMORY POINTER TABLE
+----------------------------  
+  Ptr 0111f854  Size     1  File : ..\..\mvl\usr\scl_srvr\scl_srvr.c #0486
+  Ptr 01174ffc  Size 120010  File : ..\..\mvl\Src\Acse\Mvl_acse.c #0445
+  Ptr 00b4551c  Size   200  File : ..\..\mvl\Src\Acse\Mvl_acse.c #0525
+  Ptr 010e6e5c  Size     8  File : ..\..\uca\leant\osicfgx.c #1664
+  Ptr 00f16f7c  Size   128  File : ..\..\uca\leant\osicfgx.c #1637
+  Ptr 00e12154  Size     9  File : ..\..\uca\leant\osicfgx.c #1664
+  Ptr 00f2fa8c  Size     7  File : ..\..\uca\leant\osicfgx.c #1664
+  Ptr 00e76e64  Size   256  File : ..\..\uca\leant\osicfgx.c #1621
+  Ptr 00aa2d3c  Size    40  File : ..\..\Mvl\Usr\scl_srvr\uca_obj.c #0272
+  Ptr 00aa2cec  Size    40  File : ..\..\Mvl\Usr\scl_srvr\uca_obj.c #0218
+  Ptr 00aa2c9c  Size    40  File : ..\..\Mvl\Usr\scl_srvr\uca_obj.c #0169
+  Ptr 00aa66fc  Size   400  File : ..\..\Mvl\Usr\scl_srvr\uca_obj.c #0157
+  Ptr 00ab0064  Size 440000  File : ..\..\Mvl\Usr\scl_srvr\uca_obj.c #0293
+  Ptr 00aa5554  Size   372  File : ..\..\src\gensock2.c #1890
+  Ptr 00aa2c14  Size    56  File : ..\..\src\gensock2.c #0994
+  Ptr 00aa2b84  Size   100  File : ..\..\src\gensock2.c #0298
+  Ptr 00aa2b4c  Size    10  File : ..\..\src\sx_dec.c #0897
+  Ptr 00aa2b04  Size    26  File : ..\..\src\sx_dec.c #0897
+  Ptr 00aa2ad4  Size     8  File : ..\..\mvl\usr\logcfgx.c #1227
+  ---- END OF MEMORY POINTER TABLE ----------
+  Total number of allocated pointers:   19
+  Total amount of memory allocated:     561711 bytes 
+  Maximum number of pointers allocated: 3896
+  Maximum amount of memory allocated:   5276361 bytes
+
+***********************************************************
+          LOGGING STARTED Sat Apr 21 19:28:49 2012
+***********************************************************
+
+2012-04-21 19:28:49.093 SLOGALWAYS (scl_srvr.c 395) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-21 19:28:49.093 SLOGALWAYS (scl_srvr.c 397) 
+  Initializing ...
+
+2012-04-21 19:28:49.500 SLOGALWAYS (scl_srvr.c 425) 
+  Initialization complete, entering service loop
+
+***********************************************************
+          LOGGING STARTED Sat Apr 21 20:48:45 2012
+***********************************************************
+
+2012-04-21 20:48:45.156 SLOGALWAYS (scl_srvr.c 395) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-21 20:48:46.875 SLOGALWAYS (scl_srvr.c 397) 
+  Initializing ...
+
+2012-04-21 20:49:53.468 SLOGALWAYS (scl_srvr.c 425) 
+  Initialization complete, entering service loop
+
+2012-04-21 20:50:23.406 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 35.841 seconds.
+  MAY CAUSE UNEXPECTED TIMEOUTS, DISCONNECTS, ABORTS.
+
+2012-04-21 20:50:38.906 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 16.350 seconds.
+
+2012-04-21 20:50:47.703 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 9.146 seconds.
+
+2012-04-21 20:53:17.468 MVLLOG_NERR (Mvl_uca.c 330) 
+  Could not resolve UCA variable 'Temperature'
+
+2012-04-21 20:53:17.468 MVLLOG_NERR (S_getvaa.c 229) 
+  GetVarAccAttrib : Variable Association 'Temperature' not found
+
+2012-04-21 20:53:17.468 MVLLOG_NERR (S_getdom.c 76) 
+  GetDomAttrib Ind : mvlLiteDom not found
+
+2012-04-21 20:53:17.484 MVLLOG_NERR (Mvl_uca.c 330) 
+  Could not resolve UCA variable 'Temperature'
+
+2012-04-21 20:53:17.484 MVLLOG_NERR (S_read.c 201) 
+  Read ind : Variable Association 'Temperature' not found
+
+2012-04-21 20:53:17.484 MVLLOG_NERR (Mvl_uca.c 330) 
+  Could not resolve UCA variable 'Temperature'
+
+2012-04-21 20:53:17.484 MVLLOG_NERR (S_read.c 201) 
+  Read ind : Variable Association 'Temperature' not found
+
+2012-04-21 20:53:17.484 MVLLOG_NERR (Mvl_uca.c 330) 
+  Could not resolve UCA variable 'UTF8Vstring13test'
+
+2012-04-21 20:53:17.484 MVLLOG_NERR (S_read.c 201) 
+  Read ind : Variable Association 'UTF8Vstring13test' not found
+
+2012-04-21 20:53:17.484 MVLLOG_NERR (Mvl_uca.c 330) 
+  Could not resolve UCA variable 'Temperature'
+
+2012-04-21 20:53:17.484 MVLLOG_NERR (S_write.c 285) 
+  Write ind : Variable Association 'Temperature' not found
+
+2012-04-21 20:53:17.500 MMS_LOG_NERR (mmsdec.c 527) 
+  MMS service FILE_RENAME not supported as server (cannot decode request)
+
+2012-04-21 20:53:17.500 ASN1_LOG_NERR (asn1r.c 1040) 
+  ASN.1 decode error : 0x7011
+
+2012-04-21 20:53:17.500 MVLLOG_NERR (Mvl_serv.c 389) 
+  MMS PDU decode error, sending reject
+
+2012-04-21 20:53:17.500 MVLLOG_ERR (reject.c 46) 
+  MMS Reject sent, unrecognized service. Check MMS services enabled here.
+
+2012-04-21 20:53:17.500 MMS_LOG_NERR (mmsdec.c 527) 
+  MMS service OBTAIN_FILE not supported as server (cannot decode request)
+
+2012-04-21 20:53:17.500 ASN1_LOG_NERR (asn1r.c 1040) 
+  ASN.1 decode error : 0x7011
+
+2012-04-21 20:53:17.500 MVLLOG_NERR (Mvl_serv.c 389) 
+  MMS PDU decode error, sending reject
+
+2012-04-21 20:53:17.500 MVLLOG_ERR (reject.c 46) 
+  MMS Reject sent, unrecognized service. Check MMS services enabled here.
+
+2012-04-21 20:53:17.515 MMS_LOG_NERR (mmsdec.c 527) 
+  MMS service FILE_DELETE not supported as server (cannot decode request)
+
+2012-04-21 20:53:17.515 ASN1_LOG_NERR (asn1r.c 1040) 
+  ASN.1 decode error : 0x7011
+
+2012-04-21 20:53:17.515 MVLLOG_NERR (Mvl_serv.c 389) 
+  MMS PDU decode error, sending reject
+
+2012-04-21 20:53:17.515 MVLLOG_ERR (reject.c 46) 
+  MMS Reject sent, unrecognized service. Check MMS services enabled here.
+
+2012-04-21 20:53:17.515 MMS_LOG_NERR (mmsdec.c 527) 
+  MMS service FILE_OPEN not supported as server (cannot decode request)
+
+2012-04-21 20:53:17.515 ASN1_LOG_NERR (asn1r.c 1040) 
+  ASN.1 decode error : 0x7011
+
+2012-04-21 20:53:17.515 MVLLOG_NERR (Mvl_serv.c 389) 
+  MMS PDU decode error, sending reject
+
+2012-04-21 20:53:17.515 MVLLOG_ERR (reject.c 46) 
+  MMS Reject sent, unrecognized service. Check MMS services enabled here.
+
+2012-04-21 20:53:17.531 MMS_LOG_NERR (mmsdec.c 527) 
+  MMS service FILE_OPEN not supported as server (cannot decode request)
+
+2012-04-21 20:53:17.531 ASN1_LOG_NERR (asn1r.c 1040) 
+  ASN.1 decode error : 0x7011
+
+2012-04-21 20:53:17.531 MVLLOG_NERR (Mvl_serv.c 389) 
+  MMS PDU decode error, sending reject
+
+2012-04-21 20:53:17.531 MVLLOG_ERR (reject.c 46) 
+  MMS Reject sent, unrecognized service. Check MMS services enabled here.
+
+2012-04-21 20:53:17.531 MMS_LOG_NERR (mmsdec.c 527) 
+  MMS service FILE_DIR not supported as server (cannot decode request)
+
+2012-04-21 20:53:17.531 ASN1_LOG_NERR (asn1r.c 1040) 
+  ASN.1 decode error : 0x7011
+
+2012-04-21 20:53:17.531 MVLLOG_NERR (Mvl_serv.c 389) 
+  MMS PDU decode error, sending reject
+
+2012-04-21 20:53:17.531 MVLLOG_ERR (reject.c 46) 
+  MMS Reject sent, unrecognized service. Check MMS services enabled here.
+
+2012-04-21 20:53:17.546 MVLLOG_NERR (Mvl_uca.c 330) 
+  Could not resolve UCA variable 'Temperature'
+
+2012-04-21 20:53:17.546 MVLLOG_ERR (Mvl_obj.c 878) 
+  Error creating NVL 'NewVlist': member variable 'Temperature' not found
+
+2012-04-21 20:53:17.546 MVLLOG_NERR (S_getvla.c 147) 
+  Get Var List Attributes Indication : could not find the list
+
+2012-04-21 20:53:17.546 MMS_LOG_NERR (mmsdec.c 527) 
+  MMS service INITIALIZE_JOURNAL not supported as server (cannot decode request)
+
+2012-04-21 20:53:17.546 ASN1_LOG_NERR (asn1r.c 1040) 
+  ASN.1 decode error : 0x7011
+
+2012-04-21 20:53:17.546 MVLLOG_NERR (Mvl_serv.c 389) 
+  MMS PDU decode error, sending reject
+
+2012-04-21 20:53:17.546 MVLLOG_ERR (reject.c 46) 
+  MMS Reject sent, unrecognized service. Check MMS services enabled here.
+
+2012-04-21 20:53:17.562 MMS_LOG_NERR (mmsdec.c 527) 
+  MMS service REPORT_JOURNAL_STATUS not supported as server (cannot decode request)
+
+2012-04-21 20:53:17.562 ASN1_LOG_NERR (asn1r.c 1040) 
+  ASN.1 decode error : 0x7011
+
+2012-04-21 20:53:17.562 MVLLOG_NERR (Mvl_serv.c 389) 
+  MMS PDU decode error, sending reject
+
+2012-04-21 20:53:17.562 MVLLOG_ERR (reject.c 46) 
+  MMS Reject sent, unrecognized service. Check MMS services enabled here.
+
+2012-04-21 20:53:17.562 MMS_LOG_NERR (mmsdec.c 527) 
+  MMS service READ_JOURNAL not supported as server (cannot decode request)
+
+2012-04-21 20:53:17.562 ASN1_LOG_NERR (asn1r.c 1040) 
+  ASN.1 decode error : 0x7011
+
+2012-04-21 20:53:17.562 MVLLOG_NERR (Mvl_serv.c 389) 
+  MMS PDU decode error, sending reject
+
+2012-04-21 20:53:17.562 MVLLOG_ERR (reject.c 46) 
+  MMS Reject sent, unrecognized service. Check MMS services enabled here.
+
+2012-04-21 20:53:17.562 MMS_LOG_NERR (mmsdec.c 527) 
+  MMS service INITIALIZE_JOURNAL not supported as server (cannot decode request)
+
+2012-04-21 20:53:17.562 ASN1_LOG_NERR (asn1r.c 1040) 
+  ASN.1 decode error : 0x7011
+
+2012-04-21 20:53:17.562 MVLLOG_NERR (Mvl_serv.c 389) 
+  MMS PDU decode error, sending reject
+
+2012-04-21 20:53:17.562 MVLLOG_ERR (reject.c 46) 
+  MMS Reject sent, unrecognized service. Check MMS services enabled here.
+
+2012-04-21 20:53:17.562 MMS_LOG_NERR (mmsdec.c 527) 
+  MMS service REPORT_JOURNAL_STATUS not supported as server (cannot decode request)
+
+2012-04-21 20:53:17.562 ASN1_LOG_NERR (asn1r.c 1040) 
+  ASN.1 decode error : 0x7011
+
+2012-04-21 20:53:17.578 MVLLOG_NERR (Mvl_serv.c 389) 
+  MMS PDU decode error, sending reject
+
+2012-04-21 20:53:17.578 MVLLOG_ERR (reject.c 46) 
+  MMS Reject sent, unrecognized service. Check MMS services enabled here.
+
+2012-04-21 20:53:17.578 MMS_LOG_NERR (mmsdec.c 527) 
+  MMS service READ_JOURNAL not supported as server (cannot decode request)
+
+2012-04-21 20:53:17.578 ASN1_LOG_NERR (asn1r.c 1040) 
+  ASN.1 decode error : 0x7011
+
+2012-04-21 20:53:17.578 MVLLOG_NERR (Mvl_serv.c 389) 
+  MMS PDU decode error, sending reject
+
+2012-04-21 20:53:17.578 MVLLOG_ERR (reject.c 46) 
+  MMS Reject sent, unrecognized service. Check MMS services enabled here.
+
+2012-04-21 20:57:15.859 MVLLOG_NERR (Mvl_uca.c 330) 
+  Could not resolve UCA variable 'Temperature'
+
+2012-04-21 20:57:15.859 MVLLOG_NERR (S_getvaa.c 229) 
+  GetVarAccAttrib : Variable Association 'Temperature' not found
+
+2012-04-21 20:57:15.875 MVLLOG_NERR (S_getdom.c 76) 
+  GetDomAttrib Ind : mvlLiteDom not found
+
+2012-04-21 20:57:15.875 MVLLOG_NERR (Mvl_uca.c 330) 
+  Could not resolve UCA variable 'Temperature'
+
+2012-04-21 20:57:15.875 MVLLOG_NERR (S_read.c 201) 
+  Read ind : Variable Association 'Temperature' not found
+
+2012-04-21 20:57:15.875 MVLLOG_NERR (Mvl_uca.c 330) 
+  Could not resolve UCA variable 'Temperature'
+
+2012-04-21 20:57:15.875 MVLLOG_NERR (S_read.c 201) 
+  Read ind : Variable Association 'Temperature' not found
+
+2012-04-21 20:57:15.890 MVLLOG_NERR (Mvl_uca.c 330) 
+  Could not resolve UCA variable 'UTF8Vstring13test'
+
+2012-04-21 20:57:15.890 MVLLOG_NERR (S_read.c 201) 
+  Read ind : Variable Association 'UTF8Vstring13test' not found
+
+2012-04-21 20:57:15.890 MVLLOG_NERR (Mvl_uca.c 330) 
+  Could not resolve UCA variable 'Temperature'
+
+2012-04-21 20:57:15.890 MVLLOG_NERR (S_write.c 285) 
+  Write ind : Variable Association 'Temperature' not found
+
+2012-04-21 20:57:15.890 MMS_LOG_NERR (mmsdec.c 527) 
+  MMS service FILE_RENAME not supported as server (cannot decode request)
+
+2012-04-21 20:57:15.890 ASN1_LOG_NERR (asn1r.c 1040) 
+  ASN.1 decode error : 0x7011
+
+2012-04-21 20:57:15.890 MVLLOG_NERR (Mvl_serv.c 389) 
+  MMS PDU decode error, sending reject
+
+2012-04-21 20:57:15.890 MVLLOG_ERR (reject.c 46) 
+  MMS Reject sent, unrecognized service. Check MMS services enabled here.
+
+2012-04-21 20:57:15.890 MMS_LOG_NERR (mmsdec.c 527) 
+  MMS service OBTAIN_FILE not supported as server (cannot decode request)
+
+2012-04-21 20:57:15.890 ASN1_LOG_NERR (asn1r.c 1040) 
+  ASN.1 decode error : 0x7011
+
+2012-04-21 20:57:15.890 MVLLOG_NERR (Mvl_serv.c 389) 
+  MMS PDU decode error, sending reject
+
+2012-04-21 20:57:15.890 MVLLOG_ERR (reject.c 46) 
+  MMS Reject sent, unrecognized service. Check MMS services enabled here.
+
+2012-04-21 20:57:15.906 MMS_LOG_NERR (mmsdec.c 527) 
+  MMS service FILE_DELETE not supported as server (cannot decode request)
+
+2012-04-21 20:57:15.906 ASN1_LOG_NERR (asn1r.c 1040) 
+  ASN.1 decode error : 0x7011
+
+2012-04-21 20:57:15.906 MVLLOG_NERR (Mvl_serv.c 389) 
+  MMS PDU decode error, sending reject
+
+2012-04-21 20:57:15.906 MVLLOG_ERR (reject.c 46) 
+  MMS Reject sent, unrecognized service. Check MMS services enabled here.
+
+2012-04-21 20:57:15.906 MMS_LOG_NERR (mmsdec.c 527) 
+  MMS service FILE_OPEN not supported as server (cannot decode request)
+
+2012-04-21 20:57:15.906 ASN1_LOG_NERR (asn1r.c 1040) 
+  ASN.1 decode error : 0x7011
+
+2012-04-21 20:57:15.906 MVLLOG_NERR (Mvl_serv.c 389) 
+  MMS PDU decode error, sending reject
+
+2012-04-21 20:57:15.906 MVLLOG_ERR (reject.c 46) 
+  MMS Reject sent, unrecognized service. Check MMS services enabled here.
+
+2012-04-21 20:57:15.906 MMS_LOG_NERR (mmsdec.c 527) 
+  MMS service FILE_OPEN not supported as server (cannot decode request)
+
+2012-04-21 20:57:15.906 ASN1_LOG_NERR (asn1r.c 1040) 
+  ASN.1 decode error : 0x7011
+
+2012-04-21 20:57:15.906 MVLLOG_NERR (Mvl_serv.c 389) 
+  MMS PDU decode error, sending reject
+
+2012-04-21 20:57:15.906 MVLLOG_ERR (reject.c 46) 
+  MMS Reject sent, unrecognized service. Check MMS services enabled here.
+
+2012-04-21 20:57:15.906 MMS_LOG_NERR (mmsdec.c 527) 
+  MMS service FILE_DIR not supported as server (cannot decode request)
+
+2012-04-21 20:57:15.906 ASN1_LOG_NERR (asn1r.c 1040) 
+  ASN.1 decode error : 0x7011
+
+2012-04-21 20:57:15.906 MVLLOG_NERR (Mvl_serv.c 389) 
+  MMS PDU decode error, sending reject
+
+2012-04-21 20:57:15.906 MVLLOG_ERR (reject.c 46) 
+  MMS Reject sent, unrecognized service. Check MMS services enabled here.
+
+2012-04-21 20:57:15.921 MVLLOG_NERR (Mvl_uca.c 330) 
+  Could not resolve UCA variable 'Temperature'
+
+2012-04-21 20:57:15.921 MVLLOG_ERR (Mvl_obj.c 878) 
+  Error creating NVL 'NewVlist': member variable 'Temperature' not found
+
+2012-04-21 20:57:15.921 MVLLOG_NERR (S_getvla.c 147) 
+  Get Var List Attributes Indication : could not find the list
+
+2012-04-21 20:57:15.937 MMS_LOG_NERR (mmsdec.c 527) 
+  MMS service INITIALIZE_JOURNAL not supported as server (cannot decode request)
+
+2012-04-21 20:57:15.937 ASN1_LOG_NERR (asn1r.c 1040) 
+  ASN.1 decode error : 0x7011
+
+2012-04-21 20:57:15.937 MVLLOG_NERR (Mvl_serv.c 389) 
+  MMS PDU decode error, sending reject
+
+2012-04-21 20:57:15.937 MVLLOG_ERR (reject.c 46) 
+  MMS Reject sent, unrecognized service. Check MMS services enabled here.
+
+2012-04-21 20:57:15.937 MMS_LOG_NERR (mmsdec.c 527) 
+  MMS service REPORT_JOURNAL_STATUS not supported as server (cannot decode request)
+
+2012-04-21 20:57:15.937 ASN1_LOG_NERR (asn1r.c 1040) 
+  ASN.1 decode error : 0x7011
+
+2012-04-21 20:57:15.937 MVLLOG_NERR (Mvl_serv.c 389) 
+  MMS PDU decode error, sending reject
+
+2012-04-21 20:57:15.937 MVLLOG_ERR (reject.c 46) 
+  MMS Reject sent, unrecognized service. Check MMS services enabled here.
+
+2012-04-21 20:57:15.937 MMS_LOG_NERR (mmsdec.c 527) 
+  MMS service READ_JOURNAL not supported as server (cannot decode request)
+
+2012-04-21 20:57:15.937 ASN1_LOG_NERR (asn1r.c 1040) 
+  ASN.1 decode error : 0x7011
+
+2012-04-21 20:57:15.937 MVLLOG_NERR (Mvl_serv.c 389) 
+  MMS PDU decode error, sending reject
+
+2012-04-21 20:57:15.937 MVLLOG_ERR (reject.c 46) 
+  MMS Reject sent, unrecognized service. Check MMS services enabled here.
+
+2012-04-21 20:57:15.953 MMS_LOG_NERR (mmsdec.c 527) 
+  MMS service INITIALIZE_JOURNAL not supported as server (cannot decode request)
+
+2012-04-21 20:57:15.953 ASN1_LOG_NERR (asn1r.c 1040) 
+  ASN.1 decode error : 0x7011
+
+2012-04-21 20:57:15.953 MVLLOG_NERR (Mvl_serv.c 389) 
+  MMS PDU decode error, sending reject
+
+2012-04-21 20:57:15.953 MVLLOG_ERR (reject.c 46) 
+  MMS Reject sent, unrecognized service. Check MMS services enabled here.
+
+2012-04-21 20:57:15.953 MMS_LOG_NERR (mmsdec.c 527) 
+  MMS service REPORT_JOURNAL_STATUS not supported as server (cannot decode request)
+
+2012-04-21 20:57:15.953 ASN1_LOG_NERR (asn1r.c 1040) 
+  ASN.1 decode error : 0x7011
+
+2012-04-21 20:57:15.953 MVLLOG_NERR (Mvl_serv.c 389) 
+  MMS PDU decode error, sending reject
+
+2012-04-21 20:57:15.953 MVLLOG_ERR (reject.c 46) 
+  MMS Reject sent, unrecognized service. Check MMS services enabled here.
+
+2012-04-21 20:57:15.953 MMS_LOG_NERR (mmsdec.c 527) 
+  MMS service READ_JOURNAL not supported as server (cannot decode request)
+
+2012-04-21 20:57:15.953 ASN1_LOG_NERR (asn1r.c 1040) 
+  ASN.1 decode error : 0x7011
+
+2012-04-21 20:57:15.953 MVLLOG_NERR (Mvl_serv.c 389) 
+  MMS PDU decode error, sending reject
+
+2012-04-21 20:57:15.953 MVLLOG_ERR (reject.c 46) 
+  MMS Reject sent, unrecognized service. Check MMS services enabled here.
+
+2012-04-21 21:22:05.078 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 3.522 seconds.
+
+2012-04-21 21:22:12.718 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 7.162 seconds.
+
+2012-04-21 21:22:26.031 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 3.471 seconds.
+
+2012-04-21 21:22:42.328 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 10.766 seconds.
+
+2012-04-21 21:23:01.500 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 3.936 seconds.
+
+2012-04-21 21:23:03.921 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 3.362 seconds.
+
+2012-04-21 21:23:13.062 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 3.508 seconds.
+
+2012-04-21 22:47:53.781 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 54.215 seconds.
+
+2012-04-21 22:48:19.718 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 26.164 seconds.
+
+2012-04-21 22:48:36.796 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 16.232 seconds.
+
+2012-04-21 22:48:44.515 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 4.954 seconds.
+
+2012-04-21 22:48:54.718 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 8.165 seconds.
+
+2012-04-21 22:48:58.890 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 3.327 seconds.
+
+2012-04-21 22:49:01.765 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 3.208 seconds.
+
+2012-04-21 22:49:12.453 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 7.898 seconds.
+
+2012-04-21 22:49:25.718 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 5.164 seconds.
+
+2012-04-21 22:49:54.734 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 4.177 seconds.
+
+2012-04-21 22:50:04.953 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 3.398 seconds.
+
+2012-04-21 22:50:12.250 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 4.686 seconds.
+
+2012-04-21 22:50:41.093 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 26.532 seconds.
+
+2012-04-21 22:50:44.765 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 3.206 seconds.
+
+2012-04-21 22:50:59.859 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 12.306 seconds.
+
+2012-04-21 22:51:13.359 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 3.795 seconds.
+
+2012-04-21 22:52:20.656 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 60.097 seconds.
+
+2012-04-21 22:52:46.171 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 25.619 seconds.
+
+2012-04-21 22:52:52.296 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 3.733 seconds.
+
+2012-04-21 22:53:04.343 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 8.778 seconds.
+
+2012-04-21 22:53:09.468 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 5.907 seconds.
+
+2012-04-21 22:53:12.562 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 4.008 seconds.
+
+2012-04-21 22:53:23.750 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 5.192 seconds.
+
+2012-04-21 22:53:29.875 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 3.315 seconds.
+
+2012-04-21 22:53:33.578 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 3.021 seconds.
+
+2012-04-21 22:53:42.015 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 6.457 seconds.
+
+2012-04-21 22:54:07.500 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 15.949 seconds.
+
+2012-04-21 22:54:12.406 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 5.852 seconds.
+
+2012-04-21 22:54:26.109 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 6.544 seconds.
+
+2012-04-21 22:54:41.093 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 3.543 seconds.
+
+2012-04-21 22:54:50.531 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 5.974 seconds.
+
+2012-04-21 22:54:54.765 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 3.200 seconds.
+
+2012-04-21 22:55:28.609 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 33.051 seconds.
+
+2012-04-21 22:55:50.343 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 5.787 seconds.
+
+2012-04-21 22:55:54.500 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 4.936 seconds.
+
+2012-04-21 22:56:00.203 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 3.637 seconds.
+
+2012-04-21 22:56:07.703 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 5.139 seconds.
+
+2012-04-21 22:56:20.000 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 11.440 seconds.
+
+2012-04-21 22:57:45.875 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 85.312 seconds.
+
+2012-04-21 22:57:57.437 TP4_LOG_ERR (Tp4port.c 72) 
+  WARNING: stack not serviced for 3.873 seconds.
+
+***********************************************************
+          LOGGING STARTED Sun Apr 22 09:58:04 2012
+***********************************************************
+
+2012-04-22 09:58:04.765 SLOGALWAYS (scl_srvr.c 395) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-22 09:58:04.781 SLOGALWAYS (scl_srvr.c 397) 
+  Initializing ...
+
+2012-04-22 09:58:05.296 SLOGALWAYS (scl_srvr.c 425) 
+  Initialization complete, entering service loop
+
+***********************************************************
+          LOGGING STARTED Sun Apr 22 09:58:09 2012
+***********************************************************
+
+2012-04-22 09:58:09.734 SLOGALWAYS (scl_srvr.c 395) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-22 09:58:09.734 SLOGALWAYS (scl_srvr.c 397) 
+  Initializing ...
+
+2012-04-22 09:58:10.234 CLNP_LOG_ERR (clnp_pcap.c 164) 
+  Subnetwork initialization error: 'network_device' not set.
+
+2012-04-22 09:58:10.234 CLNP_LOG_ERR (Clnp_usr.c 247) 
+  CLNP-ERROR: initialization failed ret=1
+
+2012-04-22 09:58:10.234 MVLLOG_ERR (Mvl_acse.c 609) 
+  Error: copp_initialize returned error '0x1'
+
+***********************************************************
+          LOGGING STARTED Sun Apr 22 09:58:11 2012
+***********************************************************
+
+2012-04-22 09:58:11.609 SLOGALWAYS (scl_srvr.c 395) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-22 09:58:11.609 SLOGALWAYS (scl_srvr.c 397) 
+  Initializing ...
+
+2012-04-22 09:58:12.109 CLNP_LOG_ERR (clnp_pcap.c 164) 
+  Subnetwork initialization error: 'network_device' not set.
+
+2012-04-22 09:58:12.109 CLNP_LOG_ERR (Clnp_usr.c 247) 
+  CLNP-ERROR: initialization failed ret=1
+
+2012-04-22 09:58:12.109 MVLLOG_ERR (Mvl_acse.c 609) 
+  Error: copp_initialize returned error '0x1'
+
+***********************************************************
+          LOGGING STARTED Sun Apr 22 09:58:13 2012
+***********************************************************
+
+2012-04-22 09:58:13.109 SLOGALWAYS (scl_srvr.c 395) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-22 09:58:13.109 SLOGALWAYS (scl_srvr.c 397) 
+  Initializing ...
+
+2012-04-22 09:58:13.562 CLNP_LOG_ERR (clnp_pcap.c 164) 
+  Subnetwork initialization error: 'network_device' not set.
+
+2012-04-22 09:58:13.562 CLNP_LOG_ERR (Clnp_usr.c 247) 
+  CLNP-ERROR: initialization failed ret=1
+
+2012-04-22 09:58:13.562 MVLLOG_ERR (Mvl_acse.c 609) 
+  Error: copp_initialize returned error '0x1'
+
+***********************************************************
+          LOGGING STARTED Sun Apr 22 09:58:15 2012
+***********************************************************
+
+2012-04-22 09:58:15.562 SLOGALWAYS (scl_srvr.c 395) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-22 09:58:15.562 SLOGALWAYS (scl_srvr.c 397) 
+  Initializing ...
+
+2012-04-22 09:58:16.078 CLNP_LOG_ERR (clnp_pcap.c 164) 
+  Subnetwork initialization error: 'network_device' not set.
+
+2012-04-22 09:58:16.078 CLNP_LOG_ERR (Clnp_usr.c 247) 
+  CLNP-ERROR: initialization failed ret=1
+
+2012-04-22 09:58:16.078 MVLLOG_ERR (Mvl_acse.c 609) 
+  Error: copp_initialize returned error '0x1'
+
+***********************************************************
+          LOGGING STARTED Sun Apr 22 09:58:16 2012
+***********************************************************
+
+2012-04-22 09:58:16.906 SLOGALWAYS (scl_srvr.c 395) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-22 09:58:16.906 SLOGALWAYS (scl_srvr.c 397) 
+  Initializing ...
+
+2012-04-22 09:58:17.375 CLNP_LOG_ERR (clnp_pcap.c 164) 
+  Subnetwork initialization error: 'network_device' not set.
+
+2012-04-22 09:58:17.375 CLNP_LOG_ERR (Clnp_usr.c 247) 
+  CLNP-ERROR: initialization failed ret=1
+
+2012-04-22 09:58:17.375 MVLLOG_ERR (Mvl_acse.c 609) 
+  Error: copp_initialize returned error '0x1'
+
+***********************************************************
+          LOGGING STARTED Sun Apr 22 09:58:19 2012
+***********************************************************
+
+2012-04-22 09:58:19.093 SLOGALWAYS (scl_srvr.c 395) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-22 09:58:19.093 SLOGALWAYS (scl_srvr.c 397) 
+  Initializing ...
+
+2012-04-22 09:58:19.531 SLOGALWAYS (scl_srvr.c 425) 
+  Initialization complete, entering service loop
+
+***********************************************************
+          LOGGING STARTED Sun Apr 22 10:37:02 2012
+***********************************************************
+
+2012-04-22 10:37:02.093 SLOGALWAYS (scl_srvr.c 395) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-22 10:37:02.093 SLOGALWAYS (scl_srvr.c 397) 
+  Initializing ...
+
+2012-04-22 10:37:02.515 SLOGALWAYS (scl_srvr.c 425) 
+  Initialization complete, entering service loop
+
+***********************************************************
+          LOGGING STARTED Mon Apr 30 08:49:42 2012
+***********************************************************
+
+2012-04-30 08:49:42.921 SLOGALWAYS (scl_srvr.c 395) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-30 08:49:42.984 SLOGALWAYS (scl_srvr.c 397) 
+  Initializing ...
+
+2012-04-30 08:49:43.562 SLOGALWAYS (scl_srvr.c 425) 
+  Initialization complete, entering service loop
+
+***********************************************************
+          LOGGING STARTED Mon Apr 30 08:53:39 2012
+***********************************************************
+
+2012-04-30 08:53:39.593 SLOGALWAYS (scl_srvr.c 395) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-30 08:53:39.593 SLOGALWAYS (scl_srvr.c 397) 
+  Initializing ...
+
+2012-04-30 08:53:40.109 SLOGALWAYS (scl_srvr.c 425) 
+  Initialization complete, entering service loop
+
+***********************************************************
+          LOGGING STARTED Mon Apr 30 09:42:07 2012
+***********************************************************
+
+2012-04-30 09:42:07.625 SLOGALWAYS (scl_srvr.c 395) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-30 09:42:07.625 SLOGALWAYS (scl_srvr.c 397) 
+  Initializing ...
+
+2012-04-30 09:42:08.093 SLOGALWAYS (scl_srvr.c 425) 
+  Initialization complete, entering service loop
+
+2012-04-30 09:49:02.281 MVLLOG_NERR (mvl61850_ctl.c 359) 
+  Reading of 'CSWI1$CO$Mod$SBO' not allowed: ctlModel=1, expected ctlModel=2 (sbo-with-normal-security)
+
+2012-04-30 09:49:02.281 MVLLOG_NERR (mvl61850_ctl.c 359) 
+  Reading of 'CSWI1$CO$Mod$SBO' not allowed: ctlModel=1, expected ctlModel=2 (sbo-with-normal-security)
+
+2012-04-30 09:49:02.281 MVLLOG_NERR (mvl61850_ctl.c 359) 
+  Reading of 'CSWI1$CO$Mod$SBO' not allowed: ctlModel=1, expected ctlModel=2 (sbo-with-normal-security)
+
+2012-04-30 09:49:02.281 MVLLOG_NERR (mvl61850_ctl.c 359) 
+  Reading of 'CSWI1$CO$Mod$SBO' not allowed: ctlModel=1, expected ctlModel=2 (sbo-with-normal-security)
+
+***********************************************************
+          LOGGING STARTED Tue Jul 03 22:16:20 2018
+***********************************************************
+
+2018-07-03 22:16:20.170 SLOGALWAYS (scl_srvr.c 395) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2018-07-03 22:16:20.170 SLOGALWAYS (scl_srvr.c 397) 
+  Initializing ...
+
+2018-07-03 22:16:20.528 SLOGALWAYS (scl_srvr.c 425) 
+  Initialization complete, entering service loop
+
+2018-07-03 22:16:33.196 SLOGALWAYS (scl_srvr.c 552) 
+  DEBUG: Number of types in use after cleanup=0
+
+2018-07-03 22:16:33.196 MEM_LOG_DUMP (Mem_chks.c 1299) 
+  DYNAMIC MEMORY POINTER TABLE
+----------------------------  
+  Ptr 02815a5c  Size     1  File : ..\..\mvl\usr\scl_srvr\scl_srvr.c #0486
+  Ptr 02831944  Size 120010  File : ..\..\mvl\Src\Acse\Mvl_acse.c #0445
+  Ptr 027d5654  Size   200  File : ..\..\mvl\Src\Acse\Mvl_acse.c #0525
+  Ptr 02815a2c  Size     8  File : ..\..\uca\leant\osicfgx.c #1664
+  Ptr 02514904  Size   128  File : ..\..\uca\leant\osicfgx.c #1637
+  Ptr 02814474  Size     9  File : ..\..\uca\leant\osicfgx.c #1664
+  Ptr 028159fc  Size     7  File : ..\..\uca\leant\osicfgx.c #1664
+  Ptr 027d552c  Size   256  File : ..\..\uca\leant\osicfgx.c #1621
+  Ptr 0246b904  Size    40  File : ..\..\Mvl\Usr\scl_srvr\uca_obj.c #0272
+  Ptr 01fc17ec  Size    40  File : ..\..\Mvl\Usr\scl_srvr\uca_obj.c #0218
+  Ptr 01fc179c  Size    40  File : ..\..\Mvl\Usr\scl_srvr\uca_obj.c #0169
+  Ptr 0246b74c  Size   400  File : ..\..\Mvl\Usr\scl_srvr\uca_obj.c #0157
+  Ptr 02400064  Size 440000  File : ..\..\Mvl\Usr\scl_srvr\uca_obj.c #0293
+  Ptr 01fc15d4  Size   372  File : ..\..\src\gensock2.c #1890
+  Ptr 01fc1354  Size    56  File : ..\..\src\gensock2.c #0994
+  Ptr 01fc12c4  Size   100  File : ..\..\src\gensock2.c #0298
+  Ptr 01fc128c  Size    10  File : ..\..\src\sx_dec.c #0897
+  Ptr 01fc1244  Size    26  File : ..\..\src\sx_dec.c #0897
+  Ptr 01fc1214  Size     8  File : ..\..\mvl\usr\logcfgx.c #1227
+  ---- END OF MEMORY POINTER TABLE ----------
+  Total number of allocated pointers:   19
+  Total amount of memory allocated:     561711 bytes 
+  Maximum number of pointers allocated: 3896
+  Maximum amount of memory allocated:   5276361 bytes

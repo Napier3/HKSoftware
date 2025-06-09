@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QSttCommCmdWzd_SelMacroWidget</class>
+ <widget class="QDialog" name="QSttCommCmdWzd_SelMacroWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>959</width>
+    <height>502</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string/>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="margin">
+    <number>0</number>
+   </property>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout" stretch="0">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_Step"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <property name="topMargin">
+        <number>2</number>
+       </property>
+       <property name="bottomMargin">
+        <number>2</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label_TestClass">
+         <property name="text">
+          <string>测试分类：</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="m_cmbTestClass"/>
+       </item>
+       <item>
+        <widget class="QLabel" name="m_txtTimes">
+         <property name="text">
+          <string>测试次数：</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="m_editTimes">
+         <property name="inputMask">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="m_chkRptTitle">
+         <property name="text">
+          <string>作为Word标题</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="m_txtTitleLevel">
+         <property name="text">
+          <string>标题等级：</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="m_cmbTitleLevel"/>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_ItemName">
+         <property name="text">
+          <string>项目名称：</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_Name"/>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_ItemID">
+         <property name="text">
+          <string>项目标识：</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_ID"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="m_btnSelItemsName">
+         <property name="text">
+          <string>修改项目名称</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

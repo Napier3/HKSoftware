@@ -1,0 +1,44 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: EAN - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x409 /fo"Debug/EAN.res" /d "_DEBUG" /d "_AFXDLL" "C:\Documents and Settings\yj\桌面\条形码\各种条形码\EAN\EAN.rc"" 
+Creating temporary file "C:\DOCUME~1\yj\LOCALS~1\Temp\RSP4B6.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Debug/EAN.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"C:\Documents and Settings\yj\桌面\条形码\各种条形码\EAN\Barcode.cpp"
+"C:\Documents and Settings\yj\桌面\条形码\各种条形码\EAN\EAN.cpp"
+"C:\Documents and Settings\yj\桌面\条形码\各种条形码\EAN\EAN13.cpp"
+"C:\Documents and Settings\yj\桌面\条形码\各种条形码\EAN\EANDlg.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\yj\LOCALS~1\Temp\RSP4B6.tmp" 
+Creating temporary file "C:\DOCUME~1\yj\LOCALS~1\Temp\RSP4B7.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Debug/EAN.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"C:\Documents and Settings\yj\桌面\条形码\各种条形码\EAN\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\yj\LOCALS~1\Temp\RSP4B7.tmp" 
+Creating command line "link.exe /nologo /subsystem:windows /incremental:yes /pdb:"Debug/EAN.pdb" /debug /machine:I386 /out:"Debug/EAN.exe" /pdbtype:sept  ".\Debug\Barcode.obj" ".\Debug\EAN.obj" ".\Debug\EAN13.obj" ".\Debug\EANDlg.obj" ".\Debug\StdAfx.obj" ".\Debug\EAN.res" "
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+StdAfx.cpp
+Compiling...
+Barcode.cpp
+EAN.cpp
+EAN13.cpp
+EANDlg.cpp
+Generating Code...
+Linking...
+
+
+
+<h3>Results</h3>
+EAN.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

@@ -1,0 +1,604 @@
+#include "stdafx.h"
+#include "GuideBookItemsSelTreeCtrl.h"
+#include "../../../Module/api/GloblaDrawFunctions.h"
+#include "../TCtrlCntrDefine.h"
+
+BEGIN_MESSAGE_MAP(CGuideBookItemsSelTreeCtrl, CTreeCtrl)
+	ON_NOTIFY_REFLECT(NM_CUSTOMDRAW, &CGuideBookItemsSelTreeCtrl::OnCustomdraw)
+	ON_WM_LBUTTONDOWN()
+	ON_WM_RBUTTONDOWN()
+	ON_COMMAND(WM_TESTPOINT,OnTestPoint)
+	ON_COMMAND(WM_VIEW_DEVICESETS,OnViewDeviceSets)
+	ON_COMMAND(WM_EXPAND_ALL_CHILDREN,OnExpandAllChildren)
+	ON_COMMAND(WM_TESTBELOW,OnTestBelow)
+	ON_COMMAND(WM_ITEM_PARA_EDIT,OnEditItemPara)
+	ON_COMMAND(WM_SHOWREPORT,OnShowReport)
+	ON_WM_CONTEXTMENU()
+	ON_WM_CREATE()
+	ON_WM_LBUTTONDBLCLK()
+	ON_NOTIFY_REFLECT(TVN_ITEMEXPANDED, &CGuideBookItemsSelTreeCtrl::OnTvnItemexpanded)
+	ON_NOTIFY_REFLECT(TVN_ITEMCHANGED, &CGuideBookItemsSelTreeCtrl::OnTvnItemChanged)
+END_MESSAGE_MAP()
+
+#define GAP_TESTITEMFLAG 1
+
+CGuideBookItemsSelTreeCtrl::CGuideBookItemsSelTreeCtrl()
+{
+	m_nTimerIDEvent = 2;
+	m_bShowOnlySelTestItems = false;
+
+	m_crWindow = RGB(255,255,255);
+
+	CSize sizeCheck;
+	GetCheckBoxSize(sizeCheck);
+
+	//选择框的位置
+	m_xSelCheckBox = GAP_TESTITEMFLAG;
+	m_xSelCheckBox += sizeCheck.cx / 2;
+	m_xItemTypeIcon = GAP_TESTITEMFLAG + sizeCheck.cx;
+
+	//测试项目类型图标位置
+	m_xItemTitle = GAP_TESTITEMFLAG * 2 + 16/*ICON*/ + sizeCheck.cx;
+	m_bInUpdateItemsState = FALSE;
+
+	m_pCurrSelTestItem = NULL;
+	m_nCurrSelTestItemIndex = -1;
+	m_hCurrSelTestItem = NULL;
+	m_bInTestItemInitState = FALSE;
+
+	m_pGuideBook = NULL;
+}
+
+CGuideBookItemsSelTreeCtrl::~CGuideBookItemsSelTreeCtrl()
+{
+
+}
+
+void CGuideBookItemsSelTreeCtrl::InitGuideBook(CGuideBook* pGuideBook)
+{
+	m_pGuideBook = pGuideBook;
+
+	if(m_pGuideBook != NULL)
+	{
+		m_bInTestItemInitState = TRUE;
+		DeleteAllItems();
+
+		InsertGbItemChildrenToTreeCtrl(m_pGuideBook->m_pGuideBook,NULL);
+
+		m_bInTestItemInitState = FALSE;
+	}
+}	
+
+long CGuideBookItemsSelTreeCtrl::_DrawItem(OLE_HANDLE hDC,OLE_HANDLE hItem,DWORD dwDrawStage,LRESULT* pResult)
+{
+	CDC dc;
+	dc.Attach((HDC)hDC);
+	HTREEITEM hCurrItem = (HTREEITEM)hItem;
+	*pResult = CDRF_DODEFAULT;
+
+	//=========================================================================
+	if (dwDrawStage == CDDS_PREPAINT)	// before the painting cycle begins
+	{
+		*pResult = CDRF_NOTIFYITEMDRAW /*| CDRF_NOTIFYPOSTPAINT*/;
+	}
+	else if (dwDrawStage == CDDS_ITEMPREPAINT)	// before an item is drawn
+	{
+		if (hCurrItem)
+		{
+			CRect rectItem1;
+			GetItemRect(hCurrItem, &rectItem1, FALSE);	// get rect for item
+			if (!IsBadRect(rectItem1))
+			{
+				CBrush brush(m_crWindow);
+				dc.FillRect(&rectItem1, &brush);		// erase entire background
+			}
+		}
+		*pResult = CDRF_NOTIFYPOSTPAINT | CDRF_NEWFONT;
+	}
+	else if (dwDrawStage == CDDS_ITEMPOSTPAINT && !m_bInUpdateItemsState)	// after an item has been drawn
+	{
+		CGbItemBase* pTestItem = GetTestItemByTreeItem((long)hCurrItem);
+
+		if(pTestItem != NULL)
+		{
+			HTREEITEM hSelItem = GetSelectedItem();
+			//绘制项目名称
+			BOOL bSelected = FALSE;
+			if(hSelItem == hCurrItem)
+				bSelected = TRUE;
+
+			BOOL bChangeFont = FALSE;
+			CFont *pOldFont = NULL;
+			CFont fontChange;
+			COLORREF clrTextSave,clrBkSave;
+
+			if(pTestItem->m_nState == TEST_STATE_TESTING)
+			{
+				bChangeFont = TRUE;
+				pOldFont = dc.SelectObject(&m_SSerif8Font);
+			}
+
+			//绘制checkbox
+			BOOL bEnable = TRUE;
+
+			if(m_pGuideBook->IsNowTesting())
+			{
+				bEnable = FALSE;
+			}
+
+			CRect rectItem;
+			GetItemRect(hCurrItem, &rectItem, FALSE);		// get rect for entire item
+			CRect rectText;
+			GetItemRect(hCurrItem, &rectText, TRUE);		// get rect for text
+			rectText.right = rectItem.right;
+
+			dc.FillSolidRect(&rectText, m_crWindow);
+
+			long yItemCenter = rectItem.CenterPoint().y;
+			DrawCheckBoxRect(rectText.left + m_xSelCheckBox, yItemCenter,pTestItem->GetSelect(), &dc, bEnable);
+
+			//绘制图标，未完成
+			long nImageID = pTestItem->GetClassID() & 0x000000FF;
+
+			ImageList_DrawEx(pApp->GetGbTreeImageList()->m_hImageList,nImageID,
+				dc.m_hDC,rectText.left + m_xItemTypeIcon,yItemCenter -8, 16, 16,
+				RGB(255,0,0), RGB(255,255,255), ILD_TRANSPARENT);
+
+			CRect rectTitle = rectText;
+			rectTitle.left = rectText.left + m_xItemTitle;
+
+			//绘制选择的Item的底色
+			if (bSelected)
+			{
+				clrTextSave = dc.SetTextColor(::GetSysColor(COLOR_HIGHLIGHTTEXT));
+				clrBkSave = dc.SetBkColor(::GetSysColor(COLOR_HIGHLIGHT));
+				dc.FillRect(rectTitle, &CBrush(::GetSysColor(COLOR_HIGHLIGHT)));
+			}
+			else
+			{
+				clrTextSave = dc.SetTextColor(TCC_GetItemStateColor(pTestItem));
+				dc.FillRect(rectTitle, &CBrush(::GetSysColor(COLOR_WINDOW)));
+			}
+
+			CString strName ;
+			strName = pTestItem->GetName();
+
+			if(pTestItem->m_nState == TEST_STATE_TESTING)
+			{
+				strName = L">>" + strName;
+			}
+
+			dc.DrawText(strName,rectTitle,DT_SINGLELINE /*| DT_NOPREFIX | DT_NOCLIP */| DT_VCENTER);
+
+			dc.SetTextColor(clrTextSave);
+
+			if (bSelected)
+			{
+				dc.SetBkColor(clrBkSave);
+			}
+
+			if (bChangeFont)
+			{
+				dc.SelectObject(pOldFont);
+				fontChange.DeleteObject();
+			}
+		}
+	}
+
+	dc.Detach();
+	return S_OK;	
+}
+
+long CGuideBookItemsSelTreeCtrl::_OnSelChange()
+{
+	return 0;
+}
+
+long CGuideBookItemsSelTreeCtrl::_OnLButtonDown(long xPoint,long yPoint)
+{
+	CPoint point(xPoint,yPoint);
+	HTREEITEM hSelItem = GetSelectedItem();
+	if(hSelItem == NULL || m_bInUpdateItemsState)
+	{
+		return FALSE;
+	}
+
+	CGbItemBase* pItem = GetTestItemByTreeItem((long)hSelItem);
+	if(pItem != NULL)
+	{
+		CRect rectText;
+		GetItemRect(hSelItem, &rectText, TRUE);
+		CRect rectCheck;
+		GetCheckBoxRect(rectText, rectCheck);
+		BOOL bInCheck = rectCheck.PtInRect(point);
+
+		if (bInCheck)
+		{
+			//改变测试项目的Select状态
+			SetTestItemSelectedState(pItem, pItem->GetSelect());
+			CTCtrlCntrBaseApp* pApp = (CTCtrlCntrBaseApp*)AfxGetApp();
+	
+			if(m_pGuideBook != NULL)
+			{
+				m_pGuideBook->m_pTCtrlMsgRcv->OnCurrItemStateChanged(pItem);
+			}
+		
+			Invalidate(FALSE);
+		}
+	}
+
+	ShowReport(FALSE);
+
+	return 0;
+}
+
+long CGuideBookItemsSelTreeCtrl::_OnRButtonDown(long xPoint,long yPoint)
+{
+	return 0;
+}
+
+long CGuideBookItemsSelTreeCtrl::_OnLButtonDblClk(long xPoint,long yPoint)
+{
+	HTREEITEM hSelItem = GetSelectedItem();
+	if(hSelItem == NULL || m_bInUpdateItemsState)
+	{
+		return FALSE;
+	}
+
+	return 0;
+}
+
+void CGuideBookItemsSelTreeCtrl::_SetShowOnlySelTestItems(long nShow)
+{
+}
+
+long CGuideBookItemsSelTreeCtrl::OnItemExpandStateChanged(OLE_HANDLE hItem,long nAction)
+{
+	return 0;
+}
+
+void CGuideBookItemsSelTreeCtrl::GetCheckBoxRect(CRect &rcText,CRect &rcCheck)
+{
+	CSize sizeCheck;
+	GetCheckBoxSize(sizeCheck);
+
+	//选择框的位置
+	rcCheck = rcText;
+	rcCheck.left += GAP_TESTITEMFLAG;
+	rcCheck.right = rcCheck.left + sizeCheck.cx;
+	rcCheck.top = rcText.CenterPoint().y - sizeCheck.cy / 2;
+	rcCheck.bottom  =rcCheck.top + sizeCheck.cy;
+}
+
+CGbItemBase* CGuideBookItemsSelTreeCtrl::GetTestItemByTreeItem(long hTreeItem)
+{
+	if(m_pGuideBook != NULL)
+	{
+		return (CGbItemBase*)GetItemData((HTREEITEM)hTreeItem);
+	}
+	
+	return NULL;
+}
+
+void CGuideBookItemsSelTreeCtrl::SetTestItemSelectedState(CGbItemBase *pItem,long nSelect)
+{
+	if (nSelect == 0)
+	{
+		nSelect = 1;
+	}
+	else
+	{
+		nSelect = 0;
+	}
+
+	Gb_SetTestItemSelectedState(pItem, nSelect);
+}
+
+//更新选择树形控件时的显示效果
+//nSelect = 0 表示未选中,nSelect = 1表示选中,nSelect = 2表示子节点中既包含选中也包含未选中的测试项目(中间状态)
+void CGuideBookItemsSelTreeCtrl::UpdateItemSelectedState(CGbItemBase* pItem)
+{
+	Gb_UpdateItemSelectedState(pItem);
+}
+
+void CGuideBookItemsSelTreeCtrl::InsertGbItemToTreeCtrl(CGbItemBase* pItem,HTREEITEM htiParent)
+{
+	ASSERT(m_pGuideBook != NULL);
+
+	DWORD dwItemData = 0;
+	HTREEITEM hTreeItem = NULL;
+
+	if(Gb_IsItemBaseClassID(pItem->GetClassID()))
+	{
+		hTreeItem = InsertItem(pItem->m_strName,0,0,htiParent);
+		pItem->m_dwItemData = (DWORD)hTreeItem;
+		SetItemData(hTreeItem, (DWORD)pItem);
+		InsertGbItemChildrenToTreeCtrl(pItem,hTreeItem);
+		//展开树形节点
+		if(pItem->GetExpandState())
+		{
+			Expand(hTreeItem,TVE_EXPAND);
+		}
+	}
+}
+
+void CGuideBookItemsSelTreeCtrl::InsertGbItemChildrenToTreeCtrl(CGbItemBase* pItem,HTREEITEM htiParent)
+{
+	ASSERT(pItem != NULL);
+	CGbItemBase* pObj = NULL;
+	POS pos = pItem->GetHeadPosition();
+
+	while(pos != NULL)
+	{
+		pObj = (CGbItemBase*)pItem->GetNext(pos);
+		InsertGbItemToTreeCtrl(pObj,htiParent);
+	}
+}
+
+//CGuideBookItemsSelTreeCtrl 消息响应
+void CGuideBookItemsSelTreeCtrl::OnCustomdraw(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	NMTVCUSTOMDRAW* pCD = reinterpret_cast<NMTVCUSTOMDRAW*>(pNMHDR);
+	CDC* pDC = CDC::FromHandle(pCD->nmcd.hdc);
+	HTREEITEM hItem = reinterpret_cast<HTREEITEM> (pCD->nmcd.dwItemSpec);
+	*pResult = CDRF_DODEFAULT;
+
+	LPNMHDR pNmhdr = (LPNMHDR)pNMHDR;          
+	LPNMTVCUSTOMDRAW pCustomDraw = (LPNMTVCUSTOMDRAW)pNMHDR;
+
+	if(m_pGuideBook == NULL)
+	{
+		return ;
+	}
+	else 
+	{
+		_DrawItem((long)pCD->nmcd.hdc
+			,(long)hItem
+			,pCD->nmcd.dwDrawStage
+			,pResult);
+	}
+}
+
+void CGuideBookItemsSelTreeCtrl::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	UINT uFlags = 0;
+	HTREEITEM hItem = HitTest(point,&uFlags);
+	HTREEITEM hItemSelected = GetSelectedItem();
+
+	if(hItem != hItemSelected)
+	{
+		this->SelectItem(hItem);
+	}
+
+	_OnLButtonDown(point.x,point.y);
+	CTreeCtrl::OnLButtonDown(nFlags, point);
+}
+
+void CGuideBookItemsSelTreeCtrl::OnRButtonDown(UINT nFlags, CPoint point) 
+{
+	SetFocus();
+	UINT uFlags = 0;
+	HTREEITEM hItem = HitTest(point, &uFlags);
+	HTREEITEM hItemSelected = GetSelectedItem();
+
+	if (hItem != hItemSelected)
+	{
+		this->SelectItem(hItem);
+	}
+
+	if (hItem == NULL)
+	{
+		return;
+	}
+
+	m_pCurrSelTestItem = GetTestItemByTreeItem((long)hItem);
+	TRACE(L"%s\r\n", m_pCurrSelTestItem->m_strID);
+
+	CTreeCtrl::OnRButtonDown(nFlags, point);
+
+	ClientToScreen(&point);
+	OnContextMenuEx(this, point);
+}
+
+
+void CGuideBookItemsSelTreeCtrl::SelectTopItem(CGbItemBase* pCurrItem)
+{
+	long nVisibleCount = 0;
+	long nCurrItemIndex = 0;
+
+	SelectItem((HTREEITEM)pCurrItem->m_dwItemData);
+	GetVisibleItemCount(nVisibleCount, nCurrItemIndex, pCurrItem, m_pGuideBook->m_pGuideBook);
+	nCurrItemIndex -= 7;
+
+	if (nCurrItemIndex <= 1)
+	{
+		nCurrItemIndex = 0;
+	}
+
+	//SendMessage(WM_VSCROLL,MAKELONG(SB_THUMBTRACK,nCurrItemIndex),0); 
+}
+
+long CGuideBookItemsSelTreeCtrl::GetVisibleItemCount(long &nVisibleCount, long &nCurrItemIndex, CGbItemBase *pCurrItem, CGbItemBase *pParent)
+{
+	CGbItemBase *pTestItem = NULL;
+
+	POS pos = pParent->GetHeadPosition();
+
+	while (pos != NULL)
+	{
+		pTestItem = (CGbItemBase*)pParent->GetNext(pos);
+
+		if(pTestItem->m_nShow == 1)
+		{
+			nVisibleCount ++;
+		}
+
+		if (pTestItem == pCurrItem)
+		{
+			nCurrItemIndex = nVisibleCount;
+		}
+
+		//父对象展开
+		if(!Gb_IsItemBaseClassID(pTestItem->GetClassID()) && pTestItem->m_nExpandState == 1)
+		{
+			GetVisibleItemCount(nVisibleCount,nCurrItemIndex,pCurrItem,pTestItem);
+		}
+	}
+
+	return 0;
+}
+
+void CGuideBookItemsSelTreeCtrl::OnTestPoint()
+{
+	CTCtrlCntrBaseApp *pApp = (CTCtrlCntrBaseApp*)AfxGetApp();
+	pApp->SetTestMode_Report();
+
+	m_pGuideBook->TestSingle(m_pCurrSelTestItem);
+}
+
+void CGuideBookItemsSelTreeCtrl::OnViewDeviceSets()
+{
+	//AfxGetApp()->PostThreadMessage(WM_VIEW_DEVICESETS, (WPARAM)m_pCurrSelTestItem, (LPARAM)m_pCurrSelTestItem);
+	//m_pGuideBook->TestSingle(m_pCurrSelTestItem);
+	CViewSetsDialog dlg;
+	dlg.m_pDevice = m_pCurrSelTestItem;
+	dlg.DoModal();
+}
+
+void CGuideBookItemsSelTreeCtrl::OnExpandAllChildren()
+{
+	HTREEITEM hSel = GetSelectedItem();
+	UI_ExpandAllChildren(this, hSel);
+}
+
+void CGuideBookItemsSelTreeCtrl::OnEditItemPara()
+{
+	m_pGuideBook->EditItemPara(m_pCurrSelTestItem);
+}
+
+void CGuideBookItemsSelTreeCtrl::OnTestBelow()
+{
+	m_pGuideBook->TestFrom(m_pCurrSelTestItem);
+
+	//发送消息
+	AfxGetApp()->PostThreadMessage(WM_TESTBELOW, 0, 0);
+}
+
+void CGuideBookItemsSelTreeCtrl::ShowReport(BOOL bCreate)
+{
+	HTREEITEM hItem = GetSelectedItem();
+
+	if (hItem != NULL)
+	{
+		CExBaseObject *pItem = (CExBaseObject*)GetItemData(hItem);
+		m_pGuideBook->m_pTCtrlMsgRcv->ShowItemReport(pItem, bCreate);
+	}
+}
+
+void CGuideBookItemsSelTreeCtrl::OnShowReport()
+{
+	if (m_pGuideBook == NULL)
+	{
+		return;
+	}
+
+	if (m_pGuideBook->m_pTCtrlMsgRcv == NULL)
+	{
+		return;
+	}
+
+	ShowReport(TRUE);
+}
+
+void CGuideBookItemsSelTreeCtrl::OnContextMenu(CWnd* pWnd, CPoint point)
+{
+}
+
+//void CGuideBookItemsSelTreeCtrl::CreateGuideBookTreeImageList(UINT nBitmapID,int cx ,int nGrow,COLORREF crMask)
+//{
+//	m_GuideBookTreeImageList.DeleteImageList();
+//	m_GuideBookTreeImageList.Create (nBitmapID, cx, nGrow, crMask);
+//
+//	LOGFONT lf = InitLogFont();
+//	lf.lfHeight = 14;
+//	lf.lfWeight = 400;
+//
+//#ifdef UNICODE
+//	lstrcpy(lf.lfFaceName,L"宋体");
+//#else
+//	strcpy(lf.lfFaceName,"宋体");	
+//#endif // UNICODE
+//
+//	if (m_pFontTestItem == NULL)
+//	{
+//		m_pFontTestItem =  new CFont;
+//		m_pFontTestItem->CreateFontIndirect(&lf);	
+//	}
+//}
+
+int CGuideBookItemsSelTreeCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+	if (CTreeCtrl::OnCreate(lpCreateStruct) == -1)
+		return -1;
+
+	// TODO:  在此添加您专用的创建代码
+
+	return 0;
+}
+
+void CGuideBookItemsSelTreeCtrl::OnLButtonDblClk(UINT nFlags, CPoint point)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+
+	UINT uFlags = 0;
+	HTREEITEM hItem = HitTest(point,&uFlags);
+	HTREEITEM hItemSelected = GetSelectedItem();
+
+	if(hItem != hItemSelected)
+	{
+		this->SelectItem(hItem);
+	}
+
+	CTreeCtrl::OnLButtonDblClk(nFlags, point);
+
+	_OnLButtonDblClk(point.x,point.y);
+
+}
+
+void CGuideBookItemsSelTreeCtrl::OnTvnItemexpanded(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
+
+	// TODO: 在此添加控件通知处理程序代码
+	if( !m_bInTestItemInitState)
+	{
+		HTREEITEM hCurTreeItem = pNMTreeView->itemNew.hItem;
+		UINT nAction  = pNMTreeView->action;
+
+		CGbItemBase* pItem = (CGbItemBase*)GetItemData(hCurTreeItem);
+		if(nAction == TVE_EXPAND)
+		{
+			pItem->SetExpandState(1);
+		}
+		else if(nAction == TVE_COLLAPSE)
+		{
+			pItem->SetExpandState(0);
+		}
+
+		Invalidate(FALSE);
+	}
+
+	*pResult = 0;
+}
+
+void CGuideBookItemsSelTreeCtrl::CloseTestProject()
+{
+	DeleteAllItems();
+	m_pGuideBook = NULL;
+
+}void CGuideBookItemsSelTreeCtrl::OnTvnItemChanged(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	NMTVITEMCHANGE *pNMTVItemChange = reinterpret_cast<NMTVITEMCHANGE*>(pNMHDR);
+	// TODO: 在此添加控件通知处理程序代码
+	*pResult = 0;
+}

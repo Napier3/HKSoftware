@@ -1,0 +1,1314 @@
+#include "StdAfx.h"
+#include "XmlRW_Pugi.h"
+
+#ifdef XML_USE_PUGIXML
+
+
+#ifdef _DEBUG
+#undef THIS_FILE
+static char THIS_FILE[]=__FILE__;
+#define new DEBUG_NEW
+#endif
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+CXmlRWNodeList_Pugi::CXmlRWNodeList_Pugi()
+{
+	m_oPugiXmlNodeList = pugi::xml_node();
+	m_pCurChildNode = NULL;
+}
+
+CXmlRWNodeList_Pugi::CXmlRWNodeList_Pugi(pugi::xml_node &oXMLNodeList)
+{
+	m_oPugiXmlNodeList = oXMLNodeList;
+}
+
+long CXmlRWNodeList_Pugi::GetNodeNum()
+{
+	long nNum = 0;
+
+	nNum = m_oPugiXmlNodeList.child_number();
+
+	return nNum;
+}
+
+CXmlRWNodeBase* CXmlRWNodeList_Pugi::GetChild(const long &nChildIndex)
+{
+	if (m_pCurChildNode == NULL)
+	{
+		m_pCurChildNode = new CXmlRWNode_Pugi;
+	}
+
+	CXmlRWNode_Pugi *pCurChildNode = (CXmlRWNode_Pugi *)m_pCurChildNode;
+	*pCurChildNode = m_oPugiXmlNodeList.child(nChildIndex);
+	return m_pCurChildNode;
+}
+
+void CXmlRWNodeList_Pugi::operator=(pugi::xml_node &oNodeList)
+{
+	FreeRWObj();
+	m_oPugiXmlNodeList = oNodeList;
+}
+
+void CXmlRWNodeList_Pugi::FreeRWObj()
+{
+	m_oPugiXmlNodeList = pugi::xml_node();
+
+	if (m_pCurChildNode != NULL)
+	{
+		delete m_pCurChildNode;
+		m_pCurChildNode = NULL;
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+CXmlRWNode_Pugi::CXmlRWNode_Pugi()
+{
+	m_oPugiXmlNode = pugi::xml_node();
+	m_pCurChildNode = NULL;
+}
+
+CXmlRWNode_Pugi::CXmlRWNode_Pugi(pugi::xml_node &oXMLNode)
+{
+	m_oPugiXmlNode = oXMLNode;
+}
+
+CString CXmlRWNode_Pugi::GetNodeName()
+{
+	CString strNodeName;
+	strNodeName = m_oPugiXmlNode.name();
+	return strNodeName;
+}
+
+BOOL CXmlRWNode_Pugi::IsValid()
+{
+	return (!m_oPugiXmlNode.empty());
+}
+
+CXmlRWNodeBase* CXmlRWNode_Pugi::GetChildNode(const CString &strNodeName)
+{
+	if (m_pCurChildNode == NULL)
+	{
+		m_pCurChildNode = new CXmlRWNode_Pugi;
+	}
+
+	CXmlRWNode_Pugi *pCurChildNode = (CXmlRWNode_Pugi*)m_pCurChildNode;
+	long nLen = strNodeName.GetLength();
+
+#ifdef _UNICODE
+  #ifdef PUGIXML_WCHAR_MODE
+	*pCurChildNode = m_oPugiXmlNode.child(strNodeName);
+  #else
+	char *pszNodeName = NULL;
+	str_wchar_to_char(&pszNodeName, strNodeName, nLen);
+	*pCurChildNode = m_oPugiXmlNode.child(pszNodeName);
+	delete pszNodeName;
+  #endif
+#else
+  #ifdef PUGIXML_WCHAR_MODE
+    wchar_t *pwcsNodeName = strNodeName.AllocSysString();
+    //str_char_to_wchar(&pwcsNodeName, strNodeName, nLen);
+	*pCurChildNode = m_oPugiXmlNode.child(pwcsNodeName);
+    ::SysFreeString(pwcsNodeName);
+  #else
+	*pCurChildNode = m_oPugiXmlNode.child(strNodeName);
+  #endif
+#endif
+
+	return m_pCurChildNode;
+}
+
+
+CXmlRWNodeBase* CXmlRWNode_Pugi::GetChildNode(BSTR strNodeName)
+{
+	if (m_pCurChildNode == NULL)
+	{
+		m_pCurChildNode = new CXmlRWNode_Pugi;
+	}
+
+	CXmlRWNode_Pugi *pCurChildNode = (CXmlRWNode_Pugi*)m_pCurChildNode;
+	*pCurChildNode = m_oPugiXmlNode.child(strNodeName);
+
+	return m_pCurChildNode;
+}
+
+
+CXmlRWNodeListBase* CXmlRWNode_Pugi::GetChildNodes()
+{
+	m_oChildNodeList = m_oPugiXmlNode;
+	return &m_oChildNodeList;
+}
+
+void CXmlRWNode_Pugi::operator=(CXmlRWNode_Pugi &oRWNode)
+{
+	FreeRWObj();
+	m_oPugiXmlNode = oRWNode.m_oPugiXmlNode;
+}
+
+void CXmlRWNode_Pugi::operator=(const pugi::xml_node &oXMLNode)
+{
+	FreeRWObj();
+	m_oPugiXmlNode = oXMLNode;
+}
+
+void CXmlRWNode_Pugi::FreeRWObj()
+{
+	m_oPugiXmlNode = pugi::xml_node();
+
+	if (m_pCurChildNode != NULL)
+	{
+		delete m_pCurChildNode;
+		m_pCurChildNode = NULL;
+	}
+}
+
+BOOL CXmlRWNode_Pugi::xml_PutText(const CString &strText)
+{
+	if (m_oPugiXmlNode == NULL)
+	{
+		return FALSE;
+	}
+
+	m_oPugiXmlNode.text().set(strText.AllocSysString());
+	return TRUE;
+}
+
+CString CXmlRWNode_Pugi::xml_GetText()
+{
+	CString strText;
+	strText = "";
+
+	if (m_oPugiXmlNode != NULL)
+	{
+		strText = m_oPugiXmlNode.child_value();
+	}
+
+	return strText;
+}
+
+BOOL CXmlRWNode_Pugi::xml_GetCDATA(CString &strText)
+{
+	if (m_oPugiXmlNode != NULL)
+	{
+		strText = m_oPugiXmlNode.child_value();
+	}
+
+	return TRUE;
+}
+
+BOOL CXmlRWNode_Pugi::xml_SetCDATA(CXmlRWDocBase &oXMLDoc,const CString &strText)
+{
+	if (m_oPugiXmlNode == NULL)
+	{
+		return FALSE;
+	}
+
+	m_oPugiXmlNode.append_child(pugi::node_cdata).set_value(strText.AllocSysString());
+//	m_oPugiXmlNode.text().set(strText.AllocSysString());
+
+	return TRUE;
+}
+
+BOOL CXmlRWNode_Pugi::xml_GetAttibuteValue(const BSTR strAttrName, CString &strAttrVal)
+{
+	ASSERT(m_oPugiXmlNode!=NULL);
+	pugi::xml_attribute attrTmp = m_oPugiXmlNode.attribute(strAttrName);
+
+	if (attrTmp != NULL)
+	{
+		strAttrVal = attrTmp.value();
+		return TRUE;
+	} 
+	else
+	{
+		return FALSE;
+	}
+}
+
+BOOL CXmlRWNode_Pugi::xml_GetAttibuteValue(const BSTR strAttrName, wchar_t *strAttrVal)
+{
+	ASSERT(m_oPugiXmlNode!=NULL);
+	pugi::xml_attribute attrTmp = m_oPugiXmlNode.attribute(strAttrName);
+
+	if (attrTmp != NULL)
+	{
+		CString strValue;
+		strValue = attrTmp.value();
+		strAttrVal = strValue.AllocSysString();
+		return TRUE;
+	} 
+	else
+	{
+		return FALSE;
+	}
+}
+
+BOOL CXmlRWNode_Pugi::xml_GetAttibuteValue(const BSTR strAttrName, long &nAttrVal)
+{
+	ASSERT(m_oPugiXmlNode!=NULL);
+	pugi::xml_attribute attrTmp = m_oPugiXmlNode.attribute(strAttrName);
+
+	if (attrTmp != NULL)
+	{
+		nAttrVal = attrTmp.as_int();
+		return TRUE;
+	} 
+	else
+	{
+		return FALSE;
+	}
+}
+
+BOOL CXmlRWNode_Pugi::xml_GetAttibuteValue(const BSTR strAttrName, DWORD &dwAttrVal)
+{
+	ASSERT(m_oPugiXmlNode!=NULL);
+	pugi::xml_attribute attrTmp = m_oPugiXmlNode.attribute(strAttrName);
+
+	if (attrTmp != NULL)
+	{
+		dwAttrVal = attrTmp.as_int();
+		return TRUE;
+	} 
+	else
+	{
+		return FALSE;
+	}
+}
+
+BOOL CXmlRWNode_Pugi::xml_GetAttibuteValue_Color(const BSTR strAttrName, COLORREF &crAttrVal)
+{
+	ASSERT(m_oPugiXmlNode!=NULL);
+	pugi::xml_attribute attrTmp = m_oPugiXmlNode.attribute(strAttrName);
+
+	if (attrTmp != NULL)
+	{
+		crAttrVal = attrTmp.as_int();
+		return TRUE;
+	} 
+	else
+	{
+		return FALSE;
+	}
+}
+
+BOOL CXmlRWNode_Pugi::xml_GetAttibuteValue(const BSTR strAttrName, double &dAttrVal)
+{
+	ASSERT(m_oPugiXmlNode!=NULL);
+	pugi::xml_attribute attrTmp = m_oPugiXmlNode.attribute(strAttrName);
+
+	if (attrTmp != NULL)
+	{
+		dAttrVal = attrTmp.as_double();
+		return TRUE;
+	} 
+	else
+	{
+		return FALSE;
+	}
+}
+
+BOOL CXmlRWNode_Pugi::xml_GetAttibuteValue(const BSTR strAttrName, short &unAttrVal)
+{
+	ASSERT(m_oPugiXmlNode!=NULL);
+	pugi::xml_attribute attrTmp = m_oPugiXmlNode.attribute(strAttrName);
+
+	if (attrTmp != NULL)
+	{
+		unAttrVal = attrTmp.as_int();
+		return TRUE;
+	} 
+	else
+	{
+		return FALSE;
+	}
+}
+
+BOOL CXmlRWNode_Pugi::xml_GetAttibuteValue(const BSTR strAttrName, float &fAttrVal)
+{
+	ASSERT(m_oPugiXmlNode!=NULL);
+	pugi::xml_attribute attrTmp = m_oPugiXmlNode.attribute(strAttrName);
+
+	if (attrTmp != NULL)
+	{
+		fAttrVal = attrTmp.as_double();
+		return TRUE;
+	} 
+	else
+	{
+		return FALSE;
+	}
+}
+
+#ifndef OS_QT_LINUX
+
+BOOL CXmlRWNode_Pugi::xml_GetAttibuteValue(const BSTR strAttrName, _variant_t &vValue)
+{
+	ASSERT(m_oPugiXmlNode!=NULL);
+	pugi::xml_attribute attrTmp = m_oPugiXmlNode.attribute(strAttrName);
+
+	if (attrTmp != NULL)
+	{
+		CString strValue;
+		strValue = attrTmp.value();
+        vValue = strValue;
+		return TRUE;
+	} 
+	else
+	{
+		return FALSE;
+	}
+}
+
+#endif
+
+BOOL CXmlRWNode_Pugi::xml_GetAttibuteValue(const BSTR strAttrName, SYSTEMTIME &tmSys)
+{
+	ASSERT(m_oPugiXmlNode!=NULL);
+	pugi::xml_attribute attrTmp = m_oPugiXmlNode.attribute(strAttrName);
+
+	if (attrTmp != NULL)
+	{
+		CString strTmpValue;
+		strTmpValue = attrTmp.value();
+		RW_CString_To_SYSTIME(strTmpValue,tmSys);
+		return TRUE;
+	} 
+	else
+	{
+		return FALSE;
+	}
+}
+
+BOOL CXmlRWNode_Pugi::xml_SetAttributeValue(const BSTR strAttrName,const CString &strAttrVal)
+{
+	m_oPugiXmlNode.append_attribute(strAttrName).set_value(strAttrVal.AllocSysString());
+	return TRUE;
+}
+
+BOOL CXmlRWNode_Pugi::xml_SetAttributeValue(const BSTR strAttrName,const wchar_t *strAttrVal)
+{
+	m_oPugiXmlNode.append_attribute(strAttrName).set_value(strAttrVal);
+	return TRUE;
+}
+BOOL CXmlRWNode_Pugi::xml_SetAttributeValue(const BSTR strAttrName, long &nAttrVal)
+{
+	m_oPugiXmlNode.append_attribute(strAttrName).set_value(nAttrVal);
+	return TRUE;
+}
+
+BOOL CXmlRWNode_Pugi::xml_SetAttributeValue(const BSTR strAttrName, DWORD &dwAttrVal)
+{
+	m_oPugiXmlNode.append_attribute(strAttrName).set_value((int)dwAttrVal);
+	return TRUE;
+}
+
+BOOL CXmlRWNode_Pugi::xml_SetAttributeValue_Color(const BSTR strAttrName, COLORREF &crAttrVal)
+{
+	char pszColor[40];
+	GetRGBColor(crAttrVal, pszColor);
+	m_oPugiXmlNode.append_attribute(strAttrName).set_value(pszColor);
+	return TRUE;
+}
+
+BOOL CXmlRWNode_Pugi::xml_SetAttributeValue(const BSTR strAttrName, double &dAttrVal)
+{
+	m_oPugiXmlNode.append_attribute(strAttrName).set_value(dAttrVal);
+	return TRUE;
+}
+
+BOOL CXmlRWNode_Pugi::xml_SetAttributeValue(const BSTR strAttrName, short &unAttrVal)
+{
+	m_oPugiXmlNode.append_attribute(strAttrName).set_value(unAttrVal);
+	return TRUE;
+}
+BOOL CXmlRWNode_Pugi::xml_SetAttributeValue(const BSTR strAttrName, float &fAttrVal)
+{
+	m_oPugiXmlNode.append_attribute(strAttrName).set_value(fAttrVal);
+	return TRUE;
+}
+
+#ifndef OS_QT_LINUX
+BOOL CXmlRWNode_Pugi::xml_SetAttributeValue(const BSTR strAttrName, _variant_t &vValue)
+{
+	ASSERT(FALSE);
+	return FALSE;
+}
+#endif
+
+BOOL CXmlRWNode_Pugi::xml_SetAttributeValue(const BSTR strAttrName,const SYSTEMTIME &tmSys)
+{
+#ifdef _UNICODE
+	wchar_t wstr[40];
+	wsprintf(wstr, L"%4d-%02d-%02dT%02d:%02d:%02dZ",	tmSys.wYear, tmSys.wMonth, tmSys.wDay, tmSys.wHour, tmSys.wMinute, tmSys.wSecond);
+#else
+	char wstr[40];
+	sprintf(wstr, "%4d-%02d-%02dT%02d:%02d:%02dZ",	tmSys.wYear, tmSys.wMonth, tmSys.wDay, tmSys.wHour, tmSys.wMinute, tmSys.wSecond);
+#endif
+
+	CString strValue;
+	strValue = wstr;
+	m_oPugiXmlNode.append_attribute(strAttrName).set_value(strValue.AllocSysString());
+	return TRUE;
+}
+
+BOOL CXmlRWNode_Pugi::xml_GetElementText(const BSTR strAttrName, CString &strAttrVal)
+{
+	pugi::xml_node oChild = m_oPugiXmlNode.child(strAttrName);
+
+	if(oChild == NULL)
+		return FALSE;
+
+	strAttrVal = oChild.child_value();
+	return TRUE;
+}
+
+BOOL CXmlRWNode_Pugi::xml_GetElementText(const BSTR strAttrName, wchar_t *strAttrVal)
+{
+	pugi::xml_node oChild = m_oPugiXmlNode.child(strAttrName);
+
+	if(oChild == NULL)
+		return FALSE;
+
+	CString strValue;
+	strValue = oChild.child_value();
+	strAttrVal = strValue.AllocSysString();
+	return TRUE;
+}
+
+BOOL CXmlRWNode_Pugi::xml_GetElementText(const BSTR strAttrName, long &nAttrVal)
+{
+	pugi::xml_node oChild = m_oPugiXmlNode.child(strAttrName);
+
+	if(oChild == NULL)
+		return FALSE;
+
+	nAttrVal = CString_To_long((CString)oChild.child_value());
+	return TRUE;
+}
+
+BOOL CXmlRWNode_Pugi::xml_GetElementText(const BSTR strAttrName, DWORD &dwAttrVal)
+{
+	pugi::xml_node oChild = m_oPugiXmlNode.child(strAttrName);
+
+	if(oChild == NULL)
+		return FALSE;
+
+	dwAttrVal = CString_To_long((CString)oChild.child_value());
+	return TRUE;
+}
+
+BOOL CXmlRWNode_Pugi::xml_GetElement_Color(const BSTR strAttrName, COLORREF &crAttrVal)
+{
+	pugi::xml_node oChild = m_oPugiXmlNode.child(strAttrName);
+
+	if(oChild == NULL)
+		return FALSE;
+
+	crAttrVal = CString_To_long((CString)oChild.child_value());
+	return TRUE;
+}
+
+BOOL CXmlRWNode_Pugi::xml_GetElementText_Color(const BSTR strAttrName, COLORREF &crAttrVal)
+{
+	pugi::xml_node oChild = m_oPugiXmlNode.child(strAttrName);
+
+	if(oChild == NULL)
+		return FALSE;
+
+	crAttrVal = CString_To_long((CString)oChild.child_value());
+	return TRUE;
+}
+
+BOOL CXmlRWNode_Pugi::xml_GetElementText(const BSTR strAttrName, double &dAttrVal)
+{
+	pugi::xml_node oChild = m_oPugiXmlNode.child(strAttrName);
+
+	if(oChild == NULL)
+		return FALSE;
+
+	dAttrVal = CString_To_double((CString)oChild.child_value());
+	return TRUE;
+}
+
+BOOL CXmlRWNode_Pugi::xml_GetElementText(const BSTR strAttrName, short &unAttrVal)
+{
+	pugi::xml_node oChild = m_oPugiXmlNode.child(strAttrName);
+
+	if(oChild == NULL)
+		return FALSE;
+
+	unAttrVal = CString_To_long((CString)oChild.child_value());
+	return TRUE;
+}
+
+BOOL CXmlRWNode_Pugi::xml_GetElementText(const BSTR strAttrName, float &fAttrVal)
+{
+	pugi::xml_node oChild = m_oPugiXmlNode.child(strAttrName);
+
+	if(oChild == NULL)
+		return FALSE;
+
+	fAttrVal = CString_To_double((CString)oChild.child_value());
+	return TRUE;
+}
+
+#ifndef OS_QT_LINUX
+BOOL CXmlRWNode_Pugi::xml_GetElementText(const BSTR strAttrName, _variant_t &vValue)
+{
+	pugi::xml_node oChild = m_oPugiXmlNode.child(strAttrName);
+
+	if(oChild == NULL)
+		return FALSE;
+
+	CString strAttrVal;
+	strAttrVal = oChild.child_value();
+	vValue.vt=VT_BSTR;
+	vValue.bstrVal=(_bstr_t)strAttrVal;
+	return TRUE;
+}
+#endif
+
+BOOL CXmlRWNode_Pugi::xml_GetElementText(const BSTR strAttrName, SYSTEMTIME &tmSys)
+{
+	pugi::xml_node oChild = m_oPugiXmlNode.child(strAttrName);
+
+	if(oChild == NULL)
+		return FALSE;
+
+	CString strAttrVal;
+	strAttrVal = oChild.child_value();
+
+	RW_CString_To_SYSTIME(strAttrVal,tmSys);
+	return TRUE;
+}
+
+BOOL CXmlRWNode_Pugi::xml_SetElementText(const BSTR strAttrName, CXmlRWDocBase *pXMLDoc, const CString &strAttrVal)
+{
+	pugi::xml_node oChild = m_oPugiXmlNode.append_child(strAttrName);
+	oChild.text().set(strAttrVal.AllocSysString());
+	return TRUE;
+}
+
+BOOL CXmlRWNode_Pugi::xml_SetElementText(const BSTR strAttrName, CXmlRWDocBase *pXMLDoc, long &nAttrVal)
+{
+	pugi::xml_node oChild = m_oPugiXmlNode.append_child(strAttrName);
+	CString strAttrVal;
+	strAttrVal.Format(_T("%ld"),nAttrVal);
+	oChild.text().set(strAttrVal.AllocSysString());
+	return TRUE;
+}
+
+BOOL CXmlRWNode_Pugi::xml_SetElementText_Color(const BSTR strAttrName, CXmlRWDocBase *pXMLDoc, COLORREF &crAttrVal)
+{
+	pugi::xml_node oChild = m_oPugiXmlNode.append_child(strAttrName);
+	char pszColor[40];
+	GetRGBColor(crAttrVal, pszColor);
+	CString strAttrVal;
+	strAttrVal.Format(_T("%s"),pszColor);
+	oChild.text().set(strAttrVal.AllocSysString());
+	return TRUE;
+}
+
+BOOL CXmlRWNode_Pugi::xml_SetElementText(const BSTR strAttrName, CXmlRWDocBase *pXMLDoc, double &dAttrVal)
+{
+	pugi::xml_node oChild = m_oPugiXmlNode.append_child(strAttrName);
+	CString strAttrVal;
+	strAttrVal.Format(_T("%lf"),dAttrVal);
+	oChild.text().set(strAttrVal.AllocSysString());
+	return TRUE;
+}
+
+BOOL CXmlRWNode_Pugi::xml_SetElementText(const BSTR strAttrName, CXmlRWDocBase *pXMLDoc, short &unAttrVal)
+{
+	pugi::xml_node oChild = m_oPugiXmlNode.append_child(strAttrName);
+	CString strAttrVal;
+	strAttrVal.Format(_T("%d"),unAttrVal);
+	oChild.text().set(strAttrVal.AllocSysString());
+	return TRUE;
+}
+
+BOOL CXmlRWNode_Pugi::xml_SetElementText(const BSTR strAttrName, CXmlRWDocBase *pXMLDoc, float &fAttrVal)
+{
+	pugi::xml_node oChild = m_oPugiXmlNode.append_child(strAttrName);
+	CString strAttrVal;
+	strAttrVal.Format(_T("%lf"),fAttrVal);
+	oChild.text().set(strAttrVal.AllocSysString());
+	return TRUE;
+}
+
+#ifndef OS_QT_LINUX
+BOOL CXmlRWNode_Pugi::xml_SetElementText(const BSTR strAttrName, CXmlRWDocBase *pXMLDoc, VARIANT &vValue)
+{
+	ASSERT(FALSE);
+	return FALSE;
+}
+#endif
+
+BOOL CXmlRWNode_Pugi::xml_SetElementText(const BSTR strAttrName, CXmlRWDocBase *pXMLDoc, const SYSTEMTIME &tmSys)
+{
+#ifdef _UNICODE
+	wchar_t wstr[40];
+	wsprintf(wstr, L"%4d-%02d-%02dT%02d:%02d:%02dZ",	tmSys.wYear, tmSys.wMonth, tmSys.wDay, tmSys.wHour, tmSys.wMinute, tmSys.wSecond);
+#else
+	char wstr[40];
+	sprintf(wstr, "%4d-%02d-%02dT%02d:%02d:%02dZ",	tmSys.wYear, tmSys.wMonth, tmSys.wDay, tmSys.wHour, tmSys.wMinute, tmSys.wSecond);
+#endif
+
+	pugi::xml_node oChild = m_oPugiXmlNode.append_child(strAttrName);
+	CString strAttrVal;
+	strAttrVal = wstr;
+	oChild.text().set(strAttrVal.AllocSysString());
+	return TRUE;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+CXmlRWElement_Pugi::CXmlRWElement_Pugi()
+{
+	m_oPugiXmlElement = pugi::xml_node();
+	m_pCurChildElement = NULL;
+}
+
+BOOL CXmlRWElement_Pugi::AppendChild(CXmlRWElementBase &oRWElement)
+{
+	return TRUE;
+}
+
+void CXmlRWElement_Pugi::operator=(const pugi::xml_node &oNodeList)
+{
+	FreeRWObj();
+	m_oPugiXmlElement = oNodeList;
+}
+
+void CXmlRWElement_Pugi::FreeRWObj()
+{
+	m_oPugiXmlElement = pugi::xml_node();
+
+	if (m_pCurChildElement != NULL)
+	{
+		delete m_pCurChildElement;
+		m_pCurChildElement = NULL;
+	}
+}
+
+BOOL CXmlRWElement_Pugi::xml_PutText(const CString &strText)
+{
+	if (m_oPugiXmlElement == NULL)
+	{
+		return FALSE;
+	}
+
+	m_oPugiXmlElement.text().set(strText.AllocSysString());
+	return TRUE;
+}
+
+CString CXmlRWElement_Pugi::xml_GetText()
+{
+	CString strText;
+	strText = "";
+
+	if (m_oPugiXmlElement != NULL)
+	{
+		strText = m_oPugiXmlElement.child_value();
+	}
+
+	return strText;
+}
+
+BOOL CXmlRWElement_Pugi::xml_GetCDATA(CString &strText)
+{
+	if (m_oPugiXmlElement != NULL)
+	{
+		strText = m_oPugiXmlElement.child_value();
+	}
+
+	return TRUE;
+}
+
+BOOL CXmlRWElement_Pugi::xml_SetCDATA(CXmlRWDocBase &oXMLDoc,const CString &strText)
+{
+	if (m_oPugiXmlElement == NULL)
+	{
+		return FALSE;
+	}
+
+	m_oPugiXmlElement.append_child(pugi::node_cdata).set_value(strText.AllocSysString());
+// 	CString strNewText;
+// 	strNewText = _T("<![CDATA[");
+// 	strNewText += strText;
+// 	strNewText += _T("]]>");
+// 	m_oPugiXmlElement.text().set(strNewText.AllocSysString());
+
+	return TRUE;
+}
+
+CXmlRWElementBase* CXmlRWElement_Pugi::GetCurChildElement()
+{
+	if (m_pCurChildElement == NULL)
+	{
+		m_pCurChildElement = new CXmlRWElement_Pugi;
+	}
+
+	return m_pCurChildElement;
+}
+
+BOOL CXmlRWElement_Pugi::xml_GetAttibuteValue(const BSTR strAttrName, CString &strAttrVal)
+{
+	ASSERT(m_oPugiXmlElement!=NULL);
+	pugi::xml_attribute attrTmp = m_oPugiXmlElement.attribute(strAttrName);
+
+	if (attrTmp != NULL)
+	{
+		strAttrVal = attrTmp.value();
+		return TRUE;
+	} 
+	else
+	{
+		return FALSE;
+	}
+}
+
+BOOL CXmlRWElement_Pugi::xml_GetAttibuteValue(const BSTR strAttrName, wchar_t *strAttrVal)
+{
+	ASSERT(m_oPugiXmlElement!=NULL);
+	pugi::xml_attribute attrTmp = m_oPugiXmlElement.attribute(strAttrName);
+
+	if (attrTmp != NULL)
+	{
+		CString strValue;
+		strValue = attrTmp.value();
+		strAttrVal = strValue.AllocSysString();
+		return TRUE;
+	} 
+	else
+	{
+		return FALSE;
+	}
+}
+
+BOOL CXmlRWElement_Pugi::xml_GetAttibuteValue(const BSTR strAttrName, long &nAttrVal)
+{
+	ASSERT(m_oPugiXmlElement!=NULL);
+	pugi::xml_attribute attrTmp = m_oPugiXmlElement.attribute(strAttrName);
+
+	if (attrTmp != NULL)
+	{
+		nAttrVal = attrTmp.as_int();
+		return TRUE;
+	} 
+	else
+	{
+		return FALSE;
+	}
+}
+
+BOOL CXmlRWElement_Pugi::xml_GetAttibuteValue(const BSTR strAttrName, DWORD &dwAttrVal)
+{
+	ASSERT(m_oPugiXmlElement!=NULL);
+	pugi::xml_attribute attrTmp = m_oPugiXmlElement.attribute(strAttrName);
+
+	if (attrTmp != NULL)
+	{
+		dwAttrVal = attrTmp.as_int();
+		return TRUE;
+	} 
+	else
+	{
+		return FALSE;
+	}
+}
+
+BOOL CXmlRWElement_Pugi::xml_GetAttibuteValue_Color(const BSTR strAttrName, COLORREF &crAttrVal)
+{
+	ASSERT(m_oPugiXmlElement!=NULL);
+	pugi::xml_attribute attrTmp = m_oPugiXmlElement.attribute(strAttrName);
+
+	if (attrTmp != NULL)
+	{
+		CString strAttrVal;
+		strAttrVal = attrTmp.value();
+		crAttrVal = GetRGBColor(strAttrVal, crAttrVal);
+		return TRUE;
+	} 
+	else
+	{
+		return FALSE;
+	}
+}
+
+BOOL CXmlRWElement_Pugi::xml_GetAttibuteValue(const BSTR strAttrName, double &dAttrVal)
+{
+	ASSERT(m_oPugiXmlElement!=NULL);
+	pugi::xml_attribute attrTmp = m_oPugiXmlElement.attribute(strAttrName);
+
+	if (attrTmp != NULL)
+	{
+		dAttrVal = attrTmp.as_double();
+		return TRUE;
+	} 
+	else
+	{
+		return FALSE;
+	}
+}
+
+BOOL CXmlRWElement_Pugi::xml_GetAttibuteValue(const BSTR strAttrName, short &unAttrVal)
+{
+	ASSERT(m_oPugiXmlElement!=NULL);
+	pugi::xml_attribute attrTmp = m_oPugiXmlElement.attribute(strAttrName);
+
+	if (attrTmp != NULL)
+	{
+		unAttrVal = attrTmp.as_int();
+		return TRUE;
+	} 
+	else
+	{
+		return FALSE;
+	}
+}
+
+BOOL CXmlRWElement_Pugi::xml_GetAttibuteValue(const BSTR strAttrName, float &fAttrVal)
+{
+	ASSERT(m_oPugiXmlElement!=NULL);
+	pugi::xml_attribute attrTmp = m_oPugiXmlElement.attribute(strAttrName);
+
+	if (attrTmp != NULL)
+	{
+		fAttrVal = attrTmp.as_double();
+		return TRUE;
+	} 
+	else
+	{
+		return FALSE;
+	}
+}
+
+#ifndef OS_QT_LINUX
+BOOL CXmlRWElement_Pugi::xml_GetAttibuteValue(const BSTR strAttrName, _variant_t &vValue)
+{
+	ASSERT(m_oPugiXmlElement!=NULL);
+	pugi::xml_attribute attrTmp = m_oPugiXmlElement.attribute(strAttrName);
+
+	if (attrTmp != NULL)
+	{
+		CString strValue;
+		strValue = attrTmp.value();
+        vValue = strValue;
+		return TRUE;
+	} 
+	else
+	{
+		return FALSE;
+	}
+}
+#endif
+
+
+
+BOOL CXmlRWElement_Pugi::xml_GetAttibuteValue(const BSTR strAttrName, SYSTEMTIME &tmSys)
+{
+	ASSERT(m_oPugiXmlElement!=NULL);
+	pugi::xml_attribute attrTmp = m_oPugiXmlElement.attribute(strAttrName);
+
+	if (attrTmp != NULL)
+	{
+		CString strTmpValue;
+		strTmpValue = attrTmp.value();
+		RW_CString_To_SYSTIME(strTmpValue,tmSys);
+		return TRUE;
+	} 
+	else
+	{
+		return FALSE;
+	}
+}
+
+BOOL CXmlRWElement_Pugi::xml_SetAttributeValue(const BSTR strAttrName,const CString &strAttrVal)
+{
+	m_oPugiXmlElement.append_attribute(strAttrName).set_value(strAttrVal.AllocSysString());
+	return TRUE;
+}
+
+BOOL CXmlRWElement_Pugi::xml_SetAttributeValue(const BSTR strAttrName,const wchar_t *strAttrVal)
+{
+	m_oPugiXmlElement.append_attribute(strAttrName).set_value(strAttrVal);
+	return TRUE;
+}
+
+BOOL CXmlRWElement_Pugi::xml_SetAttributeValue(const BSTR strAttrName, long &nAttrVal)
+{
+	m_oPugiXmlElement.append_attribute(strAttrName).set_value(nAttrVal);
+	return TRUE;
+}
+
+BOOL CXmlRWElement_Pugi::xml_SetAttributeValue(const BSTR strAttrName, DWORD &dwAttrVal)
+{
+	m_oPugiXmlElement.append_attribute(strAttrName).set_value((long)dwAttrVal);
+	return TRUE;
+}
+
+BOOL CXmlRWElement_Pugi::xml_SetAttributeValue_Color(const BSTR strAttrName, COLORREF &crAttrVal)
+{
+	char pszColor[40];
+	GetRGBColor(crAttrVal, pszColor);
+	m_oPugiXmlElement.append_attribute(strAttrName).set_value(pszColor);
+	return TRUE;
+}
+
+BOOL CXmlRWElement_Pugi::xml_SetAttributeValue(const BSTR strAttrName, double &dAttrVal)
+{
+	m_oPugiXmlElement.append_attribute(strAttrName).set_value(dAttrVal);
+	return TRUE;
+}
+
+BOOL CXmlRWElement_Pugi::xml_SetAttributeValue(const BSTR strAttrName, short &unAttrVal)
+{
+	m_oPugiXmlElement.append_attribute(strAttrName).set_value(unAttrVal);
+	return TRUE;
+}
+
+BOOL CXmlRWElement_Pugi::xml_SetAttributeValue(const BSTR strAttrName, float &fAttrVal)
+{
+	m_oPugiXmlElement.append_attribute(strAttrName).set_value(fAttrVal);
+	return TRUE;
+}
+
+#ifndef OS_QT_LINUX
+BOOL CXmlRWElement_Pugi::xml_SetAttributeValue(const BSTR strAttrName, _variant_t &vValue)
+{
+	//vValue.vt=VT_BSTR;
+	//vValue.bstrVal=(_bstr_t)strAttrName;
+	//m_oPugiXmlElement.append_attribute(strAttrName).set_value(pszColor);
+	ASSERT(FALSE);
+	return TRUE;
+}
+#endif
+
+BOOL CXmlRWElement_Pugi::xml_SetAttributeValue(const BSTR strAttrName,const SYSTEMTIME &tmSys)
+{
+#ifdef _UNICODE
+	wchar_t wstr[40];
+	wsprintf(wstr, L"%4d-%02d-%02dT%02d:%02d:%02dZ",	tmSys.wYear, tmSys.wMonth, tmSys.wDay, tmSys.wHour, tmSys.wMinute, tmSys.wSecond);
+#else
+	char wstr[40];
+	sprintf(wstr, "%4d-%02d-%02dT%02d:%02d:%02dZ",	tmSys.wYear, tmSys.wMonth, tmSys.wDay, tmSys.wHour, tmSys.wMinute, tmSys.wSecond);
+#endif
+
+	CString strValue;
+	strValue = wstr;
+	m_oPugiXmlElement.append_attribute(strAttrName).set_value(strValue.AllocSysString());
+	return TRUE;
+}
+
+BOOL CXmlRWElement_Pugi::xml_GetElementText(const BSTR strAttrName, CString &strAttrVal)
+{
+	pugi::xml_node oChild = m_oPugiXmlElement.child(strAttrName);
+
+	if(oChild == NULL)
+		return FALSE;
+
+	strAttrVal = oChild.child_value();
+	return TRUE;
+}
+
+BOOL CXmlRWElement_Pugi::xml_GetElementText(const BSTR strAttrName, wchar_t *strAttrVal)
+{
+	pugi::xml_node oChild = m_oPugiXmlElement.child(strAttrName);
+
+	if(oChild == NULL)
+		return FALSE;
+
+	CString strValue;
+	strValue = oChild.child_value();
+	strAttrVal = strValue.AllocSysString();
+	return TRUE;
+}
+
+BOOL CXmlRWElement_Pugi::xml_GetElementText(const BSTR strAttrName, long &nAttrVal)
+{
+	pugi::xml_node oChild = m_oPugiXmlElement.child(strAttrName);
+
+	if(oChild == NULL)
+		return FALSE;
+
+	nAttrVal = CString_To_long((CString)oChild.child_value());
+	return TRUE;
+}
+
+BOOL CXmlRWElement_Pugi::xml_GetElementText(const BSTR strAttrName, DWORD &dwAttrVal)
+{
+	pugi::xml_node oChild = m_oPugiXmlElement.child(strAttrName);
+
+	if(oChild == NULL)
+		return FALSE;
+
+	dwAttrVal = CString_To_long((CString)oChild.child_value());
+	return TRUE;
+}
+
+BOOL CXmlRWElement_Pugi::xml_GetElementText_Color(const BSTR strAttrName, COLORREF &crAttrVal)
+{
+	pugi::xml_node oChild = m_oPugiXmlElement.child(strAttrName);
+
+	if(oChild == NULL)
+		return FALSE;
+
+	crAttrVal = CString_To_long((CString)oChild.child_value());
+	return TRUE;
+}
+
+BOOL CXmlRWElement_Pugi::xml_GetElement_Color(const BSTR strAttrName, COLORREF &crAttrVal)
+{
+	pugi::xml_node oChild = m_oPugiXmlElement.child(strAttrName);
+
+	if(oChild == NULL)
+		return FALSE;
+
+	crAttrVal = CString_To_long((CString)oChild.child_value());
+	return TRUE;
+}
+
+BOOL CXmlRWElement_Pugi::xml_GetElementText(const BSTR strAttrName, double &dAttrVal)
+{
+	pugi::xml_node oChild = m_oPugiXmlElement.child(strAttrName);
+
+	if(oChild == NULL)
+		return FALSE;
+
+	dAttrVal = CString_To_double((CString)oChild.child_value());
+	return TRUE;
+}
+
+BOOL CXmlRWElement_Pugi::xml_GetElementText(const BSTR strAttrName, short &unAttrVal)
+{
+	pugi::xml_node oChild = m_oPugiXmlElement.child(strAttrName);
+
+	if(oChild == NULL)
+		return FALSE;
+
+	unAttrVal = CString_To_long((CString)oChild.child_value());
+	return TRUE;
+}
+
+BOOL CXmlRWElement_Pugi::xml_GetElementText(const BSTR strAttrName, float &fAttrVal)
+{
+	pugi::xml_node oChild = m_oPugiXmlElement.child(strAttrName);
+
+	if(oChild == NULL)
+		return FALSE;
+
+	fAttrVal = CString_To_double((CString)oChild.child_value());
+	return TRUE;
+}
+
+#ifndef OS_QT_LINUX
+BOOL CXmlRWElement_Pugi::xml_GetElementText(const BSTR strAttrName, _variant_t &vValue)
+{
+	pugi::xml_node oChild = m_oPugiXmlElement.child(strAttrName);
+
+	if(oChild == NULL)
+		return FALSE;
+
+	CString strAttrVal;
+	strAttrVal = oChild.child_value();
+	vValue.vt=VT_BSTR;
+	vValue.bstrVal=(_bstr_t)strAttrVal;
+	return TRUE;
+}
+#endif
+
+BOOL CXmlRWElement_Pugi::xml_GetElementText(const BSTR strAttrName, SYSTEMTIME &tmSys)
+{
+	pugi::xml_node oChild = m_oPugiXmlElement.child(strAttrName);
+
+	if(oChild == NULL)
+		return FALSE;
+
+	CString strAttrVal;
+	strAttrVal = oChild.child_value();
+	RW_CString_To_SYSTIME(strAttrVal,tmSys);
+	return TRUE;
+}
+
+BOOL CXmlRWElement_Pugi::xml_SetElementText(const BSTR strAttrName, CXmlRWDocBase *pXMLDoc, const CString &strAttrVal)
+{
+	pugi::xml_node oChild = m_oPugiXmlElement.append_child(strAttrName);
+	oChild.text().set(strAttrVal.AllocSysString());
+	return TRUE;
+}
+
+BOOL CXmlRWElement_Pugi::xml_SetElementText(const BSTR strAttrName, CXmlRWDocBase *pXMLDoc, long &nAttrVal)
+{
+	pugi::xml_node oChild = m_oPugiXmlElement.append_child(strAttrName);
+	CString strAttrVal;
+	strAttrVal.Format(_T("%ld"),nAttrVal);
+	oChild.text().set(strAttrVal.AllocSysString());
+	return TRUE;
+}
+
+BOOL CXmlRWElement_Pugi::xml_SetElementText_Color(const BSTR strAttrName, CXmlRWDocBase *pXMLDoc, COLORREF &crAttrVal)
+{
+	pugi::xml_node oChild = m_oPugiXmlElement.append_child(strAttrName);
+	char pszColor[40];
+	GetRGBColor(crAttrVal, pszColor);
+	CString strAttrVal;
+	strAttrVal.Format(_T("%s"),pszColor);
+	oChild.text().set(strAttrVal.AllocSysString());
+	return TRUE;
+}
+
+BOOL CXmlRWElement_Pugi::xml_SetElementText(const BSTR strAttrName, CXmlRWDocBase *pXMLDoc, double &dAttrVal)
+{
+	pugi::xml_node oChild = m_oPugiXmlElement.append_child(strAttrName);
+	CString strAttrVal;
+	strAttrVal.Format(_T("%lf"),dAttrVal);
+	oChild.text().set(strAttrVal.AllocSysString());
+	return TRUE;
+}
+
+BOOL CXmlRWElement_Pugi::xml_SetElementText(const BSTR strAttrName, CXmlRWDocBase *pXMLDoc, short &unAttrVal)
+{
+	pugi::xml_node oChild = m_oPugiXmlElement.append_child(strAttrName);
+	CString strAttrVal;
+	strAttrVal.Format(_T("%d"),unAttrVal);
+	oChild.text().set(strAttrVal.AllocSysString());
+	return TRUE;
+}
+
+BOOL CXmlRWElement_Pugi::xml_SetElementText(const BSTR strAttrName, CXmlRWDocBase *pXMLDoc, float &fAttrVal)
+{
+	pugi::xml_node oChild = m_oPugiXmlElement.append_child(strAttrName);
+	CString strAttrVal;
+	strAttrVal.Format(_T("%lf"),fAttrVal);
+	oChild.text().set(strAttrVal.AllocSysString());
+	return TRUE;
+}
+
+#ifndef OS_QT_LINUX
+BOOL CXmlRWElement_Pugi::xml_SetElementText(const BSTR strAttrName, CXmlRWDocBase *pXMLDoc, VARIANT &vValue)
+{
+	ASSERT(FALSE);
+	return FALSE;
+}
+#endif
+
+BOOL CXmlRWElement_Pugi::xml_SetElementText(const BSTR strAttrName, CXmlRWDocBase *pXMLDoc, const SYSTEMTIME &tmSys)
+{
+#ifdef _UNICODE
+	wchar_t wstr[40];
+	wsprintf(wstr, L"%4d-%02d-%02dT%02d:%02d:%02dZ",	tmSys.wYear, tmSys.wMonth, tmSys.wDay, tmSys.wHour, tmSys.wMinute, tmSys.wSecond);
+#else
+	char wstr[40];
+	sprintf(wstr, "%4d-%02d-%02dT%02d:%02d:%02dZ",	tmSys.wYear, tmSys.wMonth, tmSys.wDay, tmSys.wHour, tmSys.wMinute, tmSys.wSecond);
+#endif
+
+	pugi::xml_node oChild = m_oPugiXmlElement.append_child(strAttrName);
+	CString strAttrVal;
+	strAttrVal = wstr;
+	oChild.text().set(strAttrVal.AllocSysString());
+	return TRUE;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+CXmlRWDoc_Pugi::CXmlRWDoc_Pugi():CXmlRWDocBase()
+{
+	m_oPugiXmlDoc.reset();
+}
+
+CXmlRWNodeBase* CXmlRWDoc_Pugi::GetDocNode()
+{
+	m_oDocNode = m_oPugiXmlDoc;
+	return &m_oDocNode;
+}
+
+CXmlRWElementBase* CXmlRWDoc_Pugi::CreateElement(BSTR bstElementKey,CXmlRWElementBase *pParent)
+{
+	CXmlRWElement_Pugi *pRWElement_Pugi = (CXmlRWElement_Pugi *)pParent->GetCurChildElement();
+
+	if (pParent->IsEmpty())
+	{
+
+		*pRWElement_Pugi = m_oPugiXmlDoc.append_child(bstElementKey);
+	}
+	else
+	{
+		*pRWElement_Pugi = ((CXmlRWElement_Pugi*)pParent)->m_oPugiXmlElement.append_child(bstElementKey);
+	}
+
+	return pRWElement_Pugi;
+}
+
+BOOL CXmlRWDoc_Pugi::AppendChild(CXmlRWElementBase &oRWElement)
+{
+	return TRUE;
+}
+
+BOOL CXmlRWDoc_Pugi::CreateInstruction(const CString &strVersion,const CString &strEnCode)
+{
+	// 		pugi::xml_node pre = m_oDocU.pPugiXmlDoc->prepend_child(pugi::node_declaration);
+	// 		pre.append_attribute(L"version") = L"1.0";
+	// 		pre.append_attribute(L"encoding") = strEnCode;
+	// 		CString strtileCode;
+	// 		strtileCode.Format(("encoding=\"%s\"") ,strEnCode);
+	//		pre.append_attribute(strEnCode.AllocSysString());
+	//		pre.append_attribute(L"utf-8");
+	return TRUE;
+}
+
+BOOL CXmlRWDoc_Pugi::SaveXml(const CString &strFilePath)
+{
+    m_oPugiXmlDoc.save_file(strFilePath.GetString());
+	return TRUE;
+}
+
+void CXmlRWDoc_Pugi::FreeRWObj()
+{
+	m_oPugiXmlDoc.reset();
+}
+
+BOOL CXmlRWDoc_Pugi::GetXml(CString &strXML)
+{
+	if (m_oPugiXmlDoc == NULL)
+	{
+		return FALSE;
+	}
+
+	//pugi::xml_string_writer writer;//此方式获取的字符串的大小固定不能超过上限10024
+	//m_oPugiXmlDoc.save(writer);
+	char *pXMLValue = m_oPugiXmlDoc.get_xml_string();
+	strXML = pXMLValue;
+
+	//long nLenth = strlen(pXMLValue);
+	//CFile file;
+
+	//if (file.Open(_T("d:\\11112.xml"), CFile::modeCreate | CFile::modeWrite))
+	//{
+	//	file.Write(pXMLValue, nLenth);
+	//	file.Close();
+	//}
+
+	delete pXMLValue;
+	//std::string strValue;
+ 	//std::ostringstream ss(strValue);
+ 	//m_oPugiXmlDoc.save(ss);
+	return TRUE;
+}
+
+BOOL CXmlRWDoc_Pugi::SetXml(BSTR strXML)
+{
+	if (m_oPugiXmlDoc == NULL)
+	{
+		return FALSE;
+	}
+
+	m_oPugiXmlDoc.load_string(strXML);
+	return TRUE;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#endif //XML_USE_PUGIXML

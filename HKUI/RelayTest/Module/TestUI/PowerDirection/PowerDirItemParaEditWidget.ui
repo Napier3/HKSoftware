@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QPowerDirItemParaEditWidget</class>
+ <widget class="QWidget" name="QPowerDirItemParaEditWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>391</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>QPowerDirItemParaEditWidget</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <layout class="QGridLayout" name="gridLayout">
+     <property name="leftMargin">
+      <number>10</number>
+     </property>
+     <property name="rightMargin">
+      <number>10</number>
+     </property>
+     <item row="0" column="2">
+      <widget class="QComboBox" name="m_cbbTestPhase">
+       <item>
+        <property name="text">
+         <string>AN</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>BN</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>CN</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>AB</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>BC</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>CA</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>ABC</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="2" column="5">
+      <widget class="QLineEdit" name="m_editStepValue"/>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLabel" name="m_labFaultVol">
+       <property name="text">
+        <string>故障电压(V):</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLabel" name="m_labFaultCur">
+       <property name="text">
+        <string>故障电流(A):</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLabel" name="m_labFaultPhase">
+       <property name="text">
+        <string>故障相:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="5">
+      <widget class="QLineEdit" name="m_editActionAreaRange"/>
+     </item>
+     <item row="0" column="5">
+      <widget class="QSettingLineEdit" name="m_editMTA"/>
+     </item>
+     <item row="3" column="2">
+      <widget class="QLineEdit" name="m_editFaultCur"/>
+     </item>
+     <item row="4" column="2">
+      <widget class="QLineEdit" name="m_editFaultTime"/>
+     </item>
+     <item row="0" column="4">
+      <widget class="QLabel" name="m_labMaxSenAng">
+       <property name="text">
+        <string>最大灵敏角(°):</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="QLineEdit" name="m_editFaultVol"/>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="m_labTestPhase">
+       <property name="text">
+        <string>测试相:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="5">
+      <widget class="QLineEdit" name="m_editAbsErr"/>
+     </item>
+     <item row="3" column="4">
+      <widget class="QLabel" name="m_labAbsErr">
+       <property name="text">
+        <string>绝对误差(°):</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="4">
+      <widget class="QLabel" name="m_labActionAreaRange">
+       <property name="text">
+        <string>动作区范围(°):</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="5">
+      <widget class="QLineEdit" name="m_editRelErr"/>
+     </item>
+     <item row="2" column="4">
+      <widget class="QLabel" name="m_labStepValue">
+       <property name="text">
+        <string>变化步长(°):</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="4">
+      <widget class="QLabel" name="m_labRelErr">
+       <property name="text">
+        <string>相对误差(％):</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QComboBox" name="m_cbbFaultPhase"/>
+     </item>
+     <item row="2" column="3">
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Expanding</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>50</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="0">
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLabel" name="m_labFaultTime">
+       <property name="text">
+        <string>故障时间(s):</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="6">
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QSettingLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>../../UI/Controls/SettingCtrls/QSettingLineEdit.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

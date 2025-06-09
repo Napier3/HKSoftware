@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QPpSttIotEngineClientWidget</class>
+ <widget class="QDialog" name="QPpSttIotEngineClientWidget">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>903</width>
+    <height>277</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>IotProtcoClient</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <layout class="QVBoxLayout" name="m_wndVertOptrLayout">
+     <item>
+      <layout class="QGridLayout" name="m_gridLayOutOptr" rowstretch="0,0">
+       <property name="leftMargin">
+        <number>6</number>
+       </property>
+       <property name="topMargin">
+        <number>6</number>
+       </property>
+       <property name="rightMargin">
+        <number>6</number>
+       </property>
+       <property name="bottomMargin">
+        <number>6</number>
+       </property>
+       <item row="0" column="9">
+        <widget class="QPushButton" name="m_btnStartRpt">
+         <property name="text">
+          <string>启动报告</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="8">
+        <widget class="QPushButton" name="m_btnReset">
+         <property name="text">
+          <string>复归</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="6">
+        <widget class="QPushButton" name="m_btnReadZone">
+         <property name="text">
+          <string>读定值区</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="7">
+        <widget class="QPushButton" name="m_btnWriteZone">
+         <property name="text">
+          <string>修改定值区</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="4">
+        <widget class="QPushButton" name="m_btnReadDataset">
+         <property name="text">
+          <string>读数据</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QPushButton" name="m_btnConnectDevice">
+         <property name="text">
+          <string>连接</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="12">
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="5">
+        <widget class="QPushButton" name="m_btnWriteDataset">
+         <property name="text">
+          <string>修改数据</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QPushButton" name="m_btnCloseDevice">
+         <property name="text">
+          <string>断开</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QPushButton" name="m_btnConfigDevice">
+         <property name="text">
+          <string>配置</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="10">
+        <widget class="QPushButton" name="m_btnStopReport">
+         <property name="text">
+          <string>停止报告</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QPushButton" name="m_btnAddDevice">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>添加装置</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QPushButton" name="m_btnEnumDevice">
+         <property name="text">
+          <string>枚举装置</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="m_btnEnumLDevice">
+         <property name="text">
+          <string>枚举逻辑设备</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QPushButton" name="m_btnEnumDataset">
+         <property name="text">
+          <string>枚举数据集</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QPushButton" name="m_btnOpenDvmFile">
+         <property name="text">
+          <string>导入模型</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="4">
+        <widget class="QPushButton" name="m_btnSaveDvmFile">
+         <property name="text">
+          <string>导出模型</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="m_wndHorzLayOutArea"/>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

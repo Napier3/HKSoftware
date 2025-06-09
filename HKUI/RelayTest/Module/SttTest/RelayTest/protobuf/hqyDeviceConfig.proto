@@ -1,0 +1,77 @@
+syntax="proto3";
+import "CompensationPara.proto";
+package hqyDeviceConfig;
+
+message device
+{
+	 devicechaneldesc ochaneldesc = 1;
+         analogmap omapcurrent = 2;//电流通道映射
+         analogmap omapvolt = 3;//电压通道映射
+         Compensation.modules ocompensationmngr = 4;//补偿系数
+         analogmap omapcurrentinnervolt = 5;//current通道映射
+         analogmap omapvoltinnervolt = 6;//current通道映射
+         analogmap omapDCcurrent = 7;//直流电流通道映射
+         analogmap omapDCvolt = 8;//直流电压通道映射
+}
+
+message devicechaneldesc
+{
+         uint32 smvmaxgroupnum=1;//SMV最大组数
+         uint32 goosepubmaxgroupnum=2;//GOOSE最大组数
+         uint32 gooseinmaxgroupnum=3;//goosein 最大组数
+         uint32 analogvoltmaxchanel = 4;//模拟量电压最大通道
+         uint32 analogcurrentmaxchanel =5;//模拟量电流最大通道
+         float ffremax = 6;//频率范围
+         float fanalogVoltmax = 7;//电压范围
+         float fanalogcurrentmax = 8;//电流范围
+         bool  ishasudc = 9;//是否有Udc;
+         float fudcmax = 10;//Udc范围
+         bool  ishasidc = 11;
+         float fidcmax = 12;
+         uint32 nbimaxnum = 13;//开入量个数
+         uint32 nbomaxnum = 14;//开出量个数
+         bool   ishasDigitalout = 15;//是否有数字输出功能
+         bool   ishasvoltanalogout = 16;//是否有模拟输出功能
+         bool   ishascuranalogout = 17;//
+         uint32 nDigitalmodulenum = 18;//数字模块数
+         uint32 nDigitalmodulePortNum = 19;//数字模块光口数
+         uint32 nAnalogVoltModuleCount = 20;//电压模块数
+         repeated uint32 nAnalogVoltModuleBeginNum = 21;//电压模块编号
+         repeated uint32 nAnalogVoltModuleChanleCount = 22;//电压模块通道数
+         uint32 nAnalogCurrentModuleCount = 23;//电流模块数
+         repeated uint32 nAnalogCurrentModuleBeginNum = 24;//电流模块编号
+         repeated uint32 nAnalogCurrentModuleChanleCount = 25;//电流模块通道数
+         uint32 nDeviceNumber = 26;//device number only one;
+         uint32 nInputbinaryMode = 27;//开入量采集模式
+         repeated uint32 nDigitalmoduleCount = 28;//数字模块编号
+         uint32 nDriverVersion = 29;// 马勇驱动版本号
+         uint32 nPUDAVersion = 30;//PUDA版本号
+         string nDeviceType = 31;//仪器类型        
+         uint32 nTemp = 32;// 预留
+         uint32 nTemp1 = 33;//预留
+         float fTemp = 34;//
+         float fTemp1 = 35;
+         uint32 nDCVoltModuleCount = 36;//直流电压模块数
+         repeated uint32 nDCVoltModuleBeginNum = 37;//直流电压模块编号
+         repeated uint32 nDCVoltModuleChannelCount = 38;//直流电压模块通道数
+         uint32 nDCCurrentModuleCount = 39; //直流电流模块数
+         repeated uint32 nDCCurrentModuleBeginNum = 40;//直流电流模块编号
+         repeated uint32 nDCCurrentModuleChannelCount = 41;//直流电流模块通道数
+         uint32 Digitalmaxchannel = 42;//数字量最大通道
+         uint32 nAnalogDCvoltmaxchannel = 43;//模拟量直流电压最大通道
+         uint32 nAnalogDCcurrentmaxchannel = 44;//模拟量直流电流最大通道
+         repeated uint32 nSwitchModuleBeginNum = 45;//开关量模块编号
+}
+
+message range
+{
+	 float fmin = 1;
+	 float fmax = 2;
+}
+
+//通道映射
+message analogmap
+{
+        repeated uint32 ndevicechanel = 1;//仪器通道
+}
+

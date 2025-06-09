@@ -1,0 +1,656 @@
+// StudioCommShareMemDefine.cpp
+//////////////////////////////////////////////////////////////////////
+
+#include "stdafx.h"
+#include "StudioCommShareMemDefine.h"
+
+#ifdef _DEBUG
+#undef THIS_FILE
+static char THIS_FILE[]=_FILE_;
+#define new DEBUG_NEW
+#endif
+
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+
+CStudioCommShareMemReadWrite::CStudioCommShareMemReadWrite()
+{
+	m_dwMsg = 0;
+	m_dwMsgRcvWnd = 0;
+	m_dwReadWriteState = 0;
+	m_dwRsCmd = 0;
+	m_dwRsCmdState = 0;
+	m_dwRsCmdReturn = 0;
+	m_dwDatasCount = 0;
+	m_pBuffer = NULL;
+}
+
+CStudioCommShareMemReadWrite::~CStudioCommShareMemReadWrite()
+{
+
+}
+
+void CStudioCommShareMemReadWrite::InitHead()
+{
+	ReadMsg();
+	ReadMsgRcvWnd();
+	ReadCmd();
+	ReadCmdState();
+	ReadCmdReturn();
+}
+
+void CStudioCommShareMemReadWrite::Clear()
+{
+
+}
+
+DWORD CStudioCommShareMemReadWrite::Read(DWORD dwPos)
+{
+	ASSERT (dwPos < STUDIO_CMM_MAPSIZE);
+//	ASSERT (m_pBuffer != NULL);
+
+	if (m_pBuffer == NULL)
+	{
+		return 0;
+	}
+
+	DWORD *pdwBuffer = (DWORD*)(m_pBuffer + dwPos);
+	return *pdwBuffer;
+}
+
+void  CStudioCommShareMemReadWrite::Write(DWORD dwPos, DWORD dwData)
+{
+	ASSERT (dwPos < STUDIO_CMM_MAPSIZE);
+//	ASSERT (m_pBuffer != NULL);
+
+	if (m_pBuffer == NULL)
+	{
+		return;
+	}
+
+	DWORD *pdwBuffer = (DWORD*)(m_pBuffer + dwPos);
+	*pdwBuffer = dwData;
+}
+
+
+char* CStudioCommShareMemReadWrite::ReadString(DWORD dwPos)
+{
+	ASSERT (dwPos < STUDIO_CMM_MAPSIZE);
+//	ASSERT (m_pBuffer != NULL);
+
+	if (m_pBuffer == NULL)
+	{
+		return 0;
+	}
+
+	return (char*)(m_pBuffer + dwPos);
+}
+
+void  CStudioCommShareMemReadWrite::WriteString(DWORD dwPos, char *pString)
+{
+	ASSERT (dwPos < STUDIO_CMM_MAPSIZE);
+//	ASSERT (m_pBuffer != NULL);
+
+	if (m_pBuffer == NULL)
+	{
+		return;
+	}
+
+	char *pDest = (char*)(m_pBuffer + dwPos);
+	strcpy(pDest, pString);
+}
+
+double CStudioCommShareMemReadWrite::ReadDouble(DWORD dwPos)
+{
+	ASSERT (dwPos < STUDIO_CMM_MAPSIZE);
+	//	ASSERT (m_pBuffer != NULL);
+
+	if (m_pBuffer == NULL)
+	{
+		return 0;
+	}
+
+	return *((double*)(m_pBuffer + dwPos));
+}
+
+void  CStudioCommShareMemReadWrite::WriteDouble(DWORD dwPos, double &dValue)
+{
+	ASSERT (dwPos < STUDIO_CMM_MAPSIZE);
+	//	ASSERT (m_pBuffer != NULL);
+
+	if (m_pBuffer == NULL)
+	{
+		return;
+	}
+
+	double *pfBuffer = (double*)(m_pBuffer + dwPos);
+	*pfBuffer = dValue;
+}
+
+_int64 CStudioCommShareMemReadWrite::ReadInt64(DWORD dwPos)
+{
+	ASSERT (dwPos < STUDIO_CMM_MAPSIZE);
+	//	ASSERT (m_pBuffer != NULL);
+
+	if (m_pBuffer == NULL)
+	{
+		return 0;
+	}
+
+	return *((_int64*)(m_pBuffer + dwPos));
+}
+
+void  CStudioCommShareMemReadWrite::WriteInt64(DWORD dwPos, _int64 &n64Value)
+{
+	ASSERT (dwPos < STUDIO_CMM_MAPSIZE);
+	//	ASSERT (m_pBuffer != NULL);
+
+	if (m_pBuffer == NULL)
+	{
+		return;
+	}
+
+	_int64 *pn64Buffer = (_int64*)(m_pBuffer + dwPos);
+	*pn64Buffer = n64Value;
+}
+
+void CStudioCommShareMemReadWrite::ReadDatas(CArtAmpDigDataArray &arrDatas)
+{
+	long nCount = Read(STUDIO_CMM_BUF_DLL_CFG_DATASCOUNT);
+
+	if (nCount == 0 || nCount > 8000)
+	{
+		return;
+	}
+
+	BYTE *pBuffer = m_pBuffer + STUDIO_CMM_BUF_DLL_CFG_BEGINPOS;
+	long nIndex = 0;
+
+	for (nIndex=0; nIndex<nCount; nIndex++)
+	{
+		ART_AMP_DIGDATA oData;
+		memcpy(&oData, pBuffer, sizeof(ART_AMP_DIGDATA));
+		arrDatas.Add(oData);
+		pBuffer += sizeof(ART_AMP_DIGDATA);
+	}
+}
+
+void CStudioCommShareMemReadWrite::ReadDatasEx(CArtAmpDigDataArray &arrDatas)
+{
+	long nCount = Read(STUDIO_CMM_BUF_DLL_CFG_DATASCOUNT);
+
+	if (nCount == 0 || nCount > 8000)
+	{
+		return;
+	}
+
+	BYTE *pBuffer = m_pBuffer + STUDIO_CMM_BUF_DLL_CFG_BEGINPOS;
+	long nIndex = 0;
+
+	for (nIndex=0; nIndex<nCount; nIndex++)
+	{
+		ART_AMP_DIGDATA oData;
+		memcpy(&oData, pBuffer, sizeof(ART_AMP_DIGDATA));
+		arrDatas.SetAt(nIndex, oData);
+		pBuffer += sizeof(ART_AMP_DIGDATA);
+	}
+}
+
+void CStudioCommShareMemReadWrite::WriteDatas(CArtAmpDigDataArray &arrDatas)
+{
+//	ASSERT (m_pBuffer != NULL);
+
+	if (m_pBuffer == NULL)
+	{
+		return;
+	}
+
+	long nCount = arrDatas.GetCount();
+	Write(STUDIO_CMM_BUF_DLL_CFG_DATASCOUNT, nCount);
+
+	BYTE *pBuffer = m_pBuffer + STUDIO_CMM_BUF_DLL_CFG_BEGINPOS;
+	long nIndex = 0;
+
+	for (nIndex=0; nIndex<nCount; nIndex++)
+	{
+		ART_AMP_DIGDATA oData = arrDatas.GetAt(nIndex);
+		memcpy(pBuffer, &oData, sizeof(ART_AMP_DIGDATA));
+		pBuffer += sizeof(ART_AMP_DIGDATA);
+	}
+}
+
+
+DWORD CStudioCommShareMemReadWrite::ReadMsg()
+{
+	m_dwMsg = Read(STUDIO_CMM_BUF_CFG_MSG);
+	return m_dwMsg;
+}
+
+void CStudioCommShareMemReadWrite::WriteMsg(DWORD dwMsg)
+{
+	m_dwMsg = dwMsg;
+	Write(STUDIO_CMM_BUF_CFG_MSG, dwMsg);
+}
+
+DWORD CStudioCommShareMemReadWrite::ReadMsgRcvWnd()
+{
+	m_dwMsgRcvWnd = Read(STUDIO_CMM_BUF_CFG_MSGRCVWND);
+	return m_dwMsgRcvWnd;
+}
+
+void CStudioCommShareMemReadWrite::WriteMsgRcvWnd(DWORD dwMsgWnd)
+{
+	m_dwMsgRcvWnd = dwMsgWnd;
+	Write(STUDIO_CMM_BUF_CFG_MSGRCVWND, dwMsgWnd);
+}
+
+DWORD CStudioCommShareMemReadWrite::ReadDllWnd()
+{
+	DWORD dwDllWnd = Read(STUDIO_CMM_BUF_DLL_CFG_WND);
+	return dwDllWnd;
+}
+
+void CStudioCommShareMemReadWrite::WriteDllWnd(DWORD dwDllWnd)
+{
+	Write(STUDIO_CMM_BUF_DLL_CFG_WND, dwDllWnd);
+}
+
+DWORD CStudioCommShareMemReadWrite::ReadCmd()
+{
+	m_dwRsCmd = Read(STUDIO_CMM_BUF_DLL_CFG_COMMAND);
+	return m_dwRsCmd;
+}
+
+void CStudioCommShareMemReadWrite::WriteCmd(DWORD dwCmd)
+{
+	m_dwRsCmd = dwCmd;
+	Write(STUDIO_CMM_BUF_DLL_CFG_COMMAND, dwCmd);
+}
+
+DWORD CStudioCommShareMemReadWrite::ReadCmdState()
+{
+	m_dwRsCmdState = Read(STUDIO_CMM_BUF_DLL_CFG_RSCMD_STATE);
+	return m_dwRsCmdState;
+}
+
+void CStudioCommShareMemReadWrite::WriteCmdState(DWORD dwCmdState)
+{
+	m_dwRsCmdState = dwCmdState;
+	Write(STUDIO_CMM_BUF_DLL_CFG_RSCMD_STATE, dwCmdState);
+}
+
+DWORD CStudioCommShareMemReadWrite::ReadCmdReturn()
+{
+	m_dwRsCmdReturn = Read(STUDIO_CMM_BUF_DLL_CFG_RSCMD_RETURN);
+	return m_dwRsCmdReturn;
+}
+
+void CStudioCommShareMemReadWrite::WriteCmdReturn(DWORD dwCmdReturn)
+{
+	m_dwRsCmdReturn = dwCmdReturn;
+	Write(STUDIO_CMM_BUF_DLL_CFG_RSCMD_RETURN, dwCmdReturn);
+}
+
+void CStudioCommShareMemReadWrite::ShowMessage(const CString &strMsg)
+{
+	CString strText = strMsg;
+	if (strMsg.GetLength() > 40)
+	{
+		strText = strMsg.Left(40);
+	}
+
+	char pString[MAX_PATH];
+	CString_to_char(strText, pString);
+	WriteString(STUDIO_CMM_BUF_DLL_CFG_STRINGINFOR, pString);
+}
+
+CString CStudioCommShareMemReadWrite::GetMessage()
+{
+	return CString(ReadString(STUDIO_CMM_BUF_DLL_CFG_STRINGINFOR));
+}
+
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+//CStudioCommShareMemServer
+CStudioCommShareMemServer* CStudioCommShareMemServer::g_pSTUDIO_CMM_ShareMemServer = NULL;
+long CStudioCommShareMemServer::g_nSTUDIO_CMM_ShareMemServerRef = 0;
+
+CStudioCommShareMemServer* CStudioCommShareMemServer::CreateSTUDIO_CMM_ShareMemServer()
+{
+	g_nSTUDIO_CMM_ShareMemServerRef++;
+	
+	if (g_nSTUDIO_CMM_ShareMemServerRef == 1)
+	{
+		g_pSTUDIO_CMM_ShareMemServer = new CStudioCommShareMemServer();
+		g_pSTUDIO_CMM_ShareMemServer->InitShareMem();
+	}
+	
+	return g_pSTUDIO_CMM_ShareMemServer;
+}
+
+CStudioCommShareMemServer* CStudioCommShareMemServer::CreateSTUDIO_CMM_ShareMemServer(const CString &strPath)
+{
+	g_nSTUDIO_CMM_ShareMemServerRef++;
+
+	if (g_nSTUDIO_CMM_ShareMemServerRef == 1)
+	{
+		g_pSTUDIO_CMM_ShareMemServer = new CStudioCommShareMemServer();
+		g_pSTUDIO_CMM_ShareMemServer->m_strServerPath = strPath;
+		g_pSTUDIO_CMM_ShareMemServer->InitShareMem();
+	}
+
+	return g_pSTUDIO_CMM_ShareMemServer;
+}
+
+void CStudioCommShareMemServer::Release()
+{
+	g_nSTUDIO_CMM_ShareMemServerRef--;
+
+	if (g_nSTUDIO_CMM_ShareMemServerRef == 0)
+	{
+		delete g_pSTUDIO_CMM_ShareMemServer;
+		g_pSTUDIO_CMM_ShareMemServer = NULL;
+
+	}
+}
+
+
+void CStudioCommShareMemServer::InitShareMem(BOOL bReOpen)
+{
+	if (m_pMemServer == NULL)
+	{
+		char pszPath[MAX_PATH];
+		if (m_strServerPath.GetLength() > 0)
+		{
+			CString_to_char(m_strServerPath, pszPath);
+		}
+		else
+		{
+			strcpy(pszPath, _ST_GetBinPath());
+		}
+
+		//sprintf(pszPath, "%s%s", _ST_GetBinPath(), STUDIO_CMM_MEMFILENAME);
+		strcat(pszPath, STUDIO_CMM_MEMFILENAME);
+		m_pMemServer = new CShareMemServer(pszPath, STUDIO_CMM_MAPNAME, STUDIO_CMM_MAPSIZE);
+		m_pBuffer = (BYTE*)m_pMemServer->GetBuffer();
+
+// 		if (m_pBuffer != NULL)
+// 		{
+// 			ZeroMemory(m_pBuffer, STUDIO_CMM_MAPSIZE);
+// 		}
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+//CStudioCommShareMemClient
+CStudioCommShareMemClient* CStudioCommShareMemClient::g_pSTUDIO_CMM_ShareMemClient = NULL;
+long CStudioCommShareMemClient::g_nSTUDIO_CMM_ShareMemClientRef = 0;
+
+CStudioCommShareMemClient* CStudioCommShareMemClient::CreateSTUDIO_CMM_ShareMemClient()
+{
+	g_nSTUDIO_CMM_ShareMemClientRef++;
+	
+	if (g_nSTUDIO_CMM_ShareMemClientRef == 1)
+	{
+		g_pSTUDIO_CMM_ShareMemClient = new CStudioCommShareMemClient();
+		g_pSTUDIO_CMM_ShareMemClient->InitShareMem();	
+	}
+	
+	return g_pSTUDIO_CMM_ShareMemClient;
+}
+
+void CStudioCommShareMemClient::Release()
+{
+	g_nSTUDIO_CMM_ShareMemClientRef--;
+	
+	if (g_nSTUDIO_CMM_ShareMemClientRef == 0)
+	{
+		delete g_pSTUDIO_CMM_ShareMemClient;
+		g_pSTUDIO_CMM_ShareMemClient = NULL;
+	}
+}
+
+void CStudioCommShareMemClient::InitShareMem(BOOL bReOpen)
+{
+	if (bReOpen)
+	{
+		if (m_pMemClient != NULL)
+		{
+			delete m_pMemClient;
+			m_pMemClient = NULL;
+		}
+	}
+
+	if (m_pMemClient == NULL)
+	{
+		m_pMemClient = new CShareMemClient(FILE_MAP_READ|FILE_MAP_WRITE, STUDIO_CMM_MAPNAME);	
+		m_pBuffer = (BYTE*)m_pMemClient->GetBuffer();
+
+		if (m_pBuffer != NULL)
+		{
+			InitHead();
+		}
+	}
+}
+
+
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+/*
+CStudioCommShareMemExeArea::CStudioCommShareMemExeArea()
+{
+	m_pSmFile = NULL;
+	m_bMapCycle = FALSE;
+// 	m_dwCurrWriteLen = 0;
+}
+
+CStudioCommShareMemExeArea::~CStudioCommShareMemExeArea()
+{
+	FreeArea();
+}
+
+void CStudioCommShareMemExeArea::FreeArea()
+{
+	if (m_pSmFile != NULL)
+	{
+		m_pSmFile->UnMapView();
+		delete m_pSmFile;
+		m_pSmFile = NULL;
+	}
+}
+
+void CStudioCommShareMemExeArea::CreateArea(const CString &strID, volatile __int64 n64BeginPos, volatile __int64 n64Length, DWORD dwOnceMapSize)
+{	
+	m_strID = strID;
+	m_n64Length = n64Length;
+	m_n64AreaBeginPos = n64BeginPos;
+	m_dwOnceMapSize = dwOnceMapSize;	
+	m_n64AreaEndPos = m_n64Length + n64BeginPos;
+
+	if (dwOnceMapSize == 0)
+	{
+		m_dwOnceMapSize = (DWORD)m_n64Length;
+	}
+
+	if (m_n64Length < m_dwOnceMapSize)
+	{
+		m_dwOnceMapSize = (DWORD)m_n64Length;
+	}
+
+	if (m_pSmFile == NULL)
+	{
+		m_pSmFile = new CShareMemClientEx(FILE_MAP_READ|FILE_MAP_WRITE, strID);
+	}
+
+	MapView(m_n64AreaBeginPos, m_dwOnceMapSize);
+}
+
+void CStudioCommShareMemExeArea::MapArea(volatile __int64 n64BeginPos)
+{
+	ASSERT (m_pSmFile != NULL);
+
+	if (m_pSmFile == NULL)
+	{
+		return;
+	}
+
+	MapView(n64BeginPos, m_dwOnceMapSize);
+}
+
+BOOL CStudioCommShareMemExeArea::IsAreaOpenSucc()
+{
+	if (m_pSmFile == NULL)
+	{
+		return FALSE;
+	}
+
+	if (m_pSmFile->GetBuffer() == NULL)
+	{
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
+BYTE* CStudioCommShareMemExeArea::MapView(volatile __int64 &n64BeginPos, DWORD dwLen, DWORD dwMinLen)//32M
+{
+	ASSERT (m_pSmFile != NULL);
+
+	if (m_pSmFile == NULL)
+	{
+		return NULL;
+	}
+
+	if (CLogPrint::g_pLogPrint != NULL)
+	{
+		CLogPrint::LogFormatString(NULL, LOGLEVEL_TRACE, _T("64Begin=%I64d  Len = %08X"), n64BeginPos, dwLen);
+	}
+
+//	volatile __int64 n64BackPos = n64BeginPos;
+	volatile __int64 n64Left = m_n64AreaEndPos - n64BeginPos;
+
+	if (n64BeginPos >= m_n64AreaEndPos || n64Left < dwMinLen || n64Left < dwLen)
+	{//如果超出范围，或者剩下的空间不够最小空间，则从头开始映射
+		n64BeginPos = m_n64AreaBeginPos;
+		m_bMapCycle = TRUE;
+	}
+
+	volatile __int64 n64End = n64BeginPos + dwLen;
+
+	if (n64End >= m_n64AreaEndPos)
+	{
+		dwLen = m_n64AreaEndPos - n64BeginPos;
+	}
+
+	DWORD dwOffset = n64BeginPos % 65536;
+	volatile __int64 n64Pos = n64BeginPos;
+	n64Pos = n64Pos - dwOffset;
+	DWORD dwSize = dwLen + dwOffset;
+
+	BYTE *pBuffer = (BYTE*)m_pSmFile->MapView(n64Pos, dwSize);
+	ASSERT(pBuffer != NULL);
+
+	if (pBuffer != NULL)
+	{
+		pBuffer = (BYTE*)m_pSmFile->LocatePos(dwOffset);
+	}
+	else
+	{
+// 		CString strMsg;
+// 		strMsg.Format(_T("n64BeginPos=%I64d  Len= %d ==>> n64Pos=%I64d  Len= %d"),n64BeginPos, dwLen,  n64Pos, dwSize);
+// 		AfxMessageBox(strMsg);
+// 		AfxMessageBox(m_strID);
+// 		AfxMessageBox(m_strName);
+	}
+
+	return pBuffer;
+}
+
+volatile __int64 CStudioCommShareMemExeArea::GetCurrPos()
+{
+	return m_pSmFile->GetCurr64Pos();
+}
+
+void CStudioCommShareMemExeArea::LocateAreaPos(volatile __int64 n64BeginPos, volatile __int64 n64CurrPos)
+{
+	m_pSmFile->UnMapView();
+	LPVOID pBuffer = MapView(n64CurrPos, m_dwOnceMapSize, 0);
+
+	if (pBuffer == NULL)
+	{
+		CLogPrint::LogString(LOGLEVEL_TRACE, _T("数据库创建没有成功........"));
+	}
+	else
+	{
+		m_pSmFile->SetCurr64Pos(n64CurrPos);
+	}
+}
+
+volatile __int64 CStudioCommShareMemExeArea::SmWrite(LPVOID pData, long nLength)
+{
+	if (!m_pSmFile->CanWriteLen(nLength))
+	{
+		volatile __int64 n64CurrPos = m_pSmFile->GetCurr64Pos();
+		m_pSmFile->UnMapView();
+
+		if (MapView(n64CurrPos, m_dwOnceMapSize, nLength) == NULL)
+		{
+			return -1;
+		}
+	}
+
+	volatile __int64 n64Pos = m_pSmFile->GetCurr64Pos();
+	m_pSmFile->WriteBuffer(pData, nLength);
+
+	return n64Pos;
+}
+
+LPVOID CStudioCommShareMemExeArea::Read(__int64 n64BeginPos, DWORD dwLength)
+{
+	if (m_pSmFile == NULL)
+	{
+		return NULL;
+	}
+
+	LPVOID pBuffer = m_pSmFile->Read(n64BeginPos, dwLength);
+
+	if (pBuffer == NULL)
+	{
+		pBuffer = MapView(n64BeginPos, m_dwOnceMapSize, dwLength);
+	}
+
+	return pBuffer;
+}
+*/
+
+CStudioCommShareMemMngr::CStudioCommShareMemMngr()
+{
+	
+}
+
+CStudioCommShareMemMngr::~CStudioCommShareMemMngr()
+{
+	
+}
+
+CStudioCommShareMemMngr* CStudioCommShareMemMngr::g_pStudioCommShareMemMngr = NULL;
+long CStudioCommShareMemMngr::g_nStudioCommShareMemMngr = 0;
+	
+void CStudioCommShareMemMngr::Create()
+{
+	
+}
+
+
+void CStudioCommShareMemMngr::Release()
+{
+	
+}
+
+
+CStudioCommShareMemClient* CStudioCommShareMemMngr::GetExeShareMem(UINT nExeID
+{
+	
+}
+

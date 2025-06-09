@@ -1,0 +1,10 @@
+-exe \mmslite\mvl\usr\client\pharlap\cositpxe.exe
+\mmslite\mvl\usr\client\win32\cositpxe\debug\log_cfg
+\mmslite\mvl\usr\client\win32\cositpxe\debug\ml_init
+\mmslite\mvl\usr\client\win32\cositpxe\debug\mmslvar
+\mmslite\mvl\usr\client\win32\cositpxe\debug\mmsop_en
+\mmslite\mvl\usr\client\win32\cositpxe\debug\mvl_acse
+\mmslite\mvl\usr\client\win32\cositpxe\debug\mvlop_en
+\mmslite\mvl\usr\client\win32\cositpxe\debug\client
+\mmslite\mvl\usr\client\win32\cositpxe\debug\clntobj
+

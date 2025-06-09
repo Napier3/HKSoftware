@@ -1,0 +1,1174 @@
+// ../Module/Engine/CmmChannel/PpEngineThread.cpp : 实现文件
+//
+
+#include "stdafx.h"
+#include "PpEngineThread.h"
+#include "PpEngineBaseApp.h"
+
+
+// CPpEngineThread
+
+IMPLEMENT_DYNCREATE(CPpEngineThread, CWinThread)
+
+CPpEngineThread::CPpEngineThread()
+{
+	m_pDevice = NULL;         //设备点表数据管理对象
+	m_pTemplate = NULL;  //规约模板对象
+	m_pDeviceCmmConfig = NULL;  //设备通讯配置对象
+	m_pDeviceCmmChannel = NULL;    //关联的设备通讯对象
+	m_pUsingChannel = NULL;
+	m_pPkgSendMngr = NULL;  //报文帧发送管理对象
+	m_pDevcieModel = NULL;
+
+	m_pDeviceCmmChannel = new CDeviceCmmChannel();
+	m_pPkgSendMngr = new CPpPackageSendMngr();
+
+	//Engine Thread相关的处理
+	m_pProcedureRunThread = NULL;
+	m_bExitEngineThread = FALSE;
+	m_bHasPostWmquit = FALSE;
+
+	m_nThreadExitState = PPEXIT_STATE_NONE;
+	m_bDeleteEngineDataInExit = TRUE;
+
+	m_bKillProcedure = FALSE;
+	m_bViewProcedure = FALSE;
+}
+
+CPpEngineThread::~CPpEngineThread()
+{
+	
+}
+
+void CPpEngineThread::PostConnectDeviceMsg()
+{
+	if (IsConnecting())
+	{
+		return;
+	}
+
+	if (IsConnectSuccessful())
+	{
+		return;
+	}
+
+	PostThreadMessage(WM_THREAD_CONNECT, NULL, NULL);
+}
+
+BOOL CPpEngineThread::IsConnecting()
+{
+	if (m_pDeviceCmmChannel == NULL)
+	{
+		return FALSE;
+	}
+
+	return m_pDeviceCmmChannel->IsConnecting();
+}
+
+BOOL CPpEngineThread::IsConnectSuccessful()
+{
+	if (m_pDeviceCmmChannel == NULL)
+	{
+		return FALSE;
+	}
+
+	return m_pDeviceCmmChannel->IsConnectSuccessful();
+}
+
+void CPpEngineThread::OnDeviceConnectFinish(BOOL bSucc)
+{
+	if (m_pEngineData != NULL)
+	{
+		m_pEngineData->OnDeviceConnectFinish(bSucc);
+	}
+}
+
+BOOL CPpEngineThread::InitInstance()
+{
+	//m_oReceiveBuffer.SetBufferLength(1048576);  //1024*1024  1M
+
+	//准备连接设备
+	ASSERT (m_pDeviceCmmConfig != NULL);
+
+	// 连接设备之前将设备通讯配置数据复制到模板通讯配置数据中
+
+	if (m_pDeviceCmmConfig != NULL)
+	{
+		CopyDeviceCmmConfig(m_pTemplate->m_pCmmConfig, m_pDeviceCmmConfig);
+	}
+
+	m_pDeviceCmmChannel->m_pThread = this;
+
+	return TRUE;
+}
+
+//由于运行脚本与主线程冲突，不能单独结束线程，要结束线程需要在主线程设置时钟结束。
+void CPpEngineThread::ExitEngineThread()     
+{
+	if (m_bExitEngineThread)
+	{
+		return;
+	}
+
+	m_nThreadExitState = PPEXIT_STATE_NORMAL;
+	//DisConnectDevice();
+	PostThreadMessage(WM_EXIT_ENGINE_THREAD, 0, 0);
+}
+
+BOOL CPpEngineThread::IsThreadExitExtern()    
+{
+	if (IsThreadExit())
+	{
+		return TRUE;
+	}
+
+	if (!m_bHasPostWmquit)
+	{
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
+BOOL CPpEngineThread::IsThreadExit()    
+{
+	if (m_pProcedureRunThread != NULL)  
+	{
+		return FALSE;
+	}
+
+	if (!m_pDeviceCmmChannel->IsAllCmmChannelExit())
+	{
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
+BOOL CPpEngineThread::IsRunProduceThreadExit()
+{
+	if (m_pProcedureRunThread != NULL)  
+	{
+		//Sleep(50);
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
+int CPpEngineThread::ExitInstance()
+{
+	m_listReceivePackage.DeleteAll();
+	m_listRunProcedure.DeleteAll();
+	m_listProcedureToRun.DeleteAll();
+
+	delete m_pDeviceCmmChannel;
+	m_pDeviceCmmChannel = NULL;
+
+	delete m_pPkgSendMngr;
+	m_pPkgSendMngr = NULL;
+
+	int nRet = CWinThread::ExitInstance();
+
+	//删除对应的EngineData
+	CPpEngineBaseApp *pApp = (CPpEngineBaseApp*)AfxGetApp();
+	m_pEngineData->m_pEngineThread = NULL;
+
+	if (m_bDeleteEngineDataInExit)
+	{
+		//pApp->DeleteEngineData(m_pEngineData);
+		m_pEngineData = NULL;
+	}
+
+	return nRet;
+}
+
+BEGIN_MESSAGE_MAP(CPpEngineThread, CWinThread)
+	ON_THREAD_MESSAGE(WM_THREAD_RECEIVE, &CPpEngineThread::OnChannelReceive)
+	ON_THREAD_MESSAGE(WM_THREAD_CONNECT, &CPpEngineThread::OnConnectDevice)
+	ON_THREAD_MESSAGE(WM_THREAD_DISCONNECT, &CPpEngineThread::OnDisConnectDevice)
+	ON_THREAD_MESSAGE(WM_EXIT_ENGINE_THREAD, &CPpEngineThread::OnExitEngineThread)
+	ON_THREAD_MESSAGE(WM_DELETE_ALL_RECORD_PACKAGE, &CPpEngineThread::OnDeleteAllRecordPackage)
+END_MESSAGE_MAP()
+
+
+// CPpEngineThread 消息处理程序
+
+//添加解析完成的帧对象到临时列表
+void CPpEngineThread::AddReceivePackageDetail(CPpPackageDetail *pPkg)
+{
+
+}
+
+//模板 加载/卸载
+void CPpEngineThread::LoadTemplate(const CString &strTemplageFile)
+{
+
+}
+
+void CPpEngineThread::UnLoad()
+{
+
+}
+
+
+//设备连接、断开管理
+BOOL CPpEngineThread::ConnectDevice()
+{
+	ASSERT (m_pDeviceCmmChannel != NULL);
+	ASSERT (m_pTemplate != NULL);
+
+	if (m_pDeviceCmmChannel == NULL || m_pTemplate == NULL)
+	{
+		return FALSE;
+	}
+
+	CLogPrint::LogFormatString(LOGLEVEL_TRACE, _T("ConnectDevice：(%s)(%s)"), m_pEngineData->m_strPpTemplateFile, m_pEngineData->m_strPpDeviceFile);
+	// 启动线程
+	m_pProcedureRunThread = AfxBeginThread(ProcedureRunThread,this);
+	m_pProcedureRunThread->m_bAutoDelete = TRUE;
+	CopyDeviceCmmConfig(m_pTemplate->m_pCmmConfig, m_pDeviceCmmConfig);  //??????????????????????
+	m_pDeviceCmmChannel->m_dwCommMode = m_pTemplate->GetCommMode();
+	m_pDeviceCmmChannel->ConnectDevice(m_pTemplate->m_pCmmConfig);
+
+// 	if (g_bDebugPpEngine)
+// 	{
+// 		if (!m_pDeviceCmmChannel->IsConnectSuccessful())
+// 		{
+// 			m_pEngineData->OnDeviceConnectFinish(TRUE);
+// 		}
+// 	}
+
+	return TRUE;
+}
+
+BOOL CPpEngineThread::CmmChannelConfig()
+{
+	return FALSE;
+}
+
+BOOL CPpEngineThread::DisConnectDevice()
+{
+	if (m_pDeviceCmmChannel == NULL)
+	{
+		return TRUE;
+	}
+
+	m_pDeviceCmmChannel->DisConnectDevice();
+	m_bExitEngineThread = TRUE;
+
+	return FALSE;
+}
+
+void PpDeleteUsedPackages(CExBaseList *pList, CPpEngineData *pEngineData)
+{
+	POS pos = pList->GetHeadPosition();
+	POS posPrev = NULL;
+	CPpPackageDetail *pPkgDetail = NULL;
+	POS posTail = pList->GetTailPosition();
+
+	while (pos != posTail)
+	{
+		posPrev = pos;
+		pPkgDetail = (CPpPackageDetail*)pList->GetNext(pos);
+
+		try
+		{
+			if (pPkgDetail->CanDelete())
+			{
+				pList->RemoveAt(posPrev);
+				delete pPkgDetail;
+			}
+		}
+		catch (...)
+		{
+			
+		}
+		
+		
+	}
+}
+
+//数据接受,关联的m_pChannel对象收到数据后,通知EngineThread对象
+void CPpEngineThread::OnReceived(CCmmRcvSndTime *pCmmTime)
+{
+	if (m_pTemplate == NULL)
+	{
+		return ;
+	}
+
+	if (m_pUsingChannel->m_nParserBeginPos == m_pUsingChannel->m_pCycleRcvBuffer->GetDataFillBeginPosition())
+	{
+		return;
+	}
+
+	PACKAGEBUFFERPOS oBufPos;
+	CreateParseBufferPos(oBufPos);
+	CPpPackageDetail *pDetail = NULL;
+	long nResult = 0;
+	long nTempPos;
+
+#ifdef _debug_spy
+	CPpEngineBaseApp *pApp = (CPpEngineBaseApp*)AfxGetApp();
+	CDebugData *pDebugData = NULL;
+#endif
+
+	long nErrorBeginPos = -1;
+	long nErrorLength = 0;
+
+	while (TRUE)
+	{
+		//初始化当前解析桢解析的长度
+		m_nCurrPkgLen = 0;  
+		nTempPos = m_pUsingChannel->m_nParserBeginPos;
+
+#ifdef _debug_spy
+		pDebugData = pApp->m_pDebugSpy->Create(0, 0, L"Before Parse");
+#endif
+		
+		pDetail = new CPpPackageDetail(m_pUsingChannel);
+		nResult = m_pTemplate->Parse(oBufPos, pDetail);
+
+#ifdef _debug_spy
+		pDebugData->GetEndTime();
+#endif
+
+		//解析之后的结果有三种
+		if (!IsPpParseError(nResult))
+		{//解析成功
+			if (IsPpParseHasPakage(nResult))
+			{//解析包含完整的报文，此处的目的在于考虑串口，一次性没有接受全全部的报文
+				//偏移报文的长度
+				m_pUsingChannel->m_nParserBeginPos = oBufPos.nIndex;
+
+				//添加到报文管理对象
+				DWORD dwBegin = GetTickCount();
+
+				pDetail->SetBeginTime();
+				InitPackageTime(pDetail, nTempPos);
+				m_listReceivePackage.AddTail(pDetail);
+
+				//规约录波，记录需要记录的规约帧
+				m_pEngineData->m_pPpRecordMngr->AddPackage(pDetail);
+			}
+			else
+			{//没有包含完整的报文：此处的目的在于考虑串口，一次性没有接受全全部的报文
+				if (pDetail != NULL)
+				{
+					delete pDetail;
+					pDetail = NULL;
+				}
+
+				break;
+			}
+		}
+		else
+		{
+			//解析不成功，则向下偏移，继续解析
+			if (m_nCurrPkgLen > 0)
+			{//是一个完整的数据桢
+				//CLogPrint::LogFormatString(LOGLEVEL_TRACE, L"Move Len(%d)", m_nCurrPkgLen);
+				LogErrorParse(nErrorBeginPos, nErrorLength);
+				m_pUsingChannel->OffsetParserBeginPos(m_nCurrPkgLen);
+				nErrorBeginPos = -1;
+				nErrorLength = 0;
+			}
+			else
+			{//没有完整的数据桢
+// 				PACKAGEBUFFERPOS oBufPosError;
+// 				CreateParseBufferPos(oBufPosError);
+				if (nErrorBeginPos == -1)
+				{
+					nErrorBeginPos = m_pUsingChannel->m_nParserBeginPos;
+					nErrorLength = 1;
+				}
+				else
+				{
+					nErrorLength++;
+				}
+
+// 				CLogPrint::LogFormatString(LOGLEVEL_TRACE, _T("错误报文:(%d-%d) : (%d-%d)")
+// 					, oBufPosError.nBuffer1BeginPos, oBufPosError.nBuffer1EndPos
+// 					, oBufPosError.nBuffer2BeginPos, oBufPosError.nBuffer2EndPos);
+				m_pUsingChannel->OffsetParserBeginPos(1);
+			}
+
+			if (pDetail != NULL)
+			{
+				delete pDetail;
+				pDetail = NULL;
+			}
+		}
+
+		if (! m_pUsingChannel->DataIsEnoughForParse(m_pTemplate->m_nPackageMinLength))
+		{
+			break;
+		}
+
+		CreateParseBufferPos(oBufPos);
+	}
+
+	LogErrorParse(nErrorBeginPos, nErrorLength);
+}
+
+void CPpEngineThread::LogErrorParse(long nBeginPos, long nLength)
+{
+	if (nBeginPos != -1)
+	{
+		CYCLEMEMBUFFERPOS oBufPosError;
+		CreateParseBufferPos(oBufPosError, nBeginPos, nLength);
+
+		CLogPrint::LogFormatString(LOGLEVEL_TRACE, _T("错误报文:(Begin=%d      Len=%d)")	, nBeginPos	, nLength);
+	
+		CString strMsg;
+		LogProtocol(oBufPosError, strMsg);
+		strMsg.Append(_T("\r\n\r\n"));
+		CLogPrint::LogString(LOGLEVEL_TRACE,strMsg);
+	}
+}
+
+void CPpEngineThread::InitPackageTime(CPpPackageDetail *pPkg, long nBeginPos)
+{
+	//////////////////////////////////////////////////////////////////////////
+	//记录时间
+	long nTemp = nBeginPos + 1;
+	if (nTemp > m_pUsingChannel->m_pCycleRcvBuffer->GetBufferLength())
+	{
+		nTemp = 0;
+	}
+
+	CCmmRcvSndTime *pTm = m_pDeviceCmmChannel->m_oCmmRcvSndTimeMngr.FindTimeByPos(nTemp);
+
+	if (pTm != NULL)
+	{
+		pPkg->m_tm = pTm->m_tm;
+		pPkg->m_dwTickCount = pTm->m_dwTickCount;
+
+		if (m_pEngineData->m_pPpRecordMngr->IsPackageIDExist(pPkg->m_strID))
+		{
+			CLogPrint::LogFormatString(LOGLEVEL_TRACE, L">>>>%s = %d:%d:%d.%d", pPkg->m_strID
+				, pPkg->m_tm.wHour, pPkg->m_tm.wMinute, pPkg->m_tm.wSecond, pPkg->m_tm.wMilliseconds);
+		}
+	}
+	else
+	{
+		::GetLocalTime(&pPkg->m_tm);
+		pPkg->m_dwTickCount = ::GetTickCount();
+		CLogPrint::LogFormatString(LOGLEVEL_TRACE, L">>>>Error(%s) = %d:%d:%d.%d", pPkg->m_strID
+			, pPkg->m_tm.wHour, pPkg->m_tm.wMinute, pPkg->m_tm.wSecond, pPkg->m_tm.wMilliseconds);
+	}					
+
+}
+
+//发送接收处理线程
+UINT CPpEngineThread::PkgSendReceiveThread(LPVOID pParam)
+{
+	return 0;
+}
+
+//执行过程
+void CPpEngineThread::RunProcedure(const CString &strProcedureID, CExBaseList *pInterface) 
+{
+	if (pInterface != NULL)
+	{
+		CString strLog;
+		CString strTemp = strProcedureID;
+
+		POS pos = pInterface->GetHeadPosition();
+		strLog.Format(L"COM:RunProcedure(%s)", strTemp);
+
+		while (pos != NULL)
+		{
+			CBbVariable *pVariable = (CBbVariable*)pInterface->GetNext(pos);
+			strTemp.Format(L" [%s=%s]", pVariable->m_strID, pVariable->m_strValue);
+			strLog += strTemp;
+		}
+
+		CLogPrint::LogFormatString(LOGLEVEL_TRACE, L"Device::RunProcedure: %s", strLog);
+	}
+
+	CPpProcedure *pProcedure = (CPpProcedure*)m_pTemplate->m_pProcedures->FindByID(strProcedureID);
+
+	if (pProcedure == NULL)
+	{
+		CLogPrint::LogFormatString(LOGLEVEL_ERROR, L"-----procedure \"%s\" not exist", strProcedureID);
+	}
+	else
+	{
+		CAutoSimpleLock oLock(&m_oPrcdrTmpCriticSection);
+		CPpProcedureRun *pRun = new CPpProcedureRun(pProcedure, pInterface, this);
+		m_listProcedureToRun.AddTail(pRun);
+	}
+}
+
+void CPpEngineThread::KillProcedure(const CString &strProcedureID, CExBaseList *pInterface)
+{
+	m_strKillProcedure = strProcedureID;
+	m_bKillProcedure = TRUE;
+}
+
+void CPpEngineThread::ViewProcedure()
+{
+	m_bViewProcedure = TRUE;;
+
+}
+
+void CPpEngineThread::AddTempProcedureToRun()
+{
+	if (m_listProcedureToRun.GetCount() == 0)
+	{
+		return;
+	}
+
+	POS posTo = NULL;
+	POS posToPrev = NULL;
+	CPpProcedureRun *pTo = NULL;
+
+	//遍历过程临时链表，添加过程（互斥处理）
+	CAutoSimpleLock oLock(&m_oPrcdrTmpCriticSection);
+	posTo = m_listProcedureToRun.GetHeadPosition();
+
+	while (posTo != NULL)
+	{//遍历过程临时链表，添加过程
+		posToPrev = posTo;
+		pTo =  (CPpProcedureRun*)m_listProcedureToRun.GetNext(posTo);
+
+		if (FindRunningProcedure(pTo->m_pProcedure->m_strID) != NULL)
+		{//如果有相同的过程在运行，则不处理
+			CLogPrint::LogFormatString(LOGLEVEL_ERROR, L"过程\"%s\"已经运行", pTo->m_pProcedure->m_strID);
+			delete pTo;
+			pTo = NULL;
+			continue;
+		}
+
+		//不考虑优先级，直接添加到执行列表末尾
+		m_listRunProcedure.AddTail(pTo);
+		pTo->CopyDataInterfaceToPackage();
+	}//end of "遍历过程临时链表，添加过程"
+
+	m_listProcedureToRun.RemoveAll();
+
+	oLock.Free();
+}
+
+void CPpEngineThread::LogAllProcedure()
+{
+	if (!m_bViewProcedure)
+	{
+		return;
+	}
+
+	POS pos = m_listRunProcedure.GetHeadPosition();
+	CPpProcedureRun *p = NULL;
+
+	while (pos != NULL)
+	{
+		p = (CPpProcedureRun*)m_listRunProcedure.GetNext(pos);
+		CLogPrint::LogFormatString(LOGLEVEL_TRACE, _T("RunPp:%s %s"), p->m_pProcedure->m_strName, p->m_pProcedure->m_strID);
+	}
+
+	m_bViewProcedure = FALSE;
+}
+
+void CPpEngineThread::KillProcedure()
+{
+	if (!m_bKillProcedure)
+	{
+		return;
+	}
+
+	POS pos = m_listRunProcedure.GetHeadPosition();
+	POS posPrev = NULL;
+	CPpProcedureRun *p = NULL;
+
+	while (pos != NULL)
+	{
+		posPrev = pos;
+		p = (CPpProcedureRun*)m_listRunProcedure.GetNext(pos);
+
+		if (p->m_pProcedure->m_strID == m_strKillProcedure)
+		{
+			m_listRunProcedure.RemoveAt(posPrev);
+			delete p;
+			break;
+		}
+	}
+
+	m_bKillProcedure = FALSE;
+}
+
+//过程处理线程:死循环，不断遍历
+UINT CPpEngineThread::ProcedureRunThread(LPVOID pParam)
+{
+	CPpEngineThread *pEngineThread = (CPpEngineThread*)pParam;
+	ASSERT (pEngineThread != NULL);
+
+	CExBaseList *pListRunProcedure = &pEngineThread->m_listRunProcedure;
+	POS pos = NULL;
+	POS posPrev = NULL;
+	CPpProcedureRun *p = NULL;
+	BOOL bHasExclusive = FALSE;
+
+	while (TRUE)
+	{
+		bHasExclusive = FALSE;
+		pEngineThread->LogAllProcedure();
+		pEngineThread->KillProcedure();
+
+		//遍历过程临时链表，添加过程（互斥处理）
+		pEngineThread->AddTempProcedureToRun();
+		pos = pListRunProcedure->GetHeadPosition();
+		PpDeleteUsedPackages(&pEngineThread->m_listReceivePackage, pEngineThread->m_pEngineData);
+
+		//独占过程
+		while (pos != NULL)
+		{
+			if (pEngineThread->m_bExitEngineThread)
+			{//引擎处于关闭状态
+				break;
+			}
+
+			p = (CPpProcedureRun*)pListRunProcedure->GetNext(pos);
+
+			if (p->IsExclusive())
+			{
+				if( ! p->IsProcedureExit() )
+				{
+					p->Run();
+					bHasExclusive = TRUE;
+					break;
+				}
+			}
+
+			Sleep(5);
+		}
+
+		if (pEngineThread->m_bExitEngineThread)
+		{//引擎处于关闭状态
+			break;
+		}
+
+		//如果包含独占线程,继续执行独占线程
+		if (bHasExclusive)
+		{
+			continue;
+		}
+
+		pos = pListRunProcedure->GetHeadPosition();
+
+		while (pos != NULL)
+		{//遍历运行过程
+			posPrev = pos;
+			p = (CPpProcedureRun*)pListRunProcedure->GetNext(pos);
+
+			if (p->CanRun())
+			{//过程是否可以运行，即进行过程优先级处理
+				if (p->IsProcedureExit())
+				{
+					//结束过程报文抓包   2014-10-13  李俊庆
+					pEngineThread->OnProcedureExit(p);
+
+					CLogPrint::LogFormatString(LOGLEVEL_ERROR, L"----------过程\"%s\"结束----------", p->m_pProcedure->m_strID);
+					//发送过程结束消息
+					pEngineThread->m_pEngineData->OnProcedureEnd(p->m_pProcedure->m_strID, p->m_pProcedure->m_dwRunState, p->m_pProcedure->m_dwRunState);					
+
+					//执行过程结束脚本
+					p->m_pProcedure->RunEndScript();
+
+					//过程如果结束，从运行链表中删除
+					pListRunProcedure->RemoveAt(posPrev);
+					posPrev = pos;
+					delete p;
+				}
+				else
+				{
+					p->Run();  //执行规约过程
+				}
+			}
+			else
+			{//过程优先级计数器增加
+				p->IncreasePriorityCounter();
+			}
+
+			if (pEngineThread->m_bExitEngineThread)
+			{//引擎处于关闭状态
+				break;
+			}
+
+			Sleep(5);
+		}//end of "遍历运行过程"
+
+		pEngineThread->RecordSendPackage();
+
+		if (pEngineThread->m_bExitEngineThread)
+		{//引擎处于关闭状态
+			break;
+		}
+
+		Sleep(5);
+	}
+
+	//等待其他的使用部分退出
+	DWORD dwTimeLong = 0;
+	while (TRUE)
+	{
+		if (pEngineThread->m_pPkgSendMngr->HasAllSend())
+		{
+			break;
+		}
+		else
+		{
+			Sleep(5);
+			dwTimeLong += 5;
+		}
+
+		if (dwTimeLong > 5000)
+		{
+			break;
+		}
+	}
+
+	pEngineThread->m_pPkgSendMngr->DeleteAll();
+	pEngineThread->m_pProcedureRunThread = NULL;
+	pEngineThread->m_nThreadExitState = PPEXIT_STATE_EXITPRUN; 
+
+	return 0;
+}
+
+CPpProcedureRun* CPpEngineThread::FindRunningProcedure(const CString &strProcedureID)
+{
+	POS pos = m_listRunProcedure.GetHeadPosition();
+	CPpProcedureRun *p = NULL;
+	CPpProcedureRun *pFind = NULL;
+
+	while (pos != NULL)
+	{
+		p = (CPpProcedureRun*)m_listRunProcedure.GetNext(pos);
+
+		if (p->m_pProcedure->m_strID == strProcedureID)
+		{
+			pFind = p;
+			break;
+		}
+	}
+
+	return pFind;
+}
+
+void CPpEngineThread::CreateParseBufferPos(PACKAGEBUFFERPOS &oBufPos)
+{
+	CYCLEMEMBUFFERPOS oCycleBufPos;
+
+	m_pUsingChannel->m_pCycleRcvBuffer->GetBufferPos(m_pUsingChannel->m_nParserBeginPos, -1, oCycleBufPos);
+	oBufPos.nBuffer1BeginPos = oCycleBufPos.nBuf1BeginPos;
+	oBufPos.nBuffer1EndPos = oCycleBufPos.nBuf1EndPos;
+	oBufPos.nBuffer2BeginPos = oCycleBufPos.nBuf2BeginPos;
+	oBufPos.nBuffer2EndPos = oCycleBufPos.nBuf2EndPos;
+	oBufPos.pBuffer = oCycleBufPos.pBuffer;
+	oBufPos.nIndex = oCycleBufPos.nBuf1BeginPos;
+}
+void CPpEngineThread::CreateParseBufferPos(CYCLEMEMBUFFERPOS &oBufPos,  long nBeginPos, long nLength)
+{
+// 	CYCLEMEMBUFFERPOS oCycleBufPos;
+
+	m_pUsingChannel->m_pCycleRcvBuffer->GetBufferPos(nBeginPos, nLength, oBufPos);
+// 	oBufPos.nBuffer1BeginPos = oCycleBufPos.nBuf1BeginPos;
+// 	oBufPos.nBuffer1EndPos = oCycleBufPos.nBuf1EndPos;
+// 	oBufPos.nBuffer2BeginPos = oCycleBufPos.nBuf2BeginPos;
+// 	oBufPos.nBuffer2EndPos = oCycleBufPos.nBuf2EndPos;
+// 	oBufPos.pBuffer = oCycleBufPos.pBuffer;
+// 	oBufPos.nIndex = oCycleBufPos.nBuf1BeginPos;
+}
+
+//获取通讯通道
+CCmmChannel* CPpEngineThread::GetCmmChannel(const CString &strCmmChannelID)
+{
+	CCmmChannel *pCmmChannel = NULL;
+	pCmmChannel = (CCmmChannel*)m_pDeviceCmmChannel->FindByID(strCmmChannelID);
+	return pCmmChannel;
+}
+
+CCmmChannel* CPpEngineThread::GetCmmChannel(CPpNode *pNode)
+{
+	CCmmChannel *pCmmChannel = NULL;
+
+	if (pNode->m_strChannelID.GetLength() > 0)
+	{
+		pCmmChannel = GetCmmChannel(pNode->m_strChannelID);
+	}
+
+	if (pCmmChannel == NULL)
+	{
+		CPpProcedure *pProcedure = (CPpProcedure*)pNode->GetAncestor(PPCLASSID_PPPROCEDURE);
+
+		pCmmChannel = GetCmmChannel(pProcedure->m_strChannelID);
+
+		if (pCmmChannel != NULL)
+		{
+			return pCmmChannel;
+		}
+
+
+		CLogPrint::LogFormatString(LOGLEVEL_ERROR, L"节点\"%s\"定义的通信通道\"%s\"不存在", pProcedure->m_strID, pProcedure->m_strChannelID);
+
+		pCmmChannel = GetCmmChannel(m_pTemplate->m_strDefaultChannel);
+
+		if (pCmmChannel == NULL)
+		{
+			CLogPrint::LogFormatString(LOGLEVEL_ERROR, L"模板定义的通信通道\"%s\"不存在", pNode->m_strChannelID);
+
+			//选择第一个
+			pCmmChannel =  (CCmmChannel*)m_pDeviceCmmChannel->GetHead();
+
+			if (pCmmChannel == NULL)
+			{
+				CLogPrint::LogFormatString(LOGLEVEL_ERROR, L"模板定义的通信通道不存在");
+			}
+		}
+	}
+
+	return pCmmChannel;
+}
+
+CPpPackageSend* CPpEngineThread::AddPackageSend(CPpProcedureRun *pPpProcedureRun)
+{
+	ASSERT(m_pPkgSendMngr != NULL);
+	if (m_pTemplate == NULL)
+	{
+		return NULL;
+	}
+
+	CCmmChannel *pChannel = GetCmmChannel(pPpProcedureRun->GetCurrNode());
+	CPpPackageSend *pPkgSend = m_pPkgSendMngr->AddNew(pPpProcedureRun, pChannel, m_pTemplate->m_nPackageMaxLength);
+	pPkgSend->m_strChCmmMode = pPpProcedureRun->m_pProcedure->m_strChCmmMode;  //通讯模式
+
+// 	long nCount = m_pPkgSendMngr->GetCount();
+// 	CLogPrint::LogFormatString(g_pLogTracePrint, LOGLEVEL_TRACE, L"m_pPkgSendMngr(%d)", nCount);
+
+	return pPkgSend;
+}
+
+void CPpEngineThread::CopyDeviceCmmConfig(CDeviceCmmConfig *pDes, CDeviceCmmConfig* pSrc)
+{
+	POS pos = pDes->GetHeadPosition();
+	CExBaseObject *p = NULL;
+	CExBaseObject *pEx = NULL;
+	UINT nClassID = 0;
+
+	while (pos != NULL)
+	{
+		p = pDes->GetNext(pos);
+		nClassID = p->GetClassID();
+
+		switch (nClassID)
+		{
+		case DMCLASSID_CMM_SERIAL_CONFIG:
+			{// 如果是串口数据
+				pEx = FindByClassID(nClassID, pSrc);
+				if (pEx)
+				{
+					pEx->CopyOwn(p);
+					CCmmSerialConfig *pConfig = (CCmmSerialConfig*)p;
+					//CLogPrint::LogFormatString(LOGLEVEL_TRACE, _T("拷贝串口通讯参数(port=%d)"), pConfig->m_nPortNum);
+				}
+			}
+
+			break;
+
+		case DMCLASSID_NET_CONFIG:
+			{// 如果是网口数据
+				CCmmNetConfig *pCmmNetConfigDes = (CCmmNetConfig*)p;
+				CCmmNetConfig *pCmmNetConfigSrc = (CCmmNetConfig*)FindByClassID(nClassID, pSrc);
+				if (pCmmNetConfigSrc == NULL)
+				{
+					return;
+				}
+				POS posEx = pCmmNetConfigDes->GetHeadPosition();
+				CExBaseObject *pObj = NULL;
+				CExBaseObject *pObjEx = NULL;
+				UINT nClassIDEx = 0;
+				while (posEx != NULL)
+				{
+					pObj = pCmmNetConfigDes->GetNext(posEx);
+					nClassIDEx = pObj->GetClassID();
+					pObjEx = FindByClassID(nClassIDEx, pCmmNetConfigSrc);
+					if (pObjEx)
+					{
+						pObjEx->CopyOwn(pObj);
+					}
+				}
+			}
+
+			break;
+
+		}//end of "switch (nClassID)"
+	}//end of "while (pos != NULL)"
+}
+
+CExBaseObject* CPpEngineThread::FindByClassID(UINT nClassID, CExBaseList* pList)
+{
+	POS pos = pList->GetHeadPosition();
+	CExBaseObject *p = NULL;	
+
+	while (pos != NULL)
+	{
+		p = pList->GetNext(pos);
+		if (nClassID == p->GetClassID())
+		{
+			return p;
+		}
+	}
+
+	return NULL;
+}
+
+BOOL CPpEngineThread::GetDeviceAttribute(const CString &strAttrTag, CString &strAttrValue)
+{
+	if (m_pDevice == NULL)
+	{
+		return FALSE;
+	}
+
+	return m_pDevice->GetDeviceAttribute(strAttrTag, strAttrValue);
+}
+
+BOOL CPpEngineThread::SetDeviceAttribute(const CString &strAttrTag, const CString &strAttrValue)
+{
+	if (m_pDevice == NULL)
+	{
+		return FALSE;
+	}
+
+	return m_pDevice->SetDeviceAttribute(strAttrTag, strAttrValue);
+}
+
+void AFX_MSG_CALL CPpEngineThread::OnChannelReceive(WPARAM wParam, LPARAM lParam)
+{
+	if (m_pTemplate == NULL)
+	{
+		return;
+	}
+
+	CPpEngineBaseApp *pApp = (CPpEngineBaseApp*)AfxGetApp();
+	CYCLEMEMBUFFERPOS oCycleBufPos;
+	m_pUsingChannel = (CCmmChannel*)wParam;
+	m_pUsingChannel->GetReceiveBufferPos(oCycleBufPos);
+	CCmmRcvSndTime *pCmmTime = (CCmmRcvSndTime*)lParam; //接受报文的时间
+
+	if (pApp->GetProtocolSpy())
+	{
+		CString strTime;
+		strTime.Format(_T("%02d:%02d:%02d.%03d"), pCmmTime->m_tm.wHour, pCmmTime->m_tm.wMinute, pCmmTime->m_tm.wSecond, pCmmTime->m_tm.wMilliseconds);
+		LogProtocol(m_pDevice, g_pLogPkgReceivePrint, oCycleBufPos, TRUE, strTime);
+		//LogProtocol(m_pDevice, g_pLogPkgReceivePrint, pCmmTime->m_oCycleBufferPos, TRUE);
+	}
+	else
+	{
+	}
+
+	m_pDeviceCmmChannel->m_oCmmRcvSndTimeMngr.DeletePrev(pCmmTime);
+	//复位监视起始位置
+	m_pUsingChannel->ResetReceiveSpyBeginPos();
+	OnReceived(pCmmTime);
+}
+
+void AFX_MSG_CALL CPpEngineThread::OnConnectDevice(WPARAM wParam, LPARAM lParam)
+{
+	ConnectDevice();
+}
+
+void AFX_MSG_CALL CPpEngineThread::OnDisConnectDevice(WPARAM wParam, LPARAM lParam)
+{
+	DisConnectDevice();
+}
+
+void AFX_MSG_CALL CPpEngineThread::OnExitEngineThread(WPARAM wParam, LPARAM lParam)
+{
+	if (m_nThreadExitState == PPEXIT_STATE_NORMAL)
+	{
+		m_bExitEngineThread = TRUE;
+		PostThreadMessage(WM_EXIT_ENGINE_THREAD, 0, 0);
+		return;
+	}
+
+	if (m_nThreadExitState == PPEXIT_STATE_EXITPRUN)
+	{
+		DisConnectDevice();
+		PostThreadMessage(WM_EXIT_ENGINE_THREAD, 0, 0);
+		m_nThreadExitState = PPEXIT_STATE_DISCONNECT;
+		return;
+	}
+
+	if (IsThreadExit())
+	{
+		m_nThreadExitState = PPEXIT_STATE_EXIT;
+		PostThreadMessage(WM_QUIT, 0, 0);
+		m_bHasPostWmquit = TRUE;
+	}
+	else
+	{
+		PostThreadMessage(WM_EXIT_ENGINE_THREAD, 0, 0);
+	}
+}
+
+void AFX_MSG_CALL CPpEngineThread::OnDeleteAllRecordPackage(WPARAM wParam, LPARAM lParam)
+{
+	//CLogPrint::LogFormatString(LOGLEVEL_TRACE, L"OnDeleteAllRecordPackage-delete:%d", ::GetTickCount());
+	m_pEngineData->m_pPpRecordMngr->OnDeleteAllRecordPackage();
+}
+
+void CPpEngineThread::RecordSendPackage()
+{
+	return;
+	CPpPackageSend *pSend = NULL;
+	POS pos = m_pEngineData->m_pPpRecordMngr->GetHeadPosition();
+
+	while (pos != NULL)
+	{
+		pSend = (CPpPackageSend*)m_pEngineData->m_pPpRecordMngr->GetNext(pos);
+
+		if (pSend->HasSended())
+		{
+			if (pSend->m_pPackageDetail != NULL)
+			{
+				if (m_pEngineData->m_pPpRecordMngr->IsPackageIDExist(pSend->m_pPackageDetail->m_strID))
+				{
+					m_pEngineData->m_pPpRecordMngr->AddTail(pSend->m_pPackageDetail);
+					pSend->m_pPackageDetail = NULL;
+				}		
+			}
+		}
+	}
+
+	m_pPkgSendMngr->DeleteSendPackages();
+}
+
+
+//监视报文
+void CPpEngineThread::LogProtocol(CYCLEMEMBUFFERPOS &oBufPos, CString &strMsg)
+{
+	long nIndex = 0;
+	BYTE *pBuffer = oBufPos.pBuffer + oBufPos.nBuf1BeginPos;
+	BYTE *pEnd = oBufPos.pBuffer + oBufPos.nBuf1EndPos;
+
+	while (pBuffer < pEnd)
+	{
+		strMsg.AppendFormat(L"%02X ", *pBuffer);
+		pBuffer++;
+	}
+
+	if (oBufPos.nBuf2EndPos >= 0)
+	{
+		pBuffer = oBufPos.pBuffer + oBufPos.nBuf2BeginPos;
+		pEnd = oBufPos.pBuffer + oBufPos.nBuf2EndPos;
+
+		while (pBuffer < pEnd)
+		{
+			strMsg.AppendFormat(L"%02X ", *pBuffer);
+			pBuffer++;
+		}
+	}
+}
+
+void CPpEngineThread::LogProtocol(CExBaseObject *pDevice, LPVOID pPara, CYCLEMEMBUFFERPOS &oBufPos, BOOL bRecv, const CString &strTime)
+{
+	if (oBufPos.nBuf1BeginPos < 0 || oBufPos.nBuf1EndPos <= oBufPos.nBuf1BeginPos)
+	{
+		return ;
+	}
+
+	CPpEngineBaseApp *pApp = (CPpEngineBaseApp*)AfxGetApp();
+
+	if (pApp->IsExitEngineThread())
+	{
+		return;
+	}
+
+	if (! pApp->GetProtocolSpy())
+	{
+		return;
+	}
+
+	CDvmDevice *pLogDevice = pApp->GetCurrSpyDevice();
+
+	//监视当前设备的规约报文
+	if (pLogDevice != NULL)
+	{
+		if (pDevice != pLogDevice)
+		{
+			return;
+		}
+	}
+
+	CString strMsg;
+// 	long nIndex = 0;
+// 	BYTE *pBuffer = oBufPos.pBuffer + oBufPos.nBuf1BeginPos;
+// 	BYTE *pEnd = oBufPos.pBuffer + oBufPos.nBuf1EndPos;
+
+	if (bRecv)
+	{
+		strMsg = _T("<< ");
+	}
+	else
+	{
+		strMsg = _T(">> ");
+	}
+
+	if (strTime.GetLength() > 0)
+	{
+		strMsg = strTime + strMsg;
+	}
+
+	LogProtocol(oBufPos, strMsg);
+// 	while (pBuffer < pEnd)
+// 	{
+// 		strMsg.AppendFormat(L"%02X ", *pBuffer);
+// 		pBuffer++;
+// 	}
+// 
+// 	if (oBufPos.nBuf2EndPos >= 0)
+// 	{
+// 		pBuffer = oBufPos.pBuffer + oBufPos.nBuf2BeginPos;
+// 		pEnd = oBufPos.pBuffer + oBufPos.nBuf2EndPos;
+// 
+// 		while (pBuffer < pEnd)
+// 		{
+// 			strMsg.AppendFormat(L"%02X ", *pBuffer);
+// 			pBuffer++;
+// 		}
+// 	}
+
+	strMsg.Append(L"\r\n");
+
+	CLogPrint::LogString(pPara, LOGLEVEL_TRACE, strMsg);
+}
+
+void CPpEngineThread::ExitRunProduceThread()
+{
+	m_pTemplate = NULL;//设置为NULL，接收到数据时不予理睬。
+
+	CPpProcedureRun *p = NULL;
+	POS pos = m_listRunProcedure.GetHeadPosition();
+	while (pos != NULL)
+	{
+		p = (CPpProcedureRun *)m_listRunProcedure.GetNext(pos);
+		if (p != NULL)
+		{
+			p->ExitProcedure();
+		}
+	}
+
+	m_bExitEngineThread = TRUE;
+
+}
+
+void CPpEngineThread::OnProcedureExit(CPpProcedureRun *pPpProcedureRun)
+{
+	m_pEngineData->m_pPpRecordMngr->OnProcedureExit(pPpProcedureRun->m_pProcedure->m_strID);
+}
+
+void CPpEngineThread::OnProcedureStart(CPpProcedureRun *pPpProcedureRun)
+{
+	m_pEngineData->m_pPpRecordMngr->OnProcedureStart(pPpProcedureRun->m_pProcedure->m_strID);
+}
+

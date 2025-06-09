@@ -1,0 +1,561 @@
+//这段源代码由ClassGenerator创建
+//版权所有 LiJunqing  lijunqing1224@126.com
+//保留所有权利
+
+//SttCmdDefineGlobal.cpp
+
+#include "stdafx.h"
+#include "SttCmdDefineGlobal.h"
+#ifdef _DEBUG
+#undef THIS_FILE
+	static char THIS_FILE[]=__FILE__;
+#define new DEBUG_NEW
+#endif
+
+
+//////////////////////////////////////////////////////////////////////////
+//CSttCmdDefineXmlRWKeys
+
+CSttCmdDefineXmlRWKeys* CSttCmdDefineXmlRWKeys::g_pXmlKeys = NULL;
+long CSttCmdDefineXmlRWKeys::g_nMngrRef = 0;
+
+
+CSttCmdDefineXmlRWKeys::CSttCmdDefineXmlRWKeys()
+{
+	m_bOnlyGetItem = FALSE;
+	m_nGuideBookUseItemKey = 0;
+
+	m_strCSttIotTopoKey = L"topo";
+	m_strCSttIotNodeKey = L"node";
+	m_strCSttIotDevicesKey = L"devices";
+	m_strCSttIotDeviceKey = L"device";
+	m_strCSttMsgKey = L"msg";
+	m_strCSttMsgsKey = L"msgs";
+	m_strCSttRptMapDatasKey = L"rpt-map-datas";
+	m_strCSttReportsKey = L"reports";
+	m_strCSttReportKey = L"report";
+	m_strCSttSysStateKey = L"sys-state";
+	m_strCSttAssistCmdKey = L"assist-cmd";
+	m_strCSttDebugCmdKey = L"dbg-cmd";
+	m_strCSttRemoteCmdKey = L"remote-cmd";
+	m_strCSttAtsCmdKey = L"ats-cmd";
+	m_strCSttSystemCmdKey = L"sys-cmd";
+	m_strCSttAdjustCmdKey = L"adj-cmd";
+	m_strCSttTestCmdKey = L"test-cmd";
+	m_strCSttIotCmdKey = L"iot-cmd";
+	m_strCSttMacroKey = L"macro";
+	m_strCSttParasKey = L"paras";
+	m_strCSttResultsKey = L"results";
+	m_strCSttSearchResultsKey = L"search-results";
+	m_strCSttCmdBaseKey = L"SttCmdBase";
+	m_strCSttCmdDataKey = L"SttCmdData";
+	m_strTestorKey = L"testor";
+	m_strMater_HostKey = L"mater-host";
+	m_strRetTypeKey = L"ret-type";
+	m_strRetCmdKey = L"id-cmd";
+	m_strVersionKey = L"version";
+	m_strTypeKey = L"type";
+	m_strRemarkKey = L"remark";
+
+	m_strBeginTimeKey = L"begintime";
+	m_strEndTimeKey = L"endtime";
+
+	m_strMidKey = L"mid";
+	m_strTimeKey = L"time";
+	m_strLevelKey = L"level";
+	m_strContentKey = L"content";
+	m_strDevCodeKey = L"devCode";
+	m_strDevTypeKey = L"devType";
+	m_strSNKey = L"SN";
+	m_strCatKey = L"cat";
+	m_strParentKey = L"parent";
+	m_strStateKey = L"state";
+
+	m_strCSttHdChKey = L"hd-ch";
+	m_strCSttHdChsKey = L"hd-chs";
+	m_strCSttChMapKey = L"ch-map";
+	m_strCSttChMapsKey = L"ch-maps";
+	m_strAliasKey = L"alias";
+	m_strRsIndexKey = L"rs-index";
+
+	//shaolei 20210724
+	m_strCSttSysParaEditKey = L"sysparaedit";
+	m_strCSttSafetyKey = L"safety";
+	m_strCSttMacroTestKey = L"macrotest";
+	m_strCSttCommCmdKey = L"commcmd";
+	m_strCSttDataObjKey = L"data";
+	m_strCSttSysParasKey = L"sys-paras";
+	m_strCSttReportMapKey = L"rpt-map";
+	m_strCSttRptDataKey = L"data";
+	m_strCSttJobGuideKey = L"job-guide";
+	m_strCSttDeviceKey = L"device";
+	m_strCSttItemsKey = L"items";
+	m_strCSttItemBaseKey = L"item";
+	m_strCSttGuideBookKey = L"guidebook";
+	m_strTestMacroFileIDKey = L"macro-file";
+	m_strTestTypeFileKey = L"test-type-file";
+	m_strDeviceIdKey = L"device-id";
+	m_strDevByKey = L"dev-by";
+	//m_strVersionKey = L"version";
+	m_strCommCmdConfigFileKey = L"comm-cmd-config";
+	m_strPpTemplateFileKey = L"PpTemplateFile";
+	m_strScriptMngrFileKey = L"script-library";
+	m_strPpEngineProgIDKey = L"PpEngineProgID";
+	m_strDvmFileKey = L"dvm-file";
+	m_strStandNameFileKey = L"stand-file";
+	m_strDeviceModelFileKey = L"device-model-file";
+	m_strTestControlModeKey = L"test-control-mode";
+	m_strExpandConfigFileKey = L"expand-config-file";
+	m_strIecfgFileKey = L"iecfg-file";
+	m_strReadOnlyKey = L"read-only";
+	m_strSaveRptToDBKey = L"save-rpt-to-db";
+	m_strAuthoritySNKey = L"authority-sn";
+	m_strAuthorityCopKey = L"authority-cop";
+	m_strScriptTypeKey = L"script-type";
+	m_strTkidKey = L"tkid";
+	m_strShowKey = L"show";
+	m_strEnableKey = L"enable";
+	m_strExectypeKey = L"exectype";
+	m_strBatchItemKey = L"batch-item";
+	m_strMdvTestEachKey = L"mdv-test-each";
+	//m_strStateKey = L"state";
+	m_strSelectKey = L"select";
+	//m_strTypeKey = L"type";
+	m_strCharacteristicIDKey = L"characteristic-id";
+	m_strStxmlFileKey = L"stxml";
+	m_strWzdMapFileKey = L"wzd-map";
+	m_strActLogicKey = L"act-logic";
+	m_strFactoryKey = L"factory";
+	m_strDeviceTypeKey = L"type";
+	m_strIsTimeSetsUnit_ms_Key = L"is-time-sets-unit-s";
+	m_strDsvTextWithValueKey = L"dsv-text-with-value";
+	m_strDsvTextWithUtcTimeKey = L"dsv-text-with-utctime";
+	m_strSrcDeviceModelFileKey = L"src-device-model-file";
+	m_strPrecisionKey = L"precision";
+	m_strDataTypeKey = L"data-type";
+	m_strRWAttrKey = L"rw-attr";
+	m_strUnitKey = L"unit";
+	m_strValueKey = L"value";
+	m_strDefaultValueKey = L"default-value";
+	m_strMinValKey = L"min";
+	m_strMaxValKey = L"max";
+	m_strStepKey = L"step";
+	m_strDataIndexKey = L"data-index";
+	m_strCmdRwKey = L"rw-optr";
+	m_strSortSoeByTKey = L"sort-soe";
+	m_strDsvRunAfterResultScriptKey = L"dsv-run-after-rst";
+	m_strCmdExecModeForMgrptKey = L"mgbrpt-cmd-mode";
+	m_strRepeatTimesKey = L"repeat-timers";
+	m_strCalModeKey = L"cal-mode";
+	m_strReportFillUseNoRepeatKey = L"rpt-fill-no-repeat";
+	m_strSoundFileKey = L"sound-file";
+	m_strManyDeviceTestModeKey = L"many-rpt-test-mode";
+	m_strMacroIDKey = L"macro-id";
+	m_strContentsKey = L"contents";
+	m_strTestMacroUiParasKey = L"test-macro-ui-paras";
+}
+
+CSttCmdDefineXmlRWKeys::~CSttCmdDefineXmlRWKeys()
+{
+
+}
+
+CSttCmdDefineXmlRWKeys* CSttCmdDefineXmlRWKeys::Create()
+{
+	g_nMngrRef++;
+
+	if (g_nMngrRef == 1)
+	{
+		g_pXmlKeys = new CSttCmdDefineXmlRWKeys();
+	}
+
+	return g_pXmlKeys;
+}
+
+void CSttCmdDefineXmlRWKeys::Release()
+{
+	g_nMngrRef--;
+
+	if (g_nMngrRef == 0)
+	{
+		delete g_pXmlKeys;
+		g_pXmlKeys = NULL;
+	}
+}
+
+//2022-3-24  lijunqing
+void CSttCmdDefineXmlRWKeys::stt_Inc_GuideBookUseItemKey(CSttCmdDefineXmlRWKeys *pXmlKeys)
+{
+	if (pXmlKeys == NULL)
+	{
+		CSttCmdDefineXmlRWKeys::g_pXmlKeys->m_nGuideBookUseItemKey++;
+	}
+	else
+	{
+		pXmlKeys->m_nGuideBookUseItemKey++;
+	}
+}
+
+void CSttCmdDefineXmlRWKeys::stt_Dec_GuideBookUseItemKey(CSttCmdDefineXmlRWKeys *pXmlKeys)
+{
+	if (pXmlKeys == NULL)
+	{
+		CSttCmdDefineXmlRWKeys::g_pXmlKeys->m_nGuideBookUseItemKey--;
+	}
+	else
+	{
+		pXmlKeys->m_nGuideBookUseItemKey--;
+	}
+}
+
+long CSttCmdDefineXmlRWKeys::stt_Is_GuideBookUseItemKey(CSttCmdDefineXmlRWKeys *pXmlKeys)
+{
+	if (pXmlKeys == NULL)
+	{
+		return CSttCmdDefineXmlRWKeys::g_pXmlKeys->m_nGuideBookUseItemKey;
+	}
+	else
+	{
+		return pXmlKeys->m_nGuideBookUseItemKey--;
+	}
+}
+
+
+//////////////////////////////////////////////////////////////////////////
+//CSttCmdDefineConstGlobal
+
+long CSttCmdDefineConstGlobal::g_nGlobalRef = 0;
+CSttCmdDefineConstGlobal* CSttCmdDefineConstGlobal::g_pGlobal = NULL;
+
+
+CSttCmdDefineConstGlobal::CSttCmdDefineConstGlobal()
+{
+
+//定义全局常量管理对象初始化函数，例如  InitVariableDataTypes()
+
+}
+
+CSttCmdDefineConstGlobal::~CSttCmdDefineConstGlobal()
+{
+}
+
+CSttCmdDefineConstGlobal* CSttCmdDefineConstGlobal::Create()
+{
+	g_nGlobalRef++;
+
+	if (g_nGlobalRef == 1)
+	{
+		g_pGlobal = new CSttCmdDefineConstGlobal();
+	}
+
+	return g_pGlobal;
+}
+
+void CSttCmdDefineConstGlobal::Release()
+{
+	g_nGlobalRef--;
+
+	if (g_nGlobalRef == 0)
+	{
+		delete g_pGlobal;
+		g_pGlobal = NULL;
+	}
+}
+
+//定义全局常量管理对象初始化函数，例如  void InitVariableDataTypes()
+//	m_oFuncParaDataTypes.AddNew(g_pstrVariableType_CString, g_pstrVariableType_CString);
+
+//定义全局常量，例如  static CString g_pstrVariableType_CString;
+
+//CTestDataTypeMngrConstGlobal
+long CTestDataTypeMngrConstGlobal::g_nDataTypeGlobal = 0;
+CTestDataTypeMngrConstGlobal* CTestDataTypeMngrConstGlobal::g_pDataTypeGlobal = NULL;
+CTestDataTypeMngrConstGlobal::CTestDataTypeMngrConstGlobal()
+{
+	//定义全局常量管理对象初始化函数，例如  InitVariableDataTypes()
+	InitGlobal();
+}
+
+CTestDataTypeMngrConstGlobal::~CTestDataTypeMngrConstGlobal()
+{
+
+}
+
+CTestDataTypeMngrConstGlobal* CTestDataTypeMngrConstGlobal::Create()
+{
+	g_nDataTypeGlobal++;
+
+	if (g_nDataTypeGlobal == 1)
+	{
+		g_pDataTypeGlobal = new CTestDataTypeMngrConstGlobal();
+	}
+
+	return g_pDataTypeGlobal;
+}
+
+void CTestDataTypeMngrConstGlobal::Release()
+{
+	g_nDataTypeGlobal--;
+
+	if (g_nDataTypeGlobal == 0)
+	{
+		delete g_pDataTypeGlobal;
+		g_pDataTypeGlobal = NULL;
+	}
+}
+
+CDataTypes* CTestDataTypeMngrConstGlobal::GetTestDataTypes()
+{
+	ASSERT (g_pDataTypeGlobal != NULL);
+	return &g_pDataTypeGlobal->m_oTestDataTypes;
+}
+
+CDataType* CTestDataTypeMngrConstGlobal::FindTestDataType( const CString &strDataTypeID )
+{
+	ASSERT (g_pDataTypeGlobal != NULL);
+	CDataType *pDataType = NULL;
+
+	pDataType = (CDataType*)g_pDataTypeGlobal->m_oTestDataTypes.FindByID(strDataTypeID);
+
+	if (pDataType == NULL)
+	{
+		CLogPrint::LogFormatString(XLOGLEVEL_TRACE, _T("datatype \"%s\"is not in file\"%s\""), strDataTypeID.GetString(), CFG_IECCFG_DATATYPES_FILE.GetString());
+	}
+
+	return pDataType;
+}
+
+void CTestDataTypeMngrConstGlobal::InitGlobal()
+{
+	Init_FaultTrigModeDataType();
+	Init_K0ModeModeDataType(); 
+	Init_PTPositionDataType();
+	Init_CTPosDataType();
+	Init_CBSimulationDataType();
+	Init_IPlusDCDataType();
+	Init_FaultAngModeDataType();
+	Init_UxModeDataType();
+	Init_CalcuMode();//mym 2021-6-28  add
+	Init_RecloseMode();//mym 2021-7-5  add
+	Init_TestProcess();//mym 2021-7-5  add
+	Init_UzOutputDataType();//mym 2021-8-8  add
+	Init_UzCKDataType();//mym 2021-8-8  add
+	Init_K0CalModeDataType();//mym 2021-8-8  add
+	Init_RXSelect();//mym 2021-8-8  add
+
+	Init_USetMode();//sf 20210721 add
+	Init_InputChannel();// mym 2021-8-11 add
+	Init_IPoint();
+	Init_InterMethod();
+
+	Init_FaultType();//故障相选择
+
+	Init_DifferMarkType();	//yyj add 2021-08-25 差动定值整定方式
+	Init_BasicCurrSelect();//yyj add 2021-08-25 差动基准电流选择
+	Init_ZDPointNum();		//yyj add 2021-08-25 差动比率制动特性拐点数
+}
+
+void CTestDataTypeMngrConstGlobal::Init_K0CalModeDataType()
+{
+	CDataType *pDataType = m_oTestDataTypes.AddNew2(_T("K0CalMode"), _T("K0CalMode"));
+	pDataType->AddNewValue(_T("S1=|K0|,,Phi(K0)"), _T(""), _T("0"));
+	pDataType->AddNewValue(_T("S2=RERL,,XEXL"), _T(""), _T("1"));
+	pDataType->AddNewValue(_T("S3=|Z0/Z1|,,Phi(Z0/Z1)"), _T(""), _T("2"));
+}
+
+void CTestDataTypeMngrConstGlobal::Init_UzCKDataType()
+{
+	CDataType *pDataType = m_oTestDataTypes.AddNew2(_T("PsuVzRefPhase"), _T("PsuVzRefPhase"));
+	pDataType->AddNewValue(_T("Va相位"), _T(""), _T("0"));
+	pDataType->AddNewValue(_T("Vb相位"), _T(""), _T("1"));
+	pDataType->AddNewValue(_T("Vc相位"), _T(""), _T("2"));
+	pDataType->AddNewValue(_T("Vab相位"), _T(""), _T("3"));
+	pDataType->AddNewValue(_T("Vbc相位"), _T(""), _T("4"));
+	pDataType->AddNewValue(_T("Vca相位"), _T(""), _T("5"));
+}
+
+void CTestDataTypeMngrConstGlobal::Init_UzOutputDataType()
+{
+	CDataType *pDataType = m_oTestDataTypes.AddNew2(_T("PsuVzDefine"), _T("PsuVzDefine"));
+	pDataType->AddNewValue(_T("0"), _T(""), _T("0"));
+	pDataType->AddNewValue(_T("Va"), _T(""), _T("1"));
+	pDataType->AddNewValue(_T("Vb"), _T(""), _T("2"));
+	pDataType->AddNewValue(_T("Vc"), _T(""), _T("3"));
+	pDataType->AddNewValue(_T("√3×3Vo"), _T(""), _T("4"));
+	pDataType->AddNewValue(_T("-√3×3Vo"), _T(""), _T("5"));
+	pDataType->AddNewValue(_T("3Vo"), _T(""), _T("6"));
+	pDataType->AddNewValue(_T("-3Vo"), _T(""), _T("7"));
+}
+
+void CTestDataTypeMngrConstGlobal::Init_FaultTrigModeDataType()
+{
+	CDataType *pDataType = m_oTestDataTypes.AddNew2(_T("FaultTrigMode"), _T("FaultTrigMode"));
+	pDataType->AddNewValue(_T("时间触发"), _T(""), _T("0"));
+	pDataType->AddNewValue(_T("手动触发"), _T(""), _T("3"));
+	pDataType->AddNewValue(_T("开入量触发"), _T(""), _T("2"));
+	pDataType->AddNewValue(_T("GPS触发"), _T(""), _T("4"));
+}
+
+void CTestDataTypeMngrConstGlobal::Init_K0ModeModeDataType()
+{
+	CDataType *pDataType = m_oTestDataTypes.AddNew2(_T("K0Mode"), _T("K0Mode"));
+	pDataType->AddNewValue(_T("|K0|,Phi(K0)"), _T(""), _T("0"));
+	pDataType->AddNewValue(_T("RERL,XEXL"), _T(""), _T("1"));
+	pDataType->AddNewValue(_T("|Z0/Z1|,Phi(Z0/Z1)"), _T(""), _T("2"));
+}
+
+void CTestDataTypeMngrConstGlobal::Init_PTPositionDataType()
+{
+	CDataType *pDataType = m_oTestDataTypes.AddNew2(_T("PTPosition"), _T("PTPosition"));
+	pDataType->AddNewValue(_T("母线侧"), _T(""), _T("0"));
+	pDataType->AddNewValue(_T("线路侧"), _T(""), _T("1"));
+}
+
+void CTestDataTypeMngrConstGlobal::Init_CTPosDataType()
+{
+	CDataType *pDataType = m_oTestDataTypes.AddNew2(_T("CTPos"), _T("CTPos"));
+	pDataType->AddNewValue(_T("指向母线"), _T(""), _T("0"));
+	pDataType->AddNewValue(_T("指向线路"), _T(""), _T("1"));
+}
+
+void CTestDataTypeMngrConstGlobal::Init_CBSimulationDataType()
+{
+	CDataType *pDataType = m_oTestDataTypes.AddNew2(_T("CBSimulation"), _T("CBSimulation"));
+	pDataType->AddNewValue(_T("不模拟"), _T(""), _T("0"));
+	pDataType->AddNewValue(_T("模拟"), _T(""), _T("1"));
+}
+
+void CTestDataTypeMngrConstGlobal::Init_IPlusDCDataType()
+{
+	CDataType *pDataType = m_oTestDataTypes.AddNew2(_T("FaultId"), _T("FaultId"));
+	pDataType->AddNewValue(_T("是"), _T(""), _T("0"));
+	pDataType->AddNewValue(_T("否"), _T(""), _T("1"));
+}
+
+void CTestDataTypeMngrConstGlobal::Init_FaultAngModeDataType()
+{
+	CDataType *pDataType = m_oTestDataTypes.AddNew2(_T("FaultAngMode"), _T("FaultAngMode"));
+	pDataType->AddNewValue(_T("随机"), _T(""), _T("0"));
+	pDataType->AddNewValue(_T("定值"), _T(""), _T("1"));
+}
+void CTestDataTypeMngrConstGlobal::Init_UxModeDataType()
+{
+	CDataType *pDataType = m_oTestDataTypes.AddNew2(_T("UxMode"), _T("UxMode"));
+	pDataType->AddNewValue(_T("+3U0"), _T(""), _T("0"));
+	pDataType->AddNewValue(_T("-3U0"), _T(""), _T("1"));
+	pDataType->AddNewValue(_T("+√3×3Vo"), _T(""), _T("2"));
+	pDataType->AddNewValue(_T("-√3×3Vo"), _T(""), _T("3"));
+	pDataType->AddNewValue(_T("检同期A"), _T(""), _T("4"));
+	pDataType->AddNewValue(_T("检同期B"), _T(""), _T("5"));
+	pDataType->AddNewValue(_T("检同期C"), _T(""), _T("6"));
+	pDataType->AddNewValue(_T("检同期AB"), _T(""), _T("7"));
+	pDataType->AddNewValue(_T("检同期BC"), _T(""), _T("8"));
+	pDataType->AddNewValue(_T("检同期CA"), _T(""), _T("9"));
+	pDataType->AddNewValue(_T("检线无压母有压"), _T(""), _T("10"));
+	pDataType->AddNewValue(_T("检线有压母无压"), _T(""), _T("11"));
+	pDataType->AddNewValue(_T("检线无压母无压"), _T(""), _T("12"));
+	pDataType->AddNewValue(_T("检线有压母有压"), _T(""), _T("13"));
+	pDataType->AddNewValue(_T("无输出"), _T(""), _T("14"));
+}
+
+void CTestDataTypeMngrConstGlobal::Init_CalcuMode()
+{	
+	CDataType *pDataType = m_oTestDataTypes.AddNew2(_T("CalcuMode"), _T("CalcuMode"));
+	pDataType->AddNewValue(_T("电流不变"), _T(""), _T("0"));
+	pDataType->AddNewValue(_T("电压不变"), _T(""), _T("1"));
+	pDataType->AddNewValue(_T("系统阻抗不变"), _T(""), _T("2"));
+}
+
+void CTestDataTypeMngrConstGlobal::Init_TestProcess()
+{	
+	CDataType *pDataType = m_oTestDataTypes.AddNew2(_T("TestProcess"), _T("TestProcess"));
+	pDataType->AddNewValue(_T("跳合信号控制"), _T(""), _T("0"));
+	pDataType->AddNewValue(_T("时间控制"), _T(""), _T("1"));
+}
+
+
+void CTestDataTypeMngrConstGlobal::Init_RecloseMode()
+{	
+	CDataType *pDataType = m_oTestDataTypes.AddNew2(_T("RecloseMode"), _T("RecloseMode"));
+	pDataType->AddNewValue(_T("综重（单重+三重）"), _T(""), _T("0"));//0-综重（单重+三重） 1-三重 2-不重合
+	pDataType->AddNewValue(_T("三重"), _T(""), _T("1"));
+	pDataType->AddNewValue(_T("不重合"), _T(""), _T("2"));
+}
+
+void CTestDataTypeMngrConstGlobal::Init_USetMode()
+{
+	CDataType *pDataType = m_oTestDataTypes.AddNew2(_T("闭锁电压选择"), _T("USetMode"));
+	pDataType->AddNewValue(_T("相电压"), _T(""), _T("0"));
+	pDataType->AddNewValue(_T("线电压"), _T(""), _T("1"));
+}
+void CTestDataTypeMngrConstGlobal::Init_IPoint()
+{
+	CDataType *pDataType = m_oTestDataTypes.AddNew2(_T("动作方向"), _T("IPoint"));
+	pDataType->AddNewValue(_T("指向变压器"), _T(""), _T("0"));
+	pDataType->AddNewValue(_T("指向母线"), _T(""), _T("1"));
+}
+void CTestDataTypeMngrConstGlobal::Init_InterMethod()
+{
+	CDataType *pDataType = m_oTestDataTypes.AddNew2(_T("插值法"), _T("InterMethod"));
+	pDataType->AddNewValue(_T("拉格朗日插值法"), _T(""), _T("0"));
+	pDataType->AddNewValue(_T("线性插值法"), _T(""), _T("1"));
+}
+
+void CTestDataTypeMngrConstGlobal::Init_RXSelect()//阻抗参考方式
+{	
+	CDataType *pDataType = m_oTestDataTypes.AddNew2(_T("RXSelect"), _T("RXSelect"));
+	pDataType->AddNewValue(_T("Z-φ"), _T(""), _T("0"));	
+	pDataType->AddNewValue(_T("R-X"), _T(""), _T("1"));//0-综重（单重+三重） 1-三重 2-不重合
+}
+
+void CTestDataTypeMngrConstGlobal::Init_InputChannel()//开入量触发通道
+{	
+	CDataType *pDataType = m_oTestDataTypes.AddNew2(_T("InputChannel"), _T("InputChannel"));
+	pDataType->AddNewValue(_T("A"), _T(""), _T("0"));
+	pDataType->AddNewValue(_T("B"), _T(""), _T("1"));
+	pDataType->AddNewValue(_T("C"), _T(""), _T("2"));
+	pDataType->AddNewValue(_T("D"), _T(""), _T("3"));
+	pDataType->AddNewValue(_T("E"), _T(""), _T("4"));
+	pDataType->AddNewValue(_T("F"), _T(""), _T("5"));
+	pDataType->AddNewValue(_T("G"), _T(""), _T("6"));
+	pDataType->AddNewValue(_T("H"), _T(""), _T("7"));
+	pDataType->AddNewValue(_T("I"), _T(""), _T("8"));
+	pDataType->AddNewValue(_T("J"), _T(""), _T("9"));
+}
+
+void CTestDataTypeMngrConstGlobal::Init_FaultType()//故障相选择
+{	
+	CDataType *pDataType = m_oTestDataTypes.AddNew2(_T("FaultType"), _T("FaultType"));
+	pDataType->AddNewValue(_T("A-E"), _T(""), _T("0"));
+	pDataType->AddNewValue(_T("B-E"), _T(""), _T("1"));
+	pDataType->AddNewValue(_T("C-E"), _T(""), _T("2"));
+	pDataType->AddNewValue(_T("A-B"), _T(""), _T("3"));
+	pDataType->AddNewValue(_T("B-C"), _T(""), _T("4"));
+	pDataType->AddNewValue(_T("C-A"), _T(""), _T("5"));
+	pDataType->AddNewValue(_T("A-B-C"), _T(""), _T("6"));
+	pDataType->AddNewValue(_T("3Vo"), _T(""), _T("7"));
+	pDataType->AddNewValue(_T("V2"), _T(""), _T("8"));
+}
+
+void CTestDataTypeMngrConstGlobal::Init_DifferMarkType()	//差动定值整定方式
+{
+	CDataType *pDataType = m_oTestDataTypes.AddNew2(_T("差动定值整定方式"), _T("DifferMarkType"));
+	pDataType->AddNewValue(_T("有名值"), _T(""), _T("0"));
+	pDataType->AddNewValue(_T("标幺值"), _T(""), _T("1"));
+}
+
+void CTestDataTypeMngrConstGlobal::Init_BasicCurrSelect() //差动基准电流选择
+{
+	CDataType *pDataType = m_oTestDataTypes.AddNew2(_T("差动基准电流选择"), _T("BasicCurrSelect"));
+	pDataType->AddNewValue(_T("高侧额定二次电流"), _T(""), _T("0"));
+	pDataType->AddNewValue(_T("设定值"), _T(""), _T("1"));
+	pDataType->AddNewValue(_T("设侧二次额定电流"), _T(""), _T("1"));
+}
+
+void CTestDataTypeMngrConstGlobal::Init_ZDPointNum()
+{
+	CDataType *pDataType = m_oTestDataTypes.AddNew2(_T("比率制动拐点数"), _T("ZDPointNum"));
+	pDataType->AddNewValue(_T("一个拐点"), _T(""), _T("0"));
+	pDataType->AddNewValue(_T("两个拐点"), _T(""), _T("1"));
+	pDataType->AddNewValue(_T("三个拐点"), _T(""), _T("2"));
+}

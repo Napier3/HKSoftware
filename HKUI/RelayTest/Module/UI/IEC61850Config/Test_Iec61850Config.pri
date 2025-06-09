@@ -1,0 +1,124 @@
+
+SOURCES +=  \
+$$PWD/Grid/IecCfgChsGridBase.cpp \
+$$PWD/Grid/IecCfgDataGridBase.cpp \
+$$PWD/Grid/IecCfgFiberSetGrid.cpp \
+$$PWD/Grid/IecCfgGinChsGrid.cpp \
+$$PWD/Grid/IecCfgGinDataGrid.cpp \
+$$PWD/Grid/IecCfgGoutChannelsGrid.cpp \
+$$PWD/Grid/IecCfgGoutDataGrid.cpp \
+$$PWD/Grid/IecCfgPrimRateGrid.cpp \
+$$PWD/Grid/IecCfgSmv92ChsGrid.cpp \
+$$PWD/Grid/IecCfgSmv92InChsGrid.cpp \
+$$PWD/Grid/IecCfgSmvData92Grid.cpp \
+$$PWD/Grid/IecCfgSmvData92InGrid.cpp \
+$$PWD/Grid/IecCfgSmvDataFT3Grid.cpp \
+$$PWD/Grid/IecCfgSmvDataFT3InGrid.cpp \
+$$PWD/Grid/IecCfgSMVFT3DCOtherSetGrid.cpp \
+$$PWD/Grid/IecCfgSmvFT3InChsGrid.cpp \
+$$PWD/Grid/IecCfgSmvFT3OutChsGrid.cpp \
+$$PWD/Grid/IecCfgSmvRateGrid.cpp \
+$$PWD/Grid/QSclSelectCtrlsGrid.cpp \
+$$PWD/Grid/SclCtrlChsGridBase.cpp \
+$$PWD/Grid/SclCtrlGInChsGrid.cpp \
+$$PWD/Grid/SclCtrlGoutChsGrid.cpp \
+$$PWD/Grid/SclCtrlsGooseInGrid.cpp \
+$$PWD/Grid/SclCtrlsGooseOutGrid.cpp \
+$$PWD/Grid/SclCtrlsGridBase.cpp \
+$$PWD/Grid/SclCtrlSmvInChsGrid.cpp \
+$$PWD/Grid/SclCtrlSmvOutChsGrid.cpp \
+$$PWD/Grid/SclCtrlsSmvInGrid.cpp \
+$$PWD/Grid/SclCtrlsSmvOutGrid.cpp \
+$$PWD/SCDView/SttSclIedDrawViewWidget.cpp \
+$$PWD/SCDView/SttSclIedLineDialog.cpp \
+$$PWD/SCDView/SttSclIedSketchMapWidget.cpp \
+$$PWD/SttIecChsEditDialog.cpp \
+$$PWD/SttIecChsEditWidget.cpp \
+$$PWD/SttIecConfigDialog.cpp \
+$$PWD/SttIecConfigDialogBase.cpp \
+$$PWD/SttIecConfigDialogWin.cpp \
+$$PWD/SttIecConfigWidgetBase.cpp \
+$$PWD/SttIecGinWidget.cpp \
+$$PWD/SttIecGoutWidget.cpp \
+$$PWD/SttIecQualitySetDialog.cpp \
+$$PWD/SttIecSMV92InWidget.cpp \
+$$PWD/SttIecSMV92OtherSetDialog.cpp \
+$$PWD/SttIecSMV92Widget.cpp \
+$$PWD/SttIecSMVFT3DCOtherSetDialog.cpp \
+$$PWD/SttIecSMVFT3InitValueSetDialog.cpp \
+$$PWD/SttIecSMVFT3InMapSetDialog.cpp \
+$$PWD/SttIecSMVFT3InWidget.cpp \
+$$PWD/SttIecSMVFT3OtherSetDialog.cpp \
+$$PWD/SttIecSMVFT3OutWidget.cpp \
+$$PWD/SttIecSysCfgChildWidget.cpp \
+$$PWD/sttiecsyscfgwidget.cpp \
+$$PWD/SttIecSysParasOtherSetDialog.cpp \
+$$PWD/SttIecSysParasWidget.cpp \
+$$PWD/SttSclCtrlsWidget.cpp \
+$$PWD/SttSclFileParseDialog.cpp \
+$$PWD/SttSclIedTreeItem.cpp 
+
+
+HEADERS += \
+$$PWD/Grid/IecCfgChsGridBase.h \
+$$PWD/Grid/IecCfgDataGridBase.h \
+$$PWD/Grid/IecCfgFiberSetGrid.h \
+$$PWD/Grid/IecCfgGinChsGrid.h \
+$$PWD/Grid/IecCfgGinDataGrid.h \
+$$PWD/Grid/IecCfgGoutChannelsGrid.h \
+$$PWD/Grid/IecCfgGoutDataGrid.h \
+$$PWD/Grid/IecCfgPrimRateGrid.h \
+$$PWD/Grid/IecCfgSmv92ChsGrid.h \
+$$PWD/Grid/IecCfgSmv92InChsGrid.h \
+$$PWD/Grid/IecCfgSmvData92Grid.h \
+$$PWD/Grid/IecCfgSmvData92InGrid.h \
+$$PWD/Grid/IecCfgSmvDataFT3Grid.h \
+$$PWD/Grid/IecCfgSmvDataFT3InGrid.h \
+$$PWD/Grid/IecCfgSMVFT3DCOtherSetGrid.h \
+$$PWD/Grid/IecCfgSmvFT3InChsGrid.h \
+$$PWD/Grid/IecCfgSmvFT3OutChsGrid.h \
+$$PWD/Grid/IecCfgSmvRateGrid.h \
+$$PWD/Grid/QSclSelectCtrlsGrid.h \
+$$PWD/Grid/SclCtrlChsGridBase.h \
+$$PWD/Grid/SclCtrlGInChsGrid.h \
+$$PWD/Grid/SclCtrlGoutChsGrid.h \
+$$PWD/Grid/SclCtrlsGooseInGrid.h \
+$$PWD/Grid/SclCtrlsGooseOutGrid.h \
+$$PWD/Grid/SclCtrlsGridBase.h \
+$$PWD/Grid/SclCtrlSmvInChsGrid.h \
+$$PWD/Grid/SclCtrlSmvOutChsGrid.h \
+$$PWD/Grid/SclCtrlsSmvInGrid.h \
+$$PWD/Grid/SclCtrlsSmvOutGrid.h \
+$$PWD/SCDView/SttSclIedDrawViewWidget.h \
+$$PWD/SCDView/SttSclIedLineDialog.h \
+$$PWD/SCDView/SttSclIedSketchMapWidget.h \
+$$PWD/SttIecChsEditDialog.h \
+$$PWD/SttIecChsEditWidget.h \
+$$PWD/SttIecConfigDialog.h \
+$$PWD/SttIecConfigDialogBase.h \
+$$PWD/SttIecConfigDialogWin.h \
+$$PWD/SttIecConfigGlobalDef.h \
+$$PWD/SttIecConfigWidgetBase.h \
+$$PWD/SttIecGinWidget.h \
+$$PWD/SttIecGoutWidget.h \
+$$PWD/SttIecQualitySetDialog.h \
+$$PWD/SttIecSMV92InWidget.h \
+$$PWD/SttIecSMV92OtherSetDialog.h \
+$$PWD/SttIecSMV92Widget.h \
+$$PWD/SttIecSMVFT3DCOtherSetDialog.h \
+$$PWD/SttIecSMVFT3InitValueSetDialog.h \
+$$PWD/SttIecSMVFT3InMapSetDialog.h \
+$$PWD/SttIecSMVFT3InWidget.h \
+$$PWD/SttIecSMVFT3OtherSetDialog.h \
+$$PWD/SttIecSMVFT3OutWidget.h \
+$$PWD/SttIecSysCfgChildWidget.h \
+$$PWD/sttiecsyscfgwidget.h \
+$$PWD/SttIecSysParasOtherSetDialog.h \
+$$PWD/SttIecSysParasWidget.h \
+$$PWD/SttSclCtrlsWidget.h \
+$$PWD/SttSclFileParseDialog.h \
+$$PWD/SttSclIedTreeItem.h 
+
+
+
+

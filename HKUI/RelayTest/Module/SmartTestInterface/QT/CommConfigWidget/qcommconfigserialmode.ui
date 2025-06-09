@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QCommConfigSerialMode</class>
+ <widget class="QDialog" name="QCommConfigSerialMode">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>283</width>
+    <height>263</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <layout class="QGridLayout" name="gridLayout_2">
+     <item row="0" column="0">
+      <widget class="QLabel" name="m_lab_SerialNumber">
+       <property name="text">
+        <string>串口号</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="m_lab_StopBit_2">
+       <property name="text">
+        <string>停止位</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QComboBox" name="m_cmbParity">
+       <item>
+        <property name="text">
+         <string>无校验</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>奇校验</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>偶校验</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="m_cmbPortNum">
+       <item>
+        <property name="text">
+         <string>COM1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>COM2</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>COM3</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>COM4</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>COM5</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>COM6</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>COM7</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>COM8</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>COM9</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>COM10</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>COM11</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>COM12</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QComboBox" name="m_cmbStopBits">
+       <item>
+        <property name="text">
+         <string>1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>1.5</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QComboBox" name="m_cmbByteSize">
+       <item>
+        <property name="text">
+         <string>7</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>8</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="m_lab_BaudRate">
+       <property name="text">
+        <string>波特率</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QComboBox" name="m_cmbBaudRate">
+       <item>
+        <property name="text">
+         <string>1200</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2400</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>4800</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>9600</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>19200</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="m_lab_ParityBit">
+       <property name="text">
+        <string>校验位</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="m_lab_DataBit">
+       <property name="text">
+        <string>数据位</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

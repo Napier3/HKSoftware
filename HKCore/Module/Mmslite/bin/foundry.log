@@ -1,0 +1,14 @@
+
+
+***********************************************************
+          LOGGING STARTED Fri Mar 04 15:53:11 2011
+***********************************************************
+
+2011-03-04 15:53:10.984 SLOGALWAYS (Fo_main.c 268) 
+  Executing 'D:\mmslite\bin\foundry.exe'
+  Input TDL file         : ''
+  Configuration file     : 'align.cfg'
+  Output 'C' file        : '.c'
+  Output 'H' file        : '.h'
+  Output 'LAP XML' file  : 'lap_out.xml'
+  Output 'Lefttodo' file : 'lefttodo.txt'

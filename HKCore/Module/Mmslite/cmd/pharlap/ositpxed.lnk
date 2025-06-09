@@ -1,0 +1,9 @@
+-lib \mmslite\win32lib\mmsld
+-lib \mmslite\win32lib\mmsled
+-lib \mmslite\win32lib\mvld
+-lib \mmslite\win32lib\asn1ld
+-lib \mmslite\win32lib\ositpxed
+-lib \mmslite\win32lib\utild
+-lib \mmslite\win32lib\slogd
+-lib \mmslite\win32lib\memd
+

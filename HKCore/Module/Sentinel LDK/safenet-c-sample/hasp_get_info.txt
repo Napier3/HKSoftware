@@ -1,0 +1,106 @@
+hasp_status_t status;
+char *info = 0;
+
+const char* scope = 
+"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"
+"<haspscope/>";
+
+const char* format = 
+"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"
+"<haspformat root=\"hasp_info\">"
+"    <hasp>"
+"        <attribute name=\"id\" />"
+"        <attribute name=\"type\" />"
+"        <feature>"
+"            <attribute name=\"id\" />"
+"        </feature>"
+"    </hasp>"
+"</haspformat>";
+
+unsigned char vendor_code[] =
+"hsFM2+tlTsLQiX/TqTvX3387GODVUrLTHlxbZO+Srgu8HLrPx8IC5H1pAqgXSd2R1MzzktsuvAt5tEJq"
+"2SCA7KY6lcXsfHbr9mLFxIvKHZJDb25Zx2LioB+qtCzBLU2vHYSLYlBYyOxGF69Po3yb+foBLxv5sTxB"
+"MH/uoAQCMrRVSdZJpjO3AVnL6SDc3nMLB0bM2t0vKnnx+V2+rUkw+VV2Qmncnqsy2vFUffUV51QbDFIU"
+"xQyPXLTAHDVr2pSlBDDhFVoirLQMXw1KrhBEfWef0jy+nF09vBSJR51eVCvctyKj5TcNwqf7xv05qgPO"
+"8dd11yhKR79Ivn7tiBfy3qUXGLEZG2CSUXFHupv553SZlJFy3LiaDqj0K2rybC0i7Fh12X8XOqmnhbg8"
+"kUEffMUD86z1yj3BGUJyspPHU2/CCMe4gLuh7PnXe3g6N4onbhdPSzv7CD2xqiCdt/J6YylOBgOmW0LP"
+"CvjjPV0yz34Lyao5K0tpEr9ObRPyG1XKnT6qhV9nqaobSc2KBJ0Jh1mzdSI4KRWz1HRanxVri13amuQt"
+"b3XI50A+hHCqqdaSs6EMvybGAfeGtEznYpPKXU96gNZtmsn0vZBcXU/yehhNU+wwMNphNZ4hXNzlz4nY"
+"ytHGYldDIOxqPrBhhLEvXwJ3NXIoqIniesDsaXJ2SCrwo45BJbQtO9dlH3Ez7J/LwDd8InQA8Z4vlfXv"
+"qTKKx9ztou4i5Q/SlKONKPvRpLXY59dSxEw/MMX7RkFPX0XVBw99lKBT4wXtINCwJqYal/FI5f5KN8Tt"
+"L913ck1/DFxbpga0G+SHW2gBTTtUC4MpPs69vbp4CiAD6ZxU6BtKgPmnlbahPUVvDyy2aFVL7iMb9XNd"
+"mi/hVOyZbq3g5FAJITXd855oa8SeMgbxKZw1QtsIC0BV8dXqjBvLji1of2VWTU9adclv4I/U+ZoJGxzi"
+"ogitYUdTl4XOamKMmV6aZw==";
+
+status = hasp_get_info(scope, format, vendor_code, &info);
+
+/* check if operation was successful */
+if (status != HASP_STATUS_OK)
+{
+    switch (status)
+    {
+        case HASP_INV_FORMAT:
+            break;
+        default:
+            break;
+    }
+}
+
+/* use the information, free it afterwards */
+
+hasp_free(info);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<hasp_info>
+  <hasp id="2087229556" type="HASP-HL">
+    <feature id="0" />
+    <feature id="100" />
+    <feature id="100" />
+    <feature id="101" />
+    <feature id="101" />
+    <feature id="102" />
+    <feature id="102" />
+    <feature id="103" />
+    <feature id="103" />
+    <feature id="104" />
+    <feature id="104" />
+    <feature id="105" />
+    <feature id="105" />
+    <feature id="106" />
+    <feature id="106" />
+    <feature id="107" />
+    <feature id="108" />
+  </hasp>
+</hasp_info>

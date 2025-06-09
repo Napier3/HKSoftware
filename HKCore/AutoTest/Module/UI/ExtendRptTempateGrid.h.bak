@@ -1,0 +1,61 @@
+#pragma once
+
+#include "../../../Module/GbDev/GuideBookDevGlobalDefine.h"
+#include "afxwin.h"
+
+#include "../../../Module/UI/ScriptLibTypeComboBox.h"
+#include "..\..\Module\XLanguage\XLanguageButton.h"
+
+#include "..\..\..\..\Module\GridBase\ExBaseListGrid.h"
+
+class CGridExtendRptTempalte : public CExBaseListGrid
+{
+public:
+	CGridExtendRptTempalte();
+	virtual ~CGridExtendRptTempalte();
+
+public:
+	virtual void InitGridTitle();
+	virtual void InitGrid();
+
+private:
+	virtual void ShowData(CExBaseObject *pData, int& nRow, BOOL bInsertRow=TRUE);
+	virtual void SetMidifiedFlag(CExBaseObject *pData, BOOL bModified=TRUE);
+
+};
+
+// CGbUIGuidebookExtendRptTempateDialog 对话框
+
+class CGbUIGuidebookExtendRptTempateDialog : public CDialog, public CGbNodeAttrEditWndInterface
+{
+	DECLARE_DYNAMIC(CGbUIGuidebookExtendRptTempateDialog)
+
+public:
+	CGbUIGuidebookExtendRptTempateDialog(CExBaseObject* pNode,CWnd* pParent = NULL);   // 标准构造函数
+	CGbUIGuidebookExtendRptTempateDialog();
+	virtual ~CGbUIGuidebookExtendRptTempateDialog();
+
+	CDvmDataset *m_pExtendRptTemplate;
+
+// 对话框数据
+	enum { IDD = IDD_GBUIDLG_GUIDEBOOK_EXTEND_RPT_TEMPLATE };
+
+public:
+	void UICreate(CExBaseObject* pObj, CWnd* pParent);
+	virtual void ShowGbNode(CExBaseObject* pObj);
+	virtual void Show();
+	virtual void Hide();
+	virtual void AdjustSize(CRect rect);
+	virtual void CreateEx();
+	virtual BOOL Save();
+
+protected:
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
+
+	DECLARE_MESSAGE_MAP()
+public:
+	CGridExtendRptTempalte m_gridExtendRptTtt;
+	virtual BOOL OnInitDialog();
+	afx_msg void OnBnClickedBtnAdd();
+	afx_msg void OnBnClickedBtnDelete();
+};

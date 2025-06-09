@@ -1,0 +1,81 @@
+syntax="proto3";
+package Compensation;
+
+message CompensationItem
+{
+
+        float fampcompensation = 1;//幅值
+        float fphcompensation = 2;//相位
+}
+message CompensationItemDc
+{
+        float fampcompensation = 1;//幅值
+        float fzeroshift = 2;//零漂
+}
+
+message ChanelCompensation
+{
+     float fzeroshift = 1;//零漂
+     repeated CompensationItem oharms = 2;//谐波 1-50
+     repeated float fTempXs =3;//温区，最大20个
+     float fdczeroshft = 4;//DC zero
+     float fMaxCurrentRatio = 5;//max current;
+     repeated CompensationItemDc oDCoutput = 6;//直流模块补偿系数
+}
+
+
+message module
+{
+        repeated ChanelCompensation chanelItem =1;//通道总共6个
+        uint32 nmodule = 2;//数字模拟模块统一编码 1,2,4,8,16,32,64,128
+        string filename = 3;//模块型号
+        float frexs = 4;//频率
+        float faxudc = 5;// 辅助直流电压幅值系数;
+        float faxuzeroshift = 6; //辅助直流电压零漂系数
+        string ModuleNo = 7;//模块序列号
+        uint32 nmaxValue =8; //通道输出最大值
+        uint32 chanelNum = 9;//通道数
+        float fgain =10; //增益
+        float faxumaxdc = 11;//辅助直流电压最大值
+        float faxugain =12; //辅助直流电压增益
+        uint32 nvoltorcur = 13;//16进制 数字0xC FT3 0xD 模拟电压0x5模拟电流0xA 直流电流模块0x6 10进制 数字12 模拟电压5 模拟电流10
+        uint32 powermode = 14;//0 lowpower 1 middlepower 2hightpower 3 oldage
+        float foldagesetvolt = 15;//for current module when powermode==3
+        float fACVoltMax = 16;
+        float fsetACVoltMax = 17;//for volt module
+        float fDCVoltMax = 18;
+        float fsetDCVoltMax = 19;//for volt module DV volt
+        repeated float fVolt = 20;//每个模块4个DA值
+        uint32 nFPGAVersion = 21; //FPGA版本号
+        float fdigitaldelay = 22;//数字模块相位延时
+        uint32 nTemp = 23;// bit 1 input 0 output
+        uint32 nTemp1 = 24;//预留
+        float fTemp = 25;
+        float fTemp1 = 26;
+        bool bMultiple = 27;//并联
+ //       CompensationItemData_PTU100 compdata = 27;
+}
+
+message CompensationItemData_PTU100
+{
+
+        repeated  float fampcompensation = 1;//幅值
+        repeated  float fphcompensation = 2;//相位
+        repeated  float fzeroshift = 3;//零漂
+        repeated  float Other1 = 4;//预留
+        repeated  float Other2 = 5;//预留
+        repeated  float Other3 = 6;//预留
+}
+
+
+message modules
+{
+
+    repeated module moduleChanel = 1;// 4 ,0：vol,1:current
+    uint32 nUDCtest = 2;
+    uint32 nIDCtest = 3;
+
+}
+
+
+

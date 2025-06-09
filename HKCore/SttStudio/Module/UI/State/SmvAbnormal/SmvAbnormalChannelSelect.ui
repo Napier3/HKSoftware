@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SmvAbnormalChannelSelect</class>
+ <widget class="QDialog" name="SmvAbnormalChannelSelect">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>580</width>
+    <height>467</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>通道选择</string>
+  </property>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>561</width>
+     <height>401</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string/>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QSttCheckBox" name="ck_channel1">
+      <property name="text">
+       <string>通道1</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QSttCheckBox" name="ck_channel11">
+      <property name="text">
+       <string>通道11</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QSttCheckBox" name="ck_channel21">
+      <property name="text">
+       <string>通道21</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="3">
+     <widget class="QSttCheckBox" name="ck_channel31">
+      <property name="text">
+       <string>通道31</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="4">
+     <widget class="QSttCheckBox" name="ck_channel41">
+      <property name="text">
+       <string>通道41</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QSttCheckBox" name="ck_channel2">
+      <property name="text">
+       <string>通道2</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QSttCheckBox" name="ck_channel12">
+      <property name="text">
+       <string>通道12</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="2">
+     <widget class="QSttCheckBox" name="ck_channel22">
+      <property name="text">
+       <string>通道22</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="3">
+     <widget class="QSttCheckBox" name="ck_channel32">
+      <property name="text">
+       <string>通道32</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="4">
+     <widget class="QSttCheckBox" name="ck_channel42">
+      <property name="text">
+       <string>通道42</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QSttCheckBox" name="ck_channel3">
+      <property name="text">
+       <string>通道3</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QSttCheckBox" name="ck_channel13">
+      <property name="text">
+       <string>通道13</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="2">
+     <widget class="QSttCheckBox" name="ck_channel23">
+      <property name="text">
+       <string>通道23</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="3">
+     <widget class="QSttCheckBox" name="ck_channel33">
+      <property name="text">
+       <string>通道33</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="4">
+     <widget class="QSttCheckBox" name="ck_channel43">
+      <property name="text">
+       <string>通道43</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QSttCheckBox" name="ck_channel4">
+      <property name="text">
+       <string>通道4</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QSttCheckBox" name="ck_channel14">
+      <property name="text">
+       <string>通道14</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="2">
+     <widget class="QSttCheckBox" name="ck_channel24">
+      <property name="text">
+       <string>通道24</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="3">
+     <widget class="QSttCheckBox" name="ck_channel34">
+      <property name="text">
+       <string>通道34</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="4">
+     <widget class="QSttCheckBox" name="ck_channel44">
+      <property name="text">
+       <string>通道44</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0">
+     <widget class="QSttCheckBox" name="ck_channel5">
+      <property name="text">
+       <string>通道5</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QSttCheckBox" name="ck_channel15">
+      <property name="text">
+       <string>通道15</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="2">
+     <widget class="QSttCheckBox" name="ck_channel25">
+      <property name="text">
+       <string>通道25</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="3">
+     <widget class="QSttCheckBox" name="ck_channel35">
+      <property name="text">
+       <string>通道35</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="4">
+     <widget class="QSttCheckBox" name="ck_channel45">
+      <property name="text">
+       <string>通道45</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QSttCheckBox" name="ck_channel6">
+      <property name="text">
+       <string>通道6</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1">
+     <widget class="QSttCheckBox" name="ck_channel16">
+      <property name="text">
+       <string>通道16</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="2">
+     <widget class="QSttCheckBox" name="ck_channel26">
+      <property name="text">
+       <string>通道26</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="3">
+     <widget class="QSttCheckBox" name="ck_channel36">
+      <property name="text">
+       <string>通道36</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="4">
+     <widget class="QSttCheckBox" name="ck_channel46">
+      <property name="text">
+       <string>通道46</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="0">
+     <widget class="QSttCheckBox" name="ck_channel7">
+      <property name="text">
+       <string>通道7</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="1">
+     <widget class="QSttCheckBox" name="ck_channel17">
+      <property name="text">
+       <string>通道17</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="2">
+     <widget class="QSttCheckBox" name="ck_channel27">
+      <property name="text">
+       <string>通道27</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="3">
+     <widget class="QSttCheckBox" name="ck_channel37">
+      <property name="text">
+       <string>通道37</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="4">
+     <widget class="QSttCheckBox" name="ck_channel47">
+      <property name="text">
+       <string>通道47</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="0">
+     <widget class="QSttCheckBox" name="ck_channel8">
+      <property name="text">
+       <string>通道8</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="1">
+     <widget class="QSttCheckBox" name="ck_channel18">
+      <property name="text">
+       <string>通道18</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="2">
+     <widget class="QSttCheckBox" name="ck_channel28">
+      <property name="text">
+       <string>通道28</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="3">
+     <widget class="QSttCheckBox" name="ck_channel38">
+      <property name="text">
+       <string>通道38</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="4">
+     <widget class="QSttCheckBox" name="ck_channel48">
+      <property name="text">
+       <string>通道48</string>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="0">
+     <widget class="QSttCheckBox" name="ck_channel9">
+      <property name="text">
+       <string>通道9</string>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="1">
+     <widget class="QSttCheckBox" name="ck_channel19">
+      <property name="text">
+       <string>通道19</string>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="2">
+     <widget class="QSttCheckBox" name="ck_channel29">
+      <property name="text">
+       <string>通道29</string>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="3">
+     <widget class="QSttCheckBox" name="ck_channel39">
+      <property name="text">
+       <string>通道39</string>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="4">
+     <widget class="QSttCheckBox" name="ck_channel49">
+      <property name="text">
+       <string>通道49</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="0">
+     <widget class="QSttCheckBox" name="ck_channel10">
+      <property name="text">
+       <string>通道10</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="1">
+     <widget class="QSttCheckBox" name="ck_channel20">
+      <property name="text">
+       <string>通道20</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="2">
+     <widget class="QSttCheckBox" name="ck_channel30">
+      <property name="text">
+       <string>通道30</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="3">
+     <widget class="QSttCheckBox" name="ck_channel40">
+      <property name="text">
+       <string>通道40</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="4">
+     <widget class="QSttCheckBox" name="ck_channel50">
+      <property name="text">
+       <string>通道50</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>420</y>
+     <width>542</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="spacing">
+     <number>56</number>
+    </property>
+    <item>
+     <widget class="QPushButton" name="pbn_ALlReset">
+      <property name="text">
+       <string>全选</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pbn_ALlNoReset">
+      <property name="text">
+       <string>全不选</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pbn_Ok">
+      <property name="text">
+       <string>确定</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pbn_Cancle">
+      <property name="text">
+       <string>取消</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QSttCheckBox</class>
+   <extends>QCheckBox</extends>
+   <header>../../Controls/SttCheckBox.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

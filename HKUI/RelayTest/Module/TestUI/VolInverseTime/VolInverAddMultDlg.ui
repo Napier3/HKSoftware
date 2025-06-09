@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QVolInverAddMultDlg</class>
+ <widget class="QDialog" name="QVolInverAddMultDlg">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>533</width>
+    <height>237</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>添加系列</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0">
+   <item row="0" column="3">
+    <widget class="QGroupBox" name="groupBox_FaultTypeChoose">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="title">
+      <string>故障类别选择</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_4">
+      <item row="0" column="0">
+       <widget class="QSttCheckBox" name="m_pAN_CheckBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>AN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QSttCheckBox" name="m_pBN_CheckBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>BN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QSttCheckBox" name="m_pCN_CheckBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>CN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QSttCheckBox" name="m_pCA_CheckBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>CA短路</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QSttCheckBox" name="m_pAB_CheckBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>AB短路</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QSttCheckBox" name="m_p3U0_CheckBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>3U0</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1" colspan="2">
+       <widget class="QSttCheckBox" name="m_pBC_CheckBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>BC短路</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QSttCheckBox" name="m_pU2_CheckBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>U2</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="4">
+       <widget class="QSttCheckBox" name="m_pABC_CheckBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>三相短路</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+     <zorder>m_pCN_CheckBox</zorder>
+     <zorder>m_pBN_CheckBox</zorder>
+     <zorder>m_pAN_CheckBox</zorder>
+     <zorder>m_pCA_CheckBox</zorder>
+     <zorder>m_pAB_CheckBox</zorder>
+     <zorder>m_pU2_CheckBox</zorder>
+     <zorder>m_pBN_CheckBox</zorder>
+     <zorder>m_pCN_CheckBox</zorder>
+     <zorder>m_p3U0_CheckBox</zorder>
+     <zorder>m_pAN_CheckBox</zorder>
+     <zorder>m_pBC_CheckBox</zorder>
+     <zorder>m_pABC_CheckBox</zorder>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="3">
+    <widget class="QSttGroupBox" name="groupBox_AddTestPoint">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="title">
+      <string>测试点添加</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3" columnstretch="0,0" rowminimumheight="0,0,0" columnminimumwidth="0,0">
+      <item row="0" column="0">
+       <widget class="QLabel" name="m_pVChangeStartLabel">
+        <property name="text">
+         <string>电压变化始值(V):</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QSettingLineEdit" name="m_pVChangeStartEdit"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="m_pVChangeEndLabel">
+        <property name="text">
+         <string>电压变化终值(V):</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QSettingLineEdit" name="m_pVChangeEndEdit"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="m_pVChangeStepLabel">
+        <property name="text">
+         <string>电压变化步长(V):</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QSettingLineEdit" name="m_pVChangeStepEdit"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="m_pDLCurrentLabel">
+     <property name="text">
+      <string>短路电流(A):</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QSettingLineEdit" name="m_pDLCurrentEdit"/>
+   </item>
+   <item row="2" column="1">
+    <widget class="QSettingLineEdit" name="m_pFPhaseDiffEdit"/>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="m_pFreLabel">
+     <property name="text">
+      <string>频率(Hz):</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="m_pFPhaseDiffLabel">
+     <property name="text">
+      <string>相位差(°):</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="4">
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="m_pOK_PushButton">
+       <property name="text">
+        <string>确  认</string>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>128</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="m_pCancel_PushButton">
+       <property name="text">
+        <string>取  消</string>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item row="3" column="1">
+    <widget class="QSettingLineEdit" name="m_pFreEdit"/>
+   </item>
+   <item row="1" column="2" rowspan="3" colspan="2">
+    <widget class="QSttGroupBox" name="gridGroupBox">
+     <property name="title">
+      <string>结果评估</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <widget class="QLabel" name="m_pErrorTypeLabel">
+        <property name="text">
+         <string>误差类型:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QScrollComboBox" name="m_pCmb_ErrorType"/>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="m_pRelativeLabel">
+        <property name="text">
+         <string>相对误差(%):</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QSettingLineEdit" name="m_pRelativeEdit">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>80</width>
+          <height>0</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="m_pAbsAddLabel">
+        <property name="text">
+         <string>绝对误差(s)+:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QSettingLineEdit" name="m_pAbsAddEdit">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>80</width>
+          <height>0</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QLabel" name="m_pAbsDownLabel">
+        <property name="text">
+         <string>绝对误差(s)-:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QSettingLineEdit" name="m_pAbsDownEdit">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>80</width>
+          <height>0</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QSettingLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>../../UI/Controls/SettingCtrls/qsettinglineedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QSttGroupBox</class>
+   <extends>QGroupBox</extends>
+   <header>../../Module/UI/Controls/SttGroupBox.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QSttCheckBox</class>
+   <extends>QCheckBox</extends>
+   <header>../../Module/UI/Controls/SttCheckbox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QScrollComboBox</class>
+   <extends>QComboBox</extends>
+   <header>../../Module/UI/Module/ScrollCtrl/ScrollComboBox.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

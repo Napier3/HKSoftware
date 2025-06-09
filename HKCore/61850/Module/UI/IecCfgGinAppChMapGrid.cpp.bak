@@ -1,0 +1,58 @@
+#include "StdAfx.h"
+#include "IecCfgGinAppChMapGrid.h"
+
+
+//////////////////////////////////////////////////////////////////////////
+//CIecCfgDataChsGridBase
+
+CIecCfgGinAppChMapGrid::CIecCfgGinAppChMapGrid()
+{
+
+}
+
+
+CIecCfgGinAppChMapGrid::~CIecCfgGinAppChMapGrid(void)
+{
+	
+}
+
+void CIecCfgGinAppChMapGrid::InitGrid()
+{
+	SetListMode(TRUE);
+	SetRowCount(1);
+	SetColumnCount(IECCFG_COLS_GINCHMAP);
+	SetFixedRowCount(1);
+	SetFixedColumnCount(1);
+	InitGridTitle();
+}
+
+void CIecCfgGinAppChMapGrid::InitGridTitle()
+{
+	CString cTempStr[IECCFG_COLS_GINCHMAP]={_T("开入通道"),_T("MAC"),_T("APPID"),_T("通道编号"),_T("通道名称")};
+	int iWidth[IECCFG_COLS_GINCHMAP]={60,160, 80,90};
+
+	CIecCfgDataChsGridBase::InitGridTitle(cTempStr, iWidth, IECCFG_COLS_GINCHMAP);
+}
+
+
+void CIecCfgGinAppChMapGrid::ShowData(CExBaseObject *pData, int& nRow, BOOL bInsertRow)
+{
+	UINT nClassID = pData->GetClassID();
+	ASSERT (nClassID == CFGCLASSID_CIECCFGGINCHMAP);
+
+	if (nClassID != CFGCLASSID_CIECCFGGINCHMAP)
+	{
+		return;
+	}
+
+	CIecCfgDataChsGridBase::ShowData(pData, nRow, bInsertRow);
+
+	CIecCfgGINCHMAP *pGINCHMAP = (CIecCfgGINCHMAP*)pData;
+
+	Show_String(pData, nRow, IECCFG_COL_ID_GINCHMAP_DESC, &pGINCHMAP->m_strID, EndEditCell_String_NameAndID );
+	Show_DataType_Val(pData, nRow, IECCFG_COL_ID_GINCHMAP_CHTYPE, iecfg_GooseChDataType, &pGINCHMAP->m_strDataType, EndEditCell_ChDataType_Gin);
+	ShowCfgCh_AppCh(pData, nRow, IECCFG_COL_ID_GINCHMAP_APPCH, &pGINCHMAP->m_strAppChID, iecfg_GinAppChDataType);
+
+	nRow++;
+}
+

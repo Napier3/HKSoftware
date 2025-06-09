@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QCharEditWidget_Diff</class>
+ <widget class="QWidget" name="QCharEditWidget_Diff">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>553</width>
+    <height>420</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>QCharEditWidget_Diff</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QRadioButton" name="m_radioNormal">
+       <property name="font">
+        <font>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>比率差动</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="m_radioHarm">
+       <property name="font">
+        <font>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>谐波制动</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="1">
+      <widget class="QDataTypeComboBox" name="m_cbSettingMinAxis"/>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="m_lbSettingMinAxis">
+       <property name="font">
+        <font>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>定值整定方式</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QLabel" name="m_lbInSel">
+       <property name="font">
+        <font>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>基准电流选择</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QDataTypeComboBox" name="m_cbInSel"/>
+     </item>
+     <item row="1" column="2">
+      <widget class="QLabel" name="m_lbInSet">
+       <property name="font">
+        <font>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>基准电流(其它)</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="3">
+      <widget class="QSttLineEdit" name="m_editInSet"/>
+     </item>
+     <item row="2" column="1">
+      <widget class="QDataTypeComboBox" name="m_cbHarmIndex">
+       <property name="font">
+        <font>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="m_lbHarmIndex">
+       <property name="font">
+        <font>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>谐波次数</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="QLabel" name="m_lbHarmCoef">
+       <property name="font">
+        <font>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>谐波制动系数</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="3">
+      <widget class="QSttLineEdit" name="m_editHarmCoef">
+       <property name="font">
+        <font>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="m_layoutVert">
+     <item>
+      <layout class="QGridLayout" name="m_layGridParas">
+       <item row="1" column="2">
+        <widget class="QSttLineEdit" name="m_edtSet_Istart">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QSttLineEdit" name="m_edtSet_Kstart">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLabel" name="m_lblTitleStart">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>门槛值</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QLabel" name="m_lblTitleCurr">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>电流（Ie）</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QLabel" name="m_lblTitleK">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
+         <property name="text">
+          <string>斜率</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QSttCheckBox" name="m_chkLine1">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>第一段</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QSttLineEdit" name="m_edtSet_Ip1">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="m_lblTitleLine1">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>拐点1</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="QSttLineEdit" name="m_edtSet_K1">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QSttCheckBox" name="m_chkStart">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>启动电流</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QSttCheckBox" name="m_chkLine3">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>第三段</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QSttCheckBox" name="m_chkLine2">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>第二段</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QSttCheckBox" name="m_chkLineSd">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>速断</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="m_lblTitleLine2">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>拐点2</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLabel" name="m_lblTitleLine3">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>拐点3</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLabel" name="m_lblTitleLineSd">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>速断定值</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QSttLineEdit" name="m_edtSet_Ip2">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2">
+        <widget class="QSttLineEdit" name="m_edtSet_Ip3">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="2">
+        <widget class="QSttLineEdit" name="m_edtSet_Isd">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="3">
+        <widget class="QSttLineEdit" name="m_edtSet_K2">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="3">
+        <widget class="QSttLineEdit" name="m_edtSet_K3">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="m_lbName">
+         <property name="font">
+          <font>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>名称</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="m_lbSetting">
+         <property name="font">
+          <font>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>定值</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="m_layUser">
+       <item>
+        <widget class="QLabel" name="m_lbIdValue">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>制动电流</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSttLineEdit" name="m_editSet_IdValue">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="m_btnUserAdd">
+         <property name="font">
+          <font>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>添加自定义点</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="m_btnUserClear">
+         <property name="font">
+          <font>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>清空自定义点</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QSttLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>../../Controls/SttLineEdit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QSttCheckBox</class>
+   <extends>QCheckBox</extends>
+   <header>../../Controls/SttCheckbox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QDataTypeComboBox</class>
+   <extends>QComboBox</extends>
+   <header>../../Module/CommonCtrl_QT/QDataTypeComboBox.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

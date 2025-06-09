@@ -1,0 +1,46 @@
+{
+   
+    "model": "/home/sduept/sdom/substations/220kV国网技术学院/国网技术学院.scd",
+    "debug": true,
+    "file_root": "/home/sduept/sdom/files/61850",
+    "sg_storage": "/tmp/sg1.db",
+    "log_storage": "/tmp/log.db",
+    "network": {
+        "bind": "0.0.0.0",
+        "port": 8102
+    },
+    "ignore_ied":[
+        "XZ2201",
+        "XZ2201A1",
+        "XZ2201A2",
+        "XZ2201C2",
+        "XZ2202",
+        "XZ2202A1",
+        "XZ2202A2",
+        "XZ2202C2",
+        "XZ2203A1",
+        "XZ2203A2",
+        "XZ2203C2",
+        "XZ2204B1",
+        "XZ2204B2",
+        "XZ2204C1",
+        "XZ2204C2",
+        "XZ2205B1",
+        "XZ2205B2",
+        "XZ2205C1",
+        "XZ2205C2",
+        "XZ2206B1",
+        "XZ2206B2",
+        "XZ2206C1",
+        "XZ2206C2",
+        "XZ2207C1",
+        "XZ2208C1",
+        "XZ2209C1",
+        "XZ2211A1",
+        "XZ2212A2",
+        "XZ2213C1",
+        "XZ2214C1",
+        "XZ2215C2",
+        "XZ2216C2"
+    ]
+}

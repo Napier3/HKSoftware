@@ -1,0 +1,71 @@
+
+
+***********************************************************
+          LOGGING STARTED Mon Apr 16 19:21:29 2012
+***********************************************************
+
+2012-04-16 19:21:29.466 LOGCFG_ERR (logcfgx.c 545) 
+  ERROR Parsing Logging Configuration File: Trying again w/debug on ... 
+
+2012-04-16 19:21:29.466 SX_LOG_FLOW (sx_dec.c 144) 
+  XML File (logcfg.xml) Open Error (errno=2)
+
+***********************************************************
+          LOGGING STARTED Mon Apr 16 19:22:39 2012
+***********************************************************
+
+2012-04-16 19:22:39.685 LOGCFG_ERR (logcfgx.c 545) 
+  ERROR Parsing Logging Configuration File: Trying again w/debug on ... 
+
+2012-04-16 19:22:39.685 SX_LOG_FLOW (sx_dec.c 144) 
+  XML File (logcfg.xml) Open Error (errno=2)
+
+***********************************************************
+          LOGGING STARTED Sat Apr 21 13:34:52 2012
+***********************************************************
+
+2012-04-21 13:34:52.609 LOGCFG_ERR (logcfgx.c 545) 
+  ERROR Parsing Logging Configuration File: Trying again w/debug on ... 
+
+2012-04-21 13:34:52.625 SX_LOG_FLOW (sx_dec.c 144) 
+  XML File (logcfg.xml) Open Error (errno=2)
+
+***********************************************************
+          LOGGING STARTED Sat Apr 21 18:36:31 2012
+***********************************************************
+
+2012-04-21 18:36:31.406 LOGCFG_ERR (logcfgx.c 545) 
+  ERROR Parsing Logging Configuration File: Trying again w/debug on ... 
+
+2012-04-21 18:36:31.406 SX_LOG_FLOW (sx_dec.c 144) 
+  XML File (logcfg.xml) Open Error (errno=2)
+
+***********************************************************
+          LOGGING STARTED Sat Apr 21 18:37:02 2012
+***********************************************************
+
+2012-04-21 18:37:02.453 LOGCFG_ERR (logcfgx.c 545) 
+  ERROR Parsing Logging Configuration File: Trying again w/debug on ... 
+
+2012-04-21 18:37:02.453 SX_LOG_FLOW (sx_dec.c 144) 
+  XML File (logcfg.xml) Open Error (errno=2)
+
+***********************************************************
+          LOGGING STARTED Sat Apr 21 19:26:19 2012
+***********************************************************
+
+2012-04-21 19:26:19.000 LOGCFG_ERR (logcfgx.c 545) 
+  ERROR Parsing Logging Configuration File: Trying again w/debug on ... 
+
+2012-04-21 19:26:19.000 SX_LOG_FLOW (sx_dec.c 144) 
+  XML File (logcfg.xml) Open Error (errno=2)
+
+***********************************************************
+          LOGGING STARTED Sat Apr 21 19:28:28 2012
+***********************************************************
+
+2012-04-21 19:28:28.578 LOGCFG_ERR (logcfgx.c 545) 
+  ERROR Parsing Logging Configuration File: Trying again w/debug on ... 
+
+2012-04-21 19:28:28.578 SX_LOG_FLOW (sx_dec.c 144) 
+  XML File (logcfg.xml) Open Error (errno=2)

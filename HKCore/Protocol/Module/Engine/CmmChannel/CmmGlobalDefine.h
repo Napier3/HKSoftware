@@ -1,0 +1,56 @@
+#pragma once
+
+#include "../../../../module/baseclass/exbaselist.h"
+#include "../../../../Module/MemBuffer/CycleMemBuffer.h"
+
+#define  CMMCLASSID_BASECLASS			(CLASSID_BASECLASS    + 0x00010000 )
+#define  CMMCLASSID_LISTCLASS			(CLASSID_EXLISTCLASS  + 0x00010000 )
+
+#define  CMMCLASSID_NETSERVER			    (CMMCLASSID_LISTCLASS+1)
+#define  CMMCLASSID_TCPSERVER		        (CMMCLASSID_LISTCLASS+2)
+#define  CMMCLASSID_UDPSERVER	            (CMMCLASSID_LISTCLASS+3)
+#define  CMMCLASSID_SERIAL_CHANNEL		(CMMCLASSID_BASECLASS+4)
+#define  CMMCLASSID_TCP_SERVER_CHANNEL			(CMMCLASSID_BASECLASS+5)
+#define  CMMCLASSID_TCP_CLIENT_CHANNEL		    (CMMCLASSID_BASECLASS+6)
+#define  CMMCLASSID_UDP_SERVER_CHANNEL	        (CMMCLASSID_BASECLASS+7)
+#define  CMMCLASSID_UDP_CLIENT_CHANNEL	        (CMMCLASSID_BASECLASS+8)
+#define  CMMCLASSID_DEVICE_CMM_CHANNEL	    (CMMCLASSID_LISTCLASS+9)
+#define  CMMCLASSID_TCP_SERVER_CLIENT_CHANNEL	    (CMMCLASSID_BASECLASS+10)
+
+
+#define COMMMODE_NORMAL   0
+#define COMMMODE_ASKANSWER  1
+
+#define COMMMODEID_NORMAL   _T("normal")
+#define COMMMODEID_ASKANSWER  _T("ask-answer")
+
+inline DWORD pp_GetCommMode(const CString &strCommMode)
+{
+	if (strCommMode == COMMMODEID_NORMAL)
+	{
+		return COMMMODE_NORMAL;
+	}
+
+	if (strCommMode == COMMMODEID_ASKANSWER)
+	{
+		return COMMMODE_ASKANSWER;
+	}
+
+	return COMMMODE_NORMAL;
+}
+
+inline CString pp_GetCommMode(DWORD dwCommMode)
+{
+	if (dwCommMode == COMMMODE_NORMAL)
+	{
+		return COMMMODEID_NORMAL;
+	}
+
+	if (dwCommMode == COMMMODE_ASKANSWER)
+	{
+		return COMMMODEID_ASKANSWER;
+	}
+
+	return COMMMODEID_NORMAL;
+}
+

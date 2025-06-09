@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language name="Lang_NativeTest" id="Lang_NativeTest">
+	<item id="Native_Amplitude" translation="Amp" src="幅值" />
+	<item id="Native_Angle" translation="Ang" src="相位" />
+	<item id="Native_Freq" translation="F" src="频率" />
+	<item id="Native_Unit" translation="Unit" src="单位" />
+	<item id="Native_Channel" translation="Ch" src="通道" />
+	<item id="Native_DC" translation="DC" src="直流" />
+	<item id="Native_Fundamental" translation="Fundamental" src="基波" />
+	<item id="Harm_Set" translation="Harmonic Setting" src="谐波设置" />
+	<item id="Harm_Content" translation="Harmonic Content" src="谐波含有率" />
+	<item id="Harm_Enable" translation="Enable" src="使能" />
+	<item id="Harm_UChannel" translation="Voltage Channel" src="电压通道" />
+	<item id="Harm_IChannel" translation="Current Channel" src="电流通道" />
+	<item id="Harm_Reset" translation="Harmonic Reset" src="谐波清零" />
+	<item id="Harm_FundFreq" translation="Fundamental Frequency" src="基波频率" />
+	<item id="Harm_Times" translation="Harm" src="次" />
+	<item id="Native_OK" translation="OK" src="确定" />
+	<item id="Native_Cancel" translation="Cancel" src="取消" />
+	<item id="Native_GndA" translation="Gnd A" src="A相接地" />
+	<item id="Native_GndB" translation="Gnd B" src="B相接地" />
+	<item id="Native_GndC" translation="Gnd C" src="C相接地" />
+	<item id="Native_ShortAB" translation="Short Circuit AB" src="AB短路" />
+	<item id="Native_ShortBC" translation="Short Circuit BC" src="BC短路" />
+	<item id="Native_ShortCA" translation="Short Circuit CA" src="CA短路" />
+	<item id="Native_GndShortAB" translation="Gnd Short AB" src="AB接地短路" />
+	<item id="Native_GndShortBC" translation="Gnd Short BC" src="BC接地短路" />
+	<item id="Native_GndShortCA" translation="Gnd Short CA" src="CA接地短路" />
+	<item id="Native_ShortABC" translation="Short Circuit ABC" src="三相短路" />
+	<item id="Native_SinglePhase" translation="Single Phase Sys" src="单相系统" />
+	<item id="Native_INotChange" translation="I NotChange" src="电流不变" />
+	<item id="Native_UNotChange" translation="U NotChange" src="电压不变" />
+	<item id="Native_ZNotChange" translation="Z NotChange" src="系统阻抗不变" />
+	<item id="Native_UZoomOut" translation="U ZoomOut" src="电压放大" />
+	<item id="Native_UDZoomIn" translation="U ZoomIn" src="电压缩小" />
+	<item id="Native_IZoomOut" translation="I ZoomOut" src="电流放大" />
+	<item id="Native_IZoomIn" translation="I ZoomIn" src="电流缩小" />
+	<item id="Native_PhaseA" translation="PhaseA" src="A相" />
+	<item id="Native_PhaseB" translation="PhaseB" src="B相" />
+	<item id="Native_PhaseC" translation="PhaseC" src="C相" />
+	<item id="Native_PhaseO" translation="Phase0" src="0相" />
+	<item id="Native_Relay" translation="Relay" src="保护" />
+	<item id="Native_Measure" translation="Measure" src="测量" />
+	<item id="Native_Current" translation="Current" src="电流" />
+	<item id="Native_Voltage" translation="Voltage" src="电压" />
+	<item id="Native_EDPhaseV" translation="ED PhaseV" src="额定相电压" />
+	<item id="Native_EDCurrent" translation="ED Current" src="额定电流" />
+	<item id="Native_EqualAmp" translation="Equal Amp" src="等幅值" />
+	<item id="Native_EqualFreq" translation="Equal Freq" src="等频率" />
+	<item id="Native_PositiveSeq" translation="Positive Seq" src="正序" />
+	<item id="Native_NegativeSeq" translation="Negative Seq" src="负序" />
+	<item id="Native_ZeroSeq" translation="Zero Seq" src="零序" />
+	<item id="Native_Zero" translation="Zero" src="零" />
+	<item id="Native_AllGroup" translation="Group numers:" src="总组数:" />
+	<item id="Native_CurGroup" translation="Cur Group:" src="当前组:" />
+	<item id="Native_LastGroup" translation="Last Group" src="上一组" />
+	<item id="Native_NextGroup" translation="Next Group" src="下一组" />
+	<item id="Native_ExBinSet" translation="ExBinSet" src="扩展开入设置" />
+	<item id="Native_ExBoutSet" translation="ExBoutSet" src="扩展开出设置" />
+	<item id="Native_GooseDataSet" translation="Goose DataSet" src="Goose数据发送" />
+	<item id="Native_Bin" translation="SwitchIn" src="开入量" />
+	<item id="Native_Bout" translation="SwitchOut" src="开出量" />
+	<item id="Native_BinX" translation="BIn" src="开入" />
+	<item id="Native_BoutX" translation="BOut" src="开出" />
+	<item id="Native_BinEx" translation="SwitchInEx" src="扩展开入" />
+	<item id="Native_BoutEx" translation="SwitchOutEx" src="扩展开出" />
+	<item id="Native_Time" translation="Time" src="时间" />
+	<item id="Native_Index" translation="Index" src="序号" />
+	<item id="Native_ActType" translation="ActType" src="动作类型" />
+	<item id="Native_ActionTime" translation="Operate time(s)" src="动作时间(s)" />
+	<item id="Native_ReturnVal" translation="Return value(V):" src="返回值(V):" />
+	<item id="Native_ReturnCoeff" translation="Return Coeff" src="返回系数" />
+	<item id="Native_CurTypeIdx" translation="Current Type" src="当前状态号" />
+	<item id="Native_Group" translation="Group" src="组" />
+	<item id="Native_LangSetting" translation="Language Setting" src="语言设置" />
+	<item id="Native_LangTip" translation="Tip" src="提示" />
+	<item id="Native_LangTipContext" translation="Please reboot to take effect." src="语言设置重启后生效" />
+	<item id="Native_SelectAll" translation="SelectAll" src="全选" />
+	<item id="Native_Reverse" translation="Reverse" src="取反" />
+	<item id="Native_Repair" translation="Repair" src="置检修" />
+	<item id="Native_IEDName" translation="IEDName" src="IED名称" />
+	<item id="Native_APPID" translation="ApplicationID(APPID)    0x" src="应用标识(APPID)    0x" />
+	<item id="Native_CommonPara" translation="CommonPara" src="通用参数" />
+	<item id="Native_Type" translation="Type:" src="类型:" />
+	<item id="Native_LogicOr" translation="LogicOr" src="逻辑或" />
+	<item id="Native_LogicAnd" translation="LogicAnd" src="逻辑与" />
+	<item id="Native_Delete" translation="Delete" src="删除" />
+	<item id="Native_Enter" translation="Enter" src="完成" />
+	<item id="Native_Esc" translation="Esc" src="关闭" />
+	<item id="Native_State" translation="State" src="状态" />
+	<item id="Native_Group" translation="Group" src="组" />
+	<item id="Native_Caps" translation="Caps" src="大小写" />
+	<item id="Native_Space" translation="Space" src="空格" />
+	<item id="Native_Maps" translation="Maps" src="映射" />
+	<item id="Native_Chs" translation="Chs/Eng" src="中英" />
+	<item id="Native_Eng" translation="Eng/Chs" src="英中" />
+	<item id="Manual_IV" translation="I-V" src="电流电压" />
+	<item id="Manual_OtherParam" translation="More" src="其它参数设置" />
+	<item id="Manual_Changing" translation="Changing" src="递变" />
+	<item id="Manual_InitVal" translation="StartVal(V):" src="始值(V):" />
+	<item id="Manual_ChangeType" translation="Type:" src="变化方式:" />
+	<item id="Manual_Channel" translation="Channel:" src="通道选择:" />
+	<item id="Manual_FinishVal" translation="EndVal(V):" src="终值(V):" />
+	<item id="Manual_Step" translation="Step(V):" src="步长(V):" />
+	<item id="Manual_Timer" translation="Time(s):" src="时间(s):" />
+	<item id="Manual_Old" translation="Old" src="老化" />
+	<item id="Manual_Auto" translation="Auto" src="自动" />
+	<item id="Manual_Delayed" translation="Pending time(s):" src="触发后延时(s):" />
+	<item id="Manual_OutSetting" translation="BOut Setting" src="开出设置" />
+	<item id="Manual_Out1" translation="BOut1" src="开出1" />
+	<item id="Manual_Out2" translation="BOut2" src="开出2" />
+	<item id="Manual_Out3" translation="BOut3" src="开出3" />
+	<item id="Manual_Out4" translation="BOut4" src="开出4" />
+	<item id="Manual_Out5" translation="BOut5" src="开出5" />
+	<item id="Manual_Out6" translation="BOut6" src="开出6" />
+	<item id="Manual_Out7" translation="BOut7" src="开出7" />
+	<item id="Manual_Out8" translation="BOut8" src="开出8" />
+	<item id="Manual_InSetting" translation="BIn Setting" src="开入设置" />
+	<item id="Manual_InA" translation="BInA" src="开入A" />
+	<item id="Manual_InB" translation="BInB" src="开入B" />
+	<item id="Manual_InC" translation="BInC" src="开入C" />
+	<item id="Manual_InD" translation="BInD" src="开入D" />
+	<item id="Manual_InE" translation="BInE" src="开入E" />
+	<item id="Manual_InF" translation="BInF" src="开入F" />
+	<item id="Manual_InG" translation="BInG" src="开入G" />
+	<item id="Manual_InH" translation="BInH" src="开入H" />
+	<item id="Manual_Lock" translation="Lock" src="锁" />
+	<item id="Manual_UnLock" translation="UnLock" src="解锁" />
+	<item id="Native_Action" translation="Operate value(V):" src="动作值(V):" />
+	<item id="Manual_ActionTime" translation="Operate time(s):" src="动作时间(s):" />
+	<item id="Manual_ReturnTime" translation="Return time(s):" src="返回时间(s):" />
+	<item id="Manual_S_E" translation="S-E" src="始-终" />
+	<item id="Manual_S_E_S" translation="S-E-S" src="始-终-始" />
+	<item id="State_TrigerSetup" translation="TrigerSetup" src="触发设置" />
+	<item id="State_TrigerCondition" translation="TrigerCondition:" src="触发条件:" />
+	<item id="State_OutTime" translation="OutTime(s)" src="输出时间(s):" />
+	<item id="State_TrigerTime" translation="TrigerTime" src="触发时刻" />
+	<item id="State_Hour" translation="hour" src="时" />
+	<item id="State_Minute" translation="minute" src="分" />
+	<item id="State_Second" translation="second" src="秒" />
+	<item id="State_TrigerHoldTime" translation="TrigerHoldTime(s):" src="触发后保持时间(s):" />
+	<item id="State_HoldTime" translation="HoldTime(s):" src="保持时间(s):" />
+	<item id="State_ShortCalc" translation="ShortCalc" src="短路计算" />
+	<item id="State_GradientSet" translation="GradientSet" src="递变设置" />
+	<item id="State_PasteStateBf" translation="PasteStateBefore" src="粘贴状态—前" />
+	<item id="State_InsertStateBf" translation="InsertStateBefore" src="插入状态—前" />
+	<item id="State_InsertStateAf" translation="InsertStateAfter" src="插入状态—后" />
+	<item id="State_PasteStateAf" translation="PasteStateAfter" src="粘贴状态—后" />
+	<item id="State_CopyCurState" translation="CopyCurState" src="拷贝当前状态" />
+	<item id="State_DeleteCurState" translation="DeleteCurState" src="删除当前状态" />
+	<item id="State_UISet" translation="UISet" src="电压电流设置" />
+	<item id="State_StateParaSet" translation="StateParaSet" src="状态参数设置" />
+	<item id="State_HarmSet" translation="HarmSet" src="谐波设置" />
+	<item id="State_JudgeCondition" translation="Input flip ref state" src="开入翻转参考状态" />
+	<item id="State_DCOffSet" translation="Composition damping DC comp" src="叠加衰减直流分量" />
+	<item id="State_Tou" translation="Decay time constant" src="衰减时间常数" />
+	<item id="State_RepeatTimes" translation="RepeatTimes" src="循环次数" />
+	<item id="State_ChGroup" translation="ChannelGroup:" src="组号:" />
+	<item id="State_FaultType" translation="FaultType:" src="故障类型:" />
+	<item id="State_CalcMode" translation="CalcMode:" src="计算模型:" />
+	<item id="State_ShortI" translation="ShortI(A):" src="短路电流(A):" />
+	<item id="State_ShortU" translation="ShortU(V):" src="短路电压(V):" />
+	<item id="State_ZeroCoeff" translation="ZeroCoeff" src="零序补偿系数" />
+	<item id="State_CalcType" translation="CalcType:" src="计算方式:" />
+	<item id="State_Amp" translation="Amplitude:" src="幅值:" />
+	<item id="State_Angle" translation="Angle:" src="相角:" />
+	<item id="State_LoadI" translation="LoadI(A):" src="负荷电流(A):" />
+	<item id="State_LoadAngle" translation="LoadAngle(°):" src="负荷功角(°):" />
+	<item id="State_Trigger_Time" translation="Time Trigger" src="时间触发" />
+	<item id="State_Trigger_TimeAndBin" translation="Time+Bin Trigger" src="时间+开入量触发" />
+	<item id="State_Trigger_Bin" translation="Bin Trigger" src="开入量触发" />
+	<item id="State_Trigger_Manu" translation="Manu Trigger" src="手动触发" />
+	<item id="State_Trigger_GPSB" translation="GPS/B Trigger" src="GPS/B码触发" />
+	<item id="State_LinearChange" translation="Linear Change" src="线性变化" />
+	<item id="State_StepChange" translation="Step Change" src="阶梯变化" />
+	<item id="State_StepTime" translation="Step Time" src="步长时间(s)" />
+	<item id="State_SelectChannel" translation="Sel" src="选择" />
+	<item id="State_BeginVal" translation="BeginVal" src="始值" />
+	<item id="State_EndVal" translation="EndVal" src="终值" />
+	<item id="State_Step" translation="Step" src="步长" />
+	<item id="State_AmpGradient" translation="AmpGradient" src="幅值递变" />
+	<item id="State_FreqGradient" translation="FreqGradient" src="频率递变" />
+	<item id="State_LastState" translation="LastState" src="上一个状态" />
+	<item id="State_FirstState" translation="FirstState" src="第一个状态" />
+	<item id="State_No" translation="No" src="否" />
+	<item id="State_Yes" translation="Yes" src="是" />
+	<item id="State_HarmCount" translation="HarmCount" src="次谐波" />
+	<item id="Gradient_Var" translation="Variable" src="变量" />
+	<item id="Gradient_VarType" translation="Variable Type" src="变量类型" />
+	<item id="Gradient_Phase" translation="Phase Diff" src="相位差" />
+	<item id="Gradient_VarSet" translation="Var Setting" src="变量设置" />
+	<item id="Gradient_ChangingSet" translation="Changing Setting" src="递变参数设置" />
+	<item id="Gradient_UnChangingSet" translation="UnChanging Setting" src="非递变通道设置" />
+	<item id="Gradient_OtherSet" translation="Other Setting" src="其他参数" />
+	<item id="Gradient_TestResult" translation="Testing Result" src="测试结果" />
+	<item id="Gradient_Init" translation="StartVal" src="变化始值" />
+	<item id="Gradient_Finish" translation="EndVal" src="变化终值" />
+	<item id="Gradient_Step" translation="Step" src="变化步长" />
+	<item id="Gradient_Time" translation="Down-Time" src="故障时间" />
+	<item id="Gradient_Direction" translation="Direction" src="递变方向" />
+	<item id="Gradient_MaxAngle" translation="Maximum sensitivity angle" src="最大灵敏角" />
+	<item id="Gradient_Clockwise" translation="Clockwise" src="顺时针" />
+	<item id="Gradient_Anticlockwise" translation="Anticlockwise" src="逆时针" />
+	<item id="Gradient_AllFreq" translation="All Freq" src="全部频率" />
+	<item id="Gradient_TimeBeforeChange" translation="Time before change" src="变化前时间" />
+	<item id="Gradient_TimeBeforeFail" translation="Time before failure" src="故障前时间" />
+	<item id="Gradient_CurBeforeChange" translation="Current before change" src="变化前电流" />
+	<item id="Gradient_Normal" translation="Normal state" src="正常态" />
+	<item id="Gradient_Failure" translation="Failure state" src="故障态" />
+	<item id="Gradient_ParaSet" translation="Param-Setting" src="参数设置" />
+	<item id="Report_TestChoose" translation="Content Choice" src="内容选择" />
+	<item id="Report_TestObjInf" translation="Test Object Info" src="测试对象信息" />
+	<item id="Report_SubInformation" translation="Substation Info" src="变电站信息" />
+	<item id="Report_SubName" translation="Substation Name:" src="变电站名称" />
+	<item id="Report_SubAddr" translation="Substation Addr:" src="变电站地址" />
+	<item id="Report_LoopName" translation="LoopName:" src="回路名称" />
+	<item id="Report_LoopAddr" translation="LoopAddr:" src="回路地址" />
+	<item id="Report_Tester" translation="Tester:" src="测试人员" />
+	<item id="Report_ReportTitle" translation="ReportTitle:" src="报告标题" />
+	<item id="Report_DeviceName" translation="DeviceName:" src="装置名称" />
+	<item id="Report_DeviceInfor" translation="DeviceInfor" src="装置信息" />
+	<item id="Report_DeviceModel" translation="DeviceModel:" src="装置型号" />
+	<item id="Report_DeviceAddr" translation="DeviceAddr:" src="装置地址" />
+	<item id="Report_DeviceFactory" translation="Manufacturer:" src="生产厂家" />
+	<item id="Report_DeviceSN" translation="DeviceSN:" src="序列号" />
+	<item id="Report_SettingsNO" translation="SettingsNO:" src="定制单编号" />
+	<item id="Report_AdditionalInf" translation="AdditionalInfo:" src="附加信息" />
+	<item id="Report_RatedValue" translation="RatedValue" src="额定值" />
+	<item id="Report_TestEquInfo" translation="TestEquInfo" src="测试设备信息" />
+	<item id="Report_DUTs" translation="DUTs" src="被测装置" />
+	<item id="Report_Title" translation="Report Content and Format" src="报告内容与格式" />
+	<item id="Report_NomSettings" translation="NomSettings" src="额定值" />
+	<item id="Report_Vnom" translation="Vnom" src="额定电压" />
+	<item id="Report_Vdc" translation="Vdc" src="辅助直流" />
+	<item id="Report_SureTime" translation="SureTime" src="开入防抖时间" />
+	<item id="Report_Inom" translation="Inom" src="额定电流" />
+	<item id="Report_Vprim" translation="Vprim" src="一次侧电压" />
+	<item id="Report_Fnom" translation="Fnom" src="额定频率" />
+	<item id="Report_Iprim" translation="Iprim" src="一次侧电流" />
+	<item id="Report_TestAppInfor" translation="TestAppInfor" src="测试设备信息" />
+	<item id="Report_AppModel" translation="AppModel" src="型号" />
+	<item id="Report_Imax" translation="Maximum current" src="电流最大值" />
+	<item id="Report_AppSN" translation="Serial number" src="序列号" />
+	<item id="Report_TestStartTime" translation="Test start time" src="测试开始时间" />
+	<item id="Report_ComPortType" translation="Communication port type" src="通讯口类型" />
+	<item id="Report_TestEndTime" translation="Test end time" src="测试终止时间" />
+	<item id="Report_Vmax" translation="Maximum voltage" src="电压最大值" />
+	<item id="ChMaps_Name" translation="Name" src="名称" />
+	<item id="ChMaps_AnalogCh" translation="Analog Channel" src="模拟量通道" />
+	<item id="ChMaps_DigitalCh" translation="Digital Channel" src="数字量通道" />
+	<item id="ChMaps_WeekCh" translation="Weak Signal Channel" src="弱信号通道" />
+	<item id="ChMaps_Title" translation="Channel Mapping Settings" src="通道映射设置" />
+	<item id="ChMaps_OutputSel" translation="Output Type Selection" src="输出类型选择" />
+	<item id="ChMaps_Analog" translation="Analog" src="模拟" />
+	<item id="ChMaps_Digital" translation="Digital" src="数字" />
+	<item id="ChMaps_Week" translation="Weak" src="弱信号" />
+	<item id="ChMaps_DigitalType" translation="Digital Message Type" src="数字报文类型" />
+	<item id="ChMaps_DefautMaps" translation="Setting Default Mapping" src="设置缺省映射" />
+	<item id="ChMaps_ImportChMaps" translation="Import Channel Map" src="导入通道映射" />
+	<item id="ChMaps_ExportChMaps" translation="Export Channel Map" src="导出通道映射" />
+	<item id="IEC_SysParasSet" translation="System Parameter Setting" src="系统参数设置" />
+	<item id="IEC_SysParasConfig" translation="System Parameter Configuration" src="系统参数配置" />
+	<item id="IEC_Message" translation="IEC61850-9-2 Message" src="IEC61850-9-2报文" />
+	<item id="IEC_Publish" translation="GOOSEPublish" src="GOOSE发布" />
+	<item id="IEC_Subscription" translation="GOOSESubscription" src="GOOSE订阅" />
+	<item id="IEC_OpenConfig" translation="OpenConfig" src="打开配置" />
+	<item id="IEC_OpenConfigFile" translation="OpenConfigFile" src="打开配置文件" />
+	<item id="IEC_ConfigSaveAs" translation="ConfigSaveAs" src="配置另存" />
+	<item id="IEC_ConfigFileSaveAs" translation="ConfigFileSaveAs" src="配置文件另存为" />
+	<item id="IEC_ImportSCL" translation="ImportSCL" src="导入SCL" />
+	<item id="IEC_ImportSCLFile" translation="ImportSCLFile" src="导入SCL文件" />
+	<item id="IEC_SaveDatas" translation="SaveDatas" src="保存数据" />
+	<item id="IEC_Exit" translation="Exit" src="退出" />
+	<item id="IEC_DeleteAllButFirst" translation="DeleteAllButFirst" src="删除N-1" />
+	<item id="IEC_UnSelectedAll" translation="UnSelectedAll" src="全不选" />
+	<item id="IEC_ChEdit" translation="Channel Edit" src="通道编辑" />
+	<item id="IEC_T1Times" translation="T1 Times(ms)" src="T1时间(ms)" />
+	<item id="IEC_T0Times" translation="T0 Times(ms)" src="T0时间(ms)" />
+	<item id="IEC_TimeQuality" translation="Quality of Time" src="时间品质" />
+	<item id="IEC_GroupDelay" translation="Group Delay Time(ms)" src="组间延时(ms)" />
+	<item id="IEC_Details" translation="Details" src="详细设置" />
+	<item id="IEC_SamplingRate" translation="SamplingRate：" src="采样率：" />
+	<item id="IEC_KeepSendAfterStop" translation="KeepSendAfterStop" src="停止后保持发送" />
+	<item id="IEC_StopSending" translation="StopSending" src="停止后终止发送" />
+	<item id="IEC_OtherSettings" translation="OtherSettings" src="其它设置" />
+	<item id="IEC_PacketSendingMode" translation="PacketSendingMode：" src="报文发送方式：" />
+	<item id="IEC_PTRatio" translation="PTRatio：" src="PT变比：" />
+	<item id="IEC_CTRatio" translation="CTRatio：" src="CT变比：" />
+	<item id="IEC_ChDescription" translation="Channel Description" src="通道描述" />
+	<item id="IEC_ChType" translation="Channel Type" src="通道类型" />
+	<item id="IEC_DIMap" translation="DIMap" src="开入映射" />
+	<item id="IEC_SetRepair" translation="SetRepair" src="投检修" />
+	<item id="IEC_UnSetRepair" translation="UnSetRepair" src="不投检修" />
+	<item id="IEC_IMap" translation="Current Mapping:" src="电流映射:" />
+	<item id="IEC_UMap" translation="Voltage Mapping:" src="电压映射:" />
+	<item id="IEC_Choose" translation="choice:" src="选择:" />
+	<item id="IEC_Target" translation="Destination MAC Address" src="目标MAC地址" />
+	<item id="IEC_Entrance" translation="Input Port Selection" src="输入口选择" />
+	<item id="IEC_Describe" translation="Describe" src="描述" />
+	<item id="IEC_ChannelNumber" translation="Channel Number" src="通道数" />
+	<item id="IEC_Version" translation="Version" src="版本号" />
+	<item id="IEC_Test" translation="Test" src="测试(Test)" />
+	<item id="IEC_LifeTime" translation="Permissible Life Time(ms)" src="允许生存时间(ms)" />
+	<item id="IEC_UnParse" translation="Don't Parse GoCB,GoID,MAC,Dataset" src="不解析GoCB,GoID,MAC,Dataset" />
+	<item id="IEC_ChMaps" translation="Channel Mapping" src="通道映射" />
+	<item id="IEC_InitValue" translation="Initial Value" src="初始值" />
+	<item id="IEC_Source" translation="Source MAC Address" src="源MAC地址" />
+	<item id="IEC_Intrance" translation="Output Port Selection" src="输出口选择" />
+	<item id="IEC_Quality" translation="Quality" src="品质" />
+	<item id="IEC_Delay" translation="Sampling Time Delay(μs)" src="采样延时(μs)" />
+	<item id="IEC_Synchronously" translation="Synchronously" src="同步方式" />
+	<item id="IEC_ScaleFactor" translation="ScaleFactor" src="比例因子" />
+	<item id="IEC_SetScaleFactor" translation="SetScaleFactor" src="比例因子设置" />
+	<item id="IEC_FMByte" translation="100m Port" src="百兆口" />
+	<item id="IEC_GMByte" translation="Gigabit Port" src="千兆口" />
+	<item id="IEC_LCFI" translation="LC FI" src="LC光口" />
+	<item id="IEC_IRIGB" translation="IRIG-B" src="B码" />
+	<item id="IEC_STFI" translation="ST FI" src="ST光口" />
+	<item id="IEC_MACAddr" translation="MAC Address" src="MAC地址" />
+	<item id="IEC_DataSetText" translation="Data Set Description" src="数据集描述" />
+	<item id="IEC_GOOSEIndex" translation="GOOSE Control Block Index" src="GOOSE控制块索引" />
+	<item id="IEC_VlanPri" translation="Vlan Priority" src="Vlan优先级" />
+	<item id="IEC_ConfigVersion" translation="ConfigVersion" src="配置版本" />
+	<item id="IEC_ChAllNumber" translation="Total Number of Channels" src="总通道数" />
+	<item id="IEC_SubChNumber" translation="Number of Subscription Channels" src="订阅通道数" />
+	<item id="IEC_SubIED" translation="Subscribe to the IED" src="订阅IED" />
+	<item id="IEC_ASDU" translation="Number of ASDU" src="ASDU数" />
+	<item id="IEC_Find" translation="Find" src="查找" />
+	<item id="IEC_SMVPublish" translation="SMV Publish" src="SMV发布" />
+	<item id="IEC_SMVSubscription" translation="SMV Subscription" src="SMV订阅" />
+	<item id="IEC_Configure" translation="Rapid Configuration" src="一键配置" />
+	<item id="IEC_Import" translation="Import" src="导入" />
+	<item id="IEC_IEDList" translation="IED List" src="IED列表" />
+	
+	<item id="GOOSE_Single" translation="Single point" src="单点" />
+	<item id="GOOSE_Double" translation="Double point" src="双点" />
+	<item id="GOOSE_String" translation="String" src="字符串" />
+	<item id="GOOSE_Quality" translation="Quality" src="品质" />
+	<item id="GOOSE_Float" translation="Float" src="浮点" />
+	
+	<item id="CharLib_Name" translation="Name" src="名称" />
+	<item id="CharLib_ZoomIndex" translation="ZoomIndex" src="段号" />
+	<item id="CharLib_FaultPhase" translation="FaultPhase" src="故障相" />
+	<item id="CharLib_Index" translation="Index" src="编号" />
+	<item id="CharLib_Value" translation="Value" src="数值" />
+	<item id="CharLib_EdgeType" translation="EdgeType" src="边类型" />
+	<item id="CharLib_Points" translation="Points" src="测点数" />
+	<item id="CharLib_ErrorBand" translation="ErrorBand" src="误差带" />
+	<item id="CharLib_EdgeInfo" translation="EdgeInfo" src="边详细信息" />
+	<item id="CharLib_AttachSetting" translation="AttachSetting" src="关联定值" />
+</language>

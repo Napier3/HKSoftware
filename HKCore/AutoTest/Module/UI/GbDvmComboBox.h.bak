@@ -1,0 +1,18 @@
+#pragma once
+
+#include "..\GuideBook\GuideBook.h"
+
+class CGbDvmComboBox :	public CComboBox
+{
+public:
+	CGbDvmComboBox(void);
+	~CGbDvmComboBox(void);
+
+public:
+	void ShowDvmTree(CDevice *pDevice);
+	
+protected:
+	void ShowDvmTree(CCpus *pCpus);
+	void ShowDvmTree(CCpu *pCpu);
+
+};

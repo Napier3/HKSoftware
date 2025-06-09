@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QDistanceCommonParasDlg</class>
+ <widget class="QDialog" name="QDistanceCommonParasDlg">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>387</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>通用参数设置</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>通用参数</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_4">
+      <item row="8" column="1">
+       <widget class="QComboBox" name="m_cmbBreaker"/>
+      </item>
+      <item row="8" column="0">
+       <widget class="QLabel" name="m_labBreaker">
+        <property name="text">
+         <string>断路器模拟:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="0">
+       <widget class="QLabel" name="m_labCloseTime">
+        <property name="text">
+         <string>合闸时间(ms)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="0">
+       <widget class="QLabel" name="m_labBreakTime">
+        <property name="text">
+         <string>分闸时间(ms)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="1">
+       <widget class="QLineEdit" name="m_txtBreakTime"/>
+      </item>
+      <item row="10" column="1">
+       <widget class="QLineEdit" name="m_txtCloseTime"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="m_labTimeAfter">
+        <property name="text">
+         <string>保护动作后持续时间(s):</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="m_txtTimeAfter"/>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="m_labPTPos">
+        <property name="text">
+         <string>TV安装位置:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QComboBox" name="m_cmbFaultTrig"/>
+      </item>
+      <item row="4" column="1">
+       <widget class="QComboBox" name="m_cmbPTPos"/>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="m_labFaultTrig">
+        <property name="text">
+         <string>故障触发方式:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="m_labILoad">
+        <property name="text">
+         <string>负荷电流(A):</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="m_labCTPos">
+        <property name="text">
+         <string>TA正极性:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="QLineEdit" name="m_txtILoad"/>
+      </item>
+      <item row="5" column="1">
+       <widget class="QComboBox" name="m_cmbCTPos"/>
+      </item>
+      <item row="7" column="0">
+       <widget class="QLabel" name="m_labILoadPh">
+        <property name="text">
+         <string>负荷功角(°):</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QLineEdit" name="m_txtILoadPh"/>
+      </item>
+      <item row="11" column="0">
+       <widget class="QLabel" name="m_labVzDefine">
+        <property name="text">
+         <string>抽取电压输出定义:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="12" column="0">
+       <widget class="QLabel" name="m_labPsuVzRef">
+        <property name="text">
+         <string>抽取电压参考相定义:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="11" column="1">
+       <widget class="QComboBox" name="m_cmbVzDefine"/>
+      </item>
+      <item row="12" column="1">
+       <widget class="QComboBox" name="m_cmbPsuVzRef"/>
+      </item>
+      <item row="13" column="0">
+       <widget class="QLabel" name="m_labVzPh">
+        <property name="minimumSize">
+         <size>
+          <width>250</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>抽取电压相角(相对参考相):</string>
+        </property>
+       </widget>
+      </item>
+      <item row="13" column="1">
+       <widget class="QLineEdit" name="m_txtVzPh"/>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="m_labPreFaultTime">
+        <property name="text">
+         <string>故障前时间(s):</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="m_labFaultTime">
+        <property name="text">
+         <string>故障时间裕度(s):</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="m_txtPreFaultTime"/>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="m_txtFaultTime"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="m_btnOK">
+       <property name="text">
+        <string>确认</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="m_btnCancel">
+       <property name="text">
+        <string>取消</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

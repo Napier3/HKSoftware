@@ -1,0 +1,54 @@
+// TickCount32.cpp: implementation of the CTickCount32 class.
+//
+//////////////////////////////////////////////////////////////////////
+
+#include "stdafx.h"
+#include "TickCount32.h"
+
+#ifdef _DEBUG
+#undef THIS_FILE
+static char THIS_FILE[]=__FILE__;
+#define new DEBUG_NEW
+#endif
+
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+
+CTickCount32::CTickCount32()
+{
+	Enter();
+}
+
+CTickCount32::~CTickCount32()
+{
+	
+}
+
+void CTickCount32::Enter()
+{
+	m_dwBeginTickCount = ::GetTickCount();
+}
+
+long CTickCount32::GetTickCountLong(BOOL bUdate)
+{
+	DWORD dwEnd = ::GetTickCount();
+	DWORD dwLong = 0;
+
+	if (dwEnd < m_dwBeginTickCount)
+	{
+		dwLong = 0xFFFFFFFF - m_dwBeginTickCount;
+		dwLong += dwEnd;
+	}
+	else
+	{
+		dwLong = dwEnd - m_dwBeginTickCount;
+	}
+
+	if (bUdate)
+	{
+		m_dwBeginTickCount = dwEnd;
+	}
+
+	return dwLong;
+}

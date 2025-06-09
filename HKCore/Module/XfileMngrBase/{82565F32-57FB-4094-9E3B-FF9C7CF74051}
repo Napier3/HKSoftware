@@ -1,0 +1,275 @@
+#include "stdafx.h"
+#include "XFile.h"
+#include "XFileMngr.h"
+
+CXFileOptr *g_pXFileOptr = NULL;
+
+BOOL XCopyFile(const CString &strSrcFile, const CString &strDestFile, BOOL bFailIfExists)
+{
+	if (g_pXFileOptr == NULL)
+	{
+		::CopyFile(strSrcFile, strDestFile, bFailIfExists);
+	}
+	else
+	{
+		g_pXFileOptr->XCopyFile(strSrcFile, strDestFile, bFailIfExists);
+	}
+
+	return TRUE;
+}
+
+BOOL xfile_XCopyFile(const CString &strFile, const CString &strFolder, BOOL bFailIfExists)
+{
+	CString strDestFile = strFolder;
+	strDestFile += GetPathFileNameFromFilePathName(strFile);
+
+	if (strDestFile != strFile)
+	{
+		::CopyFile(strFile, strDestFile, FALSE);
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
+CXFile::CXFile()
+{
+	m_nSelected = 0;
+	m_bIsOpen = FALSE;
+}
+
+CXFile::~CXFile()
+{
+
+}
+
+BOOL CXFile::DeleteFile()
+{
+	if(m_bIsOpen)
+	{		//如果文件已被打开
+		return FALSE;	
+	}
+
+	CXFileMngr *pXFileMngr = (CXFileMngr*)GetAncestor(CLASSID_XFILEMNGR);
+	
+	return pXFileMngr->XDeleteXFile(this);
+	
+	//CString strPath = GetRelativePath(TRUE);
+	//BOOL bFlag =  ::DeleteFile(strPath);
+
+	//return bFlag;
+}
+
+BOOL CXFile::GetFilePostfix(CString &strPostfix, BOOL bHasDot)
+{
+	BOOL bFlag = IsFileExist();
+	
+	if(bFlag)
+	{
+		int nIndex = m_strName.ReverseFind('.');
+
+		if (bHasDot)
+		{
+			strPostfix = m_strName.Right(m_strName.GetLength()- nIndex);
+		}
+		else
+		{
+			strPostfix = m_strName.Right(m_strName.GetLength()- nIndex-1);
+		}
+	}
+
+	return TRUE;
+}
+
+BOOL CXFile::RenameFile(const CString& strNewName)
+{
+	if(m_bIsOpen)
+	{
+		return FALSE;
+	}
+
+	if(strNewName == m_strName)
+	{
+		return TRUE;
+	}
+
+	CString strOldName = m_strName;
+	CString strFromName = GetRelativePath(TRUE);	
+
+	m_strName = strNewName;
+	m_strID = strNewName;
+	CString strToName = GetRelativePath(TRUE);
+
+	CFile::Rename(strFromName, strToName);
+
+	if (IsFileExist())
+	{
+		return TRUE;
+	}
+	else
+	{
+		m_strName = strOldName;
+		m_strID = strOldName;
+		return FALSE;
+	}
+}
+
+BOOL  CXFile::GetModifyTime(CString& strModifyTime)
+{
+	return xfile_GetModifyTime(GetTotalFileName(), strModifyTime);
+}
+
+BOOL CXFile::GetFileSize(CString& strFileSize)
+{ 
+	return xfile_GetFileSize(GetTotalFileName(), strFileSize);
+}
+
+BOOL CXFile::CopyOwn(CBaseObject* pDest)
+{
+	CExBaseObject::CopyOwn(pDest);
+
+	CXFile *p = (CXFile*)pDest;
+
+	p->m_nSelected = m_nSelected;
+	p->m_strFileType = m_strFileType;
+	p->m_strFileName = m_strFileName;
+	p->m_bIsOpen = m_bIsOpen;
+
+	return TRUE;
+}
+
+CBaseObject* CXFile::Clone()
+{
+	CXFile *pNew = new CXFile();
+	Copy(pNew);
+	return pNew;
+}
+
+BOOL CXFile::IsFileExist()
+{
+	CString strFileName = GetRelativePath(TRUE);
+	return ::IsFileExist(strFileName);
+}
+
+CString CXFile::GetRelativePath(BOOL bAddRoot)
+{
+	CString strPath;
+
+	if (bAddRoot)
+	{
+		CXFolder *pFolder = (CXFolder*)GetParent();
+		strPath = pFolder->GetFolderPath() + m_strID;
+	}
+	else
+	{
+		CExBaseObject *pRoot = NULL;
+		CExBaseObject *pParent = NULL;
+
+		pParent = (CExBaseObject*)GetParent();
+		strPath = m_strID;
+
+		while (pParent != NULL)
+		{
+			pRoot = (CExBaseObject*)pParent->GetParent();
+
+			if (pRoot == NULL)
+			{
+				break;
+			}
+
+			strPath = pParent->m_strID + L"\\" + strPath;
+
+			pParent = pRoot;
+		}
+	}
+
+	return strPath;
+}
+
+CString CXFile::GetTotalFileName()
+{
+	return GetRelativePath(TRUE);
+}
+
+BOOL xfile_CheckFileName(const CString &strFileName, CWnd *pWnd)
+{
+	CString strInfor;
+
+	if (!CheckFileName(strFileName, strInfor))
+	{
+		CString strMsg;
+		strMsg.Format(_T("文件名【%s】包含【%s】等非法字符"), strFileName, strInfor);
+
+		if (pWnd != NULL)
+		{
+			pWnd->MessageBox(strMsg, _T("提示"), MB_OK | MB_ICONEXCLAMATION);
+		}
+		else
+		{
+			AfxMessageBox(strMsg, MB_OK | MB_ICONEXCLAMATION);
+		}
+
+		return FALSE;
+	}
+	else
+	{
+		return TRUE;
+	}
+}
+
+
+
+BOOL xfile_GetFileSize(const CString &strFile, CString& strFileSize)
+{ 
+	WIN32_FIND_DATA fileInfo; 
+	HANDLE hFind; 
+	double fileSize; 
+
+	hFind = FindFirstFile(strFile ,&fileInfo); 
+
+	if(hFind != INVALID_HANDLE_VALUE) 
+	{
+		fileSize = fileInfo.nFileSizeLow; 
+		strFileSize.Format(_T("%.2f"),fileSize/1024);
+		FindClose(hFind);
+
+		return TRUE;
+	}
+
+	FindClose(hFind); 
+	return FALSE;
+}
+
+
+BOOL  xfile_GetModifyTime(const CString &strFile, CString& strModifyTime)
+{
+	BOOL bFlag = ::IsFileExist(strFile);
+
+	if(bFlag)
+	{
+		HANDLE hFile;
+		WIN32_FIND_DATA wfd;
+		SYSTEMTIME systime;
+		FILETIME localtime;
+		memset(&wfd,0,sizeof(wfd));
+		hFile = FindFirstFile(strFile,&wfd);
+
+		if( hFile != INVALID_HANDLE_VALUE)
+		{
+			FileTimeToLocalFileTime(&wfd.ftLastWriteTime,&localtime);
+			FileTimeToSystemTime(&localtime,&systime);
+			strModifyTime.Format(_T("%4d-%02d-%02d %02d:%02d")
+				,systime.wYear,systime.wMonth,systime.wDay,systime.wHour
+				,systime.wMinute);
+
+			FindClose(hFile);
+			return TRUE;
+
+		}
+
+		FindClose(hFile);
+		return FALSE;
+	}
+
+	return bFlag;
+}

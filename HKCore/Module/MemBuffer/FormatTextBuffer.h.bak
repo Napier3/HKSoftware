@@ -1,0 +1,89 @@
+
+
+#if !defined(_FormatTextBuffer_H__)
+#define _FormatTextBuffer_H__
+
+#if _MSC_VER > 1000
+#pragma once
+#endif // _MSC_VER > 1000
+
+#include "BufferBase.h"
+
+
+class CFormatTextBuffer : public CBufferBase, public CBaseList
+{
+public:
+	CFormatTextBuffer();
+	CFormatTextBuffer(const CString &strBuff);
+	CFormatTextBuffer(const char *pszBuff);
+	CFormatTextBuffer(const CBufferBase *pBuffer);
+	CFormatTextBuffer(const char *pBuffBegin,const char *pBuffEnd);
+	virtual ~CFormatTextBuffer();
+
+	//解析接口
+	CString operator[](const CString &strKeyName);
+	CString operator[](const char *pszKeyName);
+	long ParseInt(const char *pszKey, int *pVal);
+	long ParseInt(const CString &strKey, int *pVal);
+	long ParseLong(const char *pszKey, long *pVal);
+	long ParseLong(const CString &strKey, long *pVal);
+	long ParseFloat(const char *pszKey, float *pVal);
+	long ParseFloat(const CString &strKey, float *pVal);
+	long ParseString(const char *pszKey, char *pszVal);
+	long ParseString(const char *pszKey, CString &strVal);
+	long ParseString(const CString &strKey, char *pszVal);
+	long ParseString(const CString &strKey, CString &strVal);
+	void FormatAroundSeparate(char chSeparate);
+
+	//设置关键字的值，如果关键字不存在且bAddNew==1，则新建关键字  2005/07/18  李俊庆
+	long SetKeyValue(const char *pszKey, char *pszVal,long bAddNew);
+	long SetKeyValue(const CString &strKey, const CString &strVal,long bAddNew);
+	long SetKeyValueEx(const CString &strScript,long bAddNew);
+	
+	//获取等式的全部数据
+	void GetEquationData(CString &strEquationData);
+	void GetEquationData(BSTR *pbstrEquationData);
+
+	//2006.05.22  获取等式的关键字的名称和数据
+	long GetKeyCount();
+	BOOL GetKey(long nIndex,BSTR *pbstrName,BSTR *pbstrValue);
+	BOOL GetKey(long nIndex,CString &strName,CString &strValue);
+	void FreeAllKeys()    {     DeleteAll();     }
+	
+public:
+	virtual BOOL ReadFromFile(const char *pszFile);
+	virtual BOOL ReadFromFile(const CString &strFile);
+	virtual BOOL WriteToFile(const CString &strFile);
+
+	//初始化缓冲区
+	virtual void InitBuffer(const CString &strBuff);
+	virtual void InitBuffer(const CBufferBase *pBuffer);
+	virtual void InitBuffer(const char *pBuffBegin,const char *pBuffEnd);
+	
+	//初始化缓冲区，缓冲区的大小比实际的大
+	virtual void FormatBufferEx();
+	
+	//分隔符号
+	virtual char GetSeparateChar(){return '=';}
+	virtual char GetSeparateEndChar(){return ';';}
+
+protected:
+	virtual BOOL IsIgnoreChar(char ch);
+	virtual BOOL PartString(const char *pszSrcBegin,const char *pszSrcEnd
+		,char **pszLeftBegin,char **pszLeftEnd
+		,char **pszRightBegin,char **pszRightEnd
+		,char cPart,char cEnd);
+	
+protected:
+	char* FindSeparateKey(char *pBeginPos,char chSeparate);
+	void OffsetBack(char **pPos);
+	void Copy(char **pDestPos,char *pSrcBegin,char *pSrcEnd);
+
+	void InitEquationKeyList();
+	BOOL GetOneLine(char **pszLineBegin,char **pszLineEnd);
+	CEquationKey* FindEquationKey(const CString &strKeyName);
+	CEquationKey* FindEquationKey(const char *pszKeyName);
+
+};
+
+#endif // !defined(_FormatTextBuffer_H__)

@@ -1,0 +1,4 @@
+#include "stdafx.h"
+#include "DLT860Engine.h"
+
+int g_nCfgMaxDevNum = 20;

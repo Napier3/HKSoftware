@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="mmslite802">
+</Property><Property Name="解决方案文件" Value="D:\mmslite\cmd\win32\mmslite802.sln">
+</Property><Property Name="Date" Value="2012年3月29日">
+</Property><Property Name="Time" Value="16:39">
+</Property></Properties><Event ErrorLevel="1" Project="asn1" Source="asn1.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="asn1" Source="asn1.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="asn1" Source="asn1.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="foundry" Source="foundry.vcproj" Description="已不再支持对本地 IIS 服务器的 Web 部署。Web 部署生成工具已从项目设置中删除。">
+</Event><Event ErrorLevel="1" Project="foundry" Source="foundry.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="foundry" Source="foundry.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="foundry" Source="foundry.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="iecgoose" Source="iecgoose.vcproj" Description="已不再支持对本地 IIS 服务器的 Web 部署。Web 部署生成工具已从项目设置中删除。">
+</Event><Event ErrorLevel="1" Project="iecgoose" Source="iecgoose.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="iecgoose" Source="iecgoose.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="iecgoose" Source="iecgoose.vcproj" Description="Converted">
+</Event><Event ErrorLevel="1" Project="mem" Source="mem.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="mem" Source="mem.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="mem" Source="mem.vcproj" Description="Converted">
+</Event><Event ErrorLevel="1" Project="meml" Source="meml.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="meml" Source="meml.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="meml" Source="meml.vcproj" Description="Converted">
+</Event><Event ErrorLevel="1" Project="mlog" Source="mlog.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="mlog" Source="mlog.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="mlog" Source="mlog.vcproj" Description="Converted">
+</Event><Event ErrorLevel="1" Project="mmsl" Source="mmsl.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="mmsl" Source="mmsl.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="mmsl" Source="mmsl.vcproj" Description="Converted">
+</Event><Event ErrorLevel="1" Project="mmsle" Source="mmsle.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="mmsle" Source="mmsle.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="mmsle" Source="mmsle.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="mmslog" Source="mmslog.vcproj" Description="已不再支持对本地 IIS 服务器的 Web 部署。Web 部署生成工具已从项目设置中删除。">
+</Event><Event ErrorLevel="1" Project="mmslog" Source="mmslog.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="mmslog" Source="mmslog.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="mmslog" Source="mmslog.vcproj" Description="Converted">
+</Event><Event ErrorLevel="1" Project="mvl" Source="mvl.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="mvl" Source="mvl.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="mvl" Source="mvl.vcproj" Description="Converted">
+</Event><Event ErrorLevel="1" Project="mvlu" Source="mvlu.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="mvlu" Source="mvlu.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="mvlu" Source="mvlu.vcproj" Description="Converted">
+</Event><Event ErrorLevel="1" Project="ositcps" Source="ositcps.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="ositcps" Source="ositcps.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="ositcps" Source="ositcps.vcproj" Description="Converted">
+</Event><Event ErrorLevel="1" Project="ositp4e" Source="ositp4e.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="ositp4e" Source="ositp4e.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="ositp4e" Source="ositp4e.vcproj" Description="Converted">
+</Event><Event ErrorLevel="1" Project="ositpxs" Source="ositpxs.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="ositpxs" Source="ositpxs.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="ositpxs" Source="ositpxs.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="scl_srvr" Source="scl_srvr.vcproj" Description="已不再支持对本地 IIS 服务器的 Web 部署。Web 部署生成工具已从项目设置中删除。">
+</Event><Event ErrorLevel="1" Project="scl_srvr" Source="scl_srvr.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="scl_srvr" Source="scl_srvr.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="scl_srvr" Source="scl_srvr.vcproj" Description="Converted">
+</Event><Event ErrorLevel="1" Project="slog" Source="slog.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="slog" Source="slog.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="slog" Source="slog.vcproj" Description="Converted">
+</Event><Event ErrorLevel="1" Project="slogl" Source="slogl.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="slogl" Source="slogl.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="slogl" Source="slogl.vcproj" Description="Converted">
+</Event><Event ErrorLevel="1" Project="smem" Source="smem.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="smem" Source="smem.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="smem" Source="smem.vcproj" Description="Converted">
+</Event><Event ErrorLevel="1" Project="ssec0" Source="ssec0.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="ssec0" Source="ssec0.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="ssec0" Source="ssec0.vcproj" Description="Converted">
+</Event><Event ErrorLevel="1" Project="smpval" Source="smpval.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="smpval" Source="smpval.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="smpval" Source="smpval.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="cositcps0" Source="cositcps0.vcproj" Description="已不再支持对本地 IIS 服务器的 Web 部署。Web 部署生成工具已从项目设置中删除。">
+</Event><Event ErrorLevel="1" Project="cositcps0" Source="cositcps0.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="cositcps0" Source="cositcps0.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="cositcps0" Source="cositcps0.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="cositpxs0" Source="cositpxs0.vcproj" Description="已不再支持对本地 IIS 服务器的 Web 部署。Web 部署生成工具已从项目设置中删除。">
+</Event><Event ErrorLevel="1" Project="cositpxs0" Source="cositpxs0.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="cositpxs0" Source="cositpxs0.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="cositpxs0" Source="cositpxs0.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="scl_tpxs0" Source="scl_tpxs0.vcproj" Description="已不再支持对本地 IIS 服务器的 Web 部署。Web 部署生成工具已从项目设置中删除。">
+</Event><Event ErrorLevel="1" Project="scl_tpxs0" Source="scl_tpxs0.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="scl_tpxs0" Source="scl_tpxs0.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="scl_tpxs0" Source="scl_tpxs0.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="sositcps0" Source="sositcps0.vcproj" Description="已不再支持对本地 IIS 服务器的 Web 部署。Web 部署生成工具已从项目设置中删除。">
+</Event><Event ErrorLevel="1" Project="sositcps0" Source="sositcps0.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="sositcps0" Source="sositcps0.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="sositcps0" Source="sositcps0.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="sositpxs0" Source="sositpxs0.vcproj" Description="已不再支持对本地 IIS 服务器的 Web 部署。Web 部署生成工具已从项目设置中删除。">
+</Event><Event ErrorLevel="1" Project="sositpxs0" Source="sositpxs0.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="sositpxs0" Source="sositpxs0.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="sositpxs0" Source="sositpxs0.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="uositcps0" Source="uositcps0.vcproj" Description="已不再支持对本地 IIS 服务器的 Web 部署。Web 部署生成工具已从项目设置中删除。">
+</Event><Event ErrorLevel="1" Project="uositcps0" Source="uositcps0.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="uositcps0" Source="uositcps0.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="uositcps0" Source="uositcps0.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="uositpxs0" Source="uositpxs0.vcproj" Description="已不再支持对本地 IIS 服务器的 Web 部署。Web 部署生成工具已从项目设置中删除。">
+</Event><Event ErrorLevel="1" Project="uositpxs0" Source="uositpxs0.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="uositpxs0" Source="uositpxs0.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="uositpxs0" Source="uositpxs0.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="sn_targt" Source="sn_targt.vcproj" Description="已不再支持对本地 IIS 服务器的 Web 部署。Web 部署生成工具已从项目设置中删除。">
+</Event><Event ErrorLevel="1" Project="sn_targt" Source="sn_targt.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="sn_targt" Source="sn_targt.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="sn_targt" Source="sn_targt.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="sn_test" Source="sn_test.vcproj" Description="已不再支持对本地 IIS 服务器的 Web 部署。Web 部署生成工具已从项目设置中删除。">
+</Event><Event ErrorLevel="1" Project="sn_test" Source="sn_test.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="sn_test" Source="sn_test.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="sn_test" Source="sn_test.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="gse_mgmt_test" Source="gse_mgmt_test.vcproj" Description="已不再支持对本地 IIS 服务器的 Web 部署。Web 部署生成工具已从项目设置中删除。">
+</Event><Event ErrorLevel="1" Project="gse_mgmt_test" Source="gse_mgmt_test.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="gse_mgmt_test" Source="gse_mgmt_test.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="gse_mgmt_test" Source="gse_mgmt_test.vcproj" Description="Converted">
+</Event><Event ErrorLevel="1" Project="gse_mgmt" Source="gse_mgmt.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="gse_mgmt" Source="gse_mgmt.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="gse_mgmt" Source="gse_mgmt.vcproj" Description="Converted">
+</Event><Event ErrorLevel="1" Project="utility" Source="utility.vcproj" Description="此应用程序已更新，包含了与 Windows Vista 的用户帐户控制(UAC)功能相关的设置。默认情况下，当运行在启用了 UAC 的 Windows Vista 上时，此应用程序被标记为以与启动它的进程相同的权限运行。此标记还禁止应用程序以虚拟化方式运行。您可以从此项目的属性页中更改与 UAC 相关的设置。">
+</Event><Event ErrorLevel="0" Project="utility" Source="utility.vcproj" Description="项目升级成功。">
+</Event><Event ErrorLevel="3" Project="utility" Source="utility.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="mmslite802.sln" Description="成功转换解决方案">
+</Event><Event ErrorLevel="3" Project="" Source="mmslite802.sln" Description="Converted">
+</Event></UpgradeLog>

@@ -1,0 +1,94 @@
+
+
+***********************************************************
+          LOGGING STARTED Mon Apr 16 19:21:22 2012
+***********************************************************
+
+2012-04-16 19:21:22.513 SLOGALWAYS (Fo_main.c 268) 
+  Executing '..\..\bin\foundry'
+  Input TDL file         : '..\..\mvl\usr\iecgoose\uca_obj.odf'
+  Configuration file     : '..\..\mvl\util\foundry\win32\align.cfg'
+  Output 'C' file        : '..\..\mvl\usr\iecgoose\uca_obj.c'
+  Output 'H' file        : '..\..\mvl\usr\iecgoose\uca_obj.h'
+  Output 'LAP XML' file  : '..\..\mvl\usr\iecgoose\lap_out.xml'
+  Output 'Lefttodo' file : '..\..\mvl\usr\iecgoose\lefttodo.txt'
+
+2012-04-16 19:21:22.513 SLOGALWAYS (Fo_parse.c 157) 
+  Searching for object definitions: 
+  String 2 = '../../mvl/util/foundry/iec61850'
+  
+    currFile = '..\..\mvl\usr\iecgoose\uca_obj.odf'
+  String 2 = '../../mvl/util/foundry/uca09'
+  
+    currFile = '..\..\mvl\usr\iecgoose\uca_obj.odf'
+  String 2 = 'MVL_UCA'
+  
+    currFile = '..\..\mvl\usr\iecgoose\uca_obj.odf'
+  String 2 = 'MVLU_USE_REF'
+  
+    currFile = '..\..\mvl\usr\iecgoose\uca_obj.odf'
+  
+    userIncIn = 'uca_srvr.h'
+  String 2 = ':TV'
+  Type Unique Flag = 'FALSE'
+  Type Unique Flag = 'FALSE'
+  Type Base Flag = 'FALSE'
+  Type Delete Unused Flag = 'TRUE'
+  Type UCA Flag = 'FALSE'
+  
+    currFile = '..\..\mvl\usr\iecgoose\uca_obj.odf'
+
+2012-04-16 19:21:22.513 SLOGALWAYS (Fo_opt.c 62) 
+  Removing transient and unreferenced base types ...
+
+2012-04-16 19:21:22.513 SLOGALWAYS (Fo_opt.c 109) 
+  Eliminating Twins
+
+2012-04-16 19:21:22.513 SLOGALWAYS (Fo_write.c 167) 
+  Writing output files ...
+
+2012-04-16 19:21:22.513 SLOGALWAYS (Fo_write.c 919) 
+  WRITING VARIABLE INITIALIZATION CODE
+
+2012-04-16 19:21:22.513 SLOGALWAYS (Fo_write.c 560) 
+  WRITING DOMAIN INITIALIZATION CODE
+
+2012-04-16 19:21:22.513 SLOGALWAYS (Fo_write.c 721) 
+  WRITING AA INITIALIZATION CODE
+
+2012-04-16 19:21:22.513 SLOGALWAYS (Fo_write.c 1019) 
+  WRITING VARIABLE LIST INITIALIZATION CODE
+
+2012-04-16 19:21:22.513 SLOGALWAYS (Fo_write.c 654) 
+  WRITING DOMAIN INITIALIZATION CODE
+
+2012-04-16 19:21:22.513 SLOGALWAYS (Fo_write.c 829) 
+  WRITING AA VARIABLE LIST INITIALIZATION CODE
+
+2012-04-16 19:21:22.513 SLOGALWAYS (Fo_write.c 1361) 
+  WRITING JOURNAL INITIALIZATION CODE
+
+2012-04-16 19:21:22.513 SLOGALWAYS (Fo_write.c 1204) 
+  WRITING RUNTIME TYPES
+
+2012-04-16 19:21:22.529 MEM_LOG_DUMP (Mem_chks.c 1299) 
+  DYNAMIC MEMORY POINTER TABLE
+----------------------------  
+  Ptr 003cdfb4  Size    23  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 003cdf74  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 003cdf34  Size    17  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 003cdee4  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 003cdea4  Size    23  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1762
+  Ptr 003cde64  Size    24  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1750
+  Ptr 003cde24  Size    17  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1749
+  Ptr 003cddd4  Size    36  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1747
+  Ptr 003caccc  Size   200  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1449
+  Ptr 003c3984  Size    11  File : ..\..\Mvl\Util\foundry\Fo_parse.c #0701
+  Ptr 003ca974  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 003ca61c  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  Ptr 003c92bc  Size   816  File : ..\..\Mvl\Util\foundry\Fo_uca.c #1549
+  ---- END OF MEMORY POINTER TABLE ----------
+  Total number of allocated pointers:   13
+  Total amount of memory allocated:     2859 bytes 
+  Maximum number of pointers allocated: 14
+  Maximum amount of memory allocated:   252859 bytes

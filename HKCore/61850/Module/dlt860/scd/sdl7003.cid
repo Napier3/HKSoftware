@@ -1,0 +1,3756 @@
+<?xml version="1.0" standalone="no"?>
+<SCL xmlns="http://www.iec.ch/61850/2003/SCL" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Header id="SDL Fault Recorder" nameStructure="IEDName" toolID="Fault Recorder ICDGenerator"/>
+    <Communication>
+        <SubNetwork name="NONE" type="8-MMS">
+            <ConnectedAP apName="S1" iedName="SDL7003cz">
+                <Address>
+                    <P type="IP">192.168.168.251</P>
+                    <P type="IP-SUBNET">255.255.0.0</P>
+                    <P type="IP-GATEWAY">192.168.168.254</P>
+                    <P type="OSI-AP-Title">1,3,9999,33</P>
+                    <P type="OSI-AE-Qualifier">33</P>
+                    <P type="OSI-PSEL">00000001</P>
+                    <P type="OSI-SSEL">0001</P>
+                    <P type="OSI-TSEL">0001</P>
+                </Address>
+            </ConnectedAP>
+        </SubNetwork>
+    </Communication>
+    <IED configVersion="1.0" desc="SDL7003电力故障行波综合测距装置" manufacturer="山东山大电力技术股份有限公司" name="SDL7003cz" type="SDL7003">
+        <Services>
+            <DynAssociation/>
+            <SettingGroups>
+                <SGEdit/>
+                <ConfSG/>
+            </SettingGroups>
+            <GetDirectory/>
+            <GetDataObjectDefinition/>
+            <GetDataSetValue/>
+            <DataSetDirectory/>
+            <ConfDataSet max="200" maxAttributes="255"/>
+            <DynDataSet max="100" maxAttributes="255"/>
+            <ReadWrite/>
+            <ConfReportControl max="32"/>
+            <GetCBValues/>
+            <ConfLogControl max="2"/>
+            <ReportSettings bufTime="Dyn" cbName="Dyn" datSet="Dyn" intgPd="Fix" optFields="Dyn" rptID="Dyn" trgOps="Dyn"/>
+            <LogSettings cbName="Dyn" datSet="Dyn" intgPd="Dyn" logEna="Dyn" trgOps="Dyn"/>
+            <FileHandling/>
+            <ConfLNs fixLnInst="true" fixPrefix="true"/>
+        </Services>
+        <AccessPoint desc="站控层访问点" name="S1">
+            <Server>
+                <Authentication none="true"/>
+                <LDevice desc="公共逻辑设备" inst="LD0">
+                    <LN0 desc="LD0逻辑节点0" inst="" lnClass="LLN0" lnType="SDL_SDL7003_V1.0_LLN0_LD0">
+                        <DataSet desc="告警信号数据集" name="dsFlAlarm">
+                            <FCDA doName="Alm1" fc="ST" ldInst="LD0" lnClass="GGIO" lnInst="1" prefix=""/>
+                            <FCDA doName="Alm2" fc="ST" ldInst="LD0" lnClass="GGIO" lnInst="1" prefix=""/>
+                            <FCDA doName="Alm3" fc="ST" ldInst="LD0" lnClass="GGIO" lnInst="1" prefix=""/>
+                            <FCDA doName="Alm4" fc="ST" ldInst="LD0" lnClass="GGIO" lnInst="1" prefix=""/>
+                            <FCDA doName="Alm5" fc="ST" ldInst="LD0" lnClass="GGIO" lnInst="1" prefix=""/>
+                            <FCDA doName="Alm6" fc="ST" ldInst="LD0" lnClass="GGIO" lnInst="1" prefix=""/>
+                        </DataSet>
+                        <ReportControl bufTime="0" buffered="true" confRev="1" datSet="dsFlAlarm" desc="告警报告控制块" intgPd="0" name="brcbFlAlarm" rptID="rptFlAlarm">
+                            <TrgOps dchg="true" dupd="false" period="true" qchg="false"/>
+                            <OptFields configRef="true" dataRef="true" dataSet="true" entryID="true" reasonCode="true" seqNum="true" timeStamp="true"/>
+                            <RptEnabled max="16"/>
+                        </ReportControl>
+                        <LogControl datSet="dsFlAlarm" desc="告警日志控制块" intgPd="0" logEna="true" logName="LD0" name="lcbFlAlarm" reasonCode="true">
+                            <TrgOps dchg="true" period="false" qchg="false"/>
+                        </LogControl>
+                        <DOI desc="LN0模式" name="Mod">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="ctlModel">
+                                <Val>status-only</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>LN0模式</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="LN0性能" name="Beh">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>LN0性能</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="LN0健康状况" name="Health">
+                            <DAI name="stVal">
+                                <Val>Ok</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>LN0健康状况</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="LN0铭牌" name="NamPlt">
+                            <DAI name="vendor">
+                                <Val>SDDL</Val>
+                            </DAI>
+                            <DAI name="swRev">
+                                <Val>7.0</Val>
+                            </DAI>
+                            <DAI name="d">
+                                <Val>Name Plate</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>LN0铭牌</Val>
+                            </DAI>
+                            <DAI name="configRev">
+                                <Val>1.0</Val>
+                            </DAI>
+                            <DAI name="ldNs">
+                                <Val>DL/T860.74:2005</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="装置复位" name="LEDRs">
+                            <DAI name="ctlModel">
+                                <Val>direct-with-normal-security</Val>
+                            </DAI>
+                            <DAI name="sboTimeout">
+                                <Val>20000000</Val>
+                            </DAI>
+                            <DAI name="sboClass">
+                                <Val>operate-once</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>装置复位</Val>
+                            </DAI>
+                        </DOI>
+                    </LN0>
+                    <LN desc="测距装置" inst="1" lnClass="LPHD" lnType="SDL_SDL7003_V1.0_LPHD" prefix="">
+                        <DOI desc="测距装置铭牌" name="PhyNam">
+                            <DAI name="vendor">
+                                <Val>SDDL</Val>
+                            </DAI>
+                            <DAI name="hwRev">
+                                <Val>7.0</Val>
+                            </DAI>
+                            <DAI name="swRev">
+                                <Val>7.0</Val>
+                            </DAI>
+                            <DAI name="model">
+                                <Val>SDL7003</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="测距装置健康状况" name="PhyHealth">
+                            <DAI name="stVal">
+                                <Val>Ok</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>测距装置健康状况</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="是否代理" name="Proxy">
+                            <DAI name="dU">
+                                <Val>是否代理</Val>
+                            </DAI>
+                        </DOI>
+                    </LN>
+                    <LN desc="装置异常告警" inst="1" lnClass="GGIO" lnType="SDL_SDL7003_V1.0_GGIO_ALM" prefix="">
+                        <DOI desc="模式" name="Mod">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="ctlModel">
+                                <Val>status-only</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>模式</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="性能" name="Beh">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>性能</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="健康状况" name="Health">
+                            <DAI name="stVal">
+                                <Val>Ok</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>健康状况</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="铭牌" name="NamPlt">
+                            <DAI name="vendor">
+                                <Val>SDDL</Val>
+                            </DAI>
+                            <DAI name="swRev">
+                                <Val>7.0</Val>
+                            </DAI>
+                            <DAI name="d">
+                                <Val>Name Plate</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>铭牌</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="装置异常" name="Alm1">
+                            <DAI name="stVal">
+                                <Val>0</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>装置异常</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="GPS异常" name="Alm2">
+                            <DAI name="stVal">
+                                <Val>0</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>GPS异常</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="电源异常" name="Alm3">
+                            <DAI name="stVal">
+                                <Val>0</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>电源异常</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="CPU异常" name="Alm4">
+                            <DAI name="stVal">
+                                <Val>0</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>CPU异常</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="AD板卡异常" name="Alm5">
+                            <DAI name="stVal">
+                                <Val>0</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>AD板卡异常</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="站间通信异常" name="Alm6">
+                            <DAI name="stVal">
+                                <Val>0</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>站间通信异常</Val>
+                            </DAI>
+                        </DOI>
+                    </LN>
+                </LDevice>
+                <LDevice desc="测距逻辑设备" inst="PTFL">
+                    <LN0 desc="通用LNN0" inst="" lnClass="LLN0" lnType="SDL_SDL7003_V1.0_LLN0">
+                        <DataSet desc="行波参数" name="dsFlParameter">
+                            <FCDA doName="SubName" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="1"/>
+                            <FCDA doName="PeerSubName" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="1"/>
+                            <FCDA doName="LineName" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="1"/>
+                            <FCDA doName="LineLen" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="1"/>
+                            <FCDA doName="WaveSpd" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="1"/>
+                            <FCDA doName="SubName" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="1"/>
+                            <FCDA doName="PeerSubName" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="1"/>
+                            <FCDA doName="LineName" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="1"/>
+                            <FCDA doName="LineLen" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="1"/>
+                            <FCDA doName="WaveSpd" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="1"/>
+                            <FCDA doName="SubName" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="2"/>
+                            <FCDA doName="PeerSubName" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="2"/>
+                            <FCDA doName="LineName" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="2"/>
+                            <FCDA doName="LineLen" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="2"/>
+                            <FCDA doName="WaveSpd" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="2"/>
+                            <FCDA doName="SubName" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="2"/>
+                            <FCDA doName="PeerSubName" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="2"/>
+                            <FCDA doName="LineName" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="2"/>
+                            <FCDA doName="LineLen" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="2"/>
+                            <FCDA doName="WaveSpd" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="2"/>
+                            <FCDA doName="SubName" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="3"/>
+                            <FCDA doName="PeerSubName" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="3"/>
+                            <FCDA doName="LineName" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="3"/>
+                            <FCDA doName="LineLen" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="3"/>
+                            <FCDA doName="WaveSpd" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="3"/>
+                            <FCDA doName="SubName" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="3"/>
+                            <FCDA doName="PeerSubName" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="3"/>
+                            <FCDA doName="LineName" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="3"/>
+                            <FCDA doName="LineLen" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="3"/>
+                            <FCDA doName="WaveSpd" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="3"/>
+                            <FCDA doName="SubName" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="4"/>
+                            <FCDA doName="PeerSubName" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="4"/>
+                            <FCDA doName="LineName" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="4"/>
+                            <FCDA doName="LineLen" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="4"/>
+                            <FCDA doName="WaveSpd" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="4"/>
+                            <FCDA doName="SubName" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="4"/>
+                            <FCDA doName="PeerSubName" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="4"/>
+                            <FCDA doName="LineName" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="4"/>
+                            <FCDA doName="LineLen" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="4"/>
+                            <FCDA doName="WaveSpd" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="4"/>
+                            <FCDA doName="SubName" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="5"/>
+                            <FCDA doName="PeerSubName" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="5"/>
+                            <FCDA doName="LineName" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="5"/>
+                            <FCDA doName="LineLen" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="5"/>
+                            <FCDA doName="WaveSpd" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="5"/>
+                            <FCDA doName="SubName" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="5"/>
+                            <FCDA doName="PeerSubName" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="5"/>
+                            <FCDA doName="LineName" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="5"/>
+                            <FCDA doName="LineLen" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="5"/>
+                            <FCDA doName="WaveSpd" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="5"/>
+                            <FCDA doName="SubName" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="6"/>
+                            <FCDA doName="PeerSubName" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="6"/>
+                            <FCDA doName="LineName" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="6"/>
+                            <FCDA doName="LineLen" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="6"/>
+                            <FCDA doName="WaveSpd" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="6"/>
+                            <FCDA doName="SubName" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="6"/>
+                            <FCDA doName="PeerSubName" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="6"/>
+                            <FCDA doName="LineName" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="6"/>
+                            <FCDA doName="LineLen" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="6"/>
+                            <FCDA doName="WaveSpd" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="6"/>
+                            <FCDA doName="SubName" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="7"/>
+                            <FCDA doName="PeerSubName" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="7"/>
+                            <FCDA doName="LineName" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="7"/>
+                            <FCDA doName="LineLen" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="7"/>
+                            <FCDA doName="WaveSpd" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="7"/>
+                            <FCDA doName="SubName" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="7"/>
+                            <FCDA doName="PeerSubName" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="7"/>
+                            <FCDA doName="LineName" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="7"/>
+                            <FCDA doName="LineLen" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="7"/>
+                            <FCDA doName="WaveSpd" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="7"/>
+                            <FCDA doName="SubName" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="8"/>
+                            <FCDA doName="PeerSubName" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="8"/>
+                            <FCDA doName="LineName" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="8"/>
+                            <FCDA doName="LineLen" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="8"/>
+                            <FCDA doName="WaveSpd" fc="SP" ldInst="PTFL" lnClass="STFL" lnInst="8"/>
+                            <FCDA doName="SubName" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="8"/>
+                            <FCDA doName="PeerSubName" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="8"/>
+                            <FCDA doName="LineName" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="8"/>
+                            <FCDA doName="LineLen" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="8"/>
+                            <FCDA doName="WaveSpd" fc="SP" ldInst="PTFL" lnClass="DTFL" lnInst="8"/>
+                        </DataSet>
+                        <DataSet desc="行波定值" name="dsFlSetting">
+                            <FCDA doName="LPartATime" fc="SG" ldInst="PTFL" lnClass="RDRE" lnInst="1" prefix=""/>
+                            <FCDA doName="LPartBTime" fc="SG" ldInst="PTFL" lnClass="RDRE" lnInst="1" prefix=""/>
+                            <FCDA doName="HPartATime" fc="SG" ldInst="PTFL" lnClass="RDRE" lnInst="1" prefix=""/>
+                            <FCDA doName="HPartBTime" fc="SG" ldInst="PTFL" lnClass="RDRE" lnInst="1" prefix=""/>
+                        </DataSet>
+                        <DataSet desc="启动录波" name="dsFlRec">
+                            <FCDA doName="RcdTrg" fc="ST" ldInst="PTFL" lnClass="RDRE" lnInst="1" prefix=""/>
+                            <FCDA doName="MemClr" fc="ST" ldInst="PTFL" lnClass="RDRE" lnInst="1" prefix=""/>
+                            <FCDA doName="MemRs" fc="ST" ldInst="PTFL" lnClass="RDRE" lnInst="1" prefix=""/>
+                            <FCDA doName="RcdMade" fc="ST" ldInst="PTFL" lnClass="RDRE" lnInst="1" prefix=""/>
+                            <FCDA doName="FltNum" fc="ST" ldInst="PTFL" lnClass="RDRE" lnInst="1" prefix=""/>
+                            <FCDA doName="GriFltNum" fc="ST" ldInst="PTFL" lnClass="RDRE" lnInst="1" prefix=""/>
+                            <FCDA doName="RcdStr" fc="ST" ldInst="PTFL" lnClass="RDRE" lnInst="1" prefix=""/>
+                        </DataSet>
+                        <DataSet desc="行波事件" name="dsFlInfo">
+                            <FCDA doName="FltNum" fc="ST" ldInst="PTFL" lnClass="STFL" lnInst="1"/>
+                            <FCDA doName="FlWaveSelfT" fc="ST" ldInst="PTFL" lnClass="STFL" lnInst="1"/>
+                            <FCDA doName="FltDiskm" fc="MX" ldInst="PTFL" lnClass="STFL" lnInst="1"/>
+                            <FCDA doName="FltNum" fc="ST" ldInst="PTFL" lnClass="DTFL" lnInst="1"/>
+                            <FCDA doName="FlWaveSelfT" fc="ST" ldInst="PTFL" lnClass="DTFL" lnInst="1"/>
+                            <FCDA doName="FlWavePeerT" fc="ST" ldInst="PTFL" lnClass="DTFL" lnInst="1"/>
+                            <FCDA doName="FltDiskm" fc="MX" ldInst="PTFL" lnClass="DTFL" lnInst="1"/>
+                            <FCDA doName="FltNum" fc="ST" ldInst="PTFL" lnClass="STFL" lnInst="2"/>
+                            <FCDA doName="FlWaveSelfT" fc="ST" ldInst="PTFL" lnClass="STFL" lnInst="2"/>
+                            <FCDA doName="FltDiskm" fc="MX" ldInst="PTFL" lnClass="STFL" lnInst="2"/>
+                            <FCDA doName="FltNum" fc="ST" ldInst="PTFL" lnClass="DTFL" lnInst="2"/>
+                            <FCDA doName="FlWaveSelfT" fc="ST" ldInst="PTFL" lnClass="DTFL" lnInst="2"/>
+                            <FCDA doName="FlWavePeerT" fc="ST" ldInst="PTFL" lnClass="DTFL" lnInst="2"/>
+                            <FCDA doName="FltDiskm" fc="MX" ldInst="PTFL" lnClass="DTFL" lnInst="2"/>
+                            <FCDA doName="FltNum" fc="ST" ldInst="PTFL" lnClass="STFL" lnInst="3"/>
+                            <FCDA doName="FlWaveSelfT" fc="ST" ldInst="PTFL" lnClass="STFL" lnInst="3"/>
+                            <FCDA doName="FltDiskm" fc="MX" ldInst="PTFL" lnClass="STFL" lnInst="3"/>
+                            <FCDA doName="FltNum" fc="ST" ldInst="PTFL" lnClass="DTFL" lnInst="3"/>
+                            <FCDA doName="FlWaveSelfT" fc="ST" ldInst="PTFL" lnClass="DTFL" lnInst="3"/>
+                            <FCDA doName="FlWavePeerT" fc="ST" ldInst="PTFL" lnClass="DTFL" lnInst="3"/>
+                            <FCDA doName="FltDiskm" fc="MX" ldInst="PTFL" lnClass="DTFL" lnInst="3"/>
+                            <FCDA doName="FltNum" fc="ST" ldInst="PTFL" lnClass="STFL" lnInst="4"/>
+                            <FCDA doName="FlWaveSelfT" fc="ST" ldInst="PTFL" lnClass="STFL" lnInst="4"/>
+                            <FCDA doName="FltDiskm" fc="MX" ldInst="PTFL" lnClass="STFL" lnInst="4"/>
+                            <FCDA doName="FltNum" fc="ST" ldInst="PTFL" lnClass="DTFL" lnInst="4"/>
+                            <FCDA doName="FlWaveSelfT" fc="ST" ldInst="PTFL" lnClass="DTFL" lnInst="4"/>
+                            <FCDA doName="FlWavePeerT" fc="ST" ldInst="PTFL" lnClass="DTFL" lnInst="4"/>
+                            <FCDA doName="FltDiskm" fc="MX" ldInst="PTFL" lnClass="DTFL" lnInst="4"/>
+                            <FCDA doName="FltNum" fc="ST" ldInst="PTFL" lnClass="STFL" lnInst="5"/>
+                            <FCDA doName="FlWaveSelfT" fc="ST" ldInst="PTFL" lnClass="STFL" lnInst="5"/>
+                            <FCDA doName="FltDiskm" fc="MX" ldInst="PTFL" lnClass="STFL" lnInst="5"/>
+                            <FCDA doName="FltNum" fc="ST" ldInst="PTFL" lnClass="DTFL" lnInst="5"/>
+                            <FCDA doName="FlWaveSelfT" fc="ST" ldInst="PTFL" lnClass="DTFL" lnInst="5"/>
+                            <FCDA doName="FlWavePeerT" fc="ST" ldInst="PTFL" lnClass="DTFL" lnInst="5"/>
+                            <FCDA doName="FltDiskm" fc="MX" ldInst="PTFL" lnClass="DTFL" lnInst="5"/>
+                            <FCDA doName="FltNum" fc="ST" ldInst="PTFL" lnClass="STFL" lnInst="6"/>
+                            <FCDA doName="FlWaveSelfT" fc="ST" ldInst="PTFL" lnClass="STFL" lnInst="6"/>
+                            <FCDA doName="FltDiskm" fc="MX" ldInst="PTFL" lnClass="STFL" lnInst="6"/>
+                            <FCDA doName="FltNum" fc="ST" ldInst="PTFL" lnClass="DTFL" lnInst="6"/>
+                            <FCDA doName="FlWaveSelfT" fc="ST" ldInst="PTFL" lnClass="DTFL" lnInst="6"/>
+                            <FCDA doName="FlWavePeerT" fc="ST" ldInst="PTFL" lnClass="DTFL" lnInst="6"/>
+                            <FCDA doName="FltDiskm" fc="MX" ldInst="PTFL" lnClass="DTFL" lnInst="6"/>
+                            <FCDA doName="FltNum" fc="ST" ldInst="PTFL" lnClass="STFL" lnInst="7"/>
+                            <FCDA doName="FlWaveSelfT" fc="ST" ldInst="PTFL" lnClass="STFL" lnInst="7"/>
+                            <FCDA doName="FltDiskm" fc="MX" ldInst="PTFL" lnClass="STFL" lnInst="7"/>
+                            <FCDA doName="FltNum" fc="ST" ldInst="PTFL" lnClass="DTFL" lnInst="7"/>
+                            <FCDA doName="FlWaveSelfT" fc="ST" ldInst="PTFL" lnClass="DTFL" lnInst="7"/>
+                            <FCDA doName="FlWavePeerT" fc="ST" ldInst="PTFL" lnClass="DTFL" lnInst="7"/>
+                            <FCDA doName="FltDiskm" fc="MX" ldInst="PTFL" lnClass="DTFL" lnInst="7"/>
+                            <FCDA doName="FltNum" fc="ST" ldInst="PTFL" lnClass="STFL" lnInst="8"/>
+                            <FCDA doName="FlWaveSelfT" fc="ST" ldInst="PTFL" lnClass="STFL" lnInst="8"/>
+                            <FCDA doName="FltDiskm" fc="MX" ldInst="PTFL" lnClass="STFL" lnInst="8"/>
+                            <FCDA doName="FltNum" fc="ST" ldInst="PTFL" lnClass="DTFL" lnInst="8"/>
+                            <FCDA doName="FlWaveSelfT" fc="ST" ldInst="PTFL" lnClass="DTFL" lnInst="8"/>
+                            <FCDA doName="FlWavePeerT" fc="ST" ldInst="PTFL" lnClass="DTFL" lnInst="8"/>
+                            <FCDA doName="FltDiskm" fc="MX" ldInst="PTFL" lnClass="DTFL" lnInst="8"/>
+                        </DataSet>
+                        <ReportControl bufTime="0" buffered="true" confRev="1" datSet="dsFlRec" desc="Recorder RCB" intgPd="0" name="brcbFlRec" rptID="rptFlRec">
+                            <TrgOps dchg="true" dupd="false" period="true" qchg="false"/>
+                            <OptFields configRef="true" dataRef="true" dataSet="true" entryID="true" reasonCode="true" seqNum="true" timeStamp="true"/>
+                            <RptEnabled max="16"/>
+                        </ReportControl>
+                        <ReportControl bufTime="0" buffered="true" confRev="1" datSet="dsFlInfo" desc="Distance RCB" intgPd="0" name="brcbFlInfo" rptID="rptFlInfo">
+                            <TrgOps dchg="true" dupd="false" period="true" qchg="false"/>
+                            <OptFields configRef="true" dataRef="true" dataSet="true" entryID="true" reasonCode="true" seqNum="true" timeStamp="true"/>
+                            <RptEnabled max="16"/>
+                        </ReportControl>
+                        <LogControl datSet="dsFlRec" intgPd="60000" logEna="true" logName="PTFL" name="lcbFlRec" reasonCode="true">
+                            <TrgOps dchg="true" period="false" qchg="false"/>
+                        </LogControl>
+                        <LogControl datSet="dsFlInfo" intgPd="60000" logEna="true" logName="PTFL" name="lcbFlInfo" reasonCode="true">
+                            <TrgOps dchg="true" period="false" qchg="false"/>
+                        </LogControl>
+                        <DOI desc="LN0模式" name="Mod">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="ctlModel">
+                                <Val>status-only</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>LN0模式</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="LN0性能" name="Beh">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>LN0性能</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="LN0健康状况" name="Health">
+                            <DAI name="stVal">
+                                <Val>Ok</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>LN0健康状况</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="LN0铭牌" name="NamPlt">
+                            <DAI name="vendor">
+                                <Val>SDDL</Val>
+                            </DAI>
+                            <DAI name="swRev">
+                                <Val>7.0</Val>
+                            </DAI>
+                            <DAI name="d">
+                                <Val>Name Plate</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>LN0铭牌</Val>
+                            </DAI>
+                            <DAI name="configRev">
+                                <Val>1.0</Val>
+                            </DAI>
+                            <DAI name="ldNs">
+                                <Val>DL/T860.74:2005</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="本地/远方操作" name="Loc">
+                            <DAI name="dU">
+                                <Val>本地/远方操作</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="电力公司名" name="CompanyName">
+                            <DAI name="setVal">
+                                <Val>sd</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>电力公司名</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="厂站名" name="StationName">
+                            <DAI name="setVal">
+                                <Val>t2</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>厂站名</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="装置名" name="DeviceName">
+                            <DAI name="setVal">
+                                <Val>237</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>装置名</Val>
+                            </DAI>
+                        </DOI>
+                        <SettingControl actSG="1" desc="定值组控制" numOfSGs="3"/>
+                    </LN0>
+                    <LN desc="测距装置" inst="1" lnClass="LPHD" lnType="SDL_SDL7003_V1.0_LPHD" prefix="">
+                        <DOI desc="测距装置铭牌" name="PhyNam">
+                            <DAI name="vendor">
+                                <Val>SDDL</Val>
+                            </DAI>
+                            <DAI name="hwRev">
+                                <Val>7.0</Val>
+                            </DAI>
+                            <DAI name="swRev">
+                                <Val>7.0</Val>
+                            </DAI>
+                            <DAI name="model">
+                                <Val>SDL7003</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="测距装置健康状况" name="PhyHealth">
+                            <DAI name="stVal">
+                                <Val>Ok</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>测距装置健康状况</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="是否代理" name="Proxy">
+                            <DAI name="dU">
+                                <Val>是否代理</Val>
+                            </DAI>
+                        </DOI>
+                    </LN>
+                    <LN desc="录波功能" inst="1" lnClass="RDRE" lnType="SDL_SDL7003_V1.0_RDRE" prefix="">
+                        <DOI desc="模式" name="Mod">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="ctlModel">
+                                <Val>status-only</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>模式</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="性能" name="Beh">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>性能</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="健康状况" name="Health">
+                            <DAI name="stVal">
+                                <Val>Ok</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>健康状况</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="铭牌" name="NamPlt">
+                            <DAI name="vendor">
+                                <Val>SDDL</Val>
+                            </DAI>
+                            <DAI name="swRev">
+                                <Val>7.0</Val>
+                            </DAI>
+                            <DAI name="d">
+                                <Val>Name Plate</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>铭牌</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="远程启动录波" name="RcdTrg">
+                            <DAI name="ctlModel">
+                                <Val>direct-with-normal-security</Val>
+                            </DAI>
+                            <DAI name="sboTimeout">
+                                <Val>20000000</Val>
+                            </DAI>
+                            <DAI name="sboClass">
+                                <Val>operate-once</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>远程启动录波</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="内存复位" name="MemRs">
+                            <DAI name="ctlModel">
+                                <Val>direct-with-normal-security</Val>
+                            </DAI>
+                            <DAI name="sboTimeout">
+                                <Val>20000000</Val>
+                            </DAI>
+                            <DAI name="sboClass">
+                                <Val>operate-once</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>内存复位</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="清空内存" name="MemClr">
+                            <DAI name="ctlModel">
+                                <Val>direct-with-normal-security</Val>
+                            </DAI>
+                            <DAI name="sboTimeout">
+                                <Val>20000000</Val>
+                            </DAI>
+                            <DAI name="sboClass">
+                                <Val>operate-once</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>清空内存</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="录波完成" name="RcdMade">
+                            <DAI name="stVal">
+                                <Val>1</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>录波完成</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="故障序号" name="FltNum">
+                            <DAI name="dU">
+                                <Val>故障序号</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="电网故障序号" name="GriFltNum">
+                            <DAI name="dU">
+                                <Val>电网故障序号</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="录波启动" name="RcdStr">
+                            <DAI name="stVal">
+                                <Val>0</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>录波启动</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="低速录波A段长度(ms)" name="LPartATime">
+                            <DAI name="setVal">
+                                <Val>200</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>低速录波A段长度(ms)</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="低速录波B段长度(ms)" name="LPartBTime">
+                            <DAI name="setVal">
+                                <Val>200</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>低速录波B段长度(ms)</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="高速录波A段长度(ms)" name="HPartATime">
+                            <DAI name="setVal">
+                                <Val>200</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>高速录波A段长度(ms)</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="高速录波B段长度(ms)" name="HPartBTime">
+                            <DAI name="setVal">
+                                <Val>200</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>高速录波B段长度(ms)</Val>
+                            </DAI>
+                        </DOI>
+                    </LN>
+                    <LN desc="1000kV台曹Ⅰ 线电流单端测距" inst="1" lnClass="STFL" lnType="SDL_SDL7003_V1.0_STFL" prefix="">
+                        <DOI desc="模式" name="Mod">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="ctlModel">
+                                <Val>status-only</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>模式</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="性能" name="Beh">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>性能</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="健康状况" name="Health">
+                            <DAI name="stVal">
+                                <Val>Ok</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>健康状况</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="铭牌" name="NamPlt">
+                            <DAI name="vendor">
+                                <Val>SDDL</Val>
+                            </DAI>
+                            <DAI name="swRev">
+                                <Val>7.0</Val>
+                            </DAI>
+                            <DAI name="d">
+                                <Val>Name Plate</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>铭牌</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="动作" name="Op">
+                            <DAI name="dU">
+                                <Val>动作</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV台曹Ⅰ 线电流故障序号" name="FltNum">
+                            <DAI name="dU">
+                                <Val>1000kV台曹Ⅰ 线电流故障序号</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV台曹Ⅰ 线电流单端测距结果" name="FltDiskm">
+                            <SDI desc="1000kV台曹Ⅰ 线电流单端测距结果值" name="mag">
+                                <DAI name="f">
+                                    <Val>0.000000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅰ 线电流单端测距结果值单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>1000kV台曹Ⅰ 线电流单端测距结果</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV台曹Ⅰ 线电流本端第1个波头时间" name="FlWaveSelfT">
+                            <DAI name="dU">
+                                <Val>1000kV台曹Ⅰ 线电流本端第1个波头时间</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV台曹Ⅰ 线电流波速度" name="WaveSpd">
+                            <SDI desc="1000kV台曹Ⅰ 线电流波速度" name="setMag">
+                                <DAI name="f">
+                                    <Val>294.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅰ 线电流波速度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅰ 线电流波速度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅰ 线电流波速度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>300.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅰ 线电流波速度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>1000kV台曹Ⅰ 线电流波速度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV台曹Ⅰ 线电流线路长度" name="LineLen">
+                            <SDI desc="1000kV台曹Ⅰ 线电流线路长度" name="setMag">
+                                <DAI name="f">
+                                    <Val>200.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅰ 线电流线路长度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅰ 线电流线路长度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅰ 线电流线路长度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>1000.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅰ 线电流线路长度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>1000kV台曹Ⅰ 线电流线路长度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路名称" name="LineName">
+                            <DAI name="setVal">
+                                <Val>1000kV台曹Ⅰ 线电流</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>线路名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="变电站名称" name="SubName">
+                            <DAI name="setVal">
+                                <Val>1000kV曹州站</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="对端变电站名称" name="PeerSubName">
+                            <DAI name="setVal">
+                                <Val>1000kV邢台变</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>对端变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                    </LN>
+                    <LN desc="1000kV台曹Ⅰ 线电流双端测距" inst="1" lnClass="DTFL" lnType="SDL_SDL7003_V1.0_DTFL" prefix="">
+                        <DOI desc="模式" name="Mod">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="ctlModel">
+                                <Val>status-only</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>模式</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="性能" name="Beh">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>性能</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="健康状况" name="Health">
+                            <DAI name="stVal">
+                                <Val>Ok</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>健康状况</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="铭牌" name="NamPlt">
+                            <DAI name="vendor">
+                                <Val>SDDL</Val>
+                            </DAI>
+                            <DAI name="swRev">
+                                <Val>7.0</Val>
+                            </DAI>
+                            <DAI name="d">
+                                <Val>Name Plate</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>铭牌</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="动作" name="Op">
+                            <DAI name="dU">
+                                <Val>动作</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV台曹Ⅰ 线电流故障序号" name="FltNum">
+                            <DAI name="dU">
+                                <Val>1000kV台曹Ⅰ 线电流故障序号</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV台曹Ⅰ 线电流双端测距结果" name="FltDiskm">
+                            <SDI desc="1000kV台曹Ⅰ 线电流双端测距结果值" name="mag">
+                                <DAI name="f">
+                                    <Val>0.000000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅰ 线电流双端测距结果值单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>1000kV台曹Ⅰ 线电流双端测距结果</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV台曹Ⅰ 线电流本端第1个波头时间" name="FlWaveSelfT">
+                            <DAI name="dU">
+                                <Val>1000kV台曹Ⅰ 线电流本端第1个波头时间</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV台曹Ⅰ 线电流对端第1个波头时间" name="FlWavePeerT">
+                            <DAI name="dU">
+                                <Val>1000kV台曹Ⅰ 线电流对端第1个波头时间</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV台曹Ⅰ 线电流波速度" name="WaveSpd">
+                            <SDI desc="1000kV台曹Ⅰ 线电流波速度" name="setMag">
+                                <DAI name="f">
+                                    <Val>294.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅰ 线电流波速度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅰ 线电流波速度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅰ 线电流波速度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>300.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅰ 线电流波速度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>1000kV台曹Ⅰ 线电流波速度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV台曹Ⅰ 线电流线路长度" name="LineLen">
+                            <SDI desc="1000kV台曹Ⅰ 线电流线路长度" name="setMag">
+                                <DAI name="f">
+                                    <Val>200.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅰ 线电流线路长度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅰ 线电流线路长度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅰ 线电流线路长度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>1000.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅰ 线电流线路长度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>1000kV台曹Ⅰ 线电流线路长度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路名称" name="LineName">
+                            <DAI name="setVal">
+                                <Val>1000kV台曹Ⅰ 线电流</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>线路名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="变电站名称" name="SubName">
+                            <DAI name="setVal">
+                                <Val>1000kV曹州站</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="对端变电站名称" name="PeerSubName">
+                            <DAI name="setVal">
+                                <Val>1000kV邢台变</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>对端变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                    </LN>
+                    <LN desc="1000kV台曹Ⅱ 线电流单端测距" inst="2" lnClass="STFL" lnType="SDL_SDL7003_V1.0_STFL" prefix="">
+                        <DOI desc="模式" name="Mod">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="ctlModel">
+                                <Val>status-only</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>模式</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="性能" name="Beh">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>性能</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="健康状况" name="Health">
+                            <DAI name="stVal">
+                                <Val>Ok</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>健康状况</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="铭牌" name="NamPlt">
+                            <DAI name="vendor">
+                                <Val>SDDL</Val>
+                            </DAI>
+                            <DAI name="swRev">
+                                <Val>7.0</Val>
+                            </DAI>
+                            <DAI name="d">
+                                <Val>Name Plate</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>铭牌</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="动作" name="Op">
+                            <DAI name="dU">
+                                <Val>动作</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV台曹Ⅱ 线电流故障序号" name="FltNum">
+                            <DAI name="dU">
+                                <Val>1000kV台曹Ⅱ 线电流故障序号</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV台曹Ⅱ 线电流单端测距结果" name="FltDiskm">
+                            <SDI desc="1000kV台曹Ⅱ 线电流单端测距结果值" name="mag">
+                                <DAI name="f">
+                                    <Val>0.000000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅱ 线电流单端测距结果值单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>1000kV台曹Ⅱ 线电流单端测距结果</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV台曹Ⅱ 线电流本端第1个波头时间" name="FlWaveSelfT">
+                            <DAI name="dU">
+                                <Val>1000kV台曹Ⅱ 线电流本端第1个波头时间</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV台曹Ⅱ 线电流波速度" name="WaveSpd">
+                            <SDI desc="1000kV台曹Ⅱ 线电流波速度" name="setMag">
+                                <DAI name="f">
+                                    <Val>294.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅱ 线电流波速度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅱ 线电流波速度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅱ 线电流波速度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>300.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅱ 线电流波速度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>1000kV台曹Ⅱ 线电流波速度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV台曹Ⅱ 线电流线路长度" name="LineLen">
+                            <SDI desc="1000kV台曹Ⅱ 线电流线路长度" name="setMag">
+                                <DAI name="f">
+                                    <Val>200.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅱ 线电流线路长度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅱ 线电流线路长度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅱ 线电流线路长度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>1000.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅱ 线电流线路长度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>1000kV台曹Ⅱ 线电流线路长度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路名称" name="LineName">
+                            <DAI name="setVal">
+                                <Val>1000kV台曹Ⅱ 线电流</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>线路名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="变电站名称" name="SubName">
+                            <DAI name="setVal">
+                                <Val>1000kV曹州站</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="对端变电站名称" name="PeerSubName">
+                            <DAI name="setVal">
+                                <Val>1000kV邢台变</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>对端变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                    </LN>
+                    <LN desc="1000kV台曹Ⅱ 线电流双端测距" inst="2" lnClass="DTFL" lnType="SDL_SDL7003_V1.0_DTFL" prefix="">
+                        <DOI desc="模式" name="Mod">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="ctlModel">
+                                <Val>status-only</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>模式</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="性能" name="Beh">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>性能</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="健康状况" name="Health">
+                            <DAI name="stVal">
+                                <Val>Ok</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>健康状况</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="铭牌" name="NamPlt">
+                            <DAI name="vendor">
+                                <Val>SDDL</Val>
+                            </DAI>
+                            <DAI name="swRev">
+                                <Val>7.0</Val>
+                            </DAI>
+                            <DAI name="d">
+                                <Val>Name Plate</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>铭牌</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="动作" name="Op">
+                            <DAI name="dU">
+                                <Val>动作</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV台曹Ⅱ 线电流故障序号" name="FltNum">
+                            <DAI name="dU">
+                                <Val>1000kV台曹Ⅱ 线电流故障序号</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV台曹Ⅱ 线电流双端测距结果" name="FltDiskm">
+                            <SDI desc="1000kV台曹Ⅱ 线电流双端测距结果值" name="mag">
+                                <DAI name="f">
+                                    <Val>0.000000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅱ 线电流双端测距结果值单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>1000kV台曹Ⅱ 线电流双端测距结果</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV台曹Ⅱ 线电流本端第1个波头时间" name="FlWaveSelfT">
+                            <DAI name="dU">
+                                <Val>1000kV台曹Ⅱ 线电流本端第1个波头时间</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV台曹Ⅱ 线电流对端第1个波头时间" name="FlWavePeerT">
+                            <DAI name="dU">
+                                <Val>1000kV台曹Ⅱ 线电流对端第1个波头时间</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV台曹Ⅱ 线电流波速度" name="WaveSpd">
+                            <SDI desc="1000kV台曹Ⅱ 线电流波速度" name="setMag">
+                                <DAI name="f">
+                                    <Val>294.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅱ 线电流波速度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅱ 线电流波速度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅱ 线电流波速度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>300.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅱ 线电流波速度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>1000kV台曹Ⅱ 线电流波速度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV台曹Ⅱ 线电流线路长度" name="LineLen">
+                            <SDI desc="1000kV台曹Ⅱ 线电流线路长度" name="setMag">
+                                <DAI name="f">
+                                    <Val>200.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅱ 线电流线路长度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅱ 线电流线路长度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅱ 线电流线路长度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>1000.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV台曹Ⅱ 线电流线路长度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>1000kV台曹Ⅱ 线电流线路长度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路名称" name="LineName">
+                            <DAI name="setVal">
+                                <Val>1000kV台曹Ⅱ 线电流</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>线路名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="变电站名称" name="SubName">
+                            <DAI name="setVal">
+                                <Val>1000kV曹州站</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="对端变电站名称" name="PeerSubName">
+                            <DAI name="setVal">
+                                <Val>1000kV邢台变</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>对端变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                    </LN>
+                    <LN desc="1000kV曹湖Ⅰ线电流单端测距" inst="3" lnClass="STFL" lnType="SDL_SDL7003_V1.0_STFL" prefix="">
+                        <DOI desc="模式" name="Mod">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="ctlModel">
+                                <Val>status-only</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>模式</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="性能" name="Beh">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>性能</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="健康状况" name="Health">
+                            <DAI name="stVal">
+                                <Val>Ok</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>健康状况</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="铭牌" name="NamPlt">
+                            <DAI name="vendor">
+                                <Val>SDDL</Val>
+                            </DAI>
+                            <DAI name="swRev">
+                                <Val>7.0</Val>
+                            </DAI>
+                            <DAI name="d">
+                                <Val>Name Plate</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>铭牌</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="动作" name="Op">
+                            <DAI name="dU">
+                                <Val>动作</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV曹湖Ⅰ线电流故障序号" name="FltNum">
+                            <DAI name="dU">
+                                <Val>1000kV曹湖Ⅰ线电流故障序号</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV曹湖Ⅰ线电流单端测距结果" name="FltDiskm">
+                            <SDI desc="1000kV曹湖Ⅰ线电流单端测距结果值" name="mag">
+                                <DAI name="f">
+                                    <Val>0.000000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅰ线电流单端测距结果值单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>1000kV曹湖Ⅰ线电流单端测距结果</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV曹湖Ⅰ线电流本端第1个波头时间" name="FlWaveSelfT">
+                            <DAI name="dU">
+                                <Val>1000kV曹湖Ⅰ线电流本端第1个波头时间</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV曹湖Ⅰ线电流波速度" name="WaveSpd">
+                            <SDI desc="1000kV曹湖Ⅰ线电流波速度" name="setMag">
+                                <DAI name="f">
+                                    <Val>294.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅰ线电流波速度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅰ线电流波速度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅰ线电流波速度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>300.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅰ线电流波速度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>1000kV曹湖Ⅰ线电流波速度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV曹湖Ⅰ线电流线路长度" name="LineLen">
+                            <SDI desc="1000kV曹湖Ⅰ线电流线路长度" name="setMag">
+                                <DAI name="f">
+                                    <Val>200.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅰ线电流线路长度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅰ线电流线路长度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅰ线电流线路长度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>1000.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅰ线电流线路长度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>1000kV曹湖Ⅰ线电流线路长度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路名称" name="LineName">
+                            <DAI name="setVal">
+                                <Val>1000kV曹湖Ⅰ线电流</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>线路名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="变电站名称" name="SubName">
+                            <DAI name="setVal">
+                                <Val>1000kV曹州站</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="对端变电站名称" name="PeerSubName">
+                            <DAI name="setVal">
+                                <Val>1000kV微山湖变</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>对端变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                    </LN>
+                    <LN desc="1000kV曹湖Ⅰ线电流双端测距" inst="3" lnClass="DTFL" lnType="SDL_SDL7003_V1.0_DTFL" prefix="">
+                        <DOI desc="模式" name="Mod">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="ctlModel">
+                                <Val>status-only</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>模式</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="性能" name="Beh">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>性能</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="健康状况" name="Health">
+                            <DAI name="stVal">
+                                <Val>Ok</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>健康状况</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="铭牌" name="NamPlt">
+                            <DAI name="vendor">
+                                <Val>SDDL</Val>
+                            </DAI>
+                            <DAI name="swRev">
+                                <Val>7.0</Val>
+                            </DAI>
+                            <DAI name="d">
+                                <Val>Name Plate</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>铭牌</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="动作" name="Op">
+                            <DAI name="dU">
+                                <Val>动作</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV曹湖Ⅰ线电流故障序号" name="FltNum">
+                            <DAI name="dU">
+                                <Val>1000kV曹湖Ⅰ线电流故障序号</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV曹湖Ⅰ线电流双端测距结果" name="FltDiskm">
+                            <SDI desc="1000kV曹湖Ⅰ线电流双端测距结果值" name="mag">
+                                <DAI name="f">
+                                    <Val>0.000000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅰ线电流双端测距结果值单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>1000kV曹湖Ⅰ线电流双端测距结果</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV曹湖Ⅰ线电流本端第1个波头时间" name="FlWaveSelfT">
+                            <DAI name="dU">
+                                <Val>1000kV曹湖Ⅰ线电流本端第1个波头时间</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV曹湖Ⅰ线电流对端第1个波头时间" name="FlWavePeerT">
+                            <DAI name="dU">
+                                <Val>1000kV曹湖Ⅰ线电流对端第1个波头时间</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV曹湖Ⅰ线电流波速度" name="WaveSpd">
+                            <SDI desc="1000kV曹湖Ⅰ线电流波速度" name="setMag">
+                                <DAI name="f">
+                                    <Val>294.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅰ线电流波速度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅰ线电流波速度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅰ线电流波速度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>300.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅰ线电流波速度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>1000kV曹湖Ⅰ线电流波速度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV曹湖Ⅰ线电流线路长度" name="LineLen">
+                            <SDI desc="1000kV曹湖Ⅰ线电流线路长度" name="setMag">
+                                <DAI name="f">
+                                    <Val>200.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅰ线电流线路长度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅰ线电流线路长度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅰ线电流线路长度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>1000.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅰ线电流线路长度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>1000kV曹湖Ⅰ线电流线路长度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路名称" name="LineName">
+                            <DAI name="setVal">
+                                <Val>1000kV曹湖Ⅰ线电流</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>线路名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="变电站名称" name="SubName">
+                            <DAI name="setVal">
+                                <Val>1000kV曹州站</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="对端变电站名称" name="PeerSubName">
+                            <DAI name="setVal">
+                                <Val>1000kV微山湖变</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>对端变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                    </LN>
+                    <LN desc="1000kV曹湖Ⅱ线电流单端测距" inst="4" lnClass="STFL" lnType="SDL_SDL7003_V1.0_STFL" prefix="">
+                        <DOI desc="模式" name="Mod">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="ctlModel">
+                                <Val>status-only</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>模式</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="性能" name="Beh">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>性能</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="健康状况" name="Health">
+                            <DAI name="stVal">
+                                <Val>Ok</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>健康状况</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="铭牌" name="NamPlt">
+                            <DAI name="vendor">
+                                <Val>SDDL</Val>
+                            </DAI>
+                            <DAI name="swRev">
+                                <Val>7.0</Val>
+                            </DAI>
+                            <DAI name="d">
+                                <Val>Name Plate</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>铭牌</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="动作" name="Op">
+                            <DAI name="dU">
+                                <Val>动作</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV曹湖Ⅱ线电流故障序号" name="FltNum">
+                            <DAI name="dU">
+                                <Val>1000kV曹湖Ⅱ线电流故障序号</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV曹湖Ⅱ线电流单端测距结果" name="FltDiskm">
+                            <SDI desc="1000kV曹湖Ⅱ线电流单端测距结果值" name="mag">
+                                <DAI name="f">
+                                    <Val>0.000000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅱ线电流单端测距结果值单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>1000kV曹湖Ⅱ线电流单端测距结果</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV曹湖Ⅱ线电流本端第1个波头时间" name="FlWaveSelfT">
+                            <DAI name="dU">
+                                <Val>1000kV曹湖Ⅱ线电流本端第1个波头时间</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV曹湖Ⅱ线电流波速度" name="WaveSpd">
+                            <SDI desc="1000kV曹湖Ⅱ线电流波速度" name="setMag">
+                                <DAI name="f">
+                                    <Val>294.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅱ线电流波速度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅱ线电流波速度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅱ线电流波速度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>300.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅱ线电流波速度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>1000kV曹湖Ⅱ线电流波速度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV曹湖Ⅱ线电流线路长度" name="LineLen">
+                            <SDI desc="1000kV曹湖Ⅱ线电流线路长度" name="setMag">
+                                <DAI name="f">
+                                    <Val>200.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅱ线电流线路长度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅱ线电流线路长度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅱ线电流线路长度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>1000.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅱ线电流线路长度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>1000kV曹湖Ⅱ线电流线路长度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路名称" name="LineName">
+                            <DAI name="setVal">
+                                <Val>1000kV曹湖Ⅱ线电流</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>线路名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="变电站名称" name="SubName">
+                            <DAI name="setVal">
+                                <Val>1000kV曹州站</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="对端变电站名称" name="PeerSubName">
+                            <DAI name="setVal">
+                                <Val>1000kV微山湖变</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>对端变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                    </LN>
+                    <LN desc="1000kV曹湖Ⅱ线电流双端测距" inst="4" lnClass="DTFL" lnType="SDL_SDL7003_V1.0_DTFL" prefix="">
+                        <DOI desc="模式" name="Mod">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="ctlModel">
+                                <Val>status-only</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>模式</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="性能" name="Beh">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>性能</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="健康状况" name="Health">
+                            <DAI name="stVal">
+                                <Val>Ok</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>健康状况</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="铭牌" name="NamPlt">
+                            <DAI name="vendor">
+                                <Val>SDDL</Val>
+                            </DAI>
+                            <DAI name="swRev">
+                                <Val>7.0</Val>
+                            </DAI>
+                            <DAI name="d">
+                                <Val>Name Plate</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>铭牌</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="动作" name="Op">
+                            <DAI name="dU">
+                                <Val>动作</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV曹湖Ⅱ线电流故障序号" name="FltNum">
+                            <DAI name="dU">
+                                <Val>1000kV曹湖Ⅱ线电流故障序号</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV曹湖Ⅱ线电流双端测距结果" name="FltDiskm">
+                            <SDI desc="1000kV曹湖Ⅱ线电流双端测距结果值" name="mag">
+                                <DAI name="f">
+                                    <Val>0.000000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅱ线电流双端测距结果值单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>1000kV曹湖Ⅱ线电流双端测距结果</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV曹湖Ⅱ线电流本端第1个波头时间" name="FlWaveSelfT">
+                            <DAI name="dU">
+                                <Val>1000kV曹湖Ⅱ线电流本端第1个波头时间</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV曹湖Ⅱ线电流对端第1个波头时间" name="FlWavePeerT">
+                            <DAI name="dU">
+                                <Val>1000kV曹湖Ⅱ线电流对端第1个波头时间</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV曹湖Ⅱ线电流波速度" name="WaveSpd">
+                            <SDI desc="1000kV曹湖Ⅱ线电流波速度" name="setMag">
+                                <DAI name="f">
+                                    <Val>294.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅱ线电流波速度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅱ线电流波速度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅱ线电流波速度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>300.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅱ线电流波速度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>1000kV曹湖Ⅱ线电流波速度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="1000kV曹湖Ⅱ线电流线路长度" name="LineLen">
+                            <SDI desc="1000kV曹湖Ⅱ线电流线路长度" name="setMag">
+                                <DAI name="f">
+                                    <Val>200.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅱ线电流线路长度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅱ线电流线路长度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅱ线电流线路长度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>1000.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="1000kV曹湖Ⅱ线电流线路长度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>1000kV曹湖Ⅱ线电流线路长度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路名称" name="LineName">
+                            <DAI name="setVal">
+                                <Val>1000kV曹湖Ⅱ线电流</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>线路名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="变电站名称" name="SubName">
+                            <DAI name="setVal">
+                                <Val>1000kV曹州站</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="对端变电站名称" name="PeerSubName">
+                            <DAI name="setVal">
+                                <Val>1000kV微山湖变</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>对端变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                    </LN>
+                    <LN desc="线路13单端测距" inst="5" lnClass="STFL" lnType="SDL_SDL7003_V1.0_STFL" prefix="">
+                        <DOI desc="模式" name="Mod">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="ctlModel">
+                                <Val>status-only</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>模式</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="性能" name="Beh">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>性能</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="健康状况" name="Health">
+                            <DAI name="stVal">
+                                <Val>Ok</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>健康状况</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="铭牌" name="NamPlt">
+                            <DAI name="vendor">
+                                <Val>SDDL</Val>
+                            </DAI>
+                            <DAI name="swRev">
+                                <Val>7.0</Val>
+                            </DAI>
+                            <DAI name="d">
+                                <Val>Name Plate</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>铭牌</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="动作" name="Op">
+                            <DAI name="dU">
+                                <Val>动作</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路13故障序号" name="FltNum">
+                            <DAI name="dU">
+                                <Val>线路13故障序号</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路13单端测距结果" name="FltDiskm">
+                            <SDI desc="线路13单端测距结果值" name="mag">
+                                <DAI name="f">
+                                    <Val>0.000000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路13单端测距结果值单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>线路13单端测距结果</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路13本端第1个波头时间" name="FlWaveSelfT">
+                            <DAI name="dU">
+                                <Val>线路13本端第1个波头时间</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路13波速度" name="WaveSpd">
+                            <SDI desc="线路13波速度" name="setMag">
+                                <DAI name="f">
+                                    <Val>294.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路13波速度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路13波速度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路13波速度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>300.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路13波速度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>线路13波速度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路13线路长度" name="LineLen">
+                            <SDI desc="线路13线路长度" name="setMag">
+                                <DAI name="f">
+                                    <Val>200.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路13线路长度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路13线路长度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路13线路长度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>1000.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路13线路长度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>线路13线路长度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路名称" name="LineName">
+                            <DAI name="setVal">
+                                <Val>线路13</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>线路名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="变电站名称" name="SubName">
+                            <DAI name="setVal">
+                                <Val>1000kV曹州站</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="对端变电站名称" name="PeerSubName">
+                            <DAI name="setVal">
+                                <Val>1000kV微山湖变</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>对端变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                    </LN>
+                    <LN desc="线路13双端测距" inst="5" lnClass="DTFL" lnType="SDL_SDL7003_V1.0_DTFL" prefix="">
+                        <DOI desc="模式" name="Mod">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="ctlModel">
+                                <Val>status-only</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>模式</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="性能" name="Beh">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>性能</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="健康状况" name="Health">
+                            <DAI name="stVal">
+                                <Val>Ok</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>健康状况</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="铭牌" name="NamPlt">
+                            <DAI name="vendor">
+                                <Val>SDDL</Val>
+                            </DAI>
+                            <DAI name="swRev">
+                                <Val>7.0</Val>
+                            </DAI>
+                            <DAI name="d">
+                                <Val>Name Plate</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>铭牌</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="动作" name="Op">
+                            <DAI name="dU">
+                                <Val>动作</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路13故障序号" name="FltNum">
+                            <DAI name="dU">
+                                <Val>线路13故障序号</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路13双端测距结果" name="FltDiskm">
+                            <SDI desc="线路13双端测距结果值" name="mag">
+                                <DAI name="f">
+                                    <Val>0.000000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路13双端测距结果值单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>线路13双端测距结果</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路13本端第1个波头时间" name="FlWaveSelfT">
+                            <DAI name="dU">
+                                <Val>线路13本端第1个波头时间</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路13对端第1个波头时间" name="FlWavePeerT">
+                            <DAI name="dU">
+                                <Val>线路13对端第1个波头时间</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路13波速度" name="WaveSpd">
+                            <SDI desc="线路13波速度" name="setMag">
+                                <DAI name="f">
+                                    <Val>294.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路13波速度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路13波速度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路13波速度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>300.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路13波速度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>线路13波速度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路13线路长度" name="LineLen">
+                            <SDI desc="线路13线路长度" name="setMag">
+                                <DAI name="f">
+                                    <Val>200.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路13线路长度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路13线路长度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路13线路长度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>1000.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路13线路长度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>线路13线路长度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路名称" name="LineName">
+                            <DAI name="setVal">
+                                <Val>线路13</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>线路名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="变电站名称" name="SubName">
+                            <DAI name="setVal">
+                                <Val>1000kV曹州站</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="对端变电站名称" name="PeerSubName">
+                            <DAI name="setVal">
+                                <Val>1000kV微山湖变</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>对端变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                    </LN>
+                    <LN desc="线路14单端测距" inst="6" lnClass="STFL" lnType="SDL_SDL7003_V1.0_STFL" prefix="">
+                        <DOI desc="模式" name="Mod">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="ctlModel">
+                                <Val>status-only</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>模式</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="性能" name="Beh">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>性能</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="健康状况" name="Health">
+                            <DAI name="stVal">
+                                <Val>Ok</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>健康状况</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="铭牌" name="NamPlt">
+                            <DAI name="vendor">
+                                <Val>SDDL</Val>
+                            </DAI>
+                            <DAI name="swRev">
+                                <Val>7.0</Val>
+                            </DAI>
+                            <DAI name="d">
+                                <Val>Name Plate</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>铭牌</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="动作" name="Op">
+                            <DAI name="dU">
+                                <Val>动作</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路14故障序号" name="FltNum">
+                            <DAI name="dU">
+                                <Val>线路14故障序号</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路14单端测距结果" name="FltDiskm">
+                            <SDI desc="线路14单端测距结果值" name="mag">
+                                <DAI name="f">
+                                    <Val>0.000000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路14单端测距结果值单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>线路14单端测距结果</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路14本端第1个波头时间" name="FlWaveSelfT">
+                            <DAI name="dU">
+                                <Val>线路14本端第1个波头时间</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路14波速度" name="WaveSpd">
+                            <SDI desc="线路14波速度" name="setMag">
+                                <DAI name="f">
+                                    <Val>294.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路14波速度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路14波速度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路14波速度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>300.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路14波速度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>线路14波速度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路14线路长度" name="LineLen">
+                            <SDI desc="线路14线路长度" name="setMag">
+                                <DAI name="f">
+                                    <Val>200.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路14线路长度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路14线路长度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路14线路长度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>1000.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路14线路长度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>线路14线路长度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路名称" name="LineName">
+                            <DAI name="setVal">
+                                <Val>线路14</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>线路名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="变电站名称" name="SubName">
+                            <DAI name="setVal">
+                                <Val>1000kV曹州站</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="对端变电站名称" name="PeerSubName">
+                            <DAI name="setVal">
+                                <Val>1000kV微山湖变</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>对端变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                    </LN>
+                    <LN desc="线路14双端测距" inst="6" lnClass="DTFL" lnType="SDL_SDL7003_V1.0_DTFL" prefix="">
+                        <DOI desc="模式" name="Mod">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="ctlModel">
+                                <Val>status-only</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>模式</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="性能" name="Beh">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>性能</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="健康状况" name="Health">
+                            <DAI name="stVal">
+                                <Val>Ok</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>健康状况</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="铭牌" name="NamPlt">
+                            <DAI name="vendor">
+                                <Val>SDDL</Val>
+                            </DAI>
+                            <DAI name="swRev">
+                                <Val>7.0</Val>
+                            </DAI>
+                            <DAI name="d">
+                                <Val>Name Plate</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>铭牌</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="动作" name="Op">
+                            <DAI name="dU">
+                                <Val>动作</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路14故障序号" name="FltNum">
+                            <DAI name="dU">
+                                <Val>线路14故障序号</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路14双端测距结果" name="FltDiskm">
+                            <SDI desc="线路14双端测距结果值" name="mag">
+                                <DAI name="f">
+                                    <Val>0.000000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路14双端测距结果值单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>线路14双端测距结果</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路14本端第1个波头时间" name="FlWaveSelfT">
+                            <DAI name="dU">
+                                <Val>线路14本端第1个波头时间</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路14对端第1个波头时间" name="FlWavePeerT">
+                            <DAI name="dU">
+                                <Val>线路14对端第1个波头时间</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路14波速度" name="WaveSpd">
+                            <SDI desc="线路14波速度" name="setMag">
+                                <DAI name="f">
+                                    <Val>294.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路14波速度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路14波速度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路14波速度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>300.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路14波速度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>线路14波速度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路14线路长度" name="LineLen">
+                            <SDI desc="线路14线路长度" name="setMag">
+                                <DAI name="f">
+                                    <Val>200.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路14线路长度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路14线路长度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路14线路长度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>1000.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路14线路长度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>线路14线路长度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路名称" name="LineName">
+                            <DAI name="setVal">
+                                <Val>线路14</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>线路名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="变电站名称" name="SubName">
+                            <DAI name="setVal">
+                                <Val>1000kV曹州站</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="对端变电站名称" name="PeerSubName">
+                            <DAI name="setVal">
+                                <Val>1000kV微山湖变</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>对端变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                    </LN>
+                    <LN desc="线路15单端测距" inst="7" lnClass="STFL" lnType="SDL_SDL7003_V1.0_STFL" prefix="">
+                        <DOI desc="模式" name="Mod">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="ctlModel">
+                                <Val>status-only</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>模式</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="性能" name="Beh">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>性能</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="健康状况" name="Health">
+                            <DAI name="stVal">
+                                <Val>Ok</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>健康状况</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="铭牌" name="NamPlt">
+                            <DAI name="vendor">
+                                <Val>SDDL</Val>
+                            </DAI>
+                            <DAI name="swRev">
+                                <Val>7.0</Val>
+                            </DAI>
+                            <DAI name="d">
+                                <Val>Name Plate</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>铭牌</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="动作" name="Op">
+                            <DAI name="dU">
+                                <Val>动作</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路15故障序号" name="FltNum">
+                            <DAI name="dU">
+                                <Val>线路15故障序号</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路15单端测距结果" name="FltDiskm">
+                            <SDI desc="线路15单端测距结果值" name="mag">
+                                <DAI name="f">
+                                    <Val>0.000000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路15单端测距结果值单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>线路15单端测距结果</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路15本端第1个波头时间" name="FlWaveSelfT">
+                            <DAI name="dU">
+                                <Val>线路15本端第1个波头时间</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路15波速度" name="WaveSpd">
+                            <SDI desc="线路15波速度" name="setMag">
+                                <DAI name="f">
+                                    <Val>294.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路15波速度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路15波速度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路15波速度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>300.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路15波速度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>线路15波速度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路15线路长度" name="LineLen">
+                            <SDI desc="线路15线路长度" name="setMag">
+                                <DAI name="f">
+                                    <Val>200.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路15线路长度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路15线路长度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路15线路长度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>1000.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路15线路长度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>线路15线路长度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路名称" name="LineName">
+                            <DAI name="setVal">
+                                <Val>线路15</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>线路名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="变电站名称" name="SubName">
+                            <DAI name="setVal">
+                                <Val>1000kV曹州站</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="对端变电站名称" name="PeerSubName">
+                            <DAI name="setVal">
+                                <Val>1000kV微山湖变</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>对端变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                    </LN>
+                    <LN desc="线路15双端测距" inst="7" lnClass="DTFL" lnType="SDL_SDL7003_V1.0_DTFL" prefix="">
+                        <DOI desc="模式" name="Mod">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="ctlModel">
+                                <Val>status-only</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>模式</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="性能" name="Beh">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>性能</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="健康状况" name="Health">
+                            <DAI name="stVal">
+                                <Val>Ok</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>健康状况</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="铭牌" name="NamPlt">
+                            <DAI name="vendor">
+                                <Val>SDDL</Val>
+                            </DAI>
+                            <DAI name="swRev">
+                                <Val>7.0</Val>
+                            </DAI>
+                            <DAI name="d">
+                                <Val>Name Plate</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>铭牌</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="动作" name="Op">
+                            <DAI name="dU">
+                                <Val>动作</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路15故障序号" name="FltNum">
+                            <DAI name="dU">
+                                <Val>线路15故障序号</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路15双端测距结果" name="FltDiskm">
+                            <SDI desc="线路15双端测距结果值" name="mag">
+                                <DAI name="f">
+                                    <Val>0.000000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路15双端测距结果值单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>线路15双端测距结果</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路15本端第1个波头时间" name="FlWaveSelfT">
+                            <DAI name="dU">
+                                <Val>线路15本端第1个波头时间</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路15对端第1个波头时间" name="FlWavePeerT">
+                            <DAI name="dU">
+                                <Val>线路15对端第1个波头时间</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路15波速度" name="WaveSpd">
+                            <SDI desc="线路15波速度" name="setMag">
+                                <DAI name="f">
+                                    <Val>294.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路15波速度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路15波速度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路15波速度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>300.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路15波速度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>线路15波速度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路15线路长度" name="LineLen">
+                            <SDI desc="线路15线路长度" name="setMag">
+                                <DAI name="f">
+                                    <Val>200.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路15线路长度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路15线路长度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路15线路长度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>1000.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路15线路长度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>线路15线路长度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路名称" name="LineName">
+                            <DAI name="setVal">
+                                <Val>线路15</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>线路名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="变电站名称" name="SubName">
+                            <DAI name="setVal">
+                                <Val>1000kV曹州站</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="对端变电站名称" name="PeerSubName">
+                            <DAI name="setVal">
+                                <Val>1000kV微山湖变</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>对端变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                    </LN>
+                    <LN desc="线路16单端测距" inst="8" lnClass="STFL" lnType="SDL_SDL7003_V1.0_STFL" prefix="">
+                        <DOI desc="模式" name="Mod">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="ctlModel">
+                                <Val>status-only</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>模式</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="性能" name="Beh">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>性能</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="健康状况" name="Health">
+                            <DAI name="stVal">
+                                <Val>Ok</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>健康状况</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="铭牌" name="NamPlt">
+                            <DAI name="vendor">
+                                <Val>SDDL</Val>
+                            </DAI>
+                            <DAI name="swRev">
+                                <Val>7.0</Val>
+                            </DAI>
+                            <DAI name="d">
+                                <Val>Name Plate</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>铭牌</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="动作" name="Op">
+                            <DAI name="dU">
+                                <Val>动作</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路16故障序号" name="FltNum">
+                            <DAI name="dU">
+                                <Val>线路16故障序号</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路16单端测距结果" name="FltDiskm">
+                            <SDI desc="线路16单端测距结果值" name="mag">
+                                <DAI name="f">
+                                    <Val>0.000000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路16单端测距结果值单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>线路16单端测距结果</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路16本端第1个波头时间" name="FlWaveSelfT">
+                            <DAI name="dU">
+                                <Val>线路16本端第1个波头时间</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路16波速度" name="WaveSpd">
+                            <SDI desc="线路16波速度" name="setMag">
+                                <DAI name="f">
+                                    <Val>294.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路16波速度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路16波速度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路16波速度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>300.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路16波速度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>线路16波速度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路16线路长度" name="LineLen">
+                            <SDI desc="线路16线路长度" name="setMag">
+                                <DAI name="f">
+                                    <Val>200.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路16线路长度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路16线路长度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路16线路长度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>1000.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路16线路长度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>线路16线路长度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路名称" name="LineName">
+                            <DAI name="setVal">
+                                <Val>线路16</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>线路名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="变电站名称" name="SubName">
+                            <DAI name="setVal">
+                                <Val>1000kV曹州站</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="对端变电站名称" name="PeerSubName">
+                            <DAI name="setVal">
+                                <Val>1000kV微山湖变</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>对端变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                    </LN>
+                    <LN desc="线路16双端测距" inst="8" lnClass="DTFL" lnType="SDL_SDL7003_V1.0_DTFL" prefix="">
+                        <DOI desc="模式" name="Mod">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="ctlModel">
+                                <Val>status-only</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>模式</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="性能" name="Beh">
+                            <DAI name="stVal">
+                                <Val>on</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>性能</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="健康状况" name="Health">
+                            <DAI name="stVal">
+                                <Val>Ok</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>健康状况</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="铭牌" name="NamPlt">
+                            <DAI name="vendor">
+                                <Val>SDDL</Val>
+                            </DAI>
+                            <DAI name="swRev">
+                                <Val>7.0</Val>
+                            </DAI>
+                            <DAI name="d">
+                                <Val>Name Plate</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>铭牌</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="动作" name="Op">
+                            <DAI name="dU">
+                                <Val>动作</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路16故障序号" name="FltNum">
+                            <DAI name="dU">
+                                <Val>线路16故障序号</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路16双端测距结果" name="FltDiskm">
+                            <SDI desc="线路16双端测距结果值" name="mag">
+                                <DAI name="f">
+                                    <Val>0.000000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路16双端测距结果值单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>线路16双端测距结果</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路16本端第1个波头时间" name="FlWaveSelfT">
+                            <DAI name="dU">
+                                <Val>线路16本端第1个波头时间</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路16对端第1个波头时间" name="FlWavePeerT">
+                            <DAI name="dU">
+                                <Val>线路16对端第1个波头时间</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路16波速度" name="WaveSpd">
+                            <SDI desc="线路16波速度" name="setMag">
+                                <DAI name="f">
+                                    <Val>294.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路16波速度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路16波速度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路16波速度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>300.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路16波速度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>线路16波速度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路16线路长度" name="LineLen">
+                            <SDI desc="线路16线路长度" name="setMag">
+                                <DAI name="f">
+                                    <Val>200.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路16线路长度单位" name="units">
+                                <DAI name="SIUnit">
+                                    <Val>m</Val>
+                                </DAI>
+                                <DAI name="multiplier">
+                                    <Val>k</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路16线路长度最小值" name="minVal">
+                                <DAI name="f">
+                                    <Val>0.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路16线路长度最大值" name="maxVal">
+                                <DAI name="f">
+                                    <Val>1000.000</Val>
+                                </DAI>
+                            </SDI>
+                            <SDI desc="线路16线路长度步长" name="stepSize">
+                                <DAI name="f">
+                                    <Val>0.010</Val>
+                                </DAI>
+                            </SDI>
+                            <DAI name="dU">
+                                <Val>线路16线路长度</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="线路名称" name="LineName">
+                            <DAI name="setVal">
+                                <Val>线路16</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>线路名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="变电站名称" name="SubName">
+                            <DAI name="setVal">
+                                <Val>1000kV曹州站</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                        <DOI desc="对端变电站名称" name="PeerSubName">
+                            <DAI name="setVal">
+                                <Val>1000kV微山湖变</Val>
+                            </DAI>
+                            <DAI name="dU">
+                                <Val>对端变电站名称</Val>
+                            </DAI>
+                        </DOI>
+                    </LN>
+                </LDevice>
+            </Server>
+        </AccessPoint>
+    </IED>
+  <DataTypeTemplates>
+    <LNodeType desc="LD0逻辑节点0" id="SDL_SDL7003_V1.0_LLN0_LD0" lnClass="LLN0">
+      <DO desc="模式" name="Mod" type="CN_INC_Mod"/>
+      <DO desc="性能" name="Beh" type="CN_INS_Beh"/>
+      <DO desc="健康状况" name="Health" type="CN_INS_Health"/>
+      <DO desc="铭牌" name="NamPlt" type="CN_LPL_LN0"/>
+      <DO desc="装置复位" name="LEDRs" type="CN_SPC"/>
+    </LNodeType>
+    <LNodeType desc="通用LLN0" id="SDL_SDL7003_V1.0_LLN0" lnClass="LLN0">
+      <DO desc="模式" name="Mod" type="CN_INC_Mod"/>
+      <DO desc="性能" name="Beh" type="CN_INS_Beh"/>
+      <DO desc="健康状况" name="Health" type="CN_INS_Health"/>
+      <DO desc="铭牌" name="NamPlt" type="CN_LPL_LN0"/>
+      <DO desc="本地操作" name="Loc" type="CN_SPS"/>
+      <DO desc="电力公司名" name="CompanyName" type="SDL_STG_SP_EX"/>
+      <DO desc="厂站名" name="StationName" type="SDL_STG_SP_EX"/>
+      <DO desc="装置名" name="DeviceName" type="SDL_STG_SP_EX"/>
+    </LNodeType>
+    <LNodeType desc="测距装置" id="SDL_SDL7003_V1.0_LPHD" lnClass="LPHD">
+      <DO desc="测距装置铭牌" name="PhyNam" type="CN_DPL"/>
+      <DO desc="测距装置健康状况" name="PhyHealth" type="CN_INS_Health"/>
+      <DO desc="是否代理" name="Proxy" type="CN_SPS"/>
+    </LNodeType>
+    <LNodeType desc="装置异常告警" id="SDL_SDL7003_V1.0_GGIO_ALM" lnClass="GGIO">
+      <DO desc="模式" name="Mod" type="CN_INC_Mod"/>
+      <DO desc="性能" name="Beh" type="CN_INS_Beh"/>
+      <DO desc="健康状况" name="Health" type="CN_INS_Health"/>
+      <DO desc="铭牌" name="NamPlt" type="CN_LPL"/>
+      <DO desc="装置异常" name="Alm1" type="CN_SPS"/>
+      <DO desc="GPS异常" name="Alm2" type="CN_SPS"/>
+      <DO desc="电源异常" name="Alm3" type="CN_SPS"/>
+      <DO desc="CPU异常" name="Alm4" type="CN_SPS"/>
+      <DO desc="AD板卡异常" name="Alm5" type="CN_SPS"/>
+      <DO desc="站间通信异常" name="Alm6" type="CN_SPS"/>
+    </LNodeType>
+    <LNodeType desc="录波记录功能" id="SDL_SDL7003_V1.0_RDRE" lnClass="RDRE">
+      <DO desc="模式" name="Mod" type="CN_INC_Mod"/>
+      <DO desc="性能" name="Beh" type="CN_INS_Beh"/>
+      <DO desc="健康状况" name="Health" type="CN_INS_Health"/>
+      <DO desc="铭牌" name="NamPlt" type="CN_LPL"/>
+      <DO desc="远程启动录波" name="RcdTrg" type="CN_SPC"/>
+      <DO desc="内存复位" name="MemRs" type="CN_SPC"/>
+      <DO desc="清空内存" name="MemClr" type="CN_SPC"/>
+      <DO desc="录波完成" name="RcdMade" type="CN_SPS"/>
+      <DO desc="故障序号" name="FltNum" type="CN_INS"/>
+      <DO desc="电网故障序号" name="GriFltNum" type="CN_INS"/>
+      <DO desc="录波启动" name="RcdStr" type="CN_SPS"/>
+      <DO desc="低速录波A段长度(ms)" name="LPartATime" type="SDL_ING_SG_EX"/>
+      <DO desc="低速录波B段长度(ms)" name="LPartBTime" type="SDL_ING_SG_EX"/>
+      <DO desc="高速录波A段长度(ms)" name="HPartATime" type="SDL_ING_SG_EX"/>
+      <DO desc="高速录波B段长度(ms)" name="HPartBTime" type="SDL_ING_SG_EX"/>
+    </LNodeType>
+    <LNodeType desc="单端行波测距" id="SDL_SDL7003_V1.0_STFL" lnClass="STFL">
+      <DO desc="模式" name="Mod" type="CN_INC_Mod"/>
+      <DO desc="性能" name="Beh" type="CN_INS_Beh"/>
+      <DO desc="健康状况" name="Health" type="CN_INS_Health"/>
+      <DO desc="铭牌" name="NamPlt" type="CN_LPL_EX"/>
+      <DO desc="动作" name="Op" type="CN_ACT"/>
+      <DO desc="故障序号" name="FltNum" type="CN_INS"/>
+      <DO desc="测距结果" name="FltDiskm" type="CN_MV"/>
+      <DO desc="本端第1个波头时间" name="FlWaveSelfT" type="SDL_NST_EX"/>
+      <DO desc="波速度" name="WaveSpd" type="SDL_ASG_SP_EX"/>
+      <DO desc="线路长度" name="LineLen" type="SDL_ASG_SP_EX"/>
+      <DO desc="线路名称" name="LineName" type="SDL_STG_SP_EX"/>
+      <DO desc="变电站名称" name="SubName" type="SDL_STG_SP_EX"/>
+      <DO desc="对端变电站名称" name="PeerSubName" type="SDL_STG_SP_EX"/>
+    </LNodeType>
+    <LNodeType desc="双端行波测距" id="SDL_SDL7003_V1.0_DTFL" lnClass="DTFL">
+      <DO desc="模式" name="Mod" type="CN_INC_Mod"/>
+      <DO desc="性能" name="Beh" type="CN_INS_Beh"/>
+      <DO desc="健康状况" name="Health" type="CN_INS_Health"/>
+      <DO desc="铭牌" name="NamPlt" type="CN_LPL_EX"/>
+      <DO desc="动作" name="Op" type="CN_ACT"/>
+      <DO desc="故障序号" name="FltNum" type="CN_INS"/>
+      <DO desc="测距结果" name="FltDiskm" type="CN_MV"/>
+      <DO desc="本端第1个波头时间" name="FlWaveSelfT" type="SDL_NST_EX"/>
+      <DO desc="对端第1个波头时间" name="FlWavePeerT" type="SDL_NST_EX"/>
+      <DO desc="波速度" name="WaveSpd" type="SDL_ASG_SP_EX"/>
+      <DO desc="线路长度" name="LineLen" type="SDL_ASG_SP_EX"/>
+      <DO desc="线路名称" name="LineName" type="SDL_STG_SP_EX"/>
+      <DO desc="变电站名称" name="SubName" type="SDL_STG_SP_EX"/>
+      <DO desc="对端变电站名称" name="PeerSubName" type="SDL_STG_SP_EX"/>
+    </LNodeType>
+    <DOType cdc="INC" id="CN_INC_Mod">
+      <DA bType="Enum" dchg="true" fc="ST" name="stVal" type="Mod"/>
+      <DA bType="Quality" fc="ST" name="q" qchg="true" />
+      <DA bType="Timestamp" fc="ST" name="t"/>
+      <DA bType="Enum" fc="CF" name="ctlModel" type="ctlModel"/>
+      <DA bType="Unicode255" fc="DC" name="dU"/>
+    </DOType>
+    <DOType cdc="INS" id="CN_INS_Beh">
+      <DA bType="Enum" dchg="true" fc="ST" name="stVal" type="Beh"/>
+      <DA bType="Quality" fc="ST" name="q" qchg="true" />
+      <DA bType="Timestamp" fc="ST" name="t"/>
+      <DA bType="Unicode255" fc="DC" name="dU"/>
+    </DOType>
+    <DOType cdc="INS" id="CN_INS_Health">
+      <DA bType="Enum" dchg="true" fc="ST" name="stVal" type="Health"/>
+      <DA bType="Quality" fc="ST" name="q" qchg="true" />
+      <DA bType="Timestamp" fc="ST" name="t"/>
+      <DA bType="Unicode255" fc="DC" name="dU"/>
+    </DOType>
+    <DOType cdc="LPL" id="CN_LPL_LN0">
+      <DA bType="VisString255" fc="DC" name="vendor"/>
+      <DA bType="VisString255" fc="DC" name="swRev"/>
+      <DA bType="VisString255" fc="DC" name="d"/>
+      <DA bType="Unicode255" fc="DC" name="dU"/>
+      <DA bType="VisString255" fc="DC" name="configRev"/>
+      <DA bType="VisString255" fc="EX" name="ldNs">
+        <Val>IEC 61850-7-4:2003</Val>
+      </DA>
+    </DOType>
+    <DOType cdc="SPC" id="CN_SPC">
+      <DA bType="VisString65" fc="CO" name="SBO"/>
+      <DA bType="Struct" fc="CO" name="SBOw" type="CN_SBOw_Oper_SDPC"/>
+      <DA bType="Struct" fc="CO" name="Oper" type="CN_SBOw_Oper_SDPC"/>
+      <DA bType="Struct" fc="CO" name="Cancel" type="CN_Cancel_SDPC"/>
+      <DA bType="BOOLEAN" dchg="true" fc="ST" name="stVal"/>
+      <DA bType="Quality" fc="ST" name="q" qchg="true" />
+      <DA bType="Timestamp" fc="ST" name="t"/>
+      <DA bType="Enum" fc="CF" name="ctlModel" type="ctlModel"/>
+      <DA bType="INT32U" fc="CF" name="sboTimeout"/>
+      <DA bType="Enum" fc="CF" name="sboClass" type="sboClass"/>
+      <DA bType="Unicode255" fc="DC" name="dU"/>
+    </DOType>
+    <DOType cdc="SPS" id="CN_SPS">
+      <DA bType="BOOLEAN" dchg="true" fc="ST" name="stVal"/>
+      <DA bType="Quality" fc="ST" name="q" qchg="true" />
+      <DA bType="Timestamp" fc="ST" name="t"/>
+      <DA bType="Unicode255" fc="DC" name="dU"/>
+    </DOType>
+    <DOType cdc="STG" id="SDL_STG_SP_EX">
+      <DA bType="Unicode255" fc="SP" name="setVal"/>
+      <DA bType="Unicode255" fc="DC" name="dU"/>
+      <DA bType="VisString255" fc="EX" name="cdcNs">
+        <Val>SDDL MODEL:2008</Val>
+      </DA>
+      <DA bType="VisString255" fc="EX" name="cdcName">
+        <Val>SDDL MODEL:2008</Val>
+      </DA>
+      <DA bType="VisString255" fc="EX" name="dataNs">
+        <Val>SDDL MODEL:2008</Val>
+      </DA>
+    </DOType>
+    <DOType cdc="DPL" id="CN_DPL">
+      <DA bType="VisString255" fc="DC" name="vendor"/>
+      <DA bType="VisString255" fc="DC" name="hwRev"/>
+      <DA bType="VisString255" fc="DC" name="swRev"/>
+      <DA bType="VisString255" fc="DC" name="model"/>
+    </DOType>
+    <DOType cdc="LPL" id="CN_LPL">
+      <DA bType="VisString255" fc="DC" name="vendor"/>
+      <DA bType="VisString255" fc="DC" name="swRev"/>
+      <DA bType="VisString255" fc="DC" name="d"/>
+      <DA bType="Unicode255" fc="DC" name="dU"/>
+    </DOType>
+    <DOType cdc="SPS" id="CN_SPS_EX">
+      <DA bType="BOOLEAN" dchg="true" fc="ST" name="stVal"/>
+      <DA bType="Quality" fc="ST" name="q" qchg="true" />
+      <DA bType="Timestamp" fc="ST" name="t"/>
+      <DA bType="Unicode255" fc="DC" name="dU"/>
+      <DA bType="VisString255" fc="EX" name="dataNs">
+        <Val>SGCC MODEL:2009</Val>
+      </DA>
+    </DOType>
+    <DOType cdc="INS" id="CN_INS">
+      <DA bType="INT32" dchg="true" fc="ST" name="stVal"/>
+      <DA bType="Quality" fc="ST" name="q" qchg="true" />
+      <DA bType="Timestamp" fc="ST" name="t"/>
+      <DA bType="Unicode255" fc="DC" name="dU"/>
+    </DOType>
+    <DOType cdc="ING" id="SDL_ING_SG_EX">
+      <DA bType="INT32" fc="SG" name="setVal"/>
+      <DA bType="INT32" fc="SE" name="setVal"/>
+      <DA bType="Unicode255" fc="DC" name="dU"/>
+      <DA bType="VisString255" fc="EX" name="dataNs">
+        <Val>SDDL MODEL:2008</Val>
+      </DA>
+    </DOType>
+    <DOType cdc="LPL" id="CN_LPL_EX">
+      <DA bType="VisString255" fc="DC" name="vendor"/>
+      <DA bType="VisString255" fc="DC" name="swRev"/>
+      <DA bType="VisString255" fc="DC" name="d"/>
+      <DA bType="Unicode255" fc="DC" name="dU"/>
+      <DA bType="VisString255" fc="EX" name="lnNs">
+        <Val>SGCC MODEL:2009</Val>
+      </DA>
+    </DOType>
+    <DOType cdc="ACT" id="CN_ACT">
+      <DA bType="BOOLEAN" dchg="true" fc="ST" name="general"/>
+      <DA bType="Quality" fc="ST" name="q" qchg="true" />
+      <DA bType="Timestamp" fc="ST" name="t"/>
+      <DA bType="Unicode255" fc="DC" name="dU"/>
+    </DOType>
+    <DOType cdc="MV" id="CN_MV">
+      <DA bType="Struct" dchg="true" fc="MX" name="mag" type="CN_FloatAnalogueValue"/>
+      <DA bType="Quality" fc="MX" name="q" qchg="true" />
+      <DA bType="Timestamp" fc="MX" name="t"/>
+      <DA bType="Struct" fc="CF" name="units" type="CN_units"/>
+      <DA bType="Unicode255" fc="DC" name="dU"/>
+    </DOType>
+    <DOType cdc="NST" id="SDL_NST_EX">
+      <DA bType="Quality" fc="ST" name="q" qchg="true" />
+      <DA bType="Timestamp" fc="ST" name="t"/>
+      <DA bType="INT32U" fc="ST" name="nst" dchg="true"/>
+      <DA bType="Unicode255" fc="DC" name="dU"/>
+      <DA bType="VisString255" fc="EX" name="cdcNs">
+        <Val>SDDL MODEL:2008</Val>
+      </DA>
+      <DA bType="VisString255" fc="EX" name="cdcName">
+        <Val>SDDL MODEL:2008</Val>
+      </DA>
+      <DA bType="VisString255" fc="EX" name="dataNs">
+        <Val>SDDL MODEL:2008</Val>
+      </DA>
+    </DOType>
+    <DOType cdc="ASG" id="SDL_ASG_SP_EX">
+      <DA bType="Struct" fc="SP" name="setMag" type="CN_FloatAnalogueValue"/>
+      <DA bType="Struct" fc="CF" name="units" type="CN_units"/>
+      <DA bType="Struct" fc="CF" name="minVal" type="CN_FloatAnalogueValue"/>
+      <DA bType="Struct" fc="CF" name="maxVal" type="CN_FloatAnalogueValue"/>
+      <DA bType="Struct" fc="CF" name="stepSize" type="CN_FloatAnalogueValue"/>
+      <DA bType="Unicode255" fc="DC" name="dU"/>
+      <DA bType="VisString255" fc="EX" name="dataNs">
+        <Val>SDDL MODEL:2008</Val>
+      </DA>
+    </DOType>
+    <DAType id="CN_SBOw_Oper_SDPC">
+      <BDA bType="BOOLEAN" name="ctlVal"/>
+      <BDA bType="Struct" name="origin" type="CN_Originator"/>
+      <BDA bType="INT8U" name="ctlNum"/>
+      <BDA bType="Timestamp" name="T"/>
+      <BDA bType="BOOLEAN" name="Test"/>
+      <BDA bType="Check" name="Check"/>
+    </DAType>
+    <DAType id="CN_Originator">
+      <BDA bType="Enum" name="orCat" type="orCategory"/>
+      <BDA bType="Octet64" name="orIdent"/>
+    </DAType>
+    <DAType id="CN_Cancel_SDPC">
+      <BDA bType="BOOLEAN" name="ctlVal"/>
+      <BDA bType="Struct" name="origin" type="CN_Originator"/>
+      <BDA bType="INT8U" name="ctlNum"/>
+      <BDA bType="Timestamp" name="T"/>
+      <BDA bType="BOOLEAN" name="Test"/>
+    </DAType>
+    <DAType id="CN_FloatAnalogueValue">
+      <BDA bType="FLOAT32" name="f"/>
+    </DAType>
+    <DAType id="CN_units">
+      <BDA bType="Enum" name="SIUnit" type="SIUnit"/>
+      <BDA bType="Enum" name="multiplier" type="multiplier"/>
+    </DAType>
+    <EnumType id="Mod">
+      <EnumVal ord="1">on</EnumVal>
+      <EnumVal ord="2">blocked</EnumVal>
+      <EnumVal ord="3">test</EnumVal>
+      <EnumVal ord="4">test/blocked</EnumVal>
+      <EnumVal ord="5">off</EnumVal>
+    </EnumType>
+    <EnumType id="ctlModel">
+      <EnumVal ord="0">status-only</EnumVal>
+      <EnumVal ord="1">direct-with-normal-security</EnumVal>
+      <EnumVal ord="2">sbo-with-normal-security</EnumVal>
+      <EnumVal ord="3">direct-with-enhanced-security</EnumVal>
+      <EnumVal ord="4">sbo-with-enhanced-security</EnumVal>
+    </EnumType>
+    <EnumType id="Beh">
+      <EnumVal ord="1">on</EnumVal>
+      <EnumVal ord="2">blocked</EnumVal>
+      <EnumVal ord="3">test</EnumVal>
+      <EnumVal ord="4">test/blocked</EnumVal>
+      <EnumVal ord="5">off</EnumVal>
+    </EnumType>
+    <EnumType id="Health">
+      <EnumVal ord="1">Ok</EnumVal>
+      <EnumVal ord="2">Warning</EnumVal>
+      <EnumVal ord="3">Alarm</EnumVal>
+    </EnumType>
+    <EnumType id="orCategory">
+      <EnumVal ord="0">not-supported</EnumVal>
+      <EnumVal ord="1">bay-control</EnumVal>
+      <EnumVal ord="2">station-control</EnumVal>
+      <EnumVal ord="3">remote-control</EnumVal>
+      <EnumVal ord="4">automatic-bay</EnumVal>
+      <EnumVal ord="5">automatic-station</EnumVal>
+      <EnumVal ord="6">automatic-remote</EnumVal>
+      <EnumVal ord="7">maintenance</EnumVal>
+      <EnumVal ord="8">process</EnumVal>
+    </EnumType>
+    <EnumType id="sboClass">
+      <EnumVal ord="0">operate-once</EnumVal>
+      <EnumVal ord="1">operate-many</EnumVal>
+    </EnumType>
+    <EnumType id="SIUnit">
+      <EnumVal ord="1"></EnumVal>
+      <EnumVal ord="2">m</EnumVal>
+      <EnumVal ord="3">kg</EnumVal>
+      <EnumVal ord="4">s</EnumVal>
+      <EnumVal ord="5">A</EnumVal>
+      <EnumVal ord="6">K</EnumVal>
+      <EnumVal ord="7">mol</EnumVal>
+      <EnumVal ord="8">cd</EnumVal>
+      <EnumVal ord="9">deg</EnumVal>
+      <EnumVal ord="10">rad</EnumVal>
+      <EnumVal ord="11">sr</EnumVal>
+      <EnumVal ord="21">Gy</EnumVal>
+      <EnumVal ord="22">q</EnumVal>
+      <EnumVal ord="23">°C</EnumVal>
+      <EnumVal ord="24">Sv</EnumVal>
+      <EnumVal ord="25">F</EnumVal>
+      <EnumVal ord="26">C</EnumVal>
+      <EnumVal ord="27">S</EnumVal>
+      <EnumVal ord="28">H</EnumVal>
+      <EnumVal ord="29">V</EnumVal>
+      <EnumVal ord="30">ohm</EnumVal>
+      <EnumVal ord="31">J</EnumVal>
+      <EnumVal ord="32">N</EnumVal>
+      <EnumVal ord="33">Hz</EnumVal>
+      <EnumVal ord="34">lx</EnumVal>
+      <EnumVal ord="35">Lm</EnumVal>
+      <EnumVal ord="36">Wb</EnumVal>
+      <EnumVal ord="37">T</EnumVal>
+      <EnumVal ord="38">W</EnumVal>
+      <EnumVal ord="39">Pa</EnumVal>
+      <EnumVal ord="41">m²</EnumVal>
+      <EnumVal ord="42">m³</EnumVal>
+      <EnumVal ord="43">m/s</EnumVal>
+      <EnumVal ord="44">m/s²</EnumVal>
+      <EnumVal ord="45">m³/s</EnumVal>
+      <EnumVal ord="46">m/m³</EnumVal>
+      <EnumVal ord="47">M</EnumVal>
+      <EnumVal ord="48">kg/m³</EnumVal>
+      <EnumVal ord="49">m²/s</EnumVal>
+      <EnumVal ord="50">W/m K</EnumVal>
+      <EnumVal ord="51">J/K</EnumVal>
+      <EnumVal ord="52">ppm</EnumVal>
+      <EnumVal ord="53">1/s</EnumVal>
+      <EnumVal ord="54">rad/s</EnumVal>
+      <EnumVal ord="61">VA</EnumVal>
+      <EnumVal ord="62">Watts</EnumVal>
+      <EnumVal ord="63">VAr</EnumVal>
+      <EnumVal ord="64">phi</EnumVal>
+      <EnumVal ord="65">cos(phi)</EnumVal>
+      <EnumVal ord="66">Vs</EnumVal>
+      <EnumVal ord="67">V²</EnumVal>
+      <EnumVal ord="68">As</EnumVal>
+      <EnumVal ord="69">A²</EnumVal>
+      <EnumVal ord="70">A²t</EnumVal>
+      <EnumVal ord="71">VAh</EnumVal>
+      <EnumVal ord="72">Wh</EnumVal>
+      <EnumVal ord="73">VArh</EnumVal>
+      <EnumVal ord="74">V/Hz</EnumVal>
+      <EnumVal ord="75">b/s</EnumVal>
+      <EnumVal ord="76">char</EnumVal>
+      <EnumVal ord="77">char/s</EnumVal>
+      <EnumVal ord="78">kgm²</EnumVal>
+      <EnumVal ord="79">dB</EnumVal>
+      <EnumVal ord="80">J/Wh</EnumVal>
+      <EnumVal ord="81">W/s</EnumVal>
+      <EnumVal ord="82">l/s</EnumVal>
+      <EnumVal ord="83">dBm</EnumVal>
+    </EnumType>
+    <EnumType id="multiplier">
+      <EnumVal ord="-24">y</EnumVal>
+      <EnumVal ord="-21">z</EnumVal>
+      <EnumVal ord="-18">a</EnumVal>
+      <EnumVal ord="-15">f</EnumVal>
+      <EnumVal ord="-12">p</EnumVal>
+      <EnumVal ord="-9">n</EnumVal>
+      <EnumVal ord="-6">µ</EnumVal>
+      <EnumVal ord="-3">m</EnumVal>
+      <EnumVal ord="-2">c</EnumVal>
+      <EnumVal ord="-1">d</EnumVal>
+      <EnumVal ord="0"></EnumVal>
+      <EnumVal ord="1">da</EnumVal>
+      <EnumVal ord="2">h</EnumVal>
+      <EnumVal ord="3">k</EnumVal>
+      <EnumVal ord="6">M</EnumVal>
+      <EnumVal ord="9">G</EnumVal>
+      <EnumVal ord="12">T</EnumVal>
+      <EnumVal ord="15">P</EnumVal>
+      <EnumVal ord="18">E</EnumVal>
+      <EnumVal ord="21">Z</EnumVal>
+      <EnumVal ord="24">Y</EnumVal>
+    </EnumType>
+  </DataTypeTemplates>
+</SCL>

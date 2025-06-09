@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CTcpEdgeTestDataView_GetMessage</class>
+ <widget class="QWidget" name="CTcpEdgeTestDataView_GetMessage">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>486</width>
+    <height>151</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>CTcpEdgeTestDataView_TimeReadReq</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_6">
+     <property name="text">
+      <string>最大返回文件个数(MaxNumber)</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="2">
+    <widget class="QCheckBox" name="__MaxNumber__">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QLineEdit" name="_MaxNumber_"/>
+   </item>
+   <item row="3" column="1">
+    <widget class="QCheckBox" name="cbEndTime">
+     <property name="text">
+      <string>使用系统时间</string>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="2">
+    <widget class="QCheckBox" name="__EndTime__">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>结束时间(EndTime)</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QCheckBox" name="cbStartTime">
+     <property name="text">
+      <string>使用系统时间</string>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QDateTimeEdit" name="_EndTime_">
+     <property name="minimumDate">
+      <date>
+       <year>1970</year>
+       <month>1</month>
+       <day>1</day>
+      </date>
+     </property>
+     <property name="currentSection">
+      <enum>QDateTimeEdit::YearSection</enum>
+     </property>
+     <property name="displayFormat">
+      <string>yyyy-M-d H:mm:ss.z</string>
+     </property>
+     <property name="timeSpec">
+      <enum>Qt::LocalTime</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QCheckBox" name="__StartTime__">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QDateTimeEdit" name="_StartTime_">
+     <property name="minimumDate">
+      <date>
+       <year>1970</year>
+       <month>1</month>
+       <day>1</day>
+      </date>
+     </property>
+     <property name="currentSection">
+      <enum>QDateTimeEdit::YearSection</enum>
+     </property>
+     <property name="displayFormat">
+      <string>yyyy-M-d H:mm:ss.z</string>
+     </property>
+     <property name="timeSpec">
+      <enum>Qt::LocalTime</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>起始时间(StartTime)</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="../../../../TcpEdgeServer/TcpEdgeServer.qrc"/>
+ </resources>
+ <connections/>
+</ui>

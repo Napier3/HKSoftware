@@ -1,0 +1,645 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QPowerDirAddMultDlg</class>
+ <widget class="QDialog" name="QPowerDirAddMultDlg">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>792</width>
+    <height>515</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>开关量</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_8">
+   <item row="2" column="3">
+    <spacer name="horizontalSpacer_3">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::MinimumExpanding</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="2" column="6">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::MinimumExpanding</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>220</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="2" column="4">
+    <widget class="QPushButton" name="m_pCancel_PushButton">
+     <property name="text">
+      <string>取  消</string>
+     </property>
+     <property name="autoDefault">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="2">
+    <widget class="QPushButton" name="m_pOK_PushButton">
+     <property name="text">
+      <string>确  认</string>
+     </property>
+     <property name="autoDefault">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::MinimumExpanding</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>220</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="1" colspan="7">
+    <widget class="QSttGroupBox" name="m_groupBox">
+     <property name="title">
+      <string/>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="2" column="6">
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="2" column="4">
+         <widget class="QSttCheckBox" name="m_pBABC_CheckBox">
+          <property name="text">
+           <string>ABC</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="3">
+         <widget class="QSttCheckBox" name="m_pBBC_CheckBox">
+          <property name="text">
+           <string>BC</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QSttCheckBox" name="m_pCCN_CheckBox">
+          <property name="text">
+           <string>CN</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QSttCheckBox" name="m_pBBN_CheckBox">
+          <property name="text">
+           <string>BN</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QSttCheckBox" name="m_pAAB_CheckBox">
+          <property name="text">
+           <string>AB</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="1">
+         <widget class="QSttCheckBox" name="m_pZeroSeq_CheckBox">
+          <property name="text">
+           <string>零序</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="3">
+         <widget class="QSttCheckBox" name="m_pACA_CheckBox">
+          <property name="text">
+           <string>CA</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="2">
+         <widget class="QSttCheckBox" name="m_pZeroAN_CheckBox">
+          <property name="text">
+           <string>AN</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="4">
+         <widget class="QSttCheckBox" name="m_pAABC_CheckBox">
+          <property name="text">
+           <string>ABC</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="1">
+         <widget class="QSttCheckBox" name="m_pNegativeSeq_CheckBox">
+          <property name="text">
+           <string>负序</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="4">
+         <widget class="QSttCheckBox" name="m_pZeroCN_CheckBox">
+          <property name="text">
+           <string>CN</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="2">
+         <widget class="QSttCheckBox" name="m_pNegativeAN_CheckBox">
+          <property name="text">
+           <string>AN</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QSttCheckBox" name="m_pBAB_CheckBox">
+          <property name="text">
+           <string>AB</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="4">
+         <widget class="QSttCheckBox" name="m_pNegativeCN_CheckBox">
+          <property name="text">
+           <string>CN</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="5">
+         <widget class="QSttCheckBox" name="m_pNegativeAB_CheckBox">
+          <property name="text">
+           <string>AB</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="3">
+         <widget class="QSttCheckBox" name="m_pZeroBN_CheckBox">
+          <property name="text">
+           <string>BN</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="3">
+         <widget class="QSttCheckBox" name="m_pNegativeBN_CheckBox">
+          <property name="text">
+           <string>BN</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="6">
+         <widget class="QSttCheckBox" name="m_pNegativeBC_CheckBox">
+          <property name="text">
+           <string>BC</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="0">
+         <widget class="QSttCheckBox" name="m_pZeroSeqTest_CheckBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>零序测试</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="m_pTestItemsLabel">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>测试项</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QCheckBox" name="m_pABTest_CheckBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>AB相测试</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QSttCheckBox" name="m_pCTest_CheckBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>C相测试</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="0">
+         <widget class="QSttCheckBox" name="m_pNegativeSeqTest_CheckBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>负序测试</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QSttCheckBox" name="m_pBCTest_CheckBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>BC相测试</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QSttCheckBox" name="m_pAAN_CheckBox">
+          <property name="text">
+           <string>AN</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QSttCheckBox" name="m_pATest_CheckBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>A相测试</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QSttCheckBox" name="m_pBTest_CheckBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>B相测试</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="0">
+         <widget class="QSttCheckBox" name="m_pCATest_CheckBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>CA相测试</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="3">
+         <widget class="QSttCheckBox" name="m_pCCA_CheckBox">
+          <property name="text">
+           <string>CA</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QSttCheckBox" name="m_pBCBC_CheckBox">
+          <property name="text">
+           <string>BC</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="4">
+         <widget class="QSttCheckBox" name="m_pCABC_CheckBox">
+          <property name="text">
+           <string>ABC</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="2">
+         <widget class="QSttCheckBox" name="m_pCBC_CheckBox">
+          <property name="text">
+           <string>BC</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QCheckBox" name="m_pABAB_CheckBox">
+          <property name="text">
+           <string>AB</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="1">
+         <widget class="QSttCheckBox" name="m_pCACA_CheckBox">
+          <property name="text">
+           <string>CA</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="7">
+         <widget class="QSttCheckBox" name="m_pNegativeCA_CheckBox">
+          <property name="text">
+           <string>CA</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1" colspan="7">
+         <widget class="QLabel" name="m_pFaultDiffLabel">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>故障相别</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="5" colspan="3">
+    <widget class="QSttGroupBox" name="m_groupBox_Results">
+     <property name="title">
+      <string>结果评估</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <layout class="QGridLayout" name="gridLayout_5">
+        <item row="0" column="0">
+         <widget class="QLabel" name="m_pErrorTypeLabel">
+          <property name="text">
+           <string>误差类型</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="CExBaseListComboBox" name="m_pCmb_ErrorType"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="m_pRelErrorLabel">
+          <property name="text">
+           <string>相对误差(%)</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="m_pAbsErrorLabel">
+          <property name="text">
+           <string>绝对误差(°)</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QSttLineEdit" name="m_pAbsErrorEdit">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QSttLineEdit" name="m_pRelErrorEdit">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QSttGroupBox" name="m_groupBox_FaultParas">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="title">
+      <string>故障参数</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_6">
+      <item row="0" column="0">
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="0" column="0">
+         <widget class="QLabel" name="m_pFaultVLabel">
+          <property name="text">
+           <string>故障电压(V)</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QSttLineEdit" name="m_pFaultVEdit">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="m_pFaultILabel">
+          <property name="text">
+           <string>故障电流(A)</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QSttLineEdit" name="m_pFaultIEdit">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="m_pFaultTimeLabel">
+          <property name="text">
+           <string>故障时间(s)</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QSttLineEdit" name="m_pFaultTimeEdit">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="2" colspan="3">
+    <widget class="QSttGroupBox" name="m_groupBox_AngleParas">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="title">
+      <string>试验参数</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_7">
+      <item row="0" column="1">
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="0" column="0">
+         <widget class="QLabel" name="m_pMaxSensitAngleLabel">
+          <property name="text">
+           <string>最大灵敏角(°)</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QSettingLineEdit" name="m_pMaxSensitAngleEdit">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QSttLineEdit" name="m_pActRangeEdit">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="m_pActRangeLabel">
+          <property name="text">
+           <string>动作区范围(°)</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="m_pStepLabel">
+          <property name="text">
+           <string>变化步长(°)</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QSttLineEdit" name="m_pStepEdit">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QSettingLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>../../UI/Controls/SettingCtrls/QSettingLineEdit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>CExBaseListComboBox</class>
+   <extends>QComboBox</extends>
+   <header>../../../../Module/BaseClass/QT/QExBaseListComboBox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QSttLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>../../Module/UI/Controls/SttLineEdit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QSttGroupBox</class>
+   <extends>QGroupBox</extends>
+   <header>../../Module/UI/Controls/SttGroupBox.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QSttCheckBox</class>
+   <extends>QCheckBox</extends>
+   <header>../../Module/UI/Controls/SttCheckbox.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,82 @@
+#pragma once
+
+#include "ExBaseObject.h"
+
+#define ExBaseCycleArray_Count   2000
+
+class CExBaseCycleArray
+{
+public:
+	CExBaseCycleArray(void);
+	virtual ~CExBaseCycleArray(void);
+
+	void FreeBuffer(long nIndexFrom);
+	void FreeBuffer();
+
+	void SetAddNewExBaseObject(BOOL b = TRUE)	{	m_bAddNewExBaseObject = b;	}
+protected:
+	BOOL FreeBuffer(long nBeginIndex, long nEndIndex);
+
+protected:
+	DWORD *m_pdwExBaseObject;
+
+	long m_nMaxCount;
+	long m_nCurrIndex;
+	long m_nCurrCount;
+
+	long m_nCurrReadIndex;  //当前写入数据库的位置
+	long m_nCurrFreeIndex;  //当前释放缓存的位置
+
+	BOOL m_bAddNewExBaseObject;
+	void Free();
+
+public:
+	void SetMaxCount(long nMaxCount);
+	long GetMaxCount()	{	return m_nMaxCount;		}
+	long GetCurrCount()	{	return m_nCurrCount;	}
+	long GetCurrIndex()	{	return m_nCurrIndex;	}
+	long GetCount(long nIndexFrom);
+
+	long GetCurrReadIndex()	{	return m_nCurrReadIndex;		}
+	long GetCurrWriteIndex()	{	return m_nCurrWriteIndex;		}
+	long GetCurrFreeIndex()	{	return m_nCurrFreeIndex;		}
+
+	void SetCurrReadIndex(long nIndex)	
+	{
+		m_nCurrReadIndex = nIndex;	
+	
+		if (m_nCurrReadIndex >= m_nMaxCount) 
+		{
+			m_nCurrReadIndex = 0;
+		}	
+	}
+
+	void SetCurrFreeIndex(long nIndex)
+	{
+		m_nCurrFreeIndex = nIndex;
+
+		if (m_nCurrFreeIndex >= m_nMaxCount) 
+		{
+			m_nCurrFreeIndex = 0;
+		}	
+	}
+
+	void GetReadIndexRange(long &nBegin1, long &nEnd1, long &nBegin2, long &nEnd2);
+	void GetFreeIndexRange(long &nBegin1, long &nEnd1, long &nBegin2, long &nEnd2);
+	void DeleteAll();
+
+	inline CExBaseObject* GetExBaseObject(long nIndex)
+	{
+		ASSERT (0 <= nIndex && nIndex < m_nMaxCount);
+		return (CExBaseObject*)m_pdwExBaseObject[nIndex];
+	}
+	
+	inline CExBaseObject* NewExBaseObject(CExBaseObject *pObj)
+	{
+	
+	}
+
+public:
+	virtual void InitExBaseCycleArray ();
+	virtual CExBaseObject* AddExBaseObject(CExBaseObject *pObj);
+};

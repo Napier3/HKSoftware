@@ -1,0 +1,65 @@
+#ifndef QSttIecSmvWaveWidget_H
+#define QSttIecSmvWaveWidget_H
+
+#include <QWidget>
+#include <QToolButton>
+#include <QMouseEvent>
+#include <QVBoxLayout>
+#include <QToolButton>
+#include <QFont>
+
+#include "SttIecRcdFuncInterface.h"
+
+#include "../../../../Module/SmartCap/61850Cap/Record/CapViewAnalyse.h"
+
+#define STT_IECRCD_WAVE_CHS_PAGE  6
+
+class QSttIecSmvWaveWidget : public QWidget, public CCapViewAnalyse, public CSttIecRcdFuncInterface, public CWnd
+{
+    //Q_OBJECT
+public:
+	explicit QSttIecSmvWaveWidget(QWidget *parent = 0);
+
+public://CWnd
+	//重载函数OnWndMsg，实现消息处理
+	virtual void OnWndMsg(unsigned int nMsgID, unsigned long wParam, unsigned long  lParam);
+	virtual void OnWndTimer(unsigned int nIDEvent) ;
+
+public://CSttIecRcdFuncInterface
+	virtual void IecRcdFunc(CCapDeviceBase *pCapDevice);
+	virtual void IecRcdFuncUpdate(CCapDeviceBase *pCapDevice);
+	virtual void Release();
+
+	virtual BOOL NeedNextAndPrev();
+	virtual void NextPage();
+	virtual void PrevPage();
+
+	LRESULT OnVariableAddRemoved(WPARAM wParam, LPARAM lParam);
+	void IecRcdInitFromRecordTest();
+	virtual void InitTimeAxis();  //2022-4-24  lijunqing 初始化时间坐标，可被重载设置个性化
+
+protected:
+	BOOL m_bInitTimeAxis;
+	long m_nCurrRcdChIndex;
+	void CalIndex_NextPage();
+	void CalIndex_PrevPage();
+
+protected:
+	virtual void mouseDoubleClickEvent(QMouseEvent *);
+	virtual void mouseMoveEvent(QMouseEvent *);
+	virtual void mousePressEvent(QMouseEvent *);
+	virtual void mouseReleaseEvent(QMouseEvent *);
+	virtual void wheelEvent(QWheelEvent *);
+
+	virtual void paintEvent(QPaintEvent *event);
+	virtual void resizeEvent(QResizeEvent *);
+
+// public:
+// 
+// signals:
+// 
+// public slots:
+
+};
+
+#endif // QSttIecSmvWaveWidget_H

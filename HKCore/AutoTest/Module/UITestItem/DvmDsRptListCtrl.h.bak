@@ -1,0 +1,14 @@
+#pragma once
+#include "..\..\..\Module\BaseClass\ExBaseListListCtrl.h"
+#include "..\..\..\Module\DataMngr\DvmDataset.h"
+
+class CDvmDsRptListCtrl :	public CExBaseListListCtrl
+{
+public:
+	CDvmDsRptListCtrl(void);
+	virtual ~CDvmDsRptListCtrl(void);
+
+
+
+
+};

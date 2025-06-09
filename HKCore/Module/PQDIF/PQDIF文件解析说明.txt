@@ -1,0 +1,142 @@
+首先从PQDIF的文件格式说起。PQDIF分为三大块: tagContainer; tagRecDataSource; tagRecMonitorSettings; tagRecObservation;
+tagContainer 记录了文件生成时间，生产厂家，记录地点, 还有文件压缩方式等一些信息
+tagRecDataSource 就是记录的数据通道定义，比如电压，电流之类的；其中还包含了子通道定义，比如时间，最大值，最小值，cp95值，平均值
+tagRecMonitorSettings 只是记录的数据通道的序列号，还可以控制此通道是否有效。但是一般用不到。另外，标准xml文件中这一块涉及了很多电力行业的专业知识，完全看不懂。
+tagRecObservation 就是存储的实际数据
+他们的关系如下图所示
+<pqdif>
+	这里是tagContainer的定义
+	<tagContainer>
+		记录一些信息
+	</tagContainer>
+	
+	这里是tagRecDatasource的定义
+	<tagRecDataSource>
+		
+		这是一个A相电压通道的完整定义
+		<!--  1 A相电压通道定义 -->
+			<tagOneChannelDefn>
+				// 通道序列号，从0开始算起
+				<tagChannelName>Voltage of AN</tagChannelName> // 通道字符串名称
+				<tagPhaseID>ID_PHASE_AN</tagPhaseID> // 相位
+				<tagQuantityTypeID>ID_QT_VALUELOG</tagQuantityTypeID> 
+				<tagQuantityMeasuredID>ID_QM_VOLTAGE</tagQuantityMeasuredID> // 测量类型
+				// 子通道数量(xml中无法显示，只在源文件才有)
+				<tagSeriesDefns>
+					<tagOneSeriesDefn> // 时间
+						<tagValueTypeID>ID_SERIES_VALUE_TYPE_TIME</tagValueTypeID> 
+						<tagQuantityUnitsID>ID_QU_SECONDS</tagQuantityUnitsID> // 测量单位
+						<tagQuantityCharacteristicID>ID_QC_INSTANTANEOUS</tagQuantityCharacteristicID> // 值类型
+						<tagStorageMethodID>ID_SERIES_METHOD_VALUES|ID_SERIES_METHOD_SCALED</tagStorageMethodID>
+						<tagHintGreekPrefixID>ID_GREEK_DONTCARE</tagHintGreekPrefixID>
+					</tagOneSeriesDefn>
+						<tagOneSeriesDefn> // 最大值子通道
+						<tagValueTypeID>ID_SERIES_VALUE_TYPE_MAX</tagValueTypeID> 
+						<tagQuantityUnitsID>ID_QU_VOLTS</tagQuantityUnitsID> // 测量单位
+						<tagQuantityCharacteristicID>ID_QC_RMS</tagQuantityCharacteristicID> // 值类型
+						<tagStorageMethodID>ID_SERIES_METHOD_VALUES|ID_SERIES_METHOD_SCALED</tagStorageMethodID>
+						<tagHintGreekPrefixID>ID_GREEK_DONTCARE</tagHintGreekPrefixID>
+				    </tagOneSeriesDefn>
+						<tagOneSeriesDefn> // 最小值子通道
+						<tagValueTypeID>ID_SERIES_VALUE_TYPE_MIN</tagValueTypeID> 
+						<tagQuantityUnitsID>ID_QU_VOLTS</tagQuantityUnitsID> // 测量单位
+						<tagQuantityCharacteristicID>ID_QC_RMS</tagQuantityCharacteristicID> // 值类型
+						<tagStorageMethodID>ID_SERIES_METHOD_VALUES|ID_SERIES_METHOD_SCALED</tagStorageMethodID>
+						<tagHintGreekPrefixID>ID_GREEK_DONTCARE</tagHintGreekPrefixID>
+				    </tagOneSeriesDefn>
+						<tagOneSeriesDefn> // 平均值子通道
+						<tagValueTypeID>ID_SERIES_VALUE_TYPE_AVG</tagValueTypeID> 
+						<tagQuantityUnitsID>ID_QU_VOLTS</tagQuantityUnitsID> // 测量单位
+						<tagQuantityCharacteristicID>ID_QC_RMS</tagQuantityCharacteristicID> // 值类型
+						<tagStorageMethodID>ID_SERIES_METHOD_VALUES|ID_SERIES_METHOD_SCALED</tagStorageMethodID>
+						<tagHintGreekPrefixID>ID_GREEK_DONTCARE</tagHintGreekPrefixID>
+				    </tagOneSeriesDefn>
+				</tagSeriesDefns>
+		</tagOneChannelDefn>
+		
+		... 以下省略了其他数据通道定义
+	
+	</tagRecDataSource>
+	
+	这里是tagRecMonitorSettings的定义，
+	<tagRecMonitorSettings>
+	</tagRecMonitorSettings>
+	
+	这里是tagRecObservation的定义
+	<tagRecObservation>
+		包含了实际的数据
+	</tagRecObservation>
+
+</pqdif>
+
+tagRecDataSource 中的数据通道定义就是用于和标准xml文件的比对。
+但不是所有tag都需要，需要比对的有：tagPhaseID相位；tagQuantityMeasuredID测量类型；子通道数量；tagQuantityUnitsID测量单位；tagQuantityCharacteristicID值类型；
+其中：测量单位 和 值类型 都是在子通道中定义的。根据这几个变量，就可以确定一个唯一的通道。
+附加的说明：在xml文件中无法看到子通道的数量，以及通道的序列号，但是在PQDIF源文件中是有的。
+
+tagRecObservation 包含具体的数据，每个通道的数据都会有一个index号，它对应的就是tagRecDataSource中的通道序列号。如果是谐波数据，它最多可能有50个数据通道，但是
+每个数据通道都对应相同的通道序列号, 表示是数据同一个通道下的数据。这样所有的数据都能找到对应的定义了。
+
+PQDIF文件就类似于xml文件的二进制形式，由于PQDIF文件采用了压缩，但并非整个文件全部压缩，tagContainer没有被压缩，tagRecDataSource tagRecMonitorSettings
+tagRecObservation 的头部的一些提示信息没有被压缩，其他的详细信息被压缩了。压缩方式实在tagContainer中定义的。
+
+以上就是PQDIF文件结构的简单说明，实际的文件格式以及具体的使用方式，要比这个复杂的多。
+下面根据代码说明具体的解析过程：
+因为PQDIF是类似于xml的文件结构，所有程序中对于一个个tag的解析都是用的递归方式。
+
+(a)
+导入标准xml文件
+misc.cpp:493: int parseStdXml(const CString &stdxml)
+解析得到的数据被存放在全局变量stPqdifTotalData g_stdFormat; 
+
+(b)
+打开被测试的文件
+pqidftool.cpp:58: int CPqdifTool::openPqdifFile( const char *file )
+这个函数里的parseFile函数就会递归解析所有的tag，因为首先要检查文件格式是否符合标准，那么tagRecDataSource解析完成之后，
+就会和g_stdFormat比对。
+pqread.cpp:104: int endOfRecord( void ) 每当一个tag数据被递归解析完成之后，都会回到这个函数里，通过比对当前解析的tag，就可以知道哪个tag被解析完成了。
+当tagRecDataSource被解析完成后，就需要和标准xml文件比对，如下：
+pqread.cpp:117: 
+if( PQDIF_IsEqualGUID( s_arrayTags[ 0 ], tagRecDataSource ) )
+{
+	addDataSourceToTotalData(); 
+
+	if ( verifyByStdXml() < 0 )
+	{
+		return -1;
+	}
+	else // 如果文件格式验证成功，则记录数据源通道的信息
+	{
+		// 添加记录每个数据源通道序列号的
+		init_Store_Sereis_Info( s_datasource, g_StoreSeriesInfo); // define @ misc.cpp
+	}
+}
+
+verifyByStdXml() 函数会比对之前提到的几个关键的tag数据。另外，因为被测试文件的通道定义顺序很可能和标准的顺序不一致，这个函数
+还需要同时记录标准文件数据通道的定义顺序以及被测试文件的定义顺序，并存放在 MapForDataSrc 这个数组中。在misc.cpp:21 有说明。
+init_Store_Sereis_Info() 函数是记录数据源通道的信息，存在storeSeriesInfo中，包括通道的名称，包含了哪些子通道，是统计数据还是波形数据。可以在需要时候取用。
+比如通过时间去查找所有通道的数据时，因为只需要统计数据，那么根据storeSeriesInfo就可以知道那些数据是统计数据了。
+
+当时文件格式验证通过，所有信息存储完成后，就接着解析 tagRecMonitorSettings tagRecObservation
+tagRecMonitorSettings 的解析结果没有作任何处理。
+tagRecObservation 的解析过程是最复杂的，一个文件可以有很多个tagRecObservation，每个里面存放不同的数据(但是都一一对应这个数据源通道的定义)。同时软件
+还有追加数据文件的功能，可以导入很多个文件，并且把这个文件的数据一次存储到同一个数据结构g_pqTotalData中。
+pqread.cpp:158 - pqread.cpp:175 的代码就是针对多个文件和多个tagRecObservation而作出的判断。
+当其中一个tagRecObservation解析完成后，就需要把解析出来的数据添加到 g_pqTotalData 中。
+回忆之前说的，被测试文件的的数据通道的定义顺序和标准数据通道的定义顺序很可能是不一样的，举个例子, 要查询voltage of AN的数据，在标准通道中，
+这个数据通道的序号是0，在测试文件中是53，如果直接把数据加入到 g_pqTotalData 中，在软件界面中，我们点击查询voltage of AN ,内部传入的查询通道序列号就是
+0, 查询的也是测试文件中的0通道数据，而不是53通道的数据，这样就查询到了错误的通道上。为了解决这个问题，需要在存入数据的时候，把数据的序列号做一下转换，
+把测试文件自带的序列号转成标准文件的序列号，这样查询的时候就不会出错。记得上面提到的 MapForDataSrc 这个数据，就记录了标准通道和测试文件的对应关系。
+通过这个数据，在 misc.cpp:372: convert_TestIndex_To_StdIndex_InTestFile()  函数中，完成了转换序列号的工作。在 misc:358: addObservationToTotalData()
+函数中被调用。并且在这个函数中处理了数据的时间戳，并且把数据加入到 g_pqTotalData 中。
+
+(c)
+按通道查询：
+按通道查询数据，就是传入数据通道的序列号，从而查找到这个通道的全部数据，并显示出来。
+
+按时间查询：
+按时间查询数据，就是传入一个自1970-01-01 开始的时间秒数，和所有通道的数据的时间比对，如果找到接近的时间，就把所有通道的数据显示出来。
+按时间查询是没有波形数据的，因为波形数据代表了一个趋势，个体的值没有意义，而且采样频率极快，都是毫秒级的。
+
+		 
+以上就是一个大概的解析过程，还有一些极为细节的处理过程，递归解析中的细节问题，tagRecObservation中如何解析出具体的数据，这个都没有说。

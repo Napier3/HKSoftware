@@ -1,0 +1,18 @@
+#include "StdAfx.h"
+#include "DvmDsRptListCtrl.h"
+#include "..\XLanguageResourceAts.h"
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#endif
+
+
+CDvmDsRptListCtrl::CDvmDsRptListCtrl(void)
+{
+	
+}
+
+
+CDvmDsRptListCtrl::~CDvmDsRptListCtrl(void)
+{
+}

@@ -1,0 +1,34 @@
+#include "StdAfx.h"
+#include "ZoneSelComboBox.h"
+
+CZoneSelComboBox::CZoneSelComboBox(void)
+{
+}
+
+CZoneSelComboBox::~CZoneSelComboBox(void)
+{
+}
+
+void CZoneSelComboBox::InitComboBox()
+{
+	ResetContent();
+
+	long nItemIndex = 0;
+	
+	nItemIndex = AddString(_T("当前定值区"));
+	SetItemData(nItemIndex, 0);
+	CString strText;
+
+	for (long nIndex=1; nIndex<32; nIndex++)
+	{
+		strText.Format(_T("%d区"), nIndex);
+		nItemIndex = AddString(strText);
+		SetItemData(nItemIndex, nIndex);
+	}
+}
+
+long CZoneSelComboBox::GetZoneSelIndex()
+{
+	return GetNumber()-1;
+}
+

@@ -1,0 +1,646 @@
+
+
+***********************************************************
+          LOGGING STARTED Sun Dec 05 13:58:08 2010
+***********************************************************
+
+2010-12-05 13:58:08.734 SLOGALWAYS (server.c 386) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2010-12-05 13:58:08.750 SLOGALWAYS (server.c 387) 
+  Initializing ...
+
+2010-12-05 13:58:08.765 SLOGALWAYS (server.c 398) 
+  Initialization complete, entering service loop
+
+2010-12-05 13:58:08.765 MEM_LOG_DUMP (mem_chks.c 1384) 
+  DYNAMIC MEMORY POINTER TABLE 
+  -----------------------------  
+  Total number of allocated pointers:   74
+  Total amount of memory allocated:     204051 bytes 
+  Maximum number of pointers allocated: 74
+  Maximum amount of memory allocated:   236050 bytes
+
+***********************************************************
+          LOGGING STARTED Sun Dec 05 16:53:34 2010
+***********************************************************
+
+2010-12-05 16:53:34.718 SLOGALWAYS (server.c 386) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2010-12-05 16:53:34.718 SLOGALWAYS (server.c 387) 
+  Initializing ...
+
+2010-12-05 16:53:34.734 SLOGALWAYS (server.c 398) 
+  Initialization complete, entering service loop
+
+2010-12-05 16:53:34.734 MEM_LOG_DUMP (mem_chks.c 1384) 
+  DYNAMIC MEMORY POINTER TABLE 
+  -----------------------------  
+  Total number of allocated pointers:   74
+  Total amount of memory allocated:     204051 bytes 
+  Maximum number of pointers allocated: 74
+  Maximum amount of memory allocated:   236050 bytes
+
+***********************************************************
+          LOGGING STARTED Sun Dec 05 17:42:45 2010
+***********************************************************
+
+2010-12-05 17:42:45.843 SLOGALWAYS (server.c 386) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2010-12-05 17:42:45.859 SLOGALWAYS (server.c 387) 
+  Initializing ...
+
+2010-12-05 17:42:45.875 SLOGALWAYS (server.c 398) 
+  Initialization complete, entering service loop
+
+2010-12-05 17:42:45.875 MEM_LOG_DUMP (mem_chks.c 1384) 
+  DYNAMIC MEMORY POINTER TABLE 
+  -----------------------------  
+  Total number of allocated pointers:   74
+  Total amount of memory allocated:     204051 bytes 
+  Maximum number of pointers allocated: 74
+  Maximum amount of memory allocated:   236050 bytes
+
+***********************************************************
+          LOGGING STARTED Mon Feb 14 13:31:16 2011
+***********************************************************
+
+2011-02-14 13:31:16.312 SLOGALWAYS (server.c 386) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2011-02-14 13:31:16.328 SLOGALWAYS (server.c 387) 
+  Initializing ...
+
+2011-02-14 13:31:16.359 SLOGALWAYS (server.c 398) 
+  Initialization complete, entering service loop
+
+2011-02-14 13:31:16.359 MEM_LOG_DUMP (mem_chks.c 1384) 
+  DYNAMIC MEMORY POINTER TABLE 
+  -----------------------------  
+  Total number of allocated pointers:   74
+  Total amount of memory allocated:     204051 bytes 
+  Maximum number of pointers allocated: 74
+  Maximum amount of memory allocated:   236050 bytes
+
+***********************************************************
+          LOGGING STARTED Mon Feb 14 13:31:37 2011
+***********************************************************
+
+2011-02-14 13:31:37.562 SLOGALWAYS (server.c 386) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2011-02-14 13:31:37.562 SLOGALWAYS (server.c 387) 
+  Initializing ...
+
+2011-02-14 13:31:37.578 SLOGALWAYS (server.c 398) 
+  Initialization complete, entering service loop
+
+2011-02-14 13:31:37.578 MEM_LOG_DUMP (mem_chks.c 1384) 
+  DYNAMIC MEMORY POINTER TABLE 
+  -----------------------------  
+  Total number of allocated pointers:   74
+  Total amount of memory allocated:     204051 bytes 
+  Maximum number of pointers allocated: 74
+  Maximum amount of memory allocated:   236050 bytes
+
+***********************************************************
+          LOGGING STARTED Sat Apr 21 18:17:55 2012
+***********************************************************
+
+2012-04-21 18:17:55.687 SLOGALWAYS (Server.c 386) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-21 18:17:55.687 SLOGALWAYS (Server.c 387) 
+  Initializing ...
+
+2012-04-21 18:17:55.718 SLOGALWAYS (Server.c 398) 
+  Initialization complete, entering service loop
+
+2012-04-21 18:17:55.734 MEM_LOG_DUMP (Mem_chks.c 1384) 
+  DYNAMIC MEMORY POINTER TABLE 
+  -----------------------------  
+  Total number of allocated pointers:   74
+  Total amount of memory allocated:     204051 bytes 
+  Maximum number of pointers allocated: 74
+  Maximum amount of memory allocated:   236050 bytes
+
+2012-04-21 18:18:54.734 MEM_LOG_DUMP (Mem_chks.c 1384) 
+  DYNAMIC MEMORY POINTER TABLE 
+  -----------------------------  
+  Total number of allocated pointers:   74
+  Total amount of memory allocated:     204051 bytes 
+  Maximum number of pointers allocated: 74
+  Maximum amount of memory allocated:   236050 bytes
+
+2012-04-21 18:18:54.828 MEM_LOG_DUMP (Mem_chks.c 1299) 
+  DYNAMIC MEMORY POINTER TABLE
+----------------------------  
+  Ptr 00aa0ecc  Size     1  File : ..\..\mvl\usr\server\Server.c #0406
+  Ptr 00aa0e9c  Size     4  File : ..\..\mvl\usr\server\Server.c #1092
+  Ptr 00aa0e64  Size    12  File : ..\..\mvl\usr\server\Server.c #1048
+  Ptr 00aa0db4  Size   132  File : ..\..\mvl\usr\server\Server.c #1036
+  Ptr 00aa0d84  Size     4  File : ..\..\mvl\usr\server\Server.c #1092
+  Ptr 00aa0d54  Size     4  File : ..\..\mvl\usr\server\Server.c #1092
+  Ptr 00aa0d14  Size    24  File : ..\..\mvl\usr\server\Server.c #1010
+  Ptr 00aa0c64  Size   132  File : ..\..\mvl\usr\server\Server.c #0998
+  Ptr 00aa0bb4  Size   132  File : ..\..\mvl\usr\server\Server.c #0985
+  Ptr 00aa0b84  Size     4  File : ..\..\mvl\usr\server\Server.c #1092
+  Ptr 00aa0b4c  Size    12  File : ..\..\mvl\usr\server\Server.c #0974
+  Ptr 00aa0a9c  Size   132  File : ..\..\mvl\usr\server\Server.c #0962
+  Ptr 00aa0a6c  Size     4  File : ..\..\mvl\usr\server\Server.c #1092
+  Ptr 00aa0a34  Size    12  File : ..\..\mvl\usr\server\Server.c #0951
+  Ptr 00aa0984  Size   132  File : ..\..\mvl\usr\server\Server.c #0939
+  Ptr 00aa08d4  Size   132  File : ..\..\mvl\usr\server\Server.c #0926
+  Ptr 00aa08a4  Size     4  File : ..\..\mvl\usr\server\Server.c #1092
+  Ptr 00a98b44  Size    12  File : ..\..\mvl\usr\server\Server.c #0913
+  Ptr 00a98a94  Size   132  File : ..\..\mvl\usr\server\Server.c #0901
+  Ptr 00a98a04  Size    98  File : ..\..\Mvl\Src\Mvl_obj.c #0594
+  Ptr 00a98974  Size   102  File : ..\..\Mvl\Src\Mvl_obj.c #0594
+  Ptr 00a988e4  Size   101  File : ..\..\Mvl\Src\Mvl_obj.c #0594
+  Ptr 00a98854  Size    99  File : ..\..\Mvl\Src\Mvl_obj.c #0594
+  Ptr 00a98824  Size     4  File : ..\..\Mvl\Usr\Server\srvrobj.c #0471
+  Ptr 00a987ec  Size    16  File : ..\..\Mvl\Usr\Server\srvrobj.c #0467
+  Ptr 00a62d4c  Size     4  File : ..\..\Mvl\Usr\Server\srvrobj.c #0449
+  Ptr 00a987b4  Size    16  File : ..\..\Mvl\Usr\Server\srvrobj.c #0445
+  Ptr 00a98764  Size    40  File : ..\..\Mvl\Usr\Server\srvrobj.c #0397
+  Ptr 00a98724  Size    24  File : ..\..\Mvl\Usr\Server\srvrobj.c #0377
+  Ptr 00a986ec  Size    12  File : ..\..\Mvl\Usr\Server\srvrobj.c #0376
+  Ptr 00a9869c  Size    40  File : ..\..\Mvl\Usr\Server\srvrobj.c #0373
+  Ptr 00a98644  Size    44  File : ..\..\Mvl\Usr\Server\srvrobj.c #0372
+  Ptr 00a98604  Size    24  File : ..\..\Mvl\Usr\Server\srvrobj.c #0346
+  Ptr 00a985cc  Size    12  File : ..\..\Mvl\Usr\Server\srvrobj.c #0345
+  Ptr 00a98554  Size    80  File : ..\..\Mvl\Usr\Server\srvrobj.c #0315
+  Ptr 00a98504  Size    40  File : ..\..\Mvl\Usr\Server\srvrobj.c #0314
+  Ptr 00a6ffbc  Size    48  File : ..\..\Mvl\Usr\Server\srvrobj.c #0311
+  Ptr 00a6ff44  Size    80  File : ..\..\Mvl\Usr\Server\srvrobj.c #0307
+  Ptr 00a9834c  Size   400  File : ..\..\Mvl\Usr\Server\srvrobj.c #0258
+  Ptr 00a98194  Size   400  File : ..\..\Mvl\Usr\Server\srvrobj.c #0225
+  Ptr 00a97fc4  Size   420  File : ..\..\Mvl\Usr\Server\srvrobj.c #0223
+  Ptr 00a6feb4  Size   104  File : ..\..\Mvl\Usr\Server\srvrobj.c #0215
+  Ptr 00a6fe5c  Size    48  File : ..\..\Mvl\Usr\Server\srvrobj.c #0214
+  Ptr 00a97dec  Size   428  File : ..\..\Mvl\Usr\Server\srvrobj.c #0165
+  Ptr 00a97b94  Size   560  File : ..\..\Mvl\Usr\Server\srvrobj.c #0161
+  Ptr 00a978ac  Size   704  File : ..\..\Mvl\Usr\Server\srvrobj.c #0495
+  Ptr 00a66cb4  Size 32010  File : ..\..\mvl\Src\Acse\Mvl_acse.c #0445
+  Ptr 00a66bc4  Size   200  File : ..\..\mvl\Src\Acse\Mvl_acse.c #0525
+  Ptr 00a62d1c  Size     8  File : ..\..\uca\leant\osicfgx.c #1664
+  Ptr 00a66b1c  Size   128  File : ..\..\uca\leant\osicfgx.c #1637
+  Ptr 00a62ce4  Size     9  File : ..\..\uca\leant\osicfgx.c #1664
+  Ptr 00a62cb4  Size     7  File : ..\..\uca\leant\osicfgx.c #1664
+  Ptr 00a669f4  Size   256  File : ..\..\uca\leant\osicfgx.c #1621
+  Ptr 00a654ec  Size   372  File : ..\..\src\gensock2.c #1890
+  Ptr 00a62c0c  Size    56  File : ..\..\src\gensock2.c #0994
+  Ptr 00a62b7c  Size   100  File : ..\..\src\gensock2.c #0298
+  Ptr 00a62b44  Size    10  File : ..\..\src\sx_dec.c #0897
+  Ptr 00a62b04  Size    24  File : ..\..\src\sx_dec.c #0897
+  Ptr 00a62ad4  Size     8  File : ..\..\mvl\usr\logcfgx.c #1227
+  ---- END OF MEMORY POINTER TABLE ----------
+  Total number of allocated pointers:   59
+  Total amount of memory allocated:     38157 bytes 
+  Maximum number of pointers allocated: 74
+  Maximum amount of memory allocated:   236050 bytes
+
+***********************************************************
+          LOGGING STARTED Sat Apr 21 18:18:57 2012
+***********************************************************
+
+2012-04-21 18:18:57.156 SLOGALWAYS (Server.c 386) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-21 18:18:57.156 SLOGALWAYS (Server.c 387) 
+  Initializing ...
+
+2012-04-21 18:18:57.187 CLNP_LOG_ERR (clnp_pcap.c 164) 
+  Subnetwork initialization error: 'network_device' not set.
+
+2012-04-21 18:18:57.187 CLNP_LOG_ERR (Clnp_usr.c 247) 
+  CLNP-ERROR: initialization failed ret=1
+
+2012-04-21 18:18:57.187 MVLLOG_ERR (Mvl_acse.c 609) 
+  Error: copp_initialize returned error '0x1'
+
+***********************************************************
+          LOGGING STARTED Sat Apr 21 18:18:58 2012
+***********************************************************
+
+2012-04-21 18:18:58.765 SLOGALWAYS (Server.c 386) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-21 18:18:58.765 SLOGALWAYS (Server.c 387) 
+  Initializing ...
+
+2012-04-21 18:18:58.781 CLNP_LOG_ERR (clnp_pcap.c 164) 
+  Subnetwork initialization error: 'network_device' not set.
+
+2012-04-21 18:18:58.781 CLNP_LOG_ERR (Clnp_usr.c 247) 
+  CLNP-ERROR: initialization failed ret=1
+
+2012-04-21 18:18:58.781 MVLLOG_ERR (Mvl_acse.c 609) 
+  Error: copp_initialize returned error '0x1'
+
+***********************************************************
+          LOGGING STARTED Sat Apr 21 18:18:59 2012
+***********************************************************
+
+2012-04-21 18:18:59.531 SLOGALWAYS (Server.c 386) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-21 18:18:59.531 SLOGALWAYS (Server.c 387) 
+  Initializing ...
+
+2012-04-21 18:18:59.562 CLNP_LOG_ERR (clnp_pcap.c 164) 
+  Subnetwork initialization error: 'network_device' not set.
+
+2012-04-21 18:18:59.562 CLNP_LOG_ERR (Clnp_usr.c 247) 
+  CLNP-ERROR: initialization failed ret=1
+
+2012-04-21 18:18:59.562 MVLLOG_ERR (Mvl_acse.c 609) 
+  Error: copp_initialize returned error '0x1'
+
+***********************************************************
+          LOGGING STARTED Sat Apr 21 18:19:00 2012
+***********************************************************
+
+2012-04-21 18:19:00.156 SLOGALWAYS (Server.c 386) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-21 18:19:00.156 SLOGALWAYS (Server.c 387) 
+  Initializing ...
+
+2012-04-21 18:19:00.171 CLNP_LOG_ERR (clnp_pcap.c 164) 
+  Subnetwork initialization error: 'network_device' not set.
+
+2012-04-21 18:19:00.171 CLNP_LOG_ERR (Clnp_usr.c 247) 
+  CLNP-ERROR: initialization failed ret=1
+
+2012-04-21 18:19:00.171 MVLLOG_ERR (Mvl_acse.c 609) 
+  Error: copp_initialize returned error '0x1'
+
+***********************************************************
+          LOGGING STARTED Sat Apr 21 18:19:00 2012
+***********************************************************
+
+2012-04-21 18:19:00.765 SLOGALWAYS (Server.c 386) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-21 18:19:00.765 SLOGALWAYS (Server.c 387) 
+  Initializing ...
+
+2012-04-21 18:19:00.781 CLNP_LOG_ERR (clnp_pcap.c 164) 
+  Subnetwork initialization error: 'network_device' not set.
+
+2012-04-21 18:19:00.781 CLNP_LOG_ERR (Clnp_usr.c 247) 
+  CLNP-ERROR: initialization failed ret=1
+
+2012-04-21 18:19:00.781 MVLLOG_ERR (Mvl_acse.c 609) 
+  Error: copp_initialize returned error '0x1'
+
+***********************************************************
+          LOGGING STARTED Sat Apr 21 18:19:01 2012
+***********************************************************
+
+2012-04-21 18:19:01.468 SLOGALWAYS (Server.c 386) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-21 18:19:01.468 SLOGALWAYS (Server.c 387) 
+  Initializing ...
+
+2012-04-21 18:19:01.484 CLNP_LOG_ERR (clnp_pcap.c 164) 
+  Subnetwork initialization error: 'network_device' not set.
+
+2012-04-21 18:19:01.484 CLNP_LOG_ERR (Clnp_usr.c 247) 
+  CLNP-ERROR: initialization failed ret=1
+
+2012-04-21 18:19:01.484 MVLLOG_ERR (Mvl_acse.c 609) 
+  Error: copp_initialize returned error '0x1'
+
+***********************************************************
+          LOGGING STARTED Sat Apr 21 18:19:02 2012
+***********************************************************
+
+2012-04-21 18:19:02.171 SLOGALWAYS (Server.c 386) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-21 18:19:02.171 SLOGALWAYS (Server.c 387) 
+  Initializing ...
+
+2012-04-21 18:19:02.187 CLNP_LOG_ERR (clnp_pcap.c 164) 
+  Subnetwork initialization error: 'network_device' not set.
+
+2012-04-21 18:19:02.187 CLNP_LOG_ERR (Clnp_usr.c 247) 
+  CLNP-ERROR: initialization failed ret=1
+
+2012-04-21 18:19:02.187 MVLLOG_ERR (Mvl_acse.c 609) 
+  Error: copp_initialize returned error '0x1'
+
+***********************************************************
+          LOGGING STARTED Sat Apr 21 18:19:34 2012
+***********************************************************
+
+2012-04-21 18:19:34.546 SLOGALWAYS (Server.c 386) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-21 18:19:34.546 SLOGALWAYS (Server.c 387) 
+  Initializing ...
+
+2012-04-21 18:19:34.578 SLOGALWAYS (Server.c 398) 
+  Initialization complete, entering service loop
+
+2012-04-21 18:19:34.578 MEM_LOG_DUMP (Mem_chks.c 1384) 
+  DYNAMIC MEMORY POINTER TABLE 
+  -----------------------------  
+  Total number of allocated pointers:   74
+  Total amount of memory allocated:     204051 bytes 
+  Maximum number of pointers allocated: 74
+  Maximum amount of memory allocated:   236050 bytes
+
+2012-04-21 18:19:37.578 MEM_LOG_DUMP (Mem_chks.c 1384) 
+  DYNAMIC MEMORY POINTER TABLE 
+  -----------------------------  
+  Total number of allocated pointers:   74
+  Total amount of memory allocated:     204051 bytes 
+  Maximum number of pointers allocated: 74
+  Maximum amount of memory allocated:   236050 bytes
+
+2012-04-21 18:19:37.671 MEM_LOG_DUMP (Mem_chks.c 1299) 
+  DYNAMIC MEMORY POINTER TABLE
+----------------------------  
+  Ptr 00aa0ebc  Size     1  File : ..\..\mvl\usr\server\Server.c #0406
+  Ptr 00aa0e8c  Size     4  File : ..\..\mvl\usr\server\Server.c #1092
+  Ptr 00aa0e54  Size    12  File : ..\..\mvl\usr\server\Server.c #1048
+  Ptr 00aa0da4  Size   132  File : ..\..\mvl\usr\server\Server.c #1036
+  Ptr 00aa0d74  Size     4  File : ..\..\mvl\usr\server\Server.c #1092
+  Ptr 00aa0d44  Size     4  File : ..\..\mvl\usr\server\Server.c #1092
+  Ptr 00aa0d04  Size    24  File : ..\..\mvl\usr\server\Server.c #1010
+  Ptr 00aa0c54  Size   132  File : ..\..\mvl\usr\server\Server.c #0998
+  Ptr 00aa0ba4  Size   132  File : ..\..\mvl\usr\server\Server.c #0985
+  Ptr 00aa0b74  Size     4  File : ..\..\mvl\usr\server\Server.c #1092
+  Ptr 00aa0b3c  Size    12  File : ..\..\mvl\usr\server\Server.c #0974
+  Ptr 00aa0a8c  Size   132  File : ..\..\mvl\usr\server\Server.c #0962
+  Ptr 00aa0a5c  Size     4  File : ..\..\mvl\usr\server\Server.c #1092
+  Ptr 00aa0a24  Size    12  File : ..\..\mvl\usr\server\Server.c #0951
+  Ptr 00aa0974  Size   132  File : ..\..\mvl\usr\server\Server.c #0939
+  Ptr 00aa08c4  Size   132  File : ..\..\mvl\usr\server\Server.c #0926
+  Ptr 00aa0894  Size     4  File : ..\..\mvl\usr\server\Server.c #1092
+  Ptr 00a98b34  Size    12  File : ..\..\mvl\usr\server\Server.c #0913
+  Ptr 00a98a84  Size   132  File : ..\..\mvl\usr\server\Server.c #0901
+  Ptr 00a989f4  Size    98  File : ..\..\Mvl\Src\Mvl_obj.c #0594
+  Ptr 00a98964  Size   102  File : ..\..\Mvl\Src\Mvl_obj.c #0594
+  Ptr 00a988d4  Size   101  File : ..\..\Mvl\Src\Mvl_obj.c #0594
+  Ptr 00a98844  Size    99  File : ..\..\Mvl\Src\Mvl_obj.c #0594
+  Ptr 00a98814  Size     4  File : ..\..\Mvl\Usr\Server\srvrobj.c #0471
+  Ptr 00a987dc  Size    16  File : ..\..\Mvl\Usr\Server\srvrobj.c #0467
+  Ptr 00a987ac  Size     4  File : ..\..\Mvl\Usr\Server\srvrobj.c #0449
+  Ptr 00a98774  Size    16  File : ..\..\Mvl\Usr\Server\srvrobj.c #0445
+  Ptr 00a98724  Size    40  File : ..\..\Mvl\Usr\Server\srvrobj.c #0397
+  Ptr 00a986e4  Size    24  File : ..\..\Mvl\Usr\Server\srvrobj.c #0377
+  Ptr 00a986ac  Size    12  File : ..\..\Mvl\Usr\Server\srvrobj.c #0376
+  Ptr 00a9865c  Size    40  File : ..\..\Mvl\Usr\Server\srvrobj.c #0373
+  Ptr 00a98604  Size    44  File : ..\..\Mvl\Usr\Server\srvrobj.c #0372
+  Ptr 00a985c4  Size    24  File : ..\..\Mvl\Usr\Server\srvrobj.c #0346
+  Ptr 00a9858c  Size    12  File : ..\..\Mvl\Usr\Server\srvrobj.c #0345
+  Ptr 00a98514  Size    80  File : ..\..\Mvl\Usr\Server\srvrobj.c #0315
+  Ptr 00a984c4  Size    40  File : ..\..\Mvl\Usr\Server\srvrobj.c #0314
+  Ptr 00a9846c  Size    48  File : ..\..\Mvl\Usr\Server\srvrobj.c #0311
+  Ptr 00a983f4  Size    80  File : ..\..\Mvl\Usr\Server\srvrobj.c #0307
+  Ptr 00a9823c  Size   400  File : ..\..\Mvl\Usr\Server\srvrobj.c #0258
+  Ptr 00a98084  Size   400  File : ..\..\Mvl\Usr\Server\srvrobj.c #0225
+  Ptr 00a97eb4  Size   420  File : ..\..\Mvl\Usr\Server\srvrobj.c #0223
+  Ptr 00a97e24  Size   104  File : ..\..\Mvl\Usr\Server\srvrobj.c #0215
+  Ptr 00a97dcc  Size    48  File : ..\..\Mvl\Usr\Server\srvrobj.c #0214
+  Ptr 00a97bf4  Size   428  File : ..\..\Mvl\Usr\Server\srvrobj.c #0165
+  Ptr 00a9799c  Size   560  File : ..\..\Mvl\Usr\Server\srvrobj.c #0161
+  Ptr 00a976b4  Size   704  File : ..\..\Mvl\Usr\Server\srvrobj.c #0495
+  Ptr 00a66c84  Size 32010  File : ..\..\mvl\Src\Acse\Mvl_acse.c #0445
+  Ptr 00a66b94  Size   200  File : ..\..\mvl\Src\Acse\Mvl_acse.c #0525
+  Ptr 00a66b64  Size     8  File : ..\..\uca\leant\osicfgx.c #1664
+  Ptr 00a66abc  Size   128  File : ..\..\uca\leant\osicfgx.c #1637
+  Ptr 00a66a84  Size     9  File : ..\..\uca\leant\osicfgx.c #1664
+  Ptr 00a66a54  Size     7  File : ..\..\uca\leant\osicfgx.c #1664
+  Ptr 00a6692c  Size   256  File : ..\..\uca\leant\osicfgx.c #1621
+  Ptr 00a65544  Size   372  File : ..\..\src\gensock2.c #1890
+  Ptr 00a62c0c  Size    56  File : ..\..\src\gensock2.c #0994
+  Ptr 00a62b7c  Size   100  File : ..\..\src\gensock2.c #0298
+  Ptr 00a62b44  Size    10  File : ..\..\src\sx_dec.c #0897
+  Ptr 00a62b04  Size    24  File : ..\..\src\sx_dec.c #0897
+  Ptr 00a62ad4  Size     8  File : ..\..\mvl\usr\logcfgx.c #1227
+  ---- END OF MEMORY POINTER TABLE ----------
+  Total number of allocated pointers:   59
+  Total amount of memory allocated:     38157 bytes 
+  Maximum number of pointers allocated: 74
+  Maximum amount of memory allocated:   236050 bytes
+
+***********************************************************
+          LOGGING STARTED Sat Apr 21 18:19:59 2012
+***********************************************************
+
+2012-04-21 18:19:59.203 SLOGALWAYS (Server.c 386) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-21 18:19:59.203 SLOGALWAYS (Server.c 387) 
+  Initializing ...
+
+2012-04-21 18:19:59.218 SLOGALWAYS (Server.c 398) 
+  Initialization complete, entering service loop
+
+2012-04-21 18:19:59.218 MEM_LOG_DUMP (Mem_chks.c 1384) 
+  DYNAMIC MEMORY POINTER TABLE 
+  -----------------------------  
+  Total number of allocated pointers:   74
+  Total amount of memory allocated:     204051 bytes 
+  Maximum number of pointers allocated: 74
+  Maximum amount of memory allocated:   236050 bytes
+
+2012-04-21 18:20:11.218 MEM_LOG_DUMP (Mem_chks.c 1384) 
+  DYNAMIC MEMORY POINTER TABLE 
+  -----------------------------  
+  Total number of allocated pointers:   74
+  Total amount of memory allocated:     204051 bytes 
+  Maximum number of pointers allocated: 74
+  Maximum amount of memory allocated:   236050 bytes
+
+2012-04-21 18:20:11.328 MEM_LOG_DUMP (Mem_chks.c 1299) 
+  DYNAMIC MEMORY POINTER TABLE
+----------------------------  
+  Ptr 00aa0edc  Size     1  File : ..\..\mvl\usr\server\Server.c #0406
+  Ptr 00aa0eac  Size     4  File : ..\..\mvl\usr\server\Server.c #1092
+  Ptr 00aa0e74  Size    12  File : ..\..\mvl\usr\server\Server.c #1048
+  Ptr 00aa0dc4  Size   132  File : ..\..\mvl\usr\server\Server.c #1036
+  Ptr 00aa0d94  Size     4  File : ..\..\mvl\usr\server\Server.c #1092
+  Ptr 00aa0d64  Size     4  File : ..\..\mvl\usr\server\Server.c #1092
+  Ptr 00aa0d24  Size    24  File : ..\..\mvl\usr\server\Server.c #1010
+  Ptr 00aa0c74  Size   132  File : ..\..\mvl\usr\server\Server.c #0998
+  Ptr 00aa0bc4  Size   132  File : ..\..\mvl\usr\server\Server.c #0985
+  Ptr 00aa0b94  Size     4  File : ..\..\mvl\usr\server\Server.c #1092
+  Ptr 00aa0b5c  Size    12  File : ..\..\mvl\usr\server\Server.c #0974
+  Ptr 00aa0aac  Size   132  File : ..\..\mvl\usr\server\Server.c #0962
+  Ptr 00aa0a7c  Size     4  File : ..\..\mvl\usr\server\Server.c #1092
+  Ptr 00aa0a44  Size    12  File : ..\..\mvl\usr\server\Server.c #0951
+  Ptr 00aa0994  Size   132  File : ..\..\mvl\usr\server\Server.c #0939
+  Ptr 00aa08e4  Size   132  File : ..\..\mvl\usr\server\Server.c #0926
+  Ptr 00aa08b4  Size     4  File : ..\..\mvl\usr\server\Server.c #1092
+  Ptr 00a98b54  Size    12  File : ..\..\mvl\usr\server\Server.c #0913
+  Ptr 00a98aa4  Size   132  File : ..\..\mvl\usr\server\Server.c #0901
+  Ptr 00a98a14  Size    98  File : ..\..\Mvl\Src\Mvl_obj.c #0594
+  Ptr 00a98984  Size   102  File : ..\..\Mvl\Src\Mvl_obj.c #0594
+  Ptr 00a988f4  Size   101  File : ..\..\Mvl\Src\Mvl_obj.c #0594
+  Ptr 00a98864  Size    99  File : ..\..\Mvl\Src\Mvl_obj.c #0594
+  Ptr 00a98834  Size     4  File : ..\..\Mvl\Usr\Server\srvrobj.c #0471
+  Ptr 00a987fc  Size    16  File : ..\..\Mvl\Usr\Server\srvrobj.c #0467
+  Ptr 00a987cc  Size     4  File : ..\..\Mvl\Usr\Server\srvrobj.c #0449
+  Ptr 00a98794  Size    16  File : ..\..\Mvl\Usr\Server\srvrobj.c #0445
+  Ptr 00a98744  Size    40  File : ..\..\Mvl\Usr\Server\srvrobj.c #0397
+  Ptr 00a98704  Size    24  File : ..\..\Mvl\Usr\Server\srvrobj.c #0377
+  Ptr 00a986cc  Size    12  File : ..\..\Mvl\Usr\Server\srvrobj.c #0376
+  Ptr 00a9867c  Size    40  File : ..\..\Mvl\Usr\Server\srvrobj.c #0373
+  Ptr 00a98624  Size    44  File : ..\..\Mvl\Usr\Server\srvrobj.c #0372
+  Ptr 00a985e4  Size    24  File : ..\..\Mvl\Usr\Server\srvrobj.c #0346
+  Ptr 00a985ac  Size    12  File : ..\..\Mvl\Usr\Server\srvrobj.c #0345
+  Ptr 00a98534  Size    80  File : ..\..\Mvl\Usr\Server\srvrobj.c #0315
+  Ptr 00a984e4  Size    40  File : ..\..\Mvl\Usr\Server\srvrobj.c #0314
+  Ptr 00a9848c  Size    48  File : ..\..\Mvl\Usr\Server\srvrobj.c #0311
+  Ptr 00a98414  Size    80  File : ..\..\Mvl\Usr\Server\srvrobj.c #0307
+  Ptr 00a9825c  Size   400  File : ..\..\Mvl\Usr\Server\srvrobj.c #0258
+  Ptr 00a980a4  Size   400  File : ..\..\Mvl\Usr\Server\srvrobj.c #0225
+  Ptr 00a97ed4  Size   420  File : ..\..\Mvl\Usr\Server\srvrobj.c #0223
+  Ptr 00a97e44  Size   104  File : ..\..\Mvl\Usr\Server\srvrobj.c #0215
+  Ptr 00a97dec  Size    48  File : ..\..\Mvl\Usr\Server\srvrobj.c #0214
+  Ptr 00a6fe44  Size   428  File : ..\..\Mvl\Usr\Server\srvrobj.c #0165
+  Ptr 00a97b94  Size   560  File : ..\..\Mvl\Usr\Server\srvrobj.c #0161
+  Ptr 00a978ac  Size   704  File : ..\..\Mvl\Usr\Server\srvrobj.c #0495
+  Ptr 00a66c9c  Size 32010  File : ..\..\mvl\Src\Acse\Mvl_acse.c #0445
+  Ptr 00a66bac  Size   200  File : ..\..\mvl\Src\Acse\Mvl_acse.c #0525
+  Ptr 00a66b7c  Size     8  File : ..\..\uca\leant\osicfgx.c #1664
+  Ptr 00a66ad4  Size   128  File : ..\..\uca\leant\osicfgx.c #1637
+  Ptr 00a66a9c  Size     9  File : ..\..\uca\leant\osicfgx.c #1664
+  Ptr 00a66a6c  Size     7  File : ..\..\uca\leant\osicfgx.c #1664
+  Ptr 00a66944  Size   256  File : ..\..\uca\leant\osicfgx.c #1621
+  Ptr 00a6555c  Size   372  File : ..\..\src\gensock2.c #1890
+  Ptr 00a62c0c  Size    56  File : ..\..\src\gensock2.c #0994
+  Ptr 00a62b7c  Size   100  File : ..\..\src\gensock2.c #0298
+  Ptr 00a62b44  Size    10  File : ..\..\src\sx_dec.c #0897
+  Ptr 00a62b04  Size    24  File : ..\..\src\sx_dec.c #0897
+  Ptr 00a62ad4  Size     8  File : ..\..\mvl\usr\logcfgx.c #1227
+  ---- END OF MEMORY POINTER TABLE ----------
+  Total number of allocated pointers:   59
+  Total amount of memory allocated:     38157 bytes 
+  Maximum number of pointers allocated: 74
+  Maximum amount of memory allocated:   236050 bytes
+
+***********************************************************
+          LOGGING STARTED Sat Apr 21 18:20:17 2012
+***********************************************************
+
+2012-04-21 18:20:17.843 SLOGALWAYS (Server.c 386) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2012-04-21 18:20:17.843 SLOGALWAYS (Server.c 387) 
+  Initializing ...
+
+2012-04-21 18:20:17.859 CLNP_LOG_ERR (clnp_pcap.c 164) 
+  Subnetwork initialization error: 'network_device' not set.
+
+2012-04-21 18:20:17.859 CLNP_LOG_ERR (Clnp_usr.c 247) 
+  CLNP-ERROR: initialization failed ret=1
+
+2012-04-21 18:20:17.859 MVLLOG_ERR (Mvl_acse.c 609) 
+  Error: copp_initialize returned error '0x1'
+
+***********************************************************
+          LOGGING STARTED Tue Jul 03 22:13:40 2018
+***********************************************************
+
+2018-07-03 22:13:40.124 SLOGALWAYS (Server.c 386) 
+  MMS-LITE-80X-001 Version 5.1004
+
+2018-07-03 22:13:40.124 SLOGALWAYS (Server.c 387) 
+  Initializing ...
+
+2018-07-03 22:13:40.140 SLOGALWAYS (Server.c 398) 
+  Initialization complete, entering service loop
+
+2018-07-03 22:13:40.140 MEM_LOG_DUMP (Mem_chks.c 1384) 
+  DYNAMIC MEMORY POINTER TABLE 
+  -----------------------------  
+  Total number of allocated pointers:   74
+  Total amount of memory allocated:     204051 bytes 
+  Maximum number of pointers allocated: 74
+  Maximum amount of memory allocated:   236050 bytes
+
+2018-07-03 22:15:59.029 MEM_LOG_DUMP (Mem_chks.c 1384) 
+  DYNAMIC MEMORY POINTER TABLE 
+  -----------------------------  
+  Total number of allocated pointers:   74
+  Total amount of memory allocated:     204051 bytes 
+  Maximum number of pointers allocated: 74
+  Maximum amount of memory allocated:   236050 bytes
+
+2018-07-03 22:15:59.138 MEM_LOG_DUMP (Mem_chks.c 1299) 
+  DYNAMIC MEMORY POINTER TABLE
+----------------------------  
+  Ptr 01e3d70c  Size     1  File : ..\..\mvl\usr\server\Server.c #0406
+  Ptr 01e3d6dc  Size     4  File : ..\..\mvl\usr\server\Server.c #1092
+  Ptr 01e3d6a4  Size    12  File : ..\..\mvl\usr\server\Server.c #1048
+  Ptr 01e3d5f4  Size   132  File : ..\..\mvl\usr\server\Server.c #1036
+  Ptr 01e3d5c4  Size     4  File : ..\..\mvl\usr\server\Server.c #1092
+  Ptr 01e3d594  Size     4  File : ..\..\mvl\usr\server\Server.c #1092
+  Ptr 01e3d554  Size    24  File : ..\..\mvl\usr\server\Server.c #1010
+  Ptr 01e3d4a4  Size   132  File : ..\..\mvl\usr\server\Server.c #0998
+  Ptr 01e3d3f4  Size   132  File : ..\..\mvl\usr\server\Server.c #0985
+  Ptr 02341fd4  Size     4  File : ..\..\mvl\usr\server\Server.c #1092
+  Ptr 01e3d3bc  Size    12  File : ..\..\mvl\usr\server\Server.c #0974
+  Ptr 02341f24  Size   132  File : ..\..\mvl\usr\server\Server.c #0962
+  Ptr 02341ef4  Size     4  File : ..\..\mvl\usr\server\Server.c #1092
+  Ptr 02341ebc  Size    12  File : ..\..\mvl\usr\server\Server.c #0951
+  Ptr 02341e0c  Size   132  File : ..\..\mvl\usr\server\Server.c #0939
+  Ptr 02341d5c  Size   132  File : ..\..\mvl\usr\server\Server.c #0926
+  Ptr 02341d2c  Size     4  File : ..\..\mvl\usr\server\Server.c #1092
+  Ptr 01e3d384  Size    12  File : ..\..\mvl\usr\server\Server.c #0913
+  Ptr 01e3d2d4  Size   132  File : ..\..\mvl\usr\server\Server.c #0901
+  Ptr 01e3d244  Size    98  File : ..\..\Mvl\Src\Mvl_obj.c #0594
+  Ptr 01e3d1b4  Size   102  File : ..\..\Mvl\Src\Mvl_obj.c #0594
+  Ptr 01e3d124  Size   101  File : ..\..\Mvl\Src\Mvl_obj.c #0594
+  Ptr 01e3d094  Size    99  File : ..\..\Mvl\Src\Mvl_obj.c #0594
+  Ptr 01e3d064  Size     4  File : ..\..\Mvl\Usr\Server\srvrobj.c #0471
+  Ptr 01e3d02c  Size    16  File : ..\..\Mvl\Usr\Server\srvrobj.c #0467
+  Ptr 02318b84  Size     4  File : ..\..\Mvl\Usr\Server\srvrobj.c #0449
+  Ptr 02339fcc  Size    16  File : ..\..\Mvl\Usr\Server\srvrobj.c #0445
+  Ptr 01e3cfdc  Size    40  File : ..\..\Mvl\Usr\Server\srvrobj.c #0397
+  Ptr 02339f8c  Size    24  File : ..\..\Mvl\Usr\Server\srvrobj.c #0377
+  Ptr 02339f54  Size    12  File : ..\..\Mvl\Usr\Server\srvrobj.c #0376
+  Ptr 02339f04  Size    40  File : ..\..\Mvl\Usr\Server\srvrobj.c #0373
+  Ptr 02339eac  Size    44  File : ..\..\Mvl\Usr\Server\srvrobj.c #0372
+  Ptr 02339e6c  Size    24  File : ..\..\Mvl\Usr\Server\srvrobj.c #0346
+  Ptr 02339e34  Size    12  File : ..\..\Mvl\Usr\Server\srvrobj.c #0345
+  Ptr 02339dbc  Size    80  File : ..\..\Mvl\Usr\Server\srvrobj.c #0315
+  Ptr 02339d6c  Size    40  File : ..\..\Mvl\Usr\Server\srvrobj.c #0314
+  Ptr 02339d14  Size    48  File : ..\..\Mvl\Usr\Server\srvrobj.c #0311
+  Ptr 02339c9c  Size    80  File : ..\..\Mvl\Usr\Server\srvrobj.c #0307
+  Ptr 02339ae4  Size   400  File : ..\..\Mvl\Usr\Server\srvrobj.c #0258
+  Ptr 0233992c  Size   400  File : ..\..\Mvl\Usr\Server\srvrobj.c #0225
+  Ptr 0233975c  Size   420  File : ..\..\Mvl\Usr\Server\srvrobj.c #0223
+  Ptr 023396cc  Size   104  File : ..\..\Mvl\Usr\Server\srvrobj.c #0215
+  Ptr 02339674  Size    48  File : ..\..\Mvl\Usr\Server\srvrobj.c #0214
+  Ptr 0233949c  Size   428  File : ..\..\Mvl\Usr\Server\srvrobj.c #0165
+  Ptr 02339244  Size   560  File : ..\..\Mvl\Usr\Server\srvrobj.c #0161
+  Ptr 02338f5c  Size   704  File : ..\..\Mvl\Usr\Server\srvrobj.c #0495
+  Ptr 02310064  Size 32010  File : ..\..\mvl\Src\Acse\Mvl_acse.c #0445
+  Ptr 023188fc  Size   200  File : ..\..\mvl\Src\Acse\Mvl_acse.c #0525
+  Ptr 01e3181c  Size     8  File : ..\..\uca\leant\osicfgx.c #1664
+  Ptr 02318854  Size   128  File : ..\..\uca\leant\osicfgx.c #1637
+  Ptr 01e317e4  Size     9  File : ..\..\uca\leant\osicfgx.c #1664
+  Ptr 01e317b4  Size     7  File : ..\..\uca\leant\osicfgx.c #1664
+  Ptr 02318bb4  Size   256  File : ..\..\uca\leant\osicfgx.c #1621
+  Ptr 01e315cc  Size   372  File : ..\..\src\gensock2.c #1890
+  Ptr 01e3134c  Size    56  File : ..\..\src\gensock2.c #0994
+  Ptr 01e312bc  Size   100  File : ..\..\src\gensock2.c #0298
+  Ptr 01e31284  Size    10  File : ..\..\src\sx_dec.c #0897
+  Ptr 01e31244  Size    24  File : ..\..\src\sx_dec.c #0897
+  Ptr 01e31214  Size     8  File : ..\..\mvl\usr\logcfgx.c #1227
+  ---- END OF MEMORY POINTER TABLE ----------
+  Total number of allocated pointers:   59
+  Total amount of memory allocated:     38157 bytes 
+  Maximum number of pointers allocated: 74
+  Maximum amount of memory allocated:   236050 bytes

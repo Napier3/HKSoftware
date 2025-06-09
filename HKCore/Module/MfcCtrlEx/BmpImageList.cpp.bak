@@ -1,0 +1,39 @@
+// SplashWndBase.cpp
+//
+
+#include "stdafx.h"
+#include "BmpImageList.h"
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
+
+//////////////////////////////////////////////////////////////////////////
+
+CBmpImageList::CBmpImageList()  
+{  
+	m_pBitmap = NULL;
+}  
+
+CBmpImageList::~CBmpImageList()  
+{  
+	delete m_pBitmap;
+}  
+
+BOOL LoadBmpFile(const CString &strFile)
+{
+	Create(16,16,ILC_COLOR32 | ILC_COLORDDB | ILC_MASK, 10, 2);
+
+	CBitmap * pBitmap = new CBitmap; 
+	HBITMAP hBitmap = (HBITMAP)LoadImage(NULL, filePath, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+	
+	if ( NULL != hBitmap ) 
+	{ 
+		pBitmap->Attach(hBitmap);  
+		m_ImageList.Add(pBitmap, RGB(255, 255, 255)); 
+	} 
+}
+
+

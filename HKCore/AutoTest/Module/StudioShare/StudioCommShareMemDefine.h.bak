@@ -1,0 +1,237 @@
+//StudioCommShareMemDefine.h
+
+#ifndef	_StudioCommShareMemDefine_h_
+#define	_StudioCommShareMemDefine_h_
+
+#define	STUDIO_CMM_MEMFILENAME	  "_studio_msg_buffer.nysm"
+#define	STUDIO_CMM_MAPNAME		    "_studio_comm_share_mem_buffer_"
+#define	STUDIO_CMM_MAPSIZE			  524288 //(64k*8)524288
+
+#define STUDIO_CMM_BUF_DLL_CFG_BEGINPOS          2048
+
+#define STUDIO_CMM_BUF_EXE_BUFFERLEN             65536
+#define STUDIO_CMM_BUF_EXE_MAIN                  0
+#define STUDIO_CMM_BUF_EXE_AUTOTEST              1
+#define STUDIO_CMM_BUF_EXE_GBDEV                 2
+#define STUDIO_CMM_BUF_EXE_PPDEV                 4
+
+//程序标记
+#define STUDIO_CMM_BUF_EXE_ID                    0
+#define STUDIO_CMM_BUF_EXE_MSG                   4
+#define STUDIO_CMM_BUF_EXE_MSGRCVWND             8
+#define STUDIO_CMM_BUF_EXE_MSGRCVTHREAD          12
+#define STUDIO_CMM_BUF_EXE_COMMAND               16
+#define STUDIO_CMM_BUF_EXE_FILECOUNT_MAX         20
+#define STUDIO_CMM_BUF_EXE_FILECOUNT             24
+#define STUDIO_CMM_BUF_EXE_FILEBEGIN             256
+#define STUDIO_CMM_BUF_EXE_FILELEN               256
+
+//自动测试 - 主程序
+#define STUDIO_CMD_AUTOTEST_TO_MAIN_TESTBEGIN    0X1001
+#define STUDIO_CMD_AUTOTEST_TO_MAIN_TESTSTOP     0X1002
+#define STUDIO_CMD_AUTOTEST_TO_MAIN_TESTCLOSE    0X1003
+#define STUDIO_CMD_AUTOTEST_TO_MAIN_TASKCLOSE    0X1004
+#define STUDIO_CMD_AUTOTEST_TO_MAIN_CREATETASK   0X1005
+#define STUDIO_CMD_AUTOTEST_TO_MAIN_CREATETEST   0X1006
+//主程序 - 自动测试
+#define STUDIO_CMD_MAIN_TO_AUTOTEST_OPENTEST     0X1007
+
+//测试模板编辑 - 主程序
+#define STUDIO_CMD_GBDEV_TO_MAIN_SAVE            0X2001
+#define STUDIO_CMD_GBDEV_TO_MAIN_CLOSE           0X2002
+//主程序 - 测试模板编辑
+#define STUDIO_CMD_MAIN_TO_GBDEV_OPEN            0X2003
+
+//规约模板编辑 - 主程序
+#define STUDIO_CMD_PPDEV_TO_MAIN_SAVE            0X3001
+#define STUDIO_CMD_PPDEV_TO_MAIN_CLOSE           0X3002
+//主程序 - 规约模板编辑
+#define STUDIO_CMD_MAIN_TO_PPDEV_OPEN            0X3003
+
+#include "..\..\..\MODULE\SHAREMEM\ShareMemServerEx.h"
+#include "..\..\..\MODULE\SHAREMEM\ShareMemClientEx.h"
+
+
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+//CStudioCommShareMemServer
+class CStudioCommShareMemReadWrite
+{
+public:
+	CStudioCommShareMemReadWrite();
+	virtual ~CStudioCommShareMemReadWrite();
+
+	DWORD m_dwMsg;
+	DWORD m_dwMsgRcvWnd;
+	DWORD m_dwReadWriteState;
+	DWORD m_dwRsCmd;
+	DWORD m_dwRsCmdState;
+	DWORD m_dwRsCmdReturn;
+	DWORD m_dwDatasCount;
+
+	BYTE* m_pBuffer;
+
+public:
+	void InitHead();
+	void Clear();
+	void ReadDatas(CArtAmpDigDataArray &arrDatas);
+	void ReadDatasEx(CArtAmpDigDataArray &arrDatas);
+	void WriteDatas(CArtAmpDigDataArray &arrDatas);
+
+	DWORD Read(DWORD dwPos);
+	void  Write(DWORD dwPos, DWORD dwData);
+
+	char* ReadString(DWORD dwPos);
+	void  WriteString(DWORD dwPos, char *pString);
+	double ReadDouble(DWORD dwPos);
+	void  WriteDouble(DWORD dwPos, double &dValue);
+	_int64 ReadInt64(DWORD dwPos);
+	void  WriteInt64(DWORD dwPos, _int64 &n64Value);
+	
+	DWORD ReadMsg();
+	void WriteMsg(DWORD dwMsg);
+	DWORD ReadMsgRcvWnd();
+	void WriteMsgRcvWnd(DWORD dwMsgWnd);
+	DWORD ReadCmd();
+	void WriteCmd(DWORD dwCmd);
+	DWORD ReadCmdState();
+	void WriteCmdState(DWORD dwCmdState);
+	DWORD ReadCmdReturn();
+	void WriteCmdReturn(DWORD dwCmdState);
+	void ShowMessage(const CString &strMsg);
+	CString GetMessage();
+
+	DWORD ReadDllWnd();
+	void WriteDllWnd(DWORD dwDllWnd);
+public:
+	virtual void InitShareMem(BOOL bReOpen=FALSE) = 0;
+};
+
+class CStudioCommShareMemServer : public CStudioCommShareMemReadWrite
+{
+private:
+	CStudioCommShareMemServer()  
+	{
+		m_pMemServer = NULL;
+	}
+
+	virtual ~CStudioCommShareMemServer()
+	{
+		if (m_pMemServer != NULL)
+		{
+			delete m_pMemServer;
+		}
+	}
+
+	CShareMemServer *m_pMemServer;
+	static CStudioCommShareMemServer *g_pSTUDIO_CMM_ShareMemServer;
+	static long g_nSTUDIO_CMM_ShareMemServerRef;
+	CString m_strServerPath;
+	
+public:
+	static CStudioCommShareMemServer* CreateSTUDIO_CMM_ShareMemServer();
+	static CStudioCommShareMemServer* CreateSTUDIO_CMM_ShareMemServer(const CString &strPath);
+	void Release();
+
+	virtual void InitShareMem(BOOL bReOpen=FALSE);
+	BOOL IsValid()  {   return (m_pMemServer != NULL) ? m_pMemServer->IsValid() : FALSE;  }
+};
+
+
+
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+//CStudioCommShareMemClient
+class CStudioCommShareMemClient : public CStudioCommShareMemReadWrite
+{
+private:
+	CStudioCommShareMemClient()  
+	{
+		m_pMemClient = NULL;
+	}
+	
+	virtual ~CStudioCommShareMemClient()
+	{
+		if (m_pMemClient != NULL)
+		{
+			delete m_pMemClient;
+		}
+	}
+	
+	CShareMemClient *m_pMemClient;
+	
+	static CStudioCommShareMemClient *g_pSTUDIO_CMM_ShareMemClient;
+	static long g_nSTUDIO_CMM_ShareMemClientRef;
+	
+public:
+	static CStudioCommShareMemClient* CreateSTUDIO_CMM_ShareMemClient();
+	void Release();
+	
+	virtual void InitShareMem(BOOL bReOpen=FALSE);
+	BOOL IsValid()  {   return (m_pMemClient != NULL) ? m_pMemClient->IsValid() : FALSE;  }
+};
+
+/*
+class CStudioCommShareMemExeArea
+{
+public:
+	CStudioCommShareMemExeArea();
+	virtual ~CStudioCommShareMemExeArea();
+
+	//重载函数
+public:
+	void UnMap()	{	if (m_pSmFile)	{	m_pSmFile->UnMapView();	}	}
+	virtual volatile __int64 SmWrite(LPVOID pData, long nLength);
+
+	void CreateArea(const CString &strID, volatile __int64 n64BeginPos, volatile __int64 n64Length, DWORD dwOnceMapSize);
+	BOOL IsAreaOpenSucc();
+	void MapArea(volatile __int64 n64BeginPos);
+	volatile __int64 GetCurrPos();
+	volatile __int64 GetBeginPos()	{	return m_n64AreaBeginPos;	}
+	volatile __int64 GetLength()		{	return m_n64Length;		}
+	void LocateAreaPos(volatile __int64 n64BeginPos, volatile __int64 n64CurrPos);
+	BOOL IsMapCycle()	{	return m_bMapCycle;	}
+	LPVOID Read(__int64 n64BeginPos, DWORD dwLength);
+
+	//私有成员变量
+protected:
+	volatile __int64 m_n64Length;    //文件的大小
+	volatile __int64 m_n64AreaBeginPos;  //数据起始位置
+	DWORD m_dwOnceMapSize;
+	volatile __int64 m_n64AreaEndPos;
+	BOOL m_bMapCycle;
+
+	CShareMemClientEx * m_pSmFile;
+
+	virtual BYTE* MapView(volatile __int64 &n64BeginPos, DWORD dwLen = 33554432, DWORD dwMinLen=1024);//32M
+
+	void FreeArea();
+};
+*/
+
+class CStudioCommShareMemMngr
+{
+private:
+	CStudioCommShareMemMngr();
+	virtual ~CStudioCommShareMemMngr();
+
+public:
+	static CStudioCommShareMemMngr* g_pStudioCommShareMemMngr;
+	static long g_nStudioCommShareMemMngr;
+	static void Create();
+	static void Release();
+	static CStudioCommShareMemClient* GetExeShareMem(UINT nExeID);
+	
+private:
+	CStudioCommShareMemServer *m_pStudioCommShareMemServer;
+	CStudioCommShareMemClient *m_pStudioCommShareMemClient;
+	
+	void CreeateShareMem();
+	
+}
+
+
+
+
+#endif//_StudioCommShareMemDefine_h_
+

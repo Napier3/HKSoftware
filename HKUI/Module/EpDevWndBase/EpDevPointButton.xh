@@ -1,0 +1,39 @@
+#pragma once
+
+
+// CEpDevPointButton
+#include "EpDevPoint.h"
+
+class CEpDevPointButton : public CStatic, public CEpDevPoint
+{
+	DECLARE_DYNAMIC(CEpDevPointButton)
+
+public:
+	CEpDevPointButton();
+	virtual ~CEpDevPointButton();
+
+public:
+	virtual CPoint GetConnectPoint();
+	virtual void Show(UINT nShow);
+
+
+	virtual long Expand(long nExpand);
+
+	void SetExpand(long nExpand=EPDES_EXPAND);
+
+
+protected:
+	DECLARE_MESSAGE_MAP()
+
+public:
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+
+protected:
+	virtual void PreSubclassWindow();
+public:
+	afx_msg void OnPaint();
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnSize(UINT nType, int cx, int cy);
+};
+
+

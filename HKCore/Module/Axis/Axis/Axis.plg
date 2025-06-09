@@ -1,0 +1,44 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: Axis - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\LiJQ\LOCALS~1\Temp\RSP362.tmp" with contents
+[
+/nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /D "_AFXDLL" /D "_MBCS" /D "_USRDLL" /Fp"Release/Axis.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"D:\WorkEx\Module\Interface\ComGlobalDefine.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\LiJQ\LOCALS~1\Temp\RSP362.tmp" 
+Creating temporary file "C:\DOCUME~1\LiJQ\LOCALS~1\Temp\RSP363.tmp" with contents
+[
+/nologo /subsystem:windows /dll /incremental:no /pdb:"Release/Axis.pdb" /machine:I386 /def:".\Axis.def" /out:"D:\Program Files\PowerAdvance\PowerTest\Bin\Axis.dll" /implib:"Release/Axis.lib" 
+.\Release\Axis.obj
+.\Release\AxisScaleData.obj
+.\Release\DescartesAxis.obj
+.\Release\LogarithmAxis.obj
+.\Release\PolarAxis.obj
+.\Release\RulerAxis.obj
+.\Release\StdAfx.obj
+.\Release\BaseObject.obj
+.\Release\ComGlobalDefine.obj
+.\Release\GloblaDrawFunctions.obj
+.\Release\Axis.res
+]
+Creating command line "link.exe @C:\DOCUME~1\LiJQ\LOCALS~1\Temp\RSP363.tmp"
+<h3>Output Window</h3>
+Compiling...
+ComGlobalDefine.cpp
+Linking...
+   Creating library Release/Axis.lib and object Release/Axis.exp
+LINK : warning LNK4089: all references to "OLEAUT32.dll" discarded by /OPT:REF
+
+
+
+<h3>Results</h3>
+Axis.dll - 0 error(s), 1 warning(s)
+</pre>
+</body>
+</html>

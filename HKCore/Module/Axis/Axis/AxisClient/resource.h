@@ -1,0 +1,119 @@
+//{{NO_DEPENDENCIES}}
+// Microsoft Developer Studio generated include file.
+// Used by AxisClient.rc
+//
+#define IDD_AXISCLIENT_DIALOG           102
+#define IDR_MAINFRAME                   128
+#define IDD_DIALOG_DESCARTES            129
+#define IDD_DIALOG_POLAR                130
+#define IDD_DIALOG_LOGARITHM            131
+#define IDD_DIALOG_RULER                132
+#define IDC_CURSOR1                     136
+#define IDC_DESCARTESAXIS               1000
+#define IDC_FRAME                       1001
+#define IDC_POLARAXIS                   1001
+#define IDC_DRAWBORDER                  1002
+#define IDC_LOGARITHMAXIS               1002
+#define IDC_AXISTITLE                   1003
+#define IDC_XAXISTITLE                  1004
+#define IDC_VERTFRAME                   1004
+#define IDC_YAXISTITLE                  1005
+#define IDC_RULERAXIS                   1005
+#define IDC_HORZFRAME                   1005
+#define IDC_XAXISTENITH                 1006
+#define IDC_XAXISSCALETEXT              1007
+#define IDC_YAXISTENITH                 1008
+#define IDC_AXISCENTER                  1009
+#define IDC_YAXISSCALETEXT              1011
+#define IDC_XAXISHALFUNITSCALE          1013
+#define IDC_YAXISHALFUNITSCALE          1014
+#define IDC_WORKAREA                    1017
+#define IDC_WORKAREAFRAME               1018
+#define IDC_AXISBORDER                  1020
+#define IDC_ANGLEUNITLINE               1021
+#define IDC_CIRCLEUNIT                  1022
+#define IDC_XAXISLINE                   1023
+#define IDC_BORDER                      1023
+#define IDC_XSCALETEXT                  1024
+#define IDC_XTENTHSCALE                 1025
+#define IDC_SCALETEXT                   1025
+#define IDC_XHALFSCALE                  1026
+#define IDC_TENTHSCALE                  1026
+#define IDC_BTN_COLOR_WORKAREA          1026
+#define IDC_YAXISLINE                   1027
+#define IDC_HALFSCALE                   1027
+#define IDC_BTN_COLOR_AXISTITLE         1027
+#define IDC_YSCALETEXT                  1028
+#define IDC_BTN_COLOR_AXISBACK          1028
+#define IDC_YTENTHSCALE                 1029
+#define IDC_BTN_COLOR_LEFTTOPFRAME      1029
+#define IDC_YHALFSCALE                  1030
+#define IDC_BTN_COLOR_RIGHTBOTTOMFRAME  1030
+#define IDC_BTN_COLOR_ANGLELINE         1031
+#define IDC_BTN_COLOR_CIRCLELINE        1032
+#define IDC_COMBO_FRAMESHADOW           1033
+#define IDC_COMBO_ANGLELINE             1044
+#define IDC_COMBO_CIRCLELINE            1045
+#define IDC_EDIT_ANGLELINE              1053
+#define IDC_EDIT_CIRCLELINE             1054
+#define IDC_EDIT_TITLE                  1055
+#define IDC_BTN_FONT                    1056
+#define IDC_BTN_COLORWORKAREA           1057
+#define IDC_EDIT_ANGLEUNIT              1057
+#define IDC_BTN_FONTANGLELINE           1058
+#define IDC_EDIT_CIRCLEUNIT             1059
+#define IDC_BTN_COLOR_ANGLEFONT         1062
+#define IDC_BTN_ZOOMIN                  1065
+#define IDC_BTN_ZOOMOUT                 1066
+#define IDC_EDIT_AXISTITLE              1067
+#define IDC_BTN_COLOR_DESAXISTITLE      1069
+#define IDC_BTN_FONT_DESAXISTITLE       1070
+#define IDC_BTN_COLOR_DESAXISBACK       1071
+#define IDC_BTN_COLOR_DESLEFTTOPBORDER  1072
+#define IDC_BTN_COLOR_DESRIGHTBOTTOMBORDER 1073
+#define IDC_COMBO_DESBORDERSHADOW       1075
+#define IDC_BTN_COLOR_DESFRAMELEFTTOP   1076
+#define IDC_BTN_COLOR_DESFRAMERIGHTBOTTOM 1077
+#define IDC_COMBO_DESFRAMESHADOW        1078
+#define IDC_BTN_COLOR_DESYUNITSCALE     1079
+#define IDC_BTN_COLOR_DESYUNITSCALESHADOW 1080
+#define IDC_BTN_FONT_DESYAXISNAME       1081
+#define IDC_BTN_FONT_DESXAXISNAME       1082
+#define IDC_BTN_FONT_DESYSCALE          1083
+#define IDC_BTN_FONT_DESXSCALE          1084
+#define IDC_EDIT_DESYAXISNAME           1085
+#define IDC_EDIT_DESXAXISNAME           1086
+#define IDC_BTN_COLOR_DESYAXISNAME      1087
+#define IDC_BTN_COLOR_DESXAXISNAME      1088
+#define IDC_BTN_COLOR_DESYSCALEFONT     1089
+#define IDC_BTN_COLOR_DESXSCALEFONT     1090
+#define IDC_BTN_COLOR_DESYGRID          1091
+#define IDC_BTN_COLOR_DESXGRID          1092
+#define IDC_BTN_COLOR_DESYTENTH         1093
+#define IDC_BTN_COLOR_DESXTENTH         1094
+#define IDC_COMBO_DESYGIRDSTYLE         1095
+#define IDC_COMBO_DESXGRIDSTYLE         1096
+#define IDC_COMBO_DESCENTERLINESTYLE    1097
+#define IDC_EDIT_DESYAXISWIDTH          1099
+#define IDC_EDIT_DESXAXISWIDTH          1100
+#define IDC_BTN_COLOR_DESXUNITSCALE     1101
+#define IDC_BTN_COLOR_DESXUNITSCALESHADOW 1102
+#define IDC_EDIT_DESYUNITSCALELEN       1103
+#define IDC_EDIT_DESXUNITSCALELEN       1104
+#define IDC_EDIT_DESYHALFSCALELEN       1105
+#define IDC_EDIT_DESXHALFSCALELEN       1106
+#define IDC_EDIT_DESYTENTHSCALELEN      1107
+#define IDC_EDIT_DESXTENTHSCALELEN      1108
+#define IDC_BTN_COLOR_CENTERLINE        1109
+#define IDC_EDIT_DESCENTERLINEWIDTH     1110
+
+// Next default values for new objects
+// 
+#ifdef APSTUDIO_INVOKED
+#ifndef APSTUDIO_READONLY_SYMBOLS
+#define _APS_NEXT_RESOURCE_VALUE        138
+#define _APS_NEXT_COMMAND_VALUE         32771
+#define _APS_NEXT_CONTROL_VALUE         1113
+#define _APS_NEXT_SYMED_VALUE           101
+#endif
+#endif

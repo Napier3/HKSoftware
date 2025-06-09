@@ -1,0 +1,24 @@
+#pragma once
+
+#include "DvDataType.h"
+
+class CDvDataTypes :
+	public CExBaseList
+{
+public:
+	CDvDataTypes(void);
+	virtual ~CDvDataTypes(void);
+
+public:
+	virtual BSTR GetXmlElementKey()  {      return CProtocolXmlRWKeys::g_pXmlRWKeys->m_strDvDataTypesKey;     }
+	virtual long XmlReadOwn(CXmlRWNodeBase &oNode, CXmlRWKeys *pXmlRWKeys);
+	virtual long XmlWriteOwn(CXmlRWDocBase &oXMLDoc, CXmlRWElementBase &oElement, CXmlRWKeys *pXmlRWKeys);
+	virtual long SerializeOwn(CBinarySerialBuffer &oBinaryBuffer);
+
+	virtual CExBaseObject* CreateNewChild(const CString &strClassID, BOOL &bAddToTail, CXmlRWKeys *pXmlRWKeys);
+	virtual CExBaseObject* CreateNewChild(long nClassID);
+public:
+	virtual BOOL IsEqualOwn(CBaseObject* pObj);
+	virtual BOOL CopyOwn(CBaseObject* pDest);
+	virtual CBaseObject* Clone();
+};

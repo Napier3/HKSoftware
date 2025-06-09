@@ -1,0 +1,27 @@
+#pragma once
+
+#include "..\CfgDataMngr\IecCfgGinData.h"
+#include "IecCfgDataGridBase.h"
+
+
+#define IECCFG_COL_ID_GINCHMAP_BIN      1
+#define IECCFG_COL_ID_GINCHMAP_MAC      2
+#define IECCFG_COL_ID_GINCHMAP_APPID    3
+#define IECCFG_COL_ID_GINCHMAP_CHNAME   4
+#define IECCFG_COL_ID_GINCHMAP_CHINDEX  5
+
+#define IECCFG_COLS_GINCHMAP            5
+
+class CIecCfgGinAppChMapGrid : public CExBaseListGrid
+{
+public:
+	CIecCfgGinAppChMapGrid();
+	virtual ~CIecCfgGinAppChMapGrid();
+	
+	virtual void InitGrid();
+	virtual void InitGridTitle();
+	virtual void ShowData(CExBaseObject *pData, int& nRow, BOOL bInsertRow=TRUE);
+
+
+};
+

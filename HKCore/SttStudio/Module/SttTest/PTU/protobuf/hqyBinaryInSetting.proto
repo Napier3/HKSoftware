@@ -1,0 +1,28 @@
+syntax="proto3";
+package hqyBinaryInPackage;
+
+
+enum BinaryInType{
+    BT_SampleMode = 0;//
+    BT_EmptyMode = 1;
+}
+
+enum BinaryInFD{
+    BFD_B_600V = 0;//
+    BFD_B_100V = 1;
+    BFD_B_10V = 2;
+    BFD_B_1V = 3;
+    BFD_B_01V = 4;
+}
+
+message BinaryInInfo
+{
+     BinaryInType ntype =1;//
+     float fThreshold = 2;//yuzhi
+
+}
+
+message BinaryinSetting
+{
+    repeated BinaryInInfo oBinaryInfoList = 1;
+}

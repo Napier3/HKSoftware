@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QSynAddMultQuickDlg</class>
+ <widget class="QDialog" name="QSynAddMultQuickDlg">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>270</width>
+    <height>198</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>开关量设置</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="m_pUPlusLabel">
+     <property name="text">
+      <string>△U+</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QSttLineEdit" name="m_pUMinusEdit"/>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="m_pUMinusLabel">
+     <property name="text">
+      <string>△U-</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="m_pFMinusLabel">
+     <property name="text">
+      <string>△f-</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="m_pFPlusLabel">
+     <property name="text">
+      <string>△f+</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0" colspan="2">
+    <layout class="QGridLayout" name="gridLayout_2">
+     <item row="0" column="0">
+      <widget class="QPushButton" name="m_pOK_PushButton">
+       <property name="text">
+        <string>确  认</string>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="2">
+      <widget class="QPushButton" name="m_pCancel_PushButton">
+       <property name="text">
+        <string>取  消</string>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="0" column="1">
+    <widget class="QSttLineEdit" name="m_pUPlusEdit"/>
+   </item>
+   <item row="3" column="1">
+    <widget class="QSttLineEdit" name="m_pFPlusEdit"/>
+   </item>
+   <item row="4" column="1">
+    <widget class="QSttLineEdit" name="m_pFMinusEdit"/>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QSttLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>../../Module/UI/Controls/SttLineEdit.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

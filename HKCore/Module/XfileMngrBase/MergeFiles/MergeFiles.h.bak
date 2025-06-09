@@ -1,0 +1,15 @@
+#if !defined(_X_MergeFiles_H__)
+#define _X_MergeFiles_H__
+
+
+class CMergeFiles
+{
+public:
+	CMergeFiles();
+	virtual ~CMergeFiles();
+
+};
+
+
+
+#endif

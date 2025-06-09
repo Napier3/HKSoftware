@@ -1,0 +1,8 @@
+﻿// EpGlobalDefine.cpp
+//
+//////////////////////////////////////////////////////////////////////
+
+#include "stdafx.h"
+#include "EpGlobalDefine.h"
+#include "EpAnalyseMngr.h"
+

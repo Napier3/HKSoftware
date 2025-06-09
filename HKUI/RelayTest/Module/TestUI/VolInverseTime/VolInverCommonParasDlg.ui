@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QVolInverseCommonParasDlg</class>
+ <widget class="QDialog" name="QVolInverseCommonParasDlg">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>341</width>
+    <height>310</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>通用参数设置</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_3">
+   <item row="0" column="0">
+    <layout class="QGridLayout" name="gridLayout_2">
+     <item row="1" column="1">
+      <widget class="QComboBox" name="m_cmbCTPos"/>
+     </item>
+     <item row="0" column="0" colspan="2">
+      <widget class="QGroupBox" name="groupBox">
+       <property name="title">
+        <string>故障前输出</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="5" column="0">
+         <widget class="QLabel" name="m_labHz">
+          <property name="text">
+           <string>频率(Hz):</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QLineEdit" name="m_txtFaultCurr"/>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="m_labPreFaultTime">
+          <property name="text">
+           <string>故障前时间(s):</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="m_labFaultVolt">
+          <property name="text">
+           <string>故障前电压(V):</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QLineEdit" name="m_txtAng"/>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="m_txtPreFaultTime"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>故障时间裕度(s)</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="m_labAng">
+          <property name="text">
+           <string>相位差(°):</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="m_txtFaultTime"/>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLineEdit" name="m_txtFaultVolt"/>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="m_labFaultCurr">
+          <property name="text">
+           <string>故障前电流(A):</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QLineEdit" name="m_txtHz"/>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>CT正极性</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0" colspan="2">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="m_btnOK">
+         <property name="text">
+          <string>确认</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="m_btnCancel">
+         <property name="text">
+          <string>取消</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

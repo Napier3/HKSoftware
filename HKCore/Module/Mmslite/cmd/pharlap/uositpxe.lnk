@@ -1,0 +1,11 @@
+-exe \mmslite\mvl\usr\uca_srvr\pharlap\uositpxe.exe
+\mmslite\mvl\usr\uca_srvr\win32\uositpxe\debug\log_cfg
+\mmslite\mvl\usr\uca_srvr\win32\uositpxe\debug\ml_init
+\mmslite\mvl\usr\uca_srvr\win32\uositpxe\debug\mmslvar
+\mmslite\mvl\usr\uca_srvr\win32\uositpxe\debug\mmsop_en
+\mmslite\mvl\usr\uca_srvr\win32\uositpxe\debug\mvl_acse
+\mmslite\mvl\usr\uca_srvr\win32\uositpxe\debug\mvlop_en
+\mmslite\mvl\usr\uca_srvr\win32\uositpxe\debug\uca_srvr
+\mmslite\mvl\usr\uca_srvr\win32\uositpxe\debug\uca_obj
+\mmslite\mvl\usr\uca_srvr\win32\uositpxe\debug\mvlu_rpt
+\mmslite\mvl\usr\uca_srvr\win32\uositpxe\debug\rdwrind

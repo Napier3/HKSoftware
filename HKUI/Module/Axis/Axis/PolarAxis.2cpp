@@ -1,0 +1,1741 @@
+// PolarAxis.cpp : implementation file
+//
+
+#include "stdafx.h"
+#include "Axis.h"
+#include "PolarAxis.h"
+#include <math.h>
+#include "..\..\Module\Api\GloblaDrawFunctions.h"
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+// CPolarAxis
+
+IMPLEMENT_DYNCREATE(CPolarAxis, CCmdTarget)
+
+CPolarAxis::CPolarAxis()
+{
+	EnableAutomation();
+
+	InitIt();
+	m_lZoomCoefficient = 0;
+	
+	AfxOleLockApp();
+}
+
+CPolarAxis::~CPolarAxis()
+{
+	// To terminate the application when all objects created with
+	// 	with OLE automation, the destructor calls AfxOleUnlockApp.
+	
+	AfxOleUnlockApp();
+}
+
+
+void CPolarAxis::OnFinalRelease()
+{
+	// When the last reference for an automation object is released
+	// OnFinalRelease is called.  The base class will automatically
+	// deletes the object.  Add additional cleanup required for your
+	// object before calling the base class.
+
+	CCmdTarget::OnFinalRelease();
+}
+
+
+BEGIN_MESSAGE_MAP(CPolarAxis, CCmdTarget)
+	//{{AFX_MSG_MAP(CPolarAxis)
+		// NOTE - the ClassWizard will add and remove mapping macros here.
+	//}}AFX_MSG_MAP
+END_MESSAGE_MAP()
+
+BEGIN_DISPATCH_MAP(CPolarAxis, CCmdTarget)
+	//{{AFX_DISPATCH_MAP(CPolarAxis)
+		// NOTE - the ClassWizard will add and remove mapping macros here.
+	//}}AFX_DISPATCH_MAP
+END_DISPATCH_MAP()
+
+// Note: we add support for IID_IPolarAxis to support typesafe binding
+//  from VBA.  This IID must match the GUID that is attached to the 
+//  dispinterface in the .ODL file.
+
+// {2BFAAA3E-C0D4-45D8-A895-7C9824106F9B}
+static const IID IID_IPolarAxis =
+{ 0x2bfaaa3e, 0xc0d4, 0x45d8, { 0xa8, 0x95, 0x7c, 0x98, 0x24, 0x10, 0x6f, 0x9b } };
+
+BEGIN_INTERFACE_MAP(CPolarAxis, CCmdTarget)
+	INTERFACE_PART(CPolarAxis, IID_IPolarAxis, Dispatch)
+	INTERFACE_PART(CPolarAxis, IID_IPolarAxisInterface, PolarAxisInterface)
+	INTERFACE_PART(CPolarAxis, IID_IPolarAxisInterface, PolarAxisInterface)
+END_INTERFACE_MAP()
+
+// {A79F865C-435C-4828-A862-C93BA4628520}
+IMPLEMENT_OLECREATE(CPolarAxis, PROGID_IPolarAxis, 0xa79f865c, 0x435c, 0x4828, 0xa8, 0x62, 0xc9, 0x3b, 0xa4, 0x62, 0x85, 0x20)
+
+/////////////////////////////////////////////////////////////////////////////
+// CPolarAxis message handlers
+void CPolarAxis::SetZoomCoefficient(long lVal)
+{
+	m_lZoomCoefficient = lVal;
+}
+
+long CPolarAxis::GetZoomCoefficient()
+{
+	return m_lZoomCoefficient;
+}
+
+//#########################################################
+//定义极坐标的绘制区域信息
+void CPolarAxis::SetPolarAxisBorder(CRect rectBorder)
+{
+	long lRulerHeight = 0;
+	long lHeightGap = 0;
+/*
+	if (m_iAxisDrawType & POLARAXIS_RULER)
+	{
+		lRulerHeight = m_ruler.GetRulerHorHeight();
+	}
+*/
+	lHeightGap = m_iVertMarginGapTop*2 + lRulerHeight;
+	ASSERT (lHeightGap < rectBorder.Height());
+	if (lHeightGap >= rectBorder.Height())
+		return;
+	
+	m_rectBorder		=rectBorder;			//整个极坐标的坐标区域
+	m_rectWorkArea		=rectBorder;			//极坐标的绘图区域
+	m_rectWorkArea.left +=m_iHorzMarginGapLeft;
+	m_rectWorkArea.right-=m_iHorzMarginGapRight;
+	m_rectWorkArea.top	+=m_iVertMarginGapTop;
+	m_rectWorkArea.bottom-=m_iVertMarginGapBottom;
+	if (m_iAxisDrawType & POLARAXIS_RULER)
+	{
+		m_rectWorkArea.bottom -= lRulerHeight;
+	}
+	int iW=m_rectWorkArea.Width();
+	int iH=m_rectWorkArea.Height();
+	int iLen=iW;
+	if(iW>iH)
+		iLen=iH;
+	iLen=iLen/2;
+	CPoint ptC=m_rectWorkArea.CenterPoint();
+	m_rectWorkArea=CRect(ptC.x-iLen,ptC.y-iLen,ptC.x+iLen,ptC.y+iLen);
+	m_ptAxisCenter = m_rectWorkArea.CenterPoint();
+	if (m_iAxisDrawType & POLARAXIS_RULER)
+	{
+		CRect rectTemp = m_rectWorkArea;
+/*
+		rectTemp.top = m_rectWorkArea.bottom + m_iVertMarginGap;
+		rectTemp.bottom = rectTemp.top + lRulerHeight;
+		m_ruler.ModifyRulerArea(rectTemp);
+*/
+		rectTemp = m_rectWorkArea;
+		rectTemp.top = m_ptAxisCenter.y;
+		rectTemp.bottom = rectTemp.top + lRulerHeight;
+//		m_rulerCenter.ModifyRulerArea(rectTemp);
+	}
+}
+
+CRect CPolarAxis::GetPolarAxisBorder()
+{
+	return m_rectBorder;
+}
+
+CRect CPolarAxis::GetPolarAxisWorkArea()
+{
+	return m_rectWorkArea;
+}
+
+CPoint CPolarAxis::GetPolarAxisCenterPoint()
+{
+	return m_ptAxisCenter;
+}
+
+void CPolarAxis::SetMarginGap(int iHorzGapLeft,int iVertGapTop,int iHorzGapRight,int iVertGapBottom)
+{
+	m_iHorzMarginGapLeft   = iHorzGapLeft;	 //坐标的水平空白区域
+	m_iVertMarginGapTop    = iVertGapTop;		 //坐标的垂直空白区域	
+	m_iHorzMarginGapRight  = iHorzGapRight;		
+	m_iVertMarginGapBottom = iVertGapBottom;
+}
+
+long CPolarAxis::GetMarginGap(int iHorzGapLeft,int iVertGapTop,int iHorzGapRight,int iVertGapBottom)
+{
+	iHorzGapLeft   = m_iHorzMarginGapLeft;
+	iVertGapTop    = m_iVertMarginGapTop;	
+	iHorzGapRight  = m_iHorzMarginGapRight;
+	iVertGapBottom = m_iVertMarginGapBottom;
+
+	return 0;
+}
+
+void CPolarAxis::ResetPolarAxis()
+{
+	int iRadius=m_rectWorkArea.Height() / 2 ;
+	for(int i=0;i<m_iCircleAxisCount;i++)
+	{
+		m_fCircleValOneGap[i] = m_fCircleUnitValue[i] / iRadius;
+	}
+}
+
+void CPolarAxis::ResetPolarAxis(int iCircleUnitIndex)
+{
+	if(iCircleUnitIndex<0 || iCircleUnitIndex>=10)return ;
+	int iRadius=m_rectWorkArea.Height() / 2 ;
+	m_fCircleValOneGap[iCircleUnitIndex] = m_fCircleUnitValue[iCircleUnitIndex] / iRadius;
+}
+
+void CPolarAxis::SetAxisBackColor(COLORREF color)
+{
+	m_crAxisBackColor = color;
+}
+
+COLORREF CPolarAxis::GetAxisBackColor()
+{
+	return m_crAxisBackColor;
+}
+
+void CPolarAxis::SetWorkAreaBkColor(COLORREF color)
+{
+	m_crAxisWorkAreaBk = color;
+}
+
+COLORREF CPolarAxis::GetWorkAreaBkColor()
+{
+	return m_crAxisWorkAreaBk;
+}
+
+void CPolarAxis::SetAngleUnitLineColor(COLORREF color)
+{
+	m_crAngleUnitLineColor = color;
+}
+
+COLORREF CPolarAxis::GetAngleUnitLineColor()
+{
+	return m_crAngleUnitLineColor;
+}
+
+void CPolarAxis::SetAxisCenterColor(COLORREF color)
+{
+	m_crAxisCenter = color;
+}
+
+COLORREF CPolarAxis::GetAxisCenterColor()
+{
+	return m_crAxisCenter;
+}
+
+void CPolarAxis::SetAxisFrameColor(COLORREF color)
+{
+	m_crAxisFrame = color;
+}
+
+COLORREF CPolarAxis::GetAxisFrameColor()
+{
+	return m_crAxisFrame;
+}
+
+void CPolarAxis::SetAngleUnitFontColor(COLORREF color)
+{
+	m_crAngleUnitFontColor = color;
+}
+
+COLORREF CPolarAxis::GetAngleUnitFontColor()
+{
+	return m_crAngleUnitFontColor;
+}
+
+void CPolarAxis::SetCenterLineType(long lVal)
+{
+	m_uiCenterLineType = lVal;
+}
+
+long CPolarAxis::GetCenterLineType()
+{
+	return m_uiCenterLineType;
+}
+
+void CPolarAxis::SetCenterLineWidth(long lVal)
+{
+	m_iCenterLineWidth = lVal;
+}
+
+long CPolarAxis::GetCenterLineWidth()
+{
+	return m_iCenterLineWidth;
+}
+
+void CPolarAxis::SetAngleUnitLineStyle(long lVal)
+{
+	m_lAngleUnitLineStyle = lVal;
+}
+
+long CPolarAxis::GetAngleUnitLineStyle()
+{
+	return m_lAngleUnitLineStyle;
+}
+void CPolarAxis::SetAxisDrawType(long lVal)
+{
+	m_iAxisDrawType = lVal;
+
+	SetPolarAxisBorder(m_rectBorder);
+}
+
+long CPolarAxis::GetAxisDrawType()
+{
+	return m_iAxisDrawType;
+}
+
+
+//#########################################################
+///////定义角度刻度相关的函数及控制变量
+//0=5;1=10;2=15;3=30
+void CPolarAxis::SetAngleUnit(int iAngleUnitIndex)
+{
+	int iUnit[4]={5,10,15,30};
+	if(iAngleUnitIndex<0)iAngleUnitIndex=0;
+	if(iAngleUnitIndex>3)iAngleUnitIndex=3;
+	m_iAngleUnit=iUnit[iAngleUnitIndex];
+}
+int CPolarAxis::GetAngleUnit()
+{
+	return m_iAngleUnit;
+}
+
+//#########################################################
+//定义幅值刻度相关的函数及其控制变量
+
+//设置幅值刻度网格的个数
+void CPolarAxis::SetCircleGridCounts(int iCircleGridCounts)
+{
+	m_iCircleGridCounts=iCircleGridCounts;
+}
+//获得幅值刻度网格的个数
+int	CPolarAxis::GetCircleGridCounts()
+{
+	return m_iCircleGridCounts;
+}
+//设置坐标的种类个数
+void CPolarAxis::SetCircleAxisCounts(int iCircleAxisCount)
+{
+	if(iCircleAxisCount<=0)iCircleAxisCount=1;
+	if(iCircleAxisCount>=10)iCircleAxisCount=10;
+	m_iCircleAxisCount=iCircleAxisCount;
+}
+//获得坐标的种类个数
+int	 CPolarAxis::GetCircleAxisCounts()
+{
+	return m_iCircleAxisCount;
+}
+//设置单个幅值坐标的幅值
+void CPolarAxis::SetCircleUnitValue(int iUnitIndex,double fUnitVal)
+{
+	if(iUnitIndex<0 || iUnitIndex>=10)return;
+	m_fCircleUnitValue[iUnitIndex]=fUnitVal;
+}
+//获得单个幅值坐标的幅值
+double CPolarAxis::GetCircleUnitValue(int iUnitIndex)
+{
+	if(iUnitIndex<0 || iUnitIndex>=10)return -1;
+	return m_fCircleUnitValue[iUnitIndex];
+}
+//设置幅值坐标的幅值
+void CPolarAxis::SetCircleUnitValue(double fUnitVal[10])
+{
+	int iIndex=0;
+	for(iIndex=0;iIndex<m_iCircleAxisCount;iIndex++)
+		m_fCircleUnitValue[iIndex]=fUnitVal[iIndex];
+
+	if(m_iAxisDrawType & POLARAXIS_RULER)
+		ResetRuler();
+}
+//获得幅值坐标的幅值，返回幅值坐标的个数
+int CPolarAxis::GetCircleUnitValue(double fUnitVal[10])
+{
+	int iIndex=0;
+	for(iIndex=0;iIndex<m_iCircleAxisCount;iIndex++)
+		fUnitVal[iIndex]=m_fCircleUnitValue[iIndex];
+	return m_iCircleAxisCount;
+}
+
+long CPolarAxis::GetXAxisType()
+{
+	return m_lAxisType;
+}
+
+void CPolarAxis::SetXAxisType(long lType)
+{
+	m_lAxisType=lType;
+}
+
+
+//#########################################################
+//定义极坐标的总的对外接口函数
+void CPolarAxis::InitIt()
+{
+	m_rectBorder		=CRect(0,0,260,230);			//整个极坐标的坐标区域
+	m_rectWorkArea		=CRect(30,15,230,215);			//极坐标的绘图区域
+	m_iHorzMarginGapLeft	=30*m_lZoomCoefficient;		//坐标的水平空白区域
+	m_iHorzMarginGapRight	=30*m_lZoomCoefficient;
+	m_iVertMarginGapTop	    =15*m_lZoomCoefficient;		//坐标的垂直空白区域
+	m_iVertMarginGapBottom  =15*m_lZoomCoefficient;	
+	lfAxisCenter		=InitLogFont (-12*m_lZoomCoefficient,0,0,0,400,'\0','\0','\0','\1','\x1','\x2','\x1','1',"Arial");
+	//矢量的名称绘制字体
+	lfVectorName		=InitLogFont (-12*m_lZoomCoefficient,0,0,0,600,'\0','\0','\0','\1','\x1','\x2','\x1','1',"Arial");
+	m_crAxisBackColor	= GetSysColor(COLOR_3DFACE);	//坐标轴的底色
+	m_crAxisWorkAreaBk	=RGB(255,255,255);	//坐标轴的底色
+	m_crAngleUnitLineColor		= GetSysColor(COLOR_3DDKSHADOW);	//坐标网格颜色
+	m_lAngleUnitLineWidth       = 1;//坐标网格宽度
+	m_crAngleUnitFontColor      =RGB(0,0,0);
+	m_lfAngleUnitFont       = InitLogFont (-12*m_lZoomCoefficient,0,0,0,400,'\0','\0','\0','\1','\x1','\x2','\x1','1',"Arial");	
+	m_crAxisCenter		=RGB(0,0,0);		//坐标中心轴颜色
+	m_crAxisFrame		=RGB(0,0,0);		//坐标边框颜色
+	m_crFrameLeftTopColor = RGB(128,128,128);
+	m_crFrameRightBottomColor = RGB(240,240,240);
+	m_iFrameShadow = (int)(2*m_lZoomCoefficient);
+	m_uiCenterLineType	=PS_SOLID;
+	m_iCenterLineWidth	=1;
+	m_lAngleUnitLineStyle	=PS_DOT;
+
+	m_iAxisDrawType		=POLARAXIS_ALL;		//坐标绘制种类	角度刻度、幅值刻度、中心轴
+	m_iAngleUnit		=30;
+	m_lCircleUnitLineStyle    =PS_DOT; 
+	m_crCircleUnitLineColor   =GetSysColor(COLOR_3DDKSHADOW);
+	m_lCircleUnitLineWidth   =1;
+	m_iCircleGridCounts	=5;
+	m_iCircleAxisCount	=1;
+	for(int i=0;i<10;i++)
+	{
+		m_fCircleUnitValue[i]=10;
+		m_fCircleValOneGap[i]=0;
+		memset(m_ppszCircleUnitName[10],0,POLORAXIS_NAMEBUFFLEN*sizeof(char));
+	}	
+	m_lAxisType = 0;
+	m_fOneYGapValue = 0;
+	m_fOneXGapValue = 0;
+	m_ptCenterLogInDv = CPoint(0,0);
+	m_ptAxisCenter = CPoint(0,0);
+	m_dXAxisMinVal = 0;
+	m_dYAxisMinVal = 0;
+	m_dXAxisMaxVal = 0;
+	m_dYAxisMaxVal = 0;
+/*
+	m_ruler.InitIt();
+	m_ruler.ContinueInit();
+*/
+//	m_rulerCenter.InitIt();
+//	m_rulerCenter.ContinueInit();
+	m_lAxisDrawStyle = POLARAXISDRAW_ALL;
+
+	m_strPolarAxisTitle = "极坐标系";
+	m_crPolarAxisTitleFont = RGB(0,0,0);
+	m_lfPolarAxisTitleFont = InitLogFont ((int)(-14*m_lZoomCoefficient),0,0,0,600,'\0','\0','\0','\0','\x1','\x2','\x1','1',"宋体");
+}
+
+void CPolarAxis::DrawWorkArea(CDC *pDC)	//绘制边框
+{
+	CPen pen,*pOldPen;
+	pen.CreatePen(PS_SOLID,1,m_crAxisWorkAreaBk);
+	pOldPen=pDC->SelectObject(&pen);
+	CBrush brush,*pOldBrush;
+	brush.CreateSolidBrush(m_crAxisWorkAreaBk);
+	pOldBrush=pDC->SelectObject(&brush);
+
+	pDC->Ellipse(m_rectWorkArea);
+
+	pDC->SelectObject(pOldPen);
+	pen.DeleteObject();
+	pDC->SelectObject(pOldBrush);
+	brush.DeleteObject();
+}
+
+void CPolarAxis::DrawWorkAreaFrame(CDC *pDC)
+{
+	CPen pen,*pOldPen;
+	pen.CreatePen(PS_SOLID,1,m_crAxisFrame);
+	pOldPen=pDC->SelectObject(&pen);
+	CGdiObject * pObj=pDC->SelectStockObject(NULL_BRUSH);
+	
+	pDC->Ellipse(m_rectWorkArea);
+	
+	pDC->SelectObject(pOldPen);
+	pen.DeleteObject();
+	pDC->SelectObject(pObj);
+}
+//坐标轴的底色
+void CPolarAxis::DrawAxisBackGround(CDC *pDC)
+{
+	//绘制背景
+	CBrush brush;
+	brush.CreateSolidBrush(m_crAxisBackColor);
+	pDC->FillRect(m_rectBorder,&brush);
+	brush.DeleteObject();	
+}
+
+//绘制中心轴
+void CPolarAxis::DrawAxisCenter(CDC*pDC)
+{
+	CPen pen,*pOldPen;
+	pen.CreatePen(m_uiCenterLineType,m_iCenterLineWidth,m_crAxisCenter);
+	pOldPen=pDC->SelectObject(&pen);
+
+	//绘制坐标中心轴轴线
+    m_ptAxisCenter = m_rectWorkArea.CenterPoint();
+	pDC->MoveTo(m_rectWorkArea.left+1,m_ptAxisCenter.y);
+	pDC->LineTo(m_rectWorkArea.right-1,m_ptAxisCenter.y);
+	pDC->MoveTo(m_ptAxisCenter.x,m_rectWorkArea.top+1);
+	pDC->LineTo(m_ptAxisCenter.x,m_rectWorkArea.bottom-1);
+	pDC->SelectObject(pOldPen);
+	pen.DeleteObject();
+
+	//绘制坐标的标注
+	CRect rect;
+	char cStr[40];
+	int iGap=4*m_lZoomCoefficient;
+	int iLen=40*m_lZoomCoefficient;
+
+	//		0
+	strcpy(cStr,"0");
+	rect.left=m_rectWorkArea.right+iGap;
+	rect.top=m_ptAxisCenter.y-10*m_lZoomCoefficient;
+	rect.right=rect.left+iLen;
+	rect.bottom=m_ptAxisCenter.y+10*m_lZoomCoefficient;
+	CmDrawTextRect(pDC,cStr,m_crAngleUnitFontColor,rect,RGB(0,0,0),lfAxisCenter,TRANSPARENT,DT_VCENTER|DT_LEFT,0);
+
+	//±180
+	strcpy(cStr,"±180");
+	rect.right=m_rectWorkArea.left-iGap;
+	rect.left=rect.right-iLen;
+	CmDrawTextRect(pDC,cStr,m_crAngleUnitFontColor,rect,RGB(0,0,0),lfAxisCenter,TRANSPARENT,DT_VCENTER|DT_RIGHT,0);
+
+	//+90
+	strcpy(cStr,"+90");
+	rect.right=m_ptAxisCenter.x+iLen/2;
+	rect.left=rect.right-iLen;
+	rect.bottom=m_rectWorkArea.top;
+	rect.top=rect.bottom-15*m_lZoomCoefficient;
+	CmDrawTextRect(pDC,cStr,m_crAngleUnitFontColor,rect,RGB(0,0,0),lfAxisCenter,TRANSPARENT,DT_BOTTOM|DT_CENTER,0);
+	
+	//-90
+	strcpy(cStr,"-90");
+	rect.top=m_rectWorkArea.bottom;
+	rect.bottom=rect.top+15*m_lZoomCoefficient;
+	CmDrawTextRect(pDC,cStr,m_crAngleUnitFontColor,rect,RGB(0,0,0),lfAxisCenter,TRANSPARENT,DT_TOP|DT_CENTER,0);
+}	
+void CPolarAxis::DrawIt(CDC *pDC,long lDrawType)
+{
+	//背景
+	if(m_lAxisDrawStyle & POLARAXIS_BACKGROUND & lDrawType)
+		DrawAxisBackGround(pDC);
+
+	//工作区
+	if(m_lAxisDrawStyle & POLARAXIS_WORKAREA & lDrawType)
+		DrawWorkArea(pDC);		
+
+	//绘制角度斜线刻度
+	if(m_lAxisDrawStyle & POLARAXIS_BIASLINE & lDrawType)
+		DrawAngleUnit(pDC);	
+	
+	//绘制幅值刻度
+	if(m_lAxisDrawStyle & POLARAXIS_CIRCLELINE & lDrawType)
+		DrawCircleUnit(pDC);	
+
+	//绘制中心轴和刻度
+	if(m_lAxisDrawStyle & POLARAXIS_CENTER & lDrawType)
+		DrawAxisCenter(pDC);	
+
+	//绘制幅值刻度
+//	if(m_lAxisDrawStyle & POLARAXIS_RULER & lDrawType)
+//		DrawRuler(pDC);	
+
+	//绘制幅值刻度
+	if(m_lAxisDrawStyle & POLARAXIS_WORKAREAFRAME & lDrawType)
+		DrawWorkAreaFrame(pDC);	
+
+
+}
+//将逻辑坐标转化为实际坐标
+void CPolarAxis::LogicPointToDevicePoint(double fRadius,double fAngle,CPoint *pPoint,int iCircleUnitIndex)
+{
+	double fUnit=fRadius / m_fCircleValOneGap[iCircleUnitIndex];		//幅值转换
+	double dx,dy;
+
+	//转化成增量
+	double da = PI_180_RADIANTOANGLE * fAngle;	//PI_180 = 3.1415926 / 180
+	dx=fUnit*cos(da);
+	dy=fUnit*sin(da);
+
+	//获得屏幕坐标值
+	pPoint->x=m_ptAxisCenter.x+(int)dx;
+	pPoint->y=m_ptAxisCenter.y-(int)dy;
+}
+
+//从实际坐标获取实际坐标所代表的值
+void CPolarAxis::DevicePointToLogicPoint(CPoint point,double *fRadius,double *fAngle,int iCircleUnitIndex)
+{
+	double dx,dy;
+
+	//获得增量
+	dx=(double)(point.x-m_ptAxisCenter.x)*m_fCircleValOneGap[iCircleUnitIndex];
+	dy=(double)(m_ptAxisCenter.y-point.y)*m_fCircleValOneGap[iCircleUnitIndex];
+	double dLen=hypot(dx,dy);
+	if(dLen<=0.0001)
+	{
+		*fRadius=0;
+		*fAngle=0;
+		return;
+	}
+
+	double da=acos(dx / dLen);
+	da= da * PI_180_ANGLETORADIAN;
+	if(point.y>m_ptAxisCenter.y)
+		da=-da;
+	dLen=dLen;
+	*fRadius=(double)dLen;
+	*fAngle=(double)(da);
+}
+
+//绘制一矢量图
+void CPolarAxis::DrawTheVector(CDC*pDC,int iCircleUnitIndex,double fRadius,double fAngle,
+		CString strVectorName,COLORREF crVector,int iLineWidth,
+		unsigned int uiLineStyle,int iArrowLen,COLORREF crVectorTitle)
+{
+	CPoint ptv;
+	if(iCircleUnitIndex>=m_iCircleAxisCount)return;
+	CPen pen,*pOldPen;
+	int	iArowLen2=15*m_lZoomCoefficient;
+	if(fRadius>m_fCircleUnitValue[iCircleUnitIndex])
+	{
+		fRadius=m_fCircleUnitValue[iCircleUnitIndex];
+		LogicPointToDevicePoint(fRadius,fAngle,&ptv,iCircleUnitIndex);
+		pen.CreatePen(uiLineStyle,iLineWidth,crVector);
+		pOldPen=pDC->SelectObject(&pen);
+		pDC->MoveTo(m_ptAxisCenter);	
+		pDC->LineTo(ptv);
+		pDC->SelectObject(pOldPen);
+		pen.DeleteObject();
+		return;
+	}
+	LogicPointToDevicePoint(fRadius,fAngle,&ptv,iCircleUnitIndex);
+	double d1=ptv.x-m_ptAxisCenter.x;
+	double d2=ptv.y-m_ptAxisCenter.y;
+	double fArowLen2=hypot(d1,d2);
+	CPoint ptArrow1,ptArrow2;
+	//////////////计算矢量图的箭头
+	iArowLen2=(int)fArowLen2;
+	if(iArowLen2<iArrowLen)
+		iArrowLen=iArowLen2;
+	double	fAss=(double)iArrowLen;
+	double	fAg=(double)(3.141592654 / 180.0);
+	ptArrow1.x=-(int)(fAss*sin((fAngle+75.0f)*fAg));
+	ptArrow1.y=-(int)(fAss*cos((fAngle+75.0f)*fAg));
+	ptArrow2.x=-(int)(fAss*sin((75.0f-fAngle)*fAg));
+	ptArrow2.y=(int)(fAss*cos((75.0f-fAngle)*fAg));
+	ptArrow1 = ptv+ptArrow1;
+	ptArrow2 = ptv+ptArrow2;
+	//////////绘制矢量直线
+	pen.CreatePen(uiLineStyle,iLineWidth,crVector);
+	pOldPen=pDC->SelectObject(&pen);
+	pDC->MoveTo(m_ptAxisCenter);	
+	pDC->LineTo(ptv);
+	pDC->SelectObject(pOldPen);
+	pen.DeleteObject();
+	//////////绘制矢量箭头
+	pen.CreatePen(PS_SOLID,iLineWidth,crVector);
+	pOldPen=pDC->SelectObject(&pen);
+	CBrush brush,*pOldBrush;
+	brush.CreateSolidBrush(crVector);
+	pOldBrush=pDC->SelectObject(&brush);
+	if(iLineWidth==1)
+	{
+		CPoint ptArrow[3];
+		ptArrow[0]=ptv;ptArrow[1]=ptArrow1;ptArrow[2]=ptArrow2;
+		pDC->Polygon(ptArrow,3);
+	}
+	else
+	{
+		pDC->MoveTo(ptArrow1);pDC->LineTo(ptv);
+		pDC->MoveTo(ptArrow2);pDC->LineTo(ptv);
+	}
+	pDC->SelectObject(pOldBrush);
+	brush.DeleteObject();
+	pDC->SelectObject(pOldPen);
+	pen.DeleteObject();
+	///////////////下面绘制矢量图的名称
+	//获取矢量图名称的位置
+	CRect rectVector;
+	int iLen=strVectorName.GetLength() ;
+	double fAT=fAngle;
+	if(fAT<0)fAT=360+fAT;
+	unsigned int ulType=0;
+	int iLenChar=10*m_lZoomCoefficient;
+	if (fAT>=45 && fAT <= 135 ) 
+	{
+		rectVector.bottom=ptv.y-2*m_lZoomCoefficient;rectVector.top=rectVector.bottom-10*m_lZoomCoefficient;
+		rectVector.left=ptv.x-iLen*iLenChar;rectVector.right=rectVector.left+iLen*iLenChar*2;
+		ulType=DT_VCENTER|DT_CENTER;
+	}
+	else if ( fAT>135 && fAT < 225)
+	{
+		rectVector.bottom=ptv.y-8*m_lZoomCoefficient;rectVector.top=ptv.y+8*m_lZoomCoefficient;
+		rectVector.right=ptv.x;rectVector.left=rectVector.right-iLen*iLenChar*2;
+		ulType=DT_VCENTER|DT_RIGHT;
+	}
+	else if(fAT>=225 && fAT <= 315)
+	{
+		rectVector.top=ptv.y+2*m_lZoomCoefficient;rectVector.bottom=rectVector.top+10*m_lZoomCoefficient;
+		rectVector.left=ptv.x-iLen*iLenChar;rectVector.right=rectVector.left+iLen*iLenChar*2;
+		ulType=DT_VCENTER|DT_CENTER;
+	}
+	else
+	{
+		rectVector.bottom=ptv.y+8*m_lZoomCoefficient;rectVector.top=ptv.y-8*m_lZoomCoefficient;
+		rectVector.left=ptv.x;rectVector.right=rectVector.left+iLen*iLenChar*2;
+		ulType=DT_VCENTER|DT_LEFT;
+	}
+	char cStr[40];
+	strcpy(cStr,strVectorName);
+	CmDrawTextRect(pDC,cStr,crVectorTitle,rectVector,RGB(0,0,0),lfVectorName,TRANSPARENT,ulType,0);
+}
+void CPolarAxis::DrawTheVector(CDC*pDC,int iCircleUnitIndex,double fRadius1,double fAngle1,double fRadius2,double fAngle2,
+							   CString strVectorName,COLORREF crVector,int iLineWidth,unsigned int uiLineStyle,
+							   int iArrowLen,COLORREF crVectorTitle)
+{
+	double	fAngle3,fRadius3;		//2矢量之间的矢量数据
+	CPoint	ptDelta;				//2矢量之间在设备坐标上的象素之差
+	CPoint	ptVector1,ptVector2;
+	CPoint	ptTemp;
+
+	if(iCircleUnitIndex>=m_iCircleAxisCount)return;
+
+	CPen pen,*pOldPen;
+	int	iArowLen2=15*m_lZoomCoefficient;
+	
+	LogicPointToDevicePoint(fRadius1,fAngle1,&ptVector1,iCircleUnitIndex);
+	LogicPointToDevicePoint(fRadius2,fAngle2,&ptVector2,iCircleUnitIndex);
+	ptDelta	=ptVector2-ptVector1;		//
+	ptTemp  =ptDelta + m_ptAxisCenter;
+	DevicePointToLogicPoint(ptTemp,&fRadius3,&fAngle3,iCircleUnitIndex);
+
+//	LogicPointToDevicePoint(fRadius,fAngle,&ptv,iCircleUnitIndex);
+	double d1=ptDelta.x;
+	double d2=ptDelta.y;
+	double fArowLen2=hypot(d1,d2);
+	CPoint ptArrow1,ptArrow2;
+	//////////////计算矢量图的箭头
+	iArowLen2=(int)fArowLen2;
+	if(iArowLen2<iArrowLen)
+		iArrowLen=iArowLen2;
+	double	fAss=(double)iArrowLen;
+	double	fAg=(double)(3.141592654 / 180.0);
+	ptArrow1.x=-(int)(fAss*sin((fAngle3+75.0f)*fAg));
+	ptArrow1.y=-(int)(fAss*cos((fAngle3+75.0f)*fAg));
+	ptArrow2.x=-(int)(fAss*sin((75.0f-fAngle3)*fAg));
+	ptArrow2.y=(int)(fAss*cos((75.0f-fAngle3)*fAg));
+	
+	ptArrow1 = ptVector2+ptArrow1;
+	ptArrow2 = ptVector2+ptArrow2;
+	//////////绘制矢量直线
+	pen.CreatePen(uiLineStyle,iLineWidth,crVector);
+	pOldPen=pDC->SelectObject(&pen);
+	pDC->MoveTo(ptVector1);		pDC->LineTo(ptVector2);
+	pDC->SelectObject(pOldPen);
+	pen.DeleteObject();
+	//////////绘制矢量箭头
+	pen.CreatePen(PS_SOLID,iLineWidth,crVector);
+	pOldPen=pDC->SelectObject(&pen);
+	CBrush brush,*pOldBrush;
+	brush.CreateSolidBrush(crVector);
+	pOldBrush=pDC->SelectObject(&brush);
+	if(iLineWidth==1)
+	{
+		CPoint ptArrow[3];
+		ptArrow[0]=ptVector2;ptArrow[1]=ptArrow1;ptArrow[2]=ptArrow2;
+		pDC->Polygon(ptArrow,3);
+	}
+	else
+	{
+		pDC->MoveTo(ptArrow1);pDC->LineTo(ptVector2);
+		pDC->MoveTo(ptArrow2);pDC->LineTo(ptVector2);
+	}
+	pDC->SelectObject(pOldBrush);
+	brush.DeleteObject();
+	pDC->SelectObject(pOldPen);
+	pen.DeleteObject();
+	///////////////下面绘制矢量图的名称
+	//获取矢量图名称的位置
+	CRect rectVector;
+	int iLen=strVectorName.GetLength() ;
+	double fAT=fAngle1;
+	if(fAT<0)fAT=360+fAT;
+	unsigned int ulType=0;
+	int iLenChar=8*m_lZoomCoefficient;
+	if (fAT>=45 && fAT <= 135 ) 
+	{
+		rectVector.bottom=ptVector1.y-2*m_lZoomCoefficient;rectVector.top=rectVector.bottom-10*m_lZoomCoefficient;
+		rectVector.left=ptVector1.x-iLen*iLenChar;rectVector.right=rectVector.left+iLen*iLenChar*2;
+		ulType=DT_VCENTER|DT_CENTER;
+	}
+	else if ( fAT>135 && fAT < 225)
+	{
+		rectVector.bottom=ptVector1.y-8*m_lZoomCoefficient;rectVector.top=ptVector1.y+8*m_lZoomCoefficient;
+		rectVector.right=ptVector1.x;rectVector.left=rectVector.right-iLen*iLenChar*2;
+		ulType=DT_VCENTER|DT_RIGHT;
+	}
+	else if(fAT>=225 && fAT <= 315)
+	{
+		rectVector.top=ptVector1.y+2*m_lZoomCoefficient;rectVector.bottom=rectVector.top+10*m_lZoomCoefficient;
+		rectVector.left=ptVector1.x-iLen*iLenChar;rectVector.right=rectVector.left+iLen*iLenChar*2;
+		ulType=DT_VCENTER|DT_CENTER;
+	}
+	else
+	{
+		rectVector.bottom=ptVector1.y+8*m_lZoomCoefficient;rectVector.top=ptVector1.y-8*m_lZoomCoefficient;
+		rectVector.left=ptVector1.x;rectVector.right=rectVector.left+iLen*iLenChar*2;
+		ulType=DT_VCENTER|DT_LEFT;
+	}
+	char cStr[40];
+	strcpy(cStr,strVectorName);
+	CmDrawTextRect(pDC,cStr,crVectorTitle,rectVector,RGB(0,0,0),lfVectorName,TRANSPARENT,ulType,0);
+}
+
+
+void CPolarAxis::DrawTheVector(CDC*pDC,int iCircleUnitIndex,
+		double fRadius1,double fAngle1,double fRadius2,double fAngle2,
+		double *fRadiusL,double *fAngleL,	//返回线性矢量
+		CString strVectorName,COLORREF crVector,int iLineWidth,unsigned int uiLineStyle,
+		int iArrowLen,COLORREF crVectorTitle)
+{
+	double	fAngle3,fRadius3;		//2矢量之间的矢量数据
+	CPoint	ptDelta;				//2矢量之间在设备坐标上的象素之差
+	CPoint	ptVector1,ptVector2;
+	CPoint	ptTemp;
+
+	if(iCircleUnitIndex>=m_iCircleAxisCount)return;
+
+	CPen pen,*pOldPen;
+	int	iArowLen2=15*m_lZoomCoefficient;
+	
+	LogicPointToDevicePoint(fRadius1,fAngle1,&ptVector1,iCircleUnitIndex);
+	LogicPointToDevicePoint(fRadius2,fAngle2,&ptVector2,iCircleUnitIndex);
+	ptDelta	=ptVector2-ptVector1;		//
+	ptTemp  =ptDelta + m_ptAxisCenter;
+	DevicePointToLogicPoint(ptTemp,&fRadius3,&fAngle3,iCircleUnitIndex);
+	*fRadiusL=fRadius3;*fAngleL=fAngle3;
+//	LogicPointToDevicePoint(fRadius,fAngle,&ptv,iCircleUnitIndex);
+	double d1=ptDelta.x;
+	double d2=ptDelta.y;
+	double fArowLen2=hypot(d1,d2);
+	CPoint ptArrow1,ptArrow2;
+	//////////////计算矢量图的箭头
+	iArowLen2=(int)fArowLen2;
+	if(iArowLen2<iArrowLen)
+		iArrowLen=iArowLen2;
+	double	fAss=(double)iArrowLen;
+	double	fAg=(double)(3.141592654 / 180.0);
+	ptArrow1.x=-(int)(fAss*sin((fAngle3+75.0f)*fAg));
+	ptArrow1.y=-(int)(fAss*cos((fAngle3+75.0f)*fAg));
+	ptArrow2.x=-(int)(fAss*sin((75.0f-fAngle3)*fAg));
+	ptArrow2.y=(int)(fAss*cos((75.0f-fAngle3)*fAg));
+	
+	ptArrow1 = ptVector2+ptArrow1;
+	ptArrow2 = ptVector2+ptArrow2;
+	//////////绘制矢量直线
+	pen.CreatePen(uiLineStyle,iLineWidth,crVector);
+	pOldPen=pDC->SelectObject(&pen); 
+	pDC->MoveTo(ptVector1);		pDC->LineTo(ptVector2);
+	pDC->SelectObject(pOldPen);
+	pen.DeleteObject();
+	//////////绘制矢量箭头
+	pen.CreatePen(PS_SOLID,iLineWidth,crVector);
+	pOldPen=pDC->SelectObject(&pen);
+	CBrush brush,*pOldBrush;
+	brush.CreateSolidBrush(crVector);
+	pOldBrush=pDC->SelectObject(&brush);
+	if(iLineWidth==1)
+	{
+		CPoint ptArrow[3];
+		ptArrow[0]=ptVector2;ptArrow[1]=ptArrow1;ptArrow[2]=ptArrow2;
+		pDC->Polygon(ptArrow,3);
+	}
+	else
+	{
+		pDC->MoveTo(ptArrow1);pDC->LineTo(ptVector2);
+		pDC->MoveTo(ptArrow2);pDC->LineTo(ptVector2);
+	}
+	pDC->SelectObject(pOldBrush);
+	brush.DeleteObject();
+	pDC->SelectObject(pOldPen);
+	pen.DeleteObject();
+	///////////////下面绘制矢量图的名称
+	//获取矢量图名称的位置
+	CRect rectVector;
+	int iLen=strVectorName.GetLength() ;
+	double fAT=fAngle1;
+	if(fAT<0)fAT=360+fAT;
+	unsigned int ulType=0;
+	int iLenChar=8*m_lZoomCoefficient;
+	if (fAT>=45 && fAT <= 135 ) 
+	{
+		rectVector.bottom=ptVector1.y-2*m_lZoomCoefficient;rectVector.top=rectVector.bottom-10*m_lZoomCoefficient;
+		rectVector.left=ptVector1.x-iLen*iLenChar;rectVector.right=rectVector.left+iLen*iLenChar*2;
+		ulType=DT_VCENTER|DT_CENTER;
+	}
+	else if ( fAT>135 && fAT < 225)
+	{
+		rectVector.bottom=ptVector1.y-8*m_lZoomCoefficient;rectVector.top=ptVector1.y+8*m_lZoomCoefficient;
+		rectVector.right=ptVector1.x;rectVector.left=rectVector.right-iLen*iLenChar*2;
+		ulType=DT_VCENTER|DT_RIGHT;
+	}
+	else if(fAT>=225 && fAT <= 315)
+	{
+		rectVector.top=ptVector1.y+2*m_lZoomCoefficient;rectVector.bottom=rectVector.top+10*m_lZoomCoefficient;
+		rectVector.left=ptVector1.x-iLen*iLenChar;rectVector.right=rectVector.left+iLen*iLenChar*2;
+		ulType=DT_VCENTER|DT_CENTER;
+	}
+	else
+	{
+		rectVector.bottom=ptVector1.y+8*m_lZoomCoefficient;rectVector.top=ptVector1.y-8*m_lZoomCoefficient;
+		rectVector.left=ptVector1.x;rectVector.right=rectVector.left+iLen*iLenChar*2;
+		ulType=DT_VCENTER|DT_LEFT;
+	}
+	char cStr[40];
+	strcpy(cStr,strVectorName);
+	CmDrawTextRect(pDC,cStr,crVectorTitle,rectVector,RGB(0,0,0),lfVectorName,TRANSPARENT,ulType,0);
+}
+
+
+//绘制角度刻度
+void CPolarAxis::DrawAngleUnit(CDC*pDC)
+{
+	double dAngleUnit=(double)m_iAngleUnit;
+	int iTotal=360 / m_iAngleUnit;
+	int iRadius=m_rectWorkArea.Width() / 2;
+	double dx,dy;
+	double dPI=3.141592654 ;
+	double dAngle=0;
+	int iX,iY;
+	CPen pen,*pOldPen;
+	pen.CreatePen(m_lAngleUnitLineStyle,m_lAngleUnitLineWidth,m_crAngleUnitLineColor);
+	pOldPen=pDC->SelectObject(&pen);
+    m_ptAxisCenter = m_rectWorkArea.CenterPoint();
+
+	for(int i=0;i<iTotal;i++)
+	{
+		dAngle = dPI * m_iAngleUnit * i / 180;
+		dx = cos(dAngle)*iRadius;
+		dy = sin(dAngle)*iRadius;
+		iX=m_ptAxisCenter.x + (int)dx;
+		iY=m_ptAxisCenter.y - (int)dy;
+		pDC->MoveTo(m_ptAxisCenter);
+		pDC->LineTo(iX,iY);
+	}
+	pDC->SelectObject(pOldPen);
+}
+
+//绘制幅值刻度
+void CPolarAxis::DrawCircleUnit(CDC *pDC)
+{
+	CRect rect;
+	int iLen=0;
+	CPen cp,*pOldPen;
+	CGdiObject * pObj=pDC->SelectStockObject(NULL_BRUSH);
+	COLORREF crBackColor = pDC->SetBkColor(m_crAxisWorkAreaBk);
+	cp.CreatePen(m_lCircleUnitLineStyle,m_lCircleUnitLineWidth,m_crCircleUnitLineColor);
+	pOldPen=pDC->SelectObject(&cp);
+/*	if(m_iAxisDrawType & POLARAXIS_RULER)
+	{
+		CAxisScaleData *pAxisData = NULL;
+		CPoint ptCircle(0,0);
+		pAxisData = m_rulerCenter.GetFirstAxisData();
+		while (pAxisData != NULL)
+		{
+			if (pAxisData->m_ptAxisScale.x >=m_rectWorkArea.left && pAxisData->m_ptAxisScale.x <=m_rectWorkArea.right)
+			{
+				LogicPointToDevicePoint(pAxisData->m_dAxisScaleVal,0,&ptCircle,0);
+				iLen = abs(ptCircle.x - m_ptAxisCenter.x);
+				rect.left = m_ptAxisCenter.x-iLen;
+				rect.right = m_ptAxisCenter.x+iLen;
+				rect.top = m_ptAxisCenter.y-iLen;
+				rect.bottom = m_ptAxisCenter.y+iLen;
+				pDC->Ellipse(rect);
+			}
+			pAxisData = m_rulerCenter.GetNextAxisData();
+		}
+	}
+	else
+*/	{
+		int iRadius=m_rectWorkArea.Width() / 2;
+		double	fUnit=(double)iRadius / m_iCircleGridCounts;
+		for(int i=1;i<m_iCircleGridCounts;i++)
+		{
+			iLen=(int)(fUnit*i);
+			rect.left=m_ptAxisCenter.x-iLen;
+			rect.right=m_ptAxisCenter.x+iLen;
+			rect.top=m_ptAxisCenter.y-iLen;
+			rect.bottom=m_ptAxisCenter.y+iLen;
+			pDC->Ellipse(rect);
+		}	
+	}
+	pDC->SelectObject(pOldPen);
+	pDC->SelectObject(pObj);
+	pDC->SetBkColor(crBackColor);
+	cp.DeleteObject();
+}
+
+void CPolarAxis::DrawCircle(CDC *pDC,int iCircleUnitIndex,double *pfRadius,long nCircles
+							,COLORREF crCircle,long nLineStype,long lLineWidth)
+{
+	if (nCircles <= 0)
+	{
+		return;
+	}
+
+	CPoint ptRadius(0,0);
+
+	int iIndex = 0;
+	int iRadius=m_rectWorkArea.Width() / 2;
+	double	fUnit=(double)iRadius / m_iCircleGridCounts;
+	CRect rect;
+	int iLen=0;
+	
+	CPen cp,*pOldPen;
+	CGdiObject * pObj=pDC->SelectStockObject(NULL_BRUSH);
+	COLORREF crBackColor = pDC->SetBkColor(m_crAxisWorkAreaBk);
+	cp.CreatePen(nLineStype,lLineWidth,crCircle);
+	pOldPen=pDC->SelectObject(&cp);
+	for(iIndex = 0; iIndex < nCircles; iIndex++)
+	{
+		LogicPointToDevicePoint(pfRadius[iIndex],0,&ptRadius,iCircleUnitIndex);
+		iLen = abs(ptRadius.x - m_ptAxisCenter.x);
+		rect.left = m_ptAxisCenter.x-iLen;
+		rect.right = m_ptAxisCenter.x+iLen;
+		rect.top = m_ptAxisCenter.y-iLen;
+		rect.bottom = m_ptAxisCenter.y+iLen;
+		pDC->Ellipse(rect);
+	}	
+	pDC->SelectObject(pOldPen);
+	pDC->SelectObject(pObj);
+	pDC->SetBkColor(crBackColor);
+	cp.DeleteObject();	
+}
+
+void CPolarAxis::GetTheVector(double fRadius1,double fAngle1,double fRadius2,double fAngle2,double *fRadiusL,double *fAngleL)
+{
+	double fx1,fy1,fx2,fy2;
+	double ftx,fty;
+	double fTemp=3.1415926/180;
+	fAngle1=fAngle1*fTemp;
+	fAngle2=fAngle2*fTemp;
+	fx1=fRadius1*cos(fAngle1);	fy1=fRadius1*sin(fAngle1);
+	fx2=fRadius2*cos(fAngle2);	fy2=fRadius2*sin(fAngle2);
+	ftx=fx2-fx1;fty=fy2-fy1;
+	*fRadiusL=hypot(ftx,fty);
+	if(*fRadiusL==0)
+	{
+		*fAngleL=0;
+		return;
+	}
+	*fAngleL=acos(ftx/(*fRadiusL)) / fTemp;
+	if(fty<0)*fAngleL=-*fAngleL;
+}
+
+void CPolarAxis::ZoomIn(float fRate)
+{
+}
+
+void CPolarAxis::ZoomOut(float fRate)
+{
+}
+
+void CPolarAxis::DrawRuler(CDC *pDC)
+{
+	if(m_iAxisDrawType & POLARAXIS_RULER)
+	{
+//		m_rulerCenter.DrawIt(pDC,0x00000007);
+	}
+}
+
+void CPolarAxis::ResetRuler()
+{
+/*
+	m_ruler.SetRulerMaxMinValue(-m_fCircleUnitValue[0],m_fCircleUnitValue[0]);
+	m_ruler.ResetRulerHorDef();
+*/
+//	m_rulerCenter.SetRulerMaxMinValue(-m_fCircleUnitValue[0],m_fCircleUnitValue[0]);
+//	m_rulerCenter.ResetRulerHorDef();
+}
+
+//设置坐标系的绘图位置
+long CPolarAxis::GetAxisMinMaxVal(double *xMin,double *yMin,double *xMax,double *yMax)
+{
+	*xMin = m_dXAxisMinVal;
+	*xMax = m_dXAxisMaxVal;	
+	*yMin = m_dYAxisMinVal;
+	*yMax = m_dYAxisMaxVal;	
+	
+	return 0;
+}
+
+//获取坐标系的绘图位置
+long CPolarAxis::GetPosition(long *left, long *top, long *right, long *bottom)
+{
+	*left = m_rectBorder.left;
+	*top = m_rectBorder.top;
+	*right = m_rectBorder.right;
+	*bottom = m_rectBorder.bottom;
+	
+	return 0;
+}
+
+//获取坐标系统的工作区，即坐标系统坐标范围标示的有效区域
+long CPolarAxis::GetWorkArea(long *left, long *top, long *right, long *bottom)
+{
+	*left = m_rectWorkArea.left;
+	*top = m_rectWorkArea.top;
+	*right = m_rectWorkArea.right;
+	*bottom = m_rectWorkArea.bottom;
+
+	return 0;
+}
+
+//将逻辑坐标转化为设备坐标:ptx,pty为设备坐标
+long CPolarAxis::LogicPointToDevicePoint(double x,double y,long *ptx,long *pty)
+{
+	CPoint pt;
+	LogicPointToDevicePoint(x,y,&pt);
+	*ptx = pt.x;
+	*pty = pt.y;
+	
+	return 0;
+}
+
+//将设备坐标转化为逻辑坐标:ptx,pty为设备坐标
+long CPolarAxis::DevicePointToLogicPoint (long ptx,long pty ,double *x,double *y)
+{
+	CPoint pt;
+	pt.x = ptx;
+	pt.y = pty;
+	DevicePointToLogicPoint(pt,x,y);
+
+	return 0;
+}
+
+////////////////////////////////////////////////////////////////////
+/////////////////////////////////接口定义///////////////////////////
+////////////////////////////////////////////////////////////////////
+STDMETHODIMP_(ULONG) CPolarAxis::XPolarAxisInterface::AddRef()
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	return pThis->ExternalAddRef();
+}
+
+STDMETHODIMP_(ULONG) CPolarAxis::XPolarAxisInterface::Release()
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	return pThis->ExternalRelease();
+}
+
+STDMETHODIMP CPolarAxis::XPolarAxisInterface::QueryInterface(REFIID iid,LPVOID* ppvObj)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	return pThis->ExternalQueryInterface(&iid, ppvObj);
+}
+
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::SetAxisDrawStyle(long nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	pThis->m_lAxisDrawStyle = nValue;
+
+	return 0;
+}
+
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::GetAxisDrawStyle(long *nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	*nValue = pThis->m_lAxisDrawStyle;
+
+	return 0;
+}
+
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::SetAxisDrawStyleBit(long nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	
+	pThis->m_lAxisDrawStyle |= nValue;
+	
+	return 0;
+}
+
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::ClearAxisDrawStyleBit(long nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	
+	pThis->m_lAxisDrawStyle &= (~nValue);
+	
+	return 0;
+}
+
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::SetAxisTitle(BSTR bstrValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	char pszValue[MAX_PATH];
+	memset(pszValue,0,MAX_PATH);
+	BSTRToAnsiStr(bstrValue,pszValue);
+	pThis->m_strPolarAxisTitle = pszValue;
+	
+	return 0;
+}
+
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::GetAxisTitle(BSTR *pbstrValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	*pbstrValue = _bstr_t(pThis->m_strPolarAxisTitle);
+
+	return 0;
+}
+
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::SetAxisTitleFont(long lfHeight,long lfWidth,long lfEscapement,long lfOrientation,long lfWeight,long lfItalic,long lfUnderline,long lfStrikeOut,long lfCharSet,long lfOutPrecision,long lfClipPrecision,long lfQuality,long lfPitchAndFamily,BSTR lfFaceName)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	LOGFONT   m_lfAxisTitleFont;
+	char pszFaceName[MAX_PATH];
+	memset(pszFaceName,0,MAX_PATH);
+	BSTRToAnsiStr(lfFaceName,pszFaceName);
+	m_lfAxisTitleFont = InitLogFont (lfHeight,lfWidth,lfEscapement,lfOrientation
+		,lfWeight,(BYTE)lfItalic,(BYTE)lfUnderline,(BYTE)lfStrikeOut,(BYTE)lfCharSet
+		,(BYTE)lfOutPrecision,(BYTE)lfClipPrecision,(BYTE)lfQuality,(BYTE)lfPitchAndFamily,pszFaceName);
+	pThis->m_lfPolarAxisTitleFont = m_lfAxisTitleFont;
+
+	return 0;
+	
+}
+
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::GetAxisTitleFont(long *lfHeight,long *lfWidth,long *lfEscapement,long *lfOrientation,long *lfWeight,long *lfItalic,long *lfUnderline,long *lfStrikeOut,long *lfCharSet,long *lfOutPrecision,long *lfClipPrecision,long *lfQuality,long *lfPitchAndFamily,BSTR *lfFaceName)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	LOGFONT   m_lfAxisTitleFont;
+	m_lfAxisTitleFont = pThis->m_lfPolarAxisTitleFont;
+	CString strFaceName;
+	*lfHeight = m_lfAxisTitleFont.lfHeight;
+	*lfWidth = m_lfAxisTitleFont.lfWidth;
+	*lfOrientation = m_lfAxisTitleFont.lfOrientation;
+	*lfWeight = m_lfAxisTitleFont.lfWeight;
+	*lfItalic = (long)m_lfAxisTitleFont.lfItalic;
+	*lfUnderline = (long)m_lfAxisTitleFont.lfUnderline;
+	*lfStrikeOut = (long)m_lfAxisTitleFont.lfStrikeOut;
+	*lfCharSet = (long)m_lfAxisTitleFont.lfCharSet;
+	*lfOutPrecision = (long)m_lfAxisTitleFont.lfOutPrecision;
+	*lfClipPrecision = (long)m_lfAxisTitleFont.lfClipPrecision;
+	*lfQuality = (long)m_lfAxisTitleFont.lfQuality;
+	*lfPitchAndFamily = (long)m_lfAxisTitleFont.lfPitchAndFamily;
+	strFaceName = m_lfAxisTitleFont.lfFaceName;
+	*lfFaceName = strFaceName.AllocSysString();
+
+	return 0 ;
+}
+
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::SetAxisTitleFontColor(long nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	pThis->m_crPolarAxisTitleFont = (COLORREF)nValue;
+
+	return 0;	
+}
+
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::GetAxisTitleFontColor(long *nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	*nValue = (long)(pThis->m_crPolarAxisTitleFont);
+
+	return 0;
+}
+
+//坐标系统的背景色
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::SetAxisBackColor(long nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	pThis->m_crAxisBackColor = (COLORREF)nValue;
+
+	return 0;
+	
+}
+
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::GetAxisBackColor(long *nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	*nValue = (COLORREF)(pThis->m_crAxisBackColor);
+
+	return 0;
+}
+
+//坐标系统工作区颜色
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::SetWorkAreaBkColor(long nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	pThis->m_crAxisWorkAreaBk = (COLORREF)nValue;
+
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::GetWorkAreaBkColor(long *nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	*nValue = (long)(pThis->m_crAxisWorkAreaBk);
+
+	return 0;
+}
+
+//坐标系统边框的颜色
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::SetFrameLeftTopColor(long nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	pThis->m_crFrameLeftTopColor = (COLORREF)nValue;
+
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::GetFrameLeftTopColor(long *nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	*nValue = (long)(pThis->m_crFrameLeftTopColor);
+
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::SetFrameRightBottomColor(long nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	pThis->m_crFrameRightBottomColor = (COLORREF)nValue;
+
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::GetFrameRightBottomColor(long *nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	*nValue = (long)(pThis->m_crFrameRightBottomColor);
+
+	return 0;
+}
+
+//坐标系统边框边界阴影
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::SetFrameShadow(long nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	pThis->m_iFrameShadow = nValue;
+
+	return 0;	
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::GetFrameShadow(long *nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	*nValue = pThis->m_iFrameShadow;
+	
+	return 0;
+}
+
+//角度刻度线的线型、颜色、线宽、字体、字体颜色
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::SetAngleUnitLineStyle(long nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	pThis->SetAngleUnitLineStyle(nValue);
+
+	return 0;	
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::GetAngleUnitLineStyle(long *nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	*nValue = pThis->GetAngleUnitLineStyle();
+
+	return 0;	
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::SetAngleUnitLineColor(long nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	COLORREF color;
+	color = (COLORREF)nValue;
+	pThis->SetAngleUnitLineColor(color);
+
+	return 0;
+	
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::GetAngleUnitLineColor(long *nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	pThis->GetAngleUnitLineColor();
+
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::SetAngleUnitLineWidth(long nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	pThis->m_lAngleUnitLineWidth = nValue;
+
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::GetAngleUnitLineWidth(long *nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	*nValue = pThis->m_lAngleUnitLineWidth;
+
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::SetAngleUnitFont(long lfHeight,long lfWidth,long lfEscapement,long lfOrientation,long lfWeight,long lfItalic,long lfUnderline,long lfStrikeOut,long lfCharSet,long lfOutPrecision,long lfClipPrecision,long lfQuality,long lfPitchAndFamily,BSTR lfFaceName)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	LOGFONT   m_lfAngleFont;
+	char pszFaceName[MAX_PATH];
+	memset(pszFaceName,0,MAX_PATH);
+	BSTRToAnsiStr(lfFaceName,pszFaceName);
+	m_lfAngleFont = InitLogFont (lfHeight,lfWidth,lfEscapement,lfOrientation
+		,lfWeight,(BYTE)lfItalic,(BYTE)lfUnderline,(BYTE)lfStrikeOut,(BYTE)lfCharSet
+		,(BYTE)lfOutPrecision,(BYTE)lfClipPrecision,(BYTE)lfQuality,(BYTE)lfPitchAndFamily,pszFaceName);
+	pThis->m_lfAngleUnitFont = m_lfAngleFont;
+	
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::GetAngleUnitFont(long *lfHeight,long *lfWidth,long *lfEscapement,long *lfOrientation,long *lfWeight,long *lfItalic,long *lfUnderline,long *lfStrikeOut,long *lfCharSet,long *lfOutPrecision,long *lfClipPrecision,long *lfQuality,long *lfPitchAndFamily,BSTR *lfFaceName)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	LOGFONT   m_lfAngleFont;
+	m_lfAngleFont = pThis->m_lfAngleUnitFont;
+	CString strFaceName;
+	*lfHeight = m_lfAngleFont.lfHeight;
+	*lfWidth = m_lfAngleFont.lfWidth;
+	*lfOrientation = m_lfAngleFont.lfOrientation;
+	*lfWeight = m_lfAngleFont.lfWeight;
+	*lfItalic = (long)m_lfAngleFont.lfItalic;
+	*lfUnderline = (long)m_lfAngleFont.lfUnderline;
+	*lfStrikeOut = (long)m_lfAngleFont.lfStrikeOut;
+	*lfCharSet = (long)m_lfAngleFont.lfCharSet;
+	*lfOutPrecision = (long)m_lfAngleFont.lfOutPrecision;
+	*lfClipPrecision = (long)m_lfAngleFont.lfClipPrecision;
+	*lfQuality = (long)m_lfAngleFont.lfQuality;
+	*lfPitchAndFamily = (long)m_lfAngleFont.lfPitchAndFamily;
+	strFaceName = m_lfAngleFont.lfFaceName;
+	*lfFaceName = strFaceName.AllocSysString();
+	
+	return 0 ;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::SetAngleUnitFontColor(long nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	pThis->SetAngleUnitFontColor((COLORREF)nValue);
+
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::GetAngleUnitFontColor(long *nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	*nValue = (long)(pThis->GetAngleUnitFontColor());
+
+	return 0;
+}
+
+//圆(幅值)刻度线的线型、颜色、线宽
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::SetCircleUnitLineStyle(long nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	pThis->m_lCircleUnitLineStyle = nValue;
+
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::GetCircleUnitLineStyle(long *nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	*nValue = pThis->m_lCircleUnitLineStyle;
+
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::SetCircleUnitLineColor(long nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	pThis->m_crCircleUnitLineColor = (COLORREF)nValue;
+
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::GetCircleUnitLineColor(long *nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	*nValue = (long)(pThis->m_crCircleUnitLineColor);
+
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::SetCircleUnitLineWidth(long nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	pThis->m_lAngleUnitLineWidth = nValue;
+
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::GetCircleUnitLineWidth(long *nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	*nValue = pThis->m_lAngleUnitLineWidth;
+
+	return 0;
+}
+
+//坐标轴中心轴参数定义
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::SetAxisCenterLineWidth(long nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	pThis->m_iCenterLineWidth = nValue;
+
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::GetAxisCenterLineWidth(long *nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	*nValue = pThis->m_iCenterLineWidth;
+
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::SetAxisCenterLineType(long nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	pThis->m_uiCenterLineType = nValue;
+
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::GetAxisCenterLineType(long *nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	*nValue = pThis->m_uiCenterLineType;
+
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::SetAxisCenterColor(long nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	pThis->m_crAxisCenter = (COLORREF)nValue;
+
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::GetAxisCenterColor(long *nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	*nValue = (long)(pThis->m_crAxisCenter);
+
+	return 0;
+}
+
+//逻辑坐标与设备坐标之间的转换
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::LogicPointToDevicePoint(double x,double y,long *ptx,long *pty)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	pThis->LogicPointToDevicePoint(x,y,ptx,pty);
+
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::DevicePointToLogicPoint(long ptx,long pty ,double *x,double *y)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	pThis->DevicePointToLogicPoint(ptx,pty,x,y);
+
+	return 0;
+}
+
+//坐标范围
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::SetAngleUnitID(long nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	pThis->SetAngleUnit(nValue);
+
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::GetAngleUnitID(long *nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	*nValue = pThis->GetAngleUnit();
+
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::SetCircleAxisCounts(long nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	pThis->SetCircleAxisCounts(nValue);
+
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::GetCircleAxisCounts(long *nValue)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	*nValue = pThis->GetCircleAxisCounts();
+
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::SetCircleUnitValue(double dValue,long nCircleAxisID)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	pThis->SetCircleUnitValue(nCircleAxisID,dValue);
+
+	if(pThis->m_iAxisDrawType & POLARAXIS_RULER)
+	pThis->ResetRuler();
+
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::GetCircleUnitValue(double *dValue,long nCircleAxisID)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	*dValue = pThis->GetCircleUnitValue(nCircleAxisID);
+	if(*dValue < 0)
+	{
+		return -1;
+	}
+	else
+	{
+		return 0;
+	}
+	
+}
+
+//坐标区域
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::SetBoder(long left, long top, long right, long bottom)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	CRect rectNewBorder;
+	rectNewBorder = CRect(left,top,right,bottom);
+	pThis->SetPolarAxisBorder(rectNewBorder);
+
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::GetBoder(long *left, long *top, long *right, long *bottom)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	CRect rectPolarAxisBorder;
+	rectPolarAxisBorder = pThis->GetPolarAxisBorder();
+	*left = rectPolarAxisBorder.left;
+	*top = rectPolarAxisBorder.top;
+	*right = rectPolarAxisBorder.right;
+	*bottom = rectPolarAxisBorder.bottom;
+
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::GetWorkArea(long *left, long *top, long *right, long *bottom)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	
+	return pThis->GetWorkArea(left,top,right,bottom);
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::SetMarginGap(long nLeftGap, long nTopGap, long nRightGap, long nBottomGap)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	pThis->SetMarginGap(nLeftGap,nTopGap,nRightGap,nBottomGap);
+
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::GetMarginGap(long *nLeftGap, long *nTopGap, long *nRightGap, long *nBottomGap)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	pThis->GetMarginGap(*nLeftGap,*nTopGap,*nRightGap,*nBottomGap);
+
+	return 0;
+}
+
+//重新计算坐标系统的刻度
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::ResetAxis()
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	pThis->ResetPolarAxis();
+
+	return 0;
+}
+
+//绘图
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::DrawAxis(long lDC)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	CDC *pDC;
+	pDC = (CDC*)lDC;
+	pThis->DrawIt(pDC,pThis->m_lAxisType);
+
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::DrawVector(long lDC,long nUnitIndex, double fRadius,double fAngle,BSTR strVectorName,long crVector,long nLineWidth,long nLineStyle,long nArrowLen,long crVectorTitle,float fZoomRatio,long xOffset,long yOffset)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	CDC *pDC;
+	pDC = (CDC*)lDC;
+	CString sVectorName = "";
+	sVectorName = strVectorName;
+	COLORREF crVectorColor;
+	COLORREF crVectorTitleColor;
+	crVectorColor = (COLORREF)crVector;
+	crVectorTitleColor = (COLORREF)crVectorTitle;
+	pThis->DrawTheVector(pDC,nUnitIndex,fRadius,fAngle,sVectorName,crVectorColor
+		,nLineWidth,nLineStyle,nArrowLen,crVectorTitleColor);
+
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::DrawVectorEx(long lDC,long nUnitIndex
+			     ,double dRadius1,double dAngle1,double dRadius2,double dAngle2
+				 ,BSTR strVectorName,long crVector,long nLineWidth,long nLineStyle
+				 ,long nArrowLen,long crVectorTitle,float fZoomRatio,long xOffset
+				 ,long yOffset)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	CDC *pDC;
+	pDC = (CDC*)lDC;
+	CString sVectorName = "";
+	sVectorName = strVectorName;
+	COLORREF crVectorColor;
+	COLORREF crVectorTitleColor;
+	crVectorColor = (COLORREF)crVector;
+	crVectorTitleColor = (COLORREF)crVectorTitle;
+	pThis->DrawTheVector(pDC,nUnitIndex,dRadius1,dAngle1,dRadius2,dAngle2,sVectorName
+		,crVectorColor,nLineWidth,nLineStyle,nArrowLen,crVectorTitleColor);
+
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::DrawVectorEx2(long lDC,long nUnitIndex
+				,double dRadius1,double dAngle1,double dRadius2,double dAngle2
+				,double *dRadiusL,double *dAngleL,BSTR strVectorName,long crVector
+				,long nLineWidth,long nLineStyle,long nArrowLen,long crVectorTitle
+				,float fZoomRatio,long xOffset,long yOffset)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	CDC *pDC;
+	pDC = (CDC*)lDC;
+	CString sVectorName = "";
+	sVectorName = strVectorName;
+	COLORREF crVectorColor,crVectorTitleColor;
+	crVectorColor = (COLORREF)crVector;
+	crVectorTitleColor = (COLORREF)crVectorTitle;
+	pThis->DrawTheVector(pDC,nUnitIndex,dRadius1,dAngle1,dRadius2,dAngle2,dRadiusL,dAngleL
+		,sVectorName,crVectorColor,nLineWidth,nLineStyle,nArrowLen,crVectorTitleColor);
+	
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::DrawCircle(long lDC,long nUnitIndex,double dRadius,long crCircle,long nLineStype,long nLineWidth,float fZoomRatio,long xOffset,long yOffset)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	CDC *pDC;
+	pDC = (CDC*)lDC;
+	COLORREF color;
+	color = (COLORREF)crCircle;
+	CPoint pt;
+	pt = CPoint(xOffset,yOffset);
+	pThis->DrawCircle(pDC,nUnitIndex,&dRadius,pThis->m_iCircleAxisCount,color,nLineStype,nLineWidth);
+	
+	return 0;
+}
+
+//放大缩小
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::ZoomIn(float fRate)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	pThis->ZoomIn(fRate);
+
+	return 0;
+}
+STDMETHODIMP_(long) CPolarAxis::XPolarAxisInterface::ZoomOut(float fRate)
+{
+	METHOD_PROLOGUE(CPolarAxis, PolarAxisInterface);
+	pThis->ZoomOut(fRate);
+
+	return 0;
+}
+
+

@@ -1,0 +1,174 @@
+// ItemParaEditDlg.cpp : 实现文件
+//
+
+#include "stdafx.h"
+#include "AutoTest.h"
+#include "ItemParaEditDlg.h"
+
+#include "..\AutoTest\XLanguageResourceAts_AutoTest.h"
+// CItemParaEditDlg 对话框
+
+CItemParaEditDlg::CItemParaEditDlg(CWnd* pParent /*=NULL*/)
+	: CDynDialogEx(pParent, TRUE)
+{
+	m_pItem = NULL;
+// 	m_pGridFaultPara = NULL;
+// 	m_pGridCommPara = NULL;
+}
+
+CItemParaEditDlg::~CItemParaEditDlg()
+{
+}
+
+void CItemParaEditDlg::DoDataExchange(CDataExchange* pDX)
+{
+	CDynDialogEx::DoDataExchange(pDX);
+}
+
+void CItemParaEditDlg::xlang_InitAndAdjust()
+{
+	if (xlang_IsCurrXLanguageChinese())
+	{
+		return;
+	}
+
+	m_btnItemParaOk.SetLanguageID(CXLanguageResourceAts_AutoTest::g_sLangID_OK);
+	m_btnItemParaCancel.SetLanguageID(CXLanguageResourceAts_AutoTest::g_sLangID_Cancel);
+
+
+	CXLangWndAdjMngr oWndAdjMngr;         
+	oWndAdjMngr.RegisterCols();  
+	oWndAdjMngr.RegisterXCol(&m_btnItemParaOk);  
+	oWndAdjMngr.RegisterXCol(&m_btnItemParaCancel); 
+
+	oWndAdjMngr.Adjust(this, TRUE);
+	xlang_InitByLgugStr(CXLanguageResourceAts_AutoTest::g_sLangID_TestItemParEdi, this);
+}
+
+BEGIN_MESSAGE_MAP(CItemParaEditDlg, CDynDialogEx)
+	ON_BN_CLICKED(IDCANCEL, &CItemParaEditDlg::OnBnClickedCancel)
+END_MESSAGE_MAP()
+
+
+void CItemParaEditDlg::InitTab()
+{
+	CRect rc;
+	m_wndTabFrame.GetWindowRect(&rc);
+	ScreenToClient(&rc);
+}
+
+void CItemParaEditDlg::ShowItemPara()
+{
+	if (m_pItem == NULL)
+	{
+		return;
+	}
+
+	UINT nClassID = m_pItem->GetClassID();
+
+	switch (nClassID)
+	{
+	case GBCLASSID_MACROTEST:
+		ShowMacroItemPara();
+		break;
+	case GBCLASSID_COMMCMD:
+		ShowCommCmdPara();
+		break;
+	default:
+		break;
+	}
+}
+
+void CItemParaEditDlg::ShowMacroItemPara()
+{
+	CTestMacro * oTestMacro = Gb_GetMacroPtr(m_pItem);
+
+	if(oTestMacro == NULL)
+	{
+		return;
+	}
+
+	m_oGridFaultPara.Create(WS_VISIBLE | WS_CHILD, CRect(0,0,0,0), &m_tabMacroItemParaType, 6001);
+	m_oGridFaultPara.EnableHeaderCtrl(TRUE, CXLanguageResourceAts_AutoTest::g_sLangTxt_ParaName/*_T("参数名称")*/, CXLanguageResourceAts_AutoTest::g_sLangTxt_ParaValue/*_T("参数值")*/);
+	m_oGridFaultPara.MarkModifiedProperties();
+	m_oGridFaultPara.SetVSDotNetLook();
+
+	m_oGridCommPara.Create(WS_VISIBLE | WS_CHILD, CRect(0,0,0,0), &m_tabMacroItemParaType, 6002);
+	m_oGridCommPara.EnableHeaderCtrl(TRUE,CXLanguageResourceAts_AutoTest::g_sLangTxt_ParaName/*_T("参数名称")*/, CXLanguageResourceAts_AutoTest::g_sLangTxt_ParaValue/*_T("参数值")*/);
+	m_oGridCommPara.MarkModifiedProperties();
+	m_oGridCommPara.SetVSDotNetLook();
+
+	m_tabMacroItemParaType.AddTab(&m_oGridFaultPara, CXLanguageResourceAts_AutoTest::g_sLangTxt_FaultParameter/*L"故障参数"*/);
+	m_tabMacroItemParaType.AddTab(&m_oGridCommPara, CXLanguageResourceAts_AutoTest::g_sLangTxt_GeneralParameter/*L"通用参数"*/);
+
+	CShortDatas* oDatas = NULL;
+	CMacroTestPara* pTestPara = ((CMacroTest*)m_pItem)->GetMacroTestPara();
+	CMacroTestParaDatas *pFaultPara = pTestPara->GetFaultParaDatas();
+
+	oDatas = oTestMacro->GetFaultParas();
+	oDatas->ResetDatas();
+	pFaultPara->SetToDatasValue(oDatas);
+	pFaultPara->SetToDatasValue(oTestMacro, TRUE);//, listNew, listDelete);
+
+	CDataGroup  *pDataGroup = NULL;
+	pDataGroup = oTestMacro->GetFaultParasEx();
+	m_oGridFaultPara.SetMacroTestDatas(pDataGroup, oDatas, m_pItem);
+
+	oDatas = oTestMacro->GetSysParas();
+	oDatas->ResetDatas();
+	pFaultPara->SetToDatasValue(oDatas);
+
+
+	m_oGridCommPara.SetMacroTestDatas(NULL, oDatas, m_pItem);
+}
+
+void CItemParaEditDlg::ShowCommCmdPara()
+{
+	
+}
+
+// CItemParaEditDlg 消息处理程序
+
+BOOL CItemParaEditDlg::OnInitDialog()
+{
+	CDynDialogEx::OnInitDialog();
+
+	CreateButton(m_btnOK, CXLanguageResourceBase::g_sLangTxt_Open/*_T("打开")*/, CRect(177, 488, 267, 510), IDOK, this);
+	CreateButton(m_btnCancel, CXLanguageResourceBase::g_sLangTxt_Cancel/*_T("取消")*/, CRect(277, 488, 367, 510), IDCANCEL, this);
+
+	m_tabMacroItemParaType.Create(CMFCTabCtrl::STYLE_3D_ROUNDED ,rc, this, 1000,CMFCTabCtrl::LOCATION_TOP);
+
+	ShowItemPara();
+
+	xlang_InitAndAdjust();
+
+	return TRUE; 
+}
+
+void CItemParaEditDlg::OnOK()
+{
+	DeleteAll();
+
+	CDynDialogEx::OnOK();
+}
+
+void CItemParaEditDlg::OnCancel()
+{
+	DeleteAll();
+
+	CDynDialogEx::OnCancel();
+}
+
+void CItemParaEditDlg::DeleteAll()
+{
+	//m_tabMacroItemParaType.RemoveAllTabs();
+	//delete m_pGridFaultPara;
+	//delete m_pGridCommPara;
+}
+
+
+void CItemParaEditDlg::OnBnClickedCancel()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	OnCancel();
+}

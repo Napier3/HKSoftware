@@ -1,0 +1,81 @@
+#pragma  once
+
+#include "../GuideBook/GuideBook.h"
+
+
+class CGuideBookItemsSelTreeCtrl : public CTreeCtrl
+{
+public:
+	CGuideBookItemsSelTreeCtrl();
+	virtual ~CGuideBookItemsSelTreeCtrl();
+
+	//属性
+private:
+	CGbItemBase* m_pCurrSelTestItem;		//当前选中的测试项目
+	HTREEITEM m_hCurrSelTestItem;
+	UINT m_nCurrSelTestItemIndex;
+	BOOL m_bInTestItemInitState;
+
+	long m_nTimerIDEvent;
+	CPoint m_ptSelTestIItem;
+	BOOL m_bShowOnlySelTestItems;
+	BOOL m_bInUpdateItemsState;
+
+	COLORREF m_crWindow;	// = RGB(0,0,255);
+	long m_xSelCheckBox;			//选择框的位置
+	long m_xItemTypeIcon;		//测试项目类型图标位置
+	long m_xItemTitle;					//测试项目标题的位置
+
+	CGuideBook	*m_pGuideBook;
+	
+	//公共接口
+public:
+	void InitGuideBook(CGuideBook* pGuideBook);
+	void CloseTestProject();
+	CGbItemBase* GetCurrSelTestItem()			{		return m_pCurrSelTestItem;		}
+	void SelectTopItem(CGbItemBase* pItem);
+
+protected:
+	virtual void InsertGbItemToTreeCtrl(CGbItemBase*pItem,HTREEITEM htiParent);
+	virtual void InsertGbItemChildrenToTreeCtrl(CGbItemBase* pItem,HTREEITEM htiParent);
+	CGbItemBase* GetTestItemByTreeItem(long hTreeItem);
+	void SetTestItemSelectedState(CGbItemBase *pItem,long nSelect);
+	void UpdateItemSelectedState(CGbItemBase* pItem);
+
+	//界面相关
+	BOOL IsBadRect(CRect &r)
+	{
+		return ( r.IsRectEmpty() || (r.Height() <= 0) || (r.Width() <= 0) );
+	}
+	
+	void GetCheckBoxRect(CRect &rcText,CRect &rcCheck);
+	virtual void OnContextMenuEx(CWnd* pWnd, CPoint point);
+	virtual long _DrawItem(OLE_HANDLE hDC,OLE_HANDLE hItem,DWORD dwDrawStage,LRESULT* pResult);
+	virtual long _OnSelChange();
+	virtual long _OnLButtonDown(long xPoint,long yPoint);
+	virtual long _OnRButtonDown(long xPoint,long yPoint);
+	virtual long _OnLButtonDblClk(long xPoint,long yPoint);
+	virtual void _SetShowOnlySelTestItems(long nShow);
+	virtual long OnItemExpandStateChanged(OLE_HANDLE hItem,long nAction);
+
+	long GetVisibleItemCount(long &nVisibleCount, long &nCurrItemIndex, CGbItemBase *pCurrItem, CGbItemBase *pParent);
+	//void CreateGuideBookTreeImageList(UINT nBitmapID,int cx ,int nGrow,COLORREF crMask);
+
+protected:
+	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnCustomdraw(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnViewDeviceSets();
+	afx_msg void OnExpandAllChildren();
+	afx_msg void OnTestPoint();
+	afx_msg void OnTestBelow();
+	afx_msg void OnEditItemPara();
+	afx_msg void OnShowReport();
+	afx_msg void OnContextMenu(CWnd* /*pWnd*/, CPoint /*point*/);
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
+	afx_msg void OnTvnItemexpanded(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnTvnItemChanged(NMHDR *pNMHDR, LRESULT *pResult);
+};

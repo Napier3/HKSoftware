@@ -1,0 +1,24 @@
+#pragma once
+#include "../GuideBook/GuideBookInterface.h"
+
+class CCommCmdAttrGrid :	public CListCtrl
+{
+		DECLARE_DYNAMIC(CCommCmdAttrGrid)
+
+public:
+	CCommCmdAttrGrid(void);
+	~CCommCmdAttrGrid(void);
+
+	void CreateGrid(CWnd *pParent, CRect rcWnd, UINT nID);
+	void ShowCommCmdAttr(CExBaseObject *pItem);
+
+protected:
+	CExBaseObject* m_pCurrItem;
+	long m_nCurrRowIndex;
+
+	void ShowAttr(const CString &strName,const CString &strValue);
+	void ShowAttr(const CString &strName,long nValue);
+	void ShowAttr(const CString &strName,float fValue);
+	void ShowAttr(const CString &strName,double dValue);
+
+};

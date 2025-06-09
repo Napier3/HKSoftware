@@ -1,0 +1,144 @@
+//这段源代码由ClassGenerator创建
+//版权所有 LiJunqing  lijunqing1224@126.com
+//保留所有权利
+
+//XDrawElement.cpp  CXDrawElement
+
+
+#include "stdafx.h"
+#include "XDrawElement.h"
+
+
+static const CString g_strXDrawPenStyle[] = 
+	{_T("PS_SOLID"), _T("PS_DASH"), _T("PS_DOT"), _T("PS_DASHDOT"), _T("PS_DASHDOTDOT") };
+
+CString XDraw_GetLineStype(UINT nStyle)
+{
+	if (0 <= nStyle && nStyle<=4)
+	{
+		return g_strXDrawPenStyle[nStyle];
+	}
+
+	return g_strXDrawPenStyle[0];
+}
+
+UINT XDraw_GetLineStyle(const CString &strStyle)
+{
+	UINT nStyle = 0;
+
+	for (nStyle=0; nStyle<5; nStyle++)
+	{
+		if (strStyle == g_strXDrawPenStyle[nStyle])
+		{
+			return nStyle;
+		}
+	}
+
+	return PS_SOLID;
+}
+
+COLORREF CXDrawElement:: m_crPickColor = RGB(0, 0, 255);
+DWORD    CXDrawElement::m_nPickStyle   = PS_SOLID;
+long     CXDrawElement::m_nPickWidth   = 2;
+
+
+CXDrawElement::CXDrawElement()
+{
+	//初始化属性
+	m_dwItemData = 0;
+	m_dwState = XDRAW_STATE_NORMAL;
+	m_crColor = RGB(0, 0, 0);
+
+	//初始化成员变量
+}
+
+CXDrawElement::~CXDrawElement()
+{
+}
+
+long CXDrawElement::XmlReadOwn(const MSXML2::IXMLDOMNodePtr &oNode, CXmlRWKeys *pXmlRWKeys)
+{
+	CXDrawXmlRWKeys *pXmlKeys = (CXDrawXmlRWKeys*)pXmlRWKeys;
+
+	xml_GetAttibuteValue(pXmlKeys->m_strColorKey, oNode, m_crColor);
+	xml_GetAttibuteValue(pXmlKeys->m_strStateKey, oNode, m_dwState);
+	return 0;
+}
+
+long CXDrawElement::XmlWriteOwn(const MSXML2::IXMLDOMDocumentPtr &oXMLDoc, const MSXML2::IXMLDOMElementPtr &oElement, CXmlRWKeys *pXmlRWKeys)
+{
+	CXDrawXmlRWKeys *pXmlKeys = (CXDrawXmlRWKeys*)pXmlRWKeys;
+
+	xml_SetAttributeValue(pXmlKeys->m_strColorKey, oElement, m_crColor);
+	xml_SetAttributeValue(pXmlKeys->m_strStateKey, oElement, m_dwState);
+	return 0;
+}
+
+long CXDrawElement::SerializeOwn(CBinarySerialBuffer &oBinaryBuffer)
+{
+	if(oBinaryBuffer.IsCalSizeMode())
+	{
+		BinarySerializeCalLen(oBinaryBuffer, m_crColor);
+		BinarySerializeCalLen(oBinaryBuffer, m_dwState);
+	}
+	else if(oBinaryBuffer.IsReadMode())
+	{
+		BinarySerializeRead(oBinaryBuffer, m_crColor);
+		BinarySerializeRead(oBinaryBuffer, m_dwState);
+	}
+	else if(oBinaryBuffer.IsWriteMode())
+	{
+		BinarySerializeWrite(oBinaryBuffer, m_crColor);
+		BinarySerializeWrite(oBinaryBuffer, m_dwState);
+	}
+	return 0;
+}
+
+BOOL CXDrawElement::IsEqualOwn(CBaseObject* pObj)
+{
+	if(this == pObj)
+	{
+		return TRUE;
+	}
+
+	CXDrawElement *p = (CXDrawElement*)pObj;
+
+	if(m_crColor != p->m_crColor)
+	{
+		return FALSE;
+	}
+
+	if(m_dwState != p->m_dwState)
+	{
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
+BOOL CXDrawElement::CopyOwn(CBaseObject* pDest)
+{
+	if(this == pDest)
+	{
+		return TRUE;
+	}
+
+	CXDrawElement *p = (CXDrawElement*)pDest;
+
+	p->m_crColor = m_crColor;
+	p->m_dwState = m_dwState;
+	return TRUE;
+}
+
+void CXDrawElement::SetPickState(BOOL bPick)
+{
+	if (bPick)
+	{
+		m_dwState = XDRAW_STATE_PICKED;
+	}
+	else
+	{
+		m_dwState = XDRAW_STATE_NORMAL;
+	}
+}
+

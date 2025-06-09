@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QDistanceItemParaEditWidget</class>
+ <widget class="QWidget" name="QDistanceItemParaEditWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>758</width>
+    <height>457</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QGridLayout" name="m_gridLayout">
+     <item row="2" column="0">
+      <widget class="QLabel" name="m_labZAng">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="m_labRate">
+       <property name="text">
+        <string>倍数</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="2">
+      <widget class="QComboBox" name="m_cmbK0Mode"/>
+     </item>
+     <item row="3" column="2">
+      <widget class="QLineEdit" name="m_txtRate"/>
+     </item>
+     <item row="4" column="3">
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="3" column="6">
+      <widget class="QComboBox" name="m_cmb_ErrorNature"/>
+     </item>
+     <item row="0" column="4">
+      <widget class="QLabel" name="m_lab_RSC">
+       <property name="text">
+        <string>阻抗方式</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="6">
+      <widget class="QComboBox" name="m_cmb_RSC"/>
+     </item>
+     <item row="1" column="4">
+      <widget class="QLabel" name="m_labFaultCurrent">
+       <property name="text">
+        <string>短路电流(A)</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QLineEdit" name="m_txtZSetting"/>
+     </item>
+     <item row="2" column="4">
+      <widget class="QLabel" name="m_lab_ErrorDirc">
+       <property name="text">
+        <string>故障方向</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="6">
+      <widget class="QComboBox" name="m_cmb_ErrorDirc"/>
+     </item>
+     <item row="0" column="2">
+      <widget class="QComboBox" name="m_cmb_ErrorType"/>
+     </item>
+     <item row="3" column="4">
+      <widget class="QLabel" name="m_lab_ErrorNature">
+       <property name="text">
+        <string>故障性质</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="m_labZSetting">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="m_labK0Mode">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>零序补偿系数</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="QLineEdit" name="m_txtZAng"/>
+     </item>
+     <item row="1" column="6">
+      <widget class="QLineEdit" name="m_txtFaultCurrent"/>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="m_labErrType">
+       <property name="text">
+        <string>故障类型</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="4">
+      <widget class="QLabel" name="m_lablne_TSetting">
+       <property name="text">
+        <string>时间定值</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="6">
+      <widget class="QLineEdit" name="m_txtTSetting"/>
+     </item>
+     <item row="5" column="4">
+      <widget class="QLabel" name="m_labAbsErr">
+       <property name="text">
+        <string>绝对误差(s)</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="6">
+      <widget class="QLineEdit" name="m_txtAbsErr"/>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="m_labKlKr">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="2">
+      <widget class="QLineEdit" name="m_txtKlKr"/>
+     </item>
+     <item row="6" column="4">
+      <widget class="QLabel" name="m_labRelErr">
+       <property name="text">
+        <string>相对误差(%)</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="6">
+      <widget class="QLineEdit" name="m_txtRelErr"/>
+     </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="m_labAngKx">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="2">
+      <widget class="QLineEdit" name="m_txtAngKx"/>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

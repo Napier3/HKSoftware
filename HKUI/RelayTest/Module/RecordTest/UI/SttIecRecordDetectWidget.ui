@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QSttIecRecordDetectWidget</class>
+ <widget class="QDialog" name="QSttIecRecordDetectWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1415</width>
+    <height>366</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string/>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <layout class="QGridLayout" name="gridLayoutNameID"/>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="m_layButtons">
+       <property name="spacing">
+        <number>6</number>
+       </property>
+       <property name="sizeConstraint">
+        <enum>QLayout::SetDefaultConstraint</enum>
+       </property>
+       <item>
+        <widget class="QPushButton" name="m_btnImportIecfg">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>18</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>导入配置</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="m_btnDetect">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>18</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>开始探测</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="m_btnDetectStop">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>18</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string> 停止探测</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="m_btnClear">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>18</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>清空列表</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="m_btnBeginRecord">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>18</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>进入监视</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSttCheckBox" name="m_chkUseSmv">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>18</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>9-2</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSttCheckBox" name="m_chkUseGoose">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>18</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>GOOSE</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSttCheckBox" name="m_chkUseFT3">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>18</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>FT3</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QSttCheckBox" name="m_chkSmvFirstIsTime">
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>18</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>SMV第1通道为延时</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QSttCheckBox</class>
+   <extends>QCheckBox</extends>
+   <header>../../UI/Controls/SttCheckBox.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

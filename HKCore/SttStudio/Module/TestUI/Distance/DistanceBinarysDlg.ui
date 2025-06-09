@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QDistanceBinarysDlg</class>
+ <widget class="QDialog" name="QDistanceBinarysDlg">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>629</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>开入、开出量设置</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>开入操作</string>
+     </property>
+     <layout class="QFormLayout" name="formLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="m_labSel">
+        <property name="text">
+         <string>开入选择</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="m_cmbSel"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="m_labA">
+        <property name="text">
+         <string>开入A</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="m_cmbA"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="m_labB">
+        <property name="text">
+         <string>开入B</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QComboBox" name="m_cmbB"/>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="m_labC">
+        <property name="text">
+         <string>开入C</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QComboBox" name="m_cmbC"/>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="m_labD">
+        <property name="text">
+         <string>开入D</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QComboBox" name="m_cmbD"/>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="m_labE">
+        <property name="text">
+         <string>开入E</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QComboBox" name="m_cmbE"/>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="m_labF">
+        <property name="text">
+         <string>开入F</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="QComboBox" name="m_cmbF"/>
+      </item>
+      <item row="7" column="0">
+       <widget class="QLabel" name="m_labG">
+        <property name="text">
+         <string>开入G</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QComboBox" name="m_cmbG"/>
+      </item>
+      <item row="8" column="0">
+       <widget class="QLabel" name="m_labH">
+        <property name="minimumSize">
+         <size>
+          <width>200</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>开入H</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="1">
+       <widget class="QComboBox" name="m_cmbH"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>开出操作</string>
+     </property>
+     <layout class="QFormLayout" name="formLayout_2">
+      <item row="0" column="0">
+       <widget class="QLabel" name="m_lab_B01">
+        <property name="text">
+         <string>开出1</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="m_cmb_B01"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="m_lab_B02">
+        <property name="text">
+         <string>开出2</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="m_cmb_B02"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="m_lab_B03">
+        <property name="text">
+         <string>开出3</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QComboBox" name="m_cmb_B03"/>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="m_lab_B04">
+        <property name="text">
+         <string>开出4</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QComboBox" name="m_cmb_B04"/>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="m_lab_B05">
+        <property name="text">
+         <string>开出5</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QComboBox" name="m_cmb_B05"/>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="m_lab_B06">
+        <property name="text">
+         <string>开出6</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QComboBox" name="m_cmb_B06"/>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="m_lab_B07">
+        <property name="text">
+         <string>开出7</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="QComboBox" name="m_cmb_B07"/>
+      </item>
+      <item row="7" column="0">
+       <widget class="QLabel" name="m_lab_B08">
+        <property name="text">
+         <string>开出8</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QComboBox" name="m_cmb_B08"/>
+      </item>
+      <item row="8" column="0">
+       <widget class="QLabel" name="m_lab_SwitchMode">
+        <property name="minimumSize">
+         <size>
+          <width>200</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>开出翻转启动方式</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="1">
+       <widget class="QComboBox" name="m_cmb_SwitchMode"/>
+      </item>
+      <item row="9" column="0">
+       <widget class="QLabel" name="m_labDelayTime">
+        <property name="text">
+         <string>开出保持时间(s)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="1">
+       <widget class="QLineEdit" name="m_txtDelayTime"/>
+      </item>
+      <item row="10" column="0">
+       <widget class="QLabel" name="m_labKeepTime">
+        <property name="text">
+         <string>开出翻转时刻(s)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="1">
+       <widget class="QLineEdit" name="m_txtKeepTime"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="m_btnOK">
+       <property name="text">
+        <string>确认</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="m_btnCancel">
+       <property name="text">
+        <string>取消</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

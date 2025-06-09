@@ -1,0 +1,272 @@
+	class Table : public COleDispatchDriver
+	{
+	public:
+		Table() {}		// Calls COleDispatchDriver default constructor
+		Table(LPDISPATCH pDispatch) : COleDispatchDriver(pDispatch) {}
+		Table(const Table& dispatchSrc) : COleDispatchDriver(dispatchSrc) {}
+
+	// Attributes
+	public:
+
+	// Operations
+	public:
+		LPDISPATCH GetParent();
+		LPDISPATCH GetColumns();
+		LPDISPATCH GetRows();
+		LPDISPATCH Cell(long Row, long Column);
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	// Row wrapper class
+
+	class Row : public COleDispatchDriver
+	{
+	public:
+		Row() {}		// Calls COleDispatchDriver default constructor
+		Row(LPDISPATCH pDispatch) : COleDispatchDriver(pDispatch) {}
+		Row(const Row& dispatchSrc) : COleDispatchDriver(dispatchSrc) {}
+
+	// Attributes
+	public:
+
+	// Operations
+	public:
+		LPDISPATCH GetParent();
+		long GetAlignment();
+		void SetAlignment(long nNewValue);
+		long GetHeadingFormat();
+		void SetHeadingFormat(long nNewValue);
+		float GetSpaceBetweenColumns();
+		void SetSpaceBetweenColumns(float newValue);
+		float GetHeight();
+		void SetHeight(float newValue);
+		float GetLeftIndent();
+		void SetLeftIndent(float newValue);
+		BOOL GetIsLast();
+		BOOL GetIsFirst();
+		long GetIndex();
+		LPDISPATCH GetCells();
+		LPDISPATCH GetNext();
+		LPDISPATCH GetPrevious();
+		void Select();
+		void Delete();
+		CString GetId();
+		void SetId(LPCTSTR lpszNewValue);
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	// Column wrapper class
+
+	class Column : public COleDispatchDriver
+	{
+	public:
+		Column() {}		// Calls COleDispatchDriver default constructor
+		Column(LPDISPATCH pDispatch) : COleDispatchDriver(pDispatch) {}
+		Column(const Column& dispatchSrc) : COleDispatchDriver(dispatchSrc) {}
+
+	// Attributes
+	public:
+
+	// Operations
+	public:
+		float GetWidth();
+		void SetWidth(float newValue);
+		BOOL GetIsFirst();
+		BOOL GetIsLast();
+		long GetIndex();
+		LPDISPATCH GetCells();
+		LPDISPATCH GetNext();
+		LPDISPATCH GetPrevious();
+		void Select();
+		void Delete();
+		void SetWidth(float ColumnWidth, long RulerStyle);
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	// Cell wrapper class
+
+	class Cell : public COleDispatchDriver
+	{
+	public:
+		Cell() {}		// Calls COleDispatchDriver default constructor
+		Cell(LPDISPATCH pDispatch) : COleDispatchDriver(pDispatch) {}
+		Cell(const Cell& dispatchSrc) : COleDispatchDriver(dispatchSrc) {}
+
+	// Attributes
+	public:
+
+	// Operations
+	public:
+		LPDISPATCH GetParent();
+		long GetRowIndex();
+		long GetColumnIndex();
+		float GetWidth();
+		void SetWidth(float newValue);
+		float GetHeight();
+		void SetHeight(float newValue);
+		long GetVerticalAlignment();
+		void SetVerticalAlignment(long nNewValue);
+		LPDISPATCH GetColumn();
+		LPDISPATCH GetRow();
+		LPDISPATCH GetNext();
+		LPDISPATCH GetPrevious();
+		void Select();
+		void Delete(VARIANT* ShiftCells);
+		void Formula(VARIANT* Formula, VARIANT* NumFormat);
+		void SetWidth(float ColumnWidth, long RulerStyle);
+		void SetHeight(VARIANT* RowHeight, long HeightRule);
+		void Merge(LPDISPATCH MergeTo);
+		void AutoSum();
+		void SetWordWrap(BOOL bNewValue);
+		float GetPreferredWidth();
+		void SetPreferredWidth(float newValue);
+		BOOL GetFitText();
+		void SetFitText(BOOL bNewValue);
+		float GetTopPadding();
+		void SetTopPadding(float newValue);
+		float GetBottomPadding();
+		void SetBottomPadding(float newValue);
+		float GetLeftPadding();
+		void SetLeftPadding(float newValue);
+		float GetRightPadding();
+		void SetRightPadding(float newValue);
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	// Tables wrapper class
+	class Rows : public COleDispatchDriver
+	{
+	public:
+		Rows() {}		// Calls COleDispatchDriver default constructor
+		Rows(LPDISPATCH pDispatch) : COleDispatchDriver(pDispatch) {}
+		Rows(const Rows& dispatchSrc) : COleDispatchDriver(dispatchSrc) {}
+
+	// Attributes
+	public:
+
+	// Operations
+	public:
+		long GetCount();
+		float GetHeight();
+		void SetHeight(float newValue);
+		long GetHeightRule();
+		void SetHeightRule(long nNewValue);
+		float GetLeftIndent();
+		void SetLeftIndent(float newValue);
+		LPDISPATCH GetFirst();
+		LPDISPATCH GetLast();
+		LPDISPATCH GetParent();
+		LPDISPATCH Item(long Index);
+		LPDISPATCH Add(VARIANT* BeforeRow);
+		void Select();
+		void Delete();
+		void SetLeftIndent(float LeftIndent, long RulerStyle);
+		void SetHeight(float RowHeight, long HeightRule);
+		void DistributeHeight();
+		float GetDistanceTop();
+		void SetDistanceTop(float newValue);
+		float GetDistanceBottom();
+		void SetDistanceBottom(float newValue);
+		float GetDistanceLeft();
+		void SetDistanceLeft(float newValue);
+		float GetDistanceRight();
+		void SetDistanceRight(float newValue);
+		float GetHorizontalPosition();
+		void SetHorizontalPosition(float newValue);
+		float GetVerticalPosition();
+		void SetVerticalPosition(float newValue);
+		long GetRelativeHorizontalPosition();
+		void SetRelativeHorizontalPosition(long nNewValue);
+		long GetRelativeVerticalPosition();
+		void SetRelativeVerticalPosition(long nNewValue);
+		long GetAllowOverlap();
+		void SetAllowOverlap(long nNewValue);
+		long GetNestingLevel();
+		long GetTableDirection();
+		void SetTableDirection(long nNewValue);
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	// Columns wrapper class
+
+	class Columns : public COleDispatchDriver
+	{
+	public:
+		Columns() {}		// Calls COleDispatchDriver default constructor
+		Columns(LPDISPATCH pDispatch) : COleDispatchDriver(pDispatch) {}
+		Columns(const Columns& dispatchSrc) : COleDispatchDriver(dispatchSrc) {}
+
+	// Attributes
+	public:
+
+	// Operations
+	public:
+		LPUNKNOWN Get_NewEnum();
+		long GetCount();
+		LPDISPATCH GetApplication();
+		long GetCreator();
+		LPDISPATCH GetParent();
+		LPDISPATCH GetFirst();
+		LPDISPATCH GetLast();
+		float GetWidth();
+		void SetWidth(float newValue);
+		LPDISPATCH GetBorders();
+		void SetBorders(LPDISPATCH newValue);
+		LPDISPATCH GetShading();
+		LPDISPATCH Item(long Index);
+		LPDISPATCH Add(VARIANT* BeforeColumn);
+		void Select();
+		void Delete();
+		void SetWidth(float ColumnWidth, long RulerStyle);
+		void AutoFit();
+		void DistributeWidth();
+		long GetNestingLevel();
+		float GetPreferredWidth();
+		void SetPreferredWidth(float newValue);
+		long GetPreferredWidthType();
+		void SetPreferredWidthType(long nNewValue);
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	// Cells wrapper class
+
+	class Cells : public COleDispatchDriver
+	{
+	public:
+		Cells() {}		// Calls COleDispatchDriver default constructor
+		Cells(LPDISPATCH pDispatch) : COleDispatchDriver(pDispatch) {}
+		Cells(const Cells& dispatchSrc) : COleDispatchDriver(dispatchSrc) {}
+
+	// Attributes
+	public:
+
+	// Operations
+	public:
+		LPUNKNOWN Get_NewEnum();
+		long GetCount();
+		LPDISPATCH GetApplication();
+		long GetCreator();
+		LPDISPATCH GetParent();
+		float GetWidth();
+		void SetWidth(float newValue);
+		float GetHeight();
+		void SetHeight(float newValue);
+		long GetHeightRule();
+		void SetHeightRule(long nNewValue);
+		long GetVerticalAlignment();
+		void SetVerticalAlignment(long nNewValue);
+		LPDISPATCH GetBorders();
+		void SetBorders(LPDISPATCH newValue);
+		LPDISPATCH GetShading();
+		LPDISPATCH Item(long Index);
+		LPDISPATCH Add(VARIANT* BeforeCell);
+		void Delete(VARIANT* ShiftCells);
+		void SetWidth(float ColumnWidth, long RulerStyle);
+		void SetHeight(VARIANT* RowHeight, long HeightRule);
+		void Merge();
+		void Split(VARIANT* NumRows, VARIANT* NumColumns, VARIANT* MergeBeforeSplit);
+		void DistributeHeight();
+		void DistributeWidth();
+		void AutoFit();
+		long GetNestingLevel();
+		float GetPreferredWidth();
+		void SetPreferredWidth(float newValue);
+		long GetPreferredWidthType();
+		void SetPreferredWidthType(long nNewValue);
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	// AutoCorrect wrapper class

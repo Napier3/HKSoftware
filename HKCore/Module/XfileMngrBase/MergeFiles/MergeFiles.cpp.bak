@@ -1,0 +1,328 @@
+#include "stdafx.h"
+
+#include "MergeFiles.h"
+#include "..\API\FileApi.h"
+////////////////////////////////////////////////////////////////////////////
+// CXMergeFiles implementation
+
+CMergeFiles::CMergeFiles()
+{
+	m_pFoundInfo = NULL;
+	m_pNextInfo = NULL;
+	m_hContext = NULL;
+	m_chDirSeparator = '\\';
+}
+
+CMergeFiles::~CMergeFiles()
+{
+	Close();
+}
+
+void CMergeFiles::Close()
+{
+	if (m_pFoundInfo != NULL)
+	{
+		delete m_pFoundInfo;
+		m_pFoundInfo = NULL;
+	}
+
+	if (m_pNextInfo != NULL)
+	{
+		delete m_pNextInfo;
+		m_pNextInfo = NULL;
+	}
+
+	if (m_hContext != NULL)
+	{
+		if (m_hContext != INVALID_HANDLE_VALUE)
+			CloseContext();
+		m_hContext = NULL;
+	}
+}
+
+void CMergeFiles::CloseContext()
+{
+	::FindClose(m_hContext);
+	return;
+}
+
+BOOL CMergeFiles::FindFile(const CString &strName /* = NULL */,
+	DWORD dwUnused /* = 0 */)
+{
+	UNUSED_ALWAYS(dwUnused);
+	Close();
+
+	if (strName.GetLength() >= X_MAX_PATH)//(_countof(((WIN32_FIND_DATAW*) m_pNextInfo)->cFileName)))
+	{
+		::SetLastError(ERROR_BAD_ARGUMENTS);
+		return FALSE;		
+	}
+	
+	m_pNextInfo = new WIN32_FIND_DATAW;
+
+	WIN32_FIND_DATAW *pFindData = (WIN32_FIND_DATAW *)m_pNextInfo;
+	pFindData->cFileName[0] = 0;
+
+#ifdef UNICODE
+	m_hContext = ::FindFirstFileW(strName, (WIN32_FIND_DATAW*) m_pNextInfo);
+#else
+	BSTR bstrName = strName.AllocSysString();
+	m_hContext = ::FindFirstFileW(bstrName, (WIN32_FIND_DATAW*) m_pNextInfo);
+	::SysFreeString(bstrName);
+#endif
+
+	if (m_hContext == INVALID_HANDLE_VALUE)
+	{
+		DWORD dwTemp = ::GetLastError();
+		Close();
+		::SetLastError(dwTemp);
+		return FALSE;
+	}
+
+	m_strRoot = GetPathFromFilePathName(strName);
+
+	return TRUE;
+}
+
+BOOL CMergeFiles::MatchesMask(DWORD dwMask) const
+{
+	ASSERT(m_hContext != NULL);
+
+	if (m_pFoundInfo != NULL)
+		return (!!(((LPWIN32_FIND_DATAW) m_pFoundInfo)->dwFileAttributes & dwMask));
+	else
+		return FALSE;
+}
+
+BOOL CMergeFiles::GetLastAccessTime(FILETIME* pTimeStamp) const
+{
+	ASSERT(m_hContext != NULL);
+	ASSERT(pTimeStamp != NULL);
+	
+
+	if (m_pFoundInfo != NULL && pTimeStamp != NULL)
+	{
+		*pTimeStamp = ((LPWIN32_FIND_DATAW) m_pFoundInfo)->ftLastAccessTime;
+		return TRUE;
+	}
+	else
+		return FALSE;
+}
+
+BOOL CMergeFiles::GetLastWriteTime(FILETIME* pTimeStamp) const
+{
+	ASSERT(m_hContext != NULL);
+	ASSERT(pTimeStamp != NULL);
+	
+
+	if (m_pFoundInfo != NULL && pTimeStamp != NULL)
+	{
+		*pTimeStamp = ((LPWIN32_FIND_DATAW) m_pFoundInfo)->ftLastWriteTime;
+		return TRUE;
+	}
+	else
+		return FALSE;
+}
+
+BOOL CMergeFiles::GetCreationTime(FILETIME* pTimeStamp) const
+{
+	ASSERT(m_hContext != NULL);
+	
+
+	if (m_pFoundInfo != NULL && pTimeStamp != NULL)
+	{
+		*pTimeStamp = ((LPWIN32_FIND_DATAW) m_pFoundInfo)->ftCreationTime;
+		return TRUE;
+	}
+	else
+		return FALSE;
+}
+
+BOOL CMergeFiles::GetLastAccessTime(CTime& refTime) const
+{
+	ASSERT(m_hContext != NULL);
+	
+
+	if (m_pFoundInfo != NULL)
+	{
+		if (CTime::IsValidFILETIME(((LPWIN32_FIND_DATAW) m_pFoundInfo)->ftLastAccessTime))
+		{
+			refTime = CTime(((LPWIN32_FIND_DATAW) m_pFoundInfo)->ftLastAccessTime);
+		}
+		else
+		{
+			refTime = CTime();
+		}
+		return TRUE;
+	}
+	else
+		return FALSE;
+}
+
+BOOL CMergeFiles::GetLastWriteTime(CTime& refTime) const
+{
+	ASSERT(m_hContext != NULL);
+	
+
+	if (m_pFoundInfo != NULL)
+	{
+		if (CTime::IsValidFILETIME(((LPWIN32_FIND_DATAW) m_pFoundInfo)->ftLastWriteTime))
+		{
+			refTime = CTime(((LPWIN32_FIND_DATAW) m_pFoundInfo)->ftLastWriteTime);
+		}
+		else
+		{
+			refTime = CTime();
+		}
+		return TRUE;
+	}
+	else
+		return FALSE;
+}
+
+BOOL CMergeFiles::GetCreationTime(CTime& refTime) const
+{
+	ASSERT(m_hContext != NULL);
+	
+
+	if (m_pFoundInfo != NULL)
+	{
+		if (CTime::IsValidFILETIME(((LPWIN32_FIND_DATAW) m_pFoundInfo)->ftCreationTime))
+		{
+			refTime = CTime(((LPWIN32_FIND_DATAW) m_pFoundInfo)->ftCreationTime);
+		}
+		else
+		{
+			refTime = CTime();
+		}
+		return TRUE;
+	}
+	else
+		return FALSE;
+}
+
+BOOL CMergeFiles::IsDots() const
+{
+	ASSERT(m_hContext != NULL);
+	
+
+	// return TRUE if the file name is "." or ".." and
+	// the file is a directory
+
+	BOOL bResult = FALSE;
+	if (m_pFoundInfo != NULL && IsDirectory())
+	{
+		LPWIN32_FIND_DATAW pFindData = (LPWIN32_FIND_DATAW) m_pFoundInfo;
+		if (pFindData->cFileName[0] == '.')
+		{
+			if (pFindData->cFileName[1] == '\0' ||
+				(pFindData->cFileName[1] == '.' &&
+				 pFindData->cFileName[2] == '\0'))
+			{
+				bResult = TRUE;
+			}
+		}
+	}
+
+	return bResult;
+}
+
+BOOL CMergeFiles::FindNextFile()
+{
+	ASSERT(m_hContext != NULL);
+
+	if (m_hContext == NULL)
+		return FALSE;
+	if (m_pFoundInfo == NULL)
+		m_pFoundInfo = new WIN32_FIND_DATAW;
+
+	
+
+	void* pTemp = m_pFoundInfo;
+	m_pFoundInfo = m_pNextInfo;
+	m_pNextInfo = pTemp;
+
+	return ::FindNextFileW(m_hContext, (LPWIN32_FIND_DATAW) m_pNextInfo);
+}
+
+CString CMergeFiles::GetFileURL() const
+{
+	ASSERT(m_hContext != NULL);
+	
+
+	CString strResult("file://");
+	strResult += GetFilePath();
+	return strResult;
+}
+
+CString CMergeFiles::GetRoot() const
+{
+	ASSERT(m_hContext != NULL);
+	
+
+	return m_strRoot;
+}
+
+CString CMergeFiles::GetFilePath() const
+{
+	ASSERT(m_hContext != NULL);
+	
+
+	CString strResult = m_strRoot;
+	LPCTSTR pszResult;
+	LPCTSTR pchLast;
+	pszResult = strResult;
+	pchLast = _tcsdec( pszResult, pszResult+strResult.GetLength() );
+    ENSURE(pchLast!=NULL);
+	if ((*pchLast != _T('\\')) && (*pchLast != _T('/')))
+		strResult += m_chDirSeparator;
+	strResult += GetFileName();
+	return strResult;
+}
+
+CString CMergeFiles::GetFileTitle() const
+{
+	ASSERT(m_hContext != NULL);
+	
+
+	CString strFullName = GetFileName();
+	CString strResult;
+
+	Checked::tsplitpath_s(strFullName, NULL, 0, NULL, 0, 
+		strResult.GetBuffer(X_MAX_FNAME), X_MAX_FNAME, NULL, 0);
+
+	strResult.ReleaseBuffer();
+	return strResult;
+}
+
+CString CMergeFiles::GetFileName() const
+{
+	ASSERT(m_hContext != NULL);
+	
+
+	CString ret;
+
+	if (m_pFoundInfo != NULL)
+		ret = ((LPWIN32_FIND_DATAW) m_pFoundInfo)->cFileName;
+	return ret;
+}
+
+ULONGLONG CMergeFiles::GetLength() const
+{
+	ASSERT(m_hContext != NULL);
+	
+
+   ULARGE_INTEGER nFileSize;
+
+	if (m_pFoundInfo != NULL)
+   {
+	  nFileSize.LowPart = ((LPWIN32_FIND_DATAW) m_pFoundInfo)->nFileSizeLow;
+	  nFileSize.HighPart = ((LPWIN32_FIND_DATAW) m_pFoundInfo)->nFileSizeHigh;
+   }
+   else
+   {
+	  nFileSize.QuadPart = 0;
+   }
+
+   return nFileSize.QuadPart;
+}

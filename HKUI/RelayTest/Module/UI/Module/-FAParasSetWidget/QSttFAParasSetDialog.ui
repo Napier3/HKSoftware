@@ -1,0 +1,826 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QSttFAParasSetDialog</class>
+ <widget class="QWidget" name="QSttFAParasSetDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1199</width>
+    <height>589</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_4">
+   <item row="0" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,2,1">
+     <item>
+      <layout class="QGridLayout" name="gridLayout_9">
+       <item row="1" column="0">
+        <widget class="QGroupBox" name="groupBox_2">
+         <property name="title">
+          <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="0">
+           <widget class="QLabel" name="m_labRatedCur">
+            <property name="font">
+             <font>
+              <family>Agency FB</family>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>额定电流</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="m_editRatedCur">
+            <property name="maximumSize">
+             <size>
+              <width>85</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Agency FB</family>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="m_labFaultCur">
+            <property name="font">
+             <font>
+              <family>Agency FB</family>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>故障(相间短路)电流</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="m_editFaultCur">
+            <property name="maximumSize">
+             <size>
+              <width>85</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Agency FB</family>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="m_labFailureCur">
+            <property name="font">
+             <font>
+              <family>Agency FB</family>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>故障持续时间</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="m_editFailureCur">
+            <property name="maximumSize">
+             <size>
+              <width>85</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Agency FB</family>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+         <zorder>m_labFailureCur</zorder>
+         <zorder>m_editFailureCur</zorder>
+         <zorder>m_labFaultCur</zorder>
+         <zorder>m_labRatedCur</zorder>
+         <zorder>m_editRatedCur</zorder>
+         <zorder>m_editFaultCur</zorder>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QGroupBox" name="m_gp">
+         <property name="title">
+          <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="m_labRatedVol">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <family>Agency FB</family>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>额定电压</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>67</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLineEdit" name="m_editRatedVol">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>85</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Agency FB</family>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="m_labResidualVol">
+            <property name="font">
+             <font>
+              <family>Agency FB</family>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>残压</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>67</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLineEdit" name="m_editResidualVol">
+            <property name="maximumSize">
+             <size>
+              <width>85</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Agency FB</family>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+         <zorder>m_labRatedVol</zorder>
+         <zorder>m_editRatedVol</zorder>
+         <zorder>m_editResidualVol</zorder>
+         <zorder>m_labResidualVol</zorder>
+         <zorder>horizontalSpacer</zorder>
+         <zorder>horizontalSpacer_2</zorder>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QGroupBox" name="groupBox_3">
+         <property name="title">
+          <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="1">
+           <spacer name="horizontalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="m_labErrorTime">
+            <property name="font">
+             <font>
+              <family>Agency FB</family>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>误差评估时间   </string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLineEdit" name="m_editErrorTime">
+            <property name="maximumSize">
+             <size>
+              <width>85</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Agency FB</family>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+         <zorder>m_editErrorTime</zorder>
+         <zorder>m_labErrorTime</zorder>
+         <zorder>horizontalSpacer_3</zorder>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox_4">
+       <property name="title">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <widget class="QLabel" name="m_labxTime">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>80</y>
+          <width>224</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Agency FB</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>X时间:来电延时合闸时间      </string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="m_editxTime">
+        <property name="geometry">
+         <rect>
+          <x>380</x>
+          <y>73</y>
+          <width>85</width>
+          <height>30</height>
+         </rect>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>85</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Agency FB</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+       <widget class="QLabel" name="m_labyTime">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>180</y>
+          <width>238</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Agency FB</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Y时间:合闸后无故障确认时间</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="m_edityTime">
+        <property name="geometry">
+         <rect>
+          <x>380</x>
+          <y>172</y>
+          <width>85</width>
+          <height>30</height>
+         </rect>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>85</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Agency FB</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+       <widget class="QLabel" name="m_labzTime">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>270</y>
+          <width>160</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Agency FB</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Z时间:失压跳闸时间</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="m_editzTime">
+        <property name="geometry">
+         <rect>
+          <x>380</x>
+          <y>271</y>
+          <width>85</width>
+          <height>30</height>
+         </rect>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>85</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Agency FB</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+       <widget class="QLabel" name="m_labxlTime">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>370</y>
+          <width>319</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Agency FB</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>XL时间:联络模式单侧失压延时合闸时间</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="m_editxlTime">
+        <property name="geometry">
+         <rect>
+          <x>380</x>
+          <y>370</y>
+          <width>85</width>
+          <height>30</height>
+         </rect>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>85</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Agency FB</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+       <widget class="QLabel" name="m_labsTime">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>470</y>
+          <width>334</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Agency FB</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>S时间:自适应型无故障得电延时合闸时间</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="m_editsTime">
+        <property name="geometry">
+         <rect>
+          <x>380</x>
+          <y>469</y>
+          <width>85</width>
+          <height>30</height>
+         </rect>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>85</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Agency FB</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+       <zorder>m_labxTime</zorder>
+       <zorder>m_editxTime</zorder>
+       <zorder>m_labyTime</zorder>
+       <zorder>m_edityTime</zorder>
+       <zorder>m_labzTime</zorder>
+       <zorder>m_editzTime</zorder>
+       <zorder>m_labxlTime</zorder>
+       <zorder>m_editxlTime</zorder>
+       <zorder>m_editsTime</zorder>
+       <zorder>m_labsTime</zorder>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QGroupBox" name="groupBox_5">
+         <property name="title">
+          <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_5">
+          <item row="0" column="0">
+           <widget class="QLabel" name="m_labTermPowerVol">
+            <property name="font">
+             <font>
+              <family>Agency FB</family>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>终端电源侧电压</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="m_cmbTermPowerVol">
+            <property name="maximumSize">
+             <size>
+              <width>85</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Agency FB</family>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="m_labTermLoadVol">
+            <property name="font">
+             <font>
+              <family>Agency FB</family>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>终端负荷侧电压</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="m_cmbTermLoadVol">
+            <property name="maximumSize">
+             <size>
+              <width>85</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Agency FB</family>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_6">
+         <property name="title">
+          <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_6">
+          <item row="0" column="0">
+           <widget class="QLabel" name="m_labTermCloseOutput">
+            <property name="font">
+             <font>
+              <family>Agency FB</family>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>终端合闸输出 </string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="m_cmbTermCloseOutput">
+            <property name="maximumSize">
+             <size>
+              <width>85</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Agency FB</family>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="m_labTermOpenOutput">
+            <property name="font">
+             <font>
+              <family>Agency FB</family>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>终端分闸输出</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="m_cmbTermOpenOutput">
+            <property name="maximumSize">
+             <size>
+              <width>85</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Agency FB</family>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+         <zorder>m_cmbTermCloseOutput</zorder>
+         <zorder>m_labTermOpenOutput</zorder>
+         <zorder>m_cmbTermOpenOutput</zorder>
+         <zorder>m_labTermCloseOutput</zorder>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_7">
+         <property name="title">
+          <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_7">
+          <item row="0" column="0">
+           <widget class="QLabel" name="m_labTermCloseSignal">
+            <property name="font">
+             <font>
+              <family>Agency FB</family>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>终端合位信号</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="m_cmbTermCloseSignal">
+            <property name="maximumSize">
+             <size>
+              <width>85</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Agency FB</family>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="m_labTermQuantileSignal">
+            <property name="font">
+             <font>
+              <family>Agency FB</family>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+            <property name="text">
+             <string>终端分位信号</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="m_cmbTermQuantileSignal">
+            <property name="maximumSize">
+             <size>
+              <width>85</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Agency FB</family>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

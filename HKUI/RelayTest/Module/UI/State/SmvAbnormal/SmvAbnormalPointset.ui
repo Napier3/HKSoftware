@@ -1,0 +1,645 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SmvAbnormalPointSet</class>
+ <widget class="QDialog" name="SmvAbnormalPointSet">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>571</width>
+    <height>464</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>异常点设置</string>
+  </property>
+  <widget class="QGroupBox" name="point_groupbox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>551</width>
+     <height>391</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>GroupBox</string>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QSttCheckBox" name="ck_point1">
+      <property name="text">
+       <string>点1</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QSttCheckBox" name="ck_point11">
+      <property name="text">
+       <string>点11</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QSttCheckBox" name="ck_point21">
+      <property name="text">
+       <string>点21</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="3">
+     <widget class="QSttCheckBox" name="ck_point31">
+      <property name="text">
+       <string>点31</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="4">
+     <widget class="QSttCheckBox" name="ck_point41">
+      <property name="text">
+       <string>点41</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="5">
+     <widget class="QSttCheckBox" name="ck_point51">
+      <property name="text">
+       <string>点51</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="6">
+     <widget class="QSttCheckBox" name="ck_point61">
+      <property name="text">
+       <string>点61</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="7">
+     <widget class="QSttCheckBox" name="ck_point71">
+      <property name="text">
+       <string>点71</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QSttCheckBox" name="ck_point2">
+      <property name="text">
+       <string>点2</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QSttCheckBox" name="ck_point12">
+      <property name="text">
+       <string>点12</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="2">
+     <widget class="QSttCheckBox" name="ck_point22">
+      <property name="text">
+       <string>点22</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="3">
+     <widget class="QSttCheckBox" name="ck_point32">
+      <property name="text">
+       <string>点32</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="4">
+     <widget class="QSttCheckBox" name="ck_point42">
+      <property name="text">
+       <string>点42</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="5">
+     <widget class="QSttCheckBox" name="ck_point52">
+      <property name="text">
+       <string>点52</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="6">
+     <widget class="QSttCheckBox" name="ck_point62">
+      <property name="text">
+       <string>点62</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="7">
+     <widget class="QSttCheckBox" name="ck_point72">
+      <property name="text">
+       <string>点72</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QSttCheckBox" name="ck_point3">
+      <property name="text">
+       <string>点3</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QSttCheckBox" name="ck_point13">
+      <property name="text">
+       <string>点13</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="2">
+     <widget class="QSttCheckBox" name="ck_point23">
+      <property name="text">
+       <string>点23</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="3">
+     <widget class="QSttCheckBox" name="ck_point33">
+      <property name="text">
+       <string>点33</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="4">
+     <widget class="QSttCheckBox" name="ck_point43">
+      <property name="text">
+       <string>点43</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="5">
+     <widget class="QSttCheckBox" name="ck_point53">
+      <property name="text">
+       <string>点53</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="6">
+     <widget class="QSttCheckBox" name="ck_point63">
+      <property name="text">
+       <string>点63</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="7">
+     <widget class="QSttCheckBox" name="ck_point73">
+      <property name="text">
+       <string>点73</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QSttCheckBox" name="ck_point4">
+      <property name="text">
+       <string>点4</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QSttCheckBox" name="ck_point14">
+      <property name="text">
+       <string>点14</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="2">
+     <widget class="QSttCheckBox" name="ck_point24">
+      <property name="text">
+       <string>点24</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="3">
+     <widget class="QSttCheckBox" name="ck_point34">
+      <property name="text">
+       <string>点34</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="4">
+     <widget class="QSttCheckBox" name="ck_point44">
+      <property name="text">
+       <string>点44</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="5">
+     <widget class="QSttCheckBox" name="ck_point54">
+      <property name="text">
+       <string>点54</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="6">
+     <widget class="QSttCheckBox" name="ck_point64">
+      <property name="text">
+       <string>点64</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="7">
+     <widget class="QSttCheckBox" name="ck_point74">
+      <property name="text">
+       <string>点74</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0">
+     <widget class="QSttCheckBox" name="ck_point5">
+      <property name="text">
+       <string>点5</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QSttCheckBox" name="ck_point15">
+      <property name="text">
+       <string>点15</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="2">
+     <widget class="QSttCheckBox" name="ck_point25">
+      <property name="text">
+       <string>点25</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="3">
+     <widget class="QSttCheckBox" name="ck_point35">
+      <property name="text">
+       <string>点35</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="4">
+     <widget class="QSttCheckBox" name="ck_point45">
+      <property name="text">
+       <string>点45</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="5">
+     <widget class="QSttCheckBox" name="ck_point55">
+      <property name="text">
+       <string>点55</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="6">
+     <widget class="QSttCheckBox" name="ck_point65">
+      <property name="text">
+       <string>点65</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="7">
+     <widget class="QSttCheckBox" name="ck_point75">
+      <property name="text">
+       <string>点75</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QSttCheckBox" name="ck_point6">
+      <property name="text">
+       <string>点6</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1">
+     <widget class="QSttCheckBox" name="ck_point16">
+      <property name="text">
+       <string>点16</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="2">
+     <widget class="QSttCheckBox" name="ck_point26">
+      <property name="text">
+       <string>点26</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="3">
+     <widget class="QSttCheckBox" name="ck_point36">
+      <property name="text">
+       <string>点36</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="4">
+     <widget class="QSttCheckBox" name="ck_point46">
+      <property name="text">
+       <string>点46</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="5">
+     <widget class="QSttCheckBox" name="ck_point56">
+      <property name="text">
+       <string>点56</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="6">
+     <widget class="QSttCheckBox" name="ck_point66">
+      <property name="text">
+       <string>点66</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="7">
+     <widget class="QSttCheckBox" name="ck_point76">
+      <property name="text">
+       <string>点76</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="0">
+     <widget class="QSttCheckBox" name="ck_point7">
+      <property name="text">
+       <string>点7</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="1">
+     <widget class="QSttCheckBox" name="ck_point17">
+      <property name="text">
+       <string>点17</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="2">
+     <widget class="QSttCheckBox" name="ck_point27">
+      <property name="text">
+       <string>点27</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="3">
+     <widget class="QSttCheckBox" name="ck_point37">
+      <property name="text">
+       <string>点37</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="4">
+     <widget class="QSttCheckBox" name="ck_point47">
+      <property name="text">
+       <string>点47</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="5">
+     <widget class="QSttCheckBox" name="ck_point57">
+      <property name="text">
+       <string>点57</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="6">
+     <widget class="QSttCheckBox" name="ck_point67">
+      <property name="text">
+       <string>点67</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="7">
+     <widget class="QSttCheckBox" name="ck_point77">
+      <property name="text">
+       <string>点77</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="0">
+     <widget class="QSttCheckBox" name="ck_point8">
+      <property name="text">
+       <string>点8</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="1">
+     <widget class="QSttCheckBox" name="ck_point18">
+      <property name="text">
+       <string>点18</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="2">
+     <widget class="QSttCheckBox" name="ck_point28">
+      <property name="text">
+       <string>点28</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="3">
+     <widget class="QSttCheckBox" name="ck_point38">
+      <property name="text">
+       <string>点38</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="4">
+     <widget class="QSttCheckBox" name="ck_point48">
+      <property name="text">
+       <string>点48</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="5">
+     <widget class="QSttCheckBox" name="ck_point58">
+      <property name="text">
+       <string>点58</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="6">
+     <widget class="QSttCheckBox" name="ck_point68">
+      <property name="text">
+       <string>点68</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="7">
+     <widget class="QSttCheckBox" name="ck_point78">
+      <property name="text">
+       <string>点78</string>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="0">
+     <widget class="QSttCheckBox" name="ck_point9">
+      <property name="text">
+       <string>点9</string>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="1">
+     <widget class="QSttCheckBox" name="ck_point19">
+      <property name="text">
+       <string>点19</string>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="2">
+     <widget class="QSttCheckBox" name="ck_point29">
+      <property name="text">
+       <string>点29</string>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="3">
+     <widget class="QSttCheckBox" name="ck_point39">
+      <property name="text">
+       <string>点39</string>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="4">
+     <widget class="QSttCheckBox" name="ck_point49">
+      <property name="text">
+       <string>点49</string>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="5">
+     <widget class="QSttCheckBox" name="ck_point59">
+      <property name="text">
+       <string>点59</string>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="6">
+     <widget class="QSttCheckBox" name="ck_point69">
+      <property name="text">
+       <string>点69</string>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="7">
+     <widget class="QSttCheckBox" name="ck_point79">
+      <property name="text">
+       <string>点79</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="0">
+     <widget class="QSttCheckBox" name="ck_point10">
+      <property name="text">
+       <string>点10</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="1">
+     <widget class="QSttCheckBox" name="ck_point20">
+      <property name="text">
+       <string>点20</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="2">
+     <widget class="QSttCheckBox" name="ck_point30">
+      <property name="text">
+       <string>点30</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="3">
+     <widget class="QSttCheckBox" name="ck_point40">
+      <property name="text">
+       <string>点40</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="4">
+     <widget class="QSttCheckBox" name="ck_point50">
+      <property name="text">
+       <string>点50</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="5">
+     <widget class="QSttCheckBox" name="ck_point60">
+      <property name="text">
+       <string>点60</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="6">
+     <widget class="QSttCheckBox" name="ck_point70">
+      <property name="text">
+       <string>点70</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="7">
+     <widget class="QSttCheckBox" name="ck_point80">
+      <property name="text">
+       <string>点80</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>410</y>
+     <width>533</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="spacing">
+     <number>53</number>
+    </property>
+    <item>
+     <widget class="QPushButton" name="pbn_AllSelsect">
+      <property name="text">
+       <string>全选</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pbn_SelectInvert">
+      <property name="text">
+       <string>反选</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pbn_Ok">
+      <property name="text">
+       <string>确定</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pbn_Cancle">
+      <property name="text">
+       <string>取消</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QSttCheckBox</class>
+   <extends>QCheckBox</extends>
+   <header>../../Controls/SttCheckBox.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

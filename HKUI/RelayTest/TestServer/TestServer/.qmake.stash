@@ -1,0 +1,23 @@
+QMAKE_CXX.INCDIRS = \
+    /usr/arm-linux-gnueabihf/include/c++/7 \
+    /usr/arm-linux-gnueabihf/include/c++/7/arm-linux-gnueabihf \
+    /usr/arm-linux-gnueabihf/include/c++/7/backward \
+    /usr/lib/gcc-cross/arm-linux-gnueabihf/7/include \
+    /usr/lib/gcc-cross/arm-linux-gnueabihf/7/include-fixed \
+    /usr/arm-linux-gnueabihf/include \
+    /usr/include
+QMAKE_CXX.LIBDIRS = \
+    /usr/lib/gcc-cross/arm-linux-gnueabihf/7 \
+    /usr/arm-linux-gnueabihf/lib \
+    /lib \
+    /usr/lib/arm-linux-gnueabihf \
+    /usr/lib
+QMAKE_CXX.QT_COMPILER_STDCXX = 201402L
+QMAKE_CXX.QMAKE_GCC_MAJOR_VERSION = 7
+QMAKE_CXX.QMAKE_GCC_MINOR_VERSION = 5
+QMAKE_CXX.QMAKE_GCC_PATCH_VERSION = 0
+QMAKE_CXX.COMPILER_MACROS = \
+    QT_COMPILER_STDCXX \
+    QMAKE_GCC_MAJOR_VERSION \
+    QMAKE_GCC_MINOR_VERSION \
+    QMAKE_GCC_PATCH_VERSION

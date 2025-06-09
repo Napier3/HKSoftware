@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HTTP_SERVER", "HTTP_SERVER\HTTP_SERVER.vcproj", "{505F5489-FE8D-4E9C-9CF2-0060D3D68E50}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HTTP_CLIENT", "HTTP_CLIENT\HTTP_CLIENT.vcproj", "{949C9855-E013-4338-944B-7C014C355481}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{505F5489-FE8D-4E9C-9CF2-0060D3D68E50}.Debug|Win32.ActiveCfg = Debug|Win32
+		{505F5489-FE8D-4E9C-9CF2-0060D3D68E50}.Debug|Win32.Build.0 = Debug|Win32
+		{505F5489-FE8D-4E9C-9CF2-0060D3D68E50}.Release|Win32.ActiveCfg = Release|Win32
+		{505F5489-FE8D-4E9C-9CF2-0060D3D68E50}.Release|Win32.Build.0 = Release|Win32
+		{949C9855-E013-4338-944B-7C014C355481}.Debug|Win32.ActiveCfg = Debug|Win32
+		{949C9855-E013-4338-944B-7C014C355481}.Debug|Win32.Build.0 = Debug|Win32
+		{949C9855-E013-4338-944B-7C014C355481}.Release|Win32.ActiveCfg = Release|Win32
+		{949C9855-E013-4338-944B-7C014C355481}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

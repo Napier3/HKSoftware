@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QCurrInverAddMultDlg</class>
+ <widget class="QDialog" name="QCurrInverAddMultDlg">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>502</width>
+    <height>496</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>添加系列</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_5">
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>故障态</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="m_labSelect">
+        <property name="text">
+         <string>变量选择:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="m_cmbSelect"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="m_labFaultVolt">
+        <property name="text">
+         <string>短路电压(V):</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QSettingLineEdit" name="m_lineFaultVolt"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="m_labFaultAngle">
+        <property name="text">
+         <string>相位(°):</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QSettingLineEdit" name="m_lineFaultAngle"/>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="m_labHz">
+        <property name="text">
+         <string>频率(Hz):</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QSettingLineEdit" name="m_lineHz"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>添加测试点</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <widget class="QLabel" name="m_labChangeStart">
+        <property name="text">
+         <string>变化始值(A):</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QSettingLineEdit" name="m_lineChangeStart"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="m_labChangeFinal">
+        <property name="text">
+         <string>变化终值(A):</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QSettingLineEdit" name="m_lineChangeFinal"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="m_labChangeStep">
+        <property name="text">
+         <string>变化步长(A):</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QSettingLineEdit" name="m_lineChangeStep"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="title">
+      <string>故障类型</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="chb_AN">
+        <property name="text">
+         <string>AN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QCheckBox" name="chb_BN">
+        <property name="text">
+         <string>BN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2" colspan="2">
+       <widget class="QCheckBox" name="chb_CN">
+        <property name="text">
+         <string>CN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QCheckBox" name="chb_AB">
+        <property name="text">
+         <string>AB</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QCheckBox" name="chb_BC">
+        <property name="text">
+         <string>BC</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QCheckBox" name="chb_CA">
+        <property name="text">
+         <string>CA</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3" colspan="2">
+       <widget class="QCheckBox" name="chb_ABC">
+        <property name="text">
+         <string>ABC</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QCheckBox" name="chb_IaIbIc">
+        <property name="text">
+         <string>Ia+Ib+Ic</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QCheckBox" name="chb_3I0">
+        <property name="text">
+         <string>3I0</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QCheckBox" name="chb_I2">
+        <property name="text">
+         <string>I2</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="3">
+       <widget class="QCheckBox" name="chb_A">
+        <property name="text">
+         <string>A</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="4">
+       <widget class="QCheckBox" name="chb_B">
+        <property name="text">
+         <string>B</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="5">
+       <widget class="QCheckBox" name="chb_C">
+        <property name="text">
+         <string>C</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="2">
+    <widget class="QGroupBox" name="groupBox_4">
+     <property name="title">
+      <string>结果评估</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_4">
+      <item row="0" column="2">
+       <widget class="QLabel" name="m_labRelErr">
+        <property name="text">
+         <string>相对误差(%):</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QSettingLineEdit" name="m_lineRelErr"/>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="m_labErrorLogic">
+        <property name="text">
+         <string>误差类型:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QSettingLineEdit" name="m_linePlus"/>
+      </item>
+      <item row="1" column="3">
+       <widget class="QSettingLineEdit" name="m_lineMinus"/>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="m_cmbErrorLogic"/>
+      </item>
+      <item row="1" column="2">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QLabel" name="m_labAbsErr_2">
+          <property name="text">
+           <string>绝对误差(s):</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="m_labMinus">
+          <property name="text">
+           <string>-</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="1" column="0">
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QLabel" name="m_labAbsErr">
+          <property name="text">
+           <string>绝对误差(s):</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="m_labPlus">
+          <property name="text">
+           <string>+</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="2">
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <spacer name="horizontalSpacer_10">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pbn_Ok">
+       <property name="text">
+        <string>确定</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_11">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pbn_Cancel">
+       <property name="text">
+        <string>取消</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_9">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QSettingLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>../../UI/Controls/SettingCtrls/qsettinglineedit.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
