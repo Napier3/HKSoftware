@@ -1,7 +1,7 @@
 #include "stdafx.h"
-#include "XLangResource_Native.h"
+#include "XLangResource_HKTest.h"
 
-const CString CXLangResource_Native::g_strXLangRs_Test = _T("Lang_NativeTest");
+const CString CXLangResource_Native::g_strXLangRs_Test = _T("Lang_HKTest");
 
 CXLangResource_Native::CXLangResource_Native()
 {

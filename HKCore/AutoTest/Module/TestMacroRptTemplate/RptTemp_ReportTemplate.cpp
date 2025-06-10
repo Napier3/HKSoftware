@@ -163,7 +163,7 @@ CExBaseObject* CRptTemp_ReportTemplate::CreateNewChild(const CString &strClassID
 	}
     else if (strClassID == pXmlKeys->m_strCRptTemp_NewPageKey)  //ftt 2024.12.9
     {
-        pNew = new CRptTemp_NewPage();
+        //pNew = new CRptTemp_NewPage();
     }
 
 	return pNew;
@@ -192,7 +192,7 @@ CExBaseObject* CRptTemp_ReportTemplate::CreateNewChild(long nClassID/*, BOOL &bA
 	}
     else if (nClassID == MNGRCLASSID_CRPTTEMP_NEWPAGE) //ftt 2024.12.9
     {
-        pNew = new CRptTemp_NewPage();
+        //pNew = new CRptTemp_NewPage();
     }
 
 	return pNew;

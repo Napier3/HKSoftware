@@ -299,8 +299,8 @@ void CXLangResource_Native::RegisterLanguageResource()
 	rs_AddString(g_sLangID_State_ConWindconnection, &g_sLangTxt_State_ConWindconnection);
 	rs_AddString(g_sLangID_State_Oclock, &g_sLangTxt_State_Oclock);
 	rs_AddString(g_sLangID_State_HbdiffAngularwind, &g_sLangTxt_State_HbdiffAngularwind);
- 	rs_AddString(g_sLangID_State_No, &g_sLangTxt_State_No);   //sun
- 	rs_AddString(g_sLangID_State_Yes, &g_sLangTxt_State_Yes); //sun
+// 	rs_AddString(g_sLangID_State_No, &g_sLangTxt_State_No);
+// 	rs_AddString(g_sLangID_State_Yes, &g_sLangTxt_State_Yes);
 	rs_AddString(g_sLangID_State_Correctionselection, &g_sLangTxt_State_Correctionselection);
 	rs_AddString(g_sLangID_State_Bequation, &g_sLangTxt_State_Bequation);
 	rs_AddString(g_sLangID_State_CTpolarity, &g_sLangTxt_State_CTpolarity);
@@ -1097,7 +1097,7 @@ void CXLangResource_Native::RegisterLanguageResource()
 	rs_AddString(g_sLangID_emptyIEC, &g_sLangTxt_emptyIEC);
 	rs_AddString(g_sLangID_addedblock, &g_sLangTxt_addedblock);
 	rs_AddString(g_sLangID_configurationfile, &g_sLangTxt_configurationfile);
- 	rs_AddString(g_sLangID_warning, &g_sLangTxt_warning); //sun
+// 	rs_AddString(g_sLangID_warning, &g_sLangTxt_warning);
 	rs_AddString(g_sLangID_NullIEC, &g_sLangTxt_NullIEC);
 	rs_AddString(g_sLangID_IECpath, &g_sLangTxt_IECpath);
 	rs_AddString(g_sLangID_IECdocument, &g_sLangTxt_IECdocument);
@@ -2807,18 +2807,18 @@ void CXLangResource_Native::RegisterLanguageResource()
 	rs_AddString(g_sLangID_Impedance_ChangeType, &g_sLangTxt_Impedance_ChangeType);
 	rs_AddString(g_sLangID_Impedance_Auto, &g_sLangTxt_Impedance_Auto);
 	rs_AddString(g_sLangID_Impedance_Mutation, &g_sLangTxt_Impedance_Mutation);
- 	rs_AddString(g_sLangID_ExpSucc, &g_sLangTxt_ExpSucc);											//sun				
- 	rs_AddString(g_sLangID_ExpFail, &g_sLangTxt_ExpFail);											//sun
- 	rs_AddString(g_sLangID_ImpSucc, &g_sLangTxt_ImpSucc);                                           //sun
- 	rs_AddString(g_sLangID_ImpFail, &g_sLangTxt_ImpFail);                                           //sun
- 	rs_AddString(g_sLangID_RemainingMemorySize, &g_sLangTxt_RemainingMemorySize);                   //sun
- 	rs_AddString(g_sLangID_InsufficientSystemMemory, &g_sLangTxt_InsufficientSystemMemory);         //sun
- 	rs_AddString(g_sLangID_ExistenceSCDFiles, &g_sLangTxt_ExistenceSCDFiles);	                    //sun
- 	rs_AddString(g_sLangID_NoExistenceSCLFiles, &g_sLangTxt_NoExistenceSCLFiles);                   //sun
- 	rs_AddString(g_sLangID_AnalysisSCLFiles, &g_sLangTxt_AnalysisSCLFiles);                         //sun
- 	rs_AddString(g_sLangID_LoadSCLFiles, &g_sLangTxt_LoadSCLFiles);	                                //sun
- 	rs_AddString(g_sLangID_LoadSCLFilesProgressBar, &g_sLangTxt_LoadSCLFilesProgressBar);           //sun
- 	rs_AddString(g_sLangID_SaveSCLFiles, &g_sLangTxt_SaveSCLFiles);                                 //sun
+// 	rs_AddString(g_sLangID_ExpSucc, &g_sLangTxt_ExpSucc);
+// 	rs_AddString(g_sLangID_ExpFail, &g_sLangTxt_ExpFail);
+// 	rs_AddString(g_sLangID_ImpSucc, &g_sLangTxt_ImpSucc);
+// 	rs_AddString(g_sLangID_ImpFail, &g_sLangTxt_ImpFail);
+// 	rs_AddString(g_sLangID_RemainingMemorySize, &g_sLangTxt_RemainingMemorySize);
+// 	rs_AddString(g_sLangID_InsufficientSystemMemory, &g_sLangTxt_InsufficientSystemMemory);
+// 	rs_AddString(g_sLangID_ExistenceSCDFiles, &g_sLangTxt_ExistenceSCDFiles);	
+// 	rs_AddString(g_sLangID_NoExistenceSCLFiles, &g_sLangTxt_NoExistenceSCLFiles);
+// 	rs_AddString(g_sLangID_AnalysisSCLFiles, &g_sLangTxt_AnalysisSCLFiles);
+// 	rs_AddString(g_sLangID_LoadSCLFiles, &g_sLangTxt_LoadSCLFiles);	
+// 	rs_AddString(g_sLangID_LoadSCLFilesProgressBar, &g_sLangTxt_LoadSCLFilesProgressBar);
+// 	rs_AddString(g_sLangID_SaveSCLFiles, &g_sLangTxt_SaveSCLFiles);
 
 	rs_AddString(g_sLangID_IEC_DescExternal, &g_sLangTxt_IEC_DescExternal);
 	rs_AddString(g_sLangID_Impedance_FunParas, &g_sLangTxt_Impedance_FunParas);
@@ -3437,10 +3437,10 @@ void CXLangResource_Native::InitLangTxt()
 	g_sLangTxt_State_LastState = _T("上一个状态");
 	g_sLangID_State_FirstState = _T("State_FirstState");
 	g_sLangTxt_State_FirstState = _T("第一个状态");
- 	g_sLangID_State_No = _T("State_No");   //sun 
- 	g_sLangTxt_State_No = _T("否");        //sun
- 	g_sLangID_State_Yes = _T("State_Yes"); //sun
- 	g_sLangTxt_State_Yes = _T("是");       //sun
+// 	g_sLangID_State_No = _T("State_No");
+// 	g_sLangTxt_State_No = _T("否");
+// 	g_sLangID_State_Yes = _T("State_Yes");
+// 	g_sLangTxt_State_Yes = _T("是");
 	g_sLangID_State_Difflowcalculation = _T("State_Difflowcalculation");
 	g_sLangTxt_State_Difflowcalculation = _T("差流计算");
 	g_sLangID_State_HarmCount = _T("State_HarmCount");
@@ -5140,8 +5140,8 @@ void CXLangResource_Native::InitLangTxt()
 	g_sLangTxt_addedblock = _T("当前控制块(%s)已添加.");
 	g_sLangID_configurationfile = _T("configurationfile");
 	g_sLangTxt_configurationfile = _T("打开配置文件(%s)失败.");
- 	g_sLangID_warning = _T("warning"); //sun
- 	g_sLangTxt_warning = _T("警告");    //sun
+// 	g_sLangID_warning = _T("warning");
+// 	g_sLangTxt_warning = _T("警告");
 	g_sLangID_NullIEC = _T("NullIEC");
 	g_sLangTxt_NullIEC = _T("当前IEC配置为空，请至少添加一个控制块！");
 	g_sLangID_IECpath = _T("IECpath");
@@ -8456,33 +8456,33 @@ void CXLangResource_Native::InitLangTxt()
 	g_sLangID_Impedance_Mutation = _T("Impedance_Mutation");
 	g_sLangTxt_Impedance_Mutation = _T("突变量启动");
 
- 	g_sLangID_ExpSucc = _T("ExpSucc");                                                //sun
- 	g_sLangTxt_ExpSucc = _T("导出成功");                                               //sun
- 	g_sLangID_ExpFail = _T("ExpFail");                                                //sun
- 	g_sLangTxt_ExpFail = _T("导出失败");                                               //sun
- 	g_sLangID_ImpSucc = _T("ImpSucc");                                                //sun
- 	g_sLangTxt_ImpSucc = _T("导入成功");                                               //sun
- 	g_sLangID_ImpFail = _T("ImpFail");                                                //sun
- 	g_sLangTxt_ImpFail = _T("导入失败");                                               //sun
-																					  //sun
- 	g_sLangID_RemainingMemorySize = _T("RemainingMemorySize");                        //sun
- 	g_sLangTxt_RemainingMemorySize = _T("当前系统剩余内存大小%lu B.");                   //sun
- 	g_sLangID_InsufficientSystemMemory = _T("InsufficientSystemMemory");              //sun
- 	g_sLangTxt_InsufficientSystemMemory = _T("当前系统剩余内存不足");                    //sun
- 	g_sLangID_ExistenceSCDFiles = _T("ExistenceSCDFiles");                            //sun
- 	g_sLangTxt_ExistenceSCDFiles = _T("当前存在同名SCD文件，是否继续？");                  //sun
- 	g_sLangID_NoExistenceSCLFiles = _T("NoExistenceSCLFiles");                        //sun
- 	g_sLangTxt_NoExistenceSCLFiles = _T("当前文件(%s)没有扩展名不是SCL文件.");            //sun
-																					  //sun
- 	g_sLangID_AnalysisSCLFiles = _T("AnalysisSCLFiles");                              //sun
- 	g_sLangTxt_AnalysisSCLFiles = _T("SCL解析");                                       //sun
- 	g_sLangID_LoadSCLFiles = _T("LoadSCLFiles");                                      //sun
- 	g_sLangTxt_LoadSCLFiles = _T("正在加载SCL文件...");                                 //sun
- 	g_sLangID_LoadSCLFilesProgressBar = _T("LoadSCLFilesProgressBar");                //sun
- 	g_sLangTxt_LoadSCLFilesProgressBar = _T("SCL加载进度条");                           //sun
-																					  //sun
- 	g_sLangID_SaveSCLFiles = _T("SaveSCLFiles");                                      //sun
- 	g_sLangTxt_SaveSCLFiles = _T("正在保存SCL配置...");                                 //sun
+// 	g_sLangID_ExpSucc = _T("ExpSucc");
+// 	g_sLangTxt_ExpSucc = _T("导出成功");
+// 	g_sLangID_ExpFail = _T("ExpFail");
+// 	g_sLangTxt_ExpFail = _T("导出失败");
+// 	g_sLangID_ImpSucc = _T("ImpSucc");
+// 	g_sLangTxt_ImpSucc = _T("导入成功");
+// 	g_sLangID_ImpFail = _T("ImpFail");
+// 	g_sLangTxt_ImpFail = _T("导入失败");
+// 
+// 	g_sLangID_RemainingMemorySize = _T("RemainingMemorySize");
+// 	g_sLangTxt_RemainingMemorySize = _T("当前系统剩余内存大小%lu B.");
+// 	g_sLangID_InsufficientSystemMemory = _T("InsufficientSystemMemory");
+// 	g_sLangTxt_InsufficientSystemMemory = _T("当前系统剩余内存不足");
+// 	g_sLangID_ExistenceSCDFiles = _T("ExistenceSCDFiles");
+// 	g_sLangTxt_ExistenceSCDFiles = _T("当前存在同名SCD文件，是否继续？");
+// 	g_sLangID_NoExistenceSCLFiles = _T("NoExistenceSCLFiles");
+// 	g_sLangTxt_NoExistenceSCLFiles = _T("当前文件(%s)没有扩展名不是SCL文件.");
+// 
+// 	g_sLangID_AnalysisSCLFiles = _T("AnalysisSCLFiles");
+// 	g_sLangTxt_AnalysisSCLFiles = _T("SCL解析");
+// 	g_sLangID_LoadSCLFiles = _T("LoadSCLFiles");
+// 	g_sLangTxt_LoadSCLFiles = _T("正在加载SCL文件...");
+// 	g_sLangID_LoadSCLFilesProgressBar = _T("LoadSCLFilesProgressBar");
+// 	g_sLangTxt_LoadSCLFilesProgressBar = _T("SCL加载进度条");
+// 
+// 	g_sLangID_SaveSCLFiles = _T("SaveSCLFiles");
+// 	g_sLangTxt_SaveSCLFiles = _T("正在保存SCL配置...");
 
 	g_sLangID_Impedance_FunParas =_T("Impedance_FunParas");
 	g_sLangTxt_Impedance_FunParas =_T("功能参数");
@@ -9193,10 +9193,10 @@ CString g_sLangID_State_LastState;			 //=	_T("State_LastState");
 CString g_sLangTxt_State_LastState;			 //= _T("上一个状态");
 CString g_sLangID_State_FirstState;			 //= _T("State_FirstState");
 CString g_sLangTxt_State_FirstState;		 //= _T("第一个状态");
-CString g_sLangID_State_No;					 //= _T("State_No");  //sun
-CString g_sLangTxt_State_No;				 //= _T("否");        //sun
-CString g_sLangID_State_Yes;				 //= _T("State_Yes"); //sun
-CString g_sLangTxt_State_Yes;				 //= _T("是");        //sun
+// CString g_sLangID_State_No;					 //= _T("State_No");
+// CString g_sLangTxt_State_No;				 //= _T("否");
+// CString g_sLangID_State_Yes;				 //= _T("State_Yes");
+// CString g_sLangTxt_State_Yes;				 //= _T("是");
 CString g_sLangID_State_HarmCount;			 //= _T("State_HarmCount");
 CString g_sLangTxt_State_HarmCount;			 //= _T("次谐波");
 
@@ -11184,8 +11184,8 @@ CString g_sLangID_addedblock;
 CString g_sLangTxt_addedblock;
 CString g_sLangID_configurationfile;
 CString g_sLangTxt_configurationfile;
-CString g_sLangID_warning; //sun
- CString g_sLangTxt_warning; //sun
+// CString g_sLangID_warning;
+// CString g_sLangTxt_warning;
 CString g_sLangID_NullIEC;
 CString g_sLangTxt_NullIEC;
 CString g_sLangID_IECpath;
@@ -15046,30 +15046,30 @@ CString g_sLangID_Impedance_Auto;			 //=_T("Impedance_Auto");
 CString g_sLangTxt_Impedance_Auto;			 //=_T("自动递变");
 CString g_sLangID_Impedance_Mutation;			 //=_T("Impedance_Mutation");
 CString g_sLangTxt_Impedance_Mutation;			 //=_T("突变量启动");
- CString g_sLangID_ExpSucc;                          //sun
- CString g_sLangTxt_ExpSucc;                         //sun
- CString g_sLangID_ExpFail;                          //sun
- CString g_sLangTxt_ExpFail;                         //sun
- CString g_sLangID_ImpSucc;                          //sun
- CString g_sLangTxt_ImpSucc;                         //sun
- CString g_sLangID_ImpFail;                          //sun
- CString g_sLangTxt_ImpFail;                         //sun
- CString g_sLangID_RemainingMemorySize;              //sun
- CString g_sLangTxt_RemainingMemorySize;             //sun
- CString g_sLangID_InsufficientSystemMemory;         //sun
- CString g_sLangTxt_InsufficientSystemMemory;        //sun
- CString g_sLangID_ExistenceSCDFiles;                //sun
- CString g_sLangTxt_ExistenceSCDFiles;               //sun
- CString g_sLangID_NoExistenceSCLFiles;              //sun
- CString g_sLangTxt_NoExistenceSCLFiles;             //sun
- CString g_sLangID_AnalysisSCLFiles;                 //sun
- CString g_sLangTxt_AnalysisSCLFiles;                //sun
- CString g_sLangID_LoadSCLFiles;                     //sun
- CString g_sLangTxt_LoadSCLFiles;                    //sun
- CString g_sLangID_LoadSCLFilesProgressBar;          //sun
- CString g_sLangTxt_LoadSCLFilesProgressBar;         //sun
- CString g_sLangID_SaveSCLFiles;                     //sun
- CString g_sLangTxt_SaveSCLFiles;                    //sun
+// CString g_sLangID_ExpSucc;
+// CString g_sLangTxt_ExpSucc;
+// CString g_sLangID_ExpFail;
+// CString g_sLangTxt_ExpFail;
+// CString g_sLangID_ImpSucc;
+// CString g_sLangTxt_ImpSucc;
+// CString g_sLangID_ImpFail;
+// CString g_sLangTxt_ImpFail;
+// CString g_sLangID_RemainingMemorySize;
+// CString g_sLangTxt_RemainingMemorySize;
+// CString g_sLangID_InsufficientSystemMemory;
+// CString g_sLangTxt_InsufficientSystemMemory;
+// CString g_sLangID_ExistenceSCDFiles;
+// CString g_sLangTxt_ExistenceSCDFiles;
+// CString g_sLangID_NoExistenceSCLFiles;
+// CString g_sLangTxt_NoExistenceSCLFiles;
+// CString g_sLangID_AnalysisSCLFiles;
+// CString g_sLangTxt_AnalysisSCLFiles;
+// CString g_sLangID_LoadSCLFiles;
+// CString g_sLangTxt_LoadSCLFiles;
+// CString g_sLangID_LoadSCLFilesProgressBar;
+// CString g_sLangTxt_LoadSCLFilesProgressBar;
+// CString g_sLangID_SaveSCLFiles;
+// CString g_sLangTxt_SaveSCLFiles;
 
 CString g_sLangID_Impedance_FunParas;			 //=_T("Impedance_FunParas");
 CString g_sLangTxt_Impedance_FunParas;			 //=_T("功能参数");

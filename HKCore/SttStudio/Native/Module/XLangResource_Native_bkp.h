@@ -1,6 +1,4 @@
-#ifndef _XLangResource_Native_h__
-#define _XLangResource_Native_h__
-
+#pragma once
 #include "../../Module/XLanguage/XLanguageMngr.h"
 #include "../../AutoTest/Module/XLanguageResourceAts.h"
 
@@ -532,10 +530,10 @@ extern CString g_sLangID_State_FirstState;
 extern CString g_sLangTxt_State_FirstState;
 extern CString g_sLangID_State_Lsbalancefactor;
 extern CString g_sLangTxt_State_Lsbalancefactor;
-extern CString g_sLangID_State_No;        //sun
-extern CString g_sLangTxt_State_No;       //sun
-extern CString g_sLangID_State_Yes;       //sun
-extern CString g_sLangTxt_State_Yes;      //sun
+// extern CString g_sLangID_State_No;
+// extern CString g_sLangTxt_State_No;
+// extern CString g_sLangID_State_Yes;
+// extern CString g_sLangTxt_State_Yes;
 extern CString g_sLangID_State_HarmCount;
 extern CString g_sLangTxt_State_HarmCount;
 extern CString g_sLangID_State_Trans1;
@@ -2591,8 +2589,8 @@ extern CString g_sLangID_addedblock;
 extern CString g_sLangTxt_addedblock;
 extern CString g_sLangID_configurationfile;
 extern CString g_sLangTxt_configurationfile;
-extern CString g_sLangID_warning;  //sun
-extern CString g_sLangTxt_warning; //sun
+// extern CString g_sLangID_warning;
+// extern CString g_sLangTxt_warning;
 extern CString g_sLangID_NullIEC;
 extern CString g_sLangTxt_NullIEC;
 extern CString g_sLangID_IECpath;
@@ -7006,31 +7004,31 @@ extern CString g_sLangTxt_Impedance_Auto;
 extern CString g_sLangID_Impedance_Mutation;
 extern CString g_sLangTxt_Impedance_Mutation;
 
-//20240723 suyang 移动到父类，主界面程序也需要 //sun
-extern CString g_sLangID_ExpSucc;
-extern CString g_sLangTxt_ExpSucc;
-extern CString g_sLangID_ExpFail;
-extern CString g_sLangTxt_ExpFail;
-extern CString g_sLangID_ImpSucc;
-extern CString g_sLangTxt_ImpSucc;
-extern CString g_sLangID_ImpFail;
-extern CString g_sLangTxt_ImpFail;
-extern CString g_sLangID_RemainingMemorySize;
-extern CString g_sLangTxt_RemainingMemorySize;
-extern CString g_sLangID_InsufficientSystemMemory;
-extern CString g_sLangTxt_InsufficientSystemMemory;
-extern CString g_sLangID_ExistenceSCDFiles;
-extern CString g_sLangTxt_ExistenceSCDFiles;
-extern CString g_sLangID_NoExistenceSCLFiles;
-extern CString g_sLangTxt_NoExistenceSCLFiles;
-extern CString g_sLangID_AnalysisSCLFiles;
-extern CString g_sLangTxt_AnalysisSCLFiles;
-extern CString g_sLangID_LoadSCLFiles;
-extern CString g_sLangTxt_LoadSCLFiles;
-extern CString g_sLangID_LoadSCLFilesProgressBar;
-extern CString g_sLangTxt_LoadSCLFilesProgressBar;
-extern CString 	g_sLangID_SaveSCLFiles ;
-extern CString g_sLangTxt_SaveSCLFiles;
+//20240723 suyang 移动到父类，主界面程序也需要
+// extern CString g_sLangID_ExpSucc;
+// extern CString g_sLangTxt_ExpSucc;
+// extern CString g_sLangID_ExpFail;
+// extern CString g_sLangTxt_ExpFail;
+// extern CString g_sLangID_ImpSucc;
+// extern CString g_sLangTxt_ImpSucc;
+// extern CString g_sLangID_ImpFail;
+// extern CString g_sLangTxt_ImpFail;
+// extern CString g_sLangID_RemainingMemorySize;
+// extern CString g_sLangTxt_RemainingMemorySize;
+// extern CString g_sLangID_InsufficientSystemMemory;
+// extern CString g_sLangTxt_InsufficientSystemMemory;
+// extern CString g_sLangID_ExistenceSCDFiles;
+// extern CString g_sLangTxt_ExistenceSCDFiles;
+// extern CString g_sLangID_NoExistenceSCLFiles;
+// extern CString g_sLangTxt_NoExistenceSCLFiles;
+// extern CString g_sLangID_AnalysisSCLFiles;
+// extern CString g_sLangTxt_AnalysisSCLFiles;
+// extern CString g_sLangID_LoadSCLFiles;
+// extern CString g_sLangTxt_LoadSCLFiles;
+// extern CString g_sLangID_LoadSCLFilesProgressBar;
+// extern CString g_sLangTxt_LoadSCLFilesProgressBar;
+// extern CString 	g_sLangID_SaveSCLFiles ;
+// extern CString g_sLangTxt_SaveSCLFiles;
 
 
 extern CString g_sLangID_Impedance_FunParas;			 //=_T("Impedance_FunParas");
@@ -7237,4 +7235,3 @@ extern CString g_sLangTxt_CurrentHigh330;
 extern CString g_sLangID_Native_CommandTimeout;
 extern CString g_sLangTxt_Native_CommandTimeout;
 
-#endif // _XLangResource_Native_h__

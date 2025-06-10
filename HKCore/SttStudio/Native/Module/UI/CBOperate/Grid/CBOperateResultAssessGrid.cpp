@@ -32,7 +32,7 @@ void CBOperateResultAssessGrid::InitUI()
     m_pResultTableWidget->horizontalHeader()->setSectionsMovable(false);
 
     QStringList headers;
-    headers << /*"名称"*/g_sLangTxt_AttrID_Name << /*"误差类型"*/g_sLangTxt_StateEstimate_ErrorType <</* "相对误差(%)"*/g_sLangTxt_StateEstimate_RelError << /*"绝对误差"*/g_sLangTxt_StateEstimate_AbsError << g_sLangID_StateEstimate_SettingValue/*"整定值"*/;
+    headers << "名称" << "误差类型" <<"相对误差(%)" << "绝对误差" << "整定值";
     m_pResultTableWidget->setHorizontalHeaderLabels(headers);
     m_pResultTableWidget->horizontalHeader()->setStyleSheet("QHeaderView::section{background: skyblue;}"); // 设置表头背景色
 	m_pResultTableWidget->setStyleSheet("selection-background-color: grey;selection-color: black");
@@ -52,13 +52,13 @@ void CBOperateResultAssessGrid::InitUI()
 	m_pResultTableWidget->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed); // 设置固定行高
 
 
-	m_pChbActionTime = new QSttCheckBox(g_sLangTxt_Gradient_ActionTime);
+    m_pChbActionTime = new QSttCheckBox("g_sLangTxt_Gradient_ActionTime");
 	m_pResultTableWidget->setCellWidget(0, 0, m_pChbActionTime);
 
-	m_pChbTripTime = new QSttCheckBox(g_sLangTxt_Native_RecloseTime);
+    m_pChbTripTime = new QSttCheckBox("g_sLangTxt_Native_RecloseTime");
 	m_pResultTableWidget->setCellWidget(1, 0, m_pChbTripTime);
 
-	m_pChbAccTime = new QSttCheckBox(g_sLangTxt_Native_PostAccTime);
+    m_pChbAccTime = new QSttCheckBox("g_sLangTxt_Native_PostAccTime");
 	m_pResultTableWidget->setCellWidget(2, 0, m_pChbAccTime);
 
 	m_pCmbActionTime = new QComboBox();
@@ -67,7 +67,7 @@ void CBOperateResultAssessGrid::InitUI()
 
 
 	QStringList headers1;
-	headers1 << /*"绝对误差"*/g_sLangTxt_StateEstimate_AbsError << /*"相对误差"*/g_sLangTxt_StateEstimate_RelError << /*"绝对or相对"*/g_sLangTxt_CBOperate_AbsOrRelative << /*"绝对&相对"*/g_sLangTxt_CBOperate_AbsRelative << /*"组合误差"*/g_sLangTxt_CBOperate_CombError;
+    headers1 << "绝对误差" << "相对误差" << "绝对or相对" << "绝对&相对" << "组合误差";
 	m_pCmbActionTime->addItems(headers1);
 	m_pCmbTtripTime->addItems(headers1);
 	m_pCmbAccTime->addItems(headers1);
@@ -78,8 +78,8 @@ void CBOperateResultAssessGrid::InitUI()
 	m_pMainLayout = new QVBoxLayout(this);
 	m_pMainLayout->addWidget(m_pResultTableWidget);
 	m_pButtonLayout = new QHBoxLayout();
-	m_pBtnOK = new QPushButton(/*"确定"*/g_sLangTxt_OK, this);
-	m_pBtnCancel = new QPushButton(/*"取消"*/g_sLangTxt_Cancel, this);
+    m_pBtnOK = new QPushButton("确定", this);
+    m_pBtnCancel = new QPushButton("取消", this);
 	m_pButtonLayout->addWidget(m_pBtnOK);
 	m_pButtonLayout->addWidget(m_pBtnCancel);
 	m_pButtonLayout->setAlignment(Qt::AlignCenter);

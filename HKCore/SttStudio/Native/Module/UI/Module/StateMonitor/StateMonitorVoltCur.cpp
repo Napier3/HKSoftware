@@ -162,12 +162,12 @@ void QStateMonitorVoltCur::InitCurve(CExBaseList* pChlUDatasList, CExBaseList* p
 
 	if (m_ChangeType == 0)   //20210908 sf 兼容幅值相位频率
 	{
-		UpdateYTtile(/*tr("电压(V)")*/g_sLangTxt_Native_Voltage+"(V)",9,TRUE);
-		UpdateYTtile(/*tr("电流(A)")*/g_sLangTxt_Native_Current+"(A)",9,FALSE);
+        UpdateYTtile(tr("电压(V)")+"(V)",9,TRUE);
+        UpdateYTtile(tr("电流(A)")+"(A)",9,FALSE);
 	}
 	else if (m_ChangeType == 1)
 	{
-		UpdateYTtile(/*tr("相位(°)")*/g_sLangTxt_Gradient_DPhase,9,TRUE);
+        UpdateYTtile(tr("相位(°)"),9,TRUE);
 		UpdateYTtile(tr(""),FALSE);
 	}
 	else
@@ -602,12 +602,12 @@ void QStateMonitorVoltCur::ChangeType(int type)
 
 	if (m_ChangeType == 0)   //20210908 sf 兼容幅值相位频率
 	{
-		UpdateYTtile(/*tr("电压(V)")*/g_sLangTxt_Native_Voltage+"(V)",9,TRUE);
-		UpdateYTtile(/*tr("电流(A)")*/g_sLangTxt_Native_Current+"(A)",9,FALSE);
+        UpdateYTtile(tr("电压(V)")+"(V)",9,TRUE);
+        UpdateYTtile(tr("电流(A)")+"(A)",9,FALSE);
 	}
 	else if (m_ChangeType == 1)
 	{
-		UpdateYTtile(/*tr("相位(°)")*/g_sLangTxt_Gradient_DPhase,9,TRUE);
+        UpdateYTtile(tr("相位(°)"),9,TRUE);
 		UpdateYTtile(tr(""),FALSE);
 	}
 	else

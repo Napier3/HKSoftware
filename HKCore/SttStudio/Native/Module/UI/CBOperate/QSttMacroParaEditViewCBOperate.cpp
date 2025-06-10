@@ -105,9 +105,9 @@ void QSttMacroParaEditViewCBOperate::InitUI()
 	m_pVlayout = new QGridLayout(this);
 
 	m_pLabFaultType = new QLabel(this);    
-	m_pLabFaultType->setText(/*_T("故障类型")*/g_sLangTxt_State_FaultType);
-	m_ItemsList << /*"A相接地" */g_sLangTxt_Native_GndA<</* "B相接地"*/g_sLangTxt_Native_GndB << g_sLangTxt_Native_GndC/*"C相接地" */<< /*"AB短路" */g_sLangTxt_Native_ShortAB<< g_sLangTxt_Native_ShortBC/*"BC短路"*/ <</* "CA短路"*/g_sLangTxt_Native_ShortCA <</* "AB相接地短路"*/ g_sLangTxt_Native_GndShortAB
-		<< /*"BC相接地短路"*/g_sLangTxt_Native_GndShortBC << /*"CA相接地短路"*/g_sLangTxt_Native_GndShortCA <</* "ABC短路"*/g_sLangTxt_Native_ShortABC << /*"单相阻抗"*/g_sLangTxt_State_SinglephaseImpedance;
+    m_pLabFaultType->setText(_T("故障类型"));
+    m_ItemsList << "A相接地" <<"B相接地" << "C相接地" << "AB短路" << "BC短路" <<"CA短路" <<"AB相接地短路"
+        << "BC相接地短路" << "CA相接地短路" << "ABC短路" << "单相阻抗";
 	m_pCmbFaultType = new QComboBox(this);	
 	m_pCmbFaultType->setMaxVisibleItems(m_ItemsList.count());
 	m_pCmbFaultType->addItems(m_ItemsList);
@@ -116,51 +116,51 @@ void QSttMacroParaEditViewCBOperate::InitUI()
 	m_pEditZ = new QLineEdit(this);		
 
 	m_pLabImpedanceAngle = new QLabel(this);
-	m_pLabImpedanceAngle->setText(/*_T("阻抗角(°)")*/g_sLangTxt_Gradient_ImpAngle);
+    m_pLabImpedanceAngle->setText( _T("阻抗角(°)" ));
 	m_pEditImpedanceAngle = new QLineEdit(this);   
 
 	m_pLabCurLoad = new QLabel(this);	
-	m_pLabCurLoad->setText(/*_T("负荷电流(A)")*/g_sLangTxt_LoadI);
+    m_pLabCurLoad->setText( _T("负荷电流(A)" ));
 	m_pEditCurLoad = new QLineEdit(this);
 
 	m_pLabPowerAngleLoad = new QLabel(this);
-	m_pLabPowerAngleLoad->setText(/*_T("负荷功角(°)")*/g_sLangTxt_State_LoadAngle);
+    m_pLabPowerAngleLoad->setText( _T("负荷功角(°)" ));
 	m_pEditPowerAngleLoad = new QLineEdit(this);	
 
 	m_pLabCurShortCircuit = new QLabel(this);
-	m_pLabCurShortCircuit->setText(/*_T("短路电流")*/g_sLangTxt_Native_ShortCircuit);
+    m_pLabCurShortCircuit->setText( _T("短路电流" ));
 	m_pEditCurShortCircuit = new QLineEdit(this);	
 
 	m_pLabVolShortCircuit = new QLabel(this);	
-	m_pLabVolShortCircuit->setText(/*_T("短路电压")*/g_sLangTxt_Native_ShortCircuitV);
+    m_pLabVolShortCircuit->setText( _T("短路电压" ));
 	m_pEditVolShortCircuit = new QLineEdit(this);    
 
 	m_pLabFaultDirection = new QLabel(this);  
-	m_pLabFaultDirection->setText(/*_T("故障方向")*/g_sLangTxt_Gradient_FailDirect);
+    m_pLabFaultDirection->setText( _T("故障方向" ));
 	m_pCmbFaultDirection = new QComboBox(this); 
-	m_pCmbFaultDirection->addItem(/*"反向"*/g_sLangTxt_CBOperate_Reverse);
-	m_pCmbFaultDirection->addItem(/*"正向"*/g_sLangTxt_CBOperate_Positive);
+    m_pCmbFaultDirection->addItem("反向");
+    m_pCmbFaultDirection->addItem("正向");
 
 	m_pLabFaultQuality = new QLabel(this);		
-	m_pLabFaultQuality->setText(/*_T("故障性质")*/g_sLangTxt_Native_NatureMalf);
+    m_pLabFaultQuality->setText( _T("故障性质" ));
 	m_pCmbFaultQuality = new QComboBox(this);
-	m_pCmbFaultQuality->addItem(/*"瞬时"*/g_sLangTxt_CBOperate_Instan);
-	m_pCmbFaultQuality->addItem(/*"永久"*/g_sLangTxt_CBOperate_Perpetual);
+    m_pCmbFaultQuality->addItem("瞬时");
+    m_pCmbFaultQuality->addItem("永久");
 
 	m_pLabLarFaultTime = new QLabel(this);	
-	m_pLabLarFaultTime->setText(/*_T("最大故障时间(S)")*/g_sLangTxt_CBOperate_MaxFaultTime);
+    m_pLabLarFaultTime->setText( _T("最大故障时间(S)" ));
 	m_pEditLarFaultTime = new QLineEdit(this);		 
 
 	m_pLabFaultTrigTime = new QLabel(this);	
-	m_pLabFaultTrigTime->setText(/*_T("故障触发时刻")*/g_sLangTxt_CBOperate_FaultMoment);
+    m_pLabFaultTrigTime->setText( _T("故障触发时刻" ));
 	m_pLabHour = new QLabel(this);				
-	m_pLabHour->setText(/*_T("时")*/g_sLangTxt_CBOperate_Hour);
+    m_pLabHour->setText( _T("时" ));
 	m_pEditHour = new QLineEdit(this); 
 	m_pLabMinute = new QLabel(this);		          
-	m_pLabMinute->setText(/*_T("分")*/g_sLangTxt_CBOperate_Minute);
+    m_pLabMinute->setText( _T("分" ));
 	m_pEditMinute = new QLineEdit(this);	
 	m_pLabSecond = new QLabel(this);		        
-	m_pLabSecond->setText(/*_T("秒")*/g_sLangTxt_CBOperate_Second);
+    m_pLabSecond->setText( _T("秒" ));
 	m_pEditSecond = new QLineEdit(this);    
 
 
@@ -171,9 +171,9 @@ void QSttMacroParaEditViewCBOperate::InitUI()
 	m_pEditRVolShortCircuit = new QLineEdit(this);
 	m_pEditRImpedanceAngle = new QLineEdit(this);
 	m_pLabImpedanceWay = new QLabel(this);  
-	m_pLabImpedanceWay->setText(/*_T("阻抗表示方式：")*/g_sLangTxt_CBOperate_ImpRepre);
+    m_pLabImpedanceWay->setText( _T("阻抗表示方式：" ));
 	m_pChkAmpAngle = new QRadioButton(this);   
-	m_pChkAmpAngle->setText(/*_T("幅值相位")*/g_sLangTxt_CBOperate_AmpPhase);
+    m_pChkAmpAngle->setText( _T("幅值相位" ));
 	m_pChkRX = new QRadioButton(this);				
 	m_pChkRX->setText(_T("R-X"));
 	m_ButtonGroup = new QButtonGroup(this);
@@ -182,35 +182,35 @@ void QSttMacroParaEditViewCBOperate::InitUI()
 	m_pChkAmpAngle->setChecked(true);
 
 	m_pLabConversionTime = new QLabel(this);
-	m_pLabConversionTime->setText(/*_T("转换时间(S)")*/g_sLangTxt_CBOperate_ConversionTime);
+    m_pLabConversionTime->setText( _T("转换时间(S)" ));
 	m_pEditConversionTime = new QLineEdit(this);	  
 
 	m_pLabRFaultType = new QLabel(this);             
-	m_pLabRFaultType->setText(/*_T("故障类型")*/g_sLangTxt_State_FaultType);
+    m_pLabRFaultType->setText( _T("故障类型" ));
 	m_pCmbRFaultType->addItems(m_ItemsList);
 	m_pCmbRFaultType->setMaxVisibleItems(m_ItemsList.count());
 	m_pLabRCurShortCircuit = new QLabel(this);		   
-	m_pLabRCurShortCircuit->setText(/*_T("短路电流(A)")*/g_sLangTxt_State_ShortI);
+    m_pLabRCurShortCircuit->setText( _T("短路电流(A)" ));
 
 	m_pLabRZ = new QLabel(this);			           
 	m_pLabRZ->setText(_T("|Z|(Ω)"));
 
 	m_pLabRVolShortCircuit = new QLabel(this);	   
-	m_pLabRVolShortCircuit->setText(/*_T("短路电压(V)")*/g_sLangTxt_State_ShortU);
+    m_pLabRVolShortCircuit->setText( _T("短路电压(V)" ));
 
 	m_pLabRImpedanceAngle = new QLabel(this);		  
-	m_pLabRImpedanceAngle->setText(/*_T("阻抗角(°)")*/g_sLangTxt_Gradient_ImpAngle);
+    m_pLabRImpedanceAngle->setText( _T("阻抗角(°)" ));
 
 	m_pLabRFaultDirection = new QLabel(this);          
-	m_pLabRFaultDirection->setText(/*_T("故障方向")*/g_sLangTxt_Gradient_FailDirect);
-	m_pCmbRFaultDirection->addItem(/*"反向"*/g_sLangTxt_CBOperate_Reverse);
-	m_pCmbRFaultDirection->addItem(/*"正向"*/g_sLangTxt_CBOperate_Positive);
+    m_pLabRFaultDirection->setText( _T("故障方向" ));
+    m_pCmbRFaultDirection->addItem("反向");
+    m_pCmbRFaultDirection->addItem("正向");
 
 	m_pBtnResultAssess = new QPushButton(this);     
-	m_pBtnResultAssess->setText(/*_T("结果评估")*/g_sLangTxt_StateEstimate_ResultEstimate);
+    m_pBtnResultAssess->setText( _T("结果评估" ));
 
 	m_pBtnCommonParas = new QPushButton(this);
-	m_pBtnCommonParas->setText(/*_T("通用参数")*/g_sLangTxt_GeneralParameter);
+    m_pBtnCommonParas->setText( _T("通用参数" ));
 
 	m_pLeftWidget = new QWidget(this);
 	m_pLeftGridLayout = new QGridLayout(m_pLeftWidget);
@@ -275,7 +275,7 @@ void QSttMacroParaEditViewCBOperate::InitUI()
 	m_pGroupBoxLayout = new QVBoxLayout;
 	m_pGroupBoxLayout->addWidget(m_pGroupBox);
 
-	m_pChkConversionFault = new QSttCheckBox(/*"转换性故障"*/g_sLangTxt_CBOperate_ConversionFail, this);
+    m_pChkConversionFault = new QSttCheckBox("转换性故障", this);
 	m_pGroupBoxLayout->setAlignment(m_pChkConversionFault, Qt::AlignTop | Qt::AlignLeft);
 	m_pGroupBoxLayout->addWidget(m_pChkConversionFault);
 
@@ -412,7 +412,7 @@ void QSttMacroParaEditViewCBOperate::SerializeTestParas(CSttXmlSerializeBase *pM
 void QSttMacroParaEditViewCBOperate::slot_ResultAssess()
 {
 	CBOperateResultAssessGrid dlg(m_oCBOperateParas,this);
-	dlg.setWindowTitle(/*"结果评估"*/g_sLangTxt_StateEstimate_ResultEstimate);
+    dlg.setWindowTitle("结果评估");
 	dlg.setWindowModality(Qt::WindowModal);
 
 #ifdef _USE_SoftKeyBoard_
@@ -429,7 +429,7 @@ void QSttMacroParaEditViewCBOperate::slot_ResultAssess()
 void QSttMacroParaEditViewCBOperate::slot_CommonParas()
 {
 	CBOperateCommonParasDlg dlg(m_oCBOperateParas,this);
-	dlg.setWindowTitle(/*"通用参数"*/g_sLangTxt_Gradient_CommonParas);
+    dlg.setWindowTitle("通用参数");
 	dlg.setWindowModality(Qt::WindowModal);
 
 #ifdef _USE_SoftKeyBoard_

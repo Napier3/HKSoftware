@@ -5,12 +5,12 @@
 // #include <locale.h>
 // #endif
 
- #ifndef _PSX_IDE_QT_
- #include "VC/StringApi_VC.cpp"
-// #else
-// #include<QTextCodec>
-// #include "QT/StringApi_QT.cpp"
- #endif
+#ifndef _PSX_IDE_QT_
+#include "VC/StringApi_VC.cpp"
+#else
+#include<QTextCodec>
+#include "QT/StringApi_QT.cpp"
+#endif
 
 long String_Char_Count(BSTR strText)
 {

@@ -1,5 +1,5 @@
 //这段源代码由ClassGenerator创建
-//版权所有 Eric  Eric1224@126.com
+//版权所有 LiJunqing  lijunqing1224@126.com
 //保留所有权利
 
 //XLanguageResourceBase.cpp  CXLanguageResourceAtsBase
@@ -523,7 +523,7 @@ void CXLanguageResourceAtsBase::RegisterLanguageResource()
 	rs_AddString(g_sLangID_IEC_AddSCL,&g_sLangTxt_IEC_AddSCL);
 	rs_AddString(g_sLangID_IEC_DeleteNow,&g_sLangTxt_IEC_DeleteNow);
 	rs_AddString(g_sLangID_IEC_Emptyout,&g_sLangTxt_IEC_Emptyout);
-// 	rs_AddString(g_sLangID_Native_FileName, &g_sLangTxt_Native_FileName);
+ 	rs_AddString(g_sLangID_Native_FileName, &g_sLangTxt_Native_FileName);
 	rs_AddString(g_sLangID_FilePath,&g_sLangTxt_FilePath);
 	rs_AddString(g_sLangID_FileSize,&g_sLangTxt_FileSize);
 // 	rs_AddString(g_sLangID_Native_Choose, &g_sLangTxt_Native_Choose);
@@ -538,7 +538,57 @@ void CXLanguageResourceAtsBase::RegisterLanguageResource()
 
 	rs_AddString(g_sLangID_Native_ChooseOpenFile, &g_sLangTxt_Native_ChooseOpenFile);
 	rs_AddString(g_sLangID_Gradient_ShowUpath,&g_sLangTxt_Gradient_ShowUpath);
+	rs_AddString(g_sLangID_warning, &g_sLangTxt_warning);
 
+	rs_AddString(g_sLangID_UpdataFail, &g_sLangTxt_UpdataFail);
+	rs_AddString(g_sLangID_DownloadFile, &g_sLangTxt_DownloadFile);
+	rs_AddString(g_sLangID_DownloadFail, &g_sLangTxt_DownloadFail);
+	rs_AddString(g_sLangID_DownloadCompress, &g_sLangTxt_DownloadCompress);
+	rs_AddString(g_sLangID_LocalUpgrades, &g_sLangTxt_LocalUpgrades);
+	rs_AddString(g_sLangID_Reboot, &g_sLangTxt_Reboot);
+	rs_AddString(g_sLangID_UnpackSucc, &g_sLangTxt_UnpackSucc);
+	rs_AddString(g_sLangID_UnpackFail, &g_sLangTxt_UnpackFail);
+    rs_AddString(g_sLangID_Update_UpdateSuccess, &g_sLangTxt_Update_UpdateSuccess);
+
+	rs_AddString(g_sLangID_Escalating, &g_sLangTxt_Escalating);
+	rs_AddString(g_sLangID_TesterUpdate, &g_sLangTxt_TesterUpdate);
+	rs_AddString(g_sLangID_BackupSucc, &g_sLangTxt_BackupSucc);
+	rs_AddString(g_sLangID_BackupFail, &g_sLangTxt_BackupFail);
+	rs_AddString(g_sLangID_CopySucc, &g_sLangTxt_CopySucc);
+	rs_AddString(g_sLangID_TesterUpdataFail, &g_sLangTxt_TesterUpdataFail);
+	
+	rs_AddString(g_sLangID_ExpSucc, &g_sLangTxt_ExpSucc);
+	rs_AddString(g_sLangID_ExpFail, &g_sLangTxt_ExpFail);
+	rs_AddString(g_sLangID_ImpSucc, &g_sLangTxt_ImpSucc);
+	rs_AddString(g_sLangID_ImpFail, &g_sLangTxt_ImpFail);
+	rs_AddString(g_sLangID_RemainingMemorySize, &g_sLangTxt_RemainingMemorySize);
+	rs_AddString(g_sLangID_InsufficientSystemMemory, &g_sLangTxt_InsufficientSystemMemory);
+	rs_AddString(g_sLangID_ExistenceSCDFiles, &g_sLangTxt_ExistenceSCDFiles);	
+	rs_AddString(g_sLangID_NoExistenceSCLFiles, &g_sLangTxt_NoExistenceSCLFiles);
+	rs_AddString(g_sLangID_AnalysisSCLFiles, &g_sLangTxt_AnalysisSCLFiles);
+	rs_AddString(g_sLangID_LoadSCLFiles, &g_sLangTxt_LoadSCLFiles);	
+	rs_AddString(g_sLangID_LoadSCLFilesProgressBar, &g_sLangTxt_LoadSCLFilesProgressBar);
+	rs_AddString(g_sLangID_SaveSCLFiles, &g_sLangTxt_SaveSCLFiles);
+	rs_AddString(g_sLangID_State_No, &g_sLangTxt_State_No);
+	rs_AddString(g_sLangID_State_Yes, &g_sLangTxt_State_Yes);
+	rs_AddString(g_sLangID_Expr, &g_sLangTxt_Expr);
+
+	//2024-12-09 shaolei
+	rs_AddString(g_sLangID_AutoTest_SvrName, &g_sLangTxt_AutoTest_SvrName);
+	rs_AddString(g_sLangID_AutoTest_SvrVersion, &g_sLangTxt_AutoTest_SvrVersion);
+
+	rs_AddString(g_sLangID_Xrio_EnterNumbers, &g_sLangTxt_Xrio_EnterNumbers);
+	rs_AddString(g_sLangID_Xrio_ValueLessThanOREqual, &g_sLangTxt_Xrio_ValueLessThanOREqual);
+	rs_AddString(g_sLangID_Xrio_ValueGreaterThanOREqual, &g_sLangTxt_Xrio_ValueGreaterThanOREqual);
+	rs_AddString(g_sLangID_Xrio_InvalidDoublePrecisionValue, &g_sLangTxt_Xrio_InvalidDoublePrecisionValue);
+	rs_AddString(g_sLangID_Xrio_InvalidIntValue, &g_sLangTxt_Xrio_InvalidIntValue);
+	rs_AddString(g_sLangID_Xrio_LogInfo_ParamDataType, &g_sLangTxt_Xrio_LogInfo_ParamDataType);
+	rs_AddString(g_sLangID_Xrio_LogInfo_NamePath, &g_sLangTxt_Xrio_LogInfo_NamePath);
+	rs_AddString(g_sLangID_Xrio_LogInfo_IDPath, &g_sLangTxt_Xrio_LogInfo_IDPath);
+	rs_AddString(g_sLangID_Xrio_LogInfo_InvalidParamDataType, &g_sLangTxt_Xrio_LogInfo_InvalidParamDataType);
+	rs_AddString(g_sLangID_Xrio_LogInfo_MinGreaterThanMax, &g_sLangTxt_Xrio_LogInfo_MinGreaterThanMax);
+	rs_AddString(g_sLangID_Xrio_InvalidEnumValue, &g_sLangTxt_Xrio_InvalidEnumValue);
+	rs_AddString(g_sLangID_Xrio_InvalidBinaryValue, &g_sLangTxt_Xrio_InvalidBinaryValue);
 }
 
 static long g_nCXLanguageResourceAtsBase_InitLangTxt = 0;
@@ -1468,7 +1518,7 @@ void CXLanguageResourceAtsBase::InitLangTxt()
 	g_sLangID_AttrID_Value = _T("sAttrID_Value");
 	g_sLangTxt_AttrID_Value = _T("数值(value)");
 	g_sLangID_AttrID_Name = _T("sAttrID_Name");
-	g_sLangTxt_AttrID_Name = _T("名称(Name)");
+	g_sLangTxt_AttrID_Name = _T("名称");
 
 	g_sLangID_TestPrjNotFinish = _T("sTestPrjNotFinish");
 	g_sLangTxt_TestPrjNotFinish = _T("测试报告[%s]没有测试完成");
@@ -1492,8 +1542,8 @@ void CXLanguageResourceAtsBase::InitLangTxt()
 	g_sLangID_IEC_Emptyout                =_T("IEC_Emptyout");
 	g_sLangTxt_IEC_Emptyout                =_T("清空全部");
 
-// 	g_sLangID_Native_FileName = _T("Native_FileName");
-// 	g_sLangTxt_Native_FileName = _T("文件名称");
+ 	g_sLangID_Native_FileName = _T("Native_FileName");	
+	g_sLangTxt_Native_FileName = _T("文件名称");
 	g_sLangID_FilePath						 =_T("FilePath");
 	g_sLangTxt_FilePath						 =_T("文件路径");
 	g_sLangID_FileSize                       =_T("FileSize");
@@ -1513,7 +1563,7 @@ void CXLanguageResourceAtsBase::InitLangTxt()
 	g_sLangID_parsefile                                                                        =_T("parsefile");
 	g_sLangTxt_parsefile                                                                        =_T("生成解析文件(%s)失败,可能原SCL文件名包含中文信息导致.");
 	g_sLangID_confirmfiles                                                                      =_T("confirmfiles");
-	g_sLangTxt_confirmfiles                                                                      =_T("请确认,是否清空全部SCL文件？.");
+	g_sLangTxt_confirmfiles                                                                      =_T("请确认,是否清空全部SCL文件？");
 	g_sLangID_IEDdialog                                                                          =_T("IEDdialog");
 	g_sLangTxt_IEDdialog                                                                         =_T("IED选择对话框");
 	g_sLangID_sameopen                                                                           =_T("sameopen");
@@ -1524,6 +1574,106 @@ void CXLanguageResourceAtsBase::InitLangTxt()
 
 	g_sLangID_Gradient_ShowUpath  = _T("Gradient_ShowUpath"); //LCQ
 	g_sLangTxt_Gradient_ShowUpath  = _T("显示U盘路径");
+
+	g_sLangID_warning = _T("warning");
+	g_sLangTxt_warning = _T("警告");
+
+	g_sLangID_UpdataFail                 = _T("sUpdataFail");
+	g_sLangTxt_UpdataFail                = _T("测试仪更新:查询[系统标识:%d,版本标识:%d]更新信息失败!");
+	g_sLangID_DownloadFile				 = _T("sDownloadFile");
+	g_sLangTxt_DownloadFile              = _T("测试仪更新:查询信息完成，开始下载文件，请稍后...[系统标识:%d,版本标识:%d]");
+	g_sLangID_DownloadFail               = _T("sDownloadFail");
+	g_sLangTxt_DownloadFail              = _T("测试仪更新:下载版本文件[%s]失败!");
+	g_sLangID_DownloadCompress           = _T("sDownloadCompress ");
+	g_sLangTxt_DownloadCompress          = _T("测试仪更新:下载版本文件[%s]完成,准备解压缩!");
+	g_sLangID_LocalUpgrades              = _T("sLocalUpgrades");
+	g_sLangTxt_LocalUpgrades             = _T("测试仪更新:已结束与云平台交互,开始解压缩更新包并进行本地升级!");
+	g_sLangID_Reboot                     = _T("sReboot");
+	g_sLangTxt_Reboot                    = _T("测试仪更新:升级成功后,需将测试仪重启,请稍等......");	
+	g_sLangID_UnpackSucc                 = _T("sUnpackSucc");
+	g_sLangTxt_UnpackSucc                = _T("测试仪更新：解压本地更新包【%s】成功!");
+	g_sLangID_UnpackFail                 = _T("sUnpackFail");
+	g_sLangTxt_UnpackFail                = _T("测试仪更新：解压本地更新包【%s】失败!");
+	g_sLangID_Update_UpdateSuccess       = _T("sUpdate_UpdateSuccess");
+    g_sLangTxt_Update_UpdateSuccess =_T("程序升级成功，请手动重启仪器");
+	g_sLangID_Escalating				 = _T("sEscalating");
+	g_sLangTxt_Escalating			     = _T("正在准备升级文件，请稍后...");
+    g_sLangID_TesterUpdate				 = _T("sTesterUpdate");
+    g_sLangTxt_TesterUpdate		         = _T("测试仪更新：已更新%.02f%%");
+	g_sLangID_BackupSucc			     = _T("sBackupSucc");
+	g_sLangTxt_BackupSucc				 = _T("测试仪更新：文件【%s】备份成功!");
+	g_sLangID_BackupFail				 = _T("sBackupFail");
+	g_sLangTxt_BackupFail				 = _T("测试仪更新：文件【%s】备份失败!");
+	g_sLangID_CopySucc				     = _T("sCopySucc");
+	g_sLangTxt_CopySucc				     = _T("测试仪更新：文件【%s】拷贝成功!");
+	g_sLangID_TesterUpdataFail			 = _T("sTesterUpdataFail");
+	g_sLangTxt_TesterUpdataFail			 = _T("测试仪更新：文件【%s】更新失败!");
+
+	g_sLangID_ExpSucc = _T("ExpSucc");
+	g_sLangTxt_ExpSucc = _T("导出成功");
+	g_sLangID_ExpFail = _T("ExpFail");
+	g_sLangTxt_ExpFail = _T("导出失败");
+	g_sLangID_ImpSucc = _T("ImpSucc");
+	g_sLangTxt_ImpSucc = _T("导入成功");
+	g_sLangID_ImpFail = _T("ImpFail");
+	g_sLangTxt_ImpFail = _T("导入失败");
+
+	g_sLangID_RemainingMemorySize = _T("RemainingMemorySize");
+	g_sLangTxt_RemainingMemorySize = _T("当前系统剩余内存大小%lu B.");
+	g_sLangID_InsufficientSystemMemory = _T("InsufficientSystemMemory");
+	g_sLangTxt_InsufficientSystemMemory = _T("当前系统剩余内存不足");
+	g_sLangID_ExistenceSCDFiles = _T("ExistenceSCDFiles");
+	g_sLangTxt_ExistenceSCDFiles = _T("当前存在同名SCD文件，是否继续？");
+	g_sLangID_NoExistenceSCLFiles = _T("NoExistenceSCLFiles");
+	g_sLangTxt_NoExistenceSCLFiles = _T("当前文件(%s)没有扩展名不是SCL文件.");
+
+	g_sLangID_AnalysisSCLFiles = _T("AnalysisSCLFiles");
+	g_sLangTxt_AnalysisSCLFiles = _T("SCL解析");
+	g_sLangID_LoadSCLFiles = _T("LoadSCLFiles");
+	g_sLangTxt_LoadSCLFiles = _T("正在加载SCL文件...");
+	g_sLangID_LoadSCLFilesProgressBar = _T("LoadSCLFilesProgressBar");
+	g_sLangTxt_LoadSCLFilesProgressBar = _T("SCL加载进度条");
+
+	g_sLangID_SaveSCLFiles = _T("SaveSCLFiles");
+	g_sLangTxt_SaveSCLFiles = _T("正在保存SCL配置...");
+
+	g_sLangID_State_No = _T("State_No");
+	g_sLangTxt_State_No = _T("否");
+	g_sLangID_State_Yes = _T("State_Yes");
+	g_sLangTxt_State_Yes = _T("是");
+	g_sLangID_Expr = _T("Expr");//Expr
+	g_sLangTxt_Expr = _T("表达式（Expr）");//表达式（Expr）
+
+	g_sLangID_AutoTest_SvrName = _T("sAutoTest_SvrName");
+	g_sLangTxt_AutoTest_SvrName = _T("自动测试服务名称");
+	g_sLangID_AutoTest_SvrVersion = _T("sAutoTest_SvrVersion");
+	g_sLangTxt_AutoTest_SvrVersion = _T("自动测试服务版本");
+
+	//国际版移植 20250207 xueyangfan
+	g_sLangID_Xrio_EnterNumbers =_T("Xrio_EnterNumbers");
+	g_sLangTxt_Xrio_EnterNumbers =_T("请输入一个数字。");
+	g_sLangID_Xrio_ValueLessThanOREqual =_T("Xrio_ValueLessThanOREqual");
+	g_sLangTxt_Xrio_ValueLessThanOREqual =_T("值必须 <= ");
+	g_sLangID_Xrio_ValueGreaterThanOREqual =_T("Xrio_ValueGreaterThanOREqual");
+	g_sLangTxt_Xrio_ValueGreaterThanOREqual =_T("值必须 >= ");
+	g_sLangID_Xrio_InvalidDoublePrecisionValue = _T("Xrio_InvalidDoublePrecisionValue");
+	g_sLangTxt_Xrio_InvalidDoublePrecisionValue = _T("无效的双精度值！");
+	g_sLangID_Xrio_InvalidIntValue = _T("Xrio_InvalidIntValue");
+	g_sLangTxt_Xrio_InvalidIntValue = _T("无效的整形值！");
+	g_sLangID_Xrio_LogInfo_ParamDataType = _T("Xrio_LogInfo_ParamDataType");
+	g_sLangTxt_Xrio_LogInfo_ParamDataType = _T("参数数据类型");
+	g_sLangID_Xrio_LogInfo_NamePath = _T("Xrio_LogInfo_NamePath");
+	g_sLangTxt_Xrio_LogInfo_NamePath = _T("名称路径");
+	g_sLangID_Xrio_LogInfo_IDPath = _T("Xrio_LogInfo_IDPath");
+	g_sLangTxt_Xrio_LogInfo_IDPath = _T("ID路径");
+	g_sLangID_Xrio_LogInfo_InvalidParamDataType = _T("Xrio_LogInfo_InvalidParamDataType");
+	g_sLangTxt_Xrio_LogInfo_InvalidParamDataType = _T("参数含无效数据类型！数据类型改为字符串型！");
+	g_sLangID_Xrio_LogInfo_MinGreaterThanMax = _T("Xrio_LogInfo_MinGreaterThanMax");
+	g_sLangTxt_Xrio_LogInfo_MinGreaterThanMax = _T("最小值大于最大值！");
+	g_sLangID_Xrio_InvalidEnumValue = _T("Xrio_InvalidEnumValue");
+	g_sLangTxt_Xrio_InvalidEnumValue = _T("无效的枚举值！");
+	g_sLangID_Xrio_InvalidBinaryValue = _T("Xrio_InvalidBinaryValue");
+	g_sLangTxt_Xrio_InvalidBinaryValue = _T("无效的二进制值！");
 
 }
 
@@ -1852,6 +2002,9 @@ CString g_sLangID_Linep                ;//= _T("sLinep");
 CString g_sLangTxt_Linep              ;//= _T("直线（linep）");
 CString g_sLangID_Mho                ;//= _T("sMho");
 CString g_sLangTxt_Mho              ;//= _T("圆（mho）");
+
+CString g_sLangID_Expr                ;//= _T("sExpr");
+CString g_sLangTxt_Expr              ;//= _T("表达式（Expr）");
 
 CString g_sLangID_I2T                ;//= _T("sI2T"); //I2T
 CString g_sLangTxt_I2T                ;//= _T("反时限I2T)");
@@ -2465,8 +2618,8 @@ CString g_sLangID_IEC_DeleteNow;
 CString g_sLangTxt_IEC_DeleteNow;
 CString g_sLangID_IEC_Emptyout;
 CString g_sLangTxt_IEC_Emptyout;
-// CString g_sLangID_Native_FileName ;//= _T("Native_FileName");
-// CString g_sLangTxt_Native_FileName ;//= _T("文件名称");
+ CString g_sLangID_Native_FileName ;//= _T("Native_FileName");
+ CString g_sLangTxt_Native_FileName ;//= _T("文件名称");
 CString g_sLangID_FilePath;
 CString g_sLangTxt_FilePath;
 CString g_sLangID_FileSize;
@@ -2496,3 +2649,99 @@ CString g_sLangTxt_Native_ChooseOpenFile ;//= _T("选择需要打开的文件");
 CString g_sLangID_Gradient_ShowUpath;
 CString g_sLangTxt_Gradient_ShowUpath;
 
+CString g_sLangID_warning;
+CString g_sLangTxt_warning;
+
+
+CString g_sLangID_UpdataFail                 ;//= _T("sUpdataFail");
+CString g_sLangTxt_UpdataFail                ;//= _T("测试仪更新:查询[系统标识:%d,版本标识:%d]更新信息失败!");
+CString g_sLangID_DownloadFile				 ;//= _T("sDownloadFile");
+CString g_sLangTxt_DownloadFile              ;//= _T("测试仪更新:查询信息完成，开始下载文件，请稍后...[系统标识:%d,版本标识:%d]");
+CString g_sLangID_DownloadFail               ;//= _T("sDownloadFail");
+CString g_sLangTxt_DownloadFail              ;//= _T("测试仪更新:下载版本文件[%s]失败!");
+CString g_sLangID_DownloadCompress           ;//= _T("sDownloadCompress ");
+CString g_sLangTxt_DownloadCompress          ;//= _T("测试仪更新:下载版本文件[%s]完成,准备解压缩!");
+CString g_sLangID_LocalUpgrades              ;//= _T("sLocalUpgrades");
+CString g_sLangTxt_LocalUpgrades             ;//= _T("测试仪更新:已结束与云平台交互,开始解压缩更新包并进行本地升级!");
+CString g_sLangID_Reboot                     ;//= _T("sReboot");
+CString g_sLangTxt_Reboot                    ;//= _T("测试仪更新:升级成功后,需将测试仪重启,请稍等......");	
+CString g_sLangID_UnpackSucc                 ;//= _T("sUnpackSucc");
+CString g_sLangTxt_UnpackSucc                ;//= _T("测试仪更新：解压本地更新包【%s】成功!");
+CString g_sLangID_UnpackFail                 ;//= _T("sUnpackFail");
+CString g_sLangTxt_UnpackFail                ;//= _T("测试仪更新：解压本地更新包【%s】失败!");
+CString g_sLangID_Update_UpdateSuccess       ;//= _T("sUpdate_UpdateSuccess");
+CString g_sLangTxt_Update_UpdateSuccess      ;//= _T("程序升级成功，请手动重启仪器");
+
+CString g_sLangID_Escalating		         ;//= _T("sEscalating");
+CString g_sLangTxt_Escalating			     ;//= _T("正在准备升级文件，请稍后...");
+CString g_sLangID_TesterUpdate				 ;//= _T("sTesterUpdate")
+CString g_sLangTxt_TesterUpdate		         ;//= _T("测试仪更新：已更新%.02f%")
+CString g_sLangID_BackupSucc			     ;//= _T("sBackupSucc")
+CString g_sLangTxt_BackupSucc				 ;//=_T("测试仪更新：文件【%s】备份成功!")
+CString g_sLangID_BackupFail				 ;//= _T("sBackupFail")
+CString g_sLangTxt_BackupFail				 ;//=_T("测试仪更新：文件【%s】备份失败!")
+CString g_sLangID_CopySucc				     ;//= _T("sCopySucc")
+CString g_sLangTxt_CopySucc				     ;//=_T("测试仪更新：文件【%s】拷贝成功!")
+CString g_sLangID_TesterUpdataFail			 ;//= _T("sTesterUpdataFail")
+CString g_sLangTxt_TesterUpdataFail			 ;//=_T("测试仪更新：文件【%s】更新失败!")
+
+CString g_sLangID_ExpSucc;
+CString g_sLangTxt_ExpSucc;
+CString g_sLangID_ExpFail;
+CString g_sLangTxt_ExpFail;
+CString g_sLangID_ImpSucc;
+CString g_sLangTxt_ImpSucc;
+CString g_sLangID_ImpFail;
+CString g_sLangTxt_ImpFail;
+CString g_sLangID_RemainingMemorySize;
+CString g_sLangTxt_RemainingMemorySize;
+CString g_sLangID_InsufficientSystemMemory;
+CString g_sLangTxt_InsufficientSystemMemory;
+CString g_sLangID_ExistenceSCDFiles;
+CString g_sLangTxt_ExistenceSCDFiles;
+CString g_sLangID_NoExistenceSCLFiles;
+CString g_sLangTxt_NoExistenceSCLFiles;
+CString g_sLangID_AnalysisSCLFiles;
+CString g_sLangTxt_AnalysisSCLFiles;
+CString g_sLangID_LoadSCLFiles;
+CString g_sLangTxt_LoadSCLFiles;
+CString g_sLangID_LoadSCLFilesProgressBar;
+CString g_sLangTxt_LoadSCLFilesProgressBar;
+CString g_sLangID_SaveSCLFiles;
+CString g_sLangTxt_SaveSCLFiles;
+CString g_sLangID_State_No;					 //= _T("State_No");
+CString g_sLangTxt_State_No;				 //= _T("否");
+CString g_sLangID_State_Yes;				 //= _T("State_Yes");
+CString g_sLangTxt_State_Yes;				 //= _T("是");
+
+//shaolei 2024-12-9
+CString g_sLangID_AutoTest_SvrName;                       //= _T("sAutoTest_SvrName")
+CString g_sLangTxt_AutoTest_SvrName;                      //= _T("自动测试服务名称")
+CString g_sLangID_AutoTest_SvrVersion;				      //= _T("sAutoTest_SvrVersion")
+CString g_sLangTxt_AutoTest_SvrVersion;                   //= _T("自动测试服务版本")
+
+//国际版移植 20250207 xueyangfan
+CString g_sLangID_Xrio_EnterNumbers;                 //=_T("Xrio_EnterNumbers");
+CString g_sLangTxt_Xrio_EnterNumbers;                //=_T("请输入一个数字。");
+CString g_sLangID_Xrio_ValueLessThanOREqual;         //=_T("Xrio_ValueLessThanOREqual");
+CString g_sLangTxt_Xrio_ValueLessThanOREqual;        //=_T("值必须 <= ");
+CString g_sLangID_Xrio_ValueGreaterThanOREqual;      //=_T("Xrio_ValueGreaterThanOREqual");
+CString g_sLangTxt_Xrio_ValueGreaterThanOREqual;     //=_T("值必须 >= ");
+CString g_sLangID_Xrio_InvalidDoublePrecisionValue;  //= _T("Xrio_InvalidDoublePrecisionValue")
+CString g_sLangTxt_Xrio_InvalidDoublePrecisionValue; //= _T("无效的双精度值！")
+CString g_sLangID_Xrio_InvalidIntValue;              //= _T("Xrio_InvalidIntValue")
+CString g_sLangTxt_Xrio_InvalidIntValue;             //= _T("无效的整形值！")
+CString g_sLangID_Xrio_LogInfo_ParamDataType;        //= _T("Xrio_LogInfo_ParamDataType")
+CString g_sLangTxt_Xrio_LogInfo_ParamDataType;       //= _T("参数数据类型")
+CString g_sLangID_Xrio_LogInfo_NamePath;             //= _T("Xrio_LogInfo_NamePath")
+CString g_sLangTxt_Xrio_LogInfo_NamePath;            //= _T("名称路径")
+CString g_sLangID_Xrio_LogInfo_IDPath;               //= _T("Xrio_LogInfo_IDPath")
+CString g_sLangTxt_Xrio_LogInfo_IDPath;              //= _T("ID路径")
+CString g_sLangID_Xrio_LogInfo_InvalidParamDataType; //= _T("Xrio_LogInfo_InvalidParamDataType")
+CString g_sLangTxt_Xrio_LogInfo_InvalidParamDataType;//= _T("参数含无效数据类型！数据类型改为字符串型！")
+CString g_sLangID_Xrio_LogInfo_MinGreaterThanMax;    //= _T("Xrio_LogInfo_MinGreaterThanMax")
+CString g_sLangTxt_Xrio_LogInfo_MinGreaterThanMax;   //= _T("最小值大于最大值！")
+CString g_sLangID_Xrio_InvalidEnumValue;             //= _T("Xrio_InvalidEnumValue")
+CString g_sLangTxt_Xrio_InvalidEnumValue;            //= _T("无效的枚举值！")
+CString g_sLangID_Xrio_InvalidBinaryValue;           //= _T("Xrio_InvalidBinaryValue")
+CString g_sLangTxt_Xrio_InvalidBinaryValue;          //= _T("无效的二进制值！")
