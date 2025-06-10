@@ -27,7 +27,7 @@ LIBS += -L "/usr/local/qwt-6.1.2/lib" -lqwt
 
 #greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = HKLinuxCenter
+TARGET = TestCtrlCntrLinux
 #OBJECTS_DIR = /home/uisrc/hkobjects
 DESTDIR = "/home/uisrc/HK/Stt/Bin"
 

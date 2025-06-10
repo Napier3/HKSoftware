@@ -15,7 +15,7 @@
 
 #include "../Module/SttGlobalDef.h"
 
-CXWndInterface *g_theCapDeviceMngrMsgRcvWnd = NULL;
+//CXWndInterface *g_theCapDeviceMngrMsgRcvWnd = NULL;
 
 CCapDeviceMngr::CCapDeviceMngr()
 {
