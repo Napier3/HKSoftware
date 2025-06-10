@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include "SttCharacterDrawForTest.h"
-#include "../../../Module/DataMngr/DataMngrTrans.h"
+#include "../../Module/DataMngr/DataMngrTrans.h"
 
 //#ifndef NOT_USE_XLANGUAGE
 #include "../XLanguageResourceAts.h"

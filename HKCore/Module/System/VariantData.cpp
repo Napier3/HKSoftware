@@ -4,7 +4,7 @@
 
 #include "stdafx.h"
 #include "VariantData.h"
-#include "../api/StringApi.h"
+#include "../API/StringApi.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE

@@ -1,13 +1,13 @@
 #pragma once
 
 #include "IotPxEngineInterface.h"
-#include "../../../Module/DataMngr/DvmDevice.h"
+#include "../../Module/DataMngr/DvmDevice.h"
 #include "IotPxEngineDeviceWnd.h"
-#include "../../../Module/BaseClass/TxArray.h"
-#include "../../../Module/BaseClass/TxCycleArray.h"
+#include "../../Module/BaseClass/TxArray.h"
+#include "../../Module/BaseClass/TxCycleArray.h"
 
 #include "../../../Protocol/Module/PxiEngine/PxiEngineGlobal.h"
-#include "../../../Module/BaseClass/ThreadProgressInterface.h"
+#include "../../Module/BaseClass/ThreadProgressInterface.h"
 
 class CIotPxEngineDeviceWnd;
 

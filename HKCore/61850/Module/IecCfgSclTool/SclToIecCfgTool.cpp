@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "SclToIecCfgTool.h"
 #include "../CfgDataMngr/IecCfg92ChIn.h"
 #include "../CfgDataMngr/IecCfg92ChsIn.h"

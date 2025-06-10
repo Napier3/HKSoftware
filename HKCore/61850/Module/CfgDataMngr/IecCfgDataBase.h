@@ -12,8 +12,8 @@
 // #include "ArtAmpDigdatas.h"
 
 #ifdef IECFG_USE_KEYDB
-#include "../../../Module/KeyDb/XKeyDB.h"
-#include "../../../Module/KeyDb/XMatchList.h"
+#include "../../Module/KeyDb/XKeyDB.h"
+#include "../../Module/KeyDb/XMatchList.h"
 #endif
 
 class CIecCfgDataBase : public CExBaseList

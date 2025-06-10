@@ -5,7 +5,7 @@
 #include "stdafx.h"
 #include "DrawTimeAxisRange.h"
 #include "DrawTimeAxis.h"
-#include "../../../Module/API/GloblaDrawFunctions.h"
+#include "../../Module/API/GloblaDrawFunctions.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE

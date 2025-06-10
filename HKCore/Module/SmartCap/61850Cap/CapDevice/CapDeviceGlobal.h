@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "../../../../Module/BaseClass/ExBaseList.h"
+#include "../../Module/BaseClass/ExBaseList.h"
 
 #define CPDCLASSID_BASECLASS       (CLASSID_BASECLASS + 0X00040000)
 #define CPDCLASSID_EXLISTCLASS     (CLASSID_LISTCLASS + 0X00040000)

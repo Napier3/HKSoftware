@@ -9,7 +9,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#include "../../BASECLASS/ExBaseList.h"
+#include "ExBaseList.h"
 #include "RtSet.h"
 
 class CRtSets : public CExBaseList  

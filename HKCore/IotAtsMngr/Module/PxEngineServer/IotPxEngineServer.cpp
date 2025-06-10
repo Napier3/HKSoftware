@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "IotPxEngineServer.h"
 #include "../../../AutoTest/Module/AutoTestGlobalDefine.h"
-#include"../../../Module/API/GlobalConfigApi.h"
+#include"../../Module/API/GlobalConfigApi.h"
 
 #ifdef _PSX_IDE_QT_
 #include "IotPxEngineServerWnd_Linux.h"

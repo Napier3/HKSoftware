@@ -10,12 +10,12 @@
 
 #ifdef _use_CIecCfgTool
 #include "../OnllyCfgTool/OnllyCfgFileTool.h"
-#include "../../../Module/XfileMngrBase/DlgXFileMngr.h"
+#include "../../Module/XfileMngrBase/DlgXFileMngr.h"
 #include "../IecCfgTool/IecCfgTool.h"
 #endif
 
 #ifndef _PSX_IDE_QT_
-#include "../../../Module/XfileMngrBase/DlgXFileMngr.h"
+#include "../../Module/XfileMngrBase/DlgXFileMngr.h"
 #endif
 
 CIecCfgDevice::CIecCfgDevice()

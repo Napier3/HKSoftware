@@ -9,7 +9,7 @@
 #include "IecCfgDataBase.h"
 #include "IecCfgDatasBase.h"
 #include "../../Module/XLanguageResourceIec.h"
-#include"../../../Module/API/GlobalConfigApi.h"
+#include"../../Module/API/GlobalConfigApi.h"
 
 CIecCfgDataBase::CIecCfgDataBase()
 {

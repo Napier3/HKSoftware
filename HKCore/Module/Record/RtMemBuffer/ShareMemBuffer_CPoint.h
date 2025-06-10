@@ -15,7 +15,7 @@
 #define	MR1200_POINT_MAPNAME        "_mr1200_point_buffer"
 #define	MR1200_POINT_MAPSIZE        104857600 //100M == 800M byte
 
-#include "../../../MODULE/SHAREMEM/ShareMemServerEx.h"
+#include "../../Module/ShareMem/ShareMemServerEx.h"
 #include "MemBuffer_CPoint.h"
 
 class CShareMemBuffer_CPoint  : public CMemBuffer_CPoint

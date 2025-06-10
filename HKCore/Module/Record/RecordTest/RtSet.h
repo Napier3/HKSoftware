@@ -9,7 +9,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#include "../../BASECLASS/ExBaseObject.h"
+#include "ExBaseObject.h"
 #include "RtScript.h"
 #include "../RecordGlobalDefine.h"
 

@@ -8,12 +8,12 @@
 #include "stdafx.h"
 #include "CharacterDrawView.h"
 
-#include "../../../Module/XDrawBase/XDrawMngrDescartes.h"
-#include "../../../Module/XDrawBase/XDrawMngrLogarithm.h"
+#include "../../Module/XDrawBase/XDrawMngrDescartes.h"
+#include "../../Module/XDrawBase/XDrawMngrLogarithm.h"
 
 #ifndef _PSX_IDE_QT_
 #ifndef _PSX_QT_LINUX_
-#include "../../../Module/BaseClass/DIB.h"
+#include "../../Module/BaseClass/DIB.h"
 #endif
 #endif
 

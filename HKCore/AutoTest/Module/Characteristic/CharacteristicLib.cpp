@@ -7,8 +7,8 @@
 
 #include "stdafx.h"
 #include "CharacteristicLib.h"
-#include "../../../Module/API/GlobalConfigApi.h"
-#include "../../../Module/API/FileApi.h"
+#include "../../Module/API/GlobalConfigApi.h"
+#include "../../Module/API/FileApi.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

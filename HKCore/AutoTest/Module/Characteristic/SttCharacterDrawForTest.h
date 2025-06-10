@@ -2,7 +2,7 @@
 
 #include "CharacteristicTmplate.h"
 #include "CharacterDrawView.h"
-#include "../../../SttStudio/Module/SttCmd/GuideBook/SttItems.h"
+#include "../Module/SttCmd/GuideBook/SttItems.h"
 
 // CCharacterDrawForTest
 

@@ -1,10 +1,10 @@
 #pragma once
 
 #include "../GbSmartGenWzdGlobal.h"
-#include "../../../../../Module/KeyDb/XKeyDB.h"
-#include "../../../../../Module/KeyDb/XMatchList.h"
-#include "../../../../../Module/DataMngr/DvmDevice.h"
-#include "../../../../../SttStudio/Module/SttCmd/GuideBook/SttGuideBook.h"
+#include "../../Module/KeyDb/XKeyDB.h"
+#include "../../Module/KeyDb/XMatchList.h"
+#include "../../Module/DataMngr/DvmDevice.h"
+#include "../Module/SttCmd/GuideBook/SttGuideBook.h"
 
 class CGbAiDataKey :public CExBaseObject
 {

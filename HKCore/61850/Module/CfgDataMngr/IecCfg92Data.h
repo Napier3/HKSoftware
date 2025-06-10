@@ -13,7 +13,7 @@
 #include "IecCfg92Chs.h"
 #include "IecCfg92ChQuality.h"
 
-#include "../../../Module/DataMngr/DvmDataset.h"
+#include "../../Module/DataMngr/DvmDataset.h"
 
 typedef CTLinkListEx<CIecCfg92ChQuality>  CIecCfg92ChQualityList;
 

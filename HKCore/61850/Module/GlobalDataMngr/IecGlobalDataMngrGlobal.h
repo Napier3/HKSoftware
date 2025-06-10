@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include "../../../Module/BaseClass/ExBaseList.h"
-#include "../../../Module/DataMngr/DataTypes.h"
+#include "../../Module/BaseClass/ExBaseList.h"
+#include "../../Module/DataMngr/DataTypes.h"
 
 #define STGCLASSID_BASECLASS       (CLASSID_BASECLASS + 0X00010000)
 #define STGCLASSID_EXLISTCLASS       (CLASSID_LISTCLASS + 0X00010000)

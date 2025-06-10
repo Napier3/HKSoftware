@@ -7,7 +7,7 @@
 
 #include "stdafx.h"
 #include "CharacteristicTmplate.h"
-#include "../../../Module/Expression/EpExpression.h"
+#include "../../Module/Expression/EpExpression.h"
 
 #ifndef NOT_USE_XLANGUAGE
 #include "../XLanguageResourceAts.h"

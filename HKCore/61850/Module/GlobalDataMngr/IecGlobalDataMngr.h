@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "../../../Module/FilterText/FilterTextMngr.h"
+#include "../../Module/FilterText/FilterTextMngr.h"
 
 #include "IecSmvChDataType.h"
 #include "IecGooseChDataTypeMngr.h"

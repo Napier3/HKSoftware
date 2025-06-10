@@ -2,7 +2,7 @@
 
 #include "GuideBookDefine.h"
 #include "reports.h"
-#include "ScriptText.h"
+#include "scriptText.h"
 #include "ReportMap/ReportMap.h"
 #include "TestTypeMngr.h"
 #include "../../../Module/TestMacro/TestMacros.h"

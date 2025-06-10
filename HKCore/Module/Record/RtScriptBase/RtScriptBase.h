@@ -10,7 +10,7 @@
 #endif // _MSC_VER > 1000
 
 #include <math.h>
-#include "../../BASECLASS/ExBaseObject.h"
+#include "ExBaseObject.h"
 #include "../RecordGlobalDefine.h"
 
 #define RTSCRIPT_OPTRID_ERROR     -1   //Error

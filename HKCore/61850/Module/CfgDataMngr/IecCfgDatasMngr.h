@@ -13,7 +13,7 @@
 #include "IecCfgSmvInDatas.h"
 #include "IecCfgSysParas.h"
 
-#include "../../../Module/DataMngr/DvmLogicDevice.h"
+#include "../../Module/DataMngr/DvmLogicDevice.h"
 // #include "IecCfgDatasAnalog.h"
 // #include "IecCfgSystemConfig.h"
 

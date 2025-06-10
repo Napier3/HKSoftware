@@ -10,11 +10,11 @@
 #include "IecCfgDataMngrGlobal.h"
 #include "IecCfgDataBase.h"
 
-#include "../../../Module/DataMngr/DvmLogicDevice.h"
+#include "../../Module/DataMngr/DvmLogicDevice.h"
 
 #ifdef IECFG_USE_KEYDB
-#include "../../../Module/KeyDb/XKeyDB.h"
-#include "../../../Module/KeyDb/XMatchList.h"
+#include "../../Module/KeyDb/XKeyDB.h"
+#include "../../Module/KeyDb/XMatchList.h"
 #endif
 
 class CIecCfgDatasBase : public CExBaseList

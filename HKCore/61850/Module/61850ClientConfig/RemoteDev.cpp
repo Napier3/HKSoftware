@@ -7,7 +7,7 @@
 
 #include "stdafx.h"
 #include "RemoteDev.h"
-#include "../../../Module/API/StringApi.h"
+#include "../../Module/API/StringApi.h"
 
 #ifdef USE_61850CLient_STRCUT
 #include "gsp_lib_memory.h"
@@ -18,13 +18,13 @@
 #include "../61850ClientConfig/61850ClientConfig.h"
 
 #include "../MmsWriteXml.h"
-#include "../../../Module/GpsPcTime/GpsPcTime.h"
+#include "../../Module/GpsPcTime/GpsPcTime.h"
 #include "../MmsGlobal.h"
 #include "../dlt860/DLT860Engine.h"
 #endif
 
-#include "../../../Module/API/FileApi.h"
-#include "../../../Module/API/StringConvert/String_Utf8_To_Gbk.h"
+#include "../../Module/API/FileApi.h"
+#include "../../Module/API/StringConvert/String_Utf8_To_Gbk.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE

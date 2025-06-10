@@ -8,7 +8,7 @@
 
 #include "TestMacroRptTemplateGlobal.h"
 #include "RptTemp_Enable.h"
-#include "../../../Module/DataMngr/DataGroup.h"
+#include "../../Module/DataMngr/DataGroup.h"
 
 
 

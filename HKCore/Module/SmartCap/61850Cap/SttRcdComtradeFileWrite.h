@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../Module/BaseClass/ExBaseList.h"
+#include "../../Module/BaseClass/ExBaseList.h"
 
 #include "../../Record/Comtrade/ComtradeMngr.h"
 #include "../../GpsPcTime/GpsPcTime.h"

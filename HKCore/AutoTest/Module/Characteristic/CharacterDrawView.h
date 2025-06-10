@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "../../../Module/XDrawBase/XDrawViewBase.h"
+#include "../../Module/XDrawBase/XDrawViewBase.h"
 #include "Characteristics.h"
 
 class CCharacterDrawView : public CXDrawViewBase

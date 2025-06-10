@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "SttRcdMemBufferMngr.h"
 #include "../61850ParseFrameList.h"
 

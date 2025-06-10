@@ -7,8 +7,8 @@
 
 #include "stdafx.h"
 #include "XSclFileMngr.h"
-#include "../../../../Module/API/FileApi.h"
-#include "../../../../Module/API/GlobalConfigApi.h"
+#include "../../Module/API/FileApi.h"
+#include "../../Module/API/GlobalConfigApi.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE

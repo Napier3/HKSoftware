@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../../../../Module/BaseClass/ExBaseList.h"
-//#include "../../../../Module/MemBuffer/CycleMemBuffer.h"
-#include "../../../../Module/MemBuffer/XMemBufferBse.h"
+#include "../../Module/BaseClass/ExBaseList.h"
+//#include "../../Module/MemBuffer/CycleMemBuffer.h"
+#include "../../Module/MemBuffer/XMemBufferBse.h"
 
 #define STPROTOCOLCLASSID_BASECLASS        (CLASSID_BASECLASS+0x04000000)
 #define STPROTOCOLCLASSID_LISTCLASS        (CLASSID_LISTCLASS+0x04000000)

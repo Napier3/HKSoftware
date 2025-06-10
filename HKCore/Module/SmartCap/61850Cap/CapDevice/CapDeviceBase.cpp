@@ -59,7 +59,7 @@ CCapDeviceBase::~CCapDeviceBase()
 {
 }
 
-#include "../../../../SttStudio/Module/SttGlobalDef.h"
+#include "../Module/SttGlobalDef.h"
 /*
 <macro type="relay" name="IEC¶©ÔÄ" id="IecRecord">
 	<fault-paras-ex name="" id="">

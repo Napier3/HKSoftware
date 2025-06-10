@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "GbWzdAiOptr.h"
 
 #ifdef _DEBUG

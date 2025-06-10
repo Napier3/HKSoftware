@@ -5,14 +5,14 @@
 //IecCfgDatasGout.h  CIecCfgDatasGout
 
 #pragma once
-#include "../../../Module/DataMngr/DataGroup.h"
+#include "../../Module/DataMngr/DataGroup.h"
 
 #include "IecCfgDataMngrGlobal.h"
 
 #include "IecCfgDatasBase.h"
 
 #include "IecCfgGoutData.h"
-#include "../../../Module/DataMngr/DvmLogicDevice.h"
+#include "../../Module/DataMngr/DvmLogicDevice.h"
 
 class CIecCfgGoutDatas : public CIecCfgDatasBase
 {

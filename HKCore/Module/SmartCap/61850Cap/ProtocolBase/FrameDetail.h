@@ -13,7 +13,7 @@
 #include "ProtocolGlobalDef.h"
 #include "ByteBlock.h"
 //#include "FrameMemBuffer.h"
-#include "../../../SmDb/XSmMemBuffer.h"
+#include "../../../Smdb/XSmMemBuffer.h"
 
 class CFrameDetail : public CByteBlocks  
 {

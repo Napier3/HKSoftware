@@ -7,7 +7,7 @@
 
 #include "stdafx.h"
 #include "IecCfgSmvRates.h"
-#include"../../../Module/API/GlobalConfigApi.h"
+#include"../../Module/API/GlobalConfigApi.h"
 
 CIecCfgSmvRates::CIecCfgSmvRates()
 {

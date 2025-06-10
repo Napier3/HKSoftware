@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "GbWzdAiMacroPara.h"
 #include "GbWzdAiSwitch.h"
 

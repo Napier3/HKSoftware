@@ -5,7 +5,7 @@
 #if !defined(_RECORTESTDEF_H_)
 #define _RECORTESTDEF_H_
 
-#include "../../BASECLASS/ExBaseObject.h"
+#include "ExBaseObject.h"
 #include "../RtMemBuffer/RtMemBufferMngr.h"
 #include "../RecordGlobalDefine.h"
 

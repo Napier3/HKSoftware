@@ -6,9 +6,9 @@
 
 #include "stdafx.h"
 #include "IecCfgDataMngrGlobal.h"
-#include "../../../Module/XLanguage/XLanguageResource.h"
-#include "../../../Module/XLanguage/XLanguageMngr.h"
-#include"../../../Module/API/GlobalConfigApi.h"
+#include "../../Module/XLanguage/XLanguageResource.h"
+#include "../../Module/XLanguage/XLanguageMngr.h"
+#include"../../Module/API/GlobalConfigApi.h"
 
 
 //#define _USE_Write_CH_FiberIndex_Config_Files

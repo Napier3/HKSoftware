@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "../../../Module/BaseClass/ExBaseList.h"
+#include "../../Module/BaseClass/ExBaseList.h"
 
 class CIecFiberCh : public CExBaseObject
 {

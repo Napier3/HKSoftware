@@ -16,7 +16,7 @@
 #include "IecCfgSmvRates.h"
 #include "IecCfg92InData.h"
 #include "IecCfg2MData.h"
-#include "../../../Module/DataMngr/DataGroup.h"
+#include "../../Module/DataMngr/DataGroup.h"
 
 static const CString g_strSmvType91		= _T("9-1");
 static const CString g_strSmvType92		= _T("9-2");

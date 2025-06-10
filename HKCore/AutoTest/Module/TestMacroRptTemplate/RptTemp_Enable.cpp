@@ -8,7 +8,7 @@
 #include "stdafx.h"
 #include "RptTemp_Enable.h"
 #include <math.h>
-#include "../../../Module/DataMngr/DvmData.h"
+#include "../../Module/DataMngr/DvmData.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE

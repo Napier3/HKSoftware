@@ -3,8 +3,8 @@
 
 #include "stdafx.h"
 #include "LogarithmAxis.h"
-#include "../Api/GloblaDrawFunctions.h"
-#include "../Api/StringApi.h"
+#include "../API/GloblaDrawFunctions.h"
+#include "../API/StringApi.h"
 
 #include <math.h>
 

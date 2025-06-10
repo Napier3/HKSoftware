@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "CapGlobalDef.h"
 
 #include "../../CriticalSection/SynCriticalSection.h"

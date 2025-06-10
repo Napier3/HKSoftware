@@ -14,7 +14,7 @@
 #include "../API/FileApi.h"
 #endif
 
-#include "../Api/GlobalConfigApi.h"
+#include "../API/GlobalConfigApi.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE

@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include "PolarAxis.h"
 
-#include "../../Module/Api/GloblaDrawFunctions.h"
+#include "../../Module/API/GloblaDrawFunctions.h"
 #include <math.h>
 
 #ifdef _DEBUG

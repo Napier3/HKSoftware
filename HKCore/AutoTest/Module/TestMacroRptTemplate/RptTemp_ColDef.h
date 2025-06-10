@@ -7,7 +7,7 @@
 #pragma once
 
 #include "TestMacroRptTemplateGlobal.h"
-#include "../../../Module/DataMngr/DataGroup.h"
+#include "../../Module/DataMngr/DataGroup.h"
 
 
 

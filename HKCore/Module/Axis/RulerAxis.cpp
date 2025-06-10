@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include "RulerAxis.h"
-#include "../../Module/Api/GloblaDrawFunctions.h"
+#include "../../Module/API/GloblaDrawFunctions.h"
 #include <math.h>
 #include "../API/StringApi.h"
 

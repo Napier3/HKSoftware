@@ -10,7 +10,7 @@
 
 
 #include "RptTemp_Group.h"
-#include "../../../Module/DataMngr/DataGroup.h"
+#include "../../Module/DataMngr/DataGroup.h"
 
 class CRptTemp_Group : public CDataGroup
 {

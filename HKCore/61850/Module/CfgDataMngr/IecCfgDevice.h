@@ -11,7 +11,7 @@
 #include "../SCL/SclIecCfgDatas.h"
 #endif
 
-#include "../../../Module/XfileMngrBase/XFileMngr.h"
+#include "../../Module/XfileMngrBase/XFileMngr.h"
 
 
 class CIecCfgDevice : public CExBaseList

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ProtocolGlobalDef.h"
-#include "../../../../Module/System/VariantData.h"
+#include "../../Module/System/VariantData.h"
 
 class CBbInffor : public CExBaseObject
 {

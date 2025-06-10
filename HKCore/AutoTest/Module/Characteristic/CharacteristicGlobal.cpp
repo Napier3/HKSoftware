@@ -7,7 +7,7 @@
 #include "stdafx.h"
 #include "CharacteristicGlobal.h"
 
-#include "../../../Module/XDrawBase/XDrawDataDef.h"
+#include "../../Module/XDrawBase/XDrawDataDef.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

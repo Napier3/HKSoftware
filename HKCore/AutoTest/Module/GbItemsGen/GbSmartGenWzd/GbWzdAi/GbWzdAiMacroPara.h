@@ -2,7 +2,7 @@
 
 #include "GbWzdAiScript.h"
 class CGbAiSwitch;
-#include "../../../../../SttStudio/Module/SttCmd/GuideBook/SttGuideBook.h"
+#include "../Module/SttCmd/GuideBook/SttGuideBook.h"
 
 //////////////////////////////////////////////////////////////////////////
 //

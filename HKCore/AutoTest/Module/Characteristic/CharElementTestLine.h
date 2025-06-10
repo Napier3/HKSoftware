@@ -7,7 +7,7 @@
 #pragma once
 
 #include "CharacteristicGlobal.h"
-#include "../../../Module/XDrawBase/XDrawList.h"
+#include "../../Module/XDrawBase/XDrawList.h"
 
 //2022-7-24  lijunqing ÒÆ¶¯µ½AutoTestGlobalDefine.h
 // #define TESTLINE_ACT_STATE_NONE     -255

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../FrameMemBuffer.h"
-#include "../../../../../Module/SmDb/XSmMemBufferMngr.h"
+#include "../../Module/Smdb/XSmMemBufferMngr.h"
 
 class CSttFrameMemBufferMngr : public CXSmMemBufferMngr
 {

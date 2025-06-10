@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "XSttCap_61850.h"
 
 extern CXWndInterface *g_theCapDeviceMngrMsgRcvWnd;

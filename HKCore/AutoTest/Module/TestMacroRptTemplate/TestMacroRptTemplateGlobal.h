@@ -9,8 +9,8 @@
 
 #pragma once
 
-#include "../../../Module/BaseClass/ExBaseList.h"
-#include "../../../Module/DataMngr/DataMngrGlobal.h"
+#include "../../Module/BaseClass/ExBaseList.h"
+#include "../../Module/DataMngr/DataMngrGlobal.h"
 
 #define RptTemplateMngrCLASSID_BASECLASS       (CLASSID_BASECLASS + 0X00060000)
 #define RptTemplateMngrCLASSID_EXLISTCLASS       (CLASSID_EXLISTCLASS + 0X00060000)

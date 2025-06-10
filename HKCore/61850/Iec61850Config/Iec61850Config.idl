@@ -1,0 +1,46 @@
+// HmVm.idl : HmVm.exe 的类型库源
+
+// 此文件将由 MIDL 编译器处理以产生
+// 类型库(HmVm.tlb)。
+
+#include "olectl.h"
+#include "olectl.h"
+[ uuid(BFA9896E-3425-473B-9376-68962C0DC87E), version(1.0) ]
+library Iec61850Config
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	//  TestEngine 的主调度接口
+		
+	[ uuid(27C70E3E-7ED4-4C61-ABF9-3809AB63D54B) ]
+	dispinterface ITestEngine
+	{
+		properties:
+		methods:
+			[id(1), helpstring("方法SetMsgWnd")] LONG SetWndMsg(ULONG hMainWnd, ULONG nMsgID);
+			[id(2), helpstring("方法OpenSCDFile")] LONG OpenSCDFile(LPCTSTR strScdFilePath);
+			[id(3), helpstring("方法OpenTscdFile")] LONG OpenTscdFile(LPCTSTR strTscdFilePath);
+			[id(4), helpstring("方法SetDestPath")] LONG SetDestPath(LPCTSTR strDestPath);
+			[id(5), helpstring("方法NewIecfgFile")] LONG NewIecfgFile(LPCTSTR strIedName,LPCTSTR strSrcIecfgFile);
+			[id(6), helpstring("方法EditIecfgFile")] LONG EditIecfgFile(LPCTSTR strIecfgFile);
+			[id(7), helpstring("方法SaveIecfgFile")] LONG SaveIecfgFile(LPCTSTR strIecfgFile);
+			[id(8), helpstring("方法CloseIecfgFile")] LONG CloseIecfgFile(LPCTSTR strIecfgFile);
+// 			[id(2), helpstring("方法NewCfgFile")] ULONG NewCfgFile(LPCTSTR strSCLFilePath, LPCTSTR strIEDName, LPCTSTR strSavePath);
+// 			[id(3), helpstring("方法EditCfgFile")] ULONG EditCfgFile(LPCTSTR strCfgFilePath);
+			[id(9), helpstring("方法ExitEngine")] ULONG ExitEngine(void);
+
+			
+			[id(10), helpstring("方法ExportAt02dFiles")] LONG ExportAt02dFiles(BSTR strDesIecfgPath, BSTR strCbXml);
+			[id(11), helpstring("方法SetDispMode")] void SetDispMode(LONG nMode);
+			[id(12), helpstring("方法CommConfig")] LONG CommConfig(BSTR strCmmConfig);
+	};
+
+	//  TestEngine 的类信息
+
+	[ uuid(AD0B02A6-A607-432C-9B4A-D0C77A4079F5) ]
+	coclass TestEngine
+	{
+		[default] dispinterface ITestEngine;
+	};
+};

@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "SttRcdComtradeFileWrite.h"
 #include "../../API/GlobalConfigApi.h"
 

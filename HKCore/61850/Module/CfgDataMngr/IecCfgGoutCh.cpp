@@ -7,7 +7,7 @@
 
 #include "stdafx.h"
 #include "IecCfgGoutCh.h"
-#include "../../../Module/API/HexTransApi.h"
+#include "../../Module/API/HexTransApi.h"
 
 CIecCfgGoutCh::CIecCfgGoutCh()
 {

@@ -9,8 +9,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-
-#include "../../../Module/BASECLASS/ExBaseList.h"
+#include "ExBaseList.h"
 #include "RtMultiVariable.h"
 #include "RtSingleVariable.h"
 #include "RtBinaryVariable.h"

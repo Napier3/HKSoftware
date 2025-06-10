@@ -1,12 +1,7 @@
 #pragma once
 
 #include "../ExBaseOptrInterface.h"
-
-#ifdef _PSX_QT_LINUX_
-#include "../../../SttStudio/Module/UI/Module/ScrollCtrl/ScrollComboBox.h"
-#else
-#include <QComboBox>
-#endif
+#include "../Module/UI/Module/ScrollCtrl/ScrollComboBox.h"
 
 void ex_InsertChildreComboBox(CExBaseList *pDatas, QComboBox *pComboBox, BOOL bAddParentNameID = FALSE, long nSel=0);
 
@@ -18,12 +13,7 @@ CExBaseObject* ex_ComboBox_GetSelObj(QComboBox *pComboBox);
 void ex_ComboBox_adjustItemWidth(QComboBox *pComboBox);
 
 
-
-#ifdef _PSX_QT_LINUX_
 class CExBaseListComboBox : public QScrollComboBox, public CExBaseCtrlOptrInterface
-#else
-class CExBaseListComboBox : public QComboBox, public CExBaseCtrlOptrInterface
-#endif
 {
 	Q_OBJECT
 public:
@@ -41,27 +31,16 @@ public:
 	virtual void ShowBaseList(CExBaseList *pList, UINT nClassID, BOOL bAddEmptyString,BOOL bAddName);
 	virtual void ShowBaseList(CExBaseList *pList);
 	virtual void Init(CExBaseList *pList, BOOL bAddEmptyString=FALSE,BOOL bAddName=TRUE);
-#ifndef NO_XDbBaseLib
-	virtual void InitEx(CExBaseList *pList, long nPkValue, BOOL bAddEmptyString=FALSE,BOOL bAddName=TRUE);
-#endif
 	virtual long FindIndex(CExBaseObject *pObj);
 
 	virtual CExBaseObject* SetCurrSelByName(const CString &strName);
 	virtual CExBaseObject* SetCurrSelByID(const CString &strID);
 	virtual CExBaseObject* SetCurrSelObj(CExBaseObject *pObj);
-#ifndef NO_XDbBaseLib
-	virtual CExBaseObject* SetCurrSelObj(long nPkValue);
-#endif
-
 	virtual CExBaseObject* GetSelectObject();	
 	virtual CString GetSelectID();
 	virtual CString GetSelectName();
 	virtual BOOL GetSelectID(CString &strID);
 	virtual BOOL GetSelectName(CString &strName);
-#ifndef NO_XDbBaseLib
-	virtual long GetSelectPKValue();
-#endif
-
 	virtual BOOL DeleteObject(CExBaseObject *pObj);
 	virtual BOOL DeleteCurrSelObject();  //2021-1-8  lijunqing
 	virtual long AddObj(CExBaseObject *pObj);

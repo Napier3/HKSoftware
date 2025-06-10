@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include "../../../Module/BaseClass/ExBaseList.h"
-#include "../../../Module/API/FileApi.h"
-#include "../../../Module/DataMngr/DataTypes.h"
+#include "../../Module/BaseClass/ExBaseList.h"
+#include "../../Module/API/FileApi.h"
+#include "../../Module/DataMngr/DataTypes.h"
 
 static const CString g_strIecCfgFilePostfix       = _T("ixml");
 static const CString g_strDeviceIecCfgFilePostfix = _T("iecfg");

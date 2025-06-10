@@ -7,8 +7,8 @@
 
 #include "stdafx.h"
 #include "IecCfg91StateWordMngr.h"
-#include "../globaldatamngr/IecGlobalDataMngrGlobal.h"
-#include "../../../Module/API/GlobalConfigApi.h"
+#include "../GlobalDataMngr/IecGlobalDataMngrGlobal.h"
+#include "../../Module/API/GlobalConfigApi.h"
 
 CIecCfg91StateWordMngr::CIecCfg91StateWordMngr()
 {

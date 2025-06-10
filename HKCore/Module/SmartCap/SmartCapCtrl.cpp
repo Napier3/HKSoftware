@@ -1,10 +1,10 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "SmartCapCtrl.h"
 #include "../../Module/SmartCap/XSmartCapMngr.h"
 
 #include "../../Module/Socket/XPing.h"
-#include "../../SttStudio/Module/SttTestAppConfig/SttTestAppCfg.h"
-#include "../../SttStudio/Module/SttTestAppConfig/SttTestAppConfigTool.h"
+#include "../Module/SttTestAppConfig/SttTestAppCfg.h"
+#include "../Module/SttTestAppConfig/SttTestAppConfigTool.h"
 
 #define MACROID_STTTIMEMEASURETEST _T("SttTimeMeasureTest")
 #define MACROID_STTIECDETECTTEST   _T("Iec61850Detect")

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../Module/DataMngr/DvmDevice.h"
+#include "../../Module/DataMngr/DvmDevice.h"
 #include "../CfgDataMngr/IecCfgDataMngrGlobal.h"
 // extern BOOL g_pIedFile_Abstract;
 

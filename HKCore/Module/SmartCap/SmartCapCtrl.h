@@ -3,7 +3,7 @@
 #include "../DataMngr/DvmDevice.h"
 #include "../../61850/Module/CfgDataMngr/IecCfgDevice.h"
 #include "XSttCap_61850.h"
-#include "../../SttStudio/Module/SttSocket/Multicast/SttMulticastClientSocket.h"
+#include "../Module/SttSocket/Multicast/SttMulticastClientSocket.h"
 
 #define WM_EMPTYCAPDEVICE (WM_USER+2334)
 #define EXIT_CAP_TIMER  1722

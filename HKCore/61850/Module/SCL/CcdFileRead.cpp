@@ -1,8 +1,8 @@
 //#include "global.h"
 #include "CcdFileRead.h"
-#include "../../../Module/API/StringConvert/String_Utf8_To_Gbk.h"
+#include "../../Module/API/StringConvert/String_Utf8_To_Gbk.h"
 
-//#include "../../../Module/OSInterface/QT/XMessageBox.h"
+//#include "../../Module/OSInterface/QT/XMessageBox.h"
 
 // #if _MSC_VER >= 1600
 // #pragma execution_character_set("utf-8")

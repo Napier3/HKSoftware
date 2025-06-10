@@ -9,7 +9,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#include "../../../Module/BASECLASS/ExBaseList.h"
+#include "ExBaseList.h"
 #include "RecordTestClassDef.h"
 #include "RtScript.h"
 

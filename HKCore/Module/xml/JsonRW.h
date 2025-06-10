@@ -4,7 +4,7 @@
 
 #include "../API/StringApi.h"
 #include "../BaseClass/TLinkList.h"
-#include "json/CJSON.h"
+#include "JSON/CJSON.h"
 #include "XmlRWBase.h"
 #include<iostream>
 #include<locale>

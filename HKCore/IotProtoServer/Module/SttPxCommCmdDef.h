@@ -51,9 +51,9 @@
 #define  ParaID_UseRead    _T("UseRead")
 
 #define  CMDID_writeenaone  _T("writeenaone")
-//#define  CMDID_writeenasel  _T("writeenasel")//zhouhj 2024.1.24 新增用于PpEngine通讯，用于遥控选择  该ID已统一修改,此处注释掉
-//#define  CMDID_writeenaoper  _T("writeenaoper")//zhouhj 2024.1.24 新增用于PpEngine通讯，用于遥控执行
-//#define  CMDID_writeenarevk  _T("writeenarevk")//zhouhj 2024.1.24 新增用于PpEngine通讯，用于遥控撤销
+#define  CMDID_writeenasel  _T("writeenasel")//zhouhj 2024.1.24 新增用于PpEngine通讯，用于遥控选择  该ID已统一修改,此处注释掉
+#define  CMDID_writeenaoper  _T("writeenaoper")//zhouhj 2024.1.24 新增用于PpEngine通讯，用于遥控执行
+#define  CMDID_writeenarevk  _T("writeenarevk")//zhouhj 2024.1.24 新增用于PpEngine通讯，用于遥控撤销
 #define  CMDID_changesetzone  _T("changesetzone")
 #define  CMDID_readain  _T("readain")
 #define  CMDID_readdin  _T("readdin")//zhouhj 2024.1.16 新增用于PpEngine通讯

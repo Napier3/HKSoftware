@@ -8,7 +8,7 @@
 #include "stdafx.h"
 #include "IecCfgDatasMngr.h"
 #include "IecCfgSmvInDatas.h"
-#include "../../../Module/API/GlobalConfigApi.h"
+#include "../../Module/API/GlobalConfigApi.h"
 
 #ifdef _use_COnllyCfgFileTool
 #include "../OnllyCfgTool/OnllyCfgFileTool.h"

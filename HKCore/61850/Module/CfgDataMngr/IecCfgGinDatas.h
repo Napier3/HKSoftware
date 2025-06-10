@@ -11,7 +11,7 @@
 #include "IecCfgDatasBase.h"
 #include "IecCfgGinData.h"
 #include "IecCfgGinAppChMaps.h"
-#include "../../../Module/DataMngr/DvmLogicDevice.h"
+#include "../../Module/DataMngr/DvmLogicDevice.h"
 
 class CIecCfgGinDatas : public CIecCfgDatasBase
 {

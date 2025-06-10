@@ -5,7 +5,7 @@
 //IecCfgDataGin.h  CIecCfgDataGin
 
 #pragma once
-#include "../../../Module/DataMngr/DataGroup.h"
+#include "../../Module/DataMngr/DataGroup.h"
 
 #include "IecCfgDataMngrGlobal.h"
 
@@ -14,7 +14,7 @@
 #include "IecCfgGinChs.h"
 
 #include"../../Module/XLanguageResourceIec.h"
-#include "../../../Module/DataMngr/DvmDataset.h"
+#include "../../Module/DataMngr/DvmDataset.h"
 
 class CIecCfgGinData : public CIecCfgGooseDataBase
 {

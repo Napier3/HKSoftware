@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../../Module/DataMngr/DvmDataset.h"
-#include "../../../Module/DataMngr/DataGroup.h"
+#include "../../Module/DataMngr/DvmDataset.h"
+#include "../../Module/DataMngr/DataGroup.h"
 
 class CPxProtocolImpInterface
 {

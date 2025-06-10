@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../baseclass/exbaselist.h"
+#include "ExBaseList.h"
 #include "../BaseClass/StringSerializeBuffer.h"
 
 #define SCRIPT_FUNC_NAME_MAXLEN   20

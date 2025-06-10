@@ -1,7 +1,7 @@
 #pragma once
 #include <QProgressDialog>
-#include "../../../Module/OSInterface/OSInterface.h"
-#include "../../../Module/BaseClass/ThreadProgressInterface.h"
+#include "../../Module/OSInterface/OSInterface.h"
+#include "../../Module/BaseClass/ThreadProgressInterface.h"
 
 #define SCDFILE_RW_TIME     0X00002005
 #define SCDFILE_RW_PROGCTRL     0X00002006

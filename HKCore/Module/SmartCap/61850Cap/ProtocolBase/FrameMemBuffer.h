@@ -4,12 +4,12 @@
 #include "ProtocolGlobalDef.h"
 
 #ifndef _PSX_IDE_QT_
-#include "../../../../Module/WinPcap/Include/pcap.h"
+#include "../../Module/WinPcap/Include/pcap.h"
 #endif
 
 #include "../CapGlobalDef.h"
 
-#include "../../../../Module/SmDb/XSmMemBuffer.h"
+#include "../../Module/Smdb/XSmMemBuffer.h"
 // #define FrameMemBuffer_use_pkthdr
 #define FrameMemBuffer_use_FrameID
 

@@ -11,7 +11,7 @@
 #include "../../Module/DataMngr/DvmDevice.h"
 #include "../../61850/Module/CfgDataMngr/IecCfgDevice.h"
 #include "../../61850/Module/CfgDataMngr/IecCfgDatasMngr.h"
-#include "../SmDB/XSmMemBufferMngr.h"
+#include "../../Module/Smdb/XSmMemBufferMngr.h"
 #include "XIecDatasetSmartMatch.h"
 #include "61850Cap/CapDevice/CapDevice92.h"
 #include "61850Cap/CapDevice/CapDevice6044.h"

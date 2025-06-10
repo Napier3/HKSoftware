@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "devicemodelxmlkeys.h"
+#include "DeviceModelXmlKeys.h"
 
 
 #ifdef _DEBUG

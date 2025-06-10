@@ -6,12 +6,12 @@
 #else
 #include <QCoreApplication>
 #endif
-#include"../../../Module/Log/LogPrint.h"
+#include"../../Module/Log/LogPrint.h"
 #include "../../Module/Engine/SttNativeTestEngine.h"
 #include "../../../AutoTest/Module/TestControl/SmartTestBaseApp.h"
 #include "../../Module/SttTestAppConfig/SttTestAppCfg.h"
 #include "../../Module/SttTestAppConfig/SttTestAppGateWayCfg.h"
-#include "../../../Module/OSInterface/QT/CXCtrl_QT_CWnd.h"
+#include "../../Module/OSInterface/QT/CXCtrl_QT_CWnd.h"
 class CWnd;
 //2020-11-25  lijunqing
 class CSttNativeTestMainWnd : public CWnd

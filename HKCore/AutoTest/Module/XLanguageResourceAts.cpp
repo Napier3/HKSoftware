@@ -7,7 +7,7 @@
 
 #include "stdafx.h"
 #include "XLanguageResourceAts.h"
-#include "../../Module/Api/GlobalConfigApi.h"
+#include "../../Module/API/GlobalConfigApi.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE

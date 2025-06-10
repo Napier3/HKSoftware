@@ -1,8 +1,8 @@
 #pragma once
 
 
-#include "ProtocolBase/PCAP/FrameMemBufferMngr.h"
-#include "../../SmDb/XSmMemBufferMngr.h"
+#include "ProtocolBase/Pcap/FrameMemBufferMngr.h"
+#include "../../Smdb/XSmMemBufferMngr.h"
 #include "ProtocolBase/ProtocolBase.h"
 #include "../XSmartCapInterface.h"
 // #include "ProtocolBase/PcapAnalysis/DoMessage.h"

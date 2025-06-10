@@ -7,7 +7,7 @@
 #pragma once
 
 #include "61850ClientCfgMngrGlobal.h"
-#include "../../../Module/DataMngr/DvmLogicDevice.h"
+#include "../../Module/DataMngr/DvmLogicDevice.h"
 #include "RemoteDevs.h"
 
 class C61850ClientConfig : public CExBaseList

@@ -13,7 +13,7 @@
 #endif
 
 #ifdef _USE_IN_AT02D_MODE_
-#include "../../../Module/SmartCap/XSttRcdInitChDvmData.h"
+#include "../../Module/SmartCap/XSttRcdInitChDvmData.h"
 #endif
 
 CIecCfg92Data::CIecCfg92Data()

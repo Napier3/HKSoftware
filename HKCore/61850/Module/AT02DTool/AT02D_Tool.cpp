@@ -1,6 +1,6 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "AT02D_Tool.h"
-#include "../../../Module/DataMngr/DvmDevice.h"
+#include "../../Module/DataMngr/DvmDevice.h"
 
 CAT02D_Tool::CAT02D_Tool(void)
 {

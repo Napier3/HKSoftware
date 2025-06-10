@@ -13,7 +13,7 @@
 #include "CapDevice6044.h"
 #include "CapDeviceGoose.h"
 
-#include "../../../../SttStudio/Module/SttGlobalDef.h"
+#include "../Module/SttGlobalDef.h"
 
 CXWndInterface *g_theCapDeviceMngrMsgRcvWnd = NULL;
 

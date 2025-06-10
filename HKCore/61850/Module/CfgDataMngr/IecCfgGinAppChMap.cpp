@@ -7,7 +7,7 @@
 
 #include "stdafx.h"
 #include "IecCfgGinAppChMap.h"
-#include "../../../Module/System/StringTokenizer.h"
+#include "../../Module/System/StringTokenizer.h"
 
 CIecCfgGinAppChMap::CIecCfgGinAppChMap()
 {

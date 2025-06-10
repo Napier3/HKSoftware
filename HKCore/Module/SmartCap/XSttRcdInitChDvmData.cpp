@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "XSttRcdInitChDvmData.h"
 #include "../API/GlobalConfigApi.h"
 

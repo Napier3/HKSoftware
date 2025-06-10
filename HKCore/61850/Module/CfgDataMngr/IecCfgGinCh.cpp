@@ -7,7 +7,7 @@
 
 #include "stdafx.h"
 #include "IecCfgGinCh.h"
-#include "../../../Module/System/StringTokenizer.h"
+#include "../../Module/System/StringTokenizer.h"
 #include"../../Module/XLanguageResourceIec.h"
 
 CIecCfgGinCh::CIecCfgGinCh()

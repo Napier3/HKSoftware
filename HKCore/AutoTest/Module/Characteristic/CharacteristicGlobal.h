@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include "../../../Module/BaseClass/ExBaseList.h"
-#include "../../../Module/DataMngr/DataMngrGlobal.h"
-#include "../../../Module/DataMngr/DvmData.h"
-#include "../../../Module/DataMngr/DataType.h"
+#include "../../Module/BaseClass/ExBaseList.h"
+#include "../../Module/DataMngr/DataMngrGlobal.h"
+#include "../../Module/DataMngr/DvmData.h"
+#include "../../Module/DataMngr/DataType.h"
 
 #define CHARCLASSID_BASECLASS       (CLASSID_BASECLASS + 0X00040000)
 #define CHARCLASSID_EXLISTCLASS       (CLASSID_EXLISTCLASS + 0X00040000)

@@ -1,2 +1,0 @@
-#include "QModalDlgInterface.h"
-

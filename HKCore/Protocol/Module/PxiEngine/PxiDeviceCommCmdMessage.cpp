@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "PxiDeviceCommCmdMessage.h"
 
 CPxiDeviceCommCmdMessage::CPxiDeviceCommCmdMessage(void)

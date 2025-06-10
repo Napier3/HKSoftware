@@ -1,0 +1,1033 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#ifndef APSTUDIO_INVOKED
+#include "targetver.h"
+#endif
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// 中文(中华人民共和国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#ifndef APSTUDIO_INVOKED\r\n"
+    "#include ""targetver.h""\r\n"
+    "#endif\r\n"
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#include ""res\\Iec61850Config.rc2""  // 非 Microsoft Visual C++ 编辑的资源\r\n"
+    "#include ""l.CHS\\afxres.rc""          // 标准组件\r\n"
+    "#if !defined(_AFXDLL)\r\n"
+    "#include ""l.CHS\\afxprint.rc""                // 打印/打印预览资源\r\n"
+    "#include ""l.CHS\\afxribbon.rc""               // MFC 功能区和控件条资源\r\n"
+    "#endif\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\Iec61850Config.ico"
+IDR_Iec61850ConfigTYPE  ICON                    "res\\Iec61850ConfigDoc.ico"
+IDI_OUTPUT_WND          ICON                    "res\\output_wnd.ico"
+IDI_OUTPUT_WND_HC       ICON                    "res\\output_wnd_hc.ico"
+IDR_SclFileTYPE         ICON                    "res\\idr_iec6.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
+IDR_MAINFRAME_256       BITMAP                  "res\\Toolbar256.bmp"
+IDB_MAIN                BITMAP                  "res\\main.bmp"
+IDB_FILELARGE           BITMAP                  "res\\filelarge.bmp"
+IDB_FILESMALL           BITMAP                  "res\\filesmall.bmp"
+IDB_WRITELARGE          BITMAP                  "res\\writelarge.bmp"
+IDB_WRITESMALL          BITMAP                  "res\\writesmall.bmp"
+IDB_BUTTONS             BITMAP                  "res\\buttons.bmp"
+IDB_IECCFGFILE          BITMAP                  "res\\IecCfgFilerBmp.bmp"
+IDB_BITMAP_SCLDATA      BITMAP                  "res\\SclDataBmp.bmp"
+IDR_TOOLBAR_DEVICE      BITMAP                  "res\\toolbar-device.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAINFRAME TOOLBAR  16, 16
+BEGIN
+    BUTTON      ID_FILE_NEW
+    BUTTON      ID_FILE_OPEN
+    BUTTON      ID_FILE_SAVE
+    SEPARATOR
+    BUTTON      ID_EDIT_CUT
+    BUTTON      ID_EDIT_COPY
+    BUTTON      ID_EDIT_PASTE
+    SEPARATOR
+    BUTTON      ID_FILE_PRINT
+    BUTTON      ID_APP_ABOUT
+END
+
+IDR_MAINFRAME_256 TOOLBAR  16, 16
+BEGIN
+    BUTTON      ID_FILE_NEW
+    BUTTON      ID_FILE_OPEN
+    BUTTON      ID_FILE_SAVE
+    SEPARATOR
+    BUTTON      ID_EDIT_CUT
+    BUTTON      ID_EDIT_COPY
+    BUTTON      ID_EDIT_PASTE
+    SEPARATOR
+    BUTTON      ID_FILE_PRINT
+    BUTTON      ID_APP_ABOUT
+END
+
+IDR_TOOLBAR_DEVICE TOOLBAR  16, 16
+BEGIN
+    BUTTON      ID_IECFGDEVICE_NEW
+    BUTTON      ID_IECFGDEVICE_INSERT
+    BUTTON      ID_IECFGDEVICE_CLONE
+    BUTTON      ID_IECFGDEVICE_DELETE
+    SEPARATOR
+    BUTTON      ID_IECFGDEVICE_OPEN
+    BUTTON      ID_IECFGDEVICE_SAVE
+    SEPARATOR
+    BUTTON      ID_IECFGDEVICE_MOVEUP
+    BUTTON      ID_IECFGDEVICE_MOVEDOWN
+    SEPARATOR
+    BUTTON      ID_IECFGDEVICE_CLOSE
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU 
+BEGIN
+    POPUP "文件(&F)"
+    BEGIN
+        MENUITEM "新建(&N)\tCtrl+N",              ID_FILE_NEW
+        MENUITEM "新建设备配置(&D)",                  ID_FILE_NEW_DEVICE
+        MENUITEM "导入配置",                        ID_FILE_IMPORT
+        MENUITEM "打开(&O)...\tCtrl+O",           ID_FILE_OPEN
+        MENUITEM "保存(&S)...\tCtrl+S",           ID_FILE_SAVE
+        MENUITEM "另存为...",                      ID_FILE_SAVE_AS
+        MENUITEM "关闭(&C)",                      ID_FILE_CLOSE
+        MENUITEM SEPARATOR
+        MENUITEM "最近的文件",                       ID_FILE_MRU_FILE1, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "退出(&X)",                      ID_APP_EXIT
+        MENUITEM "ID_TRAYICON_EXITAPP",         ID_TRAYICON_EXITAPP
+    END
+    POPUP "视图(&V)"
+    BEGIN
+        MENUITEM "状态栏(&S)",                     ID_VIEW_STATUS_BAR
+        MENUITEM "配置文件管理栏(&F)",                 ID_VIEW_IECCFG_FILE_PANE
+        MENUITEM "设备配置文件管理栏(&F)",               ID_VIEW_IECCFG_FILEDEVICE_PANE
+        MENUITEM "设备配置管理栏(&F)",                 ID_VIEW_IECCFG_DEVICE_PANE
+        MENUITEM "输出栏(&O)",                     ID_VIEW_OUTPUT
+        MENUITEM "只显示引用通道(&I)",                 ID_VIEW_IECCFG_USEDIN
+        MENUITEM SEPARATOR
+        POPUP "应用程序外观(&A)"
+        BEGIN
+            MENUITEM "Windows 2000(&2)",            ID_VIEW_APPLOOK_WIN_2000
+            MENUITEM "Office XP(&X)",               ID_VIEW_APPLOOK_OFF_XP
+            MENUITEM "Windows XP(&W)",              ID_VIEW_APPLOOK_WIN_XP
+            MENUITEM "Office 2003(&3)",             ID_VIEW_APPLOOK_OFF_2003
+            MENUITEM "Visual Studio.NET 2005(&5)",  ID_VIEW_APPLOOK_VS_2005
+            POPUP "Office 2007(&7)"
+            BEGIN
+                MENUITEM "蓝色样式(&B)",                    ID_VIEW_APPLOOK_OFF_2007_BLUE
+                MENUITEM "黑色样式(&L)",                    ID_VIEW_APPLOOK_OFF_2007_BLACK
+                MENUITEM "银色样式(&S)",                    ID_VIEW_APPLOOK_OFF_2007_SILVER
+                MENUITEM "水绿色样式(&A)",                   ID_VIEW_APPLOOK_OFF_2007_AQUA
+            END
+        END
+        MENUITEM "模型包含谐波",                      32808
+        MENUITEM "关联Gout虚端子",                   32809
+        MENUITEM "自动打开上次配置",                    32810
+        MENUITEM "显示通道路径信息",                    ID_VIEW_CH_PATH
+        MENUITEM "下发配置",                        ID_SEND_CONFIG
+    END
+    POPUP "帮助(&H)"
+    BEGIN
+        MENUITEM "关于 Iec61850Config(&A)...",    ID_APP_ABOUT
+    END
+    POPUP "配置文件(&I)"
+    BEGIN
+        MENUITEM "打开SCL文件",                     ID_FILE_OPEN_SCL
+        MENUITEM "打开SCL历史文件",                   ID_FILE_OPEN_SCL_HIS
+        MENUITEM "使用配置文件",                      ID_FILE_USE_IECCFGFILE
+        MENUITEM "报文抓包程序",                      ID_FILE_RUN_61850CAP
+        MENUITEM SEPARATOR
+        MENUITEM "状态序列工具",                      ID_FILE_STATE_TOOL
+        MENUITEM "开始测试",                        ID_FILE_STATE_STARTTEST
+        MENUITEM "停止测试",                        ID_FILE_STATE_STOPTEST
+        MENUITEM SEPARATOR
+        MENUITEM "新配置",                         32800
+        MENUITEM "导入配置",                        32801
+        MENUITEM "保存配置",                        32802
+        MENUITEM "配置另存为",                       32803
+        MENUITEM "打开SCD文件",                     32804
+        MENUITEM "选择SCD文件",                     32805
+        MENUITEM "新设备配置",                       32806
+        MENUITEM "导出设备数据模型",                    32807
+    END
+END
+
+IDR_Iec61850ConfigTYPE MENU 
+BEGIN
+    POPUP "文件(&F)"
+    BEGIN
+        MENUITEM "新建(&N)\tCtrl+N",              ID_FILE_NEW
+        MENUITEM "打开(&O)...\tCtrl+O",           ID_FILE_OPEN
+        MENUITEM "关闭(&C)",                      ID_FILE_CLOSE
+        MENUITEM "保存(&S)\tCtrl+S",              ID_FILE_SAVE
+        MENUITEM "另存为(&A)...",                  ID_FILE_SAVE_AS
+        MENUITEM SEPARATOR
+        MENUITEM "最近的文件",                       ID_FILE_MRU_FILE1, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "退出(&X)",                      ID_APP_EXIT
+    END
+    POPUP "编辑(&E)"
+    BEGIN
+        MENUITEM "撤消(&U)\tCtrl+Z",              ID_EDIT_UNDO
+        MENUITEM SEPARATOR
+        MENUITEM "剪切(&T)\tCtrl+X",              ID_EDIT_CUT
+        MENUITEM "复制(&C)\tCtrl+C",              ID_EDIT_COPY
+        MENUITEM "粘贴(&P)\tCtrl+V",              ID_EDIT_PASTE
+    END
+    POPUP "视图(&V)"
+    BEGIN
+        MENUITEM "状态栏(&S)",                     ID_VIEW_STATUS_BAR
+        POPUP "应用程序外观(&A)"
+        BEGIN
+            MENUITEM "Windows 2000(&2)",            ID_VIEW_APPLOOK_WIN_2000
+            MENUITEM "Office XP(&X)",               ID_VIEW_APPLOOK_OFF_XP
+            MENUITEM "Windows XP(&W)",              ID_VIEW_APPLOOK_WIN_XP
+            MENUITEM "Office 2003(&3)",             ID_VIEW_APPLOOK_OFF_2003
+            MENUITEM "Visual Studio.NET 2005(&5)",  ID_VIEW_APPLOOK_VS_2005
+            POPUP "Office 2007(&7)"
+            BEGIN
+                MENUITEM "蓝色样式(&B)",                    ID_VIEW_APPLOOK_OFF_2007_BLUE
+                MENUITEM "黑色样式(&L)",                    ID_VIEW_APPLOOK_OFF_2007_BLACK
+                MENUITEM "银色样式(&S)",                    ID_VIEW_APPLOOK_OFF_2007_SILVER
+                MENUITEM "水绿色样式(&A)",                   ID_VIEW_APPLOOK_OFF_2007_AQUA
+            END
+        END
+    END
+    POPUP "窗口(&W)"
+    BEGIN
+        MENUITEM "新建窗口(&N)",                    ID_WINDOW_NEW
+    END
+    POPUP "帮助(&H)"
+    BEGIN
+        MENUITEM "关于 Iec61850Config(&A)...",    ID_APP_ABOUT
+    END
+END
+
+IDR_POPUP_EDIT MENU 
+BEGIN
+    POPUP "编辑"
+    BEGIN
+        MENUITEM "剪切(&T)\tCtrl+X",              ID_EDIT_CUT
+        MENUITEM "复制(&C)\tCtrl+C",              ID_EDIT_COPY
+        MENUITEM "粘贴(&P)\tCtrl+V",              ID_EDIT_PASTE
+    END
+END
+
+IDR_WINDOWS_MENU MENU 
+BEGIN
+    MENUITEM "新建窗口(&N)",                    ID_WINDOW_NEW
+END
+
+IDR_OUTPUT_POPUP MENU 
+BEGIN
+    POPUP "弹出项"
+    BEGIN
+        MENUITEM "清除(&C)",                      ID_EDIT_CLEAR
+    END
+END
+
+IDR_THEME_MENU MENU 
+BEGIN
+    MENUITEM "Office 2007 (蓝色样式)(&B)",      ID_VIEW_APPLOOK_OFF_2007_BLUE
+    MENUITEM "Office 2007 (黑色样式)(&L)",      ID_VIEW_APPLOOK_OFF_2007_BLACK
+    MENUITEM "Office 2007 (银色样式)(&S)",      ID_VIEW_APPLOOK_OFF_2007_SILVER
+    MENUITEM "Office 2007 (水绿色样式)(&A)",     ID_VIEW_APPLOOK_OFF_2007_AQUA
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS 
+BEGIN
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY 
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 170, 62
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "关于 Iec61850Config"
+FONT 9, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,14,14,20,20
+    LTEXT           "Iec61850Config，1.0 版",IDC_STATIC,42,14,114,8,SS_NOPREFIX
+    LTEXT           "Copyright (C) 2020",IDC_STATIC,42,26,114,8,SS_ENDELLIPSIS
+    DEFPUSHBUTTON   "确定",IDOK,113,41,50,14,WS_GROUP
+END
+
+IDD_IEC61850CONFIG_FORM DIALOGEX 0, 0, 108, 49
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 9, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+END
+
+IDD_SCLFILE_TREE_VIEW DIALOGEX 0, 0, 91, 92
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 9, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_TREE1,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | WS_BORDER | WS_HSCROLL | WS_TABSTOP,0,0,91,39
+    COMBOBOX        IDC_COMBO_FILTER,0,40,46,90,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "过滤",IDC_BTN_FILTER,46,38,42,14
+    CONTROL         "自定义1",IDC_CUSTOM_IECCFG_CTRLS_GRID,"MFCGridCtrl",WS_BORDER | WS_TABSTOP,0,53,90,36
+END
+
+IDD_IECCFG_SMVCTRL_VIEW DIALOGEX 0, 0, 634, 64
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 9, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    LTEXT           "报文种类",IDC_STATIC_MESTYPE,2,4,28,8
+    COMBOBOX        IDC_COMBO_SMV_TYPE,33,3,89,139,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "采样率",IDC_STATIC_SAMPLERATE,126,5,22,8
+    EDITTEXT        IDC_EDIT_SMAP_RATE,149,2,27,14,ES_AUTOHSCROLL
+    LTEXT           "ASDU",IDC_STATIC_ASDU,178,5,19,8
+    COMBOBOX        IDC_COMBO_ASDU,200,3,29,205,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "详细设置",IDC_SMV_RATE,439,2,32,14
+    CONTROL         "不含品质位",IDC_CHECK_QUALITY,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,392,4,45,10
+    CONTROL         "DataSet",IDC_CHECK_DATASET,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,233,4,35,10
+    CONTROL         "Security",IDC_CHECK_SECURITY,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,273,4,39,10
+    CONTROL         "SmpRate",IDC_CHECK_SMPRATE,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,312,4,38,10
+    CONTROL         "RefrTm",IDC_CHECK_REFRTM,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,353,4,37,10
+    LTEXT           "采样率",IDC_STATIC_SMP_RATE_FT3,475,5,22,8
+    COMBOBOX        IDC_COMBO_SMP_RATE_FT3,498,3,48,126,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "波特率",IDC_STATIC_BAUDRATE_FT3,552,5,22,8
+    COMBOBOX        IDC_COMBO_BAUD_RATE_FT3,575,3,48,110,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_IECCFG_SMVCTRL_CHS_VIEW DIALOGEX 0, 0, 561, 75
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 9, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    CONTROL         "电流映射",IDC_RADIO_UISEL_I,"Button",BS_AUTORADIOBUTTON | WS_GROUP,3,2,43,10
+    CONTROL         "电压映射",IDC_RADIO_UISEL_U,"Button",BS_AUTORADIOBUTTON,44,2,38,10
+    CONTROL         "全部",IDC_RADIO_UISEL_ALL,"Button",BS_AUTORADIOBUTTON,85,2,24,10
+    CONTROL         "根据名称智能匹配",IDC_CHECK_USENAME,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,112,2,71,10
+    PUSHBUTTON      "配置为abc1",IDC_BTN_SET_ABC,225,1,47,13
+    PUSHBUTTON      "配置为abc2",IDC_BTN_SET_PABC,272,1,47,13
+    PUSHBUTTON      "配置为abc3",IDC_BTN_SET_SABC,319,1,47,13
+    PUSHBUTTON      "配置为abc4",IDC_BTN_SET_TABC,366,1,47,13
+    PUSHBUTTON      "配置为0",IDC_BTN_SET_0,506,1,47,13
+    PUSHBUTTON      "配置为abc5",IDC_BTN_SET_ABC5,413,1,47,13
+    PUSHBUTTON      "配置为abc6",IDC_BTN_SET_ABC6,460,1,47,13
+    PUSHBUTTON      "投检修",IDC_BTN_SET_CHECK,178,1,47,13
+END
+
+IDD_IECCFG_GINCTRL_VIEW DIALOGEX 0, 0, 280, 60
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 9, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+END
+
+IDD_IECCFG_GINCTRL_CHS_VIEW DIALOGEX 0, 0, 288, 75
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 9, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+END
+
+IDD_IECCFG_GOUTCTRL_VIEW DIALOGEX 0, 0, 165, 61
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 9, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+END
+
+IDD_IECCFG_GOUTCTRL_CHS_VIEW DIALOGEX 0, 0, 288, 75
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 9, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+END
+
+IDD_SCLFILE_CTRL_VIEW DIALOGEX 0, 0, 414, 52
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 9, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    PUSHBUTTON      "添加至>>",IDC_BTN_ADDTO,39,33,37,14
+    COMBOBOX        IDC_COMBO_IECCFG_FILE,79,35,123,217,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO_IECCFG_TYPE,204,35,60,210,CBS_DROPDOWNLIST | NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "覆盖配置>>",IDC_BTN_OVERRITE,268,33,44,14,NOT WS_VISIBLE
+    PUSHBUTTON      "对比配置>>",IDC_BTN_COMPARE,313,33,44,14,NOT WS_VISIBLE
+    PUSHBUTTON      "导出遥信向导",IDC_BTN_EXPORT,360,33,50,14
+    PUSHBUTTON      "一键配置",IDC_BTN_ONE_KEY_CFG,0,33,37,14
+END
+
+IDD_SCLFILE_CTRLCHS_VIEW DIALOGEX 0, 0, 165, 68
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 9, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    LTEXT           "通道表格",IDC_STATIC,19,35,28,8
+END
+
+IDD_DLG_SCL_FILE_HIS DIALOGEX 0, 0, 379, 195
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "SCL文件历史记录"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,263,174,50,14,WS_DISABLED
+    PUSHBUTTON      "取消",IDCANCEL,322,174,50,14
+    LISTBOX         IDC_LIST_SCL_HIS,7,7,365,165,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
+    PUSHBUTTON      "浏览...",IDC_BTN_BROWSE,7,174,50,14
+    PUSHBUTTON      "删 除",IDC_BUTTON_DELETE,65,174,50,14,WS_DISABLED
+END
+
+IDD_DLG_SCL_READ_PROGRESS DIALOGEX 0, 0, 306, 28
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "SCL文件读取中，请稍后......"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_PROGRESS_READ,"msctls_progress32",WS_BORDER,7,7,248,14
+    LTEXT           "静态",IDC_STATIC_TIME,260,10,39,8
+END
+
+IDD_XFILEMNGRVIEW DIALOG  0, 0, 320, 200
+STYLE DS_SETFONT | WS_CHILD
+FONT 9, "MS Shell Dlg"
+BEGIN
+    LTEXT           "TODO: 将窗体控件放置在此对话框上。",IDC_STATIC,24,42,280,8
+END
+
+IDD_STATETOOL_FORM DIALOGEX 0, 0, 108, 49
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 9, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+END
+
+IDD_DLG_AT02D_CFG DIALOGEX 0, 0, 614, 339
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "选择AT02D配置控制块"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,500,321,50,14
+    PUSHBUTTON      "取消",IDCANCEL,560,321,50,14
+    LTEXT           "SMV控制块需要6组,当前0组;Gin控制块需要15组,当前0组;Gout控制块需要15组,当前0组.",IDC_STATIC_LOG_MSG,11,303,593,13,0,WS_EX_CLIENTEDGE
+    LTEXT           "测试仪最大光口数:",IDC_STATIC,14,323,70,8,SS_ENDELLIPSIS
+    COMBOBOX        IDC_COMBO_MAX_FIBER_NUM,88,321,53,108,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_AT02D_CBS_FORM DIALOGEX 0, 0, 534, 309
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+END
+
+IDD_IECCFG_SYSPARAS_VIEW DIALOGEX 0, 0, 327, 348
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 9, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    LTEXT           "报文发送方式:",IDC_STATIC_PKG_SEND_TYPE,10,9,44,8
+    COMBOBOX        IDC_COMBO_PKG_SEND_TYPE,57,8,65,68,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "",IDC_STATIC_GROUP1,7,1,121,23
+    GROUPBOX        "第一组(Ua1,Ub1,Uc1,Ia1,Ib1,Ic1)",IDC_STATIC_GROUP_RATE1,8,33,312,29
+    LTEXT           "PT变比:",IDC_STATIC_PT_RATE1,10,46,26,8
+    EDITTEXT        IDC_EDIT_PRIM_PT_RATE1,39,44,56,14,ES_AUTOHSCROLL
+    LTEXT           "/",IDC_STATIC_PT1_DIV,97,47,8,8
+    EDITTEXT        IDC_EDIT_SECOND_PT_RATE1,103,44,56,14,ES_AUTOHSCROLL
+    LTEXT           "CT变比:",IDC_STATIC_CT_RATE1,166,46,26,8
+    EDITTEXT        IDC_EDIT_PRIM_CT_RATE1,195,44,56,14,ES_AUTOHSCROLL
+    LTEXT           "/",IDC_STATIC_CT1_DIV,253,47,8,8
+    EDITTEXT        IDC_EDIT_SECOND_CT_RATE1,259,44,56,14,ES_AUTOHSCROLL
+    GROUPBOX        "第二组(Ua2,Ub2,Uc2,Ia2,Ib2,Ic2)",IDC_STATIC_GROUP_RATE2,8,66,312,29
+    LTEXT           "PT变比:",IDC_STATIC_PT_RATE2,10,79,26,8
+    EDITTEXT        IDC_EDIT_PRIM_PT_RATE2,39,77,56,14,ES_AUTOHSCROLL
+    LTEXT           "/",IDC_STATIC_PT1_DIV2,97,80,8,8
+    EDITTEXT        IDC_EDIT_SECOND_PT_RATE2,103,77,56,14,ES_AUTOHSCROLL
+    LTEXT           "CT变比:",IDC_STATIC_CT_RATE2,166,79,26,8
+    EDITTEXT        IDC_EDIT_PRIM_CT_RATE2,195,77,56,14,ES_AUTOHSCROLL
+    LTEXT           "/",IDC_STATIC_CT1_DIV2,253,80,8,8
+    EDITTEXT        IDC_EDIT_SECOND_CT_RATE2,259,77,56,14,ES_AUTOHSCROLL
+    GROUPBOX        "第三组(Ua3,Ub3,Uc3,Ia3,Ib3,Ic3)",IDC_STATIC_GROUP_RATE3,8,100,312,29
+    LTEXT           "PT变比:",IDC_STATIC_PT_RATE3,10,113,26,8
+    EDITTEXT        IDC_EDIT_PRIM_PT_RATE3,39,111,56,14,ES_AUTOHSCROLL
+    LTEXT           "/",IDC_STATIC_PT1_DIV3,97,114,8,8
+    EDITTEXT        IDC_EDIT_SECOND_PT_RATE3,103,111,56,14,ES_AUTOHSCROLL
+    LTEXT           "CT变比:",IDC_STATIC_CT_RATE3,166,113,26,8
+    EDITTEXT        IDC_EDIT_PRIM_CT_RATE3,195,111,56,14,ES_AUTOHSCROLL
+    LTEXT           "/",IDC_STATIC_CT1_DIV3,253,114,8,8
+    EDITTEXT        IDC_EDIT_SECOND_CT_RATE3,259,111,56,14,ES_AUTOHSCROLL
+    GROUPBOX        "第四组(Ua4,Ub4,Uc4,Ia4,Ib4,Ic4)",IDC_STATIC_GROUP_RATE4,8,134,312,29
+    LTEXT           "PT变比:",IDC_STATIC_PT_RATE4,10,147,26,8
+    EDITTEXT        IDC_EDIT_PRIM_PT_RATE4,39,145,56,14,ES_AUTOHSCROLL
+    LTEXT           "/",IDC_STATIC_PT1_DIV4,97,148,8,8
+    EDITTEXT        IDC_EDIT_SECOND_PT_RATE4,103,145,56,14,ES_AUTOHSCROLL
+    LTEXT           "CT变比:",IDC_STATIC_CT_RATE4,166,147,26,8
+    EDITTEXT        IDC_EDIT_PRIM_CT_RATE4,195,145,56,14,ES_AUTOHSCROLL
+    LTEXT           "/",IDC_STATIC_CT1_DIV4,253,148,8,8
+    EDITTEXT        IDC_EDIT_SECOND_CT_RATE4,259,145,56,14,ES_AUTOHSCROLL
+    GROUPBOX        "第五组(Ua5,Ub5,Uc5,Ia5,Ib5,Ic5)",IDC_STATIC_GROUP_RATE5,8,170,312,29
+    LTEXT           "PT变比:",IDC_STATIC_PT_RATE5,10,183,26,8
+    EDITTEXT        IDC_EDIT_PRIM_PT_RATE5,39,181,56,14,ES_AUTOHSCROLL
+    LTEXT           "/",IDC_STATIC_PT1_DIV5,97,184,8,8
+    EDITTEXT        IDC_EDIT_SECOND_PT_RATE5,103,181,56,14,ES_AUTOHSCROLL
+    LTEXT           "CT变比:",IDC_STATIC_CT_RATE5,166,183,26,8
+    EDITTEXT        IDC_EDIT_PRIM_CT_RATE5,195,181,56,14,ES_AUTOHSCROLL
+    LTEXT           "/",IDC_STATIC_CT1_DIV5,253,184,8,8
+    EDITTEXT        IDC_EDIT_SECOND_CT_RATE5,259,181,56,14,ES_AUTOHSCROLL
+    GROUPBOX        "第六组(Ua6,Ub6,Uc6,Ia6,Ib6,Ic6)",IDC_STATIC_GROUP_RATE6,8,206,312,29
+    LTEXT           "PT变比:",IDC_STATIC_PT_RATE6,10,219,26,8
+    EDITTEXT        IDC_EDIT_PRIM_PT_RATE6,39,217,56,14,ES_AUTOHSCROLL
+    LTEXT           "/",IDC_STATIC_PT1_DIV6,97,220,8,8
+    EDITTEXT        IDC_EDIT_SECOND_PT_RATE6,103,217,56,14,ES_AUTOHSCROLL
+    LTEXT           "CT变比:",IDC_STATIC_CT_RATE6,166,219,26,8
+    EDITTEXT        IDC_EDIT_PRIM_CT_RATE6,195,217,56,14,ES_AUTOHSCROLL
+    LTEXT           "/",IDC_STATIC_CT1_DIV6,253,220,8,8
+    EDITTEXT        IDC_EDIT_SECOND_CT_RATE6,259,217,56,14,ES_AUTOHSCROLL
+    GROUPBOX        "",IDC_STATIC_GROUP2,6,25,319,215
+    GROUPBOX        "",IDC_STATIC_GROUP4,7,241,318,51
+    GROUPBOX        "LC光口1:",IDC_STATIC_LC_FIBER1,12,247,72,40
+    CONTROL         "百兆口",IDC_RADIO_100M_FIBER1,"Button",BS_AUTORADIOBUTTON | WS_GROUP,20,258,37,10
+    CONTROL         "千兆口",IDC_RADIO_1000M_FIBER1,"Button",BS_AUTORADIOBUTTON,20,272,37,10
+    GROUPBOX        "LC光口2:",IDC_STATIC_LC_FIBER2,90,247,72,40
+    CONTROL         "百兆口",IDC_RADIO_100M_FIBER2,"Button",BS_AUTORADIOBUTTON | WS_GROUP,98,258,37,10
+    CONTROL         "千兆口",IDC_RADIO_1000M_FIBER2,"Button",BS_AUTORADIOBUTTON,98,272,37,10
+    GROUPBOX        "LC光口3:",IDC_STATIC_LC_FIBER3,169,247,72,40
+    CONTROL         "百兆口",IDC_RADIO_100M_FIBER3,"Button",BS_AUTORADIOBUTTON | WS_GROUP,177,258,37,10
+    CONTROL         "千兆口",IDC_RADIO_1000M_FIBER3,"Button",BS_AUTORADIOBUTTON,177,272,37,10
+    GROUPBOX        "LC光口4:",IDC_STATIC_LC_FIBER4,248,247,72,40
+    CONTROL         "百兆口",IDC_RADIO_100M_FIBER4,"Button",BS_AUTORADIOBUTTON | WS_GROUP,256,258,37,10
+    CONTROL         "千兆口",IDC_RADIO_1000M_FIBER4,"Button",BS_AUTORADIOBUTTON,256,272,37,10
+    GROUPBOX        "",IDC_STATIC_GROUP5,7,293,318,51
+    GROUPBOX        "ST光口1:",IDC_STATIC_ST_FIBER1,11,299,49,40
+    CONTROL         "B码",IDC_RADIO_BCODE_FIBER1,"Button",BS_AUTORADIOBUTTON | WS_GROUP,19,310,27,10
+    CONTROL         "FT3",IDC_RADIO_FT3_FIBER1,"Button",BS_AUTORADIOBUTTON,19,324,28,10
+    GROUPBOX        "ST光口2:",IDC_STATIC_ST_FIBER2,63,299,49,40
+    CONTROL         "B码",IDC_RADIO_BCODE_FIBER2,"Button",BS_AUTORADIOBUTTON | WS_GROUP,71,310,27,10
+    CONTROL         "FT3",IDC_RADIO_FT3_FIBER2,"Button",BS_AUTORADIOBUTTON,71,324,28,10
+    GROUPBOX        "ST光口3:",IDC_STATIC_ST_FIBER3,115,299,49,40
+    CONTROL         "B码",IDC_RADIO_BCODE_FIBER3,"Button",BS_AUTORADIOBUTTON | WS_GROUP,123,310,27,10
+    CONTROL         "FT3",IDC_RADIO_FT3_FIBER3,"Button",BS_AUTORADIOBUTTON,123,324,28,10
+    GROUPBOX        "ST光口4:",IDC_STATIC_ST_FIBER4,167,299,49,40
+    CONTROL         "B码",IDC_RADIO_BCODE_FIBER4,"Button",BS_AUTORADIOBUTTON | WS_GROUP,175,310,27,10
+    CONTROL         "FT3",IDC_RADIO_FT3_FIBER4,"Button",BS_AUTORADIOBUTTON,175,324,28,10
+    GROUPBOX        "ST光口5:",IDC_STATIC_ST_FIBER5,219,299,49,40
+    CONTROL         "B码",IDC_RADIO_BCODE_FIBER5,"Button",BS_AUTORADIOBUTTON | WS_GROUP,227,310,27,10
+    CONTROL         "FT3",IDC_RADIO_FT3_FIBER5,"Button",BS_AUTORADIOBUTTON,227,324,28,10
+    GROUPBOX        "ST光口6:",IDC_STATIC_ST_FIBER6,272,299,49,40
+    CONTROL         "B码",IDC_RADIO_BCODE_FIBER6,"Button",BS_AUTORADIOBUTTON | WS_GROUP,280,310,27,10
+    CONTROL         "FT3",IDC_RADIO_FT3_FIBER6,"Button",BS_AUTORADIOBUTTON,280,324,28,10
+    LTEXT           "参数设置选择:",IDC_STATIC_PARAS_SET_SEL,142,9,44,8
+    COMBOBOX        IDC_COMBO_PARAS_SET_SEL,189,8,65,68,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "",IDC_STATIC_GROUP_PARAS_SET,139,1,121,23
+END
+
+IDD_IECCFG_FT3COMMON_SET_DLG DIALOGEX 0, 0, 302, 148
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "详细设置"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,97,134,50,14
+    PUSHBUTTON      "取消",IDCANCEL,158,134,50,14
+    GROUPBOX        "报文参数设置",IDC_STATIC,5,6,291,125
+    LTEXT           "直流电压码值",IDC_STC_DC_VOL_CODE_VALUE,26,21,49,8
+    EDITTEXT        IDC_EDIT_DC_VOL_CODE_VALUE,77,18,68,14,ES_AUTOHSCROLL
+    LTEXT           "一次额定电压(kV)",IDC_STC_DC_VOL_PRIM_VALUE,155,21,62,8
+    EDITTEXT        IDC_EDIT_DC_VOL_PRIM_VALUE,219,18,68,14,ES_AUTOHSCROLL
+    LTEXT           "直流电流码值",IDC_STC_DC_CUR_CODE_VALUE,26,40,49,8
+    EDITTEXT        IDC_EDIT_DC_CUR_CODE_VALUE,77,36,68,14,ES_AUTOHSCROLL
+    LTEXT           "一次额定电流(A)",IDC_STC_DC_CUR_PRIM_VALUE,155,40,59,8
+    EDITTEXT        IDC_EDIT_DC_CUR_PRIM_VALUE,219,36,68,14,ES_AUTOHSCROLL
+    LTEXT           "中性母线电压码值",IDC_STC_DC_NEUTRAL_VOL_CODE_VALUE,10,58,65,8
+    EDITTEXT        IDC_EDIT_DC_NEUTRAL_VOL_CODE_VALUE,77,55,68,14,ES_AUTOHSCROLL
+    LTEXT           "一次额定电压(kV)",IDC_STC_DC_NEUTRAL_VOL_PRIM_VALUE,155,58,62,8
+    EDITTEXT        IDC_EDIT_DC_NEUTRAL_VOL_PRIM_VALUE,219,55,68,14,ES_AUTOHSCROLL
+    LTEXT           "交流保护电流码值",IDC_STC_AC_PROT_CUR_CODE_VALUE,10,77,65,8
+    EDITTEXT        IDC_EDIT_AC_PROT_CUR_CODE_VALUE,77,74,68,14,ES_AUTOHSCROLL
+    LTEXT           "一次额定电流(A)",IDC_STC_AC_PROT_CUR_PRIM_VALUE,155,77,59,8
+    EDITTEXT        IDC_EDIT_AC_PROT_CUR_PRIM_VALUE,219,74,68,14,ES_AUTOHSCROLL
+    LTEXT           "交流测量电流码值",IDC_STC_AC_MEAS_CUR_CODE_VALUE,10,96,65,8
+    EDITTEXT        IDC_EDIT_AC_MEAS_CUR_CODE_VALUE,77,93,68,14,ES_AUTOHSCROLL
+    LTEXT           "一次额定电流(A)",IDC_STC_AC_MEAS_CUR_PRIM_VALUE,155,96,59,8
+    EDITTEXT        IDC_EDIT_AC_MEAS_CUR_PRIM_VALUE,219,93,68,14,ES_AUTOHSCROLL
+    LTEXT           "交流电压码值",IDC_STC_AC_VOL_CODE_VALUE,26,114,49,8
+    EDITTEXT        IDC_EDIT_AC__VOL_CODE_VALUE,77,111,68,14,ES_AUTOHSCROLL
+    LTEXT           "一次额定电压(kV)",IDC_STC_AC_VOL_PRIM_VALUE,155,114,62,8
+    EDITTEXT        IDC_EDIT_AC_VOL_PRIM_VALUE,219,111,68,14,ES_AUTOHSCROLL
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 2,0,20,309
+ PRODUCTVERSION 2,0,20,309
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080403a8"
+        BEGIN
+            VALUE "CompanyName", "南京能云电力科技有限公司"
+            VALUE "FileDescription", "数字保护测试仪配置"
+            VALUE "FileVersion", "2, 0, 20, 703"
+            VALUE "InternalName", "Iec61850Config.exe"
+            VALUE "LegalCopyright", "南京能云电力科技有限公司。保留所有权利。"
+            VALUE "OriginalFilename", "Iec61850Config.exe"
+            VALUE "ProductName", "数字保护测试仪IEC61850配置程序"
+            VALUE "ProductVersion", "2, 0, 20, 703"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 936
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 163
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 55
+    END
+
+    IDD_IEC61850CONFIG_FORM, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 101
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 42
+    END
+
+    IDD_SCLFILE_TREE_VIEW, DIALOG
+    BEGIN
+        BOTTOMMARGIN, 89
+    END
+
+    IDD_IECCFG_SMVCTRL_CHS_VIEW, DIALOG
+    BEGIN
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 554
+        BOTTOMMARGIN, 68
+    END
+
+    IDD_IECCFG_GINCTRL_VIEW, DIALOG
+    BEGIN
+        LEFTMARGIN, 4
+        RIGHTMARGIN, 273
+        TOPMARGIN, 4
+        BOTTOMMARGIN, 53
+    END
+
+    IDD_IECCFG_GINCTRL_CHS_VIEW, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 281
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 68
+    END
+
+    IDD_IECCFG_GOUTCTRL_VIEW, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 158
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 54
+    END
+
+    IDD_IECCFG_GOUTCTRL_CHS_VIEW, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 281
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 68
+    END
+
+    IDD_SCLFILE_CTRL_VIEW, DIALOG
+    BEGIN
+        RIGHTMARGIN, 410
+        BOTTOMMARGIN, 47
+    END
+
+    IDD_SCLFILE_CTRLCHS_VIEW, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 158
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 61
+    END
+
+    IDD_DLG_SCL_FILE_HIS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 372
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 188
+    END
+
+    IDD_DLG_SCL_READ_PROGRESS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 299
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 21
+    END
+
+    IDD_XFILEMNGRVIEW, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 313
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 193
+    END
+
+    IDD_STATETOOL_FORM, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 101
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 42
+    END
+
+    IDD_IECCFG_FT3COMMON_SET_DLG, DIALOG
+    BEGIN
+        RIGHTMARGIN, 301
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDP_OLE_INIT_FAILED     "OLE 初始化失败。请确保 OLE 库是正确的版本。"
+END
+
+STRINGTABLE 
+BEGIN
+    IDR_MAINFRAME           "Iec61850Config"
+    IDR_Iec61850ConfigTYPE  "\nIec61850Config\nIec61850Config\nIec61850Config Files (*.icxml)\n.icxml\nIec61850Config.Document\nIec61850Config.Document"
+    IDS_WINDOWS_MANAGER     "窗口(&W)..."
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_APP_TITLE       "Iec61850Config"
+    AFX_IDS_IDLEMESSAGE     "就绪"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_INDICATOR_EXT        "EXT"
+    ID_INDICATOR_CAPS       "CAP"
+    ID_INDICATOR_NUM        "NUM"
+    ID_INDICATOR_SCRL       "SCRL"
+    ID_INDICATOR_OVR        "OVR"
+    ID_INDICATOR_REC        "REC"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_FILE_NEW             "创建新文档\n新建"
+    ID_FILE_OPEN            "打开现有文档\n打开"
+    ID_FILE_CLOSE           "关闭活动文档\n关闭"
+    ID_FILE_SAVE            "保存活动文档\n保存"
+    ID_FILE_SAVE_AS         "用新名称保存活动文档\n另存为"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_APP_ABOUT            "显示程序信息、版本号和版权\n关于"
+    ID_APP_EXIT             "退出应用程序；提示保存文档\n退出"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_FILE_MRU_FILE1       "打开此文档"
+    ID_FILE_MRU_FILE2       "打开此文档"
+    ID_FILE_MRU_FILE3       "打开此文档"
+    ID_FILE_MRU_FILE4       "打开此文档"
+    ID_FILE_MRU_FILE5       "打开此文档"
+    ID_FILE_MRU_FILE6       "打开此文档"
+    ID_FILE_MRU_FILE7       "打开此文档"
+    ID_FILE_MRU_FILE8       "打开此文档"
+    ID_FILE_MRU_FILE9       "打开此文档"
+    ID_FILE_MRU_FILE10      "打开此文档"
+    ID_FILE_MRU_FILE11      "打开此文档"
+    ID_FILE_MRU_FILE12      "打开此文档"
+    ID_FILE_MRU_FILE13      "打开此文档"
+    ID_FILE_MRU_FILE14      "打开此文档"
+    ID_FILE_MRU_FILE15      "打开此文档"
+    ID_FILE_MRU_FILE16      "打开此文档"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_NEXT_PANE            "切换到下一个窗格\n下一窗格"
+    ID_PREV_PANE            "切换回上一个窗格\n上一窗格"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_WINDOW_NEW           "为活动文档打开另一个窗口\n新建窗口"
+    ID_WINDOW_ARRANGE       "在窗口底部排列图标\n排列图标"
+    ID_WINDOW_CASCADE       "以重叠方式排列窗口\n层叠窗口"
+    ID_WINDOW_TILE_HORZ     "以非重叠的平铺方式排列窗口\n平铺窗口"
+    ID_WINDOW_TILE_VERT     "以非重叠的平铺方式排列窗口\n平铺窗口"
+    ID_WINDOW_SPLIT         "将活动窗口拆分为多个窗格\n拆分"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_EDIT_CLEAR           "清除选定内容\n清除"
+    ID_EDIT_CLEAR_ALL       "清除全部内容\n全部清除"
+    ID_EDIT_COPY            "复制选定内容并将其放到剪贴板上\n复制"
+    ID_EDIT_CUT             "剪切选定内容并将其放到剪贴板上\n剪切"
+    ID_EDIT_FIND            "查找指定的文本\n查找"
+    ID_EDIT_PASTE           "插入剪贴板内容\n粘贴"
+    ID_EDIT_REPEAT          "重复上一操作\n重复"
+    ID_EDIT_REPLACE         "用其他文本替换特定的文本\n替换"
+    ID_EDIT_SELECT_ALL      "选定整个文档\n全选"
+    ID_EDIT_UNDO            "撤消上一操作\n撤消"
+    ID_EDIT_REDO            "恢复上次撤消的操作\n重做"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_VIEW_TOOLBAR         "显示或隐藏工具栏\n切换工具栏"
+    ID_VIEW_STATUS_BAR      "显示或隐藏状态栏\n切换状态栏"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_SCSIZE          "更改窗口大小"
+    AFX_IDS_SCMOVE          "更改窗口位置"
+    AFX_IDS_SCMINIMIZE      "将窗口缩小为图标"
+    AFX_IDS_SCMAXIMIZE      "使窗口最大化显示"
+    AFX_IDS_SCNEXTWINDOW    "切换到下一个文档窗口"
+    AFX_IDS_SCPREVWINDOW    "切换到前一个文档窗口"
+    AFX_IDS_SCCLOSE         "关闭活动窗口并提示保存文档"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_SCRESTORE       "将窗口恢复到正常大小"
+    AFX_IDS_SCTASKLIST      "激活任务列表"
+    AFX_IDS_MDICHILD        "激活此窗口"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STATUS_PANE1        "窗格 1"
+    IDS_STATUS_PANE2        "窗格 2"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_OUTPUT_WND          "输出"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_RIBBON_STYLE_DESC   "选择一个 Office 2007 主题"
+    IDS_RIBBON_STATUSBAR    "状态栏"
+    IDS_RIBBON_VIEW         "视图"
+    IDS_BUILD_TAB           "生成"
+    IDS_DEBUG_TAB           "调试"
+    IDS_FIND_TAB            "查找"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_RIBBON_FILE         "文件"
+    IDS_RIBBON_NEW          "新建(&N)"
+    IDS_RIBBON_OPEN         "打开(&O)..."
+    IDS_RIBBON_SAVE         "保存(&S)"
+    IDS_RIBBON_SAVEAS       "另存为(&A)..."
+    IDS_RIBBON_PRINT        "打印"
+    IDS_RIBBON_PRINT_LABEL  "预览并打印文档"
+    IDS_RIBBON_PRINT_QUICK  "快速打印(&Q)"
+    IDS_RIBBON_PRINT_PREVIEW "打印预览(&V)"
+    IDS_RIBBON_PRINT_SETUP  "打印设置(&U)"
+    IDS_RIBBON_CLOSE        "关闭(&C)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_RIBBON_RECENT_DOCS  "最近使用的文档"
+    IDS_RIBBON_EXIT         "退出(&X)"
+    IDS_RIBBON_HOME         "主页(&H)"
+    IDS_RIBBON_CLIPBOARD    "剪贴板\nD"
+    IDS_RIBBON_PASTE        "粘贴\nV"
+    IDS_RIBBON_CUT          "剪切\nX"
+    IDS_RIBBON_COPY         "复制\nC"
+    IDS_RIBBON_SELECTALL    "全选\nA"
+    IDS_RIBBON_WINDOW       "窗口\nW"
+    IDS_RIBBON_WINDOWS      "窗口\nI"
+    IDS_RIBBON_STYLE        "样式"
+    IDS_RIBBON_STYLE_TIP    "修改视觉样式"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_EDIT_MENU           "编辑"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_FILE_OPEN_SCL        "打开存在的SCL文件\n打开SCL文件"
+    ID_VIEW_IECCFG_FILE_PANE "显示或隐藏配置文件管理栏\n切换配置文件管理栏"
+    ID_VIEW_OUTPUT          "显示或隐藏输出栏\n切换输出栏"
+    ID_FILE_OPEN_SCL_HIS    "打开SCL历史文件\n打开SCL历史文件"
+    ID_FILE_USE_IECCFGFILE  "使用/下载配置文件\n使用/下载配置文件"
+    ID_FILE_IMPORT          "导入其他厂家配置文件\n导入配置"
+    ID_FILE_STATE_TOOL      "使用状态序列进行调试\n状态序列"
+    ID_FILE_STATE_STARTTEST "开始测试，输出状态序列\n开始测试"
+    ID_FILE_STATE_STOPTEST  "停止状态序列测试\n停止测试"
+    ID_VIEW_IECCFG_USEDIN   "只显示引用的通道\n只显示引用的通道"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_IECFGDEVICE_NEW      "添加测试仪配置对象\n添加配置"
+    ID_IECFGDEVICE_DELETE   "删除当前选中的配置对象\n删除配置"
+    ID_IECFGDEVICE_MOVEUP   "上移当前选中的配置对象\n上移"
+    ID_IECFGDEVICE_MOVEDOWN "下移当前选中的配置对象\n下移"
+    ID_IECFGDEVICE_CLOSE    "关闭设备配置文件\n关闭配置"
+    ID_FILE_NEW_DEVICE      "创建新设备配置文档\n新建设备配置"
+    ID_VIEW_IECCFG_DEVICE_PANE "显示或隐藏设备配置文件管理栏\n切换设备配置管理栏"
+    ID_IECFGDEVICE_CLONE    "克隆当前选中的配置\n克隆配置"
+    ID_VIEW_IECCFG_FILEDEVICE_PANE "显示或隐藏设备配置文件管理栏\n切换设备配置文件管理栏"
+    ID_IECFGDEVICE_SAVE     "保存设备配置文件\n保存"
+    ID_IECFGDEVICE_OPEN     "打开设备配置对象\n打开"
+    ID_IECFGDEVICE_INSERT   "插入测试仪配置对象文件\n插入配置"
+END
+
+#endif    // 中文(中华人民共和国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+LANGUAGE 4, 2
+#pragma code_page(936)
+#include "res\Iec61850Config.rc2"  // 非 Microsoft Visual C++ 编辑的资源
+#include "l.CHS\afxres.rc"          // 标准组件
+#if !defined(_AFXDLL)
+#include "l.CHS\afxprint.rc"                // 打印/打印预览资源
+#include "l.CHS\afxribbon.rc"               // MFC 功能区和控件条资源
+#endif
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

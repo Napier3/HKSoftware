@@ -9,7 +9,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#include "../../../MODULE/BASECLASS/ExBaseList.h"
+#include "ExBaseList.h"
 #include "RtAttrSpyConfig.h"
 #include "RecordTestClassDef.h"
 #define Max_Harm_CalCount 2

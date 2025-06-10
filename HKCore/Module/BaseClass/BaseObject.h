@@ -19,7 +19,7 @@
 #define CLASSID_EXMNGRCLASS     0xD0000000	//扩展管理对象基类
 #define CLASSID_BASEORLISTMASK     0xF0000000	//扩展管理对象基类
 
-#include "BinarySerialInterface.h"
+#include "binaryserialinterface.h"
 #include "../xml/XmlRWInterface.h"
 
 //XML文件读写关键字定义

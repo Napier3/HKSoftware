@@ -7,7 +7,7 @@
 
 #include "stdafx.h"
 #include "IecCfgSystemConfig.h"
-#include "../../../Module/API/GlobalConfigApi.h"
+#include "../../Module/API/GlobalConfigApi.h"
 
 const CString CIecCfgSystemConfig::g_strIecCfgSystemConfigFile = _T("IecCfgSystemConfig.xml");
 

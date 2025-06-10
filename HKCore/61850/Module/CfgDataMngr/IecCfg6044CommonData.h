@@ -11,7 +11,7 @@
 #include "IecCfgSmvDataBase.h"
 
 #include "IecCfg6044Chs.h"
-#include "../../../Module/DataMngr/DataGroup.h"
+#include "../../Module/DataMngr/DataGroup.h"
 
 class CIecCfg6044CommonData : public CIecCfgSmvDataBase
 {

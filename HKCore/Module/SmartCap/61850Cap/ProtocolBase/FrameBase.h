@@ -12,7 +12,7 @@
 #include <math.h>
 #include "ProtocolGlobalDef.h"
 #include "ByteBlock.h"
-#include "../../../../Module/SmDb/XSmMemBuffer.h"
+#include "../../Module/Smdb/XSmMemBuffer.h"
 #include "FrameDetail.h"
 #include "FrameMemBuffer.h"
 

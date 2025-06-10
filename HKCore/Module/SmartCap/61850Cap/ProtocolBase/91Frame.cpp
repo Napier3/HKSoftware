@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 
 #include "91Frame.h"
 #include "../CapDevice/CapDevice91.h"

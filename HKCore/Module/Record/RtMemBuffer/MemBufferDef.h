@@ -5,7 +5,7 @@
 #if !defined(_MEMBUFFERDEF_H__)
 #define _MEMBUFFERDEF_H__
 
-#include "../../../Module/BASECLASS/ExBaseObject.h"
+#include "ExBaseObject.h"
 
 #define MEMCLASSID_BUFFERBASE     (CLASSID_BASECLASS+0X00100000)
 

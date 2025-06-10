@@ -3,7 +3,7 @@
 
 #include "../../../API/MathApi.h"
 #include "../../../Record/RecordTest/CalFunctions.h"
-#include "../../../../SttStudio/Module/SttGlobalDef.h"
+#include "../Module/SttGlobalDef.h"
 #include "CapDeviceMngr.h"
 #include "../../../Record/FFT/FFT.h" // mym add 2020-6-25 ;
 //#include "../ProtocolBase/61850ParseFrameList.h"

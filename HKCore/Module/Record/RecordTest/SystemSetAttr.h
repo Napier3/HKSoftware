@@ -9,7 +9,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#include "../../../Module/BASECLASS/ExBaseObject.h"
+#include "ExBaseObject.h"
 #include "RecordTestClassDef.h"
 
 class CSystemSetAttr : public CExBaseObject  

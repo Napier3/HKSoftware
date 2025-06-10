@@ -4,10 +4,10 @@
 #include "stdafx.h"
 #include "SclIecCfgDatas.h"
 
-#include "../../Iec61850Config/XLanguageResourceIec_61850Cfg.h"
-#include "../../../Module/API/GlobalConfigApi.h"
+#include "../../61850/Iec61850Config/XLanguageResourceIec_61850Cfg.h"
+#include "../../Module/API/GlobalConfigApi.h"
 #ifdef _PSX_QT_LINUX_
-#include"../../../Module/API/StringConvertApi.h"
+#include"../../Module/API/StringConvertApi.h"
 #endif
 
 #ifdef USE_WAITINGTIMEDLG_FOR_SCLCOMPARECHECK

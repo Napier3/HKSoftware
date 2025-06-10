@@ -15,9 +15,9 @@
 #include "../../SttStudio/Module/SttSocket/TestTerminal/VC/SttClientSocket.h"
 #endif
 
-#include "../../SttStudio/Module/Engine/SttClientTestEngine.h"
-#include "../../SttStudio/Module/RecordTest/SttRcdSocketBase.h"
-#include "../../SttStudio/Module/SttTestAppConfig/SttTestAppCfg.h"
+#include "../Module/Engine/SttClientTestEngine.h"
+#include "../Module/RecordTest/SttRcdSocketBase.h"
+#include "../Module/SttTestAppConfig/SttTestAppCfg.h"
 
 /*
 #define XPARA_ID_IEC_CB _T("IEC_CB")

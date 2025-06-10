@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include "../../../../Module/DataMngr/DataGroup.h"
-#include "../../../../SttStudio/Module/SttGlobalDef.h"
+#include "../../Module/DataMngr/DataGroup.h"
+#include "../Module/SttGlobalDef.h"
 
 //2021-10-9  LIJUNQING
 #define DVMCLASSID_GBMACROGENWZD       (DVMCLASSID_EXLISTCLASS + 0X000000F1)

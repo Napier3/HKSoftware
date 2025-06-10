@@ -11,7 +11,7 @@
 
 #include "XRecordDrawBase.h"
 #include "../RecordTest/RecordTest.h"
-#include "../DRAW/DrawSysTime.h"
+#include "../Draw/DrawSysTime.h"
 
 //2023-7-22  lijunqing 从CXRecordDrawBase移动过来
 #include "../Comtrade/ComtradeMngr.h"

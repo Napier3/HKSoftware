@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/ctrls">
+        <file>images/checked.png</file>
+        <file>images/unchecked.png</file>
+        <file>images/file.png</file>
+        <file>images/folder.png</file>
+        <file>images/keyboard_chinese.png</file>
+        <file>images/keyboard_english.png</file>
+        <file>images/keyboard_number.png</file>
+        <file>images/keyboard_symbol.png</file>
+        <file>images/keyboard_upper.png</file>
+    </qresource>
+    <qresource prefix="/power">
+        <file>images/MAINPOWER-0.png</file>
+        <file>images/MAINPOWER-1.png</file>
+        <file>images/MAINPOWER-2.png</file>
+        <file>images/MAINPOWER-3.png</file>
+        <file>images/MAINPOWER-4.png</file>
+        <file>images/MAINPOWER-5.png</file>
+    </qresource>
+</RCC>

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../../Module/CriticalSection/SynCriticalSection.h"
-#include "../../../Module/BaseClass/ExBaseList.h"
+#include "../../Module/CriticalSection/SynCriticalSection.h"
+#include "../../Module/BaseClass/ExBaseList.h"
 
 #include "EthernetCapGlobalDef.h"
 #include "ProtocolBase/ProtocolGlobalDef.h"

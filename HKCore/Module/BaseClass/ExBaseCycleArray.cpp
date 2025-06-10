@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "ExBaseCycleArray.h"
 #include "../MemBuffer/XMemBufferBse.h"
 

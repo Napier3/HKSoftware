@@ -10,7 +10,7 @@
 #endif // _MSC_VER > 1000
 
 #include "DrawBase.h"
-#include "../../AXIS/RulerAxis.h"	// Added by ClassView
+#include "../../Axis/RulerAxis.h"	// Added by ClassView
 #include "DrawTimeAxisRange.h"
 #include "../RecordGlobalDefine.h"
 

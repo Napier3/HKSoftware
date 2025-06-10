@@ -1,7 +1,7 @@
 //#include "global.h"
 #include "QSclFileRead.h"
 #include <QProgressDialog>
-#include "../../../Module/API/StringConvert/String_Utf8_To_Gbk.h"
+#include "../../Module/API/StringConvert/String_Utf8_To_Gbk.h"
 
 // CXML::CXML(QWidget *parent) :
 //     QWidget(parent)
@@ -57,7 +57,7 @@
 #include <QList>
 #include <QFileDialog>
 #include <QSettings>
-#include "../../../Module/OSInterface/QT/XMessageBox.h"
+#include "../../Module/OSInterface/QT/XMessageBox.h"
 
 
 #if _MSC_VER >= 1600
@@ -197,7 +197,7 @@ SCL_IED_INFO_QT* QSclFileRead::GetSclIedInforQT(const QString &strIedName)
 BOOL QSclFileRead::ParseSCL(const CString &strSclFilePath)
 {
 // 	QTime oTime;//用于计算总用时
-// 	oTime.start();// zhouhj 2024.5.6 delete
+// 	oTime.start();// zhouhj 2024.5.6 delete
 
 	if (m_pProgressInterface != NULL)
 	{
@@ -1733,7 +1733,7 @@ BOOL QSclFileRead::SavePscdFile(const CString &strPscdFilePath)
 BOOL QSclFileRead::ParseSCL(const CString &strSclFilePath)
 {
 // 	QTime oTime;//鐢ㄤ簬璁＄畻鎬荤敤鏃?
-// 	oTime.start();// zhouhj 2024.5.6 delete
+// 	oTime.start();// zhouhj 2024.5.6 delete
 
 	if (m_pProgressInterface != NULL)
 	{

@@ -7,7 +7,7 @@
 #pragma once
 
 #include "TestMacroRptTemplateGlobal.h"
-#include "../../../Module/DataMngr/DvmData.h"
+#include "../../Module/DataMngr/DvmData.h"
 #include "RptTemp_Enable.h"
 
 class CRptTemp_Data : public CDvmData

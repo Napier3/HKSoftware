@@ -10,7 +10,7 @@
 #endif // _MSC_VER > 1000
 
 
-#include "../../../Module/BASECLASS/ExBaseList.h"
+#include "ExBaseList.h"
 #include "RecordTestClassDef.h"
 
 //没有用到，当初设计这两个类的目的是分配缓存，现在使用的类是CRtBufferConfig

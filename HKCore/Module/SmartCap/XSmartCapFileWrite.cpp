@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "XSmartCapFileWrite.h"
 #include "../API/GlobalConfigApi.h"
 #include "../API/FileApi.h"

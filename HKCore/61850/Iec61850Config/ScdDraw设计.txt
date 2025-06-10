@@ -1,0 +1,15 @@
+测试仪智能配置部分
+	主IED（被测IED）：
+		GsOut：使用Iecfg对象【CIecCfgGinDatas】，配置测试仪的开入
+		SvOut：使用Iecfg对象【CIecCfgSvInDatas】，配置电压电流通道，用于与实际的UI输出比较
+		GsIn：使用SCL对象，关联Iecfg对象【CIecCfgGoutDatas】，配置测试仪的开出，与外部IED的GsOut连线
+		SvIn：使用SCL对象，关联Iecfg对象【CIecCfgDatasSMV】，配置测试仪的电压电流通道，与外部SvOut连线
+	外部IED（被测试仪模拟的部分）
+		GsOut：使用Iecfg对象【CIecCfgGoutDatas】，配置测试仪的开出
+		SvOut：使用Iecfg对象【CIecCfgDatasSMV】，配置电压电流通道输出
+		GsIn：不配置
+		SvIn：不配置
+	CIecCfgDevice：
+		m_strIcdFile：记录整站SCD文件
+		m_pSclIed：记录被测装置的IED信息
+		

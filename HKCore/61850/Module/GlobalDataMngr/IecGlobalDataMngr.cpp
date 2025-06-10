@@ -7,7 +7,7 @@
 
 #include "stdafx.h"
 #include "IecGlobalDataMngr.h"
-#include "../../../Module/API/GlobalConfigApi.h"
+#include "../../Module/API/GlobalConfigApi.h"
 
 
 //////////////////////////////////////////////////////////////////////////

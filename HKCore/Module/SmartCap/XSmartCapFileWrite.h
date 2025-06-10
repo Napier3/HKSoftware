@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../SmDb/XSmMemBufferMngr.h"
+#include "../Smdb/XSmMemBufferMngr.h"
 #include "61850Cap/CapGlobalDef.h"
 #include "61850Cap/ProtocolBase/Stt/SttFrameMemBufferMngr.h"
 

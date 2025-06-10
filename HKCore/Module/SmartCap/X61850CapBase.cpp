@@ -1,6 +1,6 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "X61850CapBase.h"
-#include "../../Api/MathApi.h"
+#include "../../API/MathApi.h"
 
 #include "61850Cap/CapDevice/CapDevice91.h"
 #include "61850Cap/CapDevice/CapDevice6044.h"

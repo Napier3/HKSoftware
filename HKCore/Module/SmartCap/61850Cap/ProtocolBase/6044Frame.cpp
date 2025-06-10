@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 
 #include "6044Frame.h"
 #include "../CapDevice/CapDevice6044.h"

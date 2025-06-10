@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../../../SttStudio/Module/SttCmd/SttIotCmd.h"
-#include "../../../SttStudio/Module/SttCmd/SttSysState.h"
-#include "../../../Module/BaseClass/XObjectRefBase.h"
-#include "../../../Module/BaseClass/TxArray.h"
+#include "../Module/SttCmd/SttIotCmd.h"
+#include "../Module/SttCmd/SttSysState.h"
+#include "../../Module/BaseClass/XObjectRefBase.h"
+#include "../../Module/BaseClass/TxArray.h"
 
 class CIotPxEngineInterface;
 class CIotPxEngineServerInterface;

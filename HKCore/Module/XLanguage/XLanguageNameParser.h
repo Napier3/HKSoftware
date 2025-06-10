@@ -9,7 +9,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#include "../MEMBUFFER/BufferBase.h"
+#include "../MemBuffer/BufferBase.h"
 #define MAX_LanguageString 8
 #define LanguageString_Buffer_DefLen 1024
 

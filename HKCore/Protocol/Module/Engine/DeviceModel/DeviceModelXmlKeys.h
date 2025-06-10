@@ -1,10 +1,10 @@
 #ifndef DEVICEMODELXMLKEYS
 #define DEVICEMODELXMLKEYS
 
-#include "../../../../module/baseclass/baseobject.h"
+#include "BaseObject.h"
 #include "../PpGlobalDefine.h"
 #include "DeviceClassIDDefine.h"
-#include "../../../../Module/DataMngr/DataMngrGlobal.h"
+#include "../../Module/DataMngr/DataMngrGlobal.h"
 
 class CDeviceModelXmlKeys :public CDataMngrXmlRWKeys  //CXmlRWKeys
 {

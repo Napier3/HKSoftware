@@ -9,12 +9,12 @@
 #include "CharacteristicGlobal.h"
 #include "CharElementTestLine.h"
 #include "CharElementTestPoint.h"
-#include "../../../Module/XDrawBase/XDrawLine.h"
-#include "../../../Module/BaseClass/ComplexNumber.h"
-#include "../../../Module/API/MathApi.h"
+#include "../../Module/XDrawBase/XDrawLine.h"
+#include "../../Module/BaseClass/ComplexNumber.h"
+#include "../../Module/API/MathApi.h"
 
-#include "../../../Module/XDrawBase/XDrawDataDef.h"
-#include "../../../Module/XDrawBase/XDrawList.h"
+#include "../../Module/XDrawBase/XDrawDataDef.h"
+#include "../../Module/XDrawBase/XDrawList.h"
 
 #define CHAR_ERROR_LENGTH_TYPE_ABS   0
 #define CHAR_ERROR_LENGTH_TYPE_ABS   0

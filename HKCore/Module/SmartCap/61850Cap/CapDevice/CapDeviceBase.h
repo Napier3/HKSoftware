@@ -13,14 +13,14 @@
 #include "../ProtocolBase/Protocol61850Analysis.h"
 
 
-#include "../../../../Module/MemBuffer/CycleMemBuffer.h"
+#include "../../Module/MemBuffer/CycleMemBuffer.h"
 //#include "../CapGlobalDef.h"
 #include "../../../Record/RtMemBuffer/MemBuffer.h"
 
 #include "../../../../61850/Module/CfgDataMngr/IecCfgDevice.h"
 
 //SOE  lijunqing 2020-6-20
-#include "../../../../Module/BaseClass/ExBaseCycleArray.h"
+#include "../../Module/BaseClass/ExBaseCycleArray.h"
 #include "../../../System/TickCount32.h"
 #include "CapAnalysisConfig.h"
 
