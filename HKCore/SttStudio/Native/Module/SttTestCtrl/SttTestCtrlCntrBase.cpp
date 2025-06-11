@@ -4,11 +4,13 @@
 #include "../SttTestResourceMngr/TestResource/SttTestResource_6U6I.h"
 #include "../SttTestResourceMngr/TestResource/SttTestResource_Sync.h"
 #include "../SttTestResourceMngr/TestResource/SttTestResource_Async.h"
-#include "../../Module/XLanguage/XLanguageMngr.h"
+#include "../../../Module/XLanguage/XLanguageMngr.h"
 
 #include "../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdAi/GbWzdAiTool.h"
 
 extern long g_nLogDebugInfor;
+extern void Stt_Global_GetBinBoutMaxWidth();	//dingxy 20250214 获取开入开出映射后的最大宽度
+
 
 CSttTestCtrlCntrBase::CSttTestCtrlCntrBase()
 {
@@ -98,26 +100,22 @@ void CSttTestCtrlCntrBase::OpenMacroTestUI(CSttMacroTestUI_TestMacroUI *pTestMac
 
 	if (pTestMacroUI->IsUIWeb()||(!pTestMacroUI->m_strUI_ParaFile.IsEmpty()))//20220803 zhouhj 原生界面也采用此方式读取参数
 	{
-		if (g_nLogDebugInfor == 1)		CLogPrint::LogString(XLOGLEVEL_TRACE, "***** begin OpenParasFile >>");
 		stt_ui_OpenParasFile(pTestMacroUI->m_strUI_ParaFile, &m_oTestMacroUI_Paras);
-		if (g_nLogDebugInfor == 1)		CLogPrint::LogString(XLOGLEVEL_TRACE, "***** end  OpenParasFile >>");
 
 		//2023-2-7  lijunqing 根据装置模型智能生成模板参数
 		if (g_theGbWzdAiTool != NULL)
 		{
 			CString strAiFile = stt_ui_GetParasAiFile(pTestMacroUI->m_strUI_ParaFile);
 			g_theGbWzdAiTool->GbWzdAi(strAiFile, &m_oTestMacroUI_Paras);
-			
+			debug_time_long_log("GbWzdAi", true);
+
 			//调试模式下，查看智能匹配的结果
 			//stt_ui_SaveParasFile("GbWzdAiTool_After_Ai.xml", &m_oTestMacroUI_Paras);
 		}
 	}
 	
-	if (g_nLogDebugInfor == 1)		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> begin OpenHdRsFile >>");
 	stt_OpenHdRsFile(pTestMacroUI->m_strHdRsFile);
-	if (g_nLogDebugInfor == 1)		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> end  OpenHdRsFile >>");
-
-
+	debug_time_long_log("stt_OpenHdRsFile", true);
 }
 
 void CSttTestCtrlCntrBase::stt_OpenHdRsFile(const CString &strHdRsFile)
@@ -159,6 +157,8 @@ void CSttTestCtrlCntrBase::stt_OpenHdRsFile(const CString &strHdRsFile)
 	g_oSttTestResourceMngr.CreateRtDataMngr();
 	g_oSttTestResourceMngr.m_oIecDatasMngr.UpdateFT3ChsType(g_oSystemParas.m_nIecFormat,g_oSystemParas.m_nIecFormatMeas);//20240117 suyang 初始化时转换FT3通道类型
 //	g_theTestCntrFrame->m_pSttTestResource = m_pSttTestResouce;
+	//dingxy 20250214 读取配置信号后，获取开入开出映射后的最大宽度
+	Stt_Global_GetBinBoutMaxWidth();
 }
 
 
@@ -377,6 +377,11 @@ void CSttTestCtrlCntrBase::Ats_IecRecord(CDataGroup *pIecRecordParas)
 	
 }
 
+
+void CSttTestCtrlCntrBase::Ats_BinConfig(CDataGroup *pBinConfigParas)
+{
+
+}
 
 //2022-3-11 lijunqing
 void CSttTestCtrlCntrBase::OpenMacroTestUI_ParaFile(long nFileIndex)

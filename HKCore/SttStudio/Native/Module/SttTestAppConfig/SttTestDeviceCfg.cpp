@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "SttTestDeviceCfg.h"
-#include"../../Module/API/GlobalConfigApi.h"
-#include"../../Module/API/FileApi.h"
+#include"../../../Module/API/GlobalConfigApi.h"
+#include"../../../Module/API/FileApi.h"
 
 #ifdef _DEBUG  
 #define new DEBUG_NEW  

@@ -745,7 +745,7 @@ void stt_xml_serialize_common(tmt_StateParas *pParas, CSttXmlSerializeBase *pXml
     pEstimateSerialize->xml_serialize(/* "计时终点_开入" */ g_sLangTxt_Native_TimeEndInput.GetString(), "TtripEnd_Bin", " ", "string", pParas->m_paraEstimates[i].m_strTtripEnd_Bin);
     pEstimateSerialize->xml_serialize(/* "绝对误差限" */ g_sLangTxt_Native_AbsErrorLimit.GetString(), "ActT_AbsErr", " ", "number", pParas->m_paraEstimates[i].m_fActT_AbsErr);
     pEstimateSerialize->xml_serialize(/* "相对误差限" */ g_sLangTxt_Native_RelErrorLimit.GetString(), "ActT_RelErr", " ", "number", pParas->m_paraEstimates[i].m_fActT_RelErr);
-    pEstimateSerialize->xml_serialize(/* "整定值" */ g_sLangTxt_State_SettingValue.GetString(), "TSet", " ", "number", pParas->m_paraEstimates[i].m_fTset);
+    pEstimateSerialize->xml_serialize(/* "整定值" */ /*g_sLangTxt_State_SettingValue*/g_sLangTxt_SetValue.GetString(), "TSet", " ", "number", pParas->m_paraEstimates[i].m_fTset);
     pEstimateSerialize->xml_serialize(/* "判断逻辑" */ g_sLangTxt_Native_JudgeLogic.GetString(), "ErrorLogic", " ", "number", pParas->m_paraEstimates[i].m_nErrorLogic);
 #endif
 	}
@@ -1479,7 +1479,7 @@ void stt_xml_serialize_statenUnI_pnv(tmt_StateResults *pResults,tmt_StateParas *
 
 #include"../../SttCmd/SttTestCmd.h"
 #include"tmt_state_test.h"
-#include"../../Module/API/GlobalConfigApi.h"
+#include"../../../../Module/API/GlobalConfigApi.h"
 
 void stt_xml_serialize_write_StateTest()
 {

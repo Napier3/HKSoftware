@@ -379,123 +379,127 @@ void CSttPowerTestEngineBase::OnException(CDataGroup *pParas)
 	CDataGroup *pCh = NULL;
 	POS posCh = NULL;
 
-	BOOL bIsHot = FALSE,bIsUOverLoad = FALSE,bIsIOverLoad = FALSE;
+	//BOOL bIsHot = FALSE,bIsUOverLoad = FALSE,bIsIOverLoad = FALSE;
+	long nOverHeat = 0, nIBreak = 0, nUShort = 0;
 	
-	while(pos != NULL)
-	{
-		p = pParas->GetNext(pos);
+// 	while(pos != NULL)
+// 	{
+// 		p = pParas->GetNext(pos);
+// 
+// 		if (p->GetClassID() != DTMCLASSID_CDATAGROUP)
+// 		{
+// 			continue;
+// 		}
+// 
+// 		pModule = (CDataGroup *)p;
+// 
+// 		if (pModule->m_strDataType != _T("Module"))
+// 		{
+// 			continue;
+// 		}
+// 
+// /*yyj 后期处理
+// 		long nIsVoltHot = 0,nIsDCHot = 0,nIsVoltWarining = 0;
+// 		stt_GetDataValueByID(pModule, _T("IsVoltHot"), nIsVoltHot);
+// 		stt_GetDataValueByID(pModule, _T("IsDCHot"), nIsDCHot);
+// 		stt_GetDataValueByID(pModule, _T("IsVoltWarining"), nIsVoltWarining);
+// 
+// 		if (nIsVoltHot || nIsDCHot)
+// 		{
+// 			bIsHot = TRUE;
+// 		}
+// */
+// 		CString strModuleType;
+// 		stt_GetDataValueByID(pModule, _T("ModuleType"), strModuleType);
+// 
+// 		//解析温度上、中、下
+// 		float fT1 = 0.0,fT2 = 0.0,fT3 = 0.0;
+// 		stt_GetDataValueByID(pModule, _T("T1"), fT1);
+// 		stt_GetDataValueByID(pModule, _T("T2"), fT2);
+// 		stt_GetDataValueByID(pModule, _T("T3"), fT3);
+// 
+// 		if (fT1 > 75)
+// 		{
+// 			CLogPrint::LogFormatString(XLOGLEVEL_EXCEPTION,_T("模块(%s,%s)的温度(上)值(%f)超限值75°"),pModule->m_strName.GetString()
+// 				,strModuleType.GetString(),fT1);
+// 			bIsHot = TRUE;
+// 		}
+// 
+// 		if (fT2 > 75)
+// 		{
+// 			CLogPrint::LogFormatString(XLOGLEVEL_EXCEPTION,_T("模块(%s,%s)的温度(下)值(%f)超限值75°"),pModule->m_strName.GetString()
+// 				,strModuleType.GetString(),fT2);
+// 			bIsHot = TRUE;
+// 		}
+// 
+// 		if (fT3 > 75)
+// 		{
+// 			CLogPrint::LogFormatString(XLOGLEVEL_EXCEPTION,_T("模块(%s,%s)的温度(中)值(%f)超限值75°"),pModule->m_strName.GetString()
+// 				,strModuleType.GetString(),fT3);
+// 			bIsHot = TRUE;
+// 		}
+// 
+// 		posCh = pModule->GetHeadPosition();
+// 		while(posCh != NULL)
+// 		{
+// 			p1 = pModule->GetNext(posCh);
+// 
+// 			if (p1->m_strID == _T("DisableType"))
+// 			{
+// 				CLogPrint::LogFormatString(XLOGLEVEL_ERROR,_T("%s被禁用(%s),模块类型(%s)."),pModule->m_strName.GetString(),p1->m_strName.GetString(),strModuleType.GetString());
+// 			}
+// 
+// 			if (p1->GetClassID() != DTMCLASSID_CDATAGROUP)
+// 			{
+// 				continue;
+// 			}
+// 
+// 			pCh = (CDataGroup *)p1;
+// 
+// 			if (pCh->m_strDataType != _T("Channel"))
+// 			{
+// 				continue;
+// 			}
+// 
+// 			long nIsOverLoad = 0;
+// 			stt_GetDataValueByID(pCh, _T("IsOverLoad"), nIsOverLoad);
+// 
+// 			if (nIsOverLoad)
+// 			{
+// 				if (strModuleType == STT_MODULE_TYPE_VOLT_ID)
+// 				{
+// 					bIsUOverLoad = TRUE;
+// 				}
+// 				else
+// 				{
+// 					bIsIOverLoad = TRUE;
+// 				}	
+// 			}
+// 		}
+// 	}
 
-		if (p->GetClassID() != DTMCLASSID_CDATAGROUP)
-		{
-			continue;
-		}
+// 	long nUdc = 0;
+// 	stt_GetDataValueByID(pParas, STT_SYS_STATE_ID_Udc, nUdc);
 
-		pModule = (CDataGroup *)p;
-
-		if (pModule->m_strDataType != _T("Module"))
-		{
-			continue;
-		}
-
-/*yyj 后期处理
-		long nIsVoltHot = 0,nIsDCHot = 0,nIsVoltWarining = 0;
-		stt_GetDataValueByID(pModule, _T("IsVoltHot"), nIsVoltHot);
-		stt_GetDataValueByID(pModule, _T("IsDCHot"), nIsDCHot);
-		stt_GetDataValueByID(pModule, _T("IsVoltWarining"), nIsVoltWarining);
-
-		if (nIsVoltHot || nIsDCHot)
-		{
-			bIsHot = TRUE;
-		}
-*/
-		CString strModuleType;
-		stt_GetDataValueByID(pModule, _T("ModuleType"), strModuleType);
-
-		//解析温度上、中、下
-		float fT1 = 0.0,fT2 = 0.0,fT3 = 0.0;
-		stt_GetDataValueByID(pModule, _T("T1"), fT1);
-		stt_GetDataValueByID(pModule, _T("T2"), fT2);
-		stt_GetDataValueByID(pModule, _T("T3"), fT3);
-
-		if (fT1 > 75)
-		{
-			CLogPrint::LogFormatString(XLOGLEVEL_EXCEPTION,_T("模块(%s,%s)的温度(上)值(%f)超限值75°"),pModule->m_strName.GetString()
-				,strModuleType.GetString(),fT1);
-			bIsHot = TRUE;
-		}
-
-		if (fT2 > 75)
-		{
-			CLogPrint::LogFormatString(XLOGLEVEL_EXCEPTION,_T("模块(%s,%s)的温度(下)值(%f)超限值75°"),pModule->m_strName.GetString()
-				,strModuleType.GetString(),fT2);
-			bIsHot = TRUE;
-		}
-
-		if (fT3 > 75)
-		{
-			CLogPrint::LogFormatString(XLOGLEVEL_EXCEPTION,_T("模块(%s,%s)的温度(中)值(%f)超限值75°"),pModule->m_strName.GetString()
-				,strModuleType.GetString(),fT3);
-			bIsHot = TRUE;
-		}
-
-		posCh = pModule->GetHeadPosition();
-		while(posCh != NULL)
-		{
-			p1 = pModule->GetNext(posCh);
-
-			if (p1->m_strID == _T("DisableType"))
-			{
-				CLogPrint::LogFormatString(XLOGLEVEL_ERROR,_T("%s被禁用(%s),模块类型(%s)."),pModule->m_strName.GetString(),p1->m_strName.GetString(),strModuleType.GetString());
-			}
-
-			if (p1->GetClassID() != DTMCLASSID_CDATAGROUP)
-			{
-				continue;
-			}
-
-			pCh = (CDataGroup *)p1;
-
-			if (pCh->m_strDataType != _T("Channel"))
-			{
-				continue;
-			}
-
-			long nIsOverLoad = 0;
-			stt_GetDataValueByID(pCh, _T("IsOverLoad"), nIsOverLoad);
-
-			if (nIsOverLoad)
-			{
-				if (strModuleType == STT_MODULE_TYPE_VOLT_ID)
-				{
-					bIsUOverLoad = TRUE;
-				}
-				else
-				{
-					bIsIOverLoad = TRUE;
-				}	
-			}
-		}
-	}
-
-	long nUdc = 0;
-	stt_GetDataValueByID(pParas, STT_SYS_STATE_ID_Udc, nUdc);
-//	UpdateIBreakUShortOverHeat(bIsIOverLoad,bIsUOverLoad,bIsHot);
-
+	stt_GetDataValueByID(pParas, STT_SYS_STATE_ID_IBreak, nIBreak);
+	stt_GetDataValueByID(pParas, STT_SYS_STATE_ID_UShort, nUShort); 
+	stt_GetDataValueByID(pParas, STT_SYS_STATE_ID_OverHeat, nOverHeat); 
 	if (m_pLastEventResult == NULL)
 	{
 		m_pLastEventResult = &m_oCurrEventResult;
 	}
 	
-	if((m_pLastEventResult->m_nUOverLoad != (long)bIsUOverLoad)
-		|| (m_pLastEventResult->m_nIOverLoad != (long)bIsIOverLoad)
-		|| (m_pLastEventResult->m_nOverHeat != (long)bIsHot)
-		||(m_pLastEventResult->m_nUdc != nUdc))
+	if((m_pLastEventResult->m_nUOverLoad != /*(long)bIsUOverLoad*/nUShort)
+		|| (m_pLastEventResult->m_nIOverLoad != /*(long)bIsIOverLoad*/nIBreak)
+		|| (m_pLastEventResult->m_nOverHeat != /*(long)bIsHot*/nOverHeat)
+		/*||(m_pLastEventResult->m_nUdc != nUdc)*/)
 	{
+		//dingxy 20250319 Udc Data节点移除，移动到RTDATA中
 		CEventResult *pEventInfo = (CEventResult *)m_pLastEventResult->Clone();
-		pEventInfo->m_nUOverLoad = bIsUOverLoad;
-		pEventInfo->m_nIOverLoad = bIsIOverLoad;
-		pEventInfo->m_nOverHeat = bIsHot;
-		pEventInfo->m_nUdc = nUdc;
+		pEventInfo->m_nUOverLoad = nUShort;
+		pEventInfo->m_nIOverLoad = nIBreak;
+		pEventInfo->m_nOverHeat = nOverHeat;
+		/*pEventInfo->m_nUdc = nUdc;*/
 
 // 		long nSecond = 0,nNSecend = 0;
 // 		stt_GetDataValueByID(pParas, _T("Utc_s"), nSecond);
@@ -508,7 +512,7 @@ void CSttPowerTestEngineBase::OnException(CDataGroup *pParas)
 // 		ep_cap_timeval_to_systime(ts,tmException);
 // 		pEventInfo->m_tmEvent = tmException;
 
-		if (bIsHot || bIsUOverLoad || bIsIOverLoad)
+		if ((nUShort > 0) || (nIBreak > 0) || (nOverHeat > 0))
 		{
 			pEventInfo->m_strEventID = SYS_STATE_EXCEPTION;
 		}
@@ -745,6 +749,13 @@ void CSttPowerTestEngineBase::OnReport(CDataGroup *pParas)
 			OnReport_ReadDevice(STT_CMD_TYPE_ADJUST_ReadDeviceParameter,pParas);
 		}
 	} 
+	else if (pParas->m_strID == STT_CMD_TYPE_ADJUST_ReadSystemState)
+	{
+		if (!m_bStarted)
+		{
+			OnReport_ReadSystemState(STT_CMD_TYPE_ADJUST_ReadSystemState,pParas);
+		}
+	} 
 }
 
 void CSttPowerTestEngineBase::OnReport(const CString &strTestID, long nDeviceIndex, long nReportIndex, long nItemIndex, const CString & strItemID, long nState, CSttParas *pParas)
@@ -756,6 +767,13 @@ void CSttPowerTestEngineBase::OnReport(const CString &strTestID, long nDeviceInd
 		if (!m_bStarted)
 		{
 			OnReport_ReadDevice(STT_CMD_TYPE_ADJUST_ReadDeviceParameter,pParas);
+		}
+	} 
+	else if (pParas->m_strID == STT_CMD_TYPE_ADJUST_ReadSystemState)//20250317 huangliang
+	{
+		//if (!m_bStarted)	//20250319 huangliang 测试过程也需要处理数据
+		{
+			OnReport_ReadSystemState(STT_CMD_TYPE_ADJUST_ReadSystemState,pParas);
 		}
 	} 
 	else
@@ -779,6 +797,10 @@ void CSttPowerTestEngineBase::OnReport_ReadDevice(const CString &strMacroID, CDa
 {
 
 }
+void CSttPowerTestEngineBase::OnReport_ReadSystemState(const CString &strMacroID, CDataGroup *pParas)
+{
+
+}
 
 long CSttPowerTestEngineBase::OnUpdate(CSttParas *pParas)
 {
@@ -794,12 +816,12 @@ void OnRtData_SttGlobalRtDataMngr(CDataGroup *pRtDataGroup)
 
 	if (!stt_GetDataValueByID(pRtDataGroup, TMT_RESULT_ID_Time, dTime))
 	{
-		CLogPrint::LogFormatString(XLOGLEVEL_ERROR,_T("获取实时数据绝对时间失败."));
+		CLogPrint::LogFormatString(XLOGLEVEL_ERROR,_T("获取实时数据绝对时间失败.")/*g_sLangTxt_Native_GetRealTimeFail.GetString()*/);
 	}
 
 	if (!stt_GetDataValueByID(pRtDataGroup, TMT_RESULT_ID_RealTime, dRealTime))
 	{
-		CLogPrint::LogFormatString(XLOGLEVEL_ERROR,_T("获取实时数据相对时间失败."));
+		CLogPrint::LogFormatString(XLOGLEVEL_ERROR,_T("获取实时数据相对时间失败.")/*g_sLangTxt_Native_GetRelTimeFail.GetString()*/);
 		return;
 	}
 
@@ -1255,15 +1277,23 @@ long CSttPowerTestEngineBase::SendDebugLogCmd(long nValue)
 BOOL CSttPowerTestEngineBase::connectTestApp(const CString &strIP,long nPort,const CString &strSoftID)
 {
 	//连接登录
+#ifndef NOT_USE_XLANGUAGE
+	CLogPrint::LogString(XLOGLEVEL_TRACE, /*"正在连接测试仪......"*/g_sLangTxt_Native_ConnectingTester);
+#else
 	CLogPrint::LogString(XLOGLEVEL_TRACE, "正在连接测试仪......");
 
+#endif
 	g_oSttTestAppConfigTool.m_pSttTestMsgViewInterface = this;
 	BOOL bRet = g_oSttTestAppConfigTool.Local_ConnectServer(&g_oSttTestAppCfg,strIP,nPort,strSoftID);
 
 	if(bRet)
 	{
+#ifndef NOT_USE_XLANGUAGE
+		CLogPrint::LogString(XLOGLEVEL_TRACE, /*"测试仪连接成功"*/g_sLangTxt_Native_TesterConnectSucc);
+#else
 		CLogPrint::LogString(XLOGLEVEL_TRACE, "测试仪连接成功");
 
+#endif
 		g_oSttTestAppCfg.SetTestAppIP(strIP);
 		g_oSttTestAppCfg.SetTestServerPort(nPort);
 	
@@ -1273,7 +1303,13 @@ BOOL CSttPowerTestEngineBase::connectTestApp(const CString &strIP,long nPort,con
 	}
 	else
 	{
+#ifndef NOT_USE_XLANGUAGE
+		CLogPrint::LogString(XLOGLEVEL_ERROR, /*"连接测试仪失败，请检查网络链路是否连通，IP地址及端口配置是否正确；然后点击网络连接按钮重新连接"*/g_sLangTxt_Native_TesterConnectfail);
+#else
 		CLogPrint::LogString(XLOGLEVEL_ERROR, "连接测试仪失败，请检查网络链路是否连通，IP地址及端口配置是否正确；然后点击网络连接按钮重新连接");
+
+#endif
+	
 	}
 
 	return bRet;
@@ -1290,9 +1326,11 @@ void CSttPowerTestEngineBase::SendIecDetect(long bEnable,long nFT3_CrcType,long 
 	oGroup.AddNewData(_T("IecType"), nIecType);
 	if(nFT3_CrcType == 1)
 	{
+		QVector<int> vectorAtFirst ;
 		for(int i =0;i<oPkgLengthList.size();i++)
 		{
-			QVector<int> vectorAtFirst = oPkgLengthList.at(i);
+			vectorAtFirst.clear();
+			vectorAtFirst = oPkgLengthList.at(i);
 			int first = vectorAtFirst[0];  // 1
 			long nPkgLength = vectorAtFirst[1];
 			CString strPkgName;
@@ -1311,6 +1349,11 @@ void CSttPowerTestEngineBase::SendIecRecord(CDataGroup *pIecRecordParas)
 	m_pXClientEngine->Test_SetParameter(_T("IecRecord"), pIecRecordParas);
 }
 
+
+void CSttPowerTestEngineBase::SendBinConfig(CDataGroup *pBinconfigParas)
+{
+	m_pXClientEngine->Test_SetParameter(_T("BinConfig"), pBinconfigParas);
+}
 
 //////
 
@@ -1526,6 +1569,7 @@ void CSttPowerTestEngineBase::GenerateTestCmdFromSystemParas(CSttTestCmd &oSttTe
 
 	//序列化参数
 	stt_xml_serialize_SystemParas(&g_oSystemParas, pMacroParas);
+	stt_xml_serialize_AppConfig(&g_oSystemParas, pMacroParas);//dingxy 20250317 增加系统参数iec下发
 	stt_xml_serialize_ModulesGearSwitch(&g_oSystemParas, pMacroParas);//zhouhj 2024.2.1 下发系统参数时,增加档位设置,防止测试仪底层档位与上位机不一致
 
 	//根据pDoc生成对象

@@ -50,21 +50,24 @@ void stt_xml_serialize(tmt_CBOperateParas *pParas, CSttXmlSerializeBase *pXmlSie
 	pXmlSierialize->xml_serialize("转换故障短路电压", "VSet2", "V","number",pParas->m_fSCVoltage[1]);
 	pXmlSierialize->xml_serialize("转换故障故障方向", "FaultDirection2", "", "FaultDirection", pParas->m_nFaultDir[1]);
 
-	pXmlSierialize->xml_serialize("动作时间误差判断","Ttrip_Check","","long",pParas->m_nTtripCheck);
-	pXmlSierialize->xml_serialize("重合闸动作时间误差判断", "TtripD_Check", "","long",pParas->m_nTtripDCheck);
-	pXmlSierialize->xml_serialize("后加速动作时间误差判断", "TtripAcc_Check", "","long",pParas->m_nTtripAccCheck);
-	pXmlSierialize->xml_serialize("动作时间绝对误差限(s)","Ttrip_AbsErr","","number",pParas->m_fTtripAbsErr);
-	pXmlSierialize->xml_serialize("动作时间相对误差限(%)", "Ttrip_RelErr", "","number",pParas->m_fTtripRelErr);
-	pXmlSierialize->xml_serialize("动作时间整定值(s)", "TSetting", "","number",pParas->m_fTSetting);
-	pXmlSierialize->xml_serialize("重合闸动作时间绝对误差限(s)", "TtripD_AbsErr", "","number",pParas->m_fTtripDAbsErr);
-	pXmlSierialize->xml_serialize("重合闸动作时间相对误差限(%)", "TtripD_RelErr", "","number",pParas->m_fTtripDRelErr);
+	pXmlSierialize->xml_serialize("动作时间误差判断", "Ttrip_Check", "", "long", pParas->m_nTtripCheck);
+	pXmlSierialize->xml_serialize("重合闸动作时间误差判断", "TtripD_Check", "", "long", pParas->m_nTtripDCheck);
+	pXmlSierialize->xml_serialize("后加速动作时间误差判断", "TtripAcc_Check", "", "long", pParas->m_nTtripAccCheck);
+	pXmlSierialize->xml_serialize("动作时间绝对误差限(s)", "Ttrip_AbsErr", "", "number", pParas->m_fTtripAbsErr);
+	pXmlSierialize->xml_serialize("动作时间相对误差限(%)", "Ttrip_RelErr", "", "number", pParas->m_fTtripRelErr);
+	pXmlSierialize->xml_serialize("动作时间整定值(s)", "TSetting", "", "number", pParas->m_fTSetting);
+	pXmlSierialize->xml_serialize("动作时间绝对误差(-)", "Ttrip_AbsErr_Neg", "", "number", pParas->m_fTtripAbsErrMinus);
+	pXmlSierialize->xml_serialize("重合闸动作时间绝对误差限(s)", "TtripD_AbsErr", "", "number", pParas->m_fTtripDAbsErr);
+	pXmlSierialize->xml_serialize("重合闸动作时间相对误差限(%)", "TtripD_RelErr", "", "number", pParas->m_fTtripDRelErr);
 	pXmlSierialize->xml_serialize("重合闸动作时间整定值(s)", "DTSetting", "", "number", pParas->m_fDTSetting);
-	pXmlSierialize->xml_serialize("后加速动作时间绝对误差限(s)", "TtripAcc_AbsErr", "","number",pParas->m_fTtripAccAbsErr);
-	pXmlSierialize->xml_serialize("后加速动作时间相对误差限(%)", "TtripAcc_RelErr", "","number",pParas->m_fTtripAccRelErr);
+	pXmlSierialize->xml_serialize("重合闸动作时间绝对误差(-)", "TtripD_AbsErr_Neg", "", "number", pParas->m_fTtripDAbsErrMinus);
+	pXmlSierialize->xml_serialize("后加速动作时间绝对误差限(s)", "TtripAcc_AbsErr", "", "number", pParas->m_fTtripAccAbsErr);
+	pXmlSierialize->xml_serialize("后加速动作时间相对误差限(%)", "TtripAcc_RelErr", "", "number", pParas->m_fTtripAccRelErr);
 	pXmlSierialize->xml_serialize("后加速动作时间整定值(s)", "AccTSetting", "", "number", pParas->m_fAccTSetting);
-	pXmlSierialize->xml_serialize("动作时间误差逻辑判断","Ttrip_ErrorLogic","","long",pParas->m_nTtripErrorLogic);
-	pXmlSierialize->xml_serialize("重合闸动作时间误差逻辑判断", "TtripD_ErrorLogic", "","long",pParas->m_nTtripDErrorLogic);
-	pXmlSierialize->xml_serialize("后加速动作时间误差逻辑判断", "TtripAcc_ErrorLogic", "","long",pParas->m_nTtripAccErrorLogic);
+	pXmlSierialize->xml_serialize("后加速动作时间绝对误差(-)", "TtripAcc_AbsErr_Neg", "", "number", pParas->m_fTtripAccAbsErrMinus);
+	pXmlSierialize->xml_serialize("动作时间误差逻辑判断", "Ttrip_ErrorLogic", "", "long", pParas->m_nTtripErrorLogic);
+	pXmlSierialize->xml_serialize("重合闸动作时间误差逻辑判断", "TtripD_ErrorLogic", "", "long", pParas->m_nTtripDErrorLogic);
+	pXmlSierialize->xml_serialize("后加速动作时间误差逻辑判断", "TtripAcc_ErrorLogic", "", "long", pParas->m_nTtripAccErrorLogic);
 
 	pXmlSierialize->xml_serialize("试验过程","TestProcess","","PsuTestProcCtrl",pParas->m_nTestProcCtrlMode);
 	// 以下参数当m_nTestProcCtrlMode==时间控制时有效
@@ -89,27 +92,32 @@ void stt_xml_serialize(tmt_CBOperateParas *pParas, CSttXmlSerializeBase *pXmlSie
 	pXmlSierialize->xml_serialize(/* "系统电源阻抗角" */g_sLangTxt_Native_syspowerImpangle.GetString(),"Zs_Ang","°","number",pParas->m_fPhis);
 
 
-	pXmlSierialize->xml_serialize("动作时间误差判断","Ttrip_Check","","long",pParas->m_nTtripCheck);
-	pXmlSierialize->xml_serialize("重合闸动作时间误差判断", "TtripD_Check", "","long",pParas->m_nTtripDCheck);
-	pXmlSierialize->xml_serialize("后加速动作时间误差判断", "TtripAcc_Check", "","long",pParas->m_nTtripAccCheck);
-	pXmlSierialize->xml_serialize("动作时间绝对误差限(s)","Ttrip_AbsErr","","number",pParas->m_fTtripAbsErr);
-	pXmlSierialize->xml_serialize("动作时间相对误差限(%)", "Ttrip_RelErr", "","number",pParas->m_fTtripRelErr);
-	pXmlSierialize->xml_serialize("动作时间整定值(s)", "TSetting", "","number",pParas->m_fTSetting);
-	pXmlSierialize->xml_serialize("重合闸动作时间绝对误差限(s)", "TtripD_AbsErr", "","number",pParas->m_fTtripDAbsErr);
-	pXmlSierialize->xml_serialize("重合闸动作时间相对误差限(%)", "TtripD_RelErr", "","number",pParas->m_fTtripDRelErr);
+	pXmlSierialize->xml_serialize("动作时间误差判断", "Ttrip_Check", "", "long", pParas->m_nTtripCheck);
+	pXmlSierialize->xml_serialize("重合闸动作时间误差判断", "TtripD_Check", "", "long", pParas->m_nTtripDCheck);
+	pXmlSierialize->xml_serialize("后加速动作时间误差判断", "TtripAcc_Check", "", "long", pParas->m_nTtripAccCheck);
+	pXmlSierialize->xml_serialize("动作时间绝对误差限(s)", "Ttrip_AbsErr", "", "number", pParas->m_fTtripAbsErr);
+	pXmlSierialize->xml_serialize("动作时间相对误差限(%)", "Ttrip_RelErr", "", "number", pParas->m_fTtripRelErr);
+	pXmlSierialize->xml_serialize("动作时间整定值(s)", "TSetting", "", "number", pParas->m_fTSetting);
+	pXmlSierialize->xml_serialize("动作时间绝对误差(-)", "Ttrip_AbsErr_Neg", "", "number", pParas->m_fTtripAbsErrMinus);
+	pXmlSierialize->xml_serialize("重合闸动作时间绝对误差限(s)", "TtripD_AbsErr", "", "number", pParas->m_fTtripDAbsErr);
+	pXmlSierialize->xml_serialize("重合闸动作时间相对误差限(%)", "TtripD_RelErr", "", "number", pParas->m_fTtripDRelErr);
 	pXmlSierialize->xml_serialize("重合闸动作时间整定值(s)", "DTSetting", "", "number", pParas->m_fDTSetting);
-	pXmlSierialize->xml_serialize("后加速动作时间绝对误差限(s)", "TtripAcc_AbsErr", "","number",pParas->m_fTtripAccAbsErr);
-	pXmlSierialize->xml_serialize("后加速动作时间相对误差限(%)", "TtripAcc_RelErr", "","number",pParas->m_fTtripAccRelErr);
+	pXmlSierialize->xml_serialize("重合闸动作时间绝对误差(-)", "TtripD_AbsErr_Neg", "", "number", pParas->m_fTtripDAbsErrMinus);
+	pXmlSierialize->xml_serialize("后加速动作时间绝对误差限(s)", "TtripAcc_AbsErr", "", "number", pParas->m_fTtripAccAbsErr);
+	pXmlSierialize->xml_serialize("后加速动作时间相对误差限(%)", "TtripAcc_RelErr", "", "number", pParas->m_fTtripAccRelErr);
 	pXmlSierialize->xml_serialize("后加速动作时间整定值(s)", "AccTSetting", "", "number", pParas->m_fAccTSetting);
-	pXmlSierialize->xml_serialize("动作时间误差逻辑判断","Ttrip_ErrorLogic","","long",pParas->m_nTtripErrorLogic);
-	pXmlSierialize->xml_serialize("重合闸动作时间误差逻辑判断", "TtripD_ErrorLogic", "","long",pParas->m_nTtripDErrorLogic);
-	pXmlSierialize->xml_serialize("后加速动作时间误差逻辑判断", "TtripAcc_ErrorLogic", "","long",pParas->m_nTtripAccErrorLogic);
+	pXmlSierialize->xml_serialize("后加速动作时间绝对误差(-)", "TtripAcc_AbsErr_Neg", "", "number", pParas->m_fTtripAccAbsErrMinus);
+	pXmlSierialize->xml_serialize("动作时间误差逻辑判断", "Ttrip_ErrorLogic", "", "long", pParas->m_nTtripErrorLogic);
+	pXmlSierialize->xml_serialize("重合闸动作时间误差逻辑判断", "TtripD_ErrorLogic", "", "long", pParas->m_nTtripDErrorLogic);
+	pXmlSierialize->xml_serialize("后加速动作时间误差逻辑判断", "TtripAcc_ErrorLogic", "", "long", pParas->m_nTtripAccErrorLogic);
 
 	pXmlSierialize->xml_serialize(/* "故障类型" */g_sLangTxt_Gradient_FailType.GetString(),"FaultType1","","number",pParas->m_nFaultType[0]);
 	pXmlSierialize->xml_serialize(/* "短路电流" */g_sLangTxt_Native_ShortCircuit.GetString(), "ISet1", "A","number",pParas->m_fSCCurrent[0]);
 	pXmlSierialize->xml_serialize(/* "短路电压" */g_sLangTxt_Native_ShortCircuitV.GetString(), "VSet1", "V","number",pParas->m_fSCVoltage[0]);
 	pXmlSierialize->xml_serialize(/* "短路阻抗" */g_sLangTxt_Native_ShortZImp.GetString(), "Z1", "V","number",pParas->m_fImpedance[0]);
 	pXmlSierialize->xml_serialize(/* "短路阻抗角" */g_sLangTxt_Native_ShortZImpAng.GetString(), "Z1Ph", "°","number",pParas->m_fImpAngle[0]);
+	pXmlSierialize->xml_serialize(/* "电阻" */"R(Ω)", "R1", "", "number", pParas->m_fResistance[0]);
+	pXmlSierialize->xml_serialize(/* "电抗" */"X(Ω)", "X1", "", "number", pParas->m_fReactance[0]);
 	pXmlSierialize->xml_serialize(/* "故障方向" */g_sLangTxt_Gradient_FailDirect.GetString(), "FaultDirection", "", "FaultDirection", pParas->m_nFaultDir[0]);
 	pXmlSierialize->xml_serialize(/* "故障性质" */g_sLangTxt_Native_NatureMalf.GetString(),"FaultPermanent","","FaultCharacter",pParas->m_nFaultProperty);
 
@@ -122,6 +130,8 @@ void stt_xml_serialize(tmt_CBOperateParas *pParas, CSttXmlSerializeBase *pXmlSie
 	pXmlSierialize->xml_serialize(/* "转换故障类型" */g_sLangTxt_Native_switchErrtype.GetString(),"FaultType2","","number",pParas->m_nFaultType[1]);
 	pXmlSierialize->xml_serialize(/* "转换故障短路阻抗" */g_sLangTxt_Native_switchErr_shortImp.GetString(), "Z2", "V","number",pParas->m_fImpedance[1]);
 	pXmlSierialize->xml_serialize(/* "转换故障短路阻抗角" */g_sLangTxt_Native_switchErr_shortImpAng.GetString(), "Z2Ph", "°","number",pParas->m_fImpAngle[1]);
+	pXmlSierialize->xml_serialize(/* "转换电阻" */"R(Ω)", "R2", "", "number", pParas->m_fResistance[1]);
+	pXmlSierialize->xml_serialize(/* "转换电抗" */"X(Ω)", "X2", "", "number", pParas->m_fReactance[1]);
 	pXmlSierialize->xml_serialize(/* "转换故障短路电流" */g_sLangTxt_Native_switchErr_shortI.GetString(), "ISet2", "A","number",pParas->m_fSCCurrent[1]);
 	pXmlSierialize->xml_serialize(/* "转换故障短路电压" */g_sLangTxt_Native_switchErr_shortV.GetString(), "VSet2", "V","number",pParas->m_fSCVoltage[1]);
 	pXmlSierialize->xml_serialize(/* "转换故障故障方向" */g_sLangTxt_Native_switchErr_direction.GetString(), "FaultDirection2", "", "FaultDirection", pParas->m_nFaultDir[1]);

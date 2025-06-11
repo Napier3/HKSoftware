@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "DataSetGroup.h"
 // #include "Set.h"
 

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "SttTestResourceBase.h"
 #ifndef STT_NOT_TESTCNTRFRAME
 #include "../../XLangResource_Native.h"
@@ -395,9 +395,19 @@ void CSttTestResourceBase::AddGradientSequence(CDataType &oGradientChs)
 
 	if (nVolGroupNum>0)
 	{
+		if (xlang_IsCurrXLanguageChinese())
+		{
 		oGradientChs.AddNewValue(_T("U1-1"),_T("U1-1"),0);
 		oGradientChs.AddNewValue(_T("U1-2"),_T("U1-2"),1);
 		oGradientChs.AddNewValue(_T("U1-0"),_T("U1-0"),2);
+		}
+		else
+		{
+			oGradientChs.AddNewValue(_T("V1-1"),_T("U1-1"),0);
+			oGradientChs.AddNewValue(_T("V1-2"),_T("U1-2"),1);
+			oGradientChs.AddNewValue(_T("V1-0"),_T("U1-0"),2);
+		}
+		
 
 // 		if (nVolGroupNum>1)  //zhouhj 2023.8.8 序分量递变底层只支持1组
 // 		{
@@ -430,8 +440,17 @@ void CSttTestResourceBase::AddGradientLineVolt(CDataType &oGradientChs)
 
 	if (nVolGroupNum>0)
 	{
+		if (xlang_IsCurrXLanguageChinese())
+		{
 		oGradientChs.AddNewValue(_T("Uab1"),_T("Uab1"),LineVolt_vab1_type);
 		oGradientChs.AddNewValue(_T("3U1-0"),_T("3U1-0"),LineVolt_v1_0_type);
+		}
+		else
+		{
+			oGradientChs.AddNewValue(_T("Vab1"),_T("Uab1"),LineVolt_vab1_type);
+			oGradientChs.AddNewValue(_T("3V1-0"),_T("3U1-0"),LineVolt_v1_0_type);
+		}
+		
 // 		oGradientChs.AddNewValue(_T("Uab2"),_T("Uab2"),LineVolt_vab2_type);
 // 		oGradientChs.AddNewValue(_T("3U2-0"),_T("3U2-0"),LineVolt_v2_0_type);
 
@@ -665,10 +684,23 @@ long CSttTestResourceBase::GetChIndexLinevoltByChName(CString strName,BOOL bVol)
 	strRight = strName.Right(1);
 	long nIndex = strName.Find(_T("-"));
 	long nRight = CString_To_long(strRight);
+	CString strVol = _T("U");
+	if (!xlang_IsCurrXLanguageChinese())
+	{
+		strVol = _T("V");
+	}
 	
-	if (strName.Find(_T("U")) >= 0/*contains("U")*/)
+	if (strName.Find(/*_T("U")*/strVol) >= 0/*contains("U")*/)
+	{
+		if (xlang_IsCurrXLanguageChinese())
 	{
 		strName.Replace(_T("3U"),_T(""));
+		}
+		else
+		{
+			strName.Replace(_T("3V"),_T(""));
+		}
+		
 		strLeft = strName.Left(1);
 		long nLeft = CString_To_long(strLeft);
 		if(nIndex==3)
@@ -698,7 +730,15 @@ long CSttTestResourceBase::GetChIndexLinevoltByChName(CString strName,BOOL bVol)
 long CSttTestResourceBase::GetChIndexSequenceByChName(CString strName,BOOL bVol)
 {
 	long nChIndex = 0;
+	if (xlang_IsCurrXLanguageChinese())
+	{
 	strName.Replace(_T("U"),_T(""));
+	}
+	else
+	{
+		strName.Replace(_T("V"),_T(""));
+	}
+	
 	strName.Replace(_T("I"),_T(""));
 	long nIndex = strName.Find(_T("-"));
 
@@ -792,7 +832,7 @@ void CSttTestResourceBase::AddGradientCh(CDataType *pGradientChSelList,CSttChRes
 		return;
 	}
 
-	pGradientChSelList->AddNewValue(pCh->m_strName,pCh->m_strName,nChRealIndex);
+	pGradientChSelList->AddNewValue(pCh->m_strName,/*pCh->m_strName*/pCh->m_strID,nChRealIndex);
 }
 
 void CSttTestResourceBase::AddGradientCh(CDataType *pGradientChSelList,CSttChResource *pCh1,CSttChResource *pCh2,int nChRealIndex)
@@ -802,9 +842,11 @@ void CSttTestResourceBase::AddGradientCh(CDataType *pGradientChSelList,CSttChRes
 		return;
 	}
 
-	CString strChName;
-	strChName.Format(_T("%s,%s"),pCh1->m_strName.GetString(),pCh2->m_strName.GetString());
-	pGradientChSelList->AddNewValue(strChName,strChName,nChRealIndex);
+	CString strChName, strChID;
+	strChName = pCh1->m_strName + "," + pCh2->m_strName;//dingxy 20250121
+	strChID = pCh1->m_strID + "," + pCh2->m_strID;
+	//strChName.Format(_T("%s,%s"),pCh1->m_strName.GetString(),pCh2->m_strName.GetString());
+	pGradientChSelList->AddNewValue(strChName,/*strChName*/strChID,nChRealIndex);
 }
 
 void CSttTestResourceBase::AddGradientCh(CDataType *pGradientChSelList,CSttChResource *pCh1,CSttChResource *pCh2,CSttChResource *pCh3,int nChRealIndex)
@@ -820,22 +862,26 @@ void CSttTestResourceBase::AddGradientCh(CDataType *pGradientChSelList,CSttChRes
 	}
 
 	CDvmData *pComboxCh = NULL;
-	CString strTmp;
+	CString strTmp, strID;
 
 	if ((pCh3 == NULL)||(!pCh3->m_bHasMapHdRs))
 	{
-		strTmp.Format(_T("%s,%s"),pCh1->m_strName.GetString(),pCh2->m_strName.GetString());
+		strTmp = pCh1->m_strName + "," + pCh2->m_strName;
+		strID = pCh1->m_strID + "," + pCh2->m_strID;
+		//strTmp.Format(_T("%s,%s"),pCh1->m_strName.GetString(),pCh2->m_strName.GetString());
 		pComboxCh = (CDvmData*)pGradientChSelList->FindByID(strTmp);
 
 		if (pComboxCh == NULL)
 		{
-			pGradientChSelList->AddNewValue(strTmp,strTmp,nChRealIndex);
+			pGradientChSelList->AddNewValue(strTmp,/*strTmp*/strID,nChRealIndex);
 		}
 	} 
 	else
 	{
-		strTmp.Format(_T("%s,%s,%s"),pCh1->m_strName.GetString(),pCh2->m_strName.GetString(),pCh3->m_strName.GetString());
-		pGradientChSelList->AddNewValue(strTmp,strTmp,nChRealIndex);
+		strTmp = pCh1->m_strName + "," + pCh2->m_strName + "," + pCh3->m_strName;
+		strID = pCh1->m_strID + "," + pCh2->m_strID + "," + pCh3->m_strID;
+		//strTmp.Format(_T("%s,%s,%s"),pCh1->m_strName.GetString(),pCh2->m_strName.GetString(),pCh3->m_strName.GetString());
+		pGradientChSelList->AddNewValue(strTmp,/*strTmp*/strID,nChRealIndex);
 	}
 }
 
@@ -852,22 +898,26 @@ void CSttTestResourceBase::AddGradientCh_Plus(CDataType *pGradientChSelList,CStt
 	}
 
 	CDvmData *pComboxCh = NULL;
-	CString strTmp;
+	CString strTmp, strID;
 
 	if ((pCh3 == NULL)||(!pCh3->m_bHasMapHdRs))
 	{
-		strTmp.Format(_T("%s+%s"),pCh1->m_strName.GetString(),pCh2->m_strName.GetString());
+		//strTmp.Format(_T("%s+%s"),pCh1->m_strName.GetString(),pCh2->m_strName.GetString());
+		strTmp = pCh1->m_strName + "+" + pCh2->m_strName;
+		strID = pCh1->m_strID + "+" + pCh2->m_strID;
 		pComboxCh = (CDvmData*)pGradientChSelList->FindByID(strTmp);
 
 		if (pComboxCh == NULL)
 		{
-			pGradientChSelList->AddNewValue(strTmp,strTmp,nChRealIndex);
+			pGradientChSelList->AddNewValue(strTmp,/*strTmp*/strID,nChRealIndex);
 		}
 	} 
 	else
 	{
-		strTmp.Format(_T("%s+%s+%s"),pCh1->m_strName.GetString(),pCh2->m_strName.GetString(),pCh3->m_strName.GetString());
-		pGradientChSelList->AddNewValue(strTmp,strTmp,nChRealIndex);
+		//strTmp.Format(_T("%s+%s+%s"),pCh1->m_strName.GetString(),pCh2->m_strName.GetString(),pCh3->m_strName.GetString());
+		strTmp = pCh1->m_strName + "+" + pCh2->m_strName + "+" + pCh3->m_strName;
+		strID = pCh1->m_strID + "+" + pCh2->m_strID + "+" + pCh3->m_strID;
+		pGradientChSelList->AddNewValue(strTmp,/*strTmp*/strID,nChRealIndex);
 	}
 }
 
@@ -884,7 +934,7 @@ void CSttTestResourceBase::AddGradientCh(CDataType *pGradientChSelList,CSttChRes
 		return;
 	}
 
-	CString strTmp;
+	CString strTmp,strID;
 
 	if (pCh5 == NULL)
 	{
@@ -907,5 +957,26 @@ void CSttTestResourceBase::AddGradientCh(CDataType *pGradientChSelList,CSttChRes
 		strTmp.Format(_T("%s,%s,%s,%s,%s,%s"),pCh1->m_strName.GetString(),pCh2->m_strName.GetString(),pCh3->m_strName.GetString(),pCh4->m_strName.GetString(),pCh5->m_strName.GetString(),pCh6->m_strName.GetString());
 	}
 
-	pGradientChSelList->AddNewValue(strTmp,strTmp,nChRealIndex);
+	if (pCh5 == NULL)
+	{
+		strID.Format(_T("%s,%s,%s,%s"),pCh1->m_strID.GetString(),pCh2->m_strID.GetString(),pCh3->m_strID.GetString(),pCh4->m_strID.GetString());
+	}
+	else if (!pCh5->m_bHasMapHdRs)
+	{
+		strID.Format(_T("%s,%s,%s,%s"),pCh1->m_strID.GetString(),pCh2->m_strID.GetString(),pCh3->m_strID.GetString(),pCh4->m_strID.GetString());
+	}
+	else if (pCh6 == NULL)
+	{
+		strID.Format(_T("%s,%s,%s,%s,%s"),pCh1->m_strID.GetString(),pCh2->m_strID.GetString(),pCh3->m_strID.GetString(),pCh4->m_strID.GetString(),pCh5->m_strID.GetString());
+	}
+	else if (!pCh6->m_bHasMapHdRs)
+	{
+		strID.Format(_T("%s,%s,%s,%s,%s"),pCh1->m_strID.GetString(),pCh2->m_strID.GetString(),pCh3->m_strID.GetString(),pCh4->m_strID.GetString(),pCh5->m_strID.GetString());
+	}
+	else
+	{
+		strID.Format(_T("%s,%s,%s,%s,%s,%s"),pCh1->m_strID.GetString(),pCh2->m_strID.GetString(),pCh3->m_strID.GetString(),pCh4->m_strID.GetString(),pCh5->m_strID.GetString(),pCh6->m_strID.GetString());
+	}
+
+	pGradientChSelList->AddNewValue(strTmp,/*strTmp*/strID,nChRealIndex);
 }

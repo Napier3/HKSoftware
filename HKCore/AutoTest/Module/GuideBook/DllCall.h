@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../../Module/BaseClass/ExBaseList.h"
-#include "gbxmlkeys.h"
+#include "ExBaseList.h"
+#include "GbXMLKeys.h"
 #include "GuideBookDefine.h"
 
 #include "GbParaTypeMngr.h"

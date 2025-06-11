@@ -1,11 +1,13 @@
 #include "stdafx.h"
 #include "SttTestAppCfg.h"
-#include "../../Module/API/GlobalConfigApi.h"
-#include "../../Module/API/FileApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/FileApi.h"
 #include "../SttGlobalDef.h"
 
 #include "../SttTestBase/SttXmlSerialize.h"
-
+#ifndef NOT_USE_XLANGUAGE
+#include "../XLangResource_Native.h"
+#endif
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
@@ -48,7 +50,14 @@ CSttTestAppCfg::CSttTestAppCfg()
 	m_nMultiLocalPort = 8086;
 	m_strCloudIP = _T("127.0.0.1");
 	m_nCloudServerPort = STT_PORT_CLOUD_SERVER;
-	m_strCopName = _T("南京能云电力");
+//#ifndef NOT_USE_XLANGUAGE
+//#ifdef USE_STTADJMAIN_XLANGUAGE
+//	m_strCopName = /*_T("南京能云电力")*/g_sLangTxt_Native_NanjingEnergyCloud;
+//#endif
+//#else
+//	m_strCopName = _T("南京能云电力");
+//#endif
+    m_strCopName = "PONOVO";//zhouhj 2025.3.5
 	m_strUserName = _T("test");
 	m_strType = STT_TEST_APP_TYPE_LOCAL;
 	m_strTestAppSN = _T("Ponovo-001");
@@ -94,7 +103,12 @@ long CSttTestAppCfg::Open(const CString &strFile)
 
 	if (!IsFileExist(m_strFile))
 	{
-        CLogPrint::LogFormatString(XLOGLEVEL_ERROR,_T("测试仪配置文件：%s 找不到！"),m_strFile.GetString());
+//#ifndef NOT_USE_XLANGUAGE
+//        CLogPrint::LogFormatString(XLOGLEVEL_ERROR,/*_T("测试仪配置文件：%s 找不到！")*/g_sLangTxt_Native_TestInstrumentConfigFileNotFound.GetString(),m_strFile.GetString());
+//#else
+ //       CLogPrint::LogFormatString(XLOGLEVEL_ERROR,_T("测试仪配置文件：%s 找不到！"),m_strFile.GetString());
+//#endif
+        CLogPrint::LogFormatString(XLOGLEVEL_ERROR,_T("Not Find Tester Config File: %s "),m_strFile.GetString());//zhouhj 2025.3.5
 		return 0;
 	}
 
@@ -499,7 +513,12 @@ long CSttTestApps::Open()
 
 	if (!IsFileExist(m_strFile))
 	{
-		CLogPrint::LogFormatString(XLOGLEVEL_ERROR,_T("测试仪配置文件：%s 找不到！"),m_strFile.GetString());
+//#ifndef NOT_USE_XLANGUAGE
+//		CLogPrint::LogFormatString(XLOGLEVEL_ERROR,/*_T("测试仪配置文件：%s 找不到！")*/g_sLangTxt_Native_TestInstrumentConfigFileNotFound.GetString(),m_strFile.GetString());
+//#else
+//		CLogPrint::LogFormatString(XLOGLEVEL_ERROR,_T("测试仪配置文件：%s 找不到！"),m_strFile.GetString());
+//#endif
+        CLogPrint::LogFormatString(XLOGLEVEL_ERROR,_T("Not Find Tester Config File: %s "),m_strFile.GetString());//zhouhj 2025.3.5
 		return 0;
 	}
 

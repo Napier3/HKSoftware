@@ -8,7 +8,9 @@
 #include "stdafx.h"
 #include "SttAnsiDeviceXmlRW.h"
 
+#ifdef IOT_PROTOCOL_SERVER_HAS_MMS
 #include "../../../61850/Module/MmsWriteXml.h"
+#endif
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -37,9 +39,16 @@ long CSttAnsiDeviceXmlRW::XmlRead(CXmlRWNodeBase &oNode, CXmlRWKeys *pXmlRWKeys)
 	return 0;
 }
 
+#include "../../../Module/API/GlobalConfigApi.h"
 long CSttAnsiDeviceXmlRW::XmlWrite(CXmlRWDocBase &oXMLDoc,CXmlRWElementBase &oParent, BSTR pszElementKey, CXmlRWKeys *pXmlRWKeys)
 {
-	mms_XmlWrite(&pACSINode[m_nDeviceIndex], oXMLDoc, oParent, m_bOblyGetLd);
+	//mms_XmlWrite(&pACSINode[m_nDeviceIndex], oXMLDoc, oParent, m_bOblyGetLd);
+#ifdef IOT_PROTOCOL_SERVER_HAS_MMS
+	CString strFile;
+	strFile = _P_GetLibraryPath();
+	strFile += "AnsiEnum.xml";
+	mms_XmlWrite(strFile, &pACSINode[m_nDeviceIndex]);
+#endif
 
 	return 0;
 }

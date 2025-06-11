@@ -180,6 +180,13 @@ CSttModuleComtradeBind::CSttModuleComtradeBind()
 	m_fCTRatio[0] = 1.0f;
 	m_fCTRatio[1] = 1.0f;
 
+
+	//开出量
+	m_nBoutReplayModel = BOUT_REPLAY_MODEL_CH;//开出量回放方式
+	m_fHoldTime = 0.0f;			//保持时间
+	m_fDelayTime = 0.0f;			//保持时间
+
+
 }
 
 CSttModuleComtradeBind::~CSttModuleComtradeBind()
@@ -417,8 +424,8 @@ void CSttModuleComtradeBind::InitReplayBufBinary(long nLength)
 		m_pReplayBufBinary1 = new CComplexMemBuffer_Float;
 		m_pReplayBufBinary2 = new CComplexMemBuffer_Float;
 	}
-	long nBinaryBuf1 = m_pReplayBufBinary1->GetBufferLength();
-	long nBinaryBuf2 = m_pReplayBufBinary2->GetBufferLength();
+	int nBinaryBuf1 = m_pReplayBufBinary1->GetBufferLength();
+	int nBinaryBuf2 = m_pReplayBufBinary2->GetBufferLength();
 	long nRealLength = nLength + 5;
 
 	if(nBinaryBuf1 < nLength)
@@ -680,6 +687,7 @@ CSttModulesComtradeBind::CSttModulesComtradeBind()
 
 	m_nUseBinaryModule = FALSE;
 	m_nUseBinaryModuleWidget = FALSE;
+	m_strCurrModel.Empty();
 }
 
 CSttModulesComtradeBind::~CSttModulesComtradeBind()
@@ -696,8 +704,29 @@ BOOL CSttModulesComtradeBind::IsBinaryModuleSelected()
 		return FALSE;
 	}
 
+	//2024-11-20 wuxinyi 修改无需映射也下发开出量通道
 	CSttModuleBinaryChComtradeBind *pBinaryCh = NULL;
 	POS pos = pBinModule->GetHeadPosition();
+
+	if(pBinModule->m_nBoutReplayModel == BOUT_REPLAY_MODEL_DELAY_TRIGGER)
+	{
+		m_nUseBinaryModule = FALSE;
+		return FALSE;
+	}
+// 
+// 	//2024-03-29 wuxinyi 判读开出量扩展模块是否选择
+// 	while (pos != NULL)
+// 	{
+// 		pBinaryCh = (CSttModuleBinaryChComtradeBind *)pBinModule->GetNext(pos);
+// 
+// 		if (pBinaryCh->m_nBinaryCh_Index >0)
+// 		{
+// 			m_nUseBinaryModule = TRUE;
+// 			return TRUE;
+// 		}
+// 	}
+// 	m_nUseBinaryModule = FALSE;
+// 	return FALSE;
 
 	//2024-03-29 wuxinyi 判读开出量扩展模块是否选择
 	while (pos != NULL)
@@ -771,6 +800,19 @@ long CSttModulesComtradeBind::GetDataLength()
 
 void CSttModulesComtradeBind::InitBySttAdjDevice(CSttAdjDevice *pAdjDevice)
 {
+	CString strCurrModel= g_oSttTestResourceMngr.GetCurrModel();
+
+	if(m_strCurrModel != strCurrModel)
+	{
+		m_strCurrModel = strCurrModel;
+		if(strCurrModel.Find(_T("PNS330")) >= 0)
+	{
+			CLogPrint::LogString(XLOGLEVEL_RESULT,_T("当前PNS330只支持模拟量故障回放！"));
+		g_oSystemParas.m_nHasDigital = 0;
+	}
+
+	}
+
 	//初始化数据
 	DeleteAll();//20220513 zhouhj 删除之前的插件,按新插件进行重新初始化
 	InitAllMoudleCount(); 
@@ -791,8 +833,13 @@ void CSttModulesComtradeBind::InitBySttAdjDevice(CSttAdjDevice *pAdjDevice)
 	CSttModuleBinaryChComtradeBind *pBinaryChBind = NULL;
 	CString strModuleType;
 	CString strName,strTmp;
-	CString strModuleDesc = _T("模块"),strVolDesc = _T("(电压)"),strCurDesc = _T("(电流)"),strVolCurDesc = _T("(电压电流)"),strBinaryOutEx
-		,strDigitalDesc/* = _T("(数字量)")*/,strWeekDesc/* = _T("(弱信号)")*/;
+	CString strModuleDesc /*= _T("模块")*/, strVolDesc = /*_T("(电压)")*/g_sLangTxt_Native_Voltage, strCurDesc = /*_T("(电流)")*/g_sLangTxt_Native_Current, strVolCurDesc = /*_T("(电压电流)")*/g_sLangTxt_Manual_IV,
+		strBinaryOutEx	,strDigitalDesc/* = _T("(数字量)")*/,strWeekDesc/* = _T("(弱信号)")*/;;
+// 	strName = strModuleDesc;
+//	strName.AppendFormat(_T("%d"),nModuleIndex);
+	int nLen = g_sLangTxt_Native_ModReplace.GetLength();
+	strModuleDesc = g_sLangTxt_Native_ModReplace.Left(nLen - 2);
+
 	strName = strModuleDesc;
 	strName.AppendFormat(_T("%d"),nModuleIndex);
 
@@ -842,7 +889,8 @@ void CSttModulesComtradeBind::InitBySttAdjDevice(CSttAdjDevice *pAdjDevice)
 		{
 			strBinaryOutEx.Format(_T("开出量（扩展）%d 设置"), nBoutIndex);
 		}
-		else if((strModuleType == STT_MODULE_TYPE_DIGITAL_0G8M_ID ||strModuleType == STT_MODULE_TYPE_DIGITAL_2G6M_ID ||strModuleType == STT_MODULE_TYPE_DIGITAL_4G4M_ID)
+		else if((strModuleType == STT_MODULE_TYPE_DIGITAL_0G8M_ID ||strModuleType == STT_MODULE_TYPE_DIGITAL_2G6M_ID ||strModuleType == STT_MODULE_TYPE_DIGITAL_4G4M_ID 
+			|| strModuleType == STT_MODULE_TYPE_FT3_ID)
 			  && g_oSystemParas.m_nHasDigital)
 		{
  			strDigitalDesc = _T("数字量模块");
@@ -885,7 +933,7 @@ void CSttModulesComtradeBind::InitBySttAdjDevice(CSttAdjDevice *pAdjDevice)
 				AddNewChild(pModuleBind);
 			}
 		}
-		else if(strModuleType == STT_MODULE_TYPE_VOLT_CURRENT_ID || strModuleType == STT_MODULE_TYPE_VOLT_ID || strModuleType == STT_MODULE_TYPE_CURRENT_ID)
+		else if(strModuleType == STT_MODULE_TYPE_VOLT_CURRENT_ID || strModuleType == STT_MODULE_TYPE_VOLT_ID)
 		{
 			nChNum = stt_adj_HdChDef_GetNum(pHdChDef);
 			strTmp.Format(_T("%s%d"), strModuleType.GetString(), nModuleIndex); 
@@ -900,7 +948,22 @@ void CSttModulesComtradeBind::InitBySttAdjDevice(CSttAdjDevice *pAdjDevice)
 				AddNewChild(pModuleBind);
 			}
 		}
-		else if((strModuleType == STT_MODULE_TYPE_DIGITAL_0G8M_ID ||strModuleType == STT_MODULE_TYPE_DIGITAL_2G6M_ID ||strModuleType == STT_MODULE_TYPE_DIGITAL_4G4M_ID)
+		else if( strModuleType == STT_MODULE_TYPE_CURRENT_ID)//纯电流插件修改为获取DefChannelNum
+		{
+			oModule.GetModuleDefChannelNum(nChNum);
+			strTmp.Format(_T("%s%d"), strModuleType.GetString(), nModuleIndex); 
+			pModuleBind = (CSttModuleComtradeBind*)FindByID(strTmp);
+
+			if (pModuleBind == NULL)
+			{
+				pModuleBind = new CSttModuleComtradeBind();
+				pModuleBind->m_strName = strName;
+				pModuleBind->m_strModuleID.Format(_T("Module%ld"),nModuleIndex-1);
+				pModuleBind->m_strID.Format(_T("%s%d"), strModuleType.GetString(), nModuleIndex);
+				AddNewChild(pModuleBind);
+			}
+		}
+		else if((strModuleType == STT_MODULE_TYPE_DIGITAL_0G8M_ID ||strModuleType == STT_MODULE_TYPE_DIGITAL_2G6M_ID ||strModuleType == STT_MODULE_TYPE_DIGITAL_4G4M_ID|| strModuleType == STT_MODULE_TYPE_FT3_ID)
 			&& (m_nDigitalModuleCount == 1))
 		{
 			strTmp.Format(_T("%s%d"), strModuleType.GetString(), nDigitaiModuleIndex); 
@@ -931,6 +994,11 @@ void CSttModulesComtradeBind::InitBySttAdjDevice(CSttAdjDevice *pAdjDevice)
 				AddNewChild(pModuleBind);
 			}
 
+		}
+
+		if(!pModuleBind)
+		{
+			return;
 		}
 
 		pModuleAttrs = (CDataGroup*)pModule->FindByID(_T("ModuleAttrs"));
@@ -1032,7 +1100,7 @@ void CSttModulesComtradeBind::InitBySttAdjDevice(CSttAdjDevice *pAdjDevice)
 				pModuleBind->AddNewChild(pBinaryChBind);
 			}
 		}
-		else if((strModuleType == STT_MODULE_TYPE_DIGITAL_0G8M_ID ||strModuleType == STT_MODULE_TYPE_DIGITAL_2G6M_ID ||strModuleType == STT_MODULE_TYPE_DIGITAL_4G4M_ID)
+		else if((strModuleType == STT_MODULE_TYPE_DIGITAL_0G8M_ID ||strModuleType == STT_MODULE_TYPE_DIGITAL_2G6M_ID ||strModuleType == STT_MODULE_TYPE_DIGITAL_4G4M_ID|| strModuleType == STT_MODULE_TYPE_FT3_ID)
 			&& (m_nDigitalModuleCount == 1))
 		{
 			CString strID;
@@ -1121,7 +1189,6 @@ void CSttModulesComtradeBind::InitBySttAdjDevice(CSttAdjDevice *pAdjDevice)
 		}
 	}
 	
-	CLogPrint::LogFormatString(XLOGLEVEL_TRACE,_T("enter initAllCh"));
 	CLogPrint::LogFormatString(XLOGLEVEL_TRACE,_T("模拟量模块插件数量:%d"),m_nAnalogModuleCount);
 	CLogPrint::LogFormatString(XLOGLEVEL_TRACE,_T("数字量模块插件数量:%d"),m_nDigitalModuleCount);
 	CLogPrint::LogFormatString(XLOGLEVEL_TRACE,_T("弱信号模块插件数量:%d"),m_nWeekModuleCount);

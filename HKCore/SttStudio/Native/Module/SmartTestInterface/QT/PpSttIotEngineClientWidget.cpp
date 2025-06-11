@@ -1,10 +1,10 @@
 #include "PpSttIotEngineClientWidget.h"
 #include "ui_PpSttIotEngineClientWidget.h"
 
-#include "../../Protocol/Module/PxiEngine/PxiEngineGlobal.h"
-#include "../../IotProtoServer/Module/SttPxCommCmdDef.h"
+#include "../../../../Protocol/Module/PxiEngine/PxiEngineGlobal.h"
+#include "../../../../IotProtoServer/Module/SttPxCommCmdDef.h"
 
-#include "../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdAi/GbWzdAiTool.h"
+#include "../../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdAi/GbWzdAiTool.h"
 #include "qsttmmsbrcbctrlwidget.h"
 #include "qsttzoneindexsetdlg.h"
 #include "../../XLangResource_Native.h"
@@ -62,6 +62,7 @@ QPpSttIotEngineClientWidget::~QPpSttIotEngineClientWidget()
 	if (m_bDeviceCreateNew && m_pDvmDevice != NULL)
 	{
 		delete m_pDvmDevice;
+		m_pDvmDevice = NULL;
 	}
 
 	if (m_pPpDeviceClient != NULL)
@@ -71,7 +72,30 @@ QPpSttIotEngineClientWidget::~QPpSttIotEngineClientWidget()
 	m_pPpDeviceClient = NULL;
 	}
 
+	for (int i = 0; i < m_lstSttParas.size(); ++i) 
+	{
+		delete m_lstSttParas[i];  
+	}
+	m_lstSttParas.clear();
 
+
+	if (m_pCurrWriteDataset != NULL)
+	{
+		delete m_pCurrWriteDataset;
+		m_pCurrWriteDataset = NULL;
+	}
+
+	if (m_pDatasetGrid != NULL)
+	{
+		delete m_pDatasetGrid;
+		m_pDatasetGrid = NULL;
+	}
+
+	if (m_pDvmTreeCtrl != NULL)
+	{
+		delete m_pDvmTreeCtrl;
+		m_pDvmTreeCtrl = NULL;
+	}
     delete ui;
 }
 
@@ -589,7 +613,7 @@ BOOL QPpSttIotEngineClientWidget::WiriteEna_Sel(CDvmData *pData,const CString &s
 		return FALSE;
 	}
 
-	return m_pPpDeviceClient->WriteSingleData(pData,strDatasetPath,CMDID_writeenasel);
+	return m_pPpDeviceClient->WriteSingleData(pData,strDatasetPath,/*CMDID_writeenasel*/CMDID_SingleDoutSelect);
 }
 
 BOOL QPpSttIotEngineClientWidget::WiriteEna_Oper(CDvmData *pData,const CString &strDatasetPath)
@@ -599,7 +623,7 @@ BOOL QPpSttIotEngineClientWidget::WiriteEna_Oper(CDvmData *pData,const CString &
 		return FALSE;
 	}
 
-	return m_pPpDeviceClient->WriteSingleData(pData,strDatasetPath,CMDID_writeenaoper);
+	return m_pPpDeviceClient->WriteSingleData(pData,strDatasetPath,/*CMDID_writeenaoper*/CMDID_SingleDoutExecute);
 }
 
 BOOL QPpSttIotEngineClientWidget::WiriteEna_Revoke(CDvmData *pData,const CString &strDatasetPath)
@@ -609,7 +633,7 @@ BOOL QPpSttIotEngineClientWidget::WiriteEna_Revoke(CDvmData *pData,const CString
 		return FALSE;
 	}
 
-	return m_pPpDeviceClient->WriteSingleData(pData,strDatasetPath,CMDID_writeenarevk);
+	return m_pPpDeviceClient->WriteSingleData(pData,strDatasetPath,/*CMDID_writeenarevk*/CMDID_SingleDoutQuash);
 }
 
 void QPpSttIotEngineClientWidget::WaitForRunProcedureFinish()
@@ -867,7 +891,7 @@ void QPpSttIotEngineClientWidget::EnableBtns_Connecting_Closeing()
 	ui->m_btnEnumDataset->setEnabled(false);
 }
 
-#include "CommConfigWidget/ppcommconfigdlg.h"
+#include "CommConfigWidget/PpCommConfigDlg.h"
 
 void QPpSttIotEngineClientWidget::on_m_btnConfigDevice_clicked()
 {
@@ -925,9 +949,51 @@ void QPpSttIotEngineClientWidget::on_m_btnReadDataset_clicked()
     m_pPpDeviceClient->ReadDataset((CDvmDataset*)m_pCurrSelDvmDataObj);
 }
 
+BOOL QPpSttIotEngineClientWidget::HasWriteCmdData()
+{
+	if (m_pCurrWriteDataset == NULL)
+	{
+		return FALSE;
+	}
+
+	BOOL bHasModifyData = FALSE;
+	CExBaseObject *pCurrObj = NULL;
+	CDvmData *pCurrData = NULL;
+	POS pos = m_pCurrWriteDataset->GetHeadPosition();
+
+	while (pos)
+	{
+		pCurrObj = m_pCurrWriteDataset->GetNext(pos);
+
+		if (pCurrObj->GetClassID() != DVMCLASSID_CDVMDATA)
+		{
+			continue;
+		}
+
+		pCurrData = (CDvmData *)pCurrObj;
+
+		if (pCurrData->m_nChange)
+		{
+			bHasModifyData = TRUE;
+			break;
+		}
+	}
+
+	return bHasModifyData;
+}
+
 void QPpSttIotEngineClientWidget::on_m_btnWriteDataset_clicked()
 {
 	m_pCurrWriteDataset = (CDvmDataset*)m_pCurrSelDvmDataObj;
+
+	if (!HasWriteCmdData())
+	{
+		CString strTitile,strMsg;
+		strTitile = "提示";
+		strMsg = "缺少需要修改的数据,请先在表格中修改数据.";
+		CXMessageBox::information(this, strTitile, strMsg);
+		return;
+	}
 
 	if (!m_pPpDeviceClient->WriteDataset(m_pCurrWriteDataset))
 	{

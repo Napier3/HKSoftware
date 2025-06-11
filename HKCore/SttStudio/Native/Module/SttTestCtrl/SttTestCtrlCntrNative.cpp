@@ -5,15 +5,15 @@
 #include "../SttTestSysGlobalPara.h"
 #include "../SttTestResourceMngr/SttTestResourceMngr.h"
 
-#include "../../Module/SmartCap/SmartCapCtrl.h"
+#include "../../../Module/SmartCap/SmartCapCtrl.h"
 #include "../SttCmd/GuideBook/SttItemStateObject.h"
 #include "../UI/SttTestCntrFrameBase.h"
 #include "../SttCmd/GuideBook/SttContents.h"
 #include "../ReplayTest/BigComtradeTransPlay.h"
 //2022-10-5  lijunqing
 #include "../Engine/PpMeas/PpSttIotMeasServer.h"
-#include "../../Module/SmartCap/X61850CapBase.h"
-#include "../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../Module/SmartCap/X61850CapBase.h"
+#include "../../../Module/SmartCap/XSmartCapMngr.h"
 
 //2022-10-7  lijunqing
 #include "../../../IotAtsMngr/Module/PxEngineServer/IotPxEngineServer.h"
@@ -32,10 +32,10 @@ CSttTestCtrlCntrNative::CSttTestCtrlCntrNative()
 {
 	m_pSttGuideBook = new CSttGuideBook();
 	CString strConfigPath =  _P_GetConfigPath();
-	CString strTestMacroFile = strConfigPath;
-	strTestMacroFile += "RelayTest/TestMacro.xml";
-	m_pTestMacros = new CTestMacros();
-	m_pTestMacros->OpenXmlFile(strTestMacroFile, CTestMacroXmlRWKeys::g_pXmlKeys);
+// 	CString strTestMacroFile = strConfigPath;
+// 	strTestMacroFile += "RelayTest/TestMacro.xml";
+// 	m_pTestMacros = new CTestMacros();
+// 	m_pTestMacros->OpenXmlFile(strTestMacroFile, CTestMacroXmlRWKeys::g_pXmlKeys);
 
 	CString strStateTestDataTypeFile = strConfigPath;
 	strStateTestDataTypeFile += _T("StateTestDataType.xml");
@@ -59,11 +59,11 @@ CSttTestCtrlCntrNative::~CSttTestCtrlCntrNative()
 		m_pSttGuideBook = NULL;
 	}
 
-	if(m_pTestMacros != NULL)
-	{
-		delete m_pTestMacros;
-		m_pTestMacros = NULL;
-	}
+// 	if(m_pTestMacros != NULL)
+// 	{
+// 		delete m_pTestMacros;
+// 		m_pTestMacros = NULL;
+// 	}
 }
 
 void CSttTestCtrlCntrNative::SttOpen(const CString &strTestAppCfgFile)
@@ -170,7 +170,10 @@ void CSttTestCtrlCntrNative::OnReport(const CString &strTestID, long nDeviceInde
 	if (pValue != NULL)
 	{
 		long nLoopIndex = CString_To_long(pValue->m_strValue);
+		if(g_theTestCntrFrame->GetMacroEditView()!= NULL)
+		{
 		strItemID2 = g_theTestCntrFrame->GetMacroEditView()->ProcessItemID (strItemID,nLoopIndex);
+	}
 	}
 	//CSttItemBase *pItem = stt_gb_find_itembase(m_pSttGuideBook, strItemID);
 
@@ -247,6 +250,16 @@ void CSttTestCtrlCntrNative::OnReport_ReadDevice(CDataGroup *pDeviceGroup)
 
 }
 
+void CSttTestCtrlCntrNative::OnReport_ReadSystemState(const CString &strMacroID, CDataGroup *pParas)
+{
+	if (pParas == NULL)
+	{
+		return;
+	}
+
+	m_pTestCtrlCntrMsg->OnReport_ReadSystemState(strMacroID, pParas);
+}
+
 /*
 <sys-state name="" id="GenerateTemplate" mater-host="" ret-type="REPLY" id-cmd="ats-cmd">
 	<paras name="" id="">
@@ -279,6 +292,7 @@ void CSttTestCtrlCntrNative::On_Ats_Generate(const CString &strAtsCmd, CSttParas
 			g_theTestCntrFrame->ClearItemStateList();
 			m_pSttGuideBook->ClearGuideBook();
 			m_pSttGuideBook->AppendEx(*pSttGuideBook);
+			m_pSttGuideBook->InitAfterRead();
 			pSttGuideBook->RemoveAll();
 //			CLogPrint::LogFormatString(XLOGLEVEL_RESULT,_T("CSttTestCtrlCntrNative::On_Ats_Generate------."));
 			m_pTestCtrlCntrMsg->OnAtsGenerate();
@@ -534,7 +548,7 @@ void CSttTestCtrlCntrNative::UpdateReportValuesByMacroTestDataType(CSttItems *pI
 	}
 }
 
-void CSttTestCtrlCntrNative::UpdateReportValuesByMacroTestDataType(CSttReport *pReport,const CString &strMacroID)
+void CSttTestCtrlCntrNative::UpdateReportValuesByMacroTestDataType(CSttReport *pReport,const CString &strMacroID,CSttItems *pSttItem)
 {
 	if ((pReport == NULL)||(g_theHtmlRptGenFactory == NULL))
 	{
@@ -553,9 +567,11 @@ void CSttTestCtrlCntrNative::UpdateReportValuesByMacroTestDataType(CSttReport *p
 	{
 		ModifyReport_ManualTest(pValues);
 	}
-	else if (strMacroID == STT_ORG_MACRO_StateTest)
+	else if ((strMacroID == STT_ORG_MACRO_StateTest)
+		||(strMacroID == STT_ORG_MACRO_GseAbnTest)//20250219 suyang 增加SV GOOSE处理
+		||(strMacroID == STT_ORG_MACRO_SmvAbnTest))
 	{
-		ModifyReport_StateTest(pValues);
+		ModifyReport_StateTest(pValues,pSttItem);
 	}
 	else if (strMacroID == STT_ORG_MACRO_HarmTest)
 	{
@@ -582,7 +598,7 @@ void CSttTestCtrlCntrNative::UpdateReportValuesByMacroTestDataType(CSttReport *p
 #ifndef NOT_USE_XLANGUAGE
 		if (pValue->m_strValue == _T("未动作"))
 		{
-			pValue->m_strValue = g_sLangTxt_State_NoActioned;
+			pValue->m_strValue = /*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact;
 		}
 		else if (pValue->m_strValue == _T("未测试"))
 		{
@@ -646,7 +662,7 @@ void CSttTestCtrlCntrNative::ModifyReport_ManualTest(CDvmValues *pValues)
 	}
 }
 
-void CSttTestCtrlCntrNative::ModifyReport_StateTest(CDvmValues *pValues)
+void CSttTestCtrlCntrNative::ModifyReport_StateTest(CDvmValues *pValues,CSttItems *pSttItem)
 {
 	CDvmValue *pDvmValue = NULL, *pDvmValueCount = NULL;
 	long nStringIndex = 0, nStringFreIndex = 0, nStringAngIndex = 0;
@@ -655,6 +671,7 @@ void CSttTestCtrlCntrNative::ModifyReport_StateTest(CDvmValues *pValues)
 	CString strTmp1,strTmp2;
 	CSttChMap *pSttChMap = NULL;
 	BOOL bIsHasUnGradientChsParas = FALSE;
+	CDataGroup *pTestMacroUI_Paras = NULL;
 	POS pos = pValues->GetHeadPosition();
 	pDvmValueCount = (CDvmValue*)pValues->FindByID(_T("StateCount"));
 	if (pDvmValueCount != NULL)
@@ -667,7 +684,28 @@ void CSttTestCtrlCntrNative::ModifyReport_StateTest(CDvmValues *pValues)
 	POS pTempPos;
 	CString strValue, strRepeatNum;
 	int BOoutIndex, EndModeIndex, LastTIndex, EndDelayTIndex, AndOrIndex;
-	CDataGroup *pTestMacroUI_Paras = g_theTestCntrFrame->GetTestMacroUI_Paras();
+	if (pSttItem != NULL)
+	{
+		CDataGroup oTestMacroUI_Paras;
+		CSttTestMacroUiParas *pTestUIParas = (CSttTestMacroUiParas *)pSttItem->GetSttTestMacroUiParas(FALSE);
+		if (pTestUIParas)
+		{
+			BSTR bstrText = pTestUIParas->m_strParaText.AllocSysString();
+			CDataMngrXmlRWKeys::g_pXmlKeys->m_nIsGroupUseDvmData++;
+			oTestMacroUI_Paras.SetXml(bstrText, CDataMngrXmlRWKeys::g_pXmlKeys);
+			CDataMngrXmlRWKeys::g_pXmlKeys->m_nIsGroupUseDvmData--;
+#ifdef _PSX_IDE_QT_
+			delete bstrText;
+#else
+			SysFreeString(bstrText);// 用完释放
+#endif
+			pTestMacroUI_Paras = &oTestMacroUI_Paras;
+		}
+	}
+	else
+	{
+		pTestMacroUI_Paras = g_theTestCntrFrame->GetTestMacroUI_Paras();
+	}
 	pTestMacroUI_Paras->GetDataValue(_T("StateCount"), strValue);
 	pTestMacroUI_Paras->GetDataValue(_T("_RepeatNumbers"), strRepeatNum);
 	int StateCount = strValue.toInt();
@@ -749,6 +787,40 @@ void CSttTestCtrlCntrNative::ModifyReport_StateTest(CDvmValues *pValues)
 	}
 
 #else
+	if (!bIsHasUnGradientChsParas)
+	{
+		CString strValue;
+		if (pSttItem != NULL)
+		{
+			CDataGroup oTestMacroUI_Paras;
+			CSttTestMacroUiParas *pTestUIParas = (CSttTestMacroUiParas *)pSttItem->GetSttTestMacroUiParas(FALSE);
+			if (pTestUIParas)
+			{
+				BSTR bstrText = pTestUIParas->m_strParaText.AllocSysString();
+				CDataMngrXmlRWKeys::g_pXmlKeys->m_nIsGroupUseDvmData++;
+				oTestMacroUI_Paras.SetXml(bstrText, CDataMngrXmlRWKeys::g_pXmlKeys);
+				CDataMngrXmlRWKeys::g_pXmlKeys->m_nIsGroupUseDvmData--;
+				pTestMacroUI_Paras = &oTestMacroUI_Paras;
+
+#ifdef _PSX_IDE_QT_
+				delete bstrText;
+#else
+				SysFreeString(bstrText);
+#endif
+			}
+		}
+		else
+		{
+			pTestMacroUI_Paras = g_theTestCntrFrame->GetTestMacroUI_Paras();
+		}
+        if(pTestMacroUI_Paras)
+        {
+		pTestMacroUI_Paras->GetDataValue(_T("StateCount"), strValue);
+		int StateCount = strValue.toInt();
+		ModifyReportUnGradienParas_StateTest(pValues, StateCount, pTestMacroUI_Paras);
+	}
+	}
+
 	while(pos)
 	{
 		pDvmValue = (CDvmValue *)pValues->GetNext(pos);
@@ -785,14 +857,7 @@ void CSttTestCtrlCntrNative::ModifyReport_StateTest(CDvmValues *pValues)
 			}
 		}
 	}
-	if (!bIsHasUnGradientChsParas)
-	{
-		CString strValue;
-		CDataGroup *pTestMacroUI_Paras = g_theTestCntrFrame->GetTestMacroUI_Paras();
-		pTestMacroUI_Paras->GetDataValue(_T("StateCount"), strValue);
-		int StateCount = strValue.toInt();
-		ModifyReportUnGradienParas_StateTest(pValues, StateCount, pTestMacroUI_Paras);
-	}
+	
 #endif
 	//勾选直流输出时,修改对应的相位和频率value
 	//pDvmValue = (CDvmValue*)pValues->FindByID(_T("StateCount"));
@@ -848,9 +913,25 @@ void CSttTestCtrlCntrNative::ModifyReportUnGradienParas_StateTest(CDvmValues *pV
 {
 	CDvmValue *pVolAmpValue, *pVolAngValue, *pVolFreValue;
 	CDvmValue *pCurrAmpValue, *pCurrAngValue, *pCurrFreValue;
+	CDvmValue *pEndMode, *pLsatT;
 	CString strID;
+	CExBaseList *pDataGroup;
 	for (int nCount = 0; nCount < nStateCount; nCount++)
 	{
+		strID.Format(_T("state%d"), nCount);
+		pDataGroup = (CExBaseList *)pParasDataGroup->FindByID(strID);
+		pEndMode = new CDvmValue;
+		pLsatT = new CDvmValue;
+		pEndMode->m_strID.Format(_T("state%d$EndMode"), nCount);
+		pLsatT->m_strID.Format(_T("state%d$LastT"), nCount);
+		if (pDataGroup->GetClassID() == DTMCLASSID_CDATAGROUP)
+		{
+			((CDataGroup*)pDataGroup)->GetDataValue(_T("EndMode"), pEndMode->m_strValue);
+			((CDataGroup*)pDataGroup)->GetDataValue(_T("LastT"), pLsatT->m_strValue);
+			pValues->AddNewChild(pEndMode);
+			pValues->AddNewChild(pLsatT);
+		}
+		
 		for (int i = 0; i < g_oSttTestResourceMngr.m_pTestResouce->m_oVolChRsListRef.GetCount(); i++)
 		{
 			pVolAmpValue = new CDvmValue;
@@ -859,8 +940,6 @@ void CSttTestCtrlCntrNative::ModifyReportUnGradienParas_StateTest(CDvmValues *pV
 			pVolAmpValue->m_strID.Format(_T("state%d$U%d$mag"), nCount, i+1);
 			pVolAngValue->m_strID.Format(_T("state%d$U%d$ang"), nCount, i+1);
 			pVolFreValue->m_strID.Format(_T("state%d$U%d$freq"), nCount, i+1);
-			strID.Format(_T("state%d"), nCount);
-			CExBaseList *pDataGroup = (CExBaseList *)pParasDataGroup->FindByID(strID);
 			if (pDataGroup != NULL)
 			{
 				strID.Format(_T("U%d"), i+1);
@@ -1099,6 +1178,10 @@ void CSttTestCtrlCntrNative::On_Ats_QueryItem(CSttSysState *pSysState)
 {
 	CSttParas *pParas = pSysState->GetSttParas();
 	CExBaseObject *pFind = pParas->FindByID(STT_CMD_PARA_ItemParas);
+	if (pFind == NULL)
+	{
+		return;
+	}
 	m_pTestCtrlCntrMsg->OnAtsQueryItem(pFind);
 }
 
@@ -1257,7 +1340,7 @@ long CSttTestCtrlCntrNative::Ats_GenerateTemplate()
 		strDvmFile = _T("SttIecRecordDetectDvm.xml");
 	}
 
-	if(pTestMacroUI->m_strID == STT_ORG_MACRO_SoeTest || pTestMacroUI->m_strID == STT_ORG_MACRO_AntiShakeTimeTest) //chenling 2024.7.1 Soe需要加载规约
+	if(pTestMacroUI->m_strID == STT_ORG_MACRO_SoeTest || pTestMacroUI->m_strID == STT_ORG_MACRO_AntiShakeTimeTest || IsRemoteAutoTest(pTestMacroUI->m_strID)) //chenling 2024.7.1 Soe需要加载规约
 	{
 		strDvmFile = g_pTheSttTestApp->m_oCommConfig.Get_DvmFile();
 		strPpXmlFile = g_pTheSttTestApp->m_oCommConfig.Get_PpxmlFile();
@@ -1296,17 +1379,22 @@ long CSttTestCtrlCntrNative::Ats_GenerateItems(const CString &strItemParentPath,
 		strCurrItemPath.Format(_T("%s$%s"),strItemParentPath.GetString(),strItemsID.GetString());
 	}
 
+	//g_nUpdateMultiMacroParaEditView==0主界面打开模板需要跳过生成曲线图加载界面等
+
 	if (strCurrItemPath == g_theTestCntrFrame->m_pSttGbTreeView->m_strCurrSelRootNodePath)
 	{
 		CSttMacroTestUI_TestMacroUI *pTestMacroUI  = g_pTheSttTestApp->m_pTestMacroUI;/*g_pTheSttTestApp->m_pTestMacroUI*/;
 		CSttContents *pContents = NULL;//特性曲线定义
 
+		if (g_nUpdateMultiMacroParaEditView == 1)  
+		{
 		if (pTestMacroUI->m_strCharlibFile.GetLength() > 0 && g_theTestCntrFrame->m_pCharacteristics != NULL)
 		{
 			g_theTestCntrFrame->UpdateCharScriptByUIParas(&m_oTestMacroUI_Paras);//根据界面参数更新特性曲线中的脚本计算内容
 			pContents = new CSttContents;
 			pContents->m_strID = STT_CMD_PARA_Characteristic;
 			g_theTestCntrFrame->m_pCharacteristics->GetXml(CCharacteristicXmlRWKeys::g_pXmlKeys, pContents->m_strText);
+		}
 		}
 		m_bCmdReplyProcessFinished = FALSE;
 
@@ -1317,10 +1405,15 @@ long CSttTestCtrlCntrNative::Ats_GenerateItems(const CString &strItemParentPath,
 	} //2023.03.27  zhouhj 比较模板省路径是否与当前路径相同,如果不相同,则从当前项目获取参数及曲线(防止AI更新参数) 
 	else
 	{
-		CSttItemBase* pSttItemBase = stt_gb_find_itembase(m_pSttGuideBook,strCurrItemPath);
 		CString strMacroUI_ID;
 		CDataGroup oTestMacroUI_Paras;
 		CDataGroup *pUIParas = &oTestMacroUI_Paras;
+		CSttContents *pContents = NULL;//特性曲线定义		
+		CSttMacroTestUI_TestMacroUI *pTestMacroUI = g_pTheSttTestApp->m_pTestMacroUI;
+
+		if (g_nUpdateMultiMacroParaEditView == 1)  
+		{	
+			CSttItemBase* pSttItemBase = stt_gb_find_itembase(m_pSttGuideBook,strCurrItemPath);
 
 		if (pSttItemBase != NULL)
 		{
@@ -1337,20 +1430,17 @@ long CSttTestCtrlCntrNative::Ats_GenerateItems(const CString &strItemParentPath,
 				}
 			}
 		}
-		
-		CSttMacroTestUI_TestMacroUI *pTestMacroUI = g_pTheSttTestApp->m_pTestMacroUI;
 
 		if (strMacroUI_ID.GetLength() > 0)
 		{
 			pTestMacroUI = CSttMacroTestUI_TestMacroUIDB::FindTestMacroUI(strMacroUI_ID);
 		}
-		
+
 		if (pTestMacroUI == NULL)
 		{
 			return 0;
 		}
 
-		CSttContents *pContents = NULL;//特性曲线定义		
 
 		if (pTestMacroUI->m_strCharlibFile.GetLength() > 0)
 		{
@@ -1382,9 +1472,11 @@ long CSttTestCtrlCntrNative::Ats_GenerateItems(const CString &strItemParentPath,
 		{
 			CSttTestCtrlCntrBase::OpenMacroTestUI(pTestMacroUI);
 		}
-		
+
+		}	
 		pUIParas = &m_oTestMacroUI_Paras;
 		m_bCmdReplyProcessFinished = FALSE;
+
 		return m_oSttAtsClient.Ats_GenerateItems(strItemParentPath, strItemsName, strItemsID
 			, pTestMacroUI->GetTestMacroUIDataGroup(),pUIParas,pCommCmd, pContents
 			, strDvmFile, strTestClass, STT_CMD_PARA_TtRetMode_GBXML, g_oSystemParas.HasDigitalInOrOut(), nRepeatTimes
@@ -1557,7 +1649,15 @@ BOOL CSttTestCtrlCntrNative::StartTest(CDataGroup *pCurrentUIParas)
 // 	}
 
 #ifdef _PSX_QT_WINDOWS_
+	//chenling 20250226 主界面进是单机模式，直接运行TestCtrlCntrWin.exe是自动测试模式
+	if (!g_theTestCntrFrame->IsAutoTest())
+	{
+		nTestMode = TEST_MODE_SINGLETEST;
+	}
+	else
+	{
 	nTestMode = TEST_MODE_AUTOTEST;
+	}
 #endif
 
 	if (pTestMacroUI != NULL)
@@ -1567,7 +1667,7 @@ BOOL CSttTestCtrlCntrNative::StartTest(CDataGroup *pCurrentUIParas)
 		{
 			strDvmFile = _T("SttIecRecordDetectDvm.xml");
 		}
-		if(pTestMacroUI->m_strID == STT_ORG_MACRO_SoeTest  || pTestMacroUI->m_strID == STT_ORG_MACRO_AntiShakeTimeTest) // Soe需要加载规约
+		if(pTestMacroUI->m_strID == STT_ORG_MACRO_SoeTest  || pTestMacroUI->m_strID == STT_ORG_MACRO_AntiShakeTimeTest || IsRemoteAutoTest(pTestMacroUI->m_strID)) // Soe需要加载规约
 		{
 			strDvmFile = g_pTheSttTestApp->m_oCommConfig.Get_DvmFile();
 			strPpXmlFile = g_pTheSttTestApp->m_oCommConfig.Get_PpxmlFile();
@@ -1699,6 +1799,13 @@ void CSttTestCtrlCntrNative::FillReport(CSttReports *pSttReports)
 CExBaseList* CSttTestCtrlCntrNative::GetReports()
 {
 	return NULL;
+}
+
+void CSttTestCtrlCntrNative::Test_GetSystemState()
+{
+	CStringArray astrType;
+	astrType.Add(STT_CMD_PARA_DeviceStatus);
+	m_oSttAtsClient.Ats_GetSystemState(astrType);
 }
 
 //yzj 2022-2-20 没有使用引用,在执行完成后会析构oInfoList导致野指针崩溃
@@ -1908,9 +2015,9 @@ BOOL CSttTestCtrlCntrNative::ClearReportsRslts(CDataGroup *pParas)
 	return m_oSttAtsClient.Ats_ClearReportsRslts(pParas);
 }
 
-void CSttTestCtrlCntrNative::CloseTest()
+void CSttTestCtrlCntrNative::CloseTest(long nSynMode )
 {
-	m_oSttAtsClient.Ats_CloseTest();
+	m_oSttAtsClient.Ats_CloseTest(TRUE, NULL, nSynMode);
 }
 
 //2023-8-29 shaolei  //配置装置
@@ -1940,6 +2047,11 @@ void CSttTestCtrlCntrNative::Ats_IecRecord(CDataGroup *pIecRecordParas)
 BOOL CSttTestCtrlCntrNative::Ats_UartConfig(CDataGroup *pUartConfigParas)
 {
 	return m_oSttAtsClient.Ats_UartConfig(pUartConfigParas);
+}
+
+void CSttTestCtrlCntrNative::Ats_BinConfig(CDataGroup *pBinConfigParas)
+{
+	m_oSttAtsClient.Ats_BinConfig(pBinConfigParas);
 }
 
 long CSttTestCtrlCntrNative::OnConnectStateChanged(bool bState)
@@ -1992,9 +2104,9 @@ void  CSttTestCtrlCntrNative::InitMeasServer()
 
 void  CSttTestCtrlCntrNative::ExitMeasServer()
 {
-	CXSmartCapMngr::Release();
-	CIotPxEngineServer::Release();
 	CSttPpEngineServer::Release();
+	CIotPxEngineServer::Release();
+	CXSmartCapMngr::Release();
 }
 
 void CSttTestCtrlCntrNative::WaitCmdReplyProcess()
@@ -2005,4 +2117,40 @@ void CSttTestCtrlCntrNative::WaitCmdReplyProcess()
 	{
 		oTick.DoEvents(5);
 	}
+}
+
+
+bool CSttTestCtrlCntrNative::IsRemoteAutoTest(const CString &strMacroID)
+{
+	if ((strMacroID == STT_ORG_MACRO_Remote_VolCurAccuracyTest)||
+		(strMacroID == STT_ORG_MACRO_Remote_PowerAccuracyTest)||
+		(strMacroID == STT_ORG_MACRO_Remote_FreqFactorTest)||
+		(strMacroID == STT_ORG_MACRO_Remote_FreqChangeTest)||
+		(strMacroID == STT_ORG_MACRO_Remote_OverCurrTest) ||
+		(strMacroID == STT_ORG_MACRO_Remote_ZeroTest) ||
+		(strMacroID == STT_ORG_MACRO_Remote_TURecloseAccTest)||
+		(strMacroID == STT_ORG_MACRO_Remote_AccuracyTest)||
+		(strMacroID == STT_ORG_MACRO_Remote_PriorityDeliveryTest)||
+		(strMacroID == STT_ORG_MACRO_Remote_DualPositionTest) ||
+		(strMacroID == STT_ORG_MACRO_Remote_ResolutionTest) ||
+		(strMacroID == STT_ORG_MACRO_Remote_AntiShakeTest)||
+		(strMacroID == STT_ORG_MACRO_Remote_ThreePhUnbalanceTest)||
+		(strMacroID == STT_ORG_MACRO_Remote_HarmContentTest)||
+		(strMacroID == STT_ORG_MACRO_Remote_PowerFactorTest) ||
+		(strMacroID == STT_ORG_MACRO_Remote_MeasurLimitTest) ||
+		(strMacroID == STT_ORG_MACRO_Remote_InputVolTest)||
+		(strMacroID == STT_ORG_MACRO_Remote_InputCurTest)||
+		(strMacroID == STT_ORG_MACRO_Remote_Test)||
+		(strMacroID == STT_ORG_MACRO_Remote_VolExcLimitTest) ||
+		(strMacroID == STT_ORG_MACRO_Remote_CurExcLimitTest) ||
+		(strMacroID == STT_ORG_MACRO_Remote_LowCurrentTest) ||
+		(strMacroID == STT_ORG_MACRO_Remote_PTAlarmTest) ||
+		(strMacroID == STT_ORG_MACRO_Remote_ProInrushCurTest) ||
+		(strMacroID == STT_ORG_MACRO_Remote_FaultResetTest) ||
+		(strMacroID == STT_ORG_MACRO_Remote_DeadZeroDriftTest))
+	{
+		return true;
+	}
+
+	return false;
 }

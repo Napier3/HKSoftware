@@ -5,10 +5,10 @@
 
 #pragma once
 
-#include "../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/DataMngr/DataGroup.h"
 ///#include "..\..\..\oa\Module\OA_DB\PowerSky_OAGlobal.h"
 
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 
 //2021-5-4  lijunqing  统一定义到校准系数文件中，方便访问
 #include "../SttTest/Common/tmt_adjust_sys_para_module_def.h"
@@ -67,6 +67,8 @@ public:
 	long m_nBoutCount;
 	long m_nSTModeSet;//2023-11-28 suyang 从硬件信息文件中获取ST口模式使能
 	long m_nUartCount; //2024.05.8chenling 从硬件信息里面获取串口个数
+	long m_nBinVoltMeas;//2024-11-5 wuxinyi 主板开入电压采集(0-不支持，1-支持)
+	long m_nMergeCurTerminal;//suyang  合并电流端子（-1 不支持合并输出；0 不合并输出； 1  合并为1个通道输出；3 合并为3个通道输出）
 
 	virtual void GetAttrs(){};
 	virtual long GetModelType(){return STT_MODEL_TYPE_Module;}

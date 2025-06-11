@@ -1,5 +1,5 @@
 #pragma once
-#include "../../../module/baseclass/exbaseobject.h"
+#include "ExBaseObject.h"
 #include "PpScript.h"
 #include "PpScript.h"
 #include "PpPackageDetail.h"

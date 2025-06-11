@@ -3,11 +3,11 @@
 #include "../SttCmd/SttTestCmd.h"
 #include "../SttSocket/TestTerminal/VC/SttClientSocket.h"
 
-#include "../../Module/Socket/XPing.h"
+#include "../../../Module/Socket/XPing.h"
 
 #ifndef NOT_USE_XLANGUAGE
 
-#include "../../Module/XLanguage/XLanguageResource.h"
+#include "../../../Module/XLanguage/XLanguageResource.h"
 #endif
 
 #ifdef _DEBUG

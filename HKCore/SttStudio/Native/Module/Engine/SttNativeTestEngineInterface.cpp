@@ -75,6 +75,20 @@ long CSttNativeTestEngineInterfaces::X_ReturnSysStateToChildren(void *pCommInter
 	return 0;
 }
 
+long CSttNativeTestEngineInterfaces::Return_DeviceParameter_AfterLogin(void *pCommInterface, CSttSysState *pSysState)
+{
+	CSttNativeTestEngineInterface *p = NULL;
+	POS pos = GetHeadPosition();
+
+	while (pos != NULL)
+	{
+		p = GetNext(pos);
+		p->Return_DeviceParameter_AfterLogin(pCommInterface, pSysState);
+	}
+
+	return 0;
+}
+
 long CSttNativeTestEngineInterfaces::X_Ats_InputData(void *pCommInterface, CDataGroup *pDatas,CExBaseList *pMsgs)
 {
 	CSttNativeTestEngineInterface *p = NULL;

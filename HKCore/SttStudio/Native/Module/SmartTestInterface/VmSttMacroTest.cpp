@@ -173,6 +173,7 @@ BOOL CVmSttMacroTest::IsAdjust(const CString &strMacroID)
 }
 
 extern CString g_strSmartTestRunMode;
+extern CString *g_strMacroID;
 
 long CVmSttMacroTest::Test(const CString & strMacroID, const CString & strParameter)
 {
@@ -268,14 +269,17 @@ long CVmSttMacroTest::Test(const CString & strMacroID, const CString & strParame
 	//故障回放，特殊处理
 	if (m_pTestMacro->m_strID == STT_CMD_ATS_MACRO_ID_ReplayTest)
 	{
-		nRet = ComtradeReplayTest();
-
-		if (nRet <= 0)
+		if (g_strMacroID == NULL)
 		{
-			return -1;
-		}
+			nRet = ComtradeReplayTest();
 
-		return 0;
+			if (nRet <= 0)
+			{
+				return -1;
+			}
+
+			return 0;
+		}
 	}
 #endif
 
@@ -357,6 +361,7 @@ long CVmSttMacroTest::CloseDevice()
 
 CString CVmSttMacroTest::GetSearchReport()
 {
+	CAutoSimpleLock oLock(&m_oSearchRptCriticSection);  //返回结果前，必须等上一个OnSearchPointReport事件处理结束
 	CValues oValues;
 	POS pos = m_oSearchRslts.GetHeadPosition();
 
@@ -371,6 +376,12 @@ CString CVmSttMacroTest::GetSearchReport()
 
 long CVmSttMacroTest::FinishTest(long nState)
 {
+	//shaolei 2025-3-18
+	//电气量作为通讯命令的父项目时，子项目结束，父项目同时结束
+	//此时无需给测试仪发送任何指令，测试仪也没有TestFinished事件上送
+	//上位机需要再次下发StartTest，测试仪底层根据新指令覆盖上一个试验，因此需要重置标记
+	m_bTestStarted = FALSE;
+	CLogPrint::LogString(XLOGLEVEL_DEBUG, _T("for debug CVmSttMacroTest::FinishTest  -->m_bTestStarted=false"));
 	return 0;
 }
 
@@ -449,7 +460,7 @@ long CVmSttMacroTest::SendTestCmd(BYTE *pBuf, long nLen)
 	return nRet;
 }
 
-long CVmSttMacroTest::SendTestCmd(CSttTestCmd *pTestCmd)
+long CVmSttMacroTest::SendTestCmd(CSttCmdBase *pTestCmd)
 {
 	if (pTestCmd == NULL)
 	{
@@ -471,19 +482,32 @@ long CVmSttMacroTest::SendTestCmd(CSttTestCmd *pTestCmd)
 	//同步发送，函数返回即为成功、失败或超时
 	long nRet = m_oSttTestClient.SendTestCmd(pTestCmd);
 
+    if (nRet >= STT_CMD_ExecStatus_SUCCESS)
+    {
+        UpdateMergeCureTerminal(pTestCmd);
+    }
+
 	g_bIsSendTestCmding = FALSE;
 
 	return nRet;
 }
 
-long CVmSttMacroTest::SendTestCmdEx(CSttTestCmd *pTestCmd)
+long CVmSttMacroTest::SendTestCmdEx(CSttCmdBase *pTestCmd)
 {
 	if (m_bIsReleaseing)
 	{
 		return STT_CMD_ExecStatus_FAILURE;
 	}
 
-	m_oArrSttTestCmd.AddObject((CSttTestCmd *)pTestCmd->CloneEx(TRUE, TRUE));
+	if (pTestCmd->GetClassID() == STTCMDCLASSID_CSTTTESTCMD)
+	{
+		m_oArrSttTestCmd.AddObject((CSttTestCmd *)pTestCmd->CloneEx(TRUE, TRUE));
+	}
+	else if (pTestCmd->GetClassID() == STTCMDCLASSID_CSTTSYSTEMCMD)
+	{
+		//增加支持CSttSystenCmd
+		m_oArrSttTestCmd.AddObject((CSttSystemCmd *)pTestCmd->CloneEx(TRUE, TRUE));	
+	}
 
 	if (!g_bIsSendTestCmding)
 	{
@@ -497,13 +521,93 @@ long CVmSttMacroTest::SendNextTestCmd()
 {
 	while (m_oArrSttTestCmd.GetCurrReadCount() > 0)
 	{
-		CSttTestCmd *pNextCmd = m_oArrSttTestCmd.ReadCurr();
+		CSttCmdBase *pNextCmd = m_oArrSttTestCmd.ReadCurr();
 		m_oArrSttTestCmd.FreeCurr();
 		long nRet = SendTestCmd(pNextCmd);
 		delete pNextCmd;
 	}
 
 	return STT_CMD_ExecStatus_SUCCESS;
+}
+
+//判定并处理合并电流端子的设置，更新到DeviceParameter的装置属性中
+/*
+<test-cmd name="" id="SetParameter" mid="0" time="1970-01-01 00:00:00" testor="TEST">
+	<macro name="ModulesGearSwitch" id="ModulesGearSwitch" version="" type="" remark="">
+		<paras name="" id="">
+			<group id="CurrModules" data-type="CurrModules" value="">
+				<data id="CurrModuleNum" data-type="number" value="1" />
+				<group id="CurrModule1" data-type="CurrModule" value="">
+					<data id="ModulePos" data-type="number" value="3" />
+					<data id="CurModuleGear" data-type="number" value="0" />
+					<data id="MaxPortVol" data-type="float" value="0" />
+					<data id="MergeCurTerminal" data-type="float" value="0" />
+					<data id="LargeCurOutTerm" data-type="number" value="0" />
+				</group>
+			</group>
+		</paras>
+	</macro>
+</test-cmd>
+*/
+void CVmSttMacroTest::UpdateMergeCureTerminal(CSttCmdBase *pTestCmd)
+{
+	if (pTestCmd->m_strID != STT_CMD_TYPE_TEST_SetParameter)
+	{
+		return;
+	}
+
+	CSttMacro *pMacro = pTestCmd->GetSttMacro();
+
+	if (pMacro == NULL)
+	{
+		return;
+	}
+
+	if (pMacro->m_strID != STT_MACRO_ID_ModulesGearSwitch)
+	{
+		return;
+	}
+
+	CSttParas *pParas = pMacro->GetParas();
+	CDataGroup *pModules = (CDataGroup *)pParas->FindByID(_T("CurrModules"));//电流模块，ID是固定的
+
+	if (pModules == NULL)
+	{
+		return;
+	}
+
+	CDataGroup *pModule = (CDataGroup *)pModules->FindByClassID(DTMCLASSID_CDATAGROUP);//取第一个模块就行
+
+	if (pModule == NULL)
+	{
+		return;
+	}
+
+	CString strMergeCurTerminal;
+
+	if (pModule->GetDataValue(_T("MergeCurTerminal"), strMergeCurTerminal))
+	{
+		UpdateMergeCureTerminal(strMergeCurTerminal);
+	}
+}
+
+void CVmSttMacroTest::UpdateMergeCureTerminal(const CString &strValue)
+{
+	CDataGroup *pDevice = (CDataGroup *)g_oReadDeviceParameter.FindByID(_T("Device"));
+
+	if (pDevice == NULL)
+	{
+		return;
+	}
+
+	CDataGroup *pDeviceAttr = (CDataGroup *)pDevice->FindByID(_T("DeviceAttrs"));
+
+	if (pDeviceAttr == NULL)
+	{
+		return;
+	}
+
+	pDeviceAttr->SetDataValue(_T("MergeCurTerminal"), strValue, TRUE);
 }
 
 void CVmSttMacroTest::AddPkgDispatchInterface(CSttPkgDispatchInterface *p)
@@ -861,10 +965,16 @@ long CVmSttMacroTest::ComtradeReplayTest()
 
 	m_pSttReplayTest->SetSttTestEngineClient(m_oSttTestClient.GetTestEngineClient());
 
-	CDvmData *pRecordFileName = (CDvmData *)m_oFaultParas_Dvm.FindByID(STT_CMD_PARA_Record_File_Name);
+	CDvmData *pRecordFileName = (CDvmData *)m_oFaultParas_Dvm.FindByID(STT_CMD_PARA_Comtrade_File_Path);
 
 	if (pRecordFileName == NULL)
 	{
+		pRecordFileName = (CDvmData *)m_oFaultParas_Dvm.FindByID(STT_CMD_PARA_Record_File_Name);
+	}
+
+	if (pRecordFileName == NULL)
+	{
+		CLogPrint::LogString(XLOGLEVEL_DEBUG, _T("Macro [ReplayTest], can not find para [RecordFileName] or [ComtradeFilePath]"));
 		return -1;
 	}
 
@@ -977,10 +1087,10 @@ void CVmSttMacroTest::OnTestFinished(const CString &strMacroID, CDataGroup *pPar
 	AppendReport_ResultEx(&m_oFaultParas_Dvm);
 #endif
 
-	PostTestWndMsg(MTMSG_TestFinished, 0);
 	m_bTestStarted = FALSE;
 	CLogPrint::LogString(XLOGLEVEL_DEBUG, _T("for debug CVmSttMacroTest::OnTestFinished  -->m_bTestStarted=false"));
 	CLogPrint::LogFormatString(XLOGLEVEL_DEBUG, _T("MacroTestEvent-->OnTestFinished   ++  MacroID = %s"), strMacroID.GetString());
+	PostTestWndMsg(MTMSG_TestFinished, 0);
 }
 
 void CVmSttMacroTest::OnSearchPointFinish(const CString &strMacroID, CDataGroup *pParas, CDataGroup *pResults)
@@ -1077,6 +1187,7 @@ void CVmSttMacroTest::OnTestState(const CString &strMacroID, CDataGroup *pParas)
 */
 void CVmSttMacroTest::OnSearchPointReport(const CString &strMacroID, CDataGroup *pSearchResults)
 {
+	CAutoSimpleLock oLock(&m_oSearchRptCriticSection);  //处理事件前，必须等上一个事件的结果，通过GetSearchReport接口获取完整
 	m_oSearchRslts.DeleteAll();
 	m_oSearchRslts.AppendCloneEx(*pSearchResults, TRUE);
 
@@ -1229,6 +1340,16 @@ long CVmSttMacroTest::OnAts_Stop(CDataGroup *pParas)
 	m_bTestStarted = FALSE;
 	CLogPrint::LogString(XLOGLEVEL_DEBUG, _T("for debug CVmSttMacroTest::OnAts_Stop  -->m_bTestStarted=false"));
 	CLogPrint::LogFormatString(XLOGLEVEL_DEBUG, _T("MacroTestEvent-->OnAts_Stop"));
+	return 0;
+}
+
+long CVmSttMacroTest::OnDisConnect()
+{
+	if(g_theSttSmartTest != NULL)
+	{
+		g_theSttSmartTest->OnConnectFailed(NULL);
+	}
+
 	return 0;
 }
 

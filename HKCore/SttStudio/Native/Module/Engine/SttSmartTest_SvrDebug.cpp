@@ -92,6 +92,11 @@ long CSttSmartTest::OnConnectFailed()
     return 0;
 }
 
+long CSttSmartTest::OnEngineEvent()
+{
+	return 0;
+}
+
 long CSttSmartTest::OnCurrItemStateChanged(CGbItemBase* pItem, BOOL bBringToTop)
 { 
     return 0;

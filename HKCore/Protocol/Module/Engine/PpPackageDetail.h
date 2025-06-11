@@ -1,5 +1,5 @@
 #pragma once
-#include "pppackage.h"
+#include "PpPackage.h"
 
 class CPpPackageDetail :	public CPpPackage
 {

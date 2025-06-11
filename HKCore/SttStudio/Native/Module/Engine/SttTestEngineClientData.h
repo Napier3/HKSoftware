@@ -113,9 +113,9 @@ public:
 	virtual long SendCmdAsync(CSttCmdBase *pCmd,long nTimeOut,CSttCmdOverTimeMsgRcv *pSttCmdOverTimeMsgRcv=NULL, BOOL bCompress=FALSE,BOOL bReset=TRUE);
 	virtual long SendCmdOnly(CSttCmdBase *pCmd, BOOL bCompress=FALSE,BOOL bReset=TRUE);
 
-	//system command
-	long System_SetSysConfig(CDataGroup *pParas,BOOL bDoEvents=TRUE,CSttCmdData *pRetData = NULL);
-	long System_GetSysConfig(BOOL bDoEvents=TRUE,CSttCmdData *pRetData = NULL);
+	//system command=
+	long System_SetSysConfig(CDataGroup *pParas,BOOL bDoEvents=TRUE,CSttCmdData *pRetData = NULL,BOOL bSendCmdAsync=FALSE);
+	long System_GetSysConfig(BOOL bDoEvents=TRUE,CSttCmdData *pRetData = NULL,BOOL bSendCmdAsync=FALSE);
 	long System_Login(BOOL bDoEvents=TRUE,CSttCmdData *pRetData = NULL);
 	long System_Login_Local_Test(BOOL bDoEvents=TRUE,CSttCmdData *pRetData = NULL);
 	long System_Login_Local_ATS(BOOL bDoEvents=TRUE,CSttCmdData *pRetData = NULL);
@@ -172,7 +172,7 @@ public:
 	long Ats_StartTest(CDataGroup *pTestMacroUI=NULL, CDataGroup *pUIParas=NULL, CDataGroup *pCommCmd=NULL, CSttContents *pCharacteristic=NULL, 
 		BOOL bDoEvents=TRUE,CSttCmdData *pRetData = NULL,const CString &strDvmFile = _T(""),const CString &strPpXmlFile = _T(""), long nTestMode = TEST_MODE_SINGLETEST);//20230227 zhouhj Ôö¼ÓstrDvmFile
 	long Ats_StopTest(BOOL bDoEvents=TRUE,CSttCmdData *pRetData = NULL);
-	long Ats_CloseTest(BOOL bDoEvents=TRUE,CSttCmdData *pRetData = NULL);
+	long Ats_CloseTest(BOOL bDoEvents=TRUE,CSttCmdData *pRetData = NULL,long nSynMode = STT_CMD_Send_Sync);
 	long Ats_SetItemState(CExBaseList *pSttParas,BOOL bDoEvents=TRUE,CSttCmdData *pRetData = NULL);
 	long Ats_SetItemState(const CString &strItemPath,long nSelect,long nEnable,long nShow,BOOL bDoEvents=TRUE,CSttCmdData *pRetData = NULL);
 	long Ats_TestItem (const CString &strItemPath,BOOL bDoEvents=TRUE,CSttCmdData *pRetData = NULL);

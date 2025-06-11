@@ -294,6 +294,9 @@ void QRingMemBufShmDebugWidget::slot_Timer_AutoWrite()
 
 void QRingMemBufShmDebugWidget::InitLanguage()
 {
+	CString strTemp;
+	strTemp = /*_T("Ä£Äâ·¢ÉúÆ÷")*/g_sLangTxt_IEC_Writegen;
+	setWindowTitle(strTemp);
 	xlang_SetLangStrToWidget_Txt(ui->m_lblFileName,g_sLangTxt_Native_FileName,XLang_Ctrls_QLabel);
 	xlang_SetLangStrToWidget_Txt(ui->m_lblSendLength,g_sLangTxt_IEC_SendLength,XLang_Ctrls_QLabel);
 	xlang_SetLangStrToWidget_Txt(ui->m_lblSendLength_2,g_sLangTxt_IEC_SendLength_2,XLang_Ctrls_QLabel);

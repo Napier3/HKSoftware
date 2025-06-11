@@ -61,8 +61,28 @@ public:
 	void InitParas3I_BP2();//zhouhj 20211211  初始化BP2复式比率差动参数
 	BOOL CurrentCal3I_BP2(float *fId,float fIr_Id);//三相输出的BP2复式比率差动计算
 
-	 void  CurrentCal(float *fId,float fIr);
+	void CurrentCal(float *fId,float fIr);
+	//中性点不接地时,需要增加零序电流补偿
+	void CurrentCal(float *fId,float fIr,long nEarthing);//参数3为中性点是否接地,为1则为中性点接地,原差动模式都是中性点接地
+
+	//整组差动电流计算  zhouhj2024.10.7
+	//参数1为故障点电流,可能是标幺值或有名值,与实际基准电流选择一致,参数2为故障点位置
+	void CurrentCal_CbopDiff(double dFaultCurrent,long nFaultLocation,long nEarthing);
+	//根据I1 I2计算对应的各测电流,固定为中性点接地
+	void CurrentCal_CbopDiff(double dI1,double dI2);
+	//根据参数1和参数2计算参数3参数4对应的差动电流和制动电流
+	void CalIrId_CbopDiff(double dFaultCurrent,long nFaultLocation,double &dIr,double &dId);
+
 	ChannelUI_Diff* GetChannelCurrents(){return m_arryoCurrent;}
+
+	//根据制动电流及其它参数,计算差动电流理论动作值
+	double CalStdId(double dIr,double dIcdqd,int nKneePoints,double dIp1,double dIp2,double dIp3,
+		double dKid0,double dKid1,double dKid2,double dKid3,double dIsd);
+
+	//增加了4个参数,即是否组合特性,零序消除方式,故障类型,接线钟点数
+	double CalStdId(double dIr,double dIcdqd,int nKneePoints,double dIp1,double dIp2,double dIp3,
+		double dKid0,double dKid1,double dKid2,double dKid3,double dIsd,
+		long nComBineFeature,long nZeroSeqElimiType,long nFaultType,long nClock);
 
 	void GetKps(float& fKph,float& fKpm,float& fKpl){ fKph = m_fKph; fKpm = m_fKpm; fKpl = m_fKpl;} //yyj 20211029 
 	void GetKjx(float& fKjxh,float& fKjxl){ fKjxh = m_fKjxh; fKjxl = m_fKjxl; } //yyj 20211029
@@ -75,9 +95,17 @@ public:
 	static BOOL IsPhaseAB(int nPhase){return (nPhase == ABPhase);}
 	static BOOL IsPhaseBC(int nPhase){return (nPhase == BCPhase);}
 	static BOOL IsPhaseCA(int nPhase){return (nPhase == CAPhase);}
+	long GetTransAngleClockValue();//获取钟点数计算值,对应内部定义的宏
 
 
 protected:
+	//zhouhj 2024.10.6
+	bool GetI1I2_ByIdIr(float *fId,float fIr,double &dI1,double &dI2);//根据差动电流和制动电流计算高压侧及低压侧电流
+	void CurrentCal_ByI1I2_DTrans(double dI1,double dI2,double &dIa,double &dIaPh,double &dIb,double &dIbPh,double &dIc,double &dIcPh,
+		double &dIap,double &dIapPh,double &dIbp,double &dIbpPh,double &dIcp,double &dIcpPh);
+	void CurrentCal_ByI1I2_YTrans(double dI1,double dI2,double &dIa,double &dIaPh,double &dIb,double &dIbPh,double &dIc,double &dIcPh,
+		double &dIap,double &dIapPh,double &dIbp,double &dIbpPh,double &dIcp,double &dIcpPh);
+
 	int   GetMethod(int nClock,int nAngleMode);
 	 int   GetSign(int nClock,int nAngleMode);
 
@@ -110,6 +138,32 @@ protected:
 		 HighSideSecondaryCurrent = 0,
 		 SettingValue = 1,
 		 AllSideCurrent = 2
+	 };
+	 enum TransAngleClock{
+		 TransAngleClock_YY12 = 0,
+		 TransAngleClock_YD1 = 1,
+		 TransAngleClock_YY2 = 2,
+		 TransAngleClock_YD3 = 3,
+		 TransAngleClock_YY4 = 4,
+		 TransAngleClock_YD5 = 5,
+		 TransAngleClock_YY6 = 6,
+		 TransAngleClock_YD7 = 7,
+		 TransAngleClock_YY8 = 8,
+		 TransAngleClock_YD9 = 9,
+		 TransAngleClock_YY10 = 10,
+		 TransAngleClock_YD11 = 11,
+		 TransAngleClock_DD12 = 12,
+		 TransAngleClock_DY1 = 13,
+		 TransAngleClock_DD2 = 14,
+		 TransAngleClock_DY3 = 15,
+		 TransAngleClock_DD4 = 16,
+		 TransAngleClock_DY5 = 17,
+		 TransAngleClock_DD6 = 18,
+		 TransAngleClock_DY7 = 19,
+		 TransAngleClock_DD8 = 20,
+		 TransAngleClock_DY9 = 21,
+		 TransAngleClock_DD10 = 22,
+		 TransAngleClock_DY11 = 23
 	 };
 
 

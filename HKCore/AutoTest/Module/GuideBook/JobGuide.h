@@ -1,5 +1,5 @@
 #pragma once
-#include "gbitembase.h"
+#include "GbItemBase.h"
 #include "GuideBookDefine.h"
 
 class CJobGuide :public CGbItemBase

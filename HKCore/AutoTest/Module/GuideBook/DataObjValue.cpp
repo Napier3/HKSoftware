@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "DataObj.h"
 //#include "Set.h"
 #include "../XLanguageResourceAts.h"

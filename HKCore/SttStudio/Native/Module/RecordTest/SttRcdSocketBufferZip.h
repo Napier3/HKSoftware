@@ -81,9 +81,9 @@ inline long stt_rcd_zip_buf_get_len_src(BYTE *pBuffer)
 inline BOOL stt_rcd_zip_buf_match_head(BYTE *pBuffer)
 {
 	return ( (*pBuffer == 0XEA)  &&
-	           (*(pBuffer+1) = 0X15) &&
-	           (*(pBuffer+2) = 0XEA) &&
-	           (*(pBuffer+3) = 0X15 ) );
+	           (*(pBuffer+1) == 0X15) &&
+	           (*(pBuffer+2) == 0XEA) &&
+	           (*(pBuffer+3) == 0X15 ) );
 }
 
 inline BYTE* stt_rcd_zip_buf_get_zip_begin(BYTE *pBuffer)

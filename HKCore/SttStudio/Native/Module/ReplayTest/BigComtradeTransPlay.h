@@ -33,6 +33,7 @@ public:
 	BOOL m_bDrawSrcComtrade;  //2021-11-2  lijuniqing true：绘制原始comtrade波形图；false：绘制通道波形图
 	CBigComtradeFileRead m_oBigComtradeFileRead;	//Comtrade文件解析对象
 	CComtradePlayConfig m_oComtradePlayConfig;		//回放配置对象
+	bool m_bUseConnectServer;//2024 suyang 增加判断是否连上底层 
 
 private:
 	BOOL ComtradeControl_ConnServer(const CString &strIP);
@@ -56,6 +57,8 @@ public:
 	CRcdComtradeFile* GetSrcComtradeFile(); //2021-9-20  lijunqing
 	CRcdComtradeFile* GetPlayComtradeFile(); //2021-9-20  lijunqing
 	void GenerateComtradeChDatas(BOOL bSeekToBegin);
+	
+	BOOL ConnectServerState();
 
 	//开始测试事件处理接口
 	void OnStartTest();

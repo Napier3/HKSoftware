@@ -8,7 +8,9 @@
 #include "SttAdjTool.h"
 
 #include "..\..\..\Module\API\FileApi.h"
-
+#ifndef NOT_USE_XLANGUAGE
+#include "..\..\..\Module\XLanguage\XLanguageMngr.h"
+#endif
 #ifdef _DEBUG
 #undef THIS_FILE
 	static char THIS_FILE[]=__FILE__;
@@ -31,7 +33,12 @@ CSttAdjTool::CSttAdjTool()
 	strFile += _T("e-Report\\Config\\AdjustTest\\");
 	strFile += _T("AdjustTestMacro.xml");
 	m_pAdjustTestMacros->OpenTestMacroFile(strFile, _T("Adjust"));
-
+#ifndef NOT_USE_XLANGUAGE
+	if (strFile.GetLength())
+	{
+		xlang_TranslateByResourceFileEx(m_pAdjustTestMacros, strFile);
+	}
+#endif
 	m_pSttAdjTestClient = NULL;
 }
 

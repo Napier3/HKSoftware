@@ -3,13 +3,13 @@
 #include "../../../Module/DataMngr/DataGroup.h"
 #include "GbItemsGen.h"
 #include "../GuideBook/GuideBook.h"
-#include "../../../SttStudio/Module/UI/Config/MacroTestUI/SttMacroTestUI_TestMacroUIDB.h"
-#include "../../../SttStudio/Module/SttCmd/SttChMaps.h"
+#include "../Module/UI/Config/MacroTestUI/SttMacroTestUI_TestMacroUIDB.h"
+#include "../Module/SttCmd/SttChMaps.h"
 #include "../../../61850/Module/CfgDataMngr/IecCfgDatasMngr.h"
-#include "../../../SttStudio/Module/SttCmd/SttMacro.h"
-#include "../../../SttStudio/Module/SttCmd/GuideBook/SttContents.h"
+#include "../Module/SttCmd/SttMacro.h"
+#include "../Module/SttCmd/GuideBook/SttContents.h"
 #include "../GuideBook/ItemRsltExprRun.h"
-#include "../../../SttStudio/Module/SttSystemConfig/SttSystemConfig.h"
+#include "../Module/SttSystemConfig/SttSystemConfig.h"
 #include "../../../Module/Expression/XExprCal.h"
 
 //测试功能参数界面类型：0-原生态界面；1-网页界面

@@ -5,8 +5,8 @@ QT -= gui
 DEFINES +=_PSX_IDE_QT_ _PSX_QT_LINUX_ _QT_IN_LINUX_
 DEFINES +=_USE_NO_GUI_  XML_USE_PUGIXML   NO_XDbBaseLib
 #DEFINES +=  XML_USE_PUGIXML   NO_XDbBaseLib
-DEFINES +=CURLINUX
-DEFINES +=DEBUG_MODE
+DEFINES +=CURLINUX NOT_USE_XLANGUAGE
+DEFINES += #DEBUG_MODE
 DEFINES +=_USE_SMARTTEST_INTERFACE_STT_ _STT_NOT_IN_TEST_SERVER_
 DEFINES +=STT_CMD_PARAS_HAS_GUIDEBOOK
 DEFINES +=_SCRIPT_USE_XVM
@@ -118,43 +118,43 @@ SOURCES += main.cpp \
     ../../../Module/Socket/WinTcpSocket.cpp \
     ../../../Module/Socket/WinTcpSocketClient.cpp \
     ../../../Module/MemBuffer/XMemBufferBse.cpp \
-    ../../Module/SttCmdToolMngr.cpp \
-    ../../Module/SttSocket/SttServerSocketDataBase.cpp \
-    ../../Module/SttSocket/SttSocketDataBase_File.cpp \
-    ../../Module/SttAuthority/SttModuleAuthority.cpp \
-    ../../Module/SttAuthority/SttModuleAuthorityMngr.cpp \
-    ../../Module/SttAuthority/SttTestClientUser.cpp \
-    ../../Module/SttAuthority/SttTestClientUserMngr.cpp \
-    ../../Module/SttAuthority/SttTestRemoteRegister.cpp \
-    ../../Module/SttCmd/SttAssistCmd.cpp \
-    ../../Module/SttCmd/SttAtsCmd.cpp \
-    ../../Module/SttCmd/SttCmdBase.cpp \
-    ../../Module/SttCmd/SttCmdCreator.cpp \
-    ../../Module/SttCmd/SttCmdDefineGlobal.cpp \
-    ../../Module/SttCmd/SttDebugCmd.cpp \
-    ../../Module/SttCmd/SttMacro.cpp \
-    ../../Module/SttCmd/SttParas.cpp \
-    ../../Module/SttCmd/SttRemoteCmd.cpp \
-    ../../Module/SttCmd/SttSysState.cpp \
-    ../../Module/SttCmd/SttSystemCmd.cpp \
-    ../../Module/SttCmd/SttTestCmd.cpp \
-    ../../Module/Engine/SttClientTestEngine.cpp \
-    ../../Module/Engine/SttNativeClientTestEngine.cpp \
-    ../../Module/SttAtsSvr/SttNativeTestCtrlCntr.cpp \
-    ../../Module/Engine/SttNativeTestEngine.cpp \
-    ../../Module/Engine/SttTestEngineBase.cpp \
-    ../../Module/Engine/SttTestEngineServerBase.cpp \
-    ../../Module/SttSocket/SttCmdOverTimeMngr.cpp \
+    ../Module/SttCmdToolMngr.cpp \
+    ../Module/SttSocket/SttServerSocketDataBase.cpp \
+    ../Module/SttSocket/SttSocketDataBase_File.cpp \
+    ../Module/SttAuthority/SttModuleAuthority.cpp \
+    ../Module/SttAuthority/SttModuleAuthorityMngr.cpp \
+    ../Module/SttAuthority/SttTestClientUser.cpp \
+    ../Module/SttAuthority/SttTestClientUserMngr.cpp \
+    ../Module/SttAuthority/SttTestRemoteRegister.cpp \
+    ../Module/SttCmd/SttAssistCmd.cpp \
+    ../Module/SttCmd/SttAtsCmd.cpp \
+    ../Module/SttCmd/SttCmdBase.cpp \
+    ../Module/SttCmd/SttCmdCreator.cpp \
+    ../Module/SttCmd/SttCmdDefineGlobal.cpp \
+    ../Module/SttCmd/SttDebugCmd.cpp \
+    ../Module/SttCmd/SttMacro.cpp \
+    ../Module/SttCmd/SttParas.cpp \
+    ../Module/SttCmd/SttRemoteCmd.cpp \
+    ../Module/SttCmd/SttSysState.cpp \
+    ../Module/SttCmd/SttSystemCmd.cpp \
+    ../Module/SttCmd/SttTestCmd.cpp \
+    ../Module/Engine/SttClientTestEngine.cpp \
+    ../Module/Engine/SttNativeClientTestEngine.cpp \
+    ../Module/SttAtsSvr/SttNativeTestCtrlCntr.cpp \
+    ../Module/Engine/SttNativeTestEngine.cpp \
+    ../Module/Engine/SttTestEngineBase.cpp \
+    ../Module/Engine/SttTestEngineServerBase.cpp \
+    ../Module/SttSocket/SttCmdOverTimeMngr.cpp \
     ../../../Module/MemBuffer/ExpandMemBuf.cpp \
-    ../../Module/Engine/SttTestEngineClientData.cpp \
-    ../../Module/SttSocket/TestTerminal/SttClientSocketBase.cpp \
-    ../../Module/SttSocket/TestTerminal/VC/SttClientSocket.cpp \
-    ../../Module/SttSocket/TestServer/SttNativeRemoteClientSocketBase.cpp \
-    ../../Module/SttSocket/TestServer/SttServerClientSocketBase.cpp \
-    ../../Module/SttSocket/TestServer/SttTestServerSocketBase.cpp \
-    ../../Module/SttSocket/TestServer/VC/SttNativeRemoteClientSocket.cpp \
-    ../../Module/SttSocket/TestServer/VC/SttServerClientSocket.cpp \
-    ../../Module/SttSocket/TestServer/VC/SttTestServerSocket.cpp \
+    ../Module/Engine/SttTestEngineClientData.cpp \
+    ../Module/SttSocket/TestTerminal/SttClientSocketBase.cpp \
+    ../Module/SttSocket/TestTerminal/VC/SttClientSocket.cpp \
+    ../Module/SttSocket/TestServer/SttNativeRemoteClientSocketBase.cpp \
+    ../Module/SttSocket/TestServer/SttServerClientSocketBase.cpp \
+    ../Module/SttSocket/TestServer/SttTestServerSocketBase.cpp \
+    ../Module/SttSocket/TestServer/VC/SttNativeRemoteClientSocket.cpp \
+    ../Module/SttSocket/TestServer/VC/SttServerClientSocket.cpp \
+    ../Module/SttSocket/TestServer/VC/SttTestServerSocket.cpp \
     ../../../Module/Socket/WinTcpSocketServer.cpp \
     ../Module/SttNativeTestMainApp.cpp \
     ../../../AutoTest/Module/GuideBook/GbXMLKeys.cpp \
@@ -209,7 +209,7 @@ SOURCES += main.cpp \
     ../../../AutoTest/Module/GuideBook/GbCommCmdConfig/GbCommCmdConfig.cpp \
     ../../../AutoTest/Module/GuideBook/GbCommCmdConfig/GbCommCmdGlobalDefine.cpp \
     ../../../AutoTest/Module/GuideBook/GbLogCtrls.cpp \
-      ../../../AutoTest/Module/Characteristic/CharacterArea.cpp \
+    ../../../AutoTest/Module/Characteristic/CharacterArea.cpp \
     ../../../AutoTest/Module/Characteristic/CharacterFolder.cpp \
     ../../../AutoTest/Module/Characteristic/Characteristic.cpp \
     ../../../AutoTest/Module/Characteristic/CharacteristicLib.cpp \
@@ -322,10 +322,10 @@ SOURCES += main.cpp \
     ../../../AutoTest/Module/TCtrlMsgRcvInterface.cpp \
     ../../../AutoTest/Module/TCtrlCntrDefine.cpp \
     ../../../AutoTest/Module/TestControl/TestControlWnd.cpp \
-    ../../Module/SttCmd/SttCmdData.cpp \
-    ../../Module/SttFileToolMngr.cpp \
+    ../Module/SttCmd/SttCmdData.cpp \
+    ../Module/SttFileToolMngr.cpp \
     ../../../AutoTest/Module/PpDeviceRefs.cpp \
-    ../../Module/SttCmd/SttRptMapDatas.cpp \
+    ../Module/SttCmd/SttRptMapDatas.cpp \
     ../../../61850/Module/CfgDataMngr/IecCfgDatasMngr.cpp \
     ../../../61850/Module/CfgDataMngr/IecCfgGoutDatas.cpp \
     ../../../61850/Module/CfgDataMngr/IecCfgGoutData.cpp \
@@ -366,8 +366,8 @@ SOURCES += main.cpp \
     ../../../61850/Module/CfgDataMngr/IecCfg91StatusDataSet.cpp \
     ../../../61850/Module/CfgDataMngr/IecCfg91StatusDataSetCh.cpp \
     ../../../Module/Socket/SocketGlobal.cpp \
-    ../../Module/SttSocket/SttSocketDataBase.cpp \
-    ../../Module/SttRegisterCode.cpp \
+    ../Module/SttSocket/SttSocketDataBase.cpp \
+    ../Module/SttRegisterCode.cpp \
     ../../../AutoTest/Module/SmartTestRpcEventApi.cpp \
     ../../../AutoTest/Module/AutoTestXMLRWKeys.cpp \
     ../../../AutoTest/Module/GuideBook/Script/GbScript_Engine.cpp \
@@ -383,58 +383,58 @@ SOURCES += main.cpp \
     ../../../AutoTest/Module/GuideBook/Script/XScript_XVM.cpp \
     ../../../AutoTest/Module/AutoTestGlobalDefine.cpp \
     ../../../AutoTest/Module/GuideBook/ReportMap/WordRptFillBase.cpp \
-    ../../Module/SmartTestInterface/MacroTestFactory.cpp \
-    ../../Module/SmartTestInterface/ProtocolEngineFactory.cpp \
+    ../Module/SmartTestInterface/MacroTestFactory.cpp \
+    ../Module/SmartTestInterface/ProtocolEngineFactory.cpp \
     ../../../Module/DataMngr/DvmDatasetSort.cpp \
     ../../../AutoTest/Module/TCtrlSystemConfig.cpp \
     ../../../Module/System/StringTokenizerU.cpp \
     ../../../AutoTest/Module/GuideBook/GbDataTypeMngr.cpp \
     ../../../Module/minilzo-2.10/minilzo.c \
     ../../../Module/OSInterface/QT/std_api_linux.cpp \
-    ../../Module/Engine/SttServerNativeConfig.cpp \
-    ../../Module/SttCmd/SttMsg.cpp \
-    ../../Module/SttCmd/SttMsgs.cpp \
+    ../Module/Engine/SttServerNativeConfig.cpp \
+    ../Module/SttCmd/SttMsg.cpp \
+    ../Module/SttCmd/SttMsgs.cpp \
     ../../../AutoTest/Module/SmartTestRpcApi.cpp \
-    ../../Module/SttCmd/SttAdjustCmd.cpp \
-    ../../Module/LiveUpdate/SttNativeConfig/SttNativeCfgHisVer.cpp \
-    ../../Module/LiveUpdate/SttNativeConfig/SttNativeCfgMngr.cpp \
-    ../../Module/LiveUpdate/SttNativeConfig/SttNativeCfgMngrGlobal.cpp \
-    ../../Module/SttTestAppConfig/SttTestAppCfg.cpp \
-    ../../Module/SttTestAppConfig/SttTestAppConfigTool.cpp \
-    ../../Module/LiveUpdate/SttNativeConfig/SttNativeCfgYun.cpp \
-    ../../Module/LiveUpdate/SttNativeConfig/SttNativeCfgLiveUpdate.cpp \
-    ../../Module/LiveUpdate/UpdateHistory/VerUpdateHisMngrGlobal.cpp \
-    ../../Module/Engine/SttRemoteClientTestEngine.cpp \
-    ../../Module/Engine/SttTestEngineRemoteClientData.cpp \
+    ../Module/SttCmd/SttAdjustCmd.cpp \
+    ../Module/LiveUpdate/SttNativeConfig/SttNativeCfgHisVer.cpp \
+    ../Module/LiveUpdate/SttNativeConfig/SttNativeCfgMngr.cpp \
+    ../Module/LiveUpdate/SttNativeConfig/SttNativeCfgMngrGlobal.cpp \
+    ../Module/SttTestAppConfig/SttTestAppCfg.cpp \
+    ../Module/SttTestAppConfig/SttTestAppConfigTool.cpp \
+    ../Module/LiveUpdate/SttNativeConfig/SttNativeCfgYun.cpp \
+    ../Module/LiveUpdate/SttNativeConfig/SttNativeCfgLiveUpdate.cpp \
+    ../Module/LiveUpdate/UpdateHistory/VerUpdateHisMngrGlobal.cpp \
+    ../Module/Engine/SttRemoteClientTestEngine.cpp \
+    ../Module/Engine/SttTestEngineRemoteClientData.cpp \
     ../../../Module/Socket/XPing.cpp \
-    ../../Module/TestClient/SttTestClientBase.cpp \
-    ../../Module/TestClient/SttTestClientSingleTimer.cpp \
-    ../../Module/LiveUpdate/SttLiveUpdateApi.cpp \
-    ../../Module/LiveUpdate/SttNativeConfig/SttNativeCfgMnt.cpp \
+    ../Module/TestClient/SttTestClientBase.cpp \
+    ../Module/TestClient/SttTestClientSingleTimer.cpp \
+    ../Module/LiveUpdate/SttLiveUpdateApi.cpp \
+    ../Module/LiveUpdate/SttNativeConfig/SttNativeCfgMnt.cpp \
     ../../../AutoTest/Module/TestControl/TestControlWnd_Linux.cpp \
     ../../../Module/OSInterface/QT/CXCtrl_QT_CWinApp.cpp \
     ../../../Module/OSInterface/QT/CXCtrl_QT_CWnd.cpp \
     ../../../Module/BaseClass/StringSerializeBufferAscii.cpp \
-    ../../Module/MemBuffer/stt_cycle_buffer.cpp \
+    ../Module/MemBuffer/stt_cycle_buffer.cpp \
     XTestTimer.cpp \
     ../../../Module/OSInterface/QT/XMsgCycleBuffer.cpp \
     ../../../AutoTest/Module/SmartTestRpcEventApi_Linux.cpp \
     ../../../AutoTest/Module/GuideBook/GuideBookExportTool.cpp \
-    ../../Module/Engine/SttQueryAtsFileTool.cpp \
+    ../Module/Engine/SttQueryAtsFileTool.cpp \
     ../../../Module/XfileMngrBase/XFileFindEx.cpp \
     ../../../Module/XfileMngrBase/QT/XFileFindExImp.cpp \
-    ../../Module/API/NetworkInterface.cpp \
-    ../../Module/API/QT/NetworkInterface_QT.cpp \
-    ../../Module/SttProtocolBufBase.cpp \
+    ../Module/API/NetworkInterface.cpp \
+    ../Module/API/QT/NetworkInterface_QT.cpp \
+    ../Module/SttProtocolBufBase.cpp \
     ../../../AutoTest/Module/GuideBookExportConfig.cpp \
-    ../../Module/SttCmd/SttChMap.cpp \
-    ../../Module/SttCmd/SttChMaps.cpp \
-    ../../Module/SttCmd/SttHdCh.cpp \
-    ../../Module/SttCmd/SttHdChs.cpp \
-    ../../Module/SttCmd/SttIotDevice.cpp \
-    ../../Module/SttCmd/SttIotDevices.cpp \
-    ../../Module/SttCmd/SttIotNode.cpp \
-    ../../Module/SttCmd/SttIotTopo.cpp \
+    ../Module/SttCmd/SttChMap.cpp \
+    ../Module/SttCmd/SttChMaps.cpp \
+    ../Module/SttCmd/SttHdCh.cpp \
+    ../Module/SttCmd/SttHdChs.cpp \
+    ../Module/SttCmd/SttIotDevice.cpp \
+    ../Module/SttCmd/SttIotDevices.cpp \
+    ../Module/SttCmd/SttIotNode.cpp \
+    ../Module/SttCmd/SttIotTopo.cpp \
     ../../../61850/Module/CfgDataMngr/IecCfgSysParas.cpp \
     ../../../61850/Module/CfgDataMngr/IecCfgFiberPara.cpp \
     ../../../61850/Module/CfgDataMngr/IecCfgFiberParas.cpp \
@@ -442,44 +442,44 @@ SOURCES += main.cpp \
     ../../../61850/Module/CfgDataMngr/IecCfgPrimRates.cpp \
     ../../../Module/XDrawBase/XDrawText.cpp \
     ../../../Module/API/GloblaDrawFunctions.cpp \
-    ../../Module/SttTest/Common/tmt_adjust_sys_parameter.cpp \
-    ../../Module/SttTestBase/SttMacroXmlKeys.cpp \
-    ../../Module/SttTestBase/SttXmlSerialize.cpp \
-    ../../Module/SttTest/SttTestGlobaoConfig.cpp \
-    ../../Module/SttTestBase/SttXmlSerializeBase.cpp \
-    ../../Module/SttTest/Common/tmt_adjust_sys_para_trans.cpp \
-    ../../Module/SttTestAppConfig/SttTestAppGateWayCfg.cpp \
-    ../../Module/SttCmd/GuideBook/SttCmdGuideBookTransTool.cpp \
-    ../../Module/SttCmd/GuideBook/SttCommCmd.cpp \
-    ../../Module/SttCmd/GuideBook/SttDataObj.cpp \
-    ../../Module/SttCmd/GuideBook/SttDevice.cpp \
-    ../../Module/SttCmd/GuideBook/SttGuideBook.cpp \
-    ../../Module/SttCmd/GuideBook/SttItemBase.cpp \
-    ../../Module/SttCmd/GuideBook/SttItems.cpp \
-    ../../Module/SttCmd/GuideBook/SttJobGuide.cpp \
-    ../../Module/SttCmd/GuideBook/SttMacroTest.cpp \
-    ../../Module/SttCmd/GuideBook/SttReport.cpp \
-    ../../Module/SttCmd/GuideBook/SttReportMap.cpp \
-    ../../Module/SttCmd/GuideBook/SttReports.cpp \
-    ../../Module/SttCmd/GuideBook/SttRptData.cpp \
-    ../../Module/SttCmd/GuideBook/SttSafety.cpp \
-    ../../Module/SttCmd/GuideBook/SttSysParaEdit.cpp \
-    ../../Module/SttCmd/GuideBook/SttSysParas.cpp \
-    ../../Module/SmartTestInterface/VmSttMacroTest.cpp \
+    ../Module/SttTest/Common/tmt_adjust_sys_parameter.cpp \
+    ../Module/SttTestBase/SttMacroXmlKeys.cpp \
+    ../Module/SttTestBase/SttXmlSerialize.cpp \
+    ../Module/SttTest/SttTestGlobaoConfig.cpp \
+    ../Module/SttTestBase/SttXmlSerializeBase.cpp \
+    ../Module/SttTest/Common/tmt_adjust_sys_para_trans.cpp \
+    ../Module/SttTestAppConfig/SttTestAppGateWayCfg.cpp \
+    ../Module/SttCmd/GuideBook/SttCmdGuideBookTransTool.cpp \
+    ../Module/SttCmd/GuideBook/SttCommCmd.cpp \
+    ../Module/SttCmd/GuideBook/SttDataObj.cpp \
+    ../Module/SttCmd/GuideBook/SttDevice.cpp \
+    ../Module/SttCmd/GuideBook/SttGuideBook.cpp \
+    ../Module/SttCmd/GuideBook/SttItemBase.cpp \
+    ../Module/SttCmd/GuideBook/SttItems.cpp \
+    ../Module/SttCmd/GuideBook/SttJobGuide.cpp \
+    ../Module/SttCmd/GuideBook/SttMacroTest.cpp \
+    ../Module/SttCmd/GuideBook/SttReport.cpp \
+    ../Module/SttCmd/GuideBook/SttReportMap.cpp \
+    ../Module/SttCmd/GuideBook/SttReports.cpp \
+    ../Module/SttCmd/GuideBook/SttRptData.cpp \
+    ../Module/SttCmd/GuideBook/SttSafety.cpp \
+    ../Module/SttCmd/GuideBook/SttSysParaEdit.cpp \
+    ../Module/SttCmd/GuideBook/SttSysParas.cpp \
+    ../Module/SmartTestInterface/VmSttMacroTest.cpp \
     ../../../Module/DataMngr/DvmDatasetGroup.cpp \
     ../../../Module/BaseClass/XObjectRefBase.cpp \
     ../../../Module/BaseClass/XTimer.cpp \
     ../../../AutoTest/Module/GuideBook/DataSetGroup.cpp \
-    ../../Module/SmartTestInterface/SttSmartTestSvrInterface.cpp \
+    ../Module/SmartTestInterface/SttSmartTestSvrInterface.cpp \
     ../../../61850/Module/CfgDataMngr/IecCfg6044CommonCh.cpp \
     ../../../61850/Module/CfgDataMngr/IecCfg6044CommonData.cpp \
-    ../../Module/UI/Config/MacroTestUI/SttMacroTestUI_Group.cpp \
-    ../../Module/UI/Config/MacroTestUI/SttMacroTestUI_TestMacroUI.cpp \
-    ../../Module/UI/Config/MacroTestUI/SttMacroTestUI_TestMacroUIDB.cpp \
-    ../../Module/UI/Config/MacroTestUI/SttMacroTestUI_TestMacroUIMngr.cpp \
-    ../../Module/UI/Config/MacroTestUI/SttMacroTestUI_TestMacroUIRef.cpp \
-    ../../Module/UI/Config/MacroTestUI/SttMacroTestUI_TestMacroUIs.cpp \
-    ../../Module/UI/Config/MacroTestUI/SttTestCtrrlMacroTestUIMngrGlobal.cpp \
+    ../Module/UI/Config/MacroTestUI/SttMacroTestUI_Group.cpp \
+    ../Module/UI/Config/MacroTestUI/SttMacroTestUI_TestMacroUI.cpp \
+    ../Module/UI/Config/MacroTestUI/SttMacroTestUI_TestMacroUIDB.cpp \
+    ../Module/UI/Config/MacroTestUI/SttMacroTestUI_TestMacroUIMngr.cpp \
+    ../Module/UI/Config/MacroTestUI/SttMacroTestUI_TestMacroUIRef.cpp \
+    ../Module/UI/Config/MacroTestUI/SttMacroTestUI_TestMacroUIs.cpp \
+    ../Module/UI/Config/MacroTestUI/SttTestCtrrlMacroTestUIMngrGlobal.cpp \
     ../../../AutoTest/Module/GuideBook/TestMacroUiParas.cpp \
     ../../../AutoTest/Module/GbItemsGen/GbItemsGen.cpp \
     ../../../AutoTest/Module/GbItemsGen/GbItemsGenRuleDefMngrGlobal.cpp \
@@ -500,21 +500,21 @@ SOURCES += main.cpp \
     ../../../AutoTest/Module/GbItemsGen/ItemsGenParasMap.cpp \
     ../../../AutoTest/Module/GbItemsGen/MacroItemsGen.cpp \
     ../../../AutoTest/Module/GbItemsGen/ParasGenNode.cpp \
-    ../../Module/SttPkgDispatchInterface.cpp \
-    ../../Module/Engine/SttTestEngineServerData.cpp \
-    ../../Module/SttCmd/GuideBook/SttContents.cpp \
+    ../Module/SttPkgDispatchInterface.cpp \
+    ../Module/Engine/SttTestEngineServerData.cpp \
+    ../Module/SttCmd/GuideBook/SttContents.cpp \
     ../../../Module/API/StringConvert/String_Gbk_To_Utf8.cpp \
     ../../../Module/API/StringConvert/String_Utf8_To_Gbk.cpp \
-    ../../Module/SttAtsSvr/SttSmartTest.cpp \
-    ../../Module/SttAtsSvr/XSttSmartTestEntry.cpp \
+    ../Module/SttAtsSvr/SttSmartTest.cpp \
+    ../Module/SttAtsSvr/XSttSmartTestEntry.cpp \
     ../../../AutoTest/Module/XLanguageResourceAts_AutoTest.cpp \
     ../../../61850/Module/XLanguageResourceIec.cpp \
     ../../../Module/API/QT/GlobalApi_QT.cpp \
-    ../../Module/AdjustTool/SttAdjBase.cpp \
-    ../../Module/AdjustTool/SttAdjDevice.cpp \
-    ../../Module/AdjustTool/SttAdjModule.cpp \
-    ../../Module/AdjustTool/SttMesLocalDb.cpp \
-    ../../Module/SttCmd/GuideBook/SttTestMacroUiParas.cpp \
+    ../Module/AdjustTool/SttAdjBase.cpp \
+    ../Module/AdjustTool/SttAdjDevice.cpp \
+    ../Module/AdjustTool/SttAdjModule.cpp \
+    ../Module/AdjustTool/SttMesLocalDb.cpp \
+    ../Module/SttCmd/GuideBook/SttTestMacroUiParas.cpp \
     ../../../AutoTest/Module/GbItemsGen/ItemsGenCharItemLine.cpp \
     ../../../AutoTest/Module/GuideBook/GuideBookStruDscTool.cpp \
     ../../../AutoTest/Module/Characteristic/CharElementTestLines.cpp \
@@ -525,11 +525,11 @@ SOURCES += main.cpp \
     ../../../61850/Module/CfgDataMngr/IecCfgSmvInDatas.cpp \
     ../../../AutoTest/Module/SmartTestDefineInterface.cpp \
     ../../../61850/Module/CfgDataMngr/IecCfg92InData.cpp \
-    ../../Module/SttCmd/GuideBook/SttMacroCharItems.cpp \
-    ../../Module/SmartTestInterface/PpsttEngineCreator.cpp \
-    ../../Module/SmartTestInterface/PpSttIotEngine.cpp \
-    ../../Module/TestClient/PpSttIotClient.cpp \
-    ../../Module/SttTestAppConfig/SttTestDeviceCfg.cpp \
+    ../Module/SttCmd/GuideBook/SttMacroCharItems.cpp \
+    ../Module/SmartTestInterface/PpsttEngineCreator.cpp \
+    ../Module/SmartTestInterface/PpSttIotEngine.cpp \
+    ../Module/TestClient/PpSttIotClient.cpp \
+    ../Module/SttTestAppConfig/SttTestDeviceCfg.cpp \
     ../../../61850/Module/CfgDataMngr/IecCfg2MInData.cpp \
     ../../../AutoTest/Module/GbItemsGen/ItemGenRsltExpr.cpp \
     ../../../Module/Expression/XExprCmp.cpp \
@@ -545,7 +545,7 @@ SOURCES += main.cpp \
     ../../../AutoTest/Module/GbItemsGen/ItemsGenCommCmd.cpp \
     ../../../AutoTest/Module/GbItemsGen/ItemsGenSysParaEdit.cpp \
     ../../../AutoTest/Module/GbItemsGen/ItemsGenSafety.cpp \
-    ../../Module/SttCmd/SttIotCmd.cpp \
+    ../Module/SttCmd/SttIotCmd.cpp \
     ../../../Module/Expression/XExprValue_Ex.cpp \
     ../../../AutoTest/Module/Characteristic/CharElementUIVP.cpp \
     ../../../AutoTest/Module/GuideBook/GbUnqualifiedItemTool.cpp \
@@ -553,30 +553,30 @@ SOURCES += main.cpp \
     ../../../61850/Module/CfgDataMngr/IecCfg6044CommonInData.cpp \
     ../../../Module/DataMngr/DvmValues.cpp \
     ../../../Module/API/StringConvertApi.cpp \
-    ../../Module/SttCmd/GuideBook/SttItemRsltExpr.cpp \
+    ../Module/SttCmd/GuideBook/SttItemRsltExpr.cpp \
     ../../../Module/BaseClass/ExBaseCycleArray.cpp \
     ../../../Module/Expression/XExprValueCal.cpp \
     ../../../AutoTest/Module/GuideBook/TestMacroCharParas.cpp \
     ../../../AutoTest/Module/Characteristic/CharElementIUF.cpp \
-    ../../Module/SttCmd/GuideBook/SttTestMacroCharParas.cpp \
+    ../Module/SttCmd/GuideBook/SttTestMacroCharParas.cpp \
     ../../../AutoTest/Module/GbItemsGen/MacroSelfDefGen.cpp \
     ../../../61850/Module/XLanguageResourcePp_Mms.cpp \
     ../../../Module/Expression/XExprErrorCombined.cpp \
     ../../../Module/Expression/XExprErrorEx.cpp \
     ../../../Module/Expression/XExprValueCalEx.cpp \
     ../../../Module/XLanguage/QT/XLanguageAPI_QT.cpp \
-    ../../Module/SmartTestInterface/VmSttRelayTest.cpp \
-    ../../Module/ReplayTest/BigComtradeFileRead.cpp \
-    ../../Module/ReplayTest/BigComtradeTransPlay.cpp \
-    ../../Module/ReplayTest/ComtradeBufMngr.cpp \
-    ../../Module/ReplayTest/ComtradeDataBuffer.cpp \
-    ../../Module/ReplayTest/ComtradePlayConfig.cpp \
-    ../../Module/ReplayTest/ComtradeSendSocket.cpp \
-    ../../Module/ReplayTest/SttCmtrdCfgDefineGlobal.cpp \
-    ../../Module/ReplayTest/SttComtradeGroup.cpp \
-    ../../Module/ReplayTest/SttModuleChComtradeBind.cpp \
-    ../../Module/SttTest/Common/tmt_replay_test.cpp \
-    ../../Module/SttTest/Common/tmt_test_paras_head.cpp \
+    ../Module/SmartTestInterface/VmSttRelayTest.cpp \
+    ../Module/ReplayTest/BigComtradeFileRead.cpp \
+    ../Module/ReplayTest/BigComtradeTransPlay.cpp \
+    ../Module/ReplayTest/ComtradeBufMngr.cpp \
+    ../Module/ReplayTest/ComtradeDataBuffer.cpp \
+    ../Module/ReplayTest/ComtradePlayConfig.cpp \
+    ../Module/ReplayTest/ComtradeSendSocket.cpp \
+    ../Module/ReplayTest/SttCmtrdCfgDefineGlobal.cpp \
+    ../Module/ReplayTest/SttComtradeGroup.cpp \
+    ../Module/ReplayTest/SttModuleChComtradeBind.cpp \
+    ../Module/SttTest/Common/tmt_replay_test.cpp \
+    ../Module/SttTest/Common/tmt_test_paras_head.cpp \
     ../../../Module/Record/Comtrade/ComtradeAnalogData.cpp \
     ../../../Module/Record/Comtrade/ComtradeBinaryData.cpp \
     ../../../Module/Record/Comtrade/ComtradeDataBase.cpp \
@@ -597,12 +597,12 @@ SOURCES += main.cpp \
     ../../../Module/Record/RtScriptBase/RtScriptBase.cpp \
     ../../../Module/Expression/XExprCal.cpp \
     ../../../61850/Module/CfgDataMngr/IecCfgFiberParasIn.cpp \
-     ../../Module/Engine/SttNativeTestEngineInterface.cpp \
+     ../Module/Engine/SttNativeTestEngineInterface.cpp \
     ../../../AutoTest/Module/GuideBook/HdResReqest.cpp \
-    ../../Module/Engine/SttNativeTestEngine_Mqtt.cpp \
-    ../../Module/SmartTestInterface/AtsOutInterfaceMqttClient.cpp \
-    ../../Module/SmartTestInterface/PpMqttIotEngine.cpp \
-    ../../Module/SmartTestInterface/PpXIotEngineBase.cpp \
+    ../Module/Engine/SttNativeTestEngine_Mqtt.cpp \
+    ../Module/SmartTestInterface/AtsOutInterfaceMqttClient.cpp \
+    ../Module/SmartTestInterface/PpMqttIotEngine.cpp \
+    ../Module/SmartTestInterface/PpXIotEngineBase.cpp \
     ../../../IotAtsMngr/Module/SttMqttTopicParser.cpp \
     ../../../IotAtsMngr/Module/SttMqttClientEngineConfig.cpp \
     ../../../IotAtsMngr/Module/DeviceMngr/SttXDevice.cpp \
@@ -618,34 +618,34 @@ SOURCES += main.cpp \
     ../../../IotAtsMngr/Module/MQTTClient_QT/MQTTPacket/MQTTUnsubscribeServer.c \
     ../../../IotAtsMngr/Module/MQTTClient_QT/linux.cpp \
     ../../../IotAtsMngr/Module/SttMqttClient_QT.cpp \
-    ../../Module/SttAtsSvr/XSttSmartTestPAL.cpp \
+    ../Module/SttAtsSvr/XSttSmartTestPAL.cpp \
     ../../../AutoTest/Module/Characteristic/CharElementDCOverLoad.cpp \
     ../../../AutoTest/Module/GuideBook/ReportMap/JsonReport/JsonRptFill.cpp \
     ../../../Module/xml/JSON/CJSON.c \
     ../../../AutoTest/Module/GuideBook/ReportMap/RptBaseFill.cpp \
-    ../../Module/XLangResource_Native.cpp \
-    ../../Module/SttSystemConfig/SttDevConfig.cpp \
-    ../../Module/SttSystemConfig/SttModule.cpp \
-    ../../Module/SttSystemConfig/SttModuleUse.cpp \
-    ../../Module/SttSystemConfig/SttSystemConfig.cpp \
-    ../../Module/SttSystemConfig/SttSystemConfigGlobal.cpp \
-    ../../Module/SttAtsSvr/SttSmartTestWnd.cpp \
-    ../../Module/SttAtsSvr/SttSmartTestWnd_Linux.cpp \
+    ../Module/XLangResource_Native.cpp \
+    ../Module/SttSystemConfig/SttDevConfig.cpp \
+    ../Module/SttSystemConfig/SttModule.cpp \
+    ../Module/SttSystemConfig/SttModuleUse.cpp \
+    ../Module/SttSystemConfig/SttSystemConfig.cpp \
+    ../Module/SttSystemConfig/SttSystemConfigGlobal.cpp \
+    ../Module/SttAtsSvr/SttSmartTestWnd.cpp \
+    ../Module/SttAtsSvr/SttSmartTestWnd_Linux.cpp \
     ../../../Module/Expression/XExprRangeEx.cpp \
-    ../../Module/SttTestResourceMngr/SttTestResourceMngr.cpp \
-    ../../Module/SttTestResourceMngr/RtDataMngr/SttGlobalRtDataMngr.cpp \
-    ../../Module/SttTestResourceMngr/RtDataMngr/SttMacroChannels.cpp \
-    ../../Module/SttTestResourceMngr/RtDataMngr/SttMacroChannelsAsync.cpp \
-    ../../Module/SttTestResourceMngr/TestResource/SttTestResource_4U3I.cpp \
-    ../../Module/SttTestResourceMngr/TestResource/SttTestResource_6U6I.cpp \
-    ../../Module/SttTestResourceMngr/TestResource/SttTestResource_Async.cpp \
-    ../../Module/SttTestResourceMngr/TestResource/SttTestResourceBase.cpp \
-    ../../Module/SttTestResourceMngr/TestResource/SttTestResource_Sync.cpp \
-    ../../Module/SttTest/Common/tmt_system_config.cpp \
-    ../../Module/SttTestSysGlobalPara.cpp \
+    ../Module/SttTestResourceMngr/SttTestResourceMngr.cpp \
+    ../Module/SttTestResourceMngr/RtDataMngr/SttGlobalRtDataMngr.cpp \
+    ../Module/SttTestResourceMngr/RtDataMngr/SttMacroChannels.cpp \
+    ../Module/SttTestResourceMngr/RtDataMngr/SttMacroChannelsAsync.cpp \
+    ../Module/SttTestResourceMngr/TestResource/SttTestResource_4U3I.cpp \
+    ../Module/SttTestResourceMngr/TestResource/SttTestResource_6U6I.cpp \
+    ../Module/SttTestResourceMngr/TestResource/SttTestResource_Async.cpp \
+    ../Module/SttTestResourceMngr/TestResource/SttTestResourceBase.cpp \
+    ../Module/SttTestResourceMngr/TestResource/SttTestResource_Sync.cpp \
+    ../Module/SttTest/Common/tmt_system_config.cpp \
+    ../Module/SttTestSysGlobalPara.cpp \
     ../../../Module/API/QT/StringApi_QT.cpp \
     ../../../Module/Record/RecordGlobalDefine.cpp \
-    ../../Module/SttCmd/GuideBook/SttTestGlobalDatasMngr.cpp \
+    ../Module/SttCmd/GuideBook/SttTestGlobalDatasMngr.cpp \
     ../../../Module/DataMngr/XDataMap.cpp \
     ../../../Module/DataMngr/DataMaps.cpp \
     ../../../Module/System/VariantDataAddress.cpp \
@@ -686,7 +686,7 @@ HEADERS += \
     ../../../Module/OSInterface/QT/CWinThread_QT.h \
     ../../../Module/BaseClass/BaseObject.h \
     ../../../Module/BaseClass/BinarySerialBuffer.h \
-    ../../../Module/BaseClass/BinarySerialInterface.h \
+    ../../../Module/BaseClass/binaryserialinterface.h \
     ../../../Module/BaseClass/ExBaseList.h \
     ../../../Module/BaseClass/ExBaseObject.h \
     ../../../Module/MemBuffer/FormatTextBuffer.h \
@@ -739,47 +739,47 @@ HEADERS += \
     ../../../Module/Socket/WinTcpSocket.h \
     ../../../Module/Socket/WinTcpSocketClient.h \
     ../../../Module/MemBuffer/XMemBufferBse.h \
-    ../../Module/SttCmdToolMngr.h \
-    ../../Module/SttGlobalDef.h \
-    ../../Module/SttGlobalDef_File.h \
-    ../../Module/SttSocket/SttServerSocketDataBase.h \
-    ../../Module/SttSocket/SttSocketDataBase.h \
-    ../../Module/SttSocket/SttSocketDataBase_File.h \
-    ../../Module/SttAuthority/SttModuleAuthority.h \
-    ../../Module/SttAuthority/SttModuleAuthorityMngr.h \
-    ../../Module/SttAuthority/SttTestClientUser.h \
-    ../../Module/SttAuthority/SttTestClientUserMngr.h \
-    ../../Module/SttAuthority/SttTestRemoteRegister.h \
-    ../../Module/SttCmd/SttAssistCmd.h \
-    ../../Module/SttCmd/SttAtsCmd.h \
-    ../../Module/SttCmd/SttCmdBase.h \
-    ../../Module/SttCmd/SttCmdCreator.h \
-    ../../Module/SttCmd/SttCmdDefineGlobal.h \
-    ../../Module/SttCmd/SttDebugCmd.h \
-    ../../Module/SttCmd/SttMacro.h \
-    ../../Module/SttCmd/SttParas.h \
-    ../../Module/SttCmd/SttRemoteCmd.h \
-    ../../Module/SttCmd/SttSysState.h \
-    ../../Module/SttCmd/SttSystemCmd.h \
-    ../../Module/SttCmd/SttTestCmd.h \
-    ../../Module/Engine/SttClientTestEngine.h \
-    ../../Module/Engine/SttNativeClientTestEngine.h \
-    ../../Module/SttAtsSvr/SttNativeTestCtrlCntr.h \
-    ../../Module/Engine/SttNativeTestEngine.h \
-    ../../Module/Engine/SttTestEngineBase.h \
-    ../../Module/Engine/SttTestEngineServerData.h \
-    ../../Module/Engine/SttTestEngineServerBase.h \
-    ../../Module/SttSocket/SttCmdOverTimeMngr.h \
+    ../Module/SttCmdToolMngr.h \
+    ../Module/SttGlobalDef.h \
+    ../Module/SttGlobalDef_File.h \
+    ../Module/SttSocket/SttServerSocketDataBase.h \
+    ../Module/SttSocket/SttSocketDataBase.h \
+    ../Module/SttSocket/SttSocketDataBase_File.h \
+    ../Module/SttAuthority/SttModuleAuthority.h \
+    ../Module/SttAuthority/SttModuleAuthorityMngr.h \
+    ../Module/SttAuthority/SttTestClientUser.h \
+    ../Module/SttAuthority/SttTestClientUserMngr.h \
+    ../Module/SttAuthority/SttTestRemoteRegister.h \
+    ../Module/SttCmd/SttAssistCmd.h \
+    ../Module/SttCmd/SttAtsCmd.h \
+    ../Module/SttCmd/SttCmdBase.h \
+    ../Module/SttCmd/SttCmdCreator.h \
+    ../Module/SttCmd/SttCmdDefineGlobal.h \
+    ../Module/SttCmd/SttDebugCmd.h \
+    ../Module/SttCmd/SttMacro.h \
+    ../Module/SttCmd/SttParas.h \
+    ../Module/SttCmd/SttRemoteCmd.h \
+    ../Module/SttCmd/SttSysState.h \
+    ../Module/SttCmd/SttSystemCmd.h \
+    ../Module/SttCmd/SttTestCmd.h \
+    ../Module/Engine/SttClientTestEngine.h \
+    ../Module/Engine/SttNativeClientTestEngine.h \
+    ../Module/SttAtsSvr/SttNativeTestCtrlCntr.h \
+    ../Module/Engine/SttNativeTestEngine.h \
+    ../Module/Engine/SttTestEngineBase.h \
+    ../Module/Engine/SttTestEngineServerData.h \
+    ../Module/Engine/SttTestEngineServerBase.h \
+    ../Module/SttSocket/SttCmdOverTimeMngr.h \
     ../../../Module/MemBuffer/ExpandMemBuf.h \
-    ../../Module/Engine/SttTestEngineClientData.h \
-    ../../Module/SttSocket/TestTerminal/SttClientSocketBase.h \
-    ../../Module/SttSocket/TestTerminal/VC/SttClientSocket.h \
-    ../../Module/SttSocket/TestServer/SttNativeRemoteClientSocketBase.h \
-    ../../Module/SttSocket/TestServer/SttServerClientSocketBase.h \
-    ../../Module/SttSocket/TestServer/SttTestServerSocketBase.h \
-    ../../Module/SttSocket/TestServer/VC/SttNativeRemoteClientSocket.h \
-    ../../Module/SttSocket/TestServer/VC/SttServerClientSocket.h \
-    ../../Module/SttSocket/TestServer/VC/SttTestServerSocket.h \
+    ../Module/Engine/SttTestEngineClientData.h \
+    ../Module/SttSocket/TestTerminal/SttClientSocketBase.h \
+    ../Module/SttSocket/TestTerminal/VC/SttClientSocket.h \
+    ../Module/SttSocket/TestServer/SttNativeRemoteClientSocketBase.h \
+    ../Module/SttSocket/TestServer/SttServerClientSocketBase.h \
+    ../Module/SttSocket/TestServer/SttTestServerSocketBase.h \
+    ../Module/SttSocket/TestServer/VC/SttNativeRemoteClientSocket.h \
+    ../Module/SttSocket/TestServer/VC/SttServerClientSocket.h \
+    ../Module/SttSocket/TestServer/VC/SttTestServerSocket.h \
     ../../../Module/Socket/WinTcpSocketServer.h \
     ../Module/SttNativeTestMainApp.h \
     ../../../System/Module/XAtsSysSvrGlobalDef.h \
@@ -955,9 +955,9 @@ HEADERS += \
     ../../../AutoTest/Module/TCtrlCntrDefine.h \
     ../../../AutoTest/Module/TestControl/TestControlWnd.h \
     ../../../Module/OSInterface/OSInterface.h \
-    ../../Module/SttCmd/SttCmdData.h \
-    ../../Module/SttFileToolMngr.h \
-    ../../Module/SttCmd/SttRptMapDatas.h \
+    ../Module/SttCmd/SttCmdData.h \
+    ../Module/SttFileToolMngr.h \
+    ../Module/SttCmd/SttRptMapDatas.h \
     ../../../AutoTest/Module/PpDeviceRefs.h \
     ../../../61850/Module/CfgDataMngr/IecCfgDatasMngr.h \
     ../../../61850/Module/CfgDataMngr/IecCfgGoutDatas.h \
@@ -999,7 +999,7 @@ HEADERS += \
     ../../../61850/Module/CfgDataMngr/IecCfg91StatusDataSet.h \
     ../../../61850/Module/CfgDataMngr/IecCfg91StatusDataSetCh.h \
     ../../../Module/Socket/SocketGlobal.h \
-    ../../Module/SttRegisterCode.h \
+    ../Module/SttRegisterCode.h \
     ../../../AutoTest/Module/SmartTestRpcEventApi.h \
     ../../../AutoTest/Module/AutoTestXMLRWKeys.h \
     ../../../AutoTest/Module/GuideBook/Script/GbScript_Engine.h \
@@ -1014,11 +1014,11 @@ HEADERS += \
     ../../../AutoTest/Module/GuideBook/Script/XScript_XVM.h \
     ../../../AutoTest/Module/AutoTestGlobalDefine.h \
     ../../../AutoTest/Module/GuideBook/ReportMap/WordRptFillBase.h \
-    ../../Module/SmartTestInterface/MacroTestFactory.h \
-    ../../Module/SmartTestInterface/MacroTestInterface.h \
-    ../../Module/SmartTestInterface/ProtocolEngineFactory.h \
-    ../../Module/SmartTestInterface/ProtocolEngineInterface.h \
-    ../../Module/SmartTestInterface/SttBaseInterface.h \
+    ../Module/SmartTestInterface/MacroTestFactory.h \
+    ../Module/SmartTestInterface/MacroTestInterface.h \
+    ../Module/SmartTestInterface/ProtocolEngineFactory.h \
+    ../Module/SmartTestInterface/ProtocolEngineInterface.h \
+    ../Module/SmartTestInterface/SttBaseInterface.h \
     ../../../Module/DataMngr/DvmDatasetSort.h \
     ../../../AutoTest/Module/TCtrlSystemConfig.h \
     ../../../Module/System/StringTokenizerU.h \
@@ -1027,95 +1027,95 @@ HEADERS += \
     ../../../Module/minilzo-2.10/lzodefs.h \
     ../../../Module/minilzo-2.10/minilzo.h \
     ../../../Module/OSInterface/QT/std_api_linux.h \
-    ../../Module/Engine/SttServerNativeConfig.h \
-    ../../Module/SttCmd/SttMsg.h \
-    ../../Module/SttCmd/SttMsgs.h \
+    ../Module/Engine/SttServerNativeConfig.h \
+    ../Module/SttCmd/SttMsg.h \
+    ../Module/SttCmd/SttMsgs.h \
     ../../../AutoTest/Module/SmartTestRpcApi.h \
-    ../../Module/SmartTestInterface/SttMacroTestMsgRcvInterface.h \
-    ../../Module/SmartTestInterface/SttMacroTestMsgRcvInterface_Linux.h \
-    ../../Module/SttCmd/SttAdjustCmd.h \
-    ../../Module/LiveUpdate/SttNativeConfig/SttNativeCfgHisVer.h \
-    ../../Module/LiveUpdate/SttNativeConfig/SttNativeCfgMngr.h \
-    ../../Module/LiveUpdate/SttNativeConfig/SttNativeCfgMngrGlobal.h \
-    ../../Module/SttTestAppConfig/SttTestAppCfg.h \
-    ../../Module/SttTestAppConfig/SttTestAppConfigTool.h \
-    ../../Module/LiveUpdate/SttNativeConfig/SttNativeCfgYun.h \
-    ../../Module/LiveUpdate/SttNativeConfig/SttNativeCfgLiveUpdate.h \
-    ../../Module/LiveUpdate/UpdateHistory/VerUpdateHisMngrGlobal.h \
-    ../../Module/Engine/SttRemoteClientTestEngine.h \
-    ../../Module/Engine/SttTestEngineRemoteClientData.h \
+    ../Module/SmartTestInterface/SttMacroTestMsgRcvInterface.h \
+    ../Module/SmartTestInterface/SttMacroTestMsgRcvInterface_Linux.h \
+    ../Module/SttCmd/SttAdjustCmd.h \
+    ../Module/LiveUpdate/SttNativeConfig/SttNativeCfgHisVer.h \
+    ../Module/LiveUpdate/SttNativeConfig/SttNativeCfgMngr.h \
+    ../Module/LiveUpdate/SttNativeConfig/SttNativeCfgMngrGlobal.h \
+    ../Module/SttTestAppConfig/SttTestAppCfg.h \
+    ../Module/SttTestAppConfig/SttTestAppConfigTool.h \
+    ../Module/LiveUpdate/SttNativeConfig/SttNativeCfgYun.h \
+    ../Module/LiveUpdate/SttNativeConfig/SttNativeCfgLiveUpdate.h \
+    ../Module/LiveUpdate/UpdateHistory/VerUpdateHisMngrGlobal.h \
+    ../Module/Engine/SttRemoteClientTestEngine.h \
+    ../Module/Engine/SttTestEngineRemoteClientData.h \
     ../../../Module/Socket/XPing.h \
-    ../../Module/TestClient/SttTestClientBase.h \
-    ../../Module/TestClient/SttTestClientSingleTimer.h \
-    ../../Module/LiveUpdate/SttLiveUpdateApi.h \
-    ../../Module/LiveUpdate/SttNativeConfig/SttNativeCfgMnt.h \
+    ../Module/TestClient/SttTestClientBase.h \
+    ../Module/TestClient/SttTestClientSingleTimer.h \
+    ../Module/LiveUpdate/SttLiveUpdateApi.h \
+    ../Module/LiveUpdate/SttNativeConfig/SttNativeCfgMnt.h \
     ../../../AutoTest/Module/TestControl/TestControlWnd_Linux.h \
     ../../../Module/OSInterface/QT/CXCtrl_QT_CWinApp.h \
     ../../../Module/OSInterface/QT/CXCtrl_QT_CWnd.h \
     ../../../Module/BaseClass/StringSerializeBufferAscii.h \
-    ../../Module/MemBuffer/stt_cycle_buffer.h \
+    ../Module/MemBuffer/stt_cycle_buffer.h \
     XTestTimer.h \
     ../../../Module/OSInterface/QT/XMsgCycleBuffer.h \
     ../../../AutoTest/Module/GuideBook/GuideBookExportTool.h \
-    ../../Module/Engine/SttQueryAtsFileTool.h \
+    ../Module/Engine/SttQueryAtsFileTool.h \
     ../../../Module/XfileMngrBase/XFileFindEx.h \
     ../../../Module/XfileMngrBase/QT/XFileFindExImp.h \
-    ../../Module/API/NetworkInterface.h \
-    ../../Module/SttProtocolBufBase.h \
+    ../Module/API/NetworkInterface.h \
+    ../Module/SttProtocolBufBase.h \
     ../../../AutoTest/Module/GuideBookExportConfig.h \
-    ../../Module/SttCmd/SttChMap.h \
-    ../../Module/SttCmd/SttChMaps.h \
-    ../../Module/SttCmd/SttHdCh.h \
-    ../../Module/SttCmd/SttHdChs.h \
-    ../../Module/SttCmd/SttIotDevice.h \
-    ../../Module/SttCmd/SttIotDevices.h \
-    ../../Module/SttCmd/SttIotNode.h \
-    ../../Module/SttCmd/SttIotTopo.h \
+    ../Module/SttCmd/SttChMap.h \
+    ../Module/SttCmd/SttChMaps.h \
+    ../Module/SttCmd/SttHdCh.h \
+    ../Module/SttCmd/SttHdChs.h \
+    ../Module/SttCmd/SttIotDevice.h \
+    ../Module/SttCmd/SttIotDevices.h \
+    ../Module/SttCmd/SttIotNode.h \
+    ../Module/SttCmd/SttIotTopo.h \
     ../../../61850/Module/CfgDataMngr/IecCfgSysParas.h \
     ../../../61850/Module/CfgDataMngr/IecCfgFiberPara.h \
     ../../../61850/Module/CfgDataMngr/IecCfgFiberParas.h \
     ../../../61850/Module/CfgDataMngr/IecCfgPrimRate.h \
     ../../../61850/Module/CfgDataMngr/IecCfgPrimRates.h \
     ../../../Module/XDrawBase/XDrawText.h \
-    ../../Module/SttTest/Common/tmt_adjust_sys_parameter.h \
-    ../../Module/SttTestBase/SttMacroXmlKeys.h \
-    ../../Module/SttTestBase/SttXmlSerialize.h \
-    ../../Module/SttTest/SttTestGlobaoConfig.h \
-    ../../Module/SttTestBase/SttXmlSerializeBase.h \
-    ../../Module/SttTest/Common/tmt_adjust_sys_para_trans.h \
-    ../../Module/SttTestAppConfig/SttTestAppGateWayCfg.h \
-    ../../Module/Engine/SttSmartTestSvrInterface.h \
-    ../../Module/SttCmd/GuideBook/SttCmdGuideBookTransTool.h \
-    ../../Module/SttCmd/GuideBook/SttCommCmd.h \
-    ../../Module/SttCmd/GuideBook/SttDataObj.h \
-    ../../Module/SttCmd/GuideBook/SttDevice.h \
-    ../../Module/SttCmd/GuideBook/SttGuideBook.h \
-    ../../Module/SttCmd/GuideBook/SttItemBase.h \
-    ../../Module/SttCmd/GuideBook/SttItems.h \
-    ../../Module/SttCmd/GuideBook/SttJobGuide.h \
-    ../../Module/SttCmd/GuideBook/SttMacroTest.h \
-    ../../Module/SttCmd/GuideBook/SttReport.h \
-    ../../Module/SttCmd/GuideBook/SttReportMap.h \
-    ../../Module/SttCmd/GuideBook/SttReports.h \
-    ../../Module/SttCmd/GuideBook/SttRptData.h \
-    ../../Module/SttCmd/GuideBook/SttSafety.h \
-    ../../Module/SttCmd/GuideBook/SttSysParaEdit.h \
-    ../../Module/SttCmd/GuideBook/SttSysParas.h \
-    ../../Module/SmartTestInterface/VmSttMacroTest.h \
+    ../Module/SttTest/Common/tmt_adjust_sys_parameter.h \
+    ../Module/SttTestBase/SttMacroXmlKeys.h \
+    ../Module/SttTestBase/SttXmlSerialize.h \
+    ../Module/SttTest/SttTestGlobaoConfig.h \
+    ../Module/SttTestBase/SttXmlSerializeBase.h \
+    ../Module/SttTest/Common/tmt_adjust_sys_para_trans.h \
+    ../Module/SttTestAppConfig/SttTestAppGateWayCfg.h \
+    #../Module/Engine/SttSmartTestSvrInterface.h \
+    ../Module/SttCmd/GuideBook/SttCmdGuideBookTransTool.h \
+    ../Module/SttCmd/GuideBook/SttCommCmd.h \
+    ../Module/SttCmd/GuideBook/SttDataObj.h \
+    ../Module/SttCmd/GuideBook/SttDevice.h \
+    ../Module/SttCmd/GuideBook/SttGuideBook.h \
+    ../Module/SttCmd/GuideBook/SttItemBase.h \
+    ../Module/SttCmd/GuideBook/SttItems.h \
+    ../Module/SttCmd/GuideBook/SttJobGuide.h \
+    ../Module/SttCmd/GuideBook/SttMacroTest.h \
+    ../Module/SttCmd/GuideBook/SttReport.h \
+    ../Module/SttCmd/GuideBook/SttReportMap.h \
+    ../Module/SttCmd/GuideBook/SttReports.h \
+    ../Module/SttCmd/GuideBook/SttRptData.h \
+    ../Module/SttCmd/GuideBook/SttSafety.h \
+    ../Module/SttCmd/GuideBook/SttSysParaEdit.h \
+    ../Module/SttCmd/GuideBook/SttSysParas.h \
+    ../Module/SmartTestInterface/VmSttMacroTest.h \
     ../../../Module/DataMngr/DvmDatasetGroup.h \
     ../../../Module/BaseClass/XObjectRefBase.h \
     ../../../Module/BaseClass/XTimer.h \
     ../../../AutoTest/Module/GuideBook/DataSetGroup.h \
-    ../../Module/SmartTestInterface/SttSmartTestSvrInterface.h \
+    ../Module/SmartTestInterface/SttSmartTestSvrInterface.h \
     ../../../61850/Module/CfgDataMngr/IecCfg6044CommonCh.h \
     ../../../61850/Module/CfgDataMngr/IecCfg6044CommonData.h \
-    ../../Module/UI/Config/MacroTestUI/SttMacroTestUI_Group.h \
-    ../../Module/UI/Config/MacroTestUI/SttMacroTestUI_TestMacroUI.h \
-    ../../Module/UI/Config/MacroTestUI/SttMacroTestUI_TestMacroUIDB.h \
-    ../../Module/UI/Config/MacroTestUI/SttMacroTestUI_TestMacroUIMngr.h \
-    ../../Module/UI/Config/MacroTestUI/SttMacroTestUI_TestMacroUIRef.h \
-    ../../Module/UI/Config/MacroTestUI/SttMacroTestUI_TestMacroUIs.h \
-    ../../Module/UI/Config/MacroTestUI/SttTestCtrrlMacroTestUIMngrGlobal.h \
+    ../Module/UI/Config/MacroTestUI/SttMacroTestUI_Group.h \
+    ../Module/UI/Config/MacroTestUI/SttMacroTestUI_TestMacroUI.h \
+    ../Module/UI/Config/MacroTestUI/SttMacroTestUI_TestMacroUIDB.h \
+    ../Module/UI/Config/MacroTestUI/SttMacroTestUI_TestMacroUIMngr.h \
+    ../Module/UI/Config/MacroTestUI/SttMacroTestUI_TestMacroUIRef.h \
+    ../Module/UI/Config/MacroTestUI/SttMacroTestUI_TestMacroUIs.h \
+    ../Module/UI/Config/MacroTestUI/SttTestCtrrlMacroTestUIMngrGlobal.h \
     ../../../AutoTest/Module/GuideBook/TestMacroUiParas.h \
     ../../../AutoTest/Module/GbItemsGen/GbItemsGen.h \
     ../../../AutoTest/Module/GbItemsGen/GbItemsGenRuleDefMngrGlobal.h \
@@ -1136,20 +1136,20 @@ HEADERS += \
     ../../../AutoTest/Module/GbItemsGen/ItemsGenParasMap.h \
     ../../../AutoTest/Module/GbItemsGen/MacroItemsGen.h \
     ../../../AutoTest/Module/GbItemsGen/ParasGenNode.h \
-    ../../Module/SttPkgDispatchInterface.h \
-    ../../Module/SttCmd/GuideBook/SttContents.h \
+    ../Module/SttPkgDispatchInterface.h \
+    ../Module/SttCmd/GuideBook/SttContents.h \
     ../../../Module/API/StringConvert/String_Gbk_To_Utf8.h \
     ../../../Module/API/StringConvert/String_Utf8_To_Gbk.h \
-    ../../Module/SttAtsSvr/SttSmartTest.h \
-    ../../Module/SttAtsSvr/XSttSmartTestEntry.h \
+    ../Module/SttAtsSvr/SttSmartTest.h \
+    ../Module/SttAtsSvr/XSttSmartTestEntry.h \
     ../../../AutoTest/Module/XLanguageResourceAts_SmartTest.h \
     ../../../AutoTest/Module/XLanguageResourceAts_AutoTest.h \
     ../../../61850/Module/XLanguageResourceIec.h \
-    ../../Module/AdjustTool/SttAdjBase.h \
-    ../../Module/AdjustTool/SttAdjDevice.h \
-    ../../Module/AdjustTool/SttAdjModule.h \
-    ../../Module/AdjustTool/SttMesLocalDb.h \
-    ../../Module/SttCmd/GuideBook/SttTestMacroUiParas.h \
+    ../Module/AdjustTool/SttAdjBase.h \
+    ../Module/AdjustTool/SttAdjDevice.h \
+    ../Module/AdjustTool/SttAdjModule.h \
+    ../Module/AdjustTool/SttMesLocalDb.h \
+    ../Module/SttCmd/GuideBook/SttTestMacroUiParas.h \
     ../../../AutoTest/Module/GbItemsGen/ItemsGenCharItemLine.h \
     ../../../AutoTest/Module/GuideBook/GuideBookStruDscTool.h \
     ../../../AutoTest/Module/Characteristic/XCharElementTestPoints.h \
@@ -1160,11 +1160,11 @@ HEADERS += \
     ../../../61850/Module/CfgDataMngr/IecCfgSmvInDatas.h \
     ../../../AutoTest/Module/SmartTestDefineInterface.h \
     ../../../61850/Module/CfgDataMngr/IecCfg92InData.h \
-    ../../Module/SttCmd/GuideBook/SttMacroCharItems.h \
-    ../../Module/SmartTestInterface/PpsttEngineCreator.h \
-    ../../Module/SmartTestInterface/PpSttIotEngine.h \
-    ../../Module/TestClient/PpSttIotClient.h \
-    ../../Module/SttTestAppConfig/SttTestDeviceCfg.h \
+    ../Module/SttCmd/GuideBook/SttMacroCharItems.h \
+    ../Module/SmartTestInterface/PpsttEngineCreator.h \
+    ../Module/SmartTestInterface/PpSttIotEngine.h \
+    ../Module/TestClient/PpSttIotClient.h \
+    ../Module/SttTestAppConfig/SttTestDeviceCfg.h \
     ../../../61850/Module/CfgDataMngr/IecCfg2MInData.h \
     ../../../AutoTest/Module/GbItemsGen/ItemGenRsltExpr.h \
     ../../../Module/Expression/XExprGlobal.h \
@@ -1180,7 +1180,7 @@ HEADERS += \
     ../../../AutoTest/Module/GbItemsGen/ItemsGenCommCmd.h \
     ../../../AutoTest/Module/GbItemsGen/ItemsGenSysParaEdit.h \
     ../../../AutoTest/Module/GbItemsGen/ItemsGenSafety.h \
-    ../../Module/SttCmd/SttIotCmd.h \
+    ../Module/SttCmd/SttIotCmd.h \
     ../../../Module/Expression/XExprValue_Ex.h \
     ../../../AutoTest/Module/Characteristic/CharElementUIVP.h \
     ../../../AutoTest/Module/GuideBook/GbUnqualifiedItemTool.h \
@@ -1188,30 +1188,30 @@ HEADERS += \
     ../../../61850/Module/CfgDataMngr/IecCfg6044CommonInData.h \
     ../../../Module/DataMngr/DvmValues.h \
     ../../../Module/API/StringConvertApi.h \
-    ../../Module/SttCmd/GuideBook/SttItemRsltExpr.h \
+    ../Module/SttCmd/GuideBook/SttItemRsltExpr.h \
     ../../../Module/BaseClass/ExBaseCycleArray.h \
     ../../../Module/Expression/XExprValueCal.h \
     ../../../AutoTest/Module/GuideBook/TestMacroCharParas.h \
     ../../../AutoTest/Module/Characteristic/CharElementIUF.h \
-    ../../Module/SttCmd/GuideBook/SttTestMacroCharParas.h \
+    ../Module/SttCmd/GuideBook/SttTestMacroCharParas.h \
     ../../../AutoTest/Module/GbItemsGen/MacroSelfDefGen.h \
     ../../../61850/Module/XLanguageResourcePp_Mms.h \
     ../../../Module/Expression/XExprErrorCombined.h \
     ../../../Module/Expression/XExprErrorEx.h \
     ../../../Module/Expression/XExprValueCalEx.h \
     ../../../Module/XLanguage/QT/XLanguageAPI_QT.h \
-    ../../Module/SmartTestInterface/VmSttRelayTest.h \
-    ../../Module/ReplayTest/BigComtradeFileRead.h \
-    ../../Module/ReplayTest/BigComtradeTransPlay.h \
-    ../../Module/ReplayTest/ComtradeBufMngr.h \
-    ../../Module/ReplayTest/ComtradeDataBuffer.h \
-    ../../Module/ReplayTest/ComtradePlayConfig.h \
-    ../../Module/ReplayTest/ComtradeSendSocket.h \
-    ../../Module/ReplayTest/SttCmtrdCfgDefineGlobal.h \
-    ../../Module/ReplayTest/SttComtradeGroup.h \
-    ../../Module/ReplayTest/SttModuleChComtradeBind.h \
-    ../../Module/SttTest/Common/tmt_replay_test.h \
-    ../../Module/SttTest/Common/tmt_test_paras_head.h \
+    ../Module/SmartTestInterface/VmSttRelayTest.h \
+    ../Module/ReplayTest/BigComtradeFileRead.h \
+    ../Module/ReplayTest/BigComtradeTransPlay.h \
+    ../Module/ReplayTest/ComtradeBufMngr.h \
+    ../Module/ReplayTest/ComtradeDataBuffer.h \
+    ../Module/ReplayTest/ComtradePlayConfig.h \
+    ../Module/ReplayTest/ComtradeSendSocket.h \
+    ../Module/ReplayTest/SttCmtrdCfgDefineGlobal.h \
+    ../Module/ReplayTest/SttComtradeGroup.h \
+    ../Module/ReplayTest/SttModuleChComtradeBind.h \
+    ../Module/SttTest/Common/tmt_replay_test.h \
+    ../Module/SttTest/Common/tmt_test_paras_head.h \
     ../../../Module/Record/Comtrade/ComtradeAnalogData.h \
     ../../../Module/Record/Comtrade/ComtradeBinaryData.h \
     ../../../Module/Record/Comtrade/ComtradeDataBase.h \
@@ -1233,12 +1233,12 @@ HEADERS += \
     ../../../Module/Record/RtScriptBase/RtScriptBase.h \
     ../../../Module/Expression/XExprCal.h \
     ../../../61850/Module/CfgDataMngr/IecCfgFiberParasIn.h \
-    ../../Module/Engine/SttNativeTestEngineInterface.h \
+    ../Module/Engine/SttNativeTestEngineInterface.h \
     ../../../AutoTest/Module/GuideBook/HdResReqest.h \
-    ../../Module/Engine/SttNativeTestEngine_Mqtt.h \
-    ../../Module/SmartTestInterface/AtsOutInterfaceMqttClient.h \
-    ../../Module/SmartTestInterface/PpMqttIotEngine.h \
-    ../../Module/SmartTestInterface/PpXIotEngineBase.h \
+    ../Module/Engine/SttNativeTestEngine_Mqtt.h \
+    ../Module/SmartTestInterface/AtsOutInterfaceMqttClient.h \
+    ../Module/SmartTestInterface/PpMqttIotEngine.h \
+    ../Module/SmartTestInterface/PpXIotEngineBase.h \
     ../../../IotAtsMngr/Module/SttMqttTopicParser.h \
     ../../../IotAtsMngr/Module/SttMqttClientEngineConfig.h \
     ../../../IotAtsMngr/Module/DeviceMngr/SttXDevice.h \
@@ -1251,34 +1251,34 @@ HEADERS += \
     ../../../IotAtsMngr/Module/MQTTClient_QT/MQTTClient.h \
     ../../../IotAtsMngr/Module/MQTTClient_QT/MQTTLogging.h \
     ../../../IotAtsMngr/Module/SttMqttClient_QT.h \
-    ../../Module/SttAtsSvr/XSttSmartTestPAL.h \
+    ../Module/SttAtsSvr/XSttSmartTestPAL.h \
     ../../../AutoTest/Module/Characteristic/CharElementDCOverLoad.h \
     ../../../AutoTest/Module/GuideBook/ReportMap/JsonReport/JsonRptFill.h \
     ../../../Module/xml/JSON/CJSON.h \
     ../../../AutoTest/Module/GuideBook/ReportMap/RptBaseFill.h \
-    ../../Module/XLangResource_Native.h \
-    ../../Module/SttSystemConfig/SttDevConfig.h \
-    ../../Module/SttSystemConfig/SttModule.h \
-    ../../Module/SttSystemConfig/SttModuleUse.h \
-    ../../Module/SttSystemConfig/SttSystemConfig.h \
-    ../../Module/SttSystemConfig/SttSystemConfigGlobal.h \
-    ../../Module/SttAtsSvr/SttSmartTestWnd.h \
-    ../../Module/SttAtsSvr/SttSmartTestWnd_Linux.h \
+    ../Module/XLangResource_Native.h \
+    ../Module/SttSystemConfig/SttDevConfig.h \
+    ../Module/SttSystemConfig/SttModule.h \
+    ../Module/SttSystemConfig/SttModuleUse.h \
+    ../Module/SttSystemConfig/SttSystemConfig.h \
+    ../Module/SttSystemConfig/SttSystemConfigGlobal.h \
+    ../Module/SttAtsSvr/SttSmartTestWnd.h \
+    ../Module/SttAtsSvr/SttSmartTestWnd_Linux.h \
     ../../../Module/Expression/XExprRangeEx.h \
-    ../../Module/SttTestResourceMngr/SttTestResourceMngr.h \
-    ../../Module/SttTestResourceMngr/RtDataMngr/SttGlobalRtDataMngr.h \
-    ../../Module/SttTestResourceMngr/RtDataMngr/SttMacroChannels.h \
-    ../../Module/SttTestResourceMngr/RtDataMngr/SttMacroChannelsAsync.h \
-    ../../Module/SttTestResourceMngr/TestResource/SttTestResource_4U3I.h \
-    ../../Module/SttTestResourceMngr/TestResource/SttTestResource_6U6I.h \
-    ../../Module/SttTestResourceMngr/TestResource/SttTestResource_Async.h \
-    ../../Module/SttTestResourceMngr/TestResource/SttTestResourceBase.h \
-    ../../Module/SttTestResourceMngr/TestResource/SttTestResource_Sync.h \
-    ../../Module/SttTest/Common/tmt_common_def.h \
-    ../../Module/SttTest/Common/tmt_system_config.h \
-    ../../Module/SttTestSysGlobalPara.h \
+    ../Module/SttTestResourceMngr/SttTestResourceMngr.h \
+    ../Module/SttTestResourceMngr/RtDataMngr/SttGlobalRtDataMngr.h \
+    ../Module/SttTestResourceMngr/RtDataMngr/SttMacroChannels.h \
+    ../Module/SttTestResourceMngr/RtDataMngr/SttMacroChannelsAsync.h \
+    ../Module/SttTestResourceMngr/TestResource/SttTestResource_4U3I.h \
+    ../Module/SttTestResourceMngr/TestResource/SttTestResource_6U6I.h \
+    ../Module/SttTestResourceMngr/TestResource/SttTestResource_Async.h \
+    ../Module/SttTestResourceMngr/TestResource/SttTestResourceBase.h \
+    ../Module/SttTestResourceMngr/TestResource/SttTestResource_Sync.h \
+    ../Module/SttTest/Common/tmt_common_def.h \
+    ../Module/SttTest/Common/tmt_system_config.h \
+    ../Module/SttTestSysGlobalPara.h \
     ../../../Module/Record/RecordGlobalDefine.h \
-    ../../Module/SttCmd/GuideBook/SttTestGlobalDatasMngr.h \
+    ../Module/SttCmd/GuideBook/SttTestGlobalDatasMngr.h \
     ../../../Module/DataMngr/XDataMap.h \
     ../../../Module/DataMngr/DataMaps.h \
     ../../../Module/System/VariantDataAddress.h
@@ -1286,5 +1286,5 @@ HEADERS += \
 
 DISTFILES += \
     ../../../Module/Lua/lua_include/Makefile \
-    ../../Module/SttCmd/GuideBook/vssver2.scc
+    ../Module/SttCmd/GuideBook/vssver2.scc
 

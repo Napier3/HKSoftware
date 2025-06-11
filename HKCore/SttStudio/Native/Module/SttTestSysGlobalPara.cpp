@@ -3,6 +3,7 @@
 #include "SttCmd/SttParas.h"
 #include "SttCmd/SttMacro.h"
 #include"XLangResource_Native.h"
+// #include "UI/Interface/SttMacroParaEditViewOriginal.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -108,7 +109,14 @@ BOOL GetResultStringGradientTest(CDvmValues *pValues,BOOL &bHasActValue,CString 
 	}
 
 	CString strUnitString;
+    if(/*g_oLocalSysPara.vType*/g_oSystemParas.m_nParaMode == 0)
+    {
+		strUnitString = _T("kV");
+    }
+    else
+    {
 	strUnitString = _T("V");
+    }
 
 
 	if (nType == 0)
@@ -155,7 +163,7 @@ BOOL GetResultStringGradientTest(CDvmValues *pValues,BOOL &bHasActValue,CString 
 			dValue = CString_To_double(pMaxAngle->m_strValue);
 			pResultValue = (CDvmValue *)pTestMacroResults.FindByID(_T("MaxAngle"));
 
-			strResultsString += pResultValue->m_strName.GetString();
+			strResultsString += pResultValue->m_strName;//wangtao20240801 将m_strName.GetString()改为m_strName，解决结果栏打印乱码问题，下同
 			strResultsString += ":";
 			pMaxAngle->m_strValue.Format(_T("%.3lf"),dValue);
 			strResultsString.AppendFormat(_T("%.3lf"),dValue);
@@ -165,7 +173,7 @@ BOOL GetResultStringGradientTest(CDvmValues *pValues,BOOL &bHasActValue,CString 
 			dValue = CString_To_double(pAngleF->m_strValue);
 			pResultValue = (CDvmValue *)pTestMacroResults.FindByID(_T("AngleF"));
 
-			strResultsString += pResultValue->m_strName.GetString();
+			strResultsString += pResultValue->m_strName;
 			strResultsString += ":";
 			pAngleF->m_strValue.Format(_T("%.3lf"),dValue);
 			strResultsString.AppendFormat(_T("%.3lf"),dValue);
@@ -175,7 +183,7 @@ BOOL GetResultStringGradientTest(CDvmValues *pValues,BOOL &bHasActValue,CString 
 			dValue = CString_To_double(pAngleS->m_strValue);
 			pResultValue = (CDvmValue *)pTestMacroResults.FindByID(_T("AngleS"));
 
-			strResultsString += pResultValue->m_strName.GetString();
+			strResultsString += pResultValue->m_strName;
 			strResultsString += ":";
 			pAngleS->m_strValue.Format(_T("%.3lf"),dValue);
 			strResultsString.AppendFormat(_T("%.3lf"),dValue);
@@ -204,7 +212,7 @@ BOOL GetResultStringGradientTest(CDvmValues *pValues,BOOL &bHasActValue,CString 
 
 		bHasActValue = TRUE;
 		/*strResultsString += pTripValue->m_strName;*/
-		strResultsString += pResultValue->m_strName.GetString();
+		strResultsString += pResultValue->m_strName;
 		strResultsString += ":";
 		pTripValue->m_strValue.Format(_T("%.3lf"),dValue);
 		strResultsString.AppendFormat(_T("%.3lf"),dValue);
@@ -222,7 +230,7 @@ BOOL GetResultStringGradientTest(CDvmValues *pValues,BOOL &bHasActValue,CString 
 #ifdef NOT_USE_XLANGUAGE
 			strResultsString += _T("未动作");
 #else
-			strResultsString += g_sLangTxt_State_NoActioned;
+			strResultsString += /*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact;
 #endif
 			strResultsString += ";";
 		}
@@ -231,7 +239,7 @@ BOOL GetResultStringGradientTest(CDvmValues *pValues,BOOL &bHasActValue,CString 
 			dValue = CString_To_double(pReturnValue->m_strValue);
 			pResultValue = (CDvmValue *)pTestMacroResults.FindByID(_T("ReturnValue"));
 
-			strResultsString += pResultValue->m_strName.GetString();
+			strResultsString += pResultValue->m_strName;
 			strResultsString += ":";
 			pReturnValue->m_strValue.Format(_T("%.3lf"),dValue);
 			strResultsString.AppendFormat(_T("%.3lf"),dValue);
@@ -241,7 +249,7 @@ BOOL GetResultStringGradientTest(CDvmValues *pValues,BOOL &bHasActValue,CString 
 			dValue = CString_To_double(pReturnCoef->m_strValue);
 			pResultValue = (CDvmValue *)pTestMacroResults.FindByID(_T("ReturnCoef"));
 
-			strResultsString += pResultValue->m_strName.GetString();
+			strResultsString += pResultValue->m_strName;
 			strResultsString += ":";
 			pReturnCoef->m_strValue.Format(_T("%.3lf"),dValue);
 			strResultsString.AppendFormat(_T("%.3lf"),dValue);
@@ -376,7 +384,7 @@ BOOL GetResultStringLineVolGradientTest(CDvmValues *pValues,BOOL &bHasActValue,C
 
 		bHasActValue = TRUE;
 		/*strResultsString += pTripValue->m_strName;*/
-		strResultsString += pResultValue->m_strName.GetString();
+		strResultsString += pResultValue->m_strName;
 		strResultsString += ":";
 		pTripValue->m_strValue.Format(_T("%.3lf"),dValue);
 		strResultsString.AppendFormat(_T("%.3lf"),dValue);
@@ -394,7 +402,7 @@ BOOL GetResultStringLineVolGradientTest(CDvmValues *pValues,BOOL &bHasActValue,C
 #ifdef NOT_USE_XLANGUAGE
 			strResultsString += _T("未动作");
 #else
-			strResultsString += g_sLangTxt_State_NoActioned;
+			strResultsString += /*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact;
 #endif
 			strResultsString += ";";
 		}
@@ -545,7 +553,7 @@ BOOL GetResultStringSequenceGradientTest(CDvmValues *pValues,BOOL &bHasActValue,
 
 		bHasActValue = TRUE;
 		/*strResultsString += pTripValue->m_strName.GetString();*/
-		strResultsString += pResultValue->m_strName.GetString();
+		strResultsString += pResultValue->m_strName;
 		strResultsString += ":";
 		pTripValue->m_strValue.Format(_T("%.3lf"),dValue);
 		strResultsString.AppendFormat(_T("%.3lf"),dValue);
@@ -636,7 +644,7 @@ BOOL GetResultStringULockOverCurrent(CDvmValues *pValues,BOOL &bHasActValue,CStr
 		pResultValue = (CDvmValue *)pTestMacroResults.FindByID(_T("TripValue"));//zhangyq 20231226 测试结果栏内动作值乱码
 
 		bHasActValue = TRUE;
-		strResultsString += pResultValue->m_strName.GetString();
+		strResultsString += pResultValue->m_strName;
 		//strResultsString += pTripValue->m_strName;
 		strResultsString += ":";
 		pTripValue->m_strValue.Format(_T("%.3lf"),dValue);
@@ -694,7 +702,7 @@ BOOL GetResultStringPowerDirection(CDvmValues *pValues,BOOL &bHasActValue,CStrin
 		dValue = CString_To_double(pMaxAngle->m_strValue);
 		pResultValue = (CDvmValue *)pTestMacroResults.FindByID(_T("MaxAngle"));
 // 		strResultsString += pMaxAngle->m_strName;
-		strResultsString += pResultValue->m_strName.GetString();
+		strResultsString += pResultValue->m_strName;
 		strResultsString += ":";
 		pMaxAngle->m_strValue.Format(_T("%.3lf"),dValue);
 		strResultsString.AppendFormat(_T("%.3lf"),dValue);
@@ -703,7 +711,7 @@ BOOL GetResultStringPowerDirection(CDvmValues *pValues,BOOL &bHasActValue,CStrin
 		dValue = CString_To_double(pAngleF->m_strValue);
 		pResultValue = (CDvmValue *)pTestMacroResults.FindByID(_T("AngleF"));
 // 		strResultsString += pAngleF->m_strName;
-		strResultsString += pResultValue->m_strName.GetString();
+		strResultsString += pResultValue->m_strName;
 		strResultsString += ":";
 		pAngleF->m_strValue.Format(_T("%.3lf"),dValue);
 		strResultsString.AppendFormat(_T("%.3lf"),dValue);
@@ -711,7 +719,7 @@ BOOL GetResultStringPowerDirection(CDvmValues *pValues,BOOL &bHasActValue,CStrin
 
 		dValue = CString_To_double(pAngleS->m_strValue);
 		pResultValue = (CDvmValue *)pTestMacroResults.FindByID(_T("AngleS"));
-		strResultsString += pResultValue->m_strName.GetString();
+		strResultsString += pResultValue->m_strName;
 		strResultsString += ":";
 		pAngleS->m_strValue.Format(_T("%.3lf"),dValue);
 		strResultsString.AppendFormat(_T("%.3lf"),dValue);
@@ -737,11 +745,11 @@ BOOL GetResultStringVoltageActValue(CDvmValues *pValues,BOOL &bHasActValue,CStri
 
 		if (pResultValue !=NULL)
 		{
-			if (pResultValue->m_strValue != g_sLangTxt_State_NoActioned)
+			if (pResultValue->m_strValue != /*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact)
 			{
 				if (pResultValue->m_strValue == "未动作")
 				{
-					pResultValue->m_strValue = g_sLangTxt_State_NoActioned;
+					pResultValue->m_strValue = /*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact;
 				}
 				else
 				{
@@ -749,7 +757,7 @@ BOOL GetResultStringVoltageActValue(CDvmValues *pValues,BOOL &bHasActValue,CStri
 
 					if ((pCurrData->m_strUnit != "°")&&(dValue<= 0.00001))
 					{
-						pResultValue->m_strValue = g_sLangTxt_State_NoActioned;
+						pResultValue->m_strValue = /*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact;
 					}
 					else if(pCurrData->m_strID != "AngleF"
 						&& pCurrData->m_strID != "AngleS"
@@ -761,6 +769,7 @@ BOOL GetResultStringVoltageActValue(CDvmValues *pValues,BOOL &bHasActValue,CStri
 						strResultsString += ":";
 						pResultValue->m_strValue.Format(_T("%.3lf"),dValue);
 						strResultsString.AppendFormat(_T("%.3lf"),dValue);
+						pCurrData->m_strUnit = "V";
 						strResultsString += pCurrData->m_strUnit;
 						if(pCurrData->m_strID == "TripValue" && !pCurrData->m_strUnit.GetLength())
 						{
@@ -793,11 +802,11 @@ BOOL GetResultStringCurrentActValue(CDvmValues *pValues,BOOL &bHasActValue,CStri
 
 		if (pResultValue !=NULL)
 		{
-			if (pResultValue->m_strValue != g_sLangTxt_State_NoActioned/*"未动作"*/)
+			if (pResultValue->m_strValue != /*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact/*"未动作"*/)
 			{
 				if (pResultValue->m_strValue == "未动作")
 				{
-					pResultValue->m_strValue = g_sLangTxt_State_NoActioned;
+					pResultValue->m_strValue = /*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact;
 				}
 				else
 				{
@@ -805,7 +814,7 @@ BOOL GetResultStringCurrentActValue(CDvmValues *pValues,BOOL &bHasActValue,CStri
 
 					if ((pCurrData->m_strUnit != "°")&&(dValue<= 0.00001))
 					{
-						pResultValue->m_strValue = g_sLangTxt_State_NoActioned;
+						pResultValue->m_strValue = /*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact;
 					}
 					else if(pCurrData->m_strID != "AngleF"
 						&& pCurrData->m_strID != "AngleS"
@@ -853,7 +862,7 @@ BOOL GetResultStringDistanceSearchTest(CDvmValues *pValues,BOOL &bHasActValue,CS
 
 		if (pResultValue !=NULL)
 	{
-		if(pResultValue->m_strValue != g_sLangTxt_State_NoActioned/*"未动作"*/)
+		if(pResultValue->m_strValue != /*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact/*"未动作"*/)
 		{
 				dValue = CString_To_double(pResultValue->m_strValue);
 
@@ -872,7 +881,7 @@ BOOL GetResultStringDistanceSearchTest(CDvmValues *pValues,BOOL &bHasActValue,CS
 				{
 					if (dValue<= 0.00001)
 					{
-						pResultValue->m_strValue = g_sLangTxt_State_NoActioned/*"未动作"*/;
+						pResultValue->m_strValue = /*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact/*"未动作"*/;
 						return TRUE;
 					}
 					bHasActValue = TRUE;
@@ -910,7 +919,7 @@ BOOL GetResultStringStateTest( CDvmValues *pValues,BOOL &bHasActValue,CString &s
  		{
 			if (dValue <= 0.00001)
 			{
-				pCurrData->m_strValue = g_sLangTxt_State_NoActioned/*"未动作"*/;
+				pCurrData->m_strValue = /*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact/*"未动作"*/;
 			}
 			else
 			{
@@ -927,11 +936,11 @@ BOOL GetResultStringStateTest( CDvmValues *pValues,BOOL &bHasActValue,CString &s
 		if (pResultValue !=NULL)
 		{
 			bHasStateResult = TRUE;
-			if (pResultValue->m_strValue != g_sLangTxt_State_NoActioned/*"未动作"*/)
+			if (pResultValue->m_strValue != /*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact/*"未动作"*/)
 			{
 				if (pResultValue->m_strValue == "未动作")
 				{
-					pResultValue->m_strValue = g_sLangTxt_State_NoActioned;
+					pResultValue->m_strValue = /*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact;
 				}
 				else
 				{
@@ -939,7 +948,7 @@ BOOL GetResultStringStateTest( CDvmValues *pValues,BOOL &bHasActValue,CString &s
 
 					if ((pCurrData->m_strUnit != "°")&&(dValue<= 0.00001))
 					{
-						pResultValue->m_strValue = g_sLangTxt_State_NoActioned/*"未动作"*/;
+						pResultValue->m_strValue = /*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact/*"未动作"*/;
 					}
 					else
 					{
@@ -974,6 +983,180 @@ BOOL GetResultStringStateTest( CDvmValues *pValues,BOOL &bHasActValue,CString &s
 
 	return bHasStateResult;
 }
+
+BOOL GetResultStringSwingTest(CDvmValues *pValues,BOOL &bHasActValue,CString &strResultsString,CSttResults &pTestMacroResults)
+{
+	long nAct = 0;//判断是否动作
+
+	if (pValues == NULL)
+	{
+		return FALSE;
+	}
+
+	double dValue = 0;
+	BOOL bHasStateResult = FALSE;
+
+    if (!pValues->GetValue(_T("ActDsec"),nAct))
+    {
+        return FALSE;
+    }
+	CDvmValue *pActDsecValue = (CDvmValue *)pValues->FindByID(_T("ActDsec"));
+
+	POS posResult = pTestMacroResults.GetHeadPosition();
+	while(posResult)
+	{
+		CDvmData* pCurrData = (CDvmData*)pTestMacroResults.GetNext(posResult);
+		CDvmValue* pResultValue = (CDvmValue*)pValues->FindByID(pCurrData->m_strID);
+
+       if (nAct == 0 )
+        {
+            pResultValue->m_strValue = /*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact;
+            nAct = -1;
+            bHasStateResult = TRUE;
+        }
+      else
+        {
+            if (pResultValue !=NULL)
+            {
+                bHasStateResult = TRUE;
+                if (pResultValue->m_strValue != /*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact/*"未动作"*/)
+                {
+                    if (pResultValue->m_strValue == "未动作")
+                    {
+                        pResultValue->m_strValue = /*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact;
+                    }
+                    else
+                    {
+                        dValue = CString_To_double(pResultValue->m_strValue);
+
+					if ((pCurrData->m_strUnit != "°")&&(dValue<= 0.00001))
+					{
+						pResultValue->m_strValue = /*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact/*"未动作"*/;
+					}
+					else
+					{
+						bHasActValue = TRUE;
+						strResultsString += pCurrData->m_strName;
+						strResultsString += ":";
+						long nPrecision = 3;
+						if ((dValue>0.000f)&&(dValue<0.001f))
+						{
+							if (dValue<0.0001f)
+							{
+								nPrecision = 5;
+							}
+							else
+							{
+								nPrecision = 4;
+							}
+						}
+
+						//pResultValue->m_strValue = QString::number(dValue,'f',nPrecision);//.Format("%.5lf",dValue);
+						CString strFormat;
+						strFormat.Format(_T("%%.%df"), nPrecision);
+						pResultValue->m_strValue.Format(strFormat, dValue);
+						strResultsString += pResultValue->m_strValue;
+						strResultsString += pCurrData->m_strUnit;
+						strResultsString += ";";
+                        }
+                    }
+                }
+            }
+        }
+	}
+
+	return bHasStateResult;
+}
+
+
+BOOL GetResultStringHarmTest(CDvmValues *pValues,BOOL &bHasActValue,CString &strResultsString,CSttResults &pTestMacroResults)
+{
+//	long nAct = 0;//判断是否动作
+
+	if (pValues == NULL)
+	{
+		return FALSE;
+	}
+
+	double dValue = 0;
+	BOOL bHasStateResult = FALSE;
+
+	//if (!pValues->GetValue(_T("ActDsec"),nAct))
+	//{
+	//	return FALSE;
+	//}
+	//CDvmValue *pActDsecValue = (CDvmValue *)pValues->FindByID(_T("ActDsec"));
+
+	POS posResult = pTestMacroResults.GetHeadPosition();
+	while(posResult)
+	{
+		CDvmData* pCurrData = (CDvmData*)pTestMacroResults.GetNext(posResult);
+		CDvmValue* pResultValue = (CDvmValue*)pValues->FindByID(pCurrData->m_strID);
+		if(pResultValue == NULL)
+		{
+			continue;
+		}
+
+// 		if (nAct == 0 )//20250227 suyang 此处一直为0  pResultValue->m_strValue一直为未动作
+// 		{
+// 			pResultValue->m_strValue = g_sLangTxt_State_NoActioned;
+// 			nAct = -1;
+// 			bHasStateResult = TRUE;
+// 		}
+// 		else
+// 		{
+			//if (pResultValue !=NULL)
+			{
+				bHasStateResult = TRUE;
+				if (pResultValue->m_strValue != /*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact/*"未动作"*/)
+				{
+					if (pResultValue->m_strValue == "未动作")
+					{
+						pResultValue->m_strValue = /*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact;
+					}
+					else
+					{
+						dValue = CString_To_double(pResultValue->m_strValue);
+
+						if ((pCurrData->m_strUnit != "°")&&(dValue<= 0.00001))
+						{
+							pResultValue->m_strValue = "——"/*g_sLangTxt_State_NoActioned*//*"未动作"*/;
+						}
+						else
+						{
+							bHasActValue = TRUE;
+							strResultsString += pCurrData->m_strName;
+							strResultsString += ":";
+							long nPrecision = 3;
+							if ((dValue>0.000f)&&(dValue<0.001f))
+							{
+								if (dValue<0.0001f)
+								{
+									nPrecision = 5;
+								}
+								else
+								{
+									nPrecision = 4;
+								}
+							}
+
+							//pResultValue->m_strValue = QString::number(dValue,'f',nPrecision);//.Format("%.5lf",dValue);
+							CString strFormat;
+							strFormat.Format(_T("%%.%df"), nPrecision);
+							pResultValue->m_strValue.Format(strFormat.GetString(), dValue);
+							strResultsString += pResultValue->m_strValue;
+							strResultsString += pCurrData->m_strUnit;
+							strResultsString += ";";
+						}
+					}
+				}
+			}
+		//}
+	}
+
+	return bHasStateResult;
+}
+
 
 CString Global_GetSoftwareGeneVersion(const CString &strDateString)
 {
@@ -1051,4 +1234,231 @@ CString Global_GetSoftwareGeneVersion(const CString &strDateString)
 
 	strTmp1.Format(_T("%ld%02ld%02ld"),nYear,nMonth,nDay);
 	return strTmp1;
+}
+
+BOOL GetResultStringFaultGradientTest(CDvmValues *pValues, BOOL &bHasActValue, CString &strResultsString, CSttResults &pTestMacroResults)
+{
+	if (pValues == NULL)
+	{
+		return FALSE;
+	}
+
+	long nTestMode = 0;////测试类型：0-动作值 1-返回系数 2-最大灵敏角
+	long nChangeValue = 0;//变化量
+	long nAct = 0;//先判断是否动作
+	long nFaultMode = 0;//故障模式
+	CDvmValue *pResultValue = NULL;
+
+	if (!pValues->GetValue(_T("VaryMode"), nTestMode))
+	{
+		return FALSE;
+	}
+
+	if (!pValues->GetValue(_T("ChangeValue"), nChangeValue))
+	{
+		return FALSE;
+	}
+
+	if (!pValues->GetValue(_T("FaultMode"), nFaultMode))
+	{
+		return FALSE;
+	}
+
+	if (!pValues->GetValue(_T("ActDsec"), nAct))
+	{
+		return FALSE;
+	}
+
+	CString strUnitString;
+	strUnitString = _T("V");
+
+	if (nTestMode == 0 || nTestMode ==1)//动作值 mod wangtao 20241105 类型选择返回系数时,动作值需要单位
+	{
+		if (nFaultMode >= 7 /*FG_FaultMode_AB_C*/ && nFaultMode <= 12/*FG_FaultMode_CA_A*/)
+		{
+			if (nChangeValue == 0)
+			{
+				strUnitString = _T("V");
+			}
+			else if (nChangeValue == 1)
+			{
+				strUnitString = _T("A");
+			}
+			else if (nChangeValue == 2)
+			{
+				strUnitString = /*CString("°")*/g_sLangTxt_AxisUnitAng;
+			}
+		}
+		else if (nFaultMode == 13/*FG_FaultMode_UF*/)
+		{
+			if (nChangeValue == 0/*FG_FM_Vaule_VM*/)
+			{
+				strUnitString = _T("V");
+			}
+			else if (nChangeValue == 1/*FG_FM_Vaule_HZ*/)
+			{
+				strUnitString = _T("Hz");
+			}
+		}
+		else if (nFaultMode == 14/*FG_FaultMode_I2I1*/)
+		{
+			strUnitString = _T("A");
+		}
+		else
+		{
+			if (nChangeValue == 0/*FG_FM_Vaule_ShortVM*/ || nChangeValue == 5/*FG_FM_Vaule_PlusVM*/
+				|| nChangeValue == 6/*FG_FM_Vaule_MinusVM*/ || nChangeValue ==7 /*FG_FM_Vaule_ZeroVM*/)
+			{
+				strUnitString = _T("V");
+			}
+			if (nChangeValue == 1/*FG_FM_Vaule_ShortVA*/)
+			{
+				strUnitString = _T("A");
+			}
+			if (nChangeValue == 3/*FG_FM_Vaule_ShortImpede*/)
+			{
+				strUnitString = /*CString("Ω")*/g_sLangTxt_AxisUnitOmega;
+			}
+			if (nChangeValue == 2/*FG_FM_Vaule_ImpedeAngle*/)
+			{
+				strUnitString = /*CString("°")*/g_sLangTxt_AxisUnitAng;
+			}
+			if (nChangeValue == 4/*FG_FM_Vaule_Frequency*/)
+			{
+				strUnitString = _T("Hz");
+			}
+		}
+	}
+	else if (nTestMode == 2/*FG_TestMode_MaxAngle*/)//最大灵敏角
+	{
+		strUnitString = /*CString("°")*/g_sLangTxt_AxisUnitAng;
+	}
+	else
+	{
+
+	}
+
+	CDvmValue *pTripValue = (CDvmValue *)pValues->FindByID(_T("TripValue"));
+	CDvmValue *pReturnValue = (CDvmValue *)pValues->FindByID(_T("ReturnValue"));
+	CDvmValue *pReturnCoef = (CDvmValue *)pValues->FindByID(_T("ReturnCoef"));
+	CDvmValue *pAngleF = (CDvmValue *)pValues->FindByID(_T("AngleF"));
+	CDvmValue *pAngleS = (CDvmValue *)pValues->FindByID(_T("AngleS"));
+	CDvmValue *pMaxAngle = (CDvmValue *)pValues->FindByID(_T("MaxAngle"));
+
+	if ((pTripValue == NULL) || (pReturnValue == NULL) || (pReturnCoef == NULL) || (pAngleF == NULL)
+		|| (pAngleS == NULL) || (pMaxAngle == NULL))
+	{
+		return FALSE;
+	}
+
+	double dValue = 0.0f;
+
+	if (nTestMode == 2)//先对最大灵敏角做处理
+	{
+		if (nAct <= 0)
+		{
+			bHasActValue = FALSE;
+			return TRUE;
+		}
+		else
+		{
+			bHasActValue = TRUE;
+			dValue = CString_To_double(pMaxAngle->m_strValue);
+			pResultValue = (CDvmValue *)pTestMacroResults.FindByID(_T("MaxAngle"));
+
+			strResultsString += pResultValue->m_strName;//wangtao20240801 将m_strName.GetString()改为m_strName，解决结果栏打印乱码问题，下同
+			strResultsString += ":";
+			pMaxAngle->m_strValue.Format(_T("%.3lf"), dValue);
+			strResultsString.AppendFormat(_T("%.3lf"), dValue);
+			strResultsString += strUnitString;
+			strResultsString += ";";
+
+			dValue = CString_To_double(pAngleF->m_strValue);
+			pResultValue = (CDvmValue *)pTestMacroResults.FindByID(_T("AngleF"));
+
+			strResultsString += pResultValue->m_strName;
+			strResultsString += ":";
+			pAngleF->m_strValue.Format(_T("%.3lf"), dValue);
+			strResultsString.AppendFormat(_T("%.3lf"), dValue);
+			strResultsString += strUnitString;
+			strResultsString += ";";
+
+			dValue = CString_To_double(pAngleS->m_strValue);
+			pResultValue = (CDvmValue *)pTestMacroResults.FindByID(_T("AngleS"));
+
+			strResultsString += pResultValue->m_strName;
+			strResultsString += ":";
+			pAngleS->m_strValue.Format(_T("%.3lf"), dValue);
+			strResultsString.AppendFormat(_T("%.3lf"), dValue);
+			strResultsString += strUnitString;
+			strResultsString += ";";
+			return TRUE;
+		}
+	}
+
+	//不管是动作值还是返回值,都是先显示动作值
+	if ((pTripValue->m_strValue == "未动作") || (nAct <= 0))
+	{
+		bHasActValue = FALSE;
+		return TRUE;
+	}
+	else
+	{
+		dValue = CString_To_double(pTripValue->m_strValue);
+		pResultValue = (CDvmValue *)pTestMacroResults.FindByID(_T("TripValue"));//dxy 20231031 解决动作值乱码
+
+		if ((dValue <= 0.00001)/* && (strUnitString != "°")*/)//动作值小于等于0,并且递变类型不为相位
+		{
+			bHasActValue = FALSE;
+			return TRUE;
+		}
+
+		bHasActValue = TRUE;
+		/*strResultsString += pTripValue->m_strName;*/
+		strResultsString += pResultValue->m_strName;
+		strResultsString += ":";
+		pTripValue->m_strValue.Format(_T("%.3lf"), dValue);
+		strResultsString.AppendFormat(_T("%.3lf"), dValue);
+		strResultsString += strUnitString;
+		strResultsString += ";";
+	}
+
+
+	if (nTestMode == 1)//如果测试的是返回值
+	{
+		if (pReturnValue->m_strValue == "未动作")
+		{
+			strResultsString += pReturnValue->m_strName;
+			strResultsString += ":";
+#ifdef NOT_USE_XLANGUAGE
+			strResultsString += _T("未动作");
+#else
+			strResultsString += /*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact;
+#endif
+			strResultsString += ";";
+		}
+		else
+		{
+			dValue = CString_To_double(pReturnValue->m_strValue);
+			pResultValue = (CDvmValue *)pTestMacroResults.FindByID(_T("ReturnValue"));
+
+			strResultsString += pResultValue->m_strName;
+			strResultsString += ":";
+			pReturnValue->m_strValue.Format(_T("%.3lf"), dValue);
+			strResultsString.AppendFormat(_T("%.3lf"), dValue);
+			strResultsString += strUnitString;
+			strResultsString += ";";
+
+			dValue = CString_To_double(pReturnCoef->m_strValue);
+			pResultValue = (CDvmValue *)pTestMacroResults.FindByID(_T("ReturnCoef"));
+
+			strResultsString += pResultValue->m_strName;
+			strResultsString += ":";
+			pReturnCoef->m_strValue.Format(_T("%.3lf"), dValue);
+			strResultsString.AppendFormat(_T("%.3lf"), dValue);
+			strResultsString += ";";
+		}
+	}
+
+	return TRUE;
 }

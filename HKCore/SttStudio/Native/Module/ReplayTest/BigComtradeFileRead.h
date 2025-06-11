@@ -1,14 +1,14 @@
 #ifndef _CBigComtradeFileRead_H_
 #define _CBigComtradeFileRead_H_
 
-#include "../../Module/Record/Comtrade/ComtradeMngr.h"
+#include "../../../Module/Record/Comtrade/ComtradeMngr.h"
 
 #ifndef USE_Debug_BIG_ComtradeRead_Mode
 #include "ComtradePlayConfig.h"
 #endif
 
 #include "ComtradeBufMngr.h"
-#include "../../Module/MemBuffer/BufferBase.h"
+#include "../../../Module/MemBuffer/BufferBase.h"
 
 #define CMTRD_UPDATE_RAWTOREPLAY_ALL    0X000000F
 #define CMTRD_UPDATE_RAWTOREPLAY_U		0X0000001

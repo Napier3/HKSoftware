@@ -4,7 +4,7 @@
 #include "SttTestCtrlCntrBase.h"
 #include "../SttCmd/GuideBook/SttGuideBook.h"
 #include "../TestClient/SttAtsTestClient.h"
-#include "../../Module/TestMacro/TestMacros.h"
+#include "../../../Module/TestMacro/TestMacros.h"
 
 class CSttTestCtrlCntrNative : public CSttTestCtrlCntrBase, public CAtsEventInterface
 {
@@ -35,6 +35,8 @@ public:
 	virtual long OnExportRptEvent(CSttParas *pParas);
 	virtual void OnReport(const CString &strTestID, long nDeviceIndex, long nReportIndex, long nItemIndex, const CString & strItemID, long nState, CSttParas *pParas);
 	virtual void OnReport_ReadDevice(CDataGroup *pDeviceGroup);//zhouhj 20220326 增加用于更新硬件信息
+	virtual void OnReport_ReadSystemState(const CString &strMacroID, CDataGroup *pParas);//dingxy 20260320 新增用于输出功率
+
 
 	virtual void OnSearchPointReport(const CString &strMacroID, CDataGroup *pSearchResults);
 
@@ -74,6 +76,7 @@ public:
 	virtual bool IsTestStarted();
 	virtual bool IsTestAppConnect();
 	virtual void ConnectAtsServer();
+	virtual void Test_GetSystemState();
 
 	virtual void OpenMacroTestUI(CSttMacroTestUI_TestMacroUI *pTestMacroUI);
 	virtual void GetMacroUI_GbItems(CString &strMacroUI_Items);
@@ -115,21 +118,23 @@ public:
 	//2023-8-29 shaolei  //配置装置
 	virtual long Ats_ConfigDevice(CDataGroup *pCommCfg);
 
-	virtual void CloseTest();//关闭测试前要干的活 sf 20220318
+	virtual void CloseTest(long nSynMode = STT_CMD_Send_Sync);//关闭测试前要干的活 sf 20220318
 
 	//2022-4-14 lijunqing
 	virtual void Ats_IecDetect(long bEnable);
 	virtual void Ats_IecRecord(CDataGroup *pIecRecordParas);
 	virtual BOOL Ats_UartConfig(CDataGroup *pUartConfigParas);
+	virtual void Ats_BinConfig(CDataGroup *pBinConfigParas);//20240922 zhouyangyong 新增用于开入量配置
 
 	//2022-10-5  lijunqing
-	void InitMeasServer();
-	void ExitMeasServer();
+	virtual void InitMeasServer();
+	virtual void ExitMeasServer();
+
 	void UpdateReportValuesByMacroTestDataType(CSttItems *pItems);//需要根据Reports中的数据类型更新数据值
-	void UpdateReportValuesByMacroTestDataType(CSttReport *pReport,const CString &strMacroID);
+	void UpdateReportValuesByMacroTestDataType(CSttReport *pReport,const CString &strMacroID,CSttItems *pSttItem = NULL);
 	void ModifyReport_ManualTest(CDvmValues *pValues);
-	void ModifyReport_StateTest(CDvmValues *pValues);
-	void ModifyReport_HarmTest(CDvmValues *pValues);
+	void ModifyReport_StateTest(CDvmValues *pValues,CSttItems *pSttItem = NULL);
+	void ModifyReport_HarmTest(CDvmValues *pValues); 
 	void ModifyReportUnGradienParas_StateTest(CDvmValues *pValues, int nStateCount, CDataGroup *pParasDataGroup);//dingxy 20240717 更新状态序列报告中非递变通道的值
 	CExBaseObject* FindRootItemsByID(const CString &strObjID);
 protected:
@@ -139,6 +144,7 @@ protected:
 public:
 	BOOL IsCmdReplyProcessFinish()		{	return m_bCmdReplyProcessFinished;	}
 	virtual void WaitCmdReplyProcess();		//等待命令的应答处理完成
+	bool IsRemoteAutoTest(const CString &strMacroID);//chenling 2024.8.20 判断是否是自动测试模块ID,需要加载规约
 };
 
 

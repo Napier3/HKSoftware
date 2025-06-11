@@ -3,7 +3,7 @@
 #pragma once
 
 #include "SttGuideBook.h"
-#include "../../../../AutoTest/Module/GuideBook/GuideBook.h"
+#include "../../../AutoTest/Module/GuideBook/GuideBook.h"
 #include "../SttMsgs.h"
 
 /*该类作为CGuideBook与CSttGuideBook类的转换工具类
@@ -23,6 +23,7 @@ public:
 
 public:   //2022-9-14  lijunqing
     void Trans(CDevice *pDevice, CSttDevice *pSttDevice);
+	void Trans(CTestGlobalDatasMngr *pDataMngr, CSttTestGlobalDatasMngr *pSttDataMngr);
 	void Trans(CExBaseList *pGbList, CExBaseList *pSttParent);
     void Trans(CItems *pItems, CSttItems *pSttItems);
     void Trans(CMacroTest *pMacroTest, CSttMacroTest *pSttMacroTest);

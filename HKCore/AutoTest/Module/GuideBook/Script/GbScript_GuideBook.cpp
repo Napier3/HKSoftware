@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "GbScript_GuideBook.h"
 #include "../GbItemBase.h"
 #include "../Device.h"

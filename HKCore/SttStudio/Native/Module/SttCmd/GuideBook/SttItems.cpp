@@ -7,7 +7,7 @@
 
 #include "stdafx.h"
 #include "SttItems.h"
-#include "../../Module/BaseClass/ComplexNumber.h"
+#include "../../../Module/BaseClass/ComplexNumber.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE

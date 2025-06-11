@@ -59,9 +59,10 @@ public:
 	//BOOL m_bIsSendTestCmding;
 	BOOL m_bIsReleaseing;  //是否正在析构，正在析构的话，不再处理新增的指令
 	//作为19815服务端时，需要转发上位机的TestCmd指令
-	TxCycleArray<CSttTestCmd> m_oArrSttTestCmd;  //缓存的TestCmd命令列表，用于逐个处理
+	TxCycleArray<CSttCmdBase> m_oArrSttTestCmd;  //缓存的TestCmd命令列表，用于逐个处理
 	//TxCycleArray<CSttTestCmd> *m_ppArray;
 	CAutoCriticSection m_oTestCriticSection;	//执行Test的互斥量
+	CAutoCriticSection m_oSearchRptCriticSection;	//曲线搜索结果数据处理的互斥量  shaolei  2025-4-1
 
 protected:
 	BOOL m_bStopFlag;
@@ -91,10 +92,11 @@ public:
 	
 	//2022-4-20 shaolei lijunq 
 	virtual long SendTestCmd(BYTE *pBuf, long nLen);
-	virtual long SendTestCmd(CSttTestCmd *pTestCmd);
-	virtual long SendTestCmdEx(CSttTestCmd *pTestCmd);
+	virtual long SendTestCmd(CSttCmdBase *pTestCmd);
+	virtual long SendTestCmdEx(CSttCmdBase *pTestCmd);
 	long SendNextTestCmd();
-
+	void UpdateMergeCureTerminal(CSttCmdBase *pTestCmd);//判定并处理合并电流端子的设置，更新到DeviceParameter的装置属性中
+	void UpdateMergeCureTerminal(const CString &strValue);
 
     //2022-2-12  lijunqing  为通信通道制定转发报文的对象指针
     virtual void AddPkgDispatchInterface(CSttPkgDispatchInterface *p);
@@ -127,6 +129,7 @@ public:
 	virtual void OnReport(CDataGroup *pParas);
 	virtual void OnReport(const CString &strTestID, long nDeviceIndex, long nReportIndex, long nItemIndex, const CString & strItemID, long nState, CSttParas *pParas);
 	virtual long OnAts_Stop(CDataGroup *pParas);
+	virtual long OnDisConnect();//与测试仪TCP断链
 
 public:
 	//add by shaolei 20210515

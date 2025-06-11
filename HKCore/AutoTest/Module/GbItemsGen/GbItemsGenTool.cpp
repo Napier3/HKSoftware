@@ -1,15 +1,15 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "GbItemsGenTool.h"
-#include "../../../SttStudio/Module/SttGlobalDef.h"
+#include "../Module/SttGlobalDef.h"
 #include "../GuideBook/GuideBookStruDscTool.h"
 #ifndef _not_use_autotest_
 #include "../TCtrlCntrWorkSpace.h"
 #endif
 
-#include "../../../SttStudio/Module/SttCmd/GuideBook/SttCmdGuideBookTransTool.h"
+#include "../Module/SttCmd/GuideBook/SttCmdGuideBookTransTool.h"
 #include "ItemsGenDataMap.h"
 #include "../TestControl/TestControlBase.h"
-#include "../../../SttStudio/Module/SttCmd/SttAtsCmd.h"
+#include "../Module/SttCmd/SttAtsCmd.h"
 #include "../../../Module/XLanguage/XLanguageMngr.h"
 #include "../XLanguageResourceAts_AutoTest.h"
 

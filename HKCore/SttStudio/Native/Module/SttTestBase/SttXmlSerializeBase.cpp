@@ -2,7 +2,7 @@
 #include "SttXmlSerializeBase.h"
 #include <math.h>
 
-#include"../../Module/API/GlobalConfigApi.h"
+#include"../../../Module/API/GlobalConfigApi.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -42,6 +42,23 @@ BOOL CSttXmlSerializeBase::xml_serialize_sys_pata(const char *pszName,const char
 									float &fAttrVal,const char *pszSysParaID, BSTR bstrElementKey)
 {
 	return FALSE;
+}
+
+CDataMaps *CSttXmlSerializeBase::GetTopDvmDataMap()
+{
+	CSttXmlSerializeBase *pTopParent = (CSttXmlSerializeBase *)this->GetRoot();
+	CDataGroup *pParenGroup = pTopParent->GetParentGroup();
+	if(pParenGroup == NULL)
+		return NULL;
+
+	CDataMaps* pDataMaps = (CDataMaps*)(pParenGroup->FindByID(STT_SETTING_DVMDATA_MAP_ID));
+	if(pDataMaps == NULL)
+	{
+		pDataMaps = new CDataMaps();
+		pDataMaps->m_strID = STT_SETTING_DVMDATA_MAP_ID;
+		pParenGroup->AddTail(pDataMaps);
+	}
+	return pDataMaps;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -491,12 +508,26 @@ CSttXmlSerializeBase* CSttXmlSerializeRead::xml_serialize(BSTR bstrElementKey, l
 CSttXmlSerializeWrite::CSttXmlSerializeWrite(CXmlRWDocBase *pXmlDoc, CXmlRWElementBase *pElement)
 :CSttXmlSerializeBase(pXmlDoc, pElement)
 {
-
+	m_pDvmDataMaps = NULL;
 }
 
 CSttXmlSerializeWrite::~CSttXmlSerializeWrite()
 {
 
+}
+
+CDataMaps *CSttXmlSerializeWrite::GetTopSettingDvmMaps()
+{
+	//CSttXmlSerializeWrite *pTopParent = (CSttXmlSerializeWrite *)this->GetRoot();   20241204 强转有问题 导致崩溃
+
+    CSttXmlSerializeWrite *pTopParent = dynamic_cast<CSttXmlSerializeWrite *>(this->GetRoot());
+
+	if (pTopParent == NULL)
+	{
+		return NULL;
+	}
+
+	return pTopParent->m_pDvmDataMaps;
 }
 
 BOOL CSttXmlSerializeWrite::xml_serialize(const char *pszName,const char *pszID,const char *pszUnit,const char *pszDataTypeID,CString &strAttrVal, BSTR bstrElementKey)
@@ -515,6 +546,16 @@ BOOL CSttXmlSerializeWrite::xml_serialize(const char *pszName,const char *pszID,
 	//xml_SetAttributeValue(stt_DataTypeKey(), *pDataElement, pszDataTypeID);
 	//xml_SetAttributeValue(stt_DefValueKey(), *pDataElement, pszDefaultValue);
 	xml_SetAttributeValue(stt_ValueKey(), *pDataElement, strAttrVal);
+
+	//20240711 huangliang 
+	CString strFormat = "";
+	CDataMaps *pDvmMap = GetTopSettingDvmMaps();
+
+	if(pDvmMap != NULL)
+	{
+		strFormat = pDvmMap->GetAddressFormat(strAttrVal);
+		xml_SetAttributeValue(stt_FormatKey(), *pDataElement, strFormat);
+	}
 
 	return TRUE;
 }
@@ -556,6 +597,16 @@ BOOL CSttXmlSerializeWrite::xml_serialize(const char *pszName,const char *pszID,
 	//xml_SetAttributeValue(stt_DefValueKey(), *pDataElement, pszDefaultValue);
 	xml_SetAttributeValue(stt_ValueKey(), *pDataElement, nAttrVal);
 
+	//20240711 huangliang 
+	CString strFormat = "";
+	CDataMaps *pDvmMap = GetTopSettingDvmMaps();
+
+	if(pDvmMap != NULL)
+	{
+		strFormat = pDvmMap->GetAddressFormat(nAttrVal);
+		xml_SetAttributeValue(stt_FormatKey(), *pDataElement, strFormat);
+	}
+
 	return TRUE;
 }
 
@@ -577,6 +628,17 @@ BOOL CSttXmlSerializeWrite::xml_serialize_sys_pata(const char *pszName,const cha
 	//xml_SetAttributeValue(stt_DefValueKey(), *pDataElement, pszDefaultValue);
 	xml_SetAttributeValue(stt_ValueKey(), *pDataElement, dAttrVal);
 	//xml_SetAttributeValue(stt_FormatKey(), *pDataElement, pszSysParaID);
+
+	//20240711 huangliang 
+	CString strFormat = "";
+	CDataMaps *pDvmMap = GetTopSettingDvmMaps();
+
+	if(pDvmMap != NULL)
+	{
+		strFormat = pDvmMap->GetAddressFormat(dAttrVal);
+		xml_SetAttributeValue(stt_FormatKey(), *pDataElement, strFormat);
+	}
+
 	return TRUE;
 	//return xml_serialize(pszName,pszID,pszUnit,pszDataTypeID,dAttrVal,bstrElementKey);
 }
@@ -599,6 +661,17 @@ BOOL CSttXmlSerializeWrite::xml_serialize_sys_pata(const char *pszName,const cha
 	//xml_SetAttributeValue(stt_DefValueKey(), *pDataElement, pszDefaultValue);
 	xml_SetAttributeValue(stt_ValueKey(), *pDataElement, fAttrVal);
 	//xml_SetAttributeValue(stt_FormatKey(), *pDataElement, pszSysParaID);
+
+	//20240711 huangliang 
+	CString strFormat = "";
+	CDataMaps *pDvmMap = GetTopSettingDvmMaps();
+
+	if(pDvmMap != NULL)
+	{
+		strFormat = pDvmMap->GetAddressFormat(fAttrVal);
+		xml_SetAttributeValue(stt_FormatKey(), *pDataElement, strFormat);
+	}
+
 	return TRUE;
 	//return xml_serialize(pszName,pszID,pszUnit,pszDataTypeID,fAttrVal,bstrElementKey);
 }
@@ -621,6 +694,16 @@ BOOL CSttXmlSerializeWrite::xml_serialize(const char *pszName,const char *pszID,
 	long nTemp = nAttrVal;
 	xml_SetAttributeValue(stt_ValueKey(), *pDataElement, nTemp);
 
+	//20240711 huangliang 
+	CString strFormat = "";
+	CDataMaps *pDvmMap = GetTopSettingDvmMaps();
+
+	if(pDvmMap != NULL)
+	{
+		strFormat = pDvmMap->GetAddressFormat(nAttrVal);
+		xml_SetAttributeValue(stt_FormatKey(), *pDataElement, strFormat);
+	}
+
 	return TRUE;
 }
 
@@ -641,6 +724,16 @@ BOOL CSttXmlSerializeWrite::xml_serialize(const char *pszName,const char *pszID,
     //xml_SetAttributeValue(stt_DefValueKey(), *pDataElement, pszDefaultValue);
     long nTemp = unAttrVal;
     xml_SetAttributeValue(stt_ValueKey(), *pDataElement, nTemp);
+
+	//20240711 huangliang 
+	CString strFormat = "";
+	CDataMaps *pDvmMap = GetTopSettingDvmMaps();
+
+	if(pDvmMap != NULL)
+	{
+		strFormat = pDvmMap->GetAddressFormat(unAttrVal);
+		xml_SetAttributeValue(stt_FormatKey(), *pDataElement, strFormat);
+	}
 
     return TRUE;
 }
@@ -664,6 +757,16 @@ BOOL CSttXmlSerializeWrite::xml_serialize(const char *pszName,const char *pszID,
     long nTemp = bAttrVal;
     xml_SetAttributeValue(stt_ValueKey(), *pDataElement, nTemp);
 
+	//20240711 huangliang 
+	CString strFormat = "";
+	CDataMaps *pDvmMap = GetTopSettingDvmMaps();
+
+	if(pDvmMap != NULL)
+	{
+		strFormat = pDvmMap->GetAddressFormat(bAttrVal);
+		xml_SetAttributeValue(stt_FormatKey(), *pDataElement, strFormat);
+	}
+
     return TRUE;
 }
 #endif
@@ -685,6 +788,16 @@ BOOL CSttXmlSerializeWrite::xml_serialize(const char *pszName,const char *pszID,
 	//xml_SetAttributeValue(stt_DefValueKey(), *pDataElement, pszDefaultValue);
 	xml_SetAttributeValue(stt_ValueKey(), *pDataElement, dAttrVal);
 
+	//20240711 huangliang 
+	CString strFormat = "";
+	CDataMaps *pDvmMap = GetTopSettingDvmMaps();
+
+	if(pDvmMap != NULL)
+	{
+		strFormat = pDvmMap->GetAddressFormat(dAttrVal);
+		xml_SetAttributeValue(stt_FormatKey(), *pDataElement, strFormat);
+	}
+
 	return TRUE;
 }
 
@@ -704,6 +817,16 @@ BOOL CSttXmlSerializeWrite::xml_serialize(const char *pszName,const char *pszID,
 	//xml_SetAttributeValue(stt_DataTypeKey(), *pDataElement, pszDataTypeID);
 	//xml_SetAttributeValue(stt_DefValueKey(), *pDataElement, pszDefaultValue);
 	xml_SetAttributeValue(stt_ValueKey(), *pDataElement, unAttrVal);
+
+	//20240711 huangliang 
+	CString strFormat = "";
+	CDataMaps *pDvmMap = GetTopSettingDvmMaps();
+
+	if(pDvmMap != NULL)
+	{
+		strFormat = pDvmMap->GetAddressFormat(unAttrVal);
+		xml_SetAttributeValue(stt_FormatKey(), *pDataElement, strFormat);
+	}
 
 	return TRUE;
 }
@@ -725,6 +848,16 @@ BOOL CSttXmlSerializeWrite::xml_serialize(const char *pszName,const char *pszID,
 	//xml_SetAttributeValue(stt_DefValueKey(), *pDataElement, pszDefaultValue);
 	xml_SetAttributeValue(stt_ValueKey(), *pDataElement, fAttrVal);
 
+	//20240711 huangliang 
+	CString strFormat = "";
+	CDataMaps *pDvmMap = GetTopSettingDvmMaps();
+
+	if(pDvmMap != NULL)
+	{
+		strFormat = pDvmMap->GetAddressFormat(fAttrVal);
+		xml_SetAttributeValue(stt_FormatKey(), *pDataElement, strFormat);
+	}
+
 	return TRUE;
 }
 
@@ -744,6 +877,16 @@ BOOL CSttXmlSerializeWrite::xml_serialize(const char *pszName,const char *pszID,
 	//xml_SetAttributeValue(stt_DataTypeKey(), *pDataElement, pszDataTypeID);
 	//xml_SetAttributeValue(stt_DefValueKey(), *pDataElement, pszDefaultValue);
 	xml_SetAttributeValue(stt_ValueKey(), *pDataElement, strAttrVal);
+
+	//20240711 huangliang 
+	CString strFormat = "";
+	CDataMaps *pDvmMap = GetTopSettingDvmMaps();
+
+	if(pDvmMap != NULL)
+	{
+		strFormat = pDvmMap->GetAddressFormat(strAttrVal);
+		xml_SetAttributeValue(stt_FormatKey(), *pDataElement, strFormat);
+	}
 
 	return TRUE;
 }
@@ -1234,8 +1377,33 @@ BOOL CSttDataGroupSerializeRead::AddSysPara(const CString &strSysParaID,const CS
 	return TRUE;
 }
 
+//20240621 huangliang 
+CString CSttDataGroupSerializeRead::GetDvmDataFormat(const char *pszID)
+{
+	CString strID;
+	strID = pszID;
+
+	CDataGroup *pPDGroup = GetParentGroup();
+	if(pPDGroup == NULL)
+		return "";
+	CExBaseObject * pObject = (CExBaseObject *)pPDGroup->FindByID(strID);
+	if(pObject == NULL)//在本级CDataGroup中查找
+		return "";	
+	if(pObject->GetClassID() != DVMCLASSID_CDVMDATA)
+		return "";
+	CDvmData *pDvmData = (CDvmData*)pObject;
+	return pDvmData->m_strFormat;
+}
 BOOL CSttDataGroupSerializeRead::xml_serialize(const char *pszName,const char *pszID,const char *pszUnit,const char *pszDataTypeID,CString &strAttrVal, BSTR bstrElementKey)
 {
+	//20240621 huangliang 
+	CDataMaps *pDvmMap = GetTopDvmDataMap();
+	CString m_strFormat = GetDvmDataFormat(pszID);
+
+	if(pDvmMap != NULL && (!m_strFormat.IsEmpty()))
+	{
+		pDvmMap->AddAddressChild(m_strFormat, strAttrVal);
+	}
 	return stt_GetDataValueByID(m_pDataGroup, pszID, strAttrVal);	
 }
 
@@ -1246,11 +1414,28 @@ BOOL CSttDataGroupSerializeRead::xml_serialize(const char *pszName,const char *p
 
 BOOL CSttDataGroupSerializeRead::xml_serialize(const char *pszName,const char *pszID,const char *pszUnit,const char *pszDataTypeID,long &nAttrVal, BSTR bstrElementKey)
 {
+	//20240621 huangliang 
+	CDataMaps *pDvmMap = GetTopDvmDataMap();
+	CString m_strFormat = GetDvmDataFormat(pszID);
+
+	if (pDvmMap != NULL && (!m_strFormat.IsEmpty()))
+	{
+		pDvmMap->AddAddressChild(m_strFormat, nAttrVal);
+	}
 	return stt_GetDataValueByID(m_pDataGroup, pszID, nAttrVal);	
 }
 
 BOOL CSttDataGroupSerializeRead::xml_serialize(const char *pszName,const char *pszID,const char *pszUnit,const char *pszDataTypeID,int &nAttrVal, BSTR bstrElementKey)
 {
+	//20240621 huangliang 
+	CDataMaps *pDvmMap = GetTopDvmDataMap();
+	CString m_strFormat = GetDvmDataFormat(pszID);
+
+	if (pDvmMap != NULL && (!m_strFormat.IsEmpty()))
+	{
+		pDvmMap->AddAddressChild(m_strFormat, nAttrVal);
+	}
+
 	long nTemp = 0;
 	if ( stt_GetDataValueByID(m_pDataGroup, pszID, nTemp) )
 	{
@@ -1265,6 +1450,15 @@ BOOL CSttDataGroupSerializeRead::xml_serialize(const char *pszName,const char *p
 
 BOOL CSttDataGroupSerializeRead::xml_serialize(const char *pszName,const char *pszID,const char *pszUnit,const char *pszDataTypeID,unsigned int &unAttrVal, BSTR bstrElementKey)
 {
+	//20240621 huangliang 
+	CDataMaps *pDvmMap = GetTopDvmDataMap();
+	CString m_strFormat = GetDvmDataFormat(pszID);
+
+	if (pDvmMap != NULL && (!m_strFormat.IsEmpty()))
+	{
+		pDvmMap->AddAddressChild(m_strFormat, unAttrVal);
+	}
+
 	long nTemp = 0;
 	if ( stt_GetDataValueByID(m_pDataGroup, pszID, nTemp) )
 	{
@@ -1295,6 +1489,15 @@ BOOL CSttDataGroupSerializeRead::xml_serialize(const char *pszName,const char *p
 
 BOOL CSttDataGroupSerializeRead::xml_serialize(const char *pszName,const char *pszID,const char *pszUnit,const char *pszDataTypeID,double &dAttrVal, BSTR bstrElementKey)
 {
+	//20240621 huangliang 
+	CDataMaps *pDvmMap = GetTopDvmDataMap();
+	CString m_strFormat = GetDvmDataFormat(pszID);
+
+	if (pDvmMap != NULL && (!m_strFormat.IsEmpty()))
+	{
+		pDvmMap->AddAddressChild(m_strFormat, dAttrVal);
+	}
+
 	return stt_GetDataValueByID(m_pDataGroup, pszID, dAttrVal);
 }
 
@@ -1307,11 +1510,29 @@ BOOL CSttDataGroupSerializeRead::xml_serialize(const char *pszName,const char *p
 
 BOOL CSttDataGroupSerializeRead::xml_serialize(const char *pszName,const char *pszID,const char *pszUnit,const char *pszDataTypeID,float &fAttrVal, BSTR bstrElementKey)
 {
+	//20240621 huangliang 
+	CDataMaps *pDvmMap = GetTopDvmDataMap();
+	CString m_strFormat = GetDvmDataFormat(pszID);
+
+	if (pDvmMap != NULL && (!m_strFormat.IsEmpty()))
+	{
+		pDvmMap->AddAddressChild(m_strFormat, fAttrVal);
+	}
+
 	return stt_GetDataValueByID(m_pDataGroup, pszID, fAttrVal);
 }
 
 BOOL CSttDataGroupSerializeRead::xml_serialize(const char *pszName,const char *pszID,const char *pszUnit,const char *pszDataTypeID,char *strAttrVal, BSTR bstrElementKey)
 {
+	//20240621 huangliang 
+	CDataMaps *pDvmMap = GetTopDvmDataMap();
+	CString m_strFormat = GetDvmDataFormat(pszID);
+
+	if (pDvmMap != NULL && (!m_strFormat.IsEmpty()))
+	{
+		pDvmMap->AddAddressChild(m_strFormat, strAttrVal);
+	}
+
 	CString strValue;
 
 	BOOL bRet = stt_GetDataValueByID(m_pDataGroup, pszID, strValue);
@@ -1527,7 +1748,7 @@ CSttXmlSerializeBase* CSttDataGroupSerializeRead::xml_serialize(BSTR bstrElement
 CSttDataGroupSerializeRegister::CSttDataGroupSerializeRegister(CDataGroup *pDataGroup)
 :CSttXmlSerializeBase(pDataGroup)
 {
-
+	m_pDvmDataMaps = NULL;
 }
 
 CSttDataGroupSerializeRegister::~CSttDataGroupSerializeRegister()
@@ -1535,9 +1756,25 @@ CSttDataGroupSerializeRegister::~CSttDataGroupSerializeRegister()
 
 }
 
+CDataMaps *CSttDataGroupSerializeRegister::GetTopSettingDvmMaps()
+{
+	CSttDataGroupSerializeRegister *pTopParent = (CSttDataGroupSerializeRegister *)this->GetRoot();
+	return pTopParent->m_pDvmDataMaps;
+}
+
 BOOL CSttDataGroupSerializeRegister::xml_serialize(const char *pszName,const char *pszID,const char *pszUnit,const char *pszDataTypeID,CString &strAttrVal, BSTR bstrElementKey)
 {
-	m_pDataGroup->AddNewData(pszName, pszID, pszDataTypeID, strAttrVal, pszUnit);
+	//20240621 huangliang 
+	CString strFormat = "";
+	CDataMaps *pDvmMap = GetTopSettingDvmMaps();
+
+	if(pDvmMap != NULL)
+	{
+		strFormat = pDvmMap->GetAddressFormat(strAttrVal);
+	}
+
+	CDvmData* pDvmData = m_pDataGroup->AddNewData(pszName, pszID, pszDataTypeID, strAttrVal, pszUnit);
+	pDvmData->m_strFormat = strFormat;
 	return TRUE;
 }
 
@@ -1548,25 +1785,55 @@ BOOL CSttDataGroupSerializeRegister::xml_serialize(const char *pszName,const cha
 
 BOOL CSttDataGroupSerializeRegister::xml_serialize(const char *pszName,const char *pszID,const char *pszUnit,const char *pszDataTypeID,long &nAttrVal, BSTR bstrElementKey)
 {
+	//20240621 huangliang 
+	CString strFormat = "";
+	CDataMaps *pDvmMap = GetTopSettingDvmMaps();
+
+	if(pDvmMap != NULL)
+	{
+		strFormat = pDvmMap->GetAddressFormat(nAttrVal);
+	}
+
 	CString strValue;
 	strValue.Format(_T("%d"), nAttrVal);
-	m_pDataGroup->AddNewData(pszName, pszID, pszDataTypeID, strValue, pszUnit);
+	CDvmData* pDvmData = m_pDataGroup->AddNewData(pszName, pszID, pszDataTypeID, strValue, pszUnit);
+	pDvmData->m_strFormat = strFormat;
 	return TRUE;
 }
 
 BOOL CSttDataGroupSerializeRegister::xml_serialize(const char *pszName,const char *pszID,const char *pszUnit,const char *pszDataTypeID,int &nAttrVal, BSTR bstrElementKey)
 {
+	//20240621 huangliang 
+	CString strFormat = "";
+	CDataMaps *pDvmMap = GetTopSettingDvmMaps();
+
+	if(pDvmMap != NULL)
+	{
+		strFormat = pDvmMap->GetAddressFormat(nAttrVal);
+	}
+
 	CString strValue;
 	strValue.Format(_T("%d"), nAttrVal);
-	m_pDataGroup->AddNewData(pszName, pszID, pszDataTypeID, strValue, pszUnit);
+	CDvmData* pDvmData = m_pDataGroup->AddNewData(pszName, pszID, pszDataTypeID, strValue, pszUnit);
+	pDvmData->m_strFormat = strFormat;
 	return TRUE;
 }
 
 BOOL CSttDataGroupSerializeRegister::xml_serialize(const char *pszName,const char *pszID,const char *pszUnit,const char *pszDataTypeID,unsigned int &unAttrVal, BSTR bstrElementKey)
 {
+	//20240621 huangliang 
+	CString strFormat = "";
+	CDataMaps *pDvmMap = GetTopSettingDvmMaps();
+
+	if(pDvmMap != NULL)
+	{
+		strFormat = pDvmMap->GetAddressFormat(unAttrVal);
+	}
+
 	CString strValue;
 	strValue.Format(_T("%d"), unAttrVal);
-	m_pDataGroup->AddNewData(pszName, pszID, pszDataTypeID, strValue, pszUnit);
+	CDvmData* pDvmData = m_pDataGroup->AddNewData(pszName, pszID, pszDataTypeID, strValue, pszUnit);
+	pDvmData->m_strFormat = strFormat;
 	return TRUE;
 }
 
@@ -1582,9 +1849,19 @@ BOOL CSttDataGroupSerializeRegister::xml_serialize(const char *pszName,const cha
 
 BOOL CSttDataGroupSerializeRegister::xml_serialize(const char *pszName,const char *pszID,const char *pszUnit,const char *pszDataTypeID,double &dAttrVal, BSTR bstrElementKey)
 {
+	//20240621 huangliang 
+	CString strFormat = "";
+	CDataMaps *pDvmMap = GetTopSettingDvmMaps();
+
+	if(pDvmMap != NULL)
+	{
+		strFormat = pDvmMap->GetAddressFormat(dAttrVal);
+	}
+
 	CString strValue;
 	strValue.Format(_T("%f"), dAttrVal);
-	m_pDataGroup->AddNewData(pszName, pszID, pszDataTypeID, strValue, pszUnit);
+	CDvmData* pDvmData = m_pDataGroup->AddNewData(pszName, pszID, pszDataTypeID, strValue, pszUnit);
+	pDvmData->m_strFormat = strFormat;
 	return TRUE;
 }
 
@@ -1597,30 +1874,59 @@ BOOL CSttDataGroupSerializeRegister::xml_serialize(const char *pszName,const cha
 
 BOOL CSttDataGroupSerializeRegister::xml_serialize(const char *pszName,const char *pszID,const char *pszUnit,const char *pszDataTypeID,float &fAttrVal, BSTR bstrElementKey)
 {
+	//20240621 huangliang 
+	CString strFormat = "";
+	CDataMaps *pDvmMap = GetTopSettingDvmMaps();
+
+	if(pDvmMap != NULL)
+	{
+		strFormat = pDvmMap->GetAddressFormat(fAttrVal);
+	}
+
 	CString strValue;
 	strValue.Format(_T("%f"), fAttrVal);
-	m_pDataGroup->AddNewData(pszName, pszID, pszDataTypeID, strValue, pszUnit);
+	CDvmData* pDvmData = m_pDataGroup->AddNewData(pszName, pszID, pszDataTypeID, strValue, pszUnit);
+	pDvmData->m_strFormat = strFormat;
 	return TRUE;
 }
 
 BOOL CSttDataGroupSerializeRegister::xml_serialize(const char *pszName,const char *pszID,const char *pszUnit,const char *pszDataTypeID,char *strAttrVal, BSTR bstrElementKey)
 {
+	//20240621 huangliang 
+	CString strFormat = "";
+	CDataMaps *pDvmMap = GetTopSettingDvmMaps();
+
+	if(pDvmMap != NULL)
+	{
+		strFormat = pDvmMap->GetAddressFormat(strAttrVal);
+	}
+
 	//2022.5.12 caoxc
 	//{
 	//	return FALSE;
 	//}
 	CString strValue = CString(strAttrVal);
-	m_pDataGroup->AddNewData(pszName, pszID, pszDataTypeID, strValue, pszUnit);
+	CDvmData* pDvmData = m_pDataGroup->AddNewData(pszName, pszID, pszDataTypeID, strValue, pszUnit);
+	pDvmData->m_strFormat = strFormat;
 	return TRUE;
 }
 
 BOOL CSttDataGroupSerializeRegister::xml_serialize_sys_pata(const char *pszName,const char *pszID,const char *pszUnit,const char *pszDataTypeID,
 												  double &dAttrVal,const char *pszSysParaID, BSTR bstrElementKey)
 {
+	//20240621 huangliang 
+	CString strFormat = "";
+	CDataMaps *pDvmMap = GetTopSettingDvmMaps();
+
+	if(pDvmMap != NULL)
+	{
+		strFormat = pDvmMap->GetAddressFormat(dAttrVal);
+	}
+
 	CString strValue;
 	strValue.Format(_T("%d"), dAttrVal);
 	CDvmData* pDvmData = m_pDataGroup->AddNewData(pszName, pszID, pszDataTypeID, strValue, pszUnit);
- //	pDvmData->m_strFormat = pszSysParaID;
+	pDvmData->m_strFormat = strFormat;
  	return TRUE;
 	//return xml_serialize(pszName,pszID,pszUnit,pszDataTypeID,dAttrVal,bstrElementKey);
 }
@@ -1628,10 +1934,19 @@ BOOL CSttDataGroupSerializeRegister::xml_serialize_sys_pata(const char *pszName,
 BOOL CSttDataGroupSerializeRegister::xml_serialize_sys_pata(const char *pszName,const char *pszID,const char *pszUnit,const char *pszDataTypeID,
 												  float &fAttrVal,const char *pszSysParaID, BSTR bstrElementKey)
 {
+	//20240621 huangliang 
+	CString strFormat = "";
+	CDataMaps *pDvmMap = GetTopSettingDvmMaps();
+
+	if(pDvmMap != NULL)
+	{
+		strFormat = pDvmMap->GetAddressFormat(fAttrVal);
+	}
+
 	CString strValue;
 	strValue.Format(_T("%f"), fAttrVal);
 	CDvmData* pDvmData = m_pDataGroup->AddNewData(pszName, pszID, pszDataTypeID, strValue, pszUnit);
-//	pDvmData->m_strFormat = pszSysParaID;
+	pDvmData->m_strFormat = strFormat;
 	return TRUE;
 	//return xml_serialize(pszName,pszID,pszUnit,pszDataTypeID,fAttrVal,bstrElementKey);
 }

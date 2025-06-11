@@ -40,6 +40,8 @@ public:
 protected:
 	CSttTestEngineClientData* CreateTestCtrlEngine(CSttTestAppCfg *pSttTestAppCfg, const CString &strSoftID);
 	CSttTestEngineClientData* CreateAtsEngine(CSttTestAppCfg *pSttTestAppCfg, const CString &strSoftID);
+	//zhouhj 2024.10.9
+	CSttTestEngineClientData* CreateIotEngine(CSttTestAppCfg *pSttTestAppCfg, const CString &strSoftID);
 
 public:
 	CSttTestAppCfg *m_pSttTestAppCfg;

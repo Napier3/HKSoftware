@@ -64,8 +64,10 @@ void CalABCValues_ByPowerValues_Double(double dUA_mag, double dUA_ang, double dI
                                        , double dUB_mag, double dUB_ang, double dIB_mag, double dIB_ang
                                        , double dUC_mag, double dUC_ang, double dIC_mag, double dIC_ang);
 //wangtao 20240613 根据功率电压计算电流值
-void CalABCValues_ByPowerValues_Float(float &dA_mag, float &dA_ang, float &dB_mag, float &dB_ang, float &dC_mag, float &dC_ang,
-									  float fPpower_dA, float fQpower_dA, float fAmp_dA, float fAngle_dA,
-									  float fPpower_dB, float fQpower_dB, float fAmp_dB, float fAngle_dB,
-									  float fPpower_dC, float fQpower_dC, float fAmp_dC, float fAngle_dC);
+//void CalABCValues_ByPowerValues_Float(float &dA_mag, float &dA_ang, float &dB_mag, float &dB_ang, float &dC_mag, float &dC_ang,
+//									  float fPpower_dA, float fQpower_dA, float fAmp_dA, float fAngle_dA,
+//									  float fPpower_dB, float fQpower_dB, float fAmp_dB, float fAngle_dB,
+	//							 float fPpower_dC, float fQpower_dC, float fAmp_dC, float fAngle_dC);
+//国际版移植
+void CalABCValues_ByPowerValues_Float(float &dA_mag, float &dA_ang,float fPpower, float fQpower, float fAmp, float fAngle);
 #endif // !defined(AFX_Complex_H__25F906BC_5946_4F49_A982_C9998A20DB40__INCLUDED_)

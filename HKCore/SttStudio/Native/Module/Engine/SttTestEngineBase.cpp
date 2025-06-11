@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "SttTestEngineBase.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -164,8 +164,7 @@ long CSttTestEngineBase::OnTestMsg(CSttSocketDataBase *pClientSocket, BYTE *pBuf
 	}
 
     m_oSttPkgDispatch.DispatchMsg(pBuf, nLen);
-
-
+	bRet = FALSE;
 	return OnTestMsgEx(pClientSocket, pBuf, nLen, nCmdType, pszCmdID, pszTestor, pszRetCmdType, bRet);
 }
 

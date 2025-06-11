@@ -931,7 +931,7 @@ void stt_xml_serialize_12u12i_pnv(tmt_ManualParas *pParas, CSttXmlSerializeBase 
 
 
 #include"../../SttCmd/SttTestCmd.h"
-#include"../../Module/API/GlobalConfigApi.h"
+#include"../../../../Module/API/GlobalConfigApi.h"
 void stt_xml_serialize_write_ManuTest()
 {
     tmt_ManualTest oManualTest;

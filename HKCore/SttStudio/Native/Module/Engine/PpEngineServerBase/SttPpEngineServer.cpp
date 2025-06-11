@@ -4,6 +4,10 @@
 #include "SttPpServerSocket.h"
 #include "../../SttTestAppConfig/SttTestAppCfg.h"
 
+#ifdef _PSX_OS_CENTOS_
+#include "../../../../SttStudio/Module/API/NetworkInterface.h"
+#endif
+
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
@@ -32,6 +36,11 @@ CSttPpEngineServer* CSttPpEngineServer::Create()
 	oSttTestAppCfg.SttOpen(_T("SttPpEngineServerConfig.xml"));
 
 	CString strIP = oSttTestAppCfg.GetLocalIP();
+
+#ifdef _PSX_OS_CENTOS_
+	stt_net_get_ip(&strIP);
+#endif
+
 	CLogPrint::LogString(XLOGLEVEL_TRACE, strIP);
 
 	CSttPpEngineServer *pRet = Create(const_cast<char*>(strIP.GetString()), 19821);

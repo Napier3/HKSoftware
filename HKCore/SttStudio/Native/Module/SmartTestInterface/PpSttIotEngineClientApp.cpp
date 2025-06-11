@@ -401,7 +401,7 @@ BOOL CPpSttIotDeviceClient::WriteDataset(CDvmDataset *pDataset)
 
 	if (Px_JdgDataset(pDataset->m_strID, PX_DSID_dsEna))
 	{
-		return WriteDataset(pDataset, CMDID_writeena);
+		return WriteDataset(pDataset, /*CMDID_writeena*/CMDID_SingleDout);
 	}
 
 	if (Px_JdgDataset(pDataset->m_strID, PX_DSID_dsDout))
@@ -428,7 +428,7 @@ void CPpSttIotDeviceClient::WriteDataset2(CDvmDataset *pDataset, const CString &
 
     if (Px_JdgDataset(strDatasetPath, PX_DSID_dsEna))
     {
-        return WriteDataset(pDataset, strDatasetPath, CMDID_writeena);
+        return WriteDataset(pDataset, strDatasetPath, /*CMDID_writeena*/CMDID_SingleDout);
     }
 
     if (Px_JdgDataset(strDatasetPath, PX_DSID_dsDout))

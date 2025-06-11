@@ -1,5 +1,5 @@
 #pragma once
-#include "../baseclass/exbaselist.h"
+#include "ExBaseList.h"
 #include "../CriticalSection/SynCriticalSection.h"
 
 #define MSGSENDTYPE_WINDOW   0

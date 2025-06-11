@@ -70,9 +70,11 @@ void stt_xml_serialize(tmt_DiffCBOpParas *pParas, CSttXmlSerializeBase *pXmlSier
 	pXmlSierialize->xml_serialize("制动方程", "IbiasCal", "", "number", pParas->m_nIbiasCal);
 	pXmlSierialize->xml_serialize("K1","Factor1","","number",pParas->m_fFactor1);
 	pXmlSierialize->xml_serialize("K2", "Factor2", "","number",pParas->m_fFactor2);
-	pXmlSierialize->xml_serialize("组合特性", "ComBineFeature", "","long",pParas->m_nComBineFeature);
 
-	pXmlSierialize->xml_serialize("接地","Earthing","","number",pParas->m_nEarthing);
+	pXmlSierialize->xml_serialize("复合特性", "ComBineFeature", "","long",pParas->m_nComBineFeature);
+	pXmlSierialize->xml_serialize("零序消除方式", "ZeroSeqElimiType", "","ZeroSeqElimiType",pParas->m_nZeroSeqElimiType);
+	pXmlSierialize->xml_serialize("中性点接地","Earthing","","number",pParas->m_nEarthing);
+
 	pXmlSierialize->xml_serialize("断路器模拟  S1=不模拟,S2=模拟 0(0:不模拟,1:模拟)","CBSimulation","","",pParas->m_bCBSimulation);
 	pXmlSierialize->xml_serialize("分闸时间","CBTripTime","","number",pParas->m_fCBTripTime);
 	pXmlSierialize->xml_serialize("合闸时间","CBCloseTime","","number",pParas->m_fCBCloseTime);
@@ -145,9 +147,13 @@ void stt_xml_serialize(tmt_DiffCBOpParas *pParas, CSttXmlSerializeBase *pXmlSier
 	pXmlSierialize->xml_serialize("制动方程", "IbiasCal", "", "number", pParas->m_nIbiasCal);
 	pXmlSierialize->xml_serialize("K1","Factor1","","number",pParas->m_fFactor1);
 	pXmlSierialize->xml_serialize("K2", "Factor2", "","number",pParas->m_fFactor2);
-	pXmlSierialize->xml_serialize("组合特性", "ComBineFeature", "","long",pParas->m_nComBineFeature);
 
-	pXmlSierialize->xml_serialize("接地","Earthing","","number",pParas->m_nEarthing);
+	pXmlSierialize->xml_serialize("复合特性", "ComBineFeature", "","long",pParas->m_nComBineFeature);
+	pXmlSierialize->xml_serialize("零序消除方式", "ZeroSeqElimiType", "","ZeroSeqElimiType",pParas->m_nZeroSeqElimiType);
+	pXmlSierialize->xml_serialize("中性点接地","Earthing","","number",pParas->m_nEarthing);
+// 	pXmlSierialize->xml_serialize("组合特性", "ComBineFeature", "","long",pParas->m_nComBineFeature);
+// 	pXmlSierialize->xml_serialize("接地","Earthing","","number",pParas->m_nEarthing);
+
 	pXmlSierialize->xml_serialize("断路器模拟  S1=不模拟,S2=模拟 0(0:不模拟,1:模拟)","CBSimulation","","",pParas->m_bCBSimulation);
 	pXmlSierialize->xml_serialize("分闸时间","CBTripTime","","number",pParas->m_fCBTripTime);
 	pXmlSierialize->xml_serialize("合闸时间","CBCloseTime","","number",pParas->m_fCBCloseTime);

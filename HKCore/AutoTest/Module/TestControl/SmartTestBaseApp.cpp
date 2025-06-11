@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "SmartTestBaseApp.h"
-#include	"../../Module/api/GlobalConfigApi.h"
-#include "../../Module/api/GloblaDrawFunctions.h"
-#include "../../Module/api/FileApi.h"
+#include "../../Module/API/GlobalConfigApi.h"
+#include "../../Module/API/GloblaDrawFunctions.h"
+#include "../../Module/API/FileApi.h"
 
 #include "../AutoTestXMLRWKeys.h"
 #include "../../Module/API/SingleAppMutexApi.h"
@@ -11,9 +11,9 @@
 #include "../GuideBook/GuideBookTool.h"
 #include "../GuideBook/Script/GbScriptFunctions.h"
 
-#include "../../SttStudio/Module/SmartTestInterface/MacroTestFactory.h"
-#include "../../SttStudio/Module/SmartTestInterface/ProtocolEngineFactory.h"
-#include "../../Module/api/GloblaDrawFunctions.h"
+#include "../Module/SmartTestInterface/MacroTestFactory.h"
+#include "../Module/SmartTestInterface/ProtocolEngineFactory.h"
+#include "../../Module/API/GloblaDrawFunctions.h"
 #include "../../Module/TestMacro/TestMacrosFileMngr.h"
 
 #include "TestControlBase.h"
@@ -27,13 +27,13 @@
 #include "../RecorderPpEngine.h"
 #endif
 
-#include "../../../SttStudio/Module/UI/Config/MacroTestUI/SttMacroTestUI_TestMacroUIDB.h"
-#include "../../../SttStudio/Module/Engine/SttNativeTestEngine.h"
-#include "../../../SttStudio/Module/SttTestAppConfig/SttTestAppCfg.h"
-#include "../../../SttStudio/Module/Engine/SttNativeTestEngine_Mqtt.h"
-#include "../../../SttStudio/Module/SmartTestInterface/AtsOutInterfaceMqttClient.h"
-#include "../../../SttStudio/Module/SttCmd/GuideBook/SttCmdGuideBookTransTool.h"
-#include "../../../SttStudio/Module/SttAtsSvr/XSttSmartTestPAL.h"
+#include "../Module/UI/Config/MacroTestUI/SttMacroTestUI_TestMacroUIDB.h"
+#include "../Module/Engine/SttNativeTestEngine.h"
+#include "../Module/SttTestAppConfig/SttTestAppCfg.h"
+#include "../Module/Engine/SttNativeTestEngine_Mqtt.h"
+#include "../Module/SmartTestInterface/AtsOutInterfaceMqttClient.h"
+#include "../Module/SttCmd/GuideBook/SttCmdGuideBookTransTool.h"
+#include "../Module/SttAtsSvr/XSttSmartTestPAL.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE

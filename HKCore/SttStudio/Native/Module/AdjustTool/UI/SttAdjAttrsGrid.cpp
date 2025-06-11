@@ -7,6 +7,9 @@
 #include "SttAdjAttrsGrid.h"
 #include "../SttAdjBase.h"
 #include "../SttMesLocalDb.h"
+#ifndef NOT_USE_XLANGUAGE
+#include "../../XLangResource_Native.h"
+#endif
 
 CSttAdjAttrsGrid::CSttAdjAttrsGrid()
 {
@@ -36,7 +39,12 @@ void CSttAdjAttrsGrid::InitGrid()
 
 void CSttAdjAttrsGrid::InitGridTitle()
 {
+#ifndef NOT_USE_XLANGUAGE 
+	CString astrTitle[4] = {/*_T("编号")*/g_sLangTxt_Index,/* _T("名称")*/g_sLangTxt_Name,
+		/*_T("标识")*/g_sLangTxt_Native_Identifier, /*_T("数据")*/g_sLangTxt_Data};
+#else
 	CString astrTitle[4] = {_T("编号"),_T("名称"),_T("标识"),_T("数据")};
+#endif
 	CString astrAttrs[4] = {_T(""),_T("name"),_T("id"),_T("value")};
 	int nWidth[4]={40,250,150,250};
 

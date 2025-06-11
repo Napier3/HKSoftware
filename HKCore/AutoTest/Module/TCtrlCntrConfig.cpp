@@ -1,8 +1,8 @@
 #include "stdafx.h"
-#include "../../Module/api/GlobalConfigApi.h"
-#include "../../Module/api/GloblaDrawFunctions.h"
+#include "../../Module/API/GlobalConfigApi.h"
+#include "../../Module/API/GloblaDrawFunctions.h"
 #include "TCtrlCntrConfig.h"
-#include "../../SttStudio/Module/SmartTestInterface/MacroTestInterface.h"
+#include "../Module/SmartTestInterface/MacroTestInterface.h"
 
 #ifdef _use_test_task
 #include "TaskMngr/TestTask.h"
@@ -12,7 +12,7 @@
 #include "../../Module/UserDB/XUser.h"
 #endif
 
-#include "../../Module/Api/FileApi.h"
+#include "../../Module/API/FileApi.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

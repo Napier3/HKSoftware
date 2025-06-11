@@ -7,7 +7,7 @@
 
 #include "stdafx.h"
 #include "SttRptMapDatas.h"
-#include "../../Module/DataMngr/DvmData.h"
+#include "../../../Module/DataMngr/DvmData.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE

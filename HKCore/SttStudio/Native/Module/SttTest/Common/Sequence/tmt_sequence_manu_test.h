@@ -67,7 +67,12 @@ public:
     int	  m_nVarIndexType;//0=电流 1=电压 2=频率
 
     //GoosePub
-    tmt_GoosePub m_oGoosePub[MAX_MODULES_GOOSEPUB_COUNT];
+#ifndef TMT_STATECOUNT_USE_DEF
+	tmt_GoosePub *m_oGoosePub;
+#else
+	tmt_GoosePub m_oGoosePub[MAX_MODULES_GOOSEPUB_COUNT];
+#endif
+	
 
     //整定值
     float m_fTimeSet;   //动作整定时间
@@ -137,6 +142,9 @@ public:
         m_nRetCoef_ErrorLogic = 0;
         m_nVarIndexType = 0;
         m_oSequenceGradient.init();
+#ifndef TMT_STATECOUNT_USE_DEF
+		m_oGoosePub = new tmt_GoosePub[MAX_MODULES_GOOSEPUB_COUNT];
+#endif
 
         for(int i = 0; i < MAX_VOLTAGE_COUNT; i++)
         {
@@ -253,6 +261,17 @@ public:
     {
         init();
     }
+
+	virtual ~tmt_sequence_manu_paras()
+	{
+#ifndef TMT_STATECOUNT_USE_DEF
+		if (m_oGoosePub != NULL)
+		{
+			delete[] m_oGoosePub;
+			m_oGoosePub = NULL;
+		}
+#endif
+	}
 
 } tmt_SequenceManuParas;
 

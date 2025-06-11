@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "SttTestEngineServerData.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../RecordTest/SttRcdSendSocket.h"
 #include "../ReplayTest/SttComtradeRcvSocket.h"
 #ifndef _STT_NOT_IN_TEST_SERVER_
@@ -353,7 +353,11 @@ CSttSocketDataBase *CSttTestEngineServerData::FindSocketByAuthority(const CStrin
 }
 
 #ifdef _PSX_QT_LINUX_
+
+#ifndef _STT_NOT_IN_TEST_SERVER_
 #include "../SttTest/Common/tmt_adjust_sys_parameter.h"
+#endif
+
 #endif
 
 //TestServer登录
@@ -401,6 +405,8 @@ long CSttTestEngineServerData::Process_Cmd_System_Login(CSttSocketDataBase *pCli
         oSysState.AddNewParasData(STT_CMD_PARA_IDTESTER, pUser->GetIDTest());
 #ifdef _PSX_QT_LINUX_
 
+#ifndef _STT_NOT_IN_TEST_SERVER_
+
         CDataGroup oDevAttrsGroup;
         oDevAttrsGroup.m_strName=_T("装置属性");
         oDevAttrsGroup.m_strID=_T("DeviceAttrs");
@@ -419,6 +425,8 @@ long CSttTestEngineServerData::Process_Cmd_System_Login(CSttSocketDataBase *pCli
         oDevAttrsGroup.AddNewData(_T("主板版本"),_T("FpgaVer"),_T("FPGAVersion"),oDeviceAttrs.m_strFPGAVer);
         oDevAttrsGroup.AddNewData(_T("驱动版本"),_T("DriverVer"),_T("DriverVersion"),oDeviceAttrs.m_strDriverVer);
         oSysState.AddNewParas(&oDevAttrsGroup);
+#endif//#ifndef _STT_NOT_IN_TEST_SERVER_
+
 #endif
     }
     else

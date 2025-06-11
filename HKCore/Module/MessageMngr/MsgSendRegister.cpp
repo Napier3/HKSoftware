@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "MsgSendRegister.h"
 #include "../XLanguage/XLanguageResource.h"
 CMsgSendRegister::CMsgSendRegister()

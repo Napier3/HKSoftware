@@ -7,7 +7,7 @@
 
 #include "stdafx.h"
 #include "SttIecGsBinaryDraw.h"
-#include "../../Module/API/GloblaDrawFunctions.h"
+#include "../../../../Module/API/GloblaDrawFunctions.h"
 #include "../../UI/SttTestCntrFrameBase.h"
 
 //////////////////////////////////////////////////////////////////////////

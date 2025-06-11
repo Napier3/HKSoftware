@@ -7,7 +7,7 @@
 #pragma once
 
 #include "../SttCmdDefineGlobal.h"
-#include "../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/DataMngr/DataGroup.h"
 
 class CSttContents : public CDataGroup
 {

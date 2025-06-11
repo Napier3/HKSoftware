@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "BigComtradeTransPlay.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../Engine/SttClientTestEngine.h"
 
 #ifdef _PSX_QT_LINUX_
@@ -72,6 +72,7 @@ CBigComtradeTransPlay::CBigComtradeTransPlay()
 	m_bExitThread = TRUE;
 	m_pSttComtradeFileReadThread = NULL;
 	m_pTestEngineClientData = NULL;
+	m_bUseConnectServer = TRUE;
 
 	//初始化AB缓存
 	CComtradeBufMngr::Create(COMTRADE_LOOPBUF_SIZE,COMTRADE_ABBUF_SIZE);
@@ -121,6 +122,11 @@ CExBaseList * CBigComtradeTransPlay::GetBinarys()
 	return m_oBigComtradeFileRead.m_oSrcComtradeFile.GetBinarys();
 }
 
+BOOL CBigComtradeTransPlay::ConnectServerState()
+{
+	return m_oComtradeClientSocket.ConnectServer();
+}
+
 BOOL CBigComtradeTransPlay::CreateSttComtradeSocket()
 {
 	if (m_oComtradeSendSocket.IsSocketValid())//2023.6.26 zhouhj 如果录波通道Socket有效,则不需要重新创建
@@ -139,6 +145,7 @@ BOOL CBigComtradeTransPlay::CreateSttComtradeSocket()
 
 	if (!ComtradeControl_ConnServer(m_pSttTestAppCfg->GetTestAppIP()))
 	{
+		m_bUseConnectServer = false;
 		return FALSE;
 	}
 
@@ -146,6 +153,7 @@ BOOL CBigComtradeTransPlay::CreateSttComtradeSocket()
 
 	if(!bRet)
 	{
+		m_bUseConnectServer = false;
 		CLogPrint::LogFormatString(XLOGLEVEL_INFOR,_T("连接测试仪【%s,%d】失败"),m_pSttTestAppCfg->GetTestAppIP().GetString(), STT_PORT_COMTRADE_SERVER);
 		return FALSE;
 	}
@@ -156,9 +164,14 @@ BOOL CBigComtradeTransPlay::CreateSttComtradeSocket()
 	oSysCmd.m_strID = STT_CMD_TYPE_SYSTEM_Login;
 	oSysCmd.m_strTestor = STT_SOFT_ID_COMTRADE;
 
-	CLogPrint::LogString(XLOGLEVEL_INFOR,_T("建立报文故障回放通道......"));
+	
 	long nRet = m_oComtradeClientSocket.SendCmd(&oSysCmd);
 
+	if (!nRet)
+	{
+		m_bUseConnectServer = false;
+		return FALSE;
+	}
 	m_oComtradeSendSocket.AttatchClientTestEngine(m_pTestEngineClientData);
 	m_oComtradeSendSocket.AttatchSocketDatabase(&m_oComtradeClientSocket);
 	CLogPrint::LogString(XLOGLEVEL_INFOR,_T("连接完成，准备开始测试......"));
@@ -193,9 +206,22 @@ BOOL CBigComtradeTransPlay::OnOpenComtradeFile(const CString &strComtradeFile,BO
 	//根据配置参数、缓存大小计算缓存中能存的最大点数,分配回放用数据缓存
 	m_oComtradePlayConfig.InitReplayBuf(FILE_READBUF_SIZE);
 
-	if (bInitDefault&&m_oBigComtradeFileRead.GetAutoGenChABMap())
+// 	if (bInitDefault&&m_oBigComtradeFileRead.GetAutoGenChABMap())
+// 	{
+// 		m_oComtradePlayConfig.InitDefault(FALSE);//只初始化模块参数及通道相关参数
+// 	}
+// 	else if(bInitDefault == TRUE)
+// 	{
+// 		m_oComtradePlayConfig.InitDefault(TRUE);
+// 	}
+	if (bInitDefault) 
 	{
-		m_oComtradePlayConfig.InitDefault(FALSE);//只初始化模块参数及通道相关参数
+		m_oComtradePlayConfig.InitDefault(TRUE);
+	} 
+	else
+	{
+		bool bAutoGenChABMap = m_oBigComtradeFileRead.GetAutoGenChABMap();
+		m_oComtradePlayConfig.InitDefault(!bAutoGenChABMap); // 如果自动生成映射，则传 FALSE，否则传 TRUE	
 	}
 
 	//初始化Comtrade 相关缓存

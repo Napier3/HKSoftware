@@ -5,6 +5,9 @@
 #include "stdafx.h"
 #include "SttAdjChDrvPosGrid.h"
 #include "..\SttAdjBase.h"
+#ifndef NOT_USE_XLANGUAGE
+#include "..\..\..\Local\SttAdjMain\XLanguageResource_SttAdjMain.h"
+#endif
 
 CSttAdjChDrvPosGrid::CSttAdjChDrvPosGrid()
 {
@@ -34,7 +37,11 @@ void CSttAdjChDrvPosGrid::InitGrid()
 
 void CSttAdjChDrvPosGrid::InitGridTitle()
 {
+#ifndef NOT_USE_XLANGUAGE
+	CString astrTitle[4] = {/*_T("编号")*/g_sLangTxt_Index,/*_T("名称")*/g_sLangTxt_SttAdjMain_Name,/*_T("通道ID")*/g_sLangTxt_SttAdjMain_ChannelID,/*_T("通道编号")*/g_sLangTxt_SttAdjMain_ChannelIndex};
+#else
 	CString astrTitle[4] = {_T("编号"),_T("名称"),_T("通道ID"),_T("通道编号")};
+#endif
 	CString astrAttrs[4] = {_T(""),_T("Name"), _T("ID"), _T("Index")};
 	int nWidth[4]={40,120,100,100};
 

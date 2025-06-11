@@ -2,7 +2,7 @@
 
 #include "../GuideBookDefine.h"
 #include "../../../../Module/API/StringApi.h"
-#include "../ScriptText.h"
+#include "../scriptText.h"
 
 void GBS_FilterInit(LPVOID);
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "../../../module/baseclass/exbaselist.h"
+#include "ExBaseObject.h"
 #include "../../../Module/MessageMngr/MsgSendRegister.h"
 
 #include "DeviceModel/DevcieModel.h"

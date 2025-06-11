@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/DataMngr/DataGroup.h"
 #include "../../../Protocol/Module/Engine/DeviceModel/DeviceModelXmlKeys.h"
 
 class CPpSttCommConfig : public CDataGroup
@@ -85,12 +85,15 @@ public:
     void UdpServer_Set_LocalIP(const CString &strLocalIP);
     void UdpServer_Set_LocalPort(long nLocalPort);
     void UdpServer_Set_MuticastIP(const CString &strMuticastIP);
+	void UdpServer_Set_Broadcast(long nUse);//是否广播
+
 
     void UdpClient_Set_LocalIP(const CString &strLocalIP);
     void UdpClient_Set_LocalPort(long nLocalPort);
     void UdpClient_Set_MuticastIP(const CString &strMuticastIP);
     void UdpClient_Set_RemoteIP(const CString &strRemoteIP);
     void UdpClient_Set_RemotePort(long nRemotePort);
+	void UdpClient_Set_Broadcast(long nUse);//是否广播
 
     CString  TcpClient_Get_RemotePort();
     CString  TcpClient_Get_RemoteIP();

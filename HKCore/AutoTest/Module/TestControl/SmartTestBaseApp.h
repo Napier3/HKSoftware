@@ -25,13 +25,13 @@
 #include "../TCtrlCntrDefine.h"
 
 //TestMacro and Protocol Interface
-#include "../../../SttStudio/Module/SmartTestInterface/MacroTestFactory.h"
-#include "../../../SttStudio/Module/SmartTestInterface/ProtocolEngineFactory.h"
+#include "../Module/SmartTestInterface/MacroTestFactory.h"
+#include "../Module/SmartTestInterface/ProtocolEngineFactory.h"
 
 #include "../RecorderInterface.h"
 #include "../GuideBook/ReportMap/WordRptFillBase.h"
-#include "../../../SttStudio/Module/SttCmd/SttAtsCmd.h"
-#include "../../../SttStudio/Module/SttAtsSvr/SttSmartTest.h"
+#include "../Module/SttCmd/SttAtsCmd.h"
+#include "../Module/SttAtsSvr/SttSmartTest.h"
 
 class CAutoTestXMLRWKeys;
 class CTestControlBase;

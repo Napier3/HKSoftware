@@ -5,13 +5,16 @@
 #include "stdafx.h"
 #include "SttAdjHdGearsGrid.h"
 #include "..\SttAdjBase.h"
+#ifndef NOT_USE_XLANGUAGE 
+#include "../../../Local/SttAdjMain/XLanguageResource_SttAdjMain.h"
+#endif
 
 CSttAdjHdGearsGrid::CSttAdjHdGearsGrid()
 {
 	//初始化属性
 
 	//初始化成员变量
-	m_strChildDataTypeID = STT_ADJ_DATA_TYPE_HdGear;
+	m_strChildDataTypeID = "BinGear";
 }
 
 CSttAdjHdGearsGrid::~CSttAdjHdGearsGrid()
@@ -34,8 +37,12 @@ void CSttAdjHdGearsGrid::InitGrid()
 
 void CSttAdjHdGearsGrid::InitGridTitle()
 {
-	CString astrTitle[4] = {_T("编号"),_T("名称"),_T("档位ID"),_T("档位数值")};
-	CString astrAttrs[4] = {_T(""),_T("Name"), _T("GearID"), _T("GearValue")};
+#ifndef NOT_USE_XLANGUAGE 
+	CString astrTitle[4] = {/*_T("编号")*/g_sLangTxt_Index,/*_T("名称")*/g_sLangTxt_SttAdjMain_Name,/*_T("控制字")*/g_sLangTxt_ControlWord,/*_T("档位数值")*/g_sLangTxt_SttAdjMain_GearNumValue};
+#else
+	CString astrTitle[4] = {_T("编号"),_T("名称"),_T("控制字"),_T("档位数值")};
+#endif
+	CString astrAttrs[4] = {_T(""),_T("Name"), _T("GearCode"), _T("GearValue")};
 	int nWidth[4]={40,120,100,100};
 
 	CExBaseListGrid::InitGridTitle(astrTitle, nWidth, 4);

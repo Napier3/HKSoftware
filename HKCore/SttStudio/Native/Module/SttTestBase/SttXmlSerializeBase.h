@@ -1,7 +1,8 @@
 #pragma once
 
-#include "../../Module/xml/XmlRWInterface.h"
-#include "../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/xml/XmlRWInterface.h"
+#include "../../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/DataMngr/DataMaps.h"
 #include "SttMacroXmlKeys.h"
 
 inline BSTR stt_NameKey()			{	return CMacroXmlKeys::g_pMacroXmlKeys->m_strNameKey;}
@@ -37,6 +38,7 @@ inline BSTR stt_SearchResultsKey()			{	return CMacroXmlKeys::g_pMacroXmlKeys->m_
 #define STT_XML_SERIALIZE_SYS_PARA_ID_OldINom    "OldINom"
 #define STT_XML_SERIALIZE_SYS_PARA_ID_OldFNom    "OldFNom"
 
+#define STT_SETTING_DVMDATA_MAP_ID		"Setting_DvmData_Map"	//20240617 huangliang 
 
 
 class CSttXmlSerializeBase : public CExBaseList
@@ -78,6 +80,16 @@ public:
 			return m_pXmlDoc->CreateElement(bstrElementKey, m_pXmlElement);
 		}
 	}
+
+	//20240618 huangliang
+	CDataGroup *GetParentGroup(){return m_pDataGroup;}
+	CDataMaps *GetTopDvmDataMap();
+    virtual void SetSettingDvmMaps(CDataMaps *pMaps)
+    {
+#ifdef _PSX_IDE_QT_
+        (void)pMaps;
+#endif
+    };
 
 public:
 	virtual CSttXmlSerializeBase* create_new(CXmlRWDocBase *pXmlDoc, CXmlRWElementBase *pElement, BOOL bAddChild) = 0;
@@ -233,6 +245,11 @@ public:
 		double &dAttrVal,const char *pszSysParaID, BSTR bstrElementKey = NULL);
 	virtual BOOL xml_serialize_sys_pata(const char *pszName,const char *pszID,const char *pszUnit,const char *pszDataTypeID,
 		float &fAttrVal,const char *pszSysParaID, BSTR bstrElementKey = NULL);
+
+	//20240711 huangliang 更新添加界面关联数据
+	CDataMaps *m_pDvmDataMaps;
+	virtual void SetSettingDvmMaps(CDataMaps *pMaps){ m_pDvmDataMaps = pMaps; }
+	CDataMaps *GetTopSettingDvmMaps();
 };
 
 class CSttXmlSerializeRegister : public CSttXmlSerializeWrite
@@ -341,6 +358,9 @@ public:
 	virtual CSttXmlSerializeBase* xml_serialize(BSTR bstrElementKey, long nIndex, const char *pszName,const char *pszID, const char *pszDataTypeID);
 
 	CDataGroup m_oSysParasList;//存放当前被读取的xml内的系统参数和当前实际的系统参数
+
+	//20240617 huangliang 获取对象的关联定值的绝对路径
+	CString GetDvmDataFormat(const char *pszID);
 };
 
 
@@ -397,6 +417,11 @@ public:
 
 	//2021-6-1  lijunqing : use bstrElementKey and nIndex 
 	virtual CSttXmlSerializeBase* xml_serialize(BSTR bstrElementKey, long nIndex, const char *pszName,const char *pszID, const char *pszDataTypeID);
+
+	//20240621 huangliang 更新添加界面关联数据
+	CDataMaps *m_pDvmDataMaps;
+	virtual void SetSettingDvmMaps(CDataMaps *pMaps){ m_pDvmDataMaps = pMaps; }
+	CDataMaps *GetTopSettingDvmMaps();
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -409,6 +434,10 @@ public:
 
 	virtual CSttXmlSerializeBase* create_new(CXmlRWDocBase *pXmlDoc, CXmlRWElementBase *pElement, BOOL bAddChild)
 	{
+#ifdef _PSX_IDE_QT_
+        (void)pXmlDoc;
+        (void)pElement;
+#endif
 		CSttSerializeUpdateSysParas *pNew = NULL;//new CSttSerializeUpdateSysParas(pXmlDoc, pElement);
 
 		if (bAddChild)

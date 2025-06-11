@@ -161,7 +161,7 @@ void CSttActionTimeTest::TranslateToStateParas()
 		fIf = m_fFaultCur;
 	}
 
-	fIf = m_fFaultCur;
+//	fIf = m_fFaultCur;  //zhouhj 2024.10.31 故障电流上面已按基准值进行处理
 	fPhiTemp=fabs(atan2(fVf,fV))*180.0/pi;
 	int nFaultType = m_nFaultType;
 	int nVType = m_nFaultVolType;

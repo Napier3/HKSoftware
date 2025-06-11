@@ -26,3 +26,26 @@ private:
 public:
 };
 
+//删去相位校准列
+class CSttAdjChWaveAdjustsGrid2 : public CXDvmGrid_GroupRowDataCol
+{
+public:
+	CSttAdjChWaveAdjustsGrid2();
+	virtual ~CSttAdjChWaveAdjustsGrid2();
+
+	virtual void InitGrid();
+	virtual void InitGridTitle();
+	virtual void ShowData(CExBaseObject *pData, int& nRow, BOOL bInsertRow=TRUE);
+};
+
+//相位校准列改为硬件零漂
+class CSttAdjChWaveAdjustsGrid3 : public CXDvmGrid_GroupRowDataCol
+{
+public:
+	CSttAdjChWaveAdjustsGrid3();
+	virtual ~CSttAdjChWaveAdjustsGrid3();
+
+	virtual void InitGrid();
+	virtual void InitGridTitle();
+	virtual void ShowData(CExBaseObject *pData, int& nRow, BOOL bInsertRow=TRUE);
+};

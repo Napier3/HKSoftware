@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "../../SttCmd/SttSysState.h"
-#include "../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../../Module/SmartCap/XSmartCapMngr.h"
 #include "PpSttIotMeasServer.h"
 #include "PpSttIotMeasDevice.h"
 

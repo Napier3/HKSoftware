@@ -26,6 +26,9 @@ public:	//CSttPkgDispatchInterface
 public: //CSttNativeTestEngineInterface
 	virtual long X_ReturnSysStateToChildren(void *pCommInterface, CSttSysState *pSysState) ;
 	virtual long X_Ats_InputData(void *pCommInterface, CDataGroup *pDatas,CExBaseList *pMsgs) ;
+	//shaolei 20220326 
+	virtual long Return_DeviceParameter_AfterLogin(void *pCommInterface, CSttSysState *pSysState);
+
 
 private:
 	CSttNativeTestEngine();
@@ -63,6 +66,8 @@ public:
 
     // 2020-05-27  shaolei  add    设置云测试
     virtual long ProcessCmd_CloudTest(CSttSocketDataBase *pClientSocket, CSttSystemCmd &oSysCmd);
+	//2025-03-26 shaolei add
+	virtual long ProcessCmd_GetSystemState(CSttSocketDataBase *pClientSocket, CSttSystemCmd &oSysCmd);
 	//本地Ats和远程登录
 	virtual long Process_Cmd_System_Login(CSttSocketDataBase *pClientSocket, CSttSystemCmd &oSysCmd);
 	virtual long Process_Cmd_System_Logout(CSttSocketDataBase *pClientSocket, CSttSystemCmd &oSysCmd);
@@ -127,14 +132,13 @@ protected:
 	long Process_Cmd_Ats_UpdateItem(CSttSocketDataBase *pClientSocket, CSttAtsCmd &oAtsCmd);
 	long Process_Cmd_Ats_AdjustReport(CSttSocketDataBase *pClientSocket, CSttAtsCmd &oAtsCmd);
 	long Process_Cmd_Ats_ClearReportsRslts(CSttSocketDataBase *pClientSocket, CSttAtsCmd &oAtsCmd);
+	long Process_Cmd_Ats_OfflineSel(CSttSocketDataBase *pClientSocket, CSttAtsCmd &oAtsCmd);
 
 
     void Return_Ats_Success(CSttSocketDataBase *pClientSocket, CSttAtsCmd &oAtsCmd, unsigned int nState=STT_CMD_ExecStatus_SUCCESS, CDvmDataset *pDatas=NULL, CExBaseObject *pGuideBook = NULL);
     void Return_NoDevice(CSttSocketDataBase *pClientSocket, CSttSysState &oSysState);
     void Return_Ats_Event(CSttSocketDataBase *pClientSocket, CSttSysState &oSysState);
     long ValidateSmartTest(CSttSocketDataBase *pClientSocket, CSttSysState &oSysState);
-	//shaolei 20220326 
-	void Return_DeviceParameter_AfterLogin(CSttSocketDataBase *pClientSocket, CSttSysState &oSysState);
 
 public:
 	CSttTestRemoteRegister m_oRemoteRegister;

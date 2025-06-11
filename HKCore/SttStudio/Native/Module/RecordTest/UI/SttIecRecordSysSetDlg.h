@@ -13,7 +13,7 @@
 #include <QPushButton>
 #include <QLabel>
 #include "../../UI/Module/CommonCtrl_QT/QFloatLineEdit.h"
-#include "../../Module/SmartCap/X61850CapBase.h"
+#include "../../../../Module/SmartCap/X61850CapBase.h"
 #include "../../UI/IEC61850Config/Grid/IecCfgPrimRateGrid.h"
 
 

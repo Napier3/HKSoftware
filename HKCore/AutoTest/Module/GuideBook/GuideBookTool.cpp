@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "GuideBookTool.h"
 #include "../../../Module/DataMngr/ValuesParse.h"
 

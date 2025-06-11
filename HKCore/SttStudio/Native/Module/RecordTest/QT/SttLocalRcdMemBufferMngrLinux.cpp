@@ -1,6 +1,6 @@
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "SttLocalRcdMemBufferMngrLinux.h"
-#include "../../Module/SmartCap/61850Cap/ProtocolBase/61850ParseFrameList.h"
+#include "../../../../Module/SmartCap/61850Cap/ProtocolBase/61850ParseFrameList.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -8,7 +8,7 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-#include "../../Module/SmartCap/XSmartCapFileWrite.h"
+#include "../../../../Module/SmartCap/XSmartCapFileWrite.h"
 
 //////////////////////////////////////////////////////////////////////////
 //CSttLocalRcdMemBufferMngrLinux

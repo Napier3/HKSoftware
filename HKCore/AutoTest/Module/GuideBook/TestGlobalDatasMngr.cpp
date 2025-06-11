@@ -193,7 +193,7 @@ void CTestGlobalDatasMngr::SetTestGlobaoDatas_TestApp(CDataSet *pDataset)
 	m_pTestApp->AppendCloneEx(*pDataset, TRUE);
 }
 
-#include "../../../SttStudio/Module/SttGlobalDef.h"
+#include "../Module/SttGlobalDef.h"
 void CTestGlobalDatasMngr::SetCommConfig_DvmFile(const CString &strDvmFile)
 {
 	CDataGroup *p = GetCommConfig(TRUE);

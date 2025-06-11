@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "SttTestResource_6U6I.h"
 
 CSttTestResource_6U6I::CSttTestResource_6U6I(void)
@@ -12,12 +12,25 @@ CSttTestResource_6U6I::~CSttTestResource_6U6I(void)
 void CSttTestResource_6U6I::CreateSoftResource()
 {
 	DeleteAll();
+	if (xlang_IsCurrXLanguageChinese())
+	{
 	AddNewData(_T("Ua1"), _T("U1"));
 	AddNewData(_T("Ub1"), _T("U2"));
 	AddNewData(_T("Uc1"), _T("U3"));
 	AddNewData(_T("Ua2"), _T("U4"));
 	AddNewData(_T("Ub2"), _T("U5"));
 	AddNewData(_T("Uc2"), _T("U6"));
+	}
+	else
+	{
+		AddNewData(_T("Va1"), _T("U1"));
+		AddNewData(_T("Vb1"), _T("U2"));
+		AddNewData(_T("Vc1"), _T("U3"));
+		AddNewData(_T("Va2"), _T("U4"));
+		AddNewData(_T("Vb2"), _T("U5"));
+		AddNewData(_T("Vc2"), _T("U6"));
+	}
+	
 
 	AddNewData(_T("Ia1"), _T("I1"));
 	AddNewData(_T("Ib1"), _T("I2"));
@@ -56,8 +69,17 @@ void CSttTestResource_6U6I::InitAfterCreated()
 
 	for (int nIndex = nVolChNum;nIndex<6;nIndex++)
 	{
+		if (xlang_IsCurrXLanguageChinese())
+		{
 		strName.Format(_T("U%ld"),nIndex+1);
-		strID = strName;
+		}
+		else
+		{
+			strName.Format(_T("V%ld"),nIndex+1);
+		}
+		
+		//strID = strName;
+		strID.Format(_T("U%ld"),nIndex+1);
 		AddNewData(strName, strID);
 	}
 }

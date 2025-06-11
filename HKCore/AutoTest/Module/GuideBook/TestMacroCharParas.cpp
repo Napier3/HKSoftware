@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "TestMacroCharParas.h"
 
 CTestMacroCharParas::CTestMacroCharParas(void)

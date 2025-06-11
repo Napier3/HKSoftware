@@ -4,7 +4,9 @@
 #include "stdafx.h"
 #include "SttRemoteScanConfigDlg.h"
 #include "../SttTestAppConfigTool.h"
-
+#ifndef NOT_USE_XLANGUAGE
+#include "../../XLangResource_Native.h"
+#endif
 // CSttRemoteScanConfigDlg 对话框
 
 //IMPLEMENT_DYNAMIC(CSttRemoteScanConfigDlg, CDialog)
@@ -50,7 +52,26 @@ END_MESSAGE_MAP()
 BOOL CSttRemoteScanConfigDlg::OnInitDialog()
 {
 	CDynDialogEx::OnInitDialog();
+#ifndef NOT_USE_XLANGUAGE
+	CreateStatic(m_stcCloudIP,/*_T("云端IP：")*/g_sLangTxt_Native_CloudIP, CRect(5,20,100,45), STT_STC_CLOUDIP_1, this);
+	m_ctrlCloudIP.Create(WS_TABSTOP | WS_CHILD | WS_VISIBLE, CRect(100,20,280,45), this, STT_EDIT_CLOUDIP_1); 
+	CreateStatic(m_stcCloudPort,/*_T("云端Port：")*/g_sLangTxt_Native_CloudPort, CRect(300,20,380,45), STT_STC_CLOUDPORT_1, this);
+	CreateEdit(m_edtCloudPort,   CRect(380,20,460,45), STT_EDIT_CLOUDPORT_1, this);
+	CreateButton(m_btnConnect,/*_T("连接")*/g_sLangTxt_Native_Connect, CRect(480,20,550,45), STT_BTN_CONNECT_1, this);
+	CreateButton(m_btnQuery,/*_T("查询")*/g_sLangTxt_Native_Query, CRect(560,20,630,45), STT_BTN_REMOTEQUERY, this);
 
+	m_grid.Create(CRect(5,50,630,205), this, STT_GRID_REMOTETESTAPP);
+	m_grid.SetFont(g_pGlobalFont11);
+	m_grid.InitGrid();
+	m_grid.AttachDataViewOptrInterface(this);
+
+	CreateStatic(m_stcCompany,/*_T("单位：")*/g_sLangTxt_Unit, CRect(5,215,60,240), STT_STC_REMOTECOP, this);
+	CreateEdit(m_editCompany,   CRect(60,215,230,240), STT_EDIT_REMOTECOP, this);
+	CreateStatic(m_stcUser,/*_T("用户：")*/g_sLangTxt_User2, CRect(250,215,305,240), STT_STC_REMOTEUSER, this);
+	CreateEdit(m_edtUser,   CRect(305,215,385,240), STT_EDIT_REMOTEUSER, this);
+	CreateButton(m_btnCancel,/*_T("取消")*/g_sLangTxt_Cancel, CRect(500,215,560,240), STT_BTN_REMOTECANCEL, this);
+	CreateButton(m_btnBind,/*_T("绑定")*/g_sLangTxt_Native_Bind, CRect(570,215,630,240), STT_BTN_REMOTEBIND, this);
+#else
 	CreateStatic(m_stcCloudIP,_T("云端IP："), CRect(5,20,100,45), STT_STC_CLOUDIP_1, this);
 	m_ctrlCloudIP.Create(WS_TABSTOP | WS_CHILD | WS_VISIBLE, CRect(100,20,280,45), this, STT_EDIT_CLOUDIP_1); 
 	CreateStatic(m_stcCloudPort,_T("云端Port："), CRect(300,20,380,45), STT_STC_CLOUDPORT_1, this);
@@ -69,7 +90,7 @@ BOOL CSttRemoteScanConfigDlg::OnInitDialog()
 	CreateEdit(m_edtUser,   CRect(305,215,385,240), STT_EDIT_REMOTEUSER, this);
 	CreateButton(m_btnCancel,_T("取消"), CRect(500,215,560,240), STT_BTN_REMOTECANCEL, this);
 	CreateButton(m_btnBind,_T("绑定"), CRect(570,215,630,240), STT_BTN_REMOTEBIND, this);
-
+#endif
 	CFont *pFont = m_pGlobalFont11;
 	m_stcCloudIP.SetFont(pFont);
 	m_ctrlCloudIP.SetFont(pFont);
@@ -110,7 +131,11 @@ void CSttRemoteScanConfigDlg::OnBtnClickBind()
 
 	if (strCop.IsEmpty() || strUser.IsEmpty())
 	{
+#ifndef NOT_USE_XLANGUAGE
+		CLogPrint::LogString(XLOGLEVEL_INFOR,/*_T("测试仪信息、用户信息输出错误")*/g_sLangTxt_Native_TestInstrumentUserInfoError);
+#else
 		CLogPrint::LogString(XLOGLEVEL_INFOR,_T("测试仪信息、用户信息输出错误"));
+#endif
 		return;
 	}
 
@@ -196,7 +221,11 @@ void CSttRemoteScanConfigDlg::OnBtnClickConnect()
 
 	if (strIP.IsEmpty())
 	{
+#ifndef NOT_USE_XLANGUAGE
+		CLogPrint::LogString(XLOGLEVEL_INFOR,/*_T("IP为空")*/g_sLangTxt_Native_IPIsEmpty);
+#else
 		CLogPrint::LogString(XLOGLEVEL_INFOR,_T("IP为空"));
+#endif
 		return;
 	}
 
@@ -205,7 +234,12 @@ void CSttRemoteScanConfigDlg::OnBtnClickConnect()
 
 	if(!m_bConnect)
 	{
+#ifndef NOT_USE_XLANGUAGE
+		//MessageBox(/*_T("连接云端失败")*/g_sLangTxt_CloudConnectionFailed,/*_T("提示")*/g_sLangID_Message,MB_OK);
+		CLogPrint::LogString(XLOGLEVEL_INFOR, /*_T("连接云端失败")*/g_sLangTxt_Native_CloudConnectionFailed);
+#else
 		MessageBox(_T("连接云端失败"),_T("提示"),MB_OK);
+#endif
 		return;
 	}
 
@@ -242,7 +276,11 @@ void CSttRemoteScanConfigDlg::EnableButtons()
 
 	if (m_bConnect)
 	{
+#ifndef NOT_USE_XLANGUAGE
+		m_btnConnect.SetWindowText(/*_T("断链")*/g_sLangTxt_Native_Disconnection);
+#else
 		m_btnConnect.SetWindowText(_T("断链"));
+#endif
 
 		BOOL bEnable = (m_grid.GetCurrSelData() != NULL);
 		m_editCompany.GetWindowText(strCop);
@@ -265,7 +303,11 @@ void CSttRemoteScanConfigDlg::EnableButtons()
 	}
 	else
 	{
+#ifndef NOT_USE_XLANGUAGE
+		m_btnConnect.SetWindowText(/*_T("连接")*/g_sLangTxt_Native_Connect);
+#else
 		m_btnConnect.SetWindowText(_T("连接"));
+#endif
 		m_btnBind.EnableWindow(FALSE);
 		m_btnQuery.EnableWindow(FALSE);
 

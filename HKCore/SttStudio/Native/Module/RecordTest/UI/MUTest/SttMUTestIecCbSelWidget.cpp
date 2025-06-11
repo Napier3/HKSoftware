@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "SttMUTestIecCbSelWidget.h"
-#include "../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../../../Module/SmartCap/XSmartCapMngr.h"
 #include "../../../UI/SttTestCntrCmdDefine.h" 
 #include "../../../UI/SttTestCntrFrameBase.h" 
 #include "../SttIecRecordDetectWidget.h"

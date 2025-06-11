@@ -3,7 +3,7 @@
 #include "../SmartTestDefineInterface.h"
 
 #include "../../../Module/DataMngr/DataGroup.h"
-#include "../../../SttStudio/Module/SttCmd/SttCmdDefineGlobal.h"
+#include "../Module/SttCmd/SttCmdDefineGlobal.h"
 
 /*
 <ats-cmd name="" id="CreateTest" testor="">

@@ -335,6 +335,9 @@ void stt_binary_serialize(PST_MODULE_ATTR  pPara,  CBinarySerialBuffer &oBinaryB
 		BinarySerializeCalLen(oBinaryBuffer, pPara->m_nSwitchIn[7]);
 		BinarySerializeCalLen(oBinaryBuffer, pPara->m_fDefChMax);
 		BinarySerializeCalLen(oBinaryBuffer, pPara->m_fDefChDcMax);
+		BinarySerializeCalLen(oBinaryBuffer, pPara->m_nDefChannelNum);
+		BinarySerializeCalLen(oBinaryBuffer, pPara->m_nDAChanNum);
+		BinarySerializeCalLen(oBinaryBuffer, pPara->m_nFiberPortNum_LC_G);
     }
 	else if (oBinaryBuffer.IsWriteMode())
     {
@@ -367,6 +370,9 @@ void stt_binary_serialize(PST_MODULE_ATTR  pPara,  CBinarySerialBuffer &oBinaryB
 		BinarySerializeWrite(oBinaryBuffer, pPara->m_nSwitchIn[7]);
 		BinarySerializeWrite(oBinaryBuffer, pPara->m_fDefChMax);
 		BinarySerializeWrite(oBinaryBuffer, pPara->m_fDefChDcMax);
+		BinarySerializeWrite(oBinaryBuffer, pPara->m_nDefChannelNum);
+		BinarySerializeWrite(oBinaryBuffer, pPara->m_nDAChanNum);
+		BinarySerializeWrite(oBinaryBuffer, pPara->m_nFiberPortNum_LC_G);
     }
 	else if (oBinaryBuffer.IsReadMode())
     {
@@ -393,22 +399,36 @@ void stt_binary_serialize(PST_MODULE_ATTR  pPara,  CBinarySerialBuffer &oBinaryB
         BinarySerializeRead(oBinaryBuffer, pPara->m_nSwitchIn[2]);
         BinarySerializeRead(oBinaryBuffer, pPara->m_nSwitchIn[3]);
 		BinarySerializeRead(oBinaryBuffer, pPara->m_nChTypeChg);
-		if(pPara->m_dwVersion > STT_ADJUST_MODULE_PARA_VERSION_1)
+		if(pPara->m_dwVersion <= STT_ADJUST_MODULE_PARA_VERSION_1)
 		{
+			return;
+		}
+
 			BinarySerializeRead(oBinaryBuffer, pPara->m_nSwitchIn[4]);
 			BinarySerializeRead(oBinaryBuffer, pPara->m_nSwitchIn[5]);
 			BinarySerializeRead(oBinaryBuffer, pPara->m_nSwitchIn[6]);
 			BinarySerializeRead(oBinaryBuffer, pPara->m_nSwitchIn[7]);
-			if(pPara->m_dwVersion > STT_ADJUST_MODULE_PARA_VERSION_2)
+		if(pPara->m_dwVersion <= STT_ADJUST_MODULE_PARA_VERSION_2)
 			{
+			return;
+		}
+
 				BinarySerializeRead(oBinaryBuffer, pPara->m_fDefChMax);
 				BinarySerializeRead(oBinaryBuffer, pPara->m_fDefChDcMax);
-				if(pPara->m_dwVersion > STT_ADJUST_MODULE_PARA_VERSION_3)
+		if(pPara->m_dwVersion <= STT_ADJUST_MODULE_PARA_VERSION_3)
 				{
-
-				}
-			}
+			return;
 		}
+
+		BinarySerializeRead(oBinaryBuffer, pPara->m_nDefChannelNum);
+		BinarySerializeRead(oBinaryBuffer, pPara->m_nDAChanNum);
+
+		if(pPara->m_dwVersion <= STT_ADJUST_MODULE_PARA_VERSION_4)
+		{
+			return;
+				}
+
+		BinarySerializeRead(oBinaryBuffer, pPara->m_nFiberPortNum_LC_G);
     }
     else
     {

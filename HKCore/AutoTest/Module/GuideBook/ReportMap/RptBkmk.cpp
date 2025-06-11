@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "RptBkmk.h"
 
 #ifdef _DEBUG

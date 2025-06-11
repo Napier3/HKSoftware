@@ -1,5 +1,5 @@
 #pragma once
-#include "../../../module/baseclass/exbaselist.h"
+#include "ExBaseList.h"
 #include "PpPackageSend.h"
 
 class CPpPackageSendMngr :	public CExBaseList

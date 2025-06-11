@@ -1,7 +1,7 @@
 #ifndef _CRingMemBuf_h__
 #define _CRingMemBuf_h__
 
-//#include "../../Module/CriticalSection/SynCriticalSection.h"
+//#include "../../../Module/CriticalSection/SynCriticalSection.h"
 #include "SttRcdBufferRcvMsg.h"
 
 #define DEFAULT_CIRCLEBUF_LEN	20480000

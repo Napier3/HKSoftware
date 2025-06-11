@@ -8,7 +8,7 @@
 #include "stdafx.h"
 #include "SttSysState.h"
 #ifndef NOT_USE_XLANGUAGE
-//#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+//#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../../AutoTest/Module/XLanguageResourceAts.h"
 #endif
 

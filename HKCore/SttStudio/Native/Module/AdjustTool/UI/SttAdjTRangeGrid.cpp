@@ -5,6 +5,9 @@
 #include "stdafx.h"
 #include "SttAdjTRangeGrid.h"
 #include "..\SttAdjBase.h"
+#ifndef NOT_USE_XLANGUAGE
+#include "..\..\..\Local\SttAdjMain\XLanguageResource_SttAdjMain.h"
+#endif
 
 CSttAdjTRangeGrid::CSttAdjTRangeGrid()
 {
@@ -34,7 +37,11 @@ void CSttAdjTRangeGrid::InitGrid()
 
 void CSttAdjTRangeGrid::InitGridTitle()
 {
+#ifndef NOT_USE_XLANGUAGE
+	CString astrTitle[3] = {/*_T("±àºÅ")*/g_sLangTxt_Index,/*_T("ÎÂÇø")*/g_sLangTxt_SttAdjMain_TempZone,/*_T("ÎÂ¶È")*/g_sLangTxt_SttAdjMain_Temp};
+#else
 	CString astrTitle[3] = {_T("±àºÅ"),_T("ÎÂÇø"),_T("ÎÂ¶È")};
+#endif
 	CString astrAttrs[3] = {_T(""),_T("Name"), _T("Temperature")};
 	int nWidth[3]={40,80,80};
 

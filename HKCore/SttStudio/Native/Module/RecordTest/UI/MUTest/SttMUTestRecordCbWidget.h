@@ -4,10 +4,10 @@
 #include <QDialog>
 #include <QFont>
 #include "../SttIecCbGrid.h"
-#include "XWndInterface.h"
-#include "../../Module/DataMngr/DataTypes.h"
+#include "../../../../../Module/OSInterface/XWndInterface.h"
+#include "../../../../../Module/DataMngr/DataTypes.h"
 #include "../SttIecRcdFuncInterface.h"
-#include "../../Module/CriticalSection/SynCriticalSection.h"
+#include "../../../../../Module/CriticalSection/SynCriticalSection.h"
 #include "../../../UI/Module/ScrollCtrl/ScrollComboBox.h"
 #include "SttIecRecordCbInterface.h"
 #include "../SttIecSmvWaveWidget.h"

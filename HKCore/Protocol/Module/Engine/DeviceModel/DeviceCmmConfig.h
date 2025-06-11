@@ -1,6 +1,6 @@
 #pragma once
-#include "../../../../module/baseclass/exbaselist.h"
-#include "../../../../module/DataMngr/DataGroup.h"
+#include "ExBaseList.h"
+#include "../../../Module/DataMngr/DataGroup.h"
 #include "DeviceClassIDDefine.h"
 
 #include "CmmNetConfig.h"

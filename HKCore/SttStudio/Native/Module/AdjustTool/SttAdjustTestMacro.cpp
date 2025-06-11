@@ -8,7 +8,9 @@
 #include "SttAdjustTestMacro.h"
 
 #include "..\..\..\Module\API\FileApi.h"
-
+#ifndef NOT_USE_XLANGUAGE
+#include "..\..\Local\SttAdjMain\XLanguageResource_SttAdjMain.h"
+#endif
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
@@ -377,7 +379,11 @@ void CSttAdjTest_ModuleOutput::SetChannelCount(long nChannelCount)
 	for (nIndex=nCount; nIndex<nChannelCount; nIndex++)
 	{
 		pNew = (CDataGroup*)pChannel->Clone();
+#ifndef NOT_USE_XLANGUAGE
+		pNew->m_strName.Format(/*_T("通道%d")*/g_sLangTxt_SttAdjMain_ChannelFormat, nIndex+1);
+#else
 		pNew->m_strName.Format(_T("通道%d"), nIndex+1);
+#endif
 		pNew->m_strID.Format(_T("Ch%d"), nIndex);
 		m_listGroupChannels.AddTail(pNew);
 		m_pFaultParas->AddNewChild(pNew);

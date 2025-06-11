@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "GbParaTypeMngr.h"
 #include "GbXMLKeys.h"
 #include "../XLanguageResourceAts.h"

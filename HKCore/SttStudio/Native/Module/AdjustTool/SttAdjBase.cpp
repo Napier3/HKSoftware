@@ -6,7 +6,9 @@
 
 #include "stdafx.h"
 #include "SttAdjBase.h"
-
+#ifndef NOT_USE_XLANGUAGE
+#include "../XLangResource_Native.h"
+#endif
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -23,6 +25,8 @@ CSttAdjBase::CSttAdjBase()
 	m_nBoutCount = 8;
 	m_nSTModeSet = 0;
 	m_nUartCount = 6;
+	m_nBinVoltMeas = 0;
+	m_nMergeCurTerminal = -1;
 
 	//初始化成员变量
   
@@ -290,7 +294,11 @@ CDataGroup *CSttAdjBase::GenerateDBCommAttrs(BOOL bModel)
 CDataGroup *CSttAdjBase::AddNewDeviceModelByVersionViewCfg(CDataGroup *pVersionViewCfgGroup)
 {
 	CDataGroup *pDevice = new CDataGroup;
+#ifndef NOT_USE_XLANGUAGE
+	CDataGroup *pDeviceAttr = pDevice->AddNewGroup(/*_T("装置属性")*/g_sLangTxt_State_ApplianceProperties,"DeviceAttrs","DeviceAttrs");
+#else
 	CDataGroup *pDeviceAttr = pDevice->AddNewGroup(_T("装置属性"),"DeviceAttrs","DeviceAttrs");
+#endif
 	AddDeviceAttrsByVersionViewCfg(pVersionViewCfgGroup,pDeviceAttr);
 	AddAllModuleAttrsByVersionViewCfg(pVersionViewCfgGroup,pDevice);
 	return pDevice;
@@ -347,21 +355,37 @@ void CSttAdjBase::AddAllModuleAttrsByVersionViewCfg(CDataGroup *pConfigFile,CDat
 	CExBaseObject *pCurrObj = NULL;
 	CDataGroup *pCurrModuleAttrs = NULL,*pModuleGroup = NULL,*pNewModuleAttrs = NULL;
 	POS pos = m_pSttAdjRef->GetHeadPosition();
-
+	int nIndex = 0;
+	CString strID;
 	while (pos)
 	{
 		pCurrObj = m_pSttAdjRef->GetNext(pos);
 
-		if (pCurrObj->m_strID != _T("Module"))
+		if (pCurrObj->GetClassID() != DTMCLASSID_CDATAGROUP)
+		{
+			continue;
+		}
+	
+		pModuleGroup = (CDataGroup*)pCurrObj;
+
+		if (pModuleGroup->m_strDataType != _T("Module"))
 		{
 			continue;
 		}
 
-		pModuleGroup = (CDataGroup*)pCurrObj;
 		pCurrModuleAttrs = (CDataGroup*)pModuleGroup->FindByID(_T("ModuleAttrs"));
+		
+		strID.Format(_T("Module%d"),nIndex);
+
+#ifndef NOT_USE_XLANGUAGE
+		pModuleGroup = pDevice->AddNewGroup(/*_T("模块")*/g_sLangTxt_Module ,/*"Module"*/strID,"Module");
+		pNewModuleAttrs = pModuleGroup->AddNewGroup(/*_T("模块属性")*/g_sLangTxt_State_ApplianceProperties,_T("ModuleAttrs"),_T("ModuleAttrs"));
+#else
 		pModuleGroup = pDevice->AddNewGroup(_T("模块"),"Module","Module");
 		pNewModuleAttrs = pModuleGroup->AddNewGroup(_T("模块属性"),_T("ModuleAttrs"),_T("ModuleAttrs"));
+#endif
 		GetModuleAttrDataByConfig(pModuleGroup_Cfg,pCurrModuleAttrs,pNewModuleAttrs);
+		nIndex++;
 	}
 }
 
@@ -369,10 +393,12 @@ void CSttAdjBase::GetModuleAttrDataByConfig(CDataGroup *pModuleGroup_Cfg,CDataGr
 {
 	POS pos = pModuleGroup_Cfg->GetHeadPosition();
 	CDvmData *pModuleAttrCfg = NULL,*pCurrModuleAttr = NULL;
-
+	CExBaseObject *pObject = NULL;
 	while(pos)
 	{
-		pModuleAttrCfg = (CDvmData *)pModuleGroup_Cfg->GetNext(pos);
+		pObject = pModuleGroup_Cfg->GetNext(pos);
+
+		pModuleAttrCfg = (CDvmData *)pObject;
 		pCurrModuleAttr = (CDvmData *)pCurrModuleAttrs->FindByID(pModuleAttrCfg->m_strID);
 
 		if (pCurrModuleAttr == NULL)
@@ -390,6 +416,16 @@ void stt_adj_init_cmb_hdgear_type(CComboBox *pComboBox)
 {
 
 	long nIndex = 0;
+#ifndef NOT_USE_XLANGUAGE
+		nIndex = pComboBox->AddString(/*"独立直流电流通道硬件档位"*/g_sLangTxt_Native_IndepDCCurrChHWRange);
+		pComboBox->SetItemData(nIndex, 0);
+
+		nIndex = pComboBox->AddString(/*"独立直流电压通道硬件档位"*/g_sLangTxt_Native_IndepDCVolChHWRange);
+		pComboBox->SetItemData(nIndex, 1);
+
+		nIndex = pComboBox->AddString(/*"模块通道档位"*/g_sLangTxt_Native_ModChRange);
+		pComboBox->SetItemData(nIndex, 2);
+#else
 	nIndex = pComboBox->AddString("独立直流电流通道硬件档位");
 	pComboBox->SetItemData(nIndex, 0);
 
@@ -398,6 +434,7 @@ void stt_adj_init_cmb_hdgear_type(CComboBox *pComboBox)
 
 	nIndex = pComboBox->AddString("模块通道档位");
 	pComboBox->SetItemData(nIndex, 2);
+#endif
 
 	pComboBox->SetCurSel(nIndex);
 }
@@ -436,17 +473,29 @@ void stt_adj_init_cmb_channel(CComboBox *pComboBox)
 	//暂时确定为6个通道，最大化，多少后续再完善
 	for (long nCh=0; nCh<6; nCh++)
 	{
+#ifndef NOT_USE_XLANGUAGE
+		strID.Format(/*_T("通道%d")*/g_sLangTxt_Native_ChnN, nCh+1);
+#else
 		strID.Format(_T("通道%d"), nCh+1);
+#endif
 		nIndex = pComboBox->AddString(strID);
 		pComboBox->SetItemData(nIndex, nCh);
 	}
 
 	nIndex = 6;
+#ifndef NOT_USE_XLANGUAGE
+	nIndex = pComboBox->AddString(/*"独立直流电流Idc"*/g_sLangTxt_Native_IndepDCCurrIdc);
+	pComboBox->SetItemData(nIndex,6);
+
+	nIndex = pComboBox->AddString(/*"独立直流电压Udc"*/g_sLangTxt_Native_IndepDCVolUdc);
+	pComboBox->SetItemData(nIndex, 7);
+#else
 	nIndex = pComboBox->AddString("独立直流电流Idc");
 	pComboBox->SetItemData(nIndex,6);
 
 	nIndex = pComboBox->AddString("独立直流电压Udc");
 	pComboBox->SetItemData(nIndex, 7);
+#endif
 
 	pComboBox->SetCurSel(0);
 }
@@ -483,17 +532,29 @@ void stt_adj_init_cmb_ch_wave(CComboBox *pComboBox, long nHarmCount)
 {
 	pComboBox->ResetContent();
 	long nIndex = 0;
+#ifndef NOT_USE_XLANGUAGE
+	nIndex = pComboBox->AddString(/*"直流"*/g_sLangTxt_Native_DC);
+	pComboBox->SetItemData(nIndex, 0);
+
+	nIndex = pComboBox->AddString(/*"基波"*/g_sLangTxt_Native_Fundamental);
+	pComboBox->SetItemData(nIndex, 1);
+#else
 	nIndex = pComboBox->AddString("直流");
 	pComboBox->SetItemData(nIndex, 0);
 
 	nIndex = pComboBox->AddString("基波");
 	pComboBox->SetItemData(nIndex, 1);
+#endif
 	CString strID;
 
 	//暂时确定为6个通道，最大化，多少后续再完善
 	for (long nHarm=2; nHarm<=nHarmCount; nHarm++)
 	{
+#ifndef NOT_USE_XLANGUAGE
+		strID.Format(/*_T("%d次谐波")*/g_sLangTxt_Native_NthHarmonic, nHarm);
+#else
 		strID.Format(_T("%d次谐波"), nHarm);
+#endif
 		nIndex = pComboBox->AddString(strID);
 		pComboBox->SetItemData(nIndex, nHarm);
 	}

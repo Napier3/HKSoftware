@@ -4,7 +4,7 @@
 
 #include "stdafx.h"
 #include "SttComplexp.h"
-#include"../../Module/API/MathApi.h"
+#include"../../../Module/API/MathApi.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -319,30 +319,41 @@ void CalABCValues_ByPowerValues_Double(double dUA_mag, double dUA_ang, double dI
     Apparent_PowerC = SetApparent_Power_ByAng(dUC_mag, dIC_mag);
     Total_Apparent_Power = Apparent_PowerA + Apparent_PowerB + Apparent_PowerC;
 }
-void CalABCValues_ByPowerValues_Float(float &dA_mag, float &dA_ang, float &dB_mag, float &dB_ang, float &dC_mag, float &dC_ang,
-									  float fPpower_dA, float fQpower_dA, float fAmp_dA, float fAngle_dA,
-									  float fPpower_dB, float fQpower_dB, float fAmp_dB, float fAngle_dB,
-									  float fPpower_dC, float fQpower_dC, float fAmp_dC, float fAngle_dC)
+//void CalABCValues_ByPowerValues_Float(float &dA_mag, float &dA_ang, float &dB_mag, float &dB_ang, float &dC_mag, float &dC_ang,
+//									  float fPpower_dA, float fQpower_dA, float fAmp_dA, float fAngle_dA,
+//									  float fPpower_dB, float fQpower_dB, float fAmp_dB, float fAngle_dB,
+//									  float fPpower_dC, float fQpower_dC, float fAmp_dC, float fAngle_dC)
+//{
+//	 dA_mag = sqrtf((fPpower_dA*fPpower_dA)+(fQpower_dA*fQpower_dA))/fAmp_dA;
+//	 dA_ang = fAngle_dA - atan2(fQpower_dA,fPpower_dA)* 180 / _PI;
+//
+//	 dB_mag = sqrtf((fPpower_dB*fPpower_dB)+(fQpower_dB*fQpower_dB))/fAmp_dB;
+//	 dB_ang = fAngle_dB - atan2(fQpower_dB,fPpower_dB)* 180 / _PI;
+//
+//	 dC_mag = sqrtf((fPpower_dC*fPpower_dC)+(fQpower_dC*fQpower_dC))/fAmp_dC;
+//	 dC_ang = fAngle_dC - atan2(fQpower_dC,fPpower_dC)* 180 / _PI;
+//
+//	 if(abs(fAmp_dA) < 1e-7)
+//	 {
+//        dA_mag = 0;
+//	 }
+//	 if(abs(fAmp_dB) < 1e-7)
+//	 {
+//		 dB_mag = 0;
+//	 }
+//	 if(abs(fAmp_dC) < 1e-7)
+//	 {
+//		 dC_mag = 0;
+//	 }
+//}
+
+void CalABCValues_ByPowerValues_Float(float &dA_mag, float &dA_ang,float fPpower, float fQpower, float fAmp, float fAngle)
 {
-	 dA_mag = sqrtf((fPpower_dA*fPpower_dA)+(fQpower_dA*fQpower_dA))/fAmp_dA;
-	 dA_ang = fAngle_dA - atan2(fQpower_dA,fPpower_dA)* 180 / _PI;
+	dA_mag = sqrtf((fPpower*fPpower)+(fQpower*fQpower))/fAmp;
+	dA_ang = fAngle - atan2(fQpower,fPpower)* 180 / _PI;
 
-	 dB_mag = sqrtf((fPpower_dB*fPpower_dB)+(fQpower_dB*fQpower_dB))/fAmp_dB;
-	 dB_ang = fAngle_dB - atan2(fQpower_dB,fPpower_dB)* 180 / _PI;
-
-	 dC_mag = sqrtf((fPpower_dC*fPpower_dC)+(fQpower_dC*fQpower_dC))/fAmp_dC;
-	 dC_ang = fAngle_dC - atan2(fQpower_dC,fPpower_dC)* 180 / _PI;
-
-	 if(abs(fAmp_dA) < 1e-7)
+	if(abs(fAmp) < 1e-7)
 	 {
         dA_mag = 0;
-	 }
-	 if(abs(fAmp_dB) < 1e-7)
-	 {
-		 dB_mag = 0;
-	 }
-	 if(abs(fAmp_dC) < 1e-7)
-	 {
-		 dC_mag = 0;
 	 }
 }

@@ -240,19 +240,16 @@ void stt_xml_serialize(tmt_ReplayParas *pParas, CSttXmlSerializeBase *pXmlSieria
 	}
 
 	//开出量模块
-	pXmlSierialize->xml_serialize("使用主板开出量","UseBinaryModule","","BOOL",pParas->m_bUseBinaryModule);
-	
-	if(stt_xml_serialize_is_write(pXmlSierialize))
-	{
-		if(pParas->m_bUseBinaryModule == 1)
+	pXmlSierialize->xml_serialize("开出量回放方式","BoutReplayModel","","BOOL",pParas->m_nBoutReplayModel);
+	pXmlSierialize->xml_serialize("延时时间","DelayTime","s","number",pParas->m_fDelayTime);
+	pXmlSierialize->xml_serialize("保持时间","HoldTime","s","number",pParas->m_fHoldTime);
+
+	if(pParas->m_nBoutReplayModel == BOUT_REPLAY_MODEL_DELAY_TRIGGER)
 		{
-			stt_xml_serialize_module_Binary(&pParas->m_oBinaryModule,pXmlSierialize);
-		}
+		pParas->m_bUseBinaryModule = 0;
 	}
-	else
-	{
+	pXmlSierialize->xml_serialize("使用主板开出量","UseBinaryModule","","BOOL",pParas->m_bUseBinaryModule);
 	stt_xml_serialize_module_Binary(&pParas->m_oBinaryModule,pXmlSierialize);
-	}
 
 
 #ifdef NOT_USE_XLANGUAGE
@@ -305,14 +302,23 @@ void stt_xml_serialize(tmt_ReplayParas *pParas, CSttXmlSerializeBase *pXmlSieria
 	int nTimeZero[REPLAY_ACTIONTIMEZERO_COUNT] = {1,2,3,4};
 	for(i = 0; i < REPLAY_ACTIONTIMEZERO_COUNT; i++)
 	{
-		sprintf(chName, "动作时间计时起点%d选择", nTimeZero[i]);
+		sprintf(chName, "动作时间计时起点%d勾选状态", nTimeZero[i]);
+		sprintf(chID, "ActionTimeZeroSelect%ld", nTimeZero[i]);
+		//计时起点是否勾选
+		pXmlSierialize->xml_serialize(chName,chID,"s","number",pParas->m_ActionTimeZero[i].m_nSelActionTime);
+		sprintf(chName, "动作时间计时起点%d", nTimeZero[i]);
 		sprintf(chID, "ActionTimeZero%ld", nTimeZero[i]);
-		pXmlSierialize->xml_serialize(chName,chID,"s","number",pParas->m_frActionTimeZero[i]);
+		pXmlSierialize->xml_serialize(chName,chID,"s","number",pParas->m_ActionTimeZero[i].m_fActionTimeZero);
 	}
 
 	stt_xml_serialize_Exbinary_in(pParas->m_binInEx,pXmlSierialize);
 
 	stt_xml_serialize_binary_out(pParas->m_binOut, pXmlSierialize);
+	pXmlSierialize->xml_serialize("开出量回放方式", "BoutReplayModel","","number",pParas->m_nBoutReplayModel);
+	pXmlSierialize->xml_serialize("保持时间", "HoldTime","","number",pParas->m_fHoldTime);
+	pXmlSierialize->xml_serialize("动作时间开入逻辑", "DelayTime","","number",pParas->m_fDelayTime);
+
+	
 	stt_xml_serialize_Exbinary_out(pParas->m_binOutEx, pXmlSierialize);
 
 }
@@ -376,6 +382,30 @@ void stt_xml_serialize_act_rcd(tmt_ReplayResult *pResult, CSttXmlSerializeBase *
             }
         }
     }
+}
+
+void stt_xml_serialize_rslt_evalution(tmt_ReplayResult *pResults, CSttXmlSerializeBase *pXmlSierialize)
+{
+	CSttXmlSerializeBase *pXmlRslt_evalution = pXmlSierialize->xml_serialize("rslt_evaluation", "rslt_evaluation", "rslt_evaluation", stt_ParaGroupKey());
+	if (pXmlRslt_evalution != NULL)
+	{
+		CString strId;
+		for (int nIndex = 0; nIndex < REPLAY_ACTIONTIMEZERO_COUNT; nIndex++)
+		{
+			strId.Format(_T("Action%d"), nIndex + 1);
+			CSttXmlSerializeBase *pXmlAction = pXmlRslt_evalution->xml_serialize("", strId.GetString(), "Action", stt_ParaGroupKey());
+			if (pXmlAction != NULL)
+			{
+				pXmlAction->xml_serialize("", "Act","","long", pResults->m_nAction[nIndex]);
+				pXmlAction->xml_serialize("", "Time", "", "number", pResults->m_fActionTime[nIndex]);
+				for (int i = 0; i < MAX_BINARYIN_COUNT; i++)
+				{
+					strId.Format(_T("Bin%dActTime"), i + 1);
+					pXmlAction->xml_serialize("", strId.GetString(), "", "number", pResults->m_fActionBinAct[nIndex][i]);
+				}
+			}
+		}
+	}
 }
 
 void stt_xml_serialize(tmt_ReplayResult *pResult,  CSttXmlSerializeBase *pXmlSierialize)
@@ -527,6 +557,7 @@ void stt_xml_serialize(tmt_ReplayResult *pResult,  CSttXmlSerializeBase *pXmlSie
         }
     }
 
+	stt_xml_serialize_rslt_evalution(pResult,pXmlSierialize);
     stt_xml_serialize_act_rcd(pResult,pXmlSierialize);
 }
 
@@ -551,7 +582,7 @@ CSttXmlSerializeBase* stt_xml_serialize( tmt_ReplayTest *pTests, CSttXmlSerializ
 
 
 #include"../../SttCmd/SttTestCmd.h"
-#include"../../Module/API/GlobalConfigApi.h"
+#include"../../../Module/API/GlobalConfigApi.h"
 void stt_xml_serialize_write_ReplayTest()
 {
     tmt_ReplayParas oReplayTest;

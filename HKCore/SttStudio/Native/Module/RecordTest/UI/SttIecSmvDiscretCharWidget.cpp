@@ -1,6 +1,6 @@
 #include "SttIecSmvDiscretCharWidget.h"
 #include <qwt_plot_grid.h>
-#include "../../Module/SmartCap/61850Cap/CapDevice/CapAnalysisConfig.h"
+#include "../../../../Module/SmartCap/61850Cap/CapDevice/CapAnalysisConfig.h"
 #include "../../XLangResource_Native.h"
 
 QSttIecSmvDiscretCharWidget::QSttIecSmvDiscretCharWidget(QWidget* parent)

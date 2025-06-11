@@ -4,11 +4,11 @@
 //////////////////////////////////////////////////////////////////////////
 
 //整定和结果评估界面 行列
-#define FG_EstimateRow		8
+#define FG_EstimateRow		7
 #define FG_EstimateCol		5
 
 //FG  FaultGradient  故障递变
-//测试返回会类型  
+//测试返回类型  
 enum SttFaultGradientTestMode
 {
 	FG_TestMode_ActValue = 0,		//动作值
@@ -104,6 +104,7 @@ public:
 	///////////////
 	int	  m_nFaultMode;							//故障模式    m_nChannel
 	int	  m_nChangeValue;						//变化量	  m_nType
+	int	  m_nVarIndexType;						//0=电压 1=电流 2=阻抗角 3=短路阻抗 4=频率 5=返回系数 6=最大灵敏角 
 	float m_fShortVm;							//短路电压
 	int   m_nShortVmType;						//短路电压
 	float m_fShortVa;							//短路电流
@@ -126,12 +127,13 @@ public:
 	//定值
 	float m_fUSet;								//电压整定动作值
 	float m_fISet;								//电流整定动作值
-	float m_fAngleSet;							//相位整定动作值
+	float m_fImpAngleSet;						//阻抗角整定动作值
+	float m_fShortZImp;							//短路阻抗整定动作值
 	float m_fHzSet;								//频率整定动作值
-	float m_fRetCoefSet;						//返回系数整定值
 	float m_fAngleFSet;							//边界角1整定值
 	float m_fAngleSSet;							//边界角2整定值
 	float m_fMaxAngleSet;						//最大灵敏角整定值
+	float m_fRetCoefSet;						//返回系数整定值
 
 	//评估
 	float m_fUActVal_AbsErr; 					//电压动作值绝对误差
@@ -140,24 +142,29 @@ public:
 	float m_fIActVal_AbsErr; 					//电流动作值绝对误差 		
 	float m_fIActVal_RelErr; 					//电流动作值相对误差 		
 	long m_nIActVal_ErrorLogic; 				//电流动作值误差判断逻辑 	
-	float m_fAngleActVal_AbsErr; 				//相位动作值绝对误差 		
-	float m_fAngleActVal_RelErr; 				//相位动作值相对误差 		
-	long m_nAngleActVal_ErrorLogic; 			//相位动作值误差判断逻辑 	
+	float m_fImpAngleActVal_AbsErr; 				//阻抗角动作值绝对误差 		
+	float m_fImpAngleActVal_RelErr; 				//阻抗角动作值相对误差 		
+	long m_nImpAngleActVal_ErrorLogic; 			//阻抗角动作值误差判断逻辑 	
+	float m_fShortZImpActVal_AbsErr; 				//短路阻抗动作值绝对误差 		
+	float m_fShortZImpActVal_RelErr; 				//短路阻抗动作值相对误差 		
+	long m_nShortZImpActVal_ErrorLogic; 			//短路阻抗动作值误差判断逻辑 	
 	float m_fHzActVal_AbsErr; 					//频率动作值绝对误差 		
 	float m_fHzActVal_RelErr; 					//频率动作值相对误差 		
 	long m_nHzActVal_ErrorLogic; 				//频率动作值误差判断逻辑 	
-	float m_fRetCoef_AbsErr; 					//返回系数绝对误差 		
-	float m_fRetCoef_RelErr;					//返回系数相对误差 		
-	long m_nRetCoef_ErrorLogic; 				//返回系数误差判断逻辑 	
-	float m_fMaxAngle_AbsErr; 					//最大灵敏角绝对误差		
-	float m_fMaxAngle_RelErr; 					//最大灵敏角相对误差 		
-	long m_nMaxAngle_ErrorLogic; 				//最大灵敏角误差判断逻辑	
 	float m_fAngleF_AbsErr; 					//边界角1绝对误差			
 	float m_fAngleF_RelErr; 					//边界角1相对误差			
 	long m_nAngleF_ErrorLogic; 					//边界角1误差判断逻辑 		
 	float m_fAngleS_AbsErr; 					//边界角2绝对误差 			
 	float m_fAngleS_RelErr; 					//边界角2相对误差 			
-	long m_nAngleS_ErrorLogic; 					//边界角2误差判断逻辑		
+	long m_nAngleS_ErrorLogic; 					//边界角2误差判断逻辑
+	float m_fMaxAngle_AbsErr; 					//最大灵敏角绝对误差		
+	float m_fMaxAngle_RelErr; 					//最大灵敏角相对误差 		
+	long m_nMaxAngle_ErrorLogic; 				//最大灵敏角误差判断逻辑
+	float m_fRetCoef_AbsErr; 					//返回系数绝对误差 		
+	float m_fRetCoef_RelErr;					//返回系数相对误差 		
+	long m_nRetCoef_ErrorLogic; 				//返回系数误差判断逻辑 	
+	
+	
 	/////////////////////////
 
 	void init()
@@ -170,6 +177,7 @@ public:
 
 		m_nFaultMode = FG_FaultMode_A;
 		m_nChangeValue = FG_FM_Vaule_ShortVM;
+		m_nVarIndexType = 0;
 		m_fShortVm = 0;
 		m_nShortVmType = FG_Type_VM_Plus;
 		m_fShortVa = 0;
@@ -189,15 +197,13 @@ public:
 			{
 				m_binOut[j][i].init();
 			}
-		}
-
+		}	
 		m_fUSet = 0;		
 		m_fISet = 0;		
-		m_fAngleSet = 30;	
+		m_fImpAngleSet = 30;
 		m_fHzSet = 50;
+		m_fShortZImp = 0;
 		m_fRetCoefSet = 0;	
-		m_fAngleFSet = 0;	
-		m_fAngleSSet = 0;	
 		m_fMaxAngleSet = 0;	
 
 		m_fUActVal_AbsErr = 0;
@@ -206,24 +212,27 @@ public:
 		m_fIActVal_AbsErr = 0;
 		m_fIActVal_RelErr = 0;
 		m_nIActVal_ErrorLogic = 0;
-		m_fAngleActVal_AbsErr = 0;
-		m_fAngleActVal_RelErr = 0;
-		m_nAngleActVal_ErrorLogic = 0;
+		m_fImpAngleActVal_AbsErr = 0;
+		m_fImpAngleActVal_RelErr = 0;
+		m_nImpAngleActVal_ErrorLogic = 0;
+		m_fShortZImpActVal_AbsErr = 0;
+		m_fShortZImpActVal_RelErr = 0;
+		m_nShortZImpActVal_ErrorLogic = 0;
 		m_fHzActVal_AbsErr = 0;		
 		m_fHzActVal_RelErr = 0;		
-		m_nHzActVal_ErrorLogic = 0;		
-		m_fRetCoef_AbsErr = 0; 		
-		m_fRetCoef_RelErr = 0;		
-		m_nRetCoef_ErrorLogic = 0;	
+		m_nHzActVal_ErrorLogic = 0;
+		m_fAngleF_AbsErr = 0;
+		m_fAngleF_RelErr = 0;
+		m_nAngleF_ErrorLogic = 0;
+		m_fAngleS_AbsErr = 0;
+		m_fAngleS_RelErr = 0;
+		m_nAngleS_ErrorLogic = 0;
 		m_fMaxAngle_AbsErr = 0;		
 		m_fMaxAngle_RelErr = 0;		
 		m_nMaxAngle_ErrorLogic = 0; 	
-		m_fAngleF_AbsErr = 0;		
-		m_fAngleF_RelErr = 0;		
-		m_nAngleF_ErrorLogic = 0;	
-		m_fAngleS_AbsErr = 0; 		
-		m_fAngleS_RelErr = 0; 		
-		m_nAngleS_ErrorLogic = 0;
+		m_fRetCoef_AbsErr = 0;
+		m_fRetCoef_RelErr = 0;
+		m_nRetCoef_ErrorLogic = 0;
 	}
 
 	tmt_fault_gradient_paras()	{}
@@ -277,14 +286,17 @@ public:
 	float m_fTripUErrVal;						//电压动作值误差
 	float m_fTripIErrVal;						//电流动作值误差
 	float m_fTripHzErrVal;						//频率动作值误差
-	float m_fTripAngleErrVal;					//相位动作值误差
-	float m_fRetCoefErrVal;						//返回系数误差
+	float m_fImpAngleErrVal;					//阻抗角动作值误差
+	float m_fShortZImp;							//短路阻抗动作值误差
+	float m_fAngleF;							//边界角1
+	float m_fAngleS;							//边界角2
 	float m_fMaxAngleErrVal;					//最大灵敏角误差
-	float m_fAngleFErrVal;						//边界角1误差
-	float m_fAngleSErrVal;						//边界角2误差
+	float m_fRetCoefErrVal;						//返回系数误差
 
 	void init()
 	{
+		m_fAngleF = 0;
+		m_fAngleS = 0;
 		m_fTripValue = 0;
 		m_fTripTime = 0;
 		m_fReturnValue = 0;
@@ -296,11 +308,9 @@ public:
 		m_fTripUErrVal = 0;
 		m_fTripIErrVal = 0;
 		m_fTripHzErrVal = 0;
-		m_fTripAngleErrVal = 0;
+		m_fImpAngleErrVal = 0;
 		m_fRetCoefErrVal = 0;
 		m_fMaxAngleErrVal = 0;
-		m_fAngleFErrVal = 0;
-		m_fAngleSErrVal = 0;
 
 		for(int i=0; i<MAX_BINARYIN_COUNT; i++)
 		{

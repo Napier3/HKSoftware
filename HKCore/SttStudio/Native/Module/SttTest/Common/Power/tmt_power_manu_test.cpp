@@ -28,63 +28,28 @@ void stt_xml_serialize(tmt_PowerManuParas *pParas, CSttXmlSerializeBase *pXmlSie
 
 void stt_xml_serialize(tmt_PowerManuParas *pParas, CSttXmlSerializeBase *pXmlSierialize, long nVoGroupNum, long nCurGroupNum)
 {
-	//新版序列化,U1~U18,i1~i18
-	CString strID;
+	pXmlSierialize->xml_serialize("", "Ua", "V", "number", pParas->m_uiVOL[0].Harm[1].fAmp);
+	pXmlSierialize->xml_serialize("", "UaPh", "°", "number", pParas->m_uiVOL[0].Harm[1].fAngle);
+	pXmlSierialize->xml_serialize("", "Ub", "V", "number", pParas->m_uiVOL[1].Harm[1].fAmp);
+	pXmlSierialize->xml_serialize("", "UbPh", "°", "number", pParas->m_uiVOL[1].Harm[1].fAngle);
+	pXmlSierialize->xml_serialize("", "Uc", "V", "number", pParas->m_uiVOL[2].Harm[1].fAmp);
+	pXmlSierialize->xml_serialize("", "UcPh", "°", "number", pParas->m_uiVOL[2].Harm[1].fAngle);
+	pXmlSierialize->xml_serialize("", "U0", "V", "number", pParas->m_uiVOL[3].Harm[1].fAmp);
+	pXmlSierialize->xml_serialize("", "U0Ph", "°", "number", pParas->m_uiVOL[3].Harm[1].fAngle);
 
-	if(nVoGroupNum > 1/*(MAX_VOLTAGE_COUNT / 3)*/)
-	{
-		nVoGroupNum = 1/*MAX_VOLTAGE_COUNT / 3*/;
-	}
-
-	for(int nIndex = 0; nIndex < nVoGroupNum; nIndex++)
-	{
-		strID.Format(_T("Ua"), nIndex + 1);
-		pXmlSierialize->xml_serialize("", strID.GetString(), "V", "number", pParas->m_uiVOL[nIndex * 3].Harm[1].fAmp);
-		strID.Format(_T("UaPh"), nIndex + 1);
-		pXmlSierialize->xml_serialize("", strID.GetString(), "°", "number", pParas->m_uiVOL[nIndex * 3].Harm[1].fAngle);
-		strID.Format(_T("Ub"), nIndex + 1);
-		pXmlSierialize->xml_serialize("", strID.GetString(), "V", "number", pParas->m_uiVOL[nIndex * 3 + 1].Harm[1].fAmp);
-		strID.Format(_T("UbPh"), nIndex + 1);
-		pXmlSierialize->xml_serialize("", strID.GetString(), "°", "number", pParas->m_uiVOL[nIndex * 3 + 1].Harm[1].fAngle);
-		strID.Format(_T("Uc"), nIndex + 1);
-		pXmlSierialize->xml_serialize("", strID.GetString(), "V", "number", pParas->m_uiVOL[nIndex * 3 + 2].Harm[1].fAmp);
-		strID.Format(_T("UcPh"), nIndex + 1);
-		pXmlSierialize->xml_serialize("", strID.GetString(), "°", "number", pParas->m_uiVOL[nIndex * 3 + 2].Harm[1].fAngle);
-		strID.Format(_T("U0"), nIndex + 1);
-		pXmlSierialize->xml_serialize("", strID.GetString(), "V", "number", pParas->m_uiVOL[nIndex * 3 + 3].Harm[1].fAmp);
-		strID.Format(_T("U0Ph"), nIndex + 1);
-		pXmlSierialize->xml_serialize("", strID.GetString(), "°", "number", pParas->m_uiVOL[nIndex * 3 + 3].Harm[1].fAngle);
-
-
-	}
-
-	for(int nIndex = 0; nIndex < nVoGroupNum; nIndex++)
-	{
-		strID.Format(_T("Sa"), nIndex + 1);
-		pXmlSierialize->xml_serialize("", strID.GetString(), "W", "number", pParas->m_uiPOW[nIndex * 3].m_fPpower);
-		strID.Format(_T("SaQ"), nIndex + 1);
-		pXmlSierialize->xml_serialize("", strID.GetString(), "Var", "number", pParas->m_uiPOW[nIndex * 3].m_fQpower);
-		strID.Format(_T("SaF"), nIndex + 1);
-		pXmlSierialize->xml_serialize("", strID.GetString(), "", "number", pParas->m_uiPOW[nIndex * 3].m_fQpower);
-		strID.Format(_T("Sb"), nIndex + 1);
-		pXmlSierialize->xml_serialize("", strID.GetString(), "W", "number", pParas->m_uiPOW[nIndex * 3 + 1].m_fPpower);
-		strID.Format(_T("SbQ"), nIndex + 1);
-		pXmlSierialize->xml_serialize("", strID.GetString(), "Var", "number", pParas->m_uiPOW[nIndex * 3 + 1].m_fQpower);
-		strID.Format(_T("SbF"), nIndex + 1);
-		pXmlSierialize->xml_serialize("", strID.GetString(), "", "number", pParas->m_uiPOW[nIndex * 3 + 1].m_fQpower);
-		strID.Format(_T("Sc"), nIndex + 1);
-		pXmlSierialize->xml_serialize("", strID.GetString(), "W", "number", pParas->m_uiPOW[nIndex * 3 + 2].m_fPpower);
-		strID.Format(_T("ScQ"), nIndex + 1);
-		pXmlSierialize->xml_serialize("", strID.GetString(), "Var", "number", pParas->m_uiPOW[nIndex * 3 + 2].m_fQpower);
-		strID.Format(_T("ScF"), nIndex + 1);
-		pXmlSierialize->xml_serialize("", strID.GetString(), "", "number", pParas->m_uiPOW[nIndex * 3 + 2].m_fQpower);
-	}
-
+	pXmlSierialize->xml_serialize("", "Sa", "W", "number", pParas->m_uiPOW[0].m_fPpower);
+	pXmlSierialize->xml_serialize("", "SaQ", "Var", "number", pParas->m_uiPOW[0].m_fQpower);
+	pXmlSierialize->xml_serialize("", "SaF", "", "number", pParas->m_uiPOW[0].m_fFpower);
+	pXmlSierialize->xml_serialize("", "Sb", "W", "number", pParas->m_uiPOW[1].m_fPpower);
+	pXmlSierialize->xml_serialize("", "SbQ", "Var", "number", pParas->m_uiPOW[1].m_fQpower);
+	pXmlSierialize->xml_serialize("", "SbF", "", "number", pParas->m_uiPOW[1].m_fFpower);
+	pXmlSierialize->xml_serialize("", "Sc", "W", "number", pParas->m_uiPOW[2].m_fPpower);
+	pXmlSierialize->xml_serialize("", "ScQ", "Var", "number", pParas->m_uiPOW[2].m_fQpower);
+	pXmlSierialize->xml_serialize("", "ScF", "", "number", pParas->m_uiPOW[2].m_fFpower);
 
 #ifdef NOT_USE_XLANGUAGE
 	pXmlSierialize->xml_serialize("频率", "Freq", " ", "number", pParas->m_fFreq);
 	pXmlSierialize->xml_serialize("是否开入停止", "bBinStop", "", "BOOL", pParas->m_bBinStop);
-	pXmlSierialize->xml_serialize("是否老化试验", "bAging", "", "BOOL", pParas->m_bAging);
 	pXmlSierialize->xml_serialize("递变通道选择", "_GradientChSelect", "", "PsuGradientChannel", pParas->m_nGradientChSelect);
 	pXmlSierialize->xml_serialize("变化模式", "Mode", "", "UIVariateMode", pParas->m_oPowerGradient.nMode);
 	pXmlSierialize->xml_serialize("变化始值", "Start", "", "number", pParas->m_oPowerGradient.fStart);
@@ -103,8 +68,8 @@ void stt_xml_serialize(tmt_PowerManuParas *pParas, CSttXmlSerializeBase *pXmlSie
 #else
     pXmlSierialize->xml_serialize(/* "频率" */g_sLangTxt_Native_Freq.GetString(), "Freq", " ", "number", pParas->m_fFreq);
     pXmlSierialize->xml_serialize(/* "是否开入停止" */g_sLangTxt_Native_YNInputStop.GetString(), "bBinStop", "", "BOOL", pParas->m_bBinStop);
-    pXmlSierialize->xml_serialize(/* "是否老化试验" */g_sLangTxt_Native_YNaging_test.GetString(), "bAging", "", "BOOL", pParas->m_bAging);
-    pXmlSierialize->xml_serialize(/* "递变通道选择" */g_sLangTxt_Native_varchannel_select.GetString(), "_GradientChSelect", "", "PsuGradientChannel", pParas->m_nGradientChSelect);
+//    pXmlSierialize->xml_serialize(/* "是否老化试验" */g_sLangTxt_Native_YNaging_test.GetString(), "bAging", "", "BOOL", pParas->m_bAging);
+    pXmlSierialize->xml_serialize(/* "递变通道选择" */g_sLangTxt_Native_varchannel_select.GetString(), "_GradientChSelect", "", "number", pParas->m_nGradientChSelect);
     pXmlSierialize->xml_serialize(/* "变化模式" */g_sLangTxt_Native_change_mode.GetString(), "Mode", "", "UIVariateMode", pParas->m_oPowerGradient.nMode);
     pXmlSierialize->xml_serialize(/* "变化始值" */g_sLangTxt_Gradient_Init.GetString(), "Start", "", "number", pParas->m_oPowerGradient.fStart);
     pXmlSierialize->xml_serialize(/* "变化终值" */g_sLangTxt_Gradient_Finish.GetString(), "End", "", "number", pParas->m_oPowerGradient.fEnd);
@@ -129,186 +94,50 @@ void stt_xml_serialize(tmt_PowerManuParas *pParas, CSttXmlSerializeBase *pXmlSie
 #ifdef NOT_USE_XLANGUAGE
 	pXmlSierialize->xml_serialize("最长输出时间(s)", "OutputTime", " ", "number", pParas->m_fOutPutTime);
 	pXmlSierialize->xml_serialize("动作整定时间", "TSet", "s", "float", pParas->m_fTimeSet);
-    pXmlSierialize->xml_serialize("动作整定值", "TActSet", "s", "float", pParas->m_fActSet);
-	pXmlSierialize->xml_serialize("电压整定动作值", "USet", "V", "float", pParas->m_fUSet);
+	pXmlSierialize->xml_serialize("视在功率整定值", "SpowerSet", "VA", "float", pParas->m_fSpowerSet);
+	pXmlSierialize->xml_serialize("有功功率整定值", "PpowerSet", "W", "float", pParas->m_fPpowerSet);
+	pXmlSierialize->xml_serialize("无功功率整定值", "QpowerSet", "Var", "float", pParas->m_fQpowerSet);
 
-    pXmlSierialize->xml_serialize("功率整定动作值", "PSet", "W", "float", pParas->m_fPSet);
-
-	pXmlSierialize->xml_serialize("频率整定动作值", "HzSet", "Hz", "float", pParas->m_fHzSet);
-	pXmlSierialize->xml_serialize("返回系数整定值", "RetCoefSet", "", "float", pParas->m_fRetCoefSet);
-	pXmlSierialize->xml_serialize("动作时间值绝对误差", "Ttrip_AbsErr", "", "float", pParas->m_fTimeValue_AbsErr);
+	pXmlSierialize->xml_serialize("动作时间值正绝对误差", "Ttrip_AbsErrPos", "", "float", pParas->m_fTimeValue_AbsErrPos);
+	pXmlSierialize->xml_serialize("动作时间值负绝对误差", "Ttrip_AbsErrNeg", "", "float", pParas->m_fTimeValue_AbsErrNeg);
 	pXmlSierialize->xml_serialize("动作时间值相对误差", "Ttrip_RelErr", "", "float", pParas->m_fTimeValue_RelErr);
-	pXmlSierialize->xml_serialize("动作时间误差判断逻辑", "TimeValue_ErrorLogic", "", "number", pParas->m_nTimeValue_ErrorLogic);
-	
+	pXmlSierialize->xml_serialize("动作时间误差判断逻辑", "Ttrip_ErrorLogic", "", "number", pParas->m_nTimeValue_ErrorLogic);
 
-	pXmlSierialize->xml_serialize("动作值绝对误差", "ActValue_AbsErr", "", "float", pParas->m_fActValue_AbsErr);
-	pXmlSierialize->xml_serialize("动作值相对误差", "ActValue_RelErr", "", "float", pParas->m_fActValue_RelErr);
-	pXmlSierialize->xml_serialize("动作值误差判断逻辑", "ActValue_ErrorLogic", "", "number", pParas->m_nActValue_ErrorLogic);
+	pXmlSierialize->xml_serialize("视在功率绝对误差", "SpowerVal_AbsErr", "", "float", pParas->m_fSpowerValue_AbsErr);
+	pXmlSierialize->xml_serialize("视在功率相对误差", "SpowerVal_RelErr", "", "float", pParas->m_fSpowerValue_RelErr);
+	pXmlSierialize->xml_serialize("视在功率误差判断逻辑", "SpowerVal_ErrorLogic", "", "number", pParas->m_nSpowerValue_ErrorLogic);
 
-	pXmlSierialize->xml_serialize("电压动作值绝对误差", "UActVal_AbsErr", "", "float", pParas->m_fUActVal_AbsErr);
-	pXmlSierialize->xml_serialize("电压动作值相对误差", "UActVal_RelErr", "", "float", pParas->m_fUActVal_RelErr);
-	pXmlSierialize->xml_serialize("电压动作值误差判断逻辑", "UActVal_ErrorLogic", "", "number", pParas->m_nUActVal_ErrorLogic);
-	
-	pXmlSierialize->xml_serialize("功率动作值绝对误差", "PActVal_AbsErr", "", "float", pParas->m_fPActVal_AbsErr);
-	pXmlSierialize->xml_serialize("功率动作值相对误差", "PActVal_RelErr", "", "float", pParas->m_fPActVal_RelErr);
-	pXmlSierialize->xml_serialize("功率动作值误差判断逻辑", "PActVal_ErrorLogic", "", "number", pParas->m_nPActVal_ErrorLogic);
+	pXmlSierialize->xml_serialize("有功功率绝对误差", "PpowerVal_AbsErr", "", "float", pParas->m_fPpowerValue_AbsErr);
+	pXmlSierialize->xml_serialize("有功功率相对误差", "PpowerVal_RelErr", "", "float", pParas->m_fPpowerValue_RelErr);
+	pXmlSierialize->xml_serialize("有功功率误差判断逻辑", "PpowerVal_ErrorLogic", "", "number", pParas->m_nPpowerValue_ErrorLogic);
 
+	pXmlSierialize->xml_serialize("无功功率绝对误差", "QpowerVal_AbsErr", "", "float", pParas->m_fQpowerValue_AbsErr);
+	pXmlSierialize->xml_serialize("无功功率相对误差", "QpowerVal_RelErr", "", "float", pParas->m_fQpowerValue_RelErr);
+	pXmlSierialize->xml_serialize("无功功率误差判断逻辑", "QpowerVal_ErrorLogic", "", "number", pParas->m_nQpowerValue_ErrorLogic);
 
-	pXmlSierialize->xml_serialize("返回系数绝对误差", "RetCoef_AbsErr", "", "float", pParas->m_fRetCoef_AbsErr);
-	pXmlSierialize->xml_serialize("返回系数相对误差", "RetCoef_RelErr", "", "float", pParas->m_fRetCoef_RelErr);
-	pXmlSierialize->xml_serialize("返回系数误差判断逻辑", "RetCoef_ErrorLogic", "", "number", pParas->m_nRetCoef_ErrorLogic);
 #else
     pXmlSierialize->xml_serialize(/* "最长输出时间(s)" */g_sLangTxt_Native_max_outputtime.GetString(), "OutputTime", " ", "number", pParas->m_fOutPutTime);
     pXmlSierialize->xml_serialize(/* "动作整定时间" */g_sLangTxt_Native_acttuning_time.GetString(), "TSet", "s", "float", pParas->m_fTimeSet);
-    pXmlSierialize->xml_serialize(/* "电压整定动作值" */g_sLangTxt_Native_VolSetActValue.GetString(), "USet", "V", "float", pParas->m_fUSet);
-    
-	pXmlSierialize->xml_serialize(/* "功率整定动作值" */g_sLangTxt_Native_CurSetActValue.GetString(), "PSet", "W", "float", pParas->m_fPSet);
-    pXmlSierialize->xml_serialize(/* "频率整定动作值" */g_sLangTxt_Native_FreqSetActValue.GetString(), "HzSet", "Hz", "float", pParas->m_fHzSet);
-    pXmlSierialize->xml_serialize(/* "返回系数整定值" */g_sLangTxt_Native_FeedbackCoefSettingVal.GetString(), "RetCoefSet", "", "float", pParas->m_fRetCoefSet);
-    
-	pXmlSierialize->xml_serialize(/* "动作时间值绝对误差" */g_sLangTxt_Native_ActTimeValueAbsErr.GetString(), "Ttrip_AbsErr", "", "float", pParas->m_fTimeValue_AbsErr);
-    pXmlSierialize->xml_serialize(/* "动作时间值相对误差" */g_sLangTxt_Native_ActTimeValueRelErr.GetString(), "Ttrip_RelErr", "", "float", pParas->m_fTimeValue_RelErr);
-    pXmlSierialize->xml_serialize(/* "动作时间误差判断逻辑" */g_sLangTxt_Native_ActTimeValueErrLogic.GetString(), "TimeValue_ErrorLogic", "", "number", pParas->m_nTimeValue_ErrorLogic);
-    
-
-	pXmlSierialize->xml_serialize(/* "动作值绝对误差" */g_sLangTxt_Native_CurSetActValue.GetString(), "ActValue_AbsErr", "", "float", pParas->m_fActValue_AbsErr);
-	pXmlSierialize->xml_serialize(/* "动作值相对误差" */g_sLangTxt_Native_CurSetActValue.GetString(), "ActValue_RelErr", "", "float", pParas->m_fActValue_RelErr);
-	pXmlSierialize->xml_serialize(/* "动作值误差判断逻辑" */g_sLangTxt_Native_CurSetActValue.GetString(), "ActValue_ErrorLogic", "", "number", pParas->m_nActValue_ErrorLogic);
-
-
-	pXmlSierialize->xml_serialize(/* "电压动作值绝对误差" */g_sLangTxt_Native_VActionValueAbsErr.GetString(), "UActVal_AbsErr", "", "float", pParas->m_fUActVal_AbsErr);
-    pXmlSierialize->xml_serialize(/* "电压动作值相对误差" */g_sLangTxt_Native_VActionValueRelErr.GetString(), "UActVal_RelErr", "", "float", pParas->m_fUActVal_RelErr);
-    pXmlSierialize->xml_serialize(/* "电压动作值误差判断逻辑" */g_sLangTxt_Native_VActionValueErrLogic.GetString(), "UActVal_ErrorLogic", "", "number", pParas->m_nUActVal_ErrorLogic);
-    pXmlSierialize->xml_serialize(/* "功率动作值绝对误差" */g_sLangTxt_Native_CurSetActValue.GetString(), "PActVal_AbsErr", "", "float", pParas->m_fPActVal_AbsErr);
-    pXmlSierialize->xml_serialize(/* "功率动作值相对误差" */g_sLangTxt_Native_CurSetActValue.GetString(), "PActVal_RelErr", "", "float", pParas->m_fPActVal_RelErr);
-    pXmlSierialize->xml_serialize(/* "功率动作值误差判断逻辑" */g_sLangTxt_Native_CurSetActValue.GetString(), "PActVal_ErrorLogic", "", "number", pParas->m_nPActVal_ErrorLogic);
-	
-    pXmlSierialize->xml_serialize(/* "返回系数绝对误差" */g_sLangTxt_Native_CoefficientAbsErr.GetString(), "RetCoef_AbsErr", "", "float", pParas->m_fRetCoef_AbsErr);
-    pXmlSierialize->xml_serialize(/* "返回系数相对误差" */g_sLangTxt_Native_CoefficientRelErr.GetString(), "RetCoef_RelErr", "", "float", pParas->m_fRetCoef_RelErr);
-    pXmlSierialize->xml_serialize(/* "返回系数误差判断逻辑" */g_sLangTxt_Native_CoefficientErrLogic.GetString(), "RetCoef_ErrorLogic", "", "number", pParas->m_nRetCoef_ErrorLogic);
-#endif
-    
-}
-
-void stt_xml_serialize_Power(tmt_ManualParas *pParas, CSttXmlSerializeBase *pXmlSierialize, tmt_channel *puiVOL,tmt_ChannelPower *puiPOW)
-{
-	float fFreq = 50.0;
-#ifdef NOT_USE_XLANGUAGE
-	pXmlSierialize->xml_serialize("频率", "Freq", " ", "number", fFreq);
-#else
-    pXmlSierialize->xml_serialize(/* "频率" */g_sLangTxt_Native_Freq.GetString(), "Freq", " ", "number", fFreq);
-#endif
-	
-	//新版序列化,18U18I
-	CString strID;
-
-	for(int nIndex = 0; nIndex < 6; nIndex++)
-	{
-		strID.Format(_T("U%d_1"), nIndex + 1);
-		pXmlSierialize->xml_serialize("", strID.GetString(), "V", "number", puiVOL[nIndex * 3].Harm[1].fAmp);
-		strID.Format(_T("U%d_1Ph"), nIndex + 1);
-		pXmlSierialize->xml_serialize("", strID.GetString(), "°", "number", puiVOL[nIndex * 3].Harm[1].fAngle);
-		puiVOL[nIndex * 3].Harm[1].fFreq = fFreq;
-		strID.Format(_T("U%d_2"), nIndex + 1);
-		pXmlSierialize->xml_serialize("", strID.GetString(), "V", "number", puiVOL[nIndex * 3 + 1].Harm[1].fAmp);
-		strID.Format(_T("U%d_2Ph"), nIndex + 1);
-		pXmlSierialize->xml_serialize("", strID.GetString(), "°", "number", puiVOL[nIndex * 3 + 1].Harm[1].fAngle);
-		puiVOL[nIndex * 3 + 1].Harm[1].fFreq = fFreq;
-		strID.Format(_T("U%d_0"), nIndex + 1);
-		pXmlSierialize->xml_serialize("", strID.GetString(), "V", "number", puiVOL[nIndex * 3 + 2].Harm[1].fAmp);
-		strID.Format(_T("U%d_0Ph"), nIndex + 1);
-		pXmlSierialize->xml_serialize("", strID.GetString(), "°", "number", puiVOL[nIndex * 3 + 2].Harm[1].fAngle);
-		puiVOL[nIndex * 3 + 2].Harm[1].fFreq = fFreq;
-
+	pXmlSierialize->xml_serialize("视在功率整定值", "SpowerSet", "VA", "float", pParas->m_fSpowerSet);
+	pXmlSierialize->xml_serialize("有功功率整定值", "PpowerSet", "W", "float", pParas->m_fPpowerSet);
+	pXmlSierialize->xml_serialize("无功功率整定值", "QpowerSet", "Var", "float", pParas->m_fQpowerSet);
 		
-		strID.Format(_T("S%d_1"), nIndex + 1);
-		pXmlSierialize->xml_serialize("", strID.GetString(), "W", "number", puiPOW[nIndex * 3].m_fPpower);
-		strID.Format(_T("S%d_1Q"), nIndex + 1);
-		pXmlSierialize->xml_serialize("", strID.GetString(), "Var", "number", puiPOW[nIndex * 3].m_fQpower);
-       
-		strID.Format(_T("S%d_2"), nIndex + 1);
-		pXmlSierialize->xml_serialize("", strID.GetString(), "W", "number", puiPOW[nIndex * 3 + 1].m_fPpower);
-		strID.Format(_T("S%d_2Q"), nIndex + 1);
-		pXmlSierialize->xml_serialize("", strID.GetString(), "Var", "number", puiPOW[nIndex * 3 + 1].m_fQpower);
-		
-		strID.Format(_T("S%d_0"), nIndex + 1);
-		pXmlSierialize->xml_serialize("", strID.GetString(), "W", "number", puiPOW[nIndex * 3 + 2].m_fPpower);
-		strID.Format(_T("S%d_0Q"), nIndex + 1);
-		pXmlSierialize->xml_serialize("", strID.GetString(), "Var", "number", puiPOW[nIndex * 3 + 2].m_fQpower);
-		
-
-	}
-
-#ifdef NOT_USE_XLANGUAGE
-	pXmlSierialize->xml_serialize("是否开入停止", "bBinStop", "", "BOOL", pParas->m_bBinStop);
-	pXmlSierialize->xml_serialize("递变通道选择", "_GradientChSelect", "", "PsuGradientChannel", pParas->m_nGradientChSelect);
-    pXmlSierialize->xml_serialize("递变类型选择", "_GradientTpSelect", "", "PsuGradientType", pParas->m_nGradientTpSelect);
-    pXmlSierialize->xml_serialize("变化模式", "Mode", "", "UIVariateMode", pParas->m_manuGradient.nMode);
-	pXmlSierialize->xml_serialize("变化始值", "Start", "", "number", pParas->m_manuGradient.fStart);
-	pXmlSierialize->xml_serialize("变化终值", "End", "", "number", pParas->m_manuGradient.fEnd);
-	pXmlSierialize->xml_serialize("变化步长", "Step", "", "number", pParas->m_manuGradient.fStep);
-	pXmlSierialize->xml_serialize("每步时间", "StepTime", "", "number", pParas->m_manuGradient.fStepTime);
-	pXmlSierialize->xml_serialize("触发延时", "TrigDelay", "", "number", pParas->m_manuGradient.fTrigDelay);
-	pXmlSierialize->xml_serialize("开入逻辑", "_AndOr", "", "InPutLogic_Psu", pParas->m_nBinLogic);
-	stt_xml_serialize_binary_in(pParas->m_binIn, pXmlSierialize);
-	stt_xml_serialize_binary_out(pParas->m_binOut, pXmlSierialize);
-	stt_xml_serialize_Exbinary_in(pParas->m_binInEx, pXmlSierialize);
-	stt_xml_serialize_Exbinary_out(pParas->m_binOutEx, pXmlSierialize);
-	pXmlSierialize->xml_serialize("测试通道类型", "VarIndexType", "", "number", pParas->m_nVarIndexType);
-	pXmlSierialize->xml_serialize("是否锁定", "_bLock", "", "BOOL", pParas->m_bLockChanged);
-	pXmlSierialize->xml_serialize("是否自动递变", "_bAuto", "", "BOOL", pParas->m_bAuto);
-#else
-    pXmlSierialize->xml_serialize(/* "是否开入停止" */g_sLangTxt_Native_YNInputStop.GetString(), "bBinStop", "", "BOOL", pParas->m_bBinStop);
-    pXmlSierialize->xml_serialize(/* "递变通道选择" */g_sLangTxt_Native_varchannel_select.GetString(), "_GradientChSelect", "", "PsuGradientChannel", pParas->m_nGradientChSelect);
-    pXmlSierialize->xml_serialize(/* "变化始值" */g_sLangTxt_Gradient_Init.GetString(), "Start", "", "number", pParas->m_manuGradient.fStart);
-    pXmlSierialize->xml_serialize(/* "变化终值" */g_sLangTxt_Gradient_Finish.GetString(), "End", "", "number", pParas->m_manuGradient.fEnd);
-    pXmlSierialize->xml_serialize(/* "变化步长" */g_sLangTxt_Gradient_Step.GetString(), "Step", "", "number", pParas->m_manuGradient.fStep);
-    pXmlSierialize->xml_serialize(/* "每步时间" */g_sLangTxt_Native_step_time.GetString(), "StepTime", "", "number", pParas->m_manuGradient.fStepTime);
-    pXmlSierialize->xml_serialize(/* "触发延时" */g_sLangTxt_Native_trigger_delay.GetString(), "TrigDelay", "", "number", pParas->m_manuGradient.fTrigDelay);
-    pXmlSierialize->xml_serialize(/* "开入逻辑" */g_sLangTxt_Native_InLogic.GetString(), "_AndOr", "", "InPutLogic_Psu", pParas->m_nBinLogic);
-    stt_xml_serialize_binary_in(pParas->m_binIn, pXmlSierialize);
-    stt_xml_serialize_binary_out(pParas->m_binOut, pXmlSierialize);
-    stt_xml_serialize_Exbinary_in(pParas->m_binInEx, pXmlSierialize);
-    stt_xml_serialize_Exbinary_out(pParas->m_binOutEx, pXmlSierialize);
-    pXmlSierialize->xml_serialize(/* "测试通道类型" */g_sLangTxt_Native_TestChannelType.GetString(), "VarIndexType", "", "number", pParas->m_nVarIndexType);
-    pXmlSierialize->xml_serialize(/* "是否锁定" */g_sLangTxt_Native_YN_locked.GetString(), "_bLock", "", "BOOL", pParas->m_bLockChanged);
-    pXmlSierialize->xml_serialize(/* "是否自动递变" */g_sLangTxt_Native_YN_autoevo.GetString(), "_bAuto", "", "BOOL", pParas->m_bAuto);
-#endif
-    
-
-	if(stt_xml_serialize_is_read(pXmlSierialize))
-	{
-		stt_xml_serialize(&pParas->m_oGoosePub[0], pXmlSierialize);
-	}
-
-#ifdef NOT_USE_XLANGUAGE
-	pXmlSierialize->xml_serialize("最长输出时间(s)", "OutputTime", " ", "number", pParas->m_fOutPutTime);
-	pXmlSierialize->xml_serialize("动作整定时间", "TSet", "s", "float", pParas->m_fTimeSet);
-	pXmlSierialize->xml_serialize("电压整定动作值", "USet", "V", "float", pParas->m_fUSet);
-	pXmlSierialize->xml_serialize("电流整定动作值", "ISet", "A", "float", pParas->m_fISet);
-	pXmlSierialize->xml_serialize("动作时间值绝对误差", "Ttrip_AbsErr", "", "float", pParas->m_fTimeValue_AbsErr);
+	pXmlSierialize->xml_serialize("动作时间值正绝对误差", "Ttrip_AbsErrPos", "", "float", pParas->m_fTimeValue_AbsErrPos);
+	pXmlSierialize->xml_serialize("动作时间值负绝对误差", "Ttrip_AbsErrNeg", "", "float", pParas->m_fTimeValue_AbsErrNeg);
 	pXmlSierialize->xml_serialize("动作时间值相对误差", "Ttrip_RelErr", "", "float", pParas->m_fTimeValue_RelErr);
-	pXmlSierialize->xml_serialize("动作时间误差判断逻辑", "TimeValue_ErrorLogic", "", "number", pParas->m_nTimeValue_ErrorLogic);
-	pXmlSierialize->xml_serialize("电压动作值绝对误差", "UActVal_AbsErr", "", "float", pParas->m_fUActVal_AbsErr);
-	pXmlSierialize->xml_serialize("电压动作值相对误差", "UActVal_RelErr", "", "float", pParas->m_fUActVal_RelErr);
-	pXmlSierialize->xml_serialize("电压动作值误差判断逻辑", "UActVal_ErrorLogic", "", "number", pParas->m_nUActVal_ErrorLogic);
-	pXmlSierialize->xml_serialize("电流动作值绝对误差", "IActVal_AbsErr", "", "float", pParas->m_fIActVal_AbsErr);
-	pXmlSierialize->xml_serialize("电流动作值相对误差", "IActVal_RelErr", "", "float", pParas->m_fIActVal_RelErr);
-	pXmlSierialize->xml_serialize("电流动作值误差判断逻辑", "IActVal_ErrorLogic", "", "number", pParas->m_nIActVal_ErrorLogic);
-#else
-    pXmlSierialize->xml_serialize(/* "最长输出时间(s)" */g_sLangTxt_Native_max_outputtime.GetString(), "OutputTime", " ", "number", pParas->m_fOutPutTime);
-    pXmlSierialize->xml_serialize(/* "动作整定时间" */g_sLangTxt_Native_acttuning_time.GetString(), "TSet", "s", "float", pParas->m_fTimeSet);
-    pXmlSierialize->xml_serialize(/* "电压整定动作值" */g_sLangTxt_Native_VolSetActValue.GetString(), "USet", "V", "float", pParas->m_fUSet);
-    pXmlSierialize->xml_serialize(/* "电流整定动作值" */g_sLangTxt_Native_CurSetActValue.GetString(), "ISet", "A", "float", pParas->m_fISet);
-    pXmlSierialize->xml_serialize(/* "动作时间值绝对误差" */g_sLangTxt_Native_ActTimeValueAbsErr.GetString(), "Ttrip_AbsErr", "", "float", pParas->m_fTimeValue_AbsErr);
-    pXmlSierialize->xml_serialize(/* "动作时间值相对误差" */g_sLangTxt_Native_ActTimeValueRelErr.GetString(), "Ttrip_RelErr", "", "float", pParas->m_fTimeValue_RelErr);
-    pXmlSierialize->xml_serialize(/* "动作时间误差判断逻辑" */g_sLangTxt_Native_ActTimeValueErrLogic.GetString(), "TimeValue_ErrorLogic", "", "number", pParas->m_nTimeValue_ErrorLogic);
-    pXmlSierialize->xml_serialize(/* "电压动作值绝对误差" */g_sLangTxt_Native_VActionValueAbsErr.GetString(), "UActVal_AbsErr", "", "float", pParas->m_fUActVal_AbsErr);
-    pXmlSierialize->xml_serialize(/* "电压动作值相对误差" */g_sLangTxt_Native_VActionValueRelErr.GetString(), "UActVal_RelErr", "", "float", pParas->m_fUActVal_RelErr);
-    pXmlSierialize->xml_serialize(/* "电压动作值误差判断逻辑" */g_sLangTxt_Native_VActionValueErrLogic.GetString(), "UActVal_ErrorLogic", "", "number", pParas->m_nUActVal_ErrorLogic);
-    pXmlSierialize->xml_serialize(/* "电流动作值绝对误差" */g_sLangTxt_Native_IActionValueAbsErr.GetString(), "IActVal_AbsErr", "", "float", pParas->m_fIActVal_AbsErr);
-    pXmlSierialize->xml_serialize(/* "电流动作值相对误差" */g_sLangTxt_Native_IActionValueRelErr.GetString(), "IActVal_RelErr", "", "float", pParas->m_fIActVal_RelErr);
-    pXmlSierialize->xml_serialize(/* "电流动作值误差判断逻辑" */g_sLangTxt_Native_IActionValueErrLogic.GetString(), "IActVal_ErrorLogic", "", "number", pParas->m_nIActVal_ErrorLogic);
+	pXmlSierialize->xml_serialize("动作时间误差判断逻辑", "Ttrip_ErrorLogic", "", "number", pParas->m_nTimeValue_ErrorLogic);
+
+	pXmlSierialize->xml_serialize("视在功率绝对误差", "SpowerVal_AbsErr", "", "float", pParas->m_fSpowerValue_AbsErr);
+	pXmlSierialize->xml_serialize("视在功率相对误差", "SpowerVal_RelErr", "", "float", pParas->m_fSpowerValue_RelErr);
+	pXmlSierialize->xml_serialize("视在功率误差判断逻辑", "SpowerVal_ErrorLogic", "", "number", pParas->m_nSpowerValue_ErrorLogic);
+
+	pXmlSierialize->xml_serialize("有功功率绝对误差", "PpowerVal_AbsErr", "", "float", pParas->m_fPpowerValue_AbsErr);
+	pXmlSierialize->xml_serialize("有功功率相对误差", "PpowerVal_RelErr", "", "float", pParas->m_fPpowerValue_RelErr);
+	pXmlSierialize->xml_serialize("有功功率误差判断逻辑", "PpowerVal_ErrorLogic", "", "number", pParas->m_nPpowerValue_ErrorLogic);
+
+	pXmlSierialize->xml_serialize("无功功率绝对误差", "QpowerVal_AbsErr", "", "float", pParas->m_fQpowerValue_AbsErr);
+	pXmlSierialize->xml_serialize("无功功率相对误差", "QpowerVal_RelErr", "", "float", pParas->m_fQpowerValue_RelErr);
+	pXmlSierialize->xml_serialize("无功功率误差判断逻辑", "QpowerVal_ErrorLogic", "", "number", pParas->m_nQpowerValue_ErrorLogic);
 #endif
     
 }
@@ -480,7 +309,7 @@ CSttXmlSerializeBase* stt_xml_serialize(tmt_PowerManuTest *pParas, CSttXmlSerial
 
 
 #include"../../../SttCmd/SttTestCmd.h"
-#include"../../Module/API/GlobalConfigApi.h"
+#include"../../../../../Module/API/GlobalConfigApi.h"
 
 void stt_xml_serialize_write_PowerManuTest()
 {

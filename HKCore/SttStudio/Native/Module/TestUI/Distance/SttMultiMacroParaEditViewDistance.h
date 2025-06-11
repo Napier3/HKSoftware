@@ -9,7 +9,7 @@
 #include "../QSttMultiMacroParaEditViewBase.h"
 #include "../Module/CommonGrid/QSttMacroParaEditGrid.h"
 
-#include "../../Module/TestMacro/TestMacro.h"
+#include "../../../../Module/TestMacro/TestMacro.h"
 
 
 class QSttMultiMacroParaEditViewDistance : public QSttMultiMacroParaEditViewBase

@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include <QFont>
-#include "../../Module/API/StringApi.h"
+#include "../../../../Module/API/StringApi.h"
 
 #include "../PpSttIotEngineClientApp.h"
 #include "PpSttIotEngineClientAppWnd.h"

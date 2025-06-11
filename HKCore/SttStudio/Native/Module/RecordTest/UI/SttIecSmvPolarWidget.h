@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-#include "../../Module/Axis/PolarAxis.h"
+#include "../../../../Module/Axis/PolarAxis.h"
 
 //////////////////////////////////////////////////////////////////////////
 class QSttIecSmvPolarWidget : public QWidget

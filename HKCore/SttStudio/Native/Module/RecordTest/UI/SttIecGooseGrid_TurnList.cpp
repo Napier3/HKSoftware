@@ -1,7 +1,7 @@
 #include "SttIecGooseGrid_TurnList.h"
-#include "../../Module/SmartCap/XSmartCapMngr.h"
-#include "../../Module/SmartCap/61850Cap/CapDevice/CapDeviceGoose.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../../Module/SmartCap/61850Cap/CapDevice/CapDeviceGoose.h"
+#include "../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../XLangResource_Native.h"
 
 CSttIecGooseGrid_TurnList::CSttIecGooseGrid_TurnList(QWidget* pparent):CSttIecChsGridBase(pparent)

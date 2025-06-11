@@ -1,8 +1,8 @@
 #include "SttIecCbGrid.h"
 #include "../../UI/Module/CommonCtrl_QT/QIecWidgetDelegate.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../XLangResource_Native.h"
-#include "../../Module/SmartCap/61850Cap/CapDevice/CapDevice6044.h"
+#include "../../../../Module/SmartCap/61850Cap/CapDevice/CapDevice6044.h"
 
 
 #define CAPDEVICEGRID_COLS			6
@@ -39,6 +39,18 @@ CSttIecCbGrid::~CSttIecCbGrid()
 
 void CSttIecCbGrid::InitGrid()
 {
+	if (m_bViewFT3)
+	{
+		if (m_nIecCbShowType != STT_IECCBGRID_SHOW_TYPE_60044)
+		{
+			m_nIecCbShowType = STT_IECCBGRID_SHOW_TYPE_60044;
+		}
+	}
+	else if (m_nIecCbShowType != STT_IECCBGRID_SHOW_TYPE_61850)
+	{
+		m_nIecCbShowType = STT_IECCBGRID_SHOW_TYPE_61850;
+	}
+
  	QExBaseListGridBase::InitGrid();
 	QExBaseListCheckBoxDelegate *pCtrlBlockSelectDelegate = new QExBaseListCheckBoxDelegate(this);
 	setItemDelegateForColumn(0,pCtrlBlockSelectDelegate);
@@ -58,6 +70,10 @@ void CSttIecCbGrid::InitGridTitle()
 		InitGridTitle_61850();
 	}
 }
+// void CSttIecCbGrid::UpdateGridTitle()
+// {
+// 	InitGridTitle();
+// }
 
 void CSttIecCbGrid::InitGridTitle_61850()
 {
@@ -237,9 +253,9 @@ void CSttIecCbGrid::Show_61850Type(CExBaseObject *pStData, const int& nRow, cons
 void CSttIecCbGrid::Show_Fiber(CExBaseObject *pStData, const int& nRow, const int& nCol, UINT nFiberIndex)
 {
 	CString strFiber;
-	QString str = QString("光口%1").arg(nFiberIndex+1);//dingxy 20240511 更改报文探测光口乱码问题
-	strFiber.Format(str);
-	//strFiber.Format(/*_T("光口%d")*/g_sLangTxt_Gradient_POpticalPort.GetString(),nFiberIndex+1); //lcq
+//  	QString str = QString("光口%1").arg(nFiberIndex+1);//dingxy 20240511 更改报文探测光口乱码问题
+//  	strFiber.Format(str);
+	strFiber.Format(/*_T("光口%d")*/g_sLangTxt_Gradient_POpticalPort.GetString(),nFiberIndex+1); //lcq
 	Show_StaticString(pStData, nRow, nCol, strFiber);
 }
 
@@ -422,12 +438,12 @@ void CSttIecCbGrid::EndEditCell_SelectCB (int nRow, int nCol,QGV_ITEM *pCell, QE
 	CSttIecCbGrid *pOwnGrid = (CSttIecCbGrid*)pGrid;
 	CCapDeviceBase *pCapDevice = (CCapDeviceBase *)pVCellData->pObj;
 
-// 	//20240722 suyang 由多选改完单选
-// 	if (!pOwnGrid->ValidSetSelectCbsState(pCapDevice))
-// 	{
-// 		pOwnGrid->slot_UpdateSelectCbsState();
-// 		pOwnGrid->setCurrentCell(nRow,nCol);
-// 	}
+	//20240722 suyang 由多选改为单选
+	if (!pOwnGrid->ValidSetSelectCbsState(pCapDevice))
+	{
+		pOwnGrid->slot_UpdateSelectCbsState();
+		pOwnGrid->setCurrentCell(nRow,nCol);
+	}
 
 	pOwnGrid->m_pDataViewOptrInterface->OnDataSelChanged(pOwnGrid, nRow, nCol);
 }
@@ -462,62 +478,62 @@ void ShowColorRow(QExBaseListGridBase* pGridCtrl, int nMatchState, int nRow, int
 		pGridCtrl->SetItemFgColour(nRow, iCol, crMatchColor);
 	}
 }
-// 
-// void CSttIecCbGrid::slot_UpdateSelectCbsState()
-// {
-// 	if (m_pDatas == NULL)
-// 	{
-// 		return;
-// 	}
-// 
-// 	DisConnectAll_SigSlot();
-// 
-// 	CCapDeviceBase *pCapDevice = NULL;
-// 	int nRowIndex = 0;
-// 	POS pos = m_pDatas->GetHeadPosition();
-// 
-// 	while (pos != NULL)
-// 	{
-// 		pCapDevice = (CCapDeviceBase *)m_pDatas->GetNext(pos);
-// 		Show_Check(pCapDevice, nRowIndex, 0, &pCapDevice->m_bSelect,EndEditCell_SelectCB);
-// 		nRowIndex++;
-// 	}
-// 
-// 
-// 	ConnectAll_SigSlot();
-// }
-// 
-// BOOL CSttIecCbGrid::ValidSetSelectCbsState(CCapDeviceBase *pCapDeviceBase)
-// {
-// 	if (m_pDatas == NULL)
-// 	{
-// 		return TRUE;
-// 	}
-// 
-// 	if (pCapDeviceBase->m_bSelect == 0)
-// 	{
-// 		return TRUE;
-// 	}
-// 
-// 	CCapDeviceBase *pCurrObj = NULL;
-// 	BOOL bSuccess = TRUE;
-// 	POS pos = m_pDatas->GetHeadPosition();
-// 
-// 	while(pos)
-// 	{
-// 		pCurrObj = (CCapDeviceBase *)m_pDatas->GetNext(pos);
-// 
-// 		if (pCapDeviceBase == pCurrObj)
-// 		{
-// 			continue;
-// 		}
-// 
-// 		if (pCurrObj->m_bSelect)
-// 		{
-// 			pCurrObj->m_bSelect = 0;
-// 			bSuccess = FALSE;
-// 		}
-// 	}
-// 
-// 	return bSuccess;
-// }
+
+void CSttIecCbGrid::slot_UpdateSelectCbsState()
+{
+	if (m_pDatas == NULL)
+	{
+		return;
+	}
+
+	DisConnectAll_SigSlot();
+
+	CCapDeviceBase *pCapDevice = NULL;
+	int nRowIndex = 0;
+	POS pos = m_pDatas->GetHeadPosition();
+
+	while (pos != NULL)
+	{
+		pCapDevice = (CCapDeviceBase *)m_pDatas->GetNext(pos);
+		Show_Check(pCapDevice, nRowIndex, 0, &pCapDevice->m_bSelect,EndEditCell_SelectCB);
+		nRowIndex++;
+	}
+
+
+	ConnectAll_SigSlot();
+}
+
+BOOL CSttIecCbGrid::ValidSetSelectCbsState(CCapDeviceBase *pCapDeviceBase)
+{
+	if (m_pDatas == NULL)
+	{
+		return TRUE;
+	}
+
+	if (pCapDeviceBase->m_bSelect == 0)
+	{
+		return TRUE;
+	}
+
+	CCapDeviceBase *pCurrObj = NULL;
+	BOOL bSuccess = TRUE;
+	POS pos = m_pDatas->GetHeadPosition();
+
+	while(pos)
+	{
+		pCurrObj = (CCapDeviceBase *)m_pDatas->GetNext(pos);
+
+		if (pCapDeviceBase == pCurrObj)
+		{
+			continue;
+		}
+
+		if (pCurrObj->m_bSelect)
+		{
+			pCurrObj->m_bSelect = 0;
+			bSuccess = FALSE;
+		}
+	}
+
+	return bSuccess;
+}

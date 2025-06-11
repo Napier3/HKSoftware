@@ -15,10 +15,10 @@
 #include "../../../Module/System/TickCount32.h"
 #include "../../../Module/CriticalSection/SynCriticalSection.h"
 #include "../../../Protocol/Module/PxiEngine/PxiEngineGlobal.h"
-#include"../../../SttStudio/Module/SmartTestInterface/MacroTestInterface.h"
+#include"../Module/SmartTestInterface/MacroTestInterface.h"
 #include "../PpDeviceRefs.h"
 #include "../../../Module/DataMngr/DataMngrTrans.h"
-#include "../../../SttStudio/Module/SmartTestInterface/ProtocolEngineInterface.h"
+#include "../Module/SmartTestInterface/ProtocolEngineInterface.h"
 
 CString ats_GetBinaryTempFile(const CString strTempFilePath, CGbItemBase* pItem);
 CString ats_GetBinaryTempFilePath(CGbItemBase* pItem);

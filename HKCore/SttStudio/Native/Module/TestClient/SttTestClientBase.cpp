@@ -17,7 +17,7 @@
 #include "SttTestClientSingleTimer.h"
 */
 
-#include "../../Module/API/FileApi.h"
+#include "../../../Module/API/FileApi.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -331,7 +331,7 @@ void CSttTestClientBase::AddPkgDispatchInterface(CSttPkgDispatchInterface *p)
 	}
 }
 ///
-long CSttTestClientBase::SendTestCmd(CSttTestCmd *pTestCmd)
+long CSttTestClientBase::SendTestCmd(CSttCmdBase *pTestCmd)
 {
 	if (m_pXClientEngine == NULL)
 	{

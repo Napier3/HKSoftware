@@ -5,7 +5,7 @@
 #include "../GbItemBase.h"
 #include "../Device.h"
 #include "../../../../Module/API/StringApi.h"
-#include "../ScriptText.h"
+#include "../scriptText.h"
 
 #include "../../../../Module/GpsPcTime/GpsPcTime.h"
 #include "../../../../Module/DataMngr/DatasetValid/DsvSequence.h"

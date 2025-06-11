@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../Module/BaseClass/ExBaseList.h"
+#include "../../../Module/BaseClass/ExBaseList.h"
 
 #include "../SttTestBase/SttXmlSerializeBase.h"
 

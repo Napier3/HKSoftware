@@ -116,7 +116,7 @@ void stt_xml_serialize(tmt_SequenceManuParas *pParas, CSttXmlSerializeBase *pXml
 
 	if(stt_xml_serialize_is_read(pXmlSierialize))
 	{
-		stt_xml_serialize(&pParas->m_oGoosePub[0], pXmlSierialize);
+        stt_xml_serialize(&pParas->m_oGoosePub[0], pXmlSierialize);
 	}
 
 #ifdef NOT_USE_XLANGUAGE
@@ -259,7 +259,7 @@ void stt_xml_serialize_Sequence(tmt_ManualParas *pParas, CSttXmlSerializeBase *p
 
 	if(stt_xml_serialize_is_read(pXmlSierialize))
 	{
-		stt_xml_serialize(&pParas->m_oGoosePub[0], pXmlSierialize);
+        stt_xml_serialize(&pParas->m_oGoosePub[0], pXmlSierialize);
 	}
 
 #ifdef NOT_USE_XLANGUAGE
@@ -461,7 +461,7 @@ CSttXmlSerializeBase* stt_xml_serialize(tmt_SequenceManuTest *pParas, CSttXmlSer
 
 
 #include"../../../SttCmd/SttTestCmd.h"
-#include"../../Module/API/GlobalConfigApi.h"
+#include"../../../../../Module/API/GlobalConfigApi.h"
 
 void stt_xml_serialize_write_SequenceManuTest()
 {

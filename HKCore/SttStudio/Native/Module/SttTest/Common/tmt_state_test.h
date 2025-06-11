@@ -6,6 +6,8 @@
 #include "Abnormal/tmt_abnormal_test.h"
 
 #define STATE_INIT_COUNT	6
+//2024 lijunqing 优化程序启动速度，因此固定最大状态数
+#define STATE_MAX_COUNT     100
 
 //////////////////////////////////////////////////////////////////////////
 //由于异步同步状态序列共同使用相关触发方式宏定义，将其移至tmt_common_def.h
@@ -144,10 +146,15 @@ public:
 
 	tmt_StateCloseAngle   m_oCloseAngle;		//合闸角选择 0-随机 1-定值  //zhouhj 20211015 增加用于阻抗类的合闸角设置
 
-    //GoosePub
+#ifndef TMT_STATECOUNT_USE_DEF
+	tmt_GoosePub *m_oGoosePub;
+	tmt_Ft3Pub *m_oFt3Pub;
+#else
+//GoosePub
 	tmt_GoosePub m_oGoosePub[MAX_MODULES_GOOSEPUB_COUNT];
-    //Ft3Pub
-    tmt_Ft3Pub  m_oFt3Pub[MAX_MODULES_FT3PUB_COUNT];
+//Ft3Pub
+	tmt_Ft3Pub  m_oFt3Pub[MAX_MODULES_FT3PUB_COUNT];
+#endif
 
 	tmt_StateAbnormalSMV m_oAbnormalSMV;
 	tmt_StateAbnormalGOOSE m_oAbnormalGOOSE;
@@ -173,6 +180,10 @@ public:
 		m_nRampTimeGrad = 0;
 		memset(m_strName, 0, MAX_STATE_NAME);
 		memset(m_strID, 0, MAX_STATE_ID);
+#ifndef TMT_STATECOUNT_USE_DEF
+		m_oFt3Pub = new tmt_Ft3Pub[MAX_MODULES_FT3PUB_COUNT];
+		m_oGoosePub = new tmt_GoosePub[MAX_MODULES_GOOSEPUB_COUNT];
+#endif
 
 		m_oCloseAngle.init();
 		m_oAbnormalSMV.init();
@@ -307,7 +318,6 @@ public:
 	{	
 		init(); 
 	}
-
 }tmt_StatePara;
 
 typedef struct tmt_state_result
@@ -395,7 +405,12 @@ public:
 		long		m_nErrorLogic;//判断逻辑
 	}m_paraEstimates[10];
 
+#ifdef TMT_STATECOUNT_USE_DEF
+	tmt_StatePara       m_paraState[STATE_MAX_COUNT];
+#else
     tmt_StatePara*       m_paraState;
+#endif
+	
 	int m_nStateCount;
 
 	void initCommon()
@@ -423,9 +438,11 @@ public:
 
     void init(long nStateNumbers)
     {
-
+#ifdef TMT_STATECOUNT_USE_DEF
+#else
 		if (g_nStateCount > m_nStateCount)
 		{
+			//2024-9-11 lijunqing 优化
 			if (m_paraState != NULL)
 			{
 				delete []m_paraState;
@@ -433,11 +450,13 @@ public:
 			}	
 		}
 
-
         if(m_paraState == NULL)
         {
+			//2024-9-11 lijunqing 优化
             m_paraState = new tmt_StatePara[g_nStateCount];
         }
+
+#endif
 
         for (int i=0;i<nStateNumbers&&i<g_nStateCount;i++)
         {
@@ -470,6 +489,8 @@ public:
 
 	void SetFundFreq(float fFreqValue)
 	{
+#ifdef TMT_STATECOUNT_USE_DEF
+#else
 		if (m_paraState == NULL)
 		{
 			return;
@@ -479,21 +500,29 @@ public:
 		{
 			m_paraState[i].SetFundFreq(fFreqValue);
 		}
+#endif
 	}
 
-    tmt_state_paras(){
+    tmt_state_paras()
+	{
+#ifdef TMT_STATECOUNT_USE_DEF
+#else
 		m_paraState = NULL;
+#endif
 		m_nStateCount = 0;
 		initCommon();
 	}
 
 	virtual ~tmt_state_paras()
 	{
+#ifdef TMT_STATECOUNT_USE_DEF
+#else
 		if (m_paraState != NULL)
 		{
             delete[] m_paraState;
 			m_paraState = NULL;
 		}
+#endif
 	}
 }tmt_StateParas;
 
@@ -503,7 +532,12 @@ public:
     long m_nLoopIndex;
     int  m_nBinRefState[MAX_BINARYIN_COUNT];//暂存第一态结束开入值
     int  m_nBinExRefState[MAX_ExBINARY_COUNT];//暂存第一态结束开入值
+ 
+#ifdef TMT_STATECOUNT_USE_DEF
+	tmt_StateResult  m_resultState[STATE_MAX_COUNT];
+#else
     tmt_StateResult*  m_resultState;
+#endif
 	int m_nStateCount;//dxy 20240118 标记初始化g_nStateCount个数
 
 	//评估
@@ -526,16 +560,24 @@ public:
 
 		if (g_nStateCount > m_nStateCount)//dxy 20240118 加判断防止g_nStateCount测试中更改，数组越界
 		{
+			//2024-9-11 lijunqing 优化
+#ifdef TMT_STATECOUNT_USE_DEF
+#else
 			if (m_resultState != NULL)
 			{
 				delete []m_resultState;
 				m_resultState = NULL;
 			}	
+#endif
 		}
 
         if(m_resultState == NULL)
         {
+			//2024-9-11 lijunqing 优化
+#ifdef TMT_STATECOUNT_USE_DEF
+#else
             m_resultState = new tmt_StateResult[g_nStateCount];
+#endif
         }
 
         m_nLoopIndex = 0;
@@ -553,21 +595,28 @@ public:
         {
             m_resultState[i].init();
         }
+
 		m_nStateCount = g_nStateCount;
     }
 
     tmt_state_results()
 	{
+#ifdef TMT_STATECOUNT_USE_DEF
+#else
 		m_resultState = NULL;
+#endif
 		m_nStateCount = 0;
 	}
     virtual ~tmt_state_results()
 	{
+#ifdef TMT_STATECOUNT_USE_DEF
+#else
 		if (m_resultState != NULL)
 		{
             delete[] m_resultState;
 			m_resultState = NULL;
 		}
+#endif
 	}
 }tmt_StateResults;
 

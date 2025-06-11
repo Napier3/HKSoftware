@@ -84,6 +84,7 @@ public:
     virtual long OnException(long nError, const CString &strError);
     virtual long OnConnectSuccess();
 	virtual long OnConnectFailed();
+	virtual long OnEngineEvent();
      virtual long OnCurrItemStateChanged(CGbItemBase* pItem, BOOL bBringToTop=TRUE);
      virtual long OnCurrCharItemStateChanged(CGbItemBase* pItem, CExBaseObject *pObj);
     virtual long OnTestBegin();

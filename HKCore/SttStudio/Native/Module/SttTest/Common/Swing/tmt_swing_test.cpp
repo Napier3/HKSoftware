@@ -108,6 +108,10 @@ void stt_xml_serialize(tmt_SwingParas *pParas, CSttXmlSerializeBase *pXmlSierial
 	pXmlSierialize->xml_serialize(/* "发电机暂态阻抗" */g_sLangTxt_Native_GeneTransImped.GetString(),"ImpTs","Ω","number",pParas->m_fImpTs);
 	pXmlSierialize->xml_serialize(/* "动作时间定值" */g_sLangTxt_Native_OpTimeSet.GetString(),"TimeActSetting","s","number",pParas->m_fActTimeSet);
 
+	pXmlSierialize->xml_serialize(/* "误差类型" */g_sLangTxt_StateEstimate_ErrorType.GetString(),"Ttrip_ErrorLogic","","number",pParas->m_nTtripErrorLogic);//？？？
+	pXmlSierialize->xml_serialize(/* "相对误差" */g_sLangTxt_StateEstimate_RelError.GetString(),"Ttrip_RelErr","","float",pParas->m_fTtripRelErr);
+	pXmlSierialize->xml_serialize(/* "绝对误差" */g_sLangTxt_StateEstimate_AbsError.GetString(),"Ttrip_AbsErr","","float",pParas->m_fTtripAbsErr);
+    pXmlSierialize->xml_serialize(/* "绝对误差(-)" */g_sLangTxt_StateEstimate_AbsError_Neg.GetString(),"Ttrip_AbsErr_Neg","","float",pParas->m_fTtripAbsErr_Neg);
 
 // 	stt_xml_serialize_binary_in(pParas->m_binIn,pXmlSierialize);
 //  	stt_xml_serialize_Exbinary_in(pParas->m_binInEx,pXmlSierialize,nBinExNum);

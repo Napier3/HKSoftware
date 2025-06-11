@@ -4,7 +4,9 @@
 #include "stdafx.h"
 #include "SttLocalConfigDlg.h"
 #include "../SttTestAppConfigTool.h"
-
+#ifndef NOT_USE_XLANGUAGE
+#include "../../XLangResource_Native.h"
+#endif
 
 // CSttLocalConfigDlg 对话框
 
@@ -48,8 +50,13 @@ BOOL CSttLocalConfigDlg::OnInitDialog()
 
 	CreateStatic(m_stcIP,_T("IP："), CRect(10,20,35,45), STT_STC_TESTAPPIP, this);
 	m_ctrlIP.Create(WS_TABSTOP | WS_CHILD | WS_VISIBLE, CRect(40,20,240,45), this, STT_EDIT_TESTAPPIP); 
+#ifndef NOT_USE_XLANGUAGE
+	CreateButton(m_btnCancel,/*_T("取消")*/g_sLangTxt_Cancel, CRect(460,215,540,240), STT_BTN_CANCEL, this);
+	CreateButton(m_btnOK,/*_T("确定")*/g_sLangTxt_OK, CRect(550,215,630,240), STT_BTN_OK, this);
+#else
 	CreateButton(m_btnCancel,_T("取消"), CRect(460,215,540,240), STT_BTN_CANCEL, this);
 	CreateButton(m_btnOK,_T("确定"), CRect(550,215,630,240), STT_BTN_OK, this);
+#endif
 
 	m_stcIP.SetFont(m_pGlobalFont11);
 	m_ctrlIP.SetFont(m_pGlobalFont11);
@@ -70,7 +77,11 @@ void CSttLocalConfigDlg::OnBtnClickOK()
 
 	if (strIP.IsEmpty())
 	{
+#ifndef NOT_USE_XLANGUAGE
+		CLogPrint::LogString(XLOGLEVEL_INFOR,/*_T("IP为空")*/g_sLangTxt_Native_IPIsEmpty);
+#else
 		CLogPrint::LogString(XLOGLEVEL_INFOR,_T("IP为空"));
+#endif
 		return;
 	}
 
@@ -81,7 +92,11 @@ void CSttLocalConfigDlg::OnBtnClickOK()
 
 	if(!bRet)
 	{
+#ifndef NOT_USE_XLANGUAGE
+		MessageBox(/*_T("连接测试仪失败")*/g_sLangTxt_Native_ConnectionTestInstrumentFailed,/*_T("提示")*/g_sLangID_Message,MB_OK);
+#else
 		MessageBox(_T("连接测试仪失败"),_T("提示"),MB_OK);
+#endif
 		return;
 	}
 

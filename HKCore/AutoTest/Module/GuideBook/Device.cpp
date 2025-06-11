@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "Device.h"
 #include "Items.h"
 #include "SysParas.h"

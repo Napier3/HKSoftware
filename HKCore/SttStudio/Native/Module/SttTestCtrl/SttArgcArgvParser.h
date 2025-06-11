@@ -1,7 +1,7 @@
 #ifndef __CSttArgcArgvParser_H
 #define __CSttArgcArgvParser_H
 
-#include "../../Module/MemBuffer/EquationBuffer.h"
+#include "../../../Module/MemBuffer/EquationBuffer.h"
 #include "../Main/SttMainArgvDef.h"
 
 

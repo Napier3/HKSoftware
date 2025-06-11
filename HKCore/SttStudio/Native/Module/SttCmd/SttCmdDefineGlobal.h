@@ -6,8 +6,10 @@
 
 #pragma once
 
+//#ifndef CLIENT_TEST_ENGINE_IN_LOCAL
 #include "../../../61850/Module/CfgDataMngr/IecCfgDataMngrGlobal.h"
-//#include "../../Module/DataMngr/DataMngrGlobal.h"
+//#endif
+//#include "../../../Module/DataMngr/DataMngrGlobal.h"
 
 //2021-6-13  lijunqing
 //模块class id的命名，都用模块的功能概要简写，同时都是大写，MNGR是生成工具缺省的，必须要修改
@@ -81,6 +83,12 @@
 #define STTGBXMLCLASSID_CSTTITEMRSLTEXPR            (STTCMDCLASSID_EXLISTCLASS + 0x00000030)
 //2023-3-22
 #define STTGBXMLCLASSID_CSTTTESTMACROCHARPARAS		(STTCMDCLASSID_BASECLASS + 0X00000031)  
+//2024-12-11
+#define STTGBXMLCLASSID_TESTGLOBALDATASMNGR                      (STTCMDCLASSID_EXLISTCLASS + 0X00000032)
+//lijunqing 2024-10-25
+#define STTCMDCLASSID_CSTTLICENSEMODULE       (STTCMDCLASSID_BASECLASS + 0X00000034)
+#define STTCMDCLASSID_CSTTLICENSE       (STTCMDCLASSID_EXLISTCLASS + 0X00000035)
+#define STTCMDCLASSID_CSTTLICENSEMNGR       (STTCMDCLASSID_EXLISTCLASS + 0X00000036)
 
 inline bool stt_gb_is_a_itembase(UINT nClassID)
 {
@@ -315,6 +323,19 @@ public:
 	BSTR m_strRptTitleKey;   //rpt-title
 	BSTR m_strTitleLevelKey; //title-level
 
+    //lijunqing 2024-10-25
+    BSTR m_strCSttLicenseMngrKey; //license-mngr
+    BSTR m_strCSttLicenseKey; //license
+    BSTR m_strCSttLicenseModuleKey; //module
+    BSTR m_strKeyKey; //key
+    BSTR m_strYearKey; //year
+    BSTR m_strMonthKey; //month
+    BSTR m_strDayKey; //day
+    BSTR m_strDaysKey; //days
+    BSTR m_strTimesKey; //times
+	BSTR m_strCurrTimesKey; //currtimes
+	BSTR m_strTestGlobalDatasMngrKey;  //shaolei 2024-12-11
+
 public:
 	static BSTR CSttCommCmdDataKey()  {   return g_pXmlKeys->m_strCSttCommCmdDataKey;  }
 
@@ -441,6 +462,10 @@ public:
 	static BSTR CSttMacroCharItemsKey()  {   return g_pXmlKeys->m_strCSttMacroCharItemsKey;  }
 	static BSTR CSttCharacteristicKey()  {   return g_pXmlKeys->m_strCSttCharacteristicKey;  }
 	static BSTR CSttItemRsltExprKey()	{	return g_pXmlKeys->m_strCSttItemRsltExprKey;	}
+
+    static BSTR CSttLicenseMngrKey()	{	return g_pXmlKeys->m_strCSttLicenseMngrKey;	}
+    static BSTR CSttLicenseKey()	{	return g_pXmlKeys->m_strCSttLicenseKey;	}
+    static BSTR CSttLicenseModuleKey()	{	return g_pXmlKeys->m_strCSttLicenseModuleKey;	}
 };
 
 

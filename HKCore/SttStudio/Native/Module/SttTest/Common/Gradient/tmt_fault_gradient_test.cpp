@@ -15,6 +15,8 @@
 void stt_xml_serialize(tmt_faultGradientParas *pParas, CSttXmlSerializeBase *pXmlSierialize)
 {
 	stt_xml_serialize_base(pParas, pXmlSierialize);
+	stt_xml_serialize_FaultGradientSetting(pParas, pXmlSierialize);
+	stt_xml_serialize_FaultGradientError(pParas, pXmlSierialize);
 	stt_xml_serialize_binary_AndOr(pParas, pXmlSierialize);
 	stt_xml_serialize_binary_in(pParas, pXmlSierialize);
 	stt_xml_serialize_binary_out(pParas, pXmlSierialize);
@@ -30,7 +32,8 @@ void stt_xml_serialize_base(tmt_faultGradientParas *pParas, CSttXmlSerializeBase
 	pXmlSierialize->xml_serialize("测试返回系数", "VaryMode", "", "number", pParas->m_nTestMode);
 	
 	pXmlSierialize->xml_serialize("故障模式", "FaultMode", "", "UIRampType", pParas->m_nFaultMode);
-	pXmlSierialize->xml_serialize("变化量", "ChangeValue", "", "UIRampChannel", pParas->m_nChangeValue );
+	pXmlSierialize->xml_serialize("变化量", "ChangeValue", "", "UIRampChannel", pParas->m_nChangeValue);
+	pXmlSierialize->xml_serialize("测试通道类型", "VarIndexType", "", "number", pParas->m_nVarIndexType);
 	pXmlSierialize->xml_serialize("短路电压值", "ShorVmValue", "V", "set", pParas->m_fShortVm);
 	pXmlSierialize->xml_serialize("短路电压类型","ShorVmType","","number",pParas->m_nShortVmType);
 	pXmlSierialize->xml_serialize("短路电流", "ShortVa", "A", "number", pParas->m_fShortVa);
@@ -94,14 +97,15 @@ void stt_xml_serialize_binary_out(tmt_faultGradientParas *pParas, CSttXmlSeriali
 //整定值 
 void stt_xml_serialize_FaultGradientSetting(tmt_faultGradientParas *pParas,CSttXmlSerializeBase *pXmlSierialize)
 {
-	pXmlSierialize->xml_serialize("电压整定动作值","USet","V","float",pParas->m_fUSet);
-	pXmlSierialize->xml_serialize("电流整定动作值","ISet","A","float",pParas->m_fISet);
-	pXmlSierialize->xml_serialize("相位整定动作值","AngleSet","°","float",pParas->m_fAngleSet);
-	pXmlSierialize->xml_serialize("频率整定动作值","HzSet","Hz","float",pParas->m_fHzSet);
-	pXmlSierialize->xml_serialize("返回系数整定值","RetCoefSet","","float",pParas->m_fRetCoefSet);
-	pXmlSierialize->xml_serialize("边界角1整定值","AngleFSet","°","float",pParas->m_fAngleFSet);
-	pXmlSierialize->xml_serialize("边界角2整定值","AngleSSet","°","float",pParas->m_fAngleSSet);
-	pXmlSierialize->xml_serialize("最大灵敏角整定值","MaxAngleSet","°","float",pParas->m_fMaxAngleSet);
+	pXmlSierialize->xml_serialize(/*"电压整定动作值"*/g_sLangTxt_Native_VolSetActValue.GetString(), "USet", "V", "float", pParas->m_fUSet);
+	pXmlSierialize->xml_serialize(/*"电流整定动作值"*/g_sLangTxt_Native_CurSetActValue.GetString(), "ISet", "A", "float", pParas->m_fISet);
+	pXmlSierialize->xml_serialize("阻抗角整定动作值", "ImpAngleSet", "°", "float", pParas->m_fImpAngleSet);
+	pXmlSierialize->xml_serialize("短路阻抗整定动作值", "ShortZImp", "Ω", "float", pParas->m_fShortZImp);
+	pXmlSierialize->xml_serialize(/*"频率整定动作值"*/g_sLangTxt_Native_FreqSetActValue.GetString(), "HzSet", "Hz", "float", pParas->m_fHzSet);
+	pXmlSierialize->xml_serialize(/*"边界角1整定值"*/g_sLangTxt_Native_BoundaryAngle1SetVal.GetString(), "AngleFSet", "°", "float", pParas->m_fAngleFSet);
+	pXmlSierialize->xml_serialize(/*"边界角2整定值"*/g_sLangTxt_Native_BoundaryAngle2SetVal.GetString(), "AngleSSet", "°", "float", pParas->m_fAngleSSet);
+	pXmlSierialize->xml_serialize(/*"最大灵敏角整定值"*/g_sLangTxt_Native_MaxSensitivityAngleSetVal.GetString(), "MaxAngleSet", "°", "float", pParas->m_fMaxAngleSet);
+	pXmlSierialize->xml_serialize(/*"返回系数整定值"*/g_sLangTxt_Native_FeedbackCoefSettingVal.GetString(), "RetCoefSet", "", "float", pParas->m_fRetCoefSet);
 }
 
 //评估 误差值 
@@ -113,24 +117,28 @@ void stt_xml_serialize_FaultGradientError(tmt_faultGradientParas *pParas,CSttXml
 	pXmlSierialize->xml_serialize("电流动作值绝对误差","IActVal_AbsErr","","float",pParas->m_fIActVal_AbsErr);
 	pXmlSierialize->xml_serialize("电流动作值相对误差","IActVal_RelErr","","float",pParas->m_fIActVal_RelErr);
 	pXmlSierialize->xml_serialize("电流动作值误差判断逻辑","IActVal_ErrorLogic","","number",pParas->m_nIActVal_ErrorLogic);
-	pXmlSierialize->xml_serialize("相位动作值绝对误差","AngleActVal_AbsErr","","float",pParas->m_fAngleActVal_AbsErr);
-	pXmlSierialize->xml_serialize("相位动作值相对误差","AngleActVal_RelErr","","float",pParas->m_fAngleActVal_RelErr);
-	pXmlSierialize->xml_serialize("相位动作值误差判断逻辑","AngleActVal_ErrorLogic","","number",pParas->m_nAngleActVal_ErrorLogic);
+	pXmlSierialize->xml_serialize("阻抗角动作值绝对误差", "ImpAngleActVal_AbsErr", "", "float", pParas->m_fImpAngleActVal_AbsErr);
+	pXmlSierialize->xml_serialize("阻抗角动作值相对误差", "ImpAngleActVal_RelErr", "", "float", pParas->m_fImpAngleActVal_RelErr);
+	pXmlSierialize->xml_serialize("阻抗角动作值误差判断逻辑", "ImpAngleActVal_ErrorLogic", "", "number", pParas->m_nImpAngleActVal_ErrorLogic);
+	pXmlSierialize->xml_serialize("短路阻抗动作值绝对误差", "ShortZImpActVal_AbsErr", "", "float", pParas->m_fShortZImpActVal_AbsErr);
+	pXmlSierialize->xml_serialize("短路阻抗动作值相对误差", "ShortZImpActVal_RelErr", "", "float", pParas->m_fShortZImpActVal_RelErr);
+	pXmlSierialize->xml_serialize("短路阻抗动作值误差判断逻辑", "ShortZImpActVal_ErrorLogic", "", "number", pParas->m_nShortZImpActVal_ErrorLogic);
 	pXmlSierialize->xml_serialize("频率动作值绝对误差","HzActVal_AbsErr","","float",pParas->m_fHzActVal_AbsErr);	
 	pXmlSierialize->xml_serialize("频率动作值相对误差","HzActVal_RelErr","","float",pParas->m_fHzActVal_RelErr);	
 	pXmlSierialize->xml_serialize("频率动作值误差判断逻辑","HzActVal_ErrorLogic","","number",pParas->m_nHzActVal_ErrorLogic);	
-	pXmlSierialize->xml_serialize("返回系数绝对误差","RetCoef_AbsErr","","float",pParas->m_fRetCoef_AbsErr);
-	pXmlSierialize->xml_serialize("返回系数相对误差","RetCoef_RelErr","","float",pParas->m_fRetCoef_RelErr);	
-	pXmlSierialize->xml_serialize("返回系数误差判断逻辑","RetCoef_ErrorLogic","","number",pParas->m_nRetCoef_ErrorLogic);
+	pXmlSierialize->xml_serialize(/*"边界角1绝对误差"*/g_sLangTxt_Native_BndryAng1AbsErr.GetString(), "AngleF_AbsErr", "°", "float", pParas->m_fAngleF_AbsErr);
+	pXmlSierialize->xml_serialize(/*"边界角1相对误差"*/g_sLangTxt_Native_BndryAng1RelErr.GetString(), "AngleF_RelErr", "", "float", pParas->m_fAngleF_RelErr);
+	pXmlSierialize->xml_serialize(/*"边界角1误差判断逻辑"*/g_sLangTxt_Native_BndryAng1ErrDetectLogic.GetString(), "AngleF_ErrorLogic", "", "number", pParas->m_nAngleF_ErrorLogic);
+	pXmlSierialize->xml_serialize(/*"边界角2绝对误差"*/g_sLangTxt_Native_BndryAng2AbsErr.GetString(), "AngleS_AbsErr", "°", "float", pParas->m_fAngleS_AbsErr);
+	pXmlSierialize->xml_serialize(/*"边界角2相对误差"*/g_sLangTxt_Native_BndryAng2RelErr.GetString(), "AngleS_RelErr", "", "float", pParas->m_fAngleS_RelErr);
+	pXmlSierialize->xml_serialize(/*"边界角2误差判断逻辑"*/g_sLangTxt_Native_BndryAng2ErrDetectLogic.GetString(), "AngleS_ErrorLogic", "", "number", pParas->m_nAngleS_ErrorLogic);
 	pXmlSierialize->xml_serialize("最大灵敏角绝对误差","MaxAngle_AbsErr","°","float",pParas->m_fMaxAngle_AbsErr);	
 	pXmlSierialize->xml_serialize("最大灵敏角相对误差","MaxAngle_RelErr","","float",pParas->m_fMaxAngle_RelErr);
 	pXmlSierialize->xml_serialize("最大灵敏角误差判断逻辑","MaxAngle_ErrorLogic","","number",pParas->m_nMaxAngle_ErrorLogic);	
-	pXmlSierialize->xml_serialize("边界角1绝对误差","AngleF_AbsErr","°","float",pParas->m_fAngleF_AbsErr);	
-	pXmlSierialize->xml_serialize("边界角1相对误差","AngleF_RelErr","","float",pParas->m_fAngleF_RelErr);	
-	pXmlSierialize->xml_serialize("边界角1误差判断逻辑","AngleF_ErrorLogic","","number",pParas->m_nAngleF_ErrorLogic);
-	pXmlSierialize->xml_serialize("边界角2绝对误差","AngleS_AbsErr","°","float",pParas->m_fAngleS_AbsErr);	
-	pXmlSierialize->xml_serialize("边界角2相对误差","AngleS_RelErr","","float",pParas->m_fAngleS_RelErr);
-	pXmlSierialize->xml_serialize("边界角2误差判断逻辑","AngleS_ErrorLogic","","number",pParas->m_nAngleS_ErrorLogic);
+	pXmlSierialize->xml_serialize("返回系数绝对误差", "RetCoef_AbsErr", "", "float", pParas->m_fRetCoef_AbsErr);
+	pXmlSierialize->xml_serialize("返回系数相对误差", "RetCoef_RelErr", "", "float", pParas->m_fRetCoef_RelErr);
+	pXmlSierialize->xml_serialize("返回系数误差判断逻辑", "RetCoef_ErrorLogic", "", "number", pParas->m_nRetCoef_ErrorLogic);
+
 }
 
 /////////////////////////////////////////////结果 读写
@@ -145,11 +153,13 @@ void stt_xml_serialize(tmt_faultGradientResult *pResults, CSttXmlSerializeBase *
 	pXmlSierialize->xml_serialize("电压动作值误差","TripUErrVal","","number",pResults->m_fTripUErrVal);
 	pXmlSierialize->xml_serialize("电流动作值误差","TripIErrVal","","number",pResults->m_fTripIErrVal);
 	pXmlSierialize->xml_serialize("频率动作值误差","TripHzErrVal","","number",pResults->m_fTripHzErrVal);
-	pXmlSierialize->xml_serialize("相位动作值误差","TripAngleErrVal","","number",pResults->m_fTripAngleErrVal);
+	pXmlSierialize->xml_serialize("阻抗角动作值误差", "ImpAngleErrVal", "", "number", pResults->m_fImpAngleErrVal);
+	pXmlSierialize->xml_serialize("短路阻抗动作值误差", "ImpAngleErrVal", "", "number", pResults->m_fShortZImp);
+//	pXmlSierialize->xml_serialize("相位动作值误差","TripAngleErrVal","","number",pResults->m_fTripAngleErrVal);
 	pXmlSierialize->xml_serialize("返回系数误差","RetCoefErrVal","","number",pResults->m_fRetCoefErrVal);
 	pXmlSierialize->xml_serialize("最大灵敏角误差","MaxAngleErrVal","","number",pResults->m_fMaxAngleErrVal);
-	pXmlSierialize->xml_serialize("边界角1误差","AngleFErrVal","","number",pResults->m_fAngleFErrVal);
-	pXmlSierialize->xml_serialize("边界角2误差","AngleSErrVal","","number",pResults->m_fAngleSErrVal);
+//	pXmlSierialize->xml_serialize("边界角1误差","AngleFErrVal","","number",pResults->m_fAngleFErrVal);
+//	pXmlSierialize->xml_serialize("边界角2误差","AngleSErrVal","","number",pResults->m_fAngleSErrVal);
 
 	pXmlSierialize->xml_serialize("开入1动作值","TripValueA","A/V","number",pResults->m_fTripValueChl[0]);
 	pXmlSierialize->xml_serialize("开入2动作值","TripValueB","A/V","number",pResults->m_fTripValueChl[1]);
@@ -188,7 +198,7 @@ void stt_xml_serialize(tmt_faultGradientResult *pResults, CSttXmlSerializeBase *
 	}
 }
 
-#include"../../Module/API/GlobalConfigApi.h"
+#include"../../../../../Module/API/GlobalConfigApi.h"
 void stt_xml_serialize_write_FaultGradientTest()
 {
 	tmt_faultGradientTest oFGTest;

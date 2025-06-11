@@ -46,12 +46,10 @@ void CComtradePlayConfig::InitDefault(BOOL bInitNotModuleParas)
 	{
 		m_fPTRatio[0] = m_fPTRatio[1] = 1;
 		m_fCTRatio[0] = m_fCTRatio[1] = 1;//dxy 20240204 按需求PT CT变比重新打开文件后不初始化
-
+	}
 		m_nTriggerType = COMTRADE_TRIGGRE_TYPE_No;
 		m_oBinaryConfig.init();
 		m_oWaveEditParas.init();
-	}
-
 }
 
 long CComtradePlayConfig::GetTotalChannelNum()
@@ -676,6 +674,10 @@ void CComtradePlayConfig::GenerateReplayTestParas(tmt_ReplayParas &oReplayParas,
 	pModule = GetBinaryModule();
 	if(pModule)
 	{
+		oReplayParas.m_nBoutReplayModel = pModule->m_nBoutReplayModel;
+		oReplayParas.m_fDelayTime = pModule->m_fDelayTime;
+		oReplayParas.m_fHoldTime = pModule->m_fHoldTime;
+
 		oReplayParas.m_bUseBinaryModule = m_oSttModulesComtradeBind.m_nUseBinaryModule;
 		oReplayParas.m_oBinaryModule.m_nChUseCount = m_oSttModulesComtradeBind.m_pBinaryModuleComtradeBind->GetCount();
 		POS posCh = m_oSttModulesComtradeBind.m_pBinaryModuleComtradeBind->GetHeadPosition();
@@ -947,6 +949,9 @@ void CComtradePlayConfig::GenerateReplayConfigFromTMT(tmt_ReplayParas *pReplayPa
 		pModule->m_pReplayBufBinary1 = new CComplexMemBuffer_Float();
 		pModule->m_pReplayBufBinary2 = new CComplexMemBuffer_Float();
 	}
+	pModule->m_nBoutReplayModel = pReplayParas->m_nBoutReplayModel;
+	pModule->m_fDelayTime = pReplayParas->m_fDelayTime;
+	pModule->m_fHoldTime = pReplayParas->m_fHoldTime;
 
 	for(int nChIndex = 0; nChIndex < pReplayParas->m_oBinaryModule.m_nChUseCount; nChIndex++)
 	{
@@ -1046,7 +1051,6 @@ void CComtradePlayConfig::GetTotalChs_SelectedModule(float ***pppdChValue)  //zh
 	int nChIndex = 0;
 
 	float **ppPre = *pppdChValue;
-
 	while(pos != NULL)
 	{
 		pModule = (CSttModuleComtradeBind *)m_oSttModulesComtradeBind.GetNext(pos);
@@ -1632,7 +1636,7 @@ bool CComtradePlayConfig::HasFT3ChMap()
 		}
 	}
 
-	CLogPrint::LogFormatString(XLOGLEVEL_ERROR,_T("当前未配置相应FT3通道，请从IEC配置中重新设置！"));
+	CLogPrint::LogFormatString(XLOGLEVEL_RESULT,_T("IEC配置中FT3发送未映射电压电流通道!"));
 	return false;
 }
 

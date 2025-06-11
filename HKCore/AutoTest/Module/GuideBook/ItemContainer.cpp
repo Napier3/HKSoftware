@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "ItemContainer.h"
 #include "GuideBook.h"
 #include "GbItemBase.h"

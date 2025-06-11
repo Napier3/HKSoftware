@@ -6,7 +6,9 @@
 #include "../SttTestAppConfigTool.h"
 #include "../../API/NetworkInterface.h"
 #include "SttTestAppIPConfigDlg.h"
-
+#ifndef NOT_USE_XLANGUAGE
+#include "../../XLangResource_Native.h"
+#endif
 
 // CSttLocalScanConfigDlg 对话框
 
@@ -399,7 +401,15 @@ BOOL CSttLocalScanConfigDlg::OnInitDialog()
 	m_grid.SetFont(g_pGlobalFont11);
 	m_grid.InitGrid();
 	m_grid.AttachDataViewOptrInterface(this);
-
+#ifndef NOT_USE_XLANGUAGE
+	CreateButton(m_btnScan,/*_T("扫描")*/g_sLangTxt_Native_Scanning, CRect(5,215,85,240), STT_BTN_SCANLOCAL, this);
+	CreateButton(m_btnSet,/*_T("设置")*/g_sLangTxt_Native_Setup, CRect(95,215,175,240), STT_BTN_SET, this);
+	CreateButton(m_btnTestLiveUpdate,/*_T("启升级")*/g_sLangTxt_Native_Upgrade, CRect(220,215,290,240), STT_BTN_TESTLIVEUPDATE, this);
+	CreateButton(m_btnTestOn,/*_T("启PUDA")*/g_sLangTxt_Native_EnablePUDA, CRect(300,215,370,240), STT_BTN_TESTON, this);
+	CreateButton(m_btnTestOff,/*_T("启TestSvr")*/g_sLangTxt_Native_EnableTestSvr, CRect(380,215,450,240), STT_BTN_TESTOFF, this);
+	CreateButton(m_btnCancel,/*_T("取消")*/g_sLangTxt_Cancel, CRect(460,215,540,240), STT_BTN_CANCEL_1, this);
+	CreateButton(m_btnSel,/*_T("确定")*/g_sLangTxt_OK, CRect(550,215,630,240), STT_BTN_SELLOCAL, this);
+#else
 	CreateButton(m_btnScan,_T("扫描"), CRect(5,215,85,240), STT_BTN_SCANLOCAL, this);
 	CreateButton(m_btnSet,_T("设置"), CRect(95,215,175,240), STT_BTN_SET, this);
 	CreateButton(m_btnTestLiveUpdate,_T("启升级"), CRect(220,215,290,240), STT_BTN_TESTLIVEUPDATE, this);
@@ -407,7 +417,7 @@ BOOL CSttLocalScanConfigDlg::OnInitDialog()
 	CreateButton(m_btnTestOff,_T("启TestSvr"), CRect(380,215,450,240), STT_BTN_TESTOFF, this);
 	CreateButton(m_btnCancel,_T("取消"), CRect(460,215,540,240), STT_BTN_CANCEL_1, this);
 	CreateButton(m_btnSel,_T("确定"), CRect(550,215,630,240), STT_BTN_SELLOCAL, this);
-
+#endif
 	m_btnSet.SetFont(m_pGlobalFont11);
 	m_btnScan.SetFont(m_pGlobalFont11);
 	m_btnCancel.SetFont(m_pGlobalFont11);
@@ -446,7 +456,11 @@ void CSttLocalScanConfigDlg::OnBtnClickScan()
 
 		m_oGridDatas.DeleteAll();
 		m_grid.ShowDatas(&m_oGridDatas);
+#ifndef NOT_USE_XLANGUAGE
+		m_btnScan.SetWindowText(/*_T("停止扫描")*/g_sLangTxt_Native_StopScanning);
+#else
 		m_btnScan.SetWindowText(_T("停止扫描"));
+#endif
 
 		m_nNextCmdID = 0;//清除标记
 		m_pSttMulticastClientSocket->AttatchSttMulticastMsgViewInterface(this);
@@ -476,7 +490,11 @@ void CSttLocalScanConfigDlg::OnBtnClickSel()
 
 	if(!bRet)
 	{
+#ifndef NOT_USE_XLANGUAGE
+		MessageBox(/*_T("连接测试仪失败")*/g_sLangTxt_Native_ConnectionTestInstrumentFailed,/*_T("提示")*/g_sLangTxt_Message,MB_OK);
+#else
 		MessageBox(_T("连接测试仪失败"),_T("提示"),MB_OK);
+#endif
 		return;
 	}
 
@@ -614,7 +632,11 @@ void CSttLocalScanConfigDlg::OnStopScan()
 
 	if (::IsWindow(m_btnScan.m_hWnd))
 	{
+#ifndef NOT_USE_XLANGUAGE
+		m_btnScan.SetWindowText(/*_T("扫描")*/g_sLangTxt_Native_Scanning);
+#else
 		m_btnScan.SetWindowText(_T("扫描"));
+#endif
 	}
 }
 

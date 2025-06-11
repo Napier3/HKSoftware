@@ -2,8 +2,8 @@
 #define _SttTestAppBase_h__
 
 #include "SttTestCtrlCntrBase.h"
-#include "../../Module/XLanguage/XLanguageMngr.h"
-#include "../../Module/KeyDb/XKeyDB.h"
+#include "../../../Module/XLanguage/XLanguageMngr.h"
+#include "../../../Module/KeyDb/XKeyDB.h"
 #include "../SttTestAppConfig/SttTestAppCfg.h"
 
 #include <QProcess>
@@ -34,6 +34,8 @@ public:
 	bool IsTestMacro_CurrVolChAsItem();//20230110 判断当前测试功能是否为电压电流通道当做一个单独测试项生成报告的
 	bool IsMuTest();
 	bool IsMuTest(const CString &strMacroID);
+	bool IsRemoteAutoTest(const CString &strMacroID);
+
 
 	//zhouhj 2023.12.19 自动测试调用的时候,是否需要进行传参
 	bool SmartTestIsNeedArguments(const CString &strMacroID);

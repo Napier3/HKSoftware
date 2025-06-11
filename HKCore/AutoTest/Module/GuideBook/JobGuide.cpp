@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "JobGuide.h"
 #include "GbXMLKeys.h"
 #include "Items.h"

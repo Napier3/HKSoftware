@@ -10,6 +10,7 @@ typedef struct stt_adj_parameter_xml_serial_config
 	long m_nDeviceAttr;
 	long m_nBOutAttr;
 	long m_nBinAttr;
+	long m_nDCMeasAttr;
 	long m_nModuleAttr;
 	long m_nModuleChDef;
 	long m_nModuleHdGear;
@@ -20,6 +21,7 @@ typedef struct stt_adj_parameter_xml_serial_config
 		m_nDeviceAttr = 1;
 		m_nBOutAttr = 1;
 		m_nBinAttr = 1;
+		m_nDCMeasAttr = 1;
 		m_nModuleAttr = 1;
 		m_nModuleChDef = 1;
 		m_nModuleHdGear = 1;

@@ -2,7 +2,7 @@
 #include "TCtrlSystemConfig.h"
 #include "AutoTestXMLRWKeys.h"
 // #include "../../Module/Interface/XML2Interface.h"
-#include "../../Module/api/GlobalConfigApi.h"
+#include "../../Module/API/GlobalConfigApi.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

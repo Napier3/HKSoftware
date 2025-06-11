@@ -64,6 +64,10 @@ long CSttTestEngineServerBase::Process_Cmd_System(CSttSocketDataBase *pClientSoc
     {
         nRet = ProcessCmd_CloudTest(pClientSocket,oSysCmd);
     }
+	else if (oSysCmd.m_strID == STT_CMD_TYPE_SYSTEM_GetSystemState)
+	{
+		nRet = ProcessCmd_GetSystemState(pClientSocket,oSysCmd);
+	}
     else
     {//∆‰À˚≤‚ ‘√¸¡Ó
 

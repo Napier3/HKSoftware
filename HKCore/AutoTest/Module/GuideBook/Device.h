@@ -1,6 +1,6 @@
 #pragma once
 #include "GuideBookDefine.h"
-#include "../../../Module/BaseClass/ExBaseList.h"
+#include "ExBaseList.h"
 #include "GbItemBase.h"
 #include "SysParas.h"
 #include "Cpus.h"

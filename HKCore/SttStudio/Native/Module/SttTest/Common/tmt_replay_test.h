@@ -33,6 +33,10 @@
 #define REPLAY_WEEK_CH_ELETYPE_VOL		0		//弱信号电气类型-电压
 #define REPLAY_WEEK_CH_ELETYPE_CURR		1		//弱信号电气类型-电流
 
+#define BOUT_REPLAY_MODEL_CH			0	//开出量通道回放
+#define BOUT_REPLAY_MODEL_DELAY_TRIGGER  1  // 故障触发后延时翻转
+
+
 /*
 
 <group name="模块1" id="Module1" data-type="Module">
@@ -220,6 +224,25 @@ typedef struct tmt_replay_WaveEditPara
 
 }TMT_REPLAY_WAVEEDITPARA;
 
+
+typedef struct tmt_replay_actionTime
+{
+	int m_nSelActionTime;			//是否勾选  0-不勾选 
+	float m_fActionTimeZero;		//2023-11-07 wuxinyi 计时起点
+
+	void init()
+	{	
+		m_nSelActionTime = 0;
+		m_fActionTimeZero = 0.0f;
+	}
+
+	void CopyOwn(tmt_replay_actionTime *pDest)
+	{
+		pDest->m_nSelActionTime = m_nSelActionTime;
+		pDest->m_fActionTimeZero = m_fActionTimeZero;
+	}
+};
+
 typedef struct tmt_replay_para
 {
 	TMT_REPLAY_MODULE_BINARY m_oBinaryModule;//主板开出
@@ -253,13 +276,18 @@ typedef struct tmt_replay_para
 	int m_nCycleIndex;//20230926 wxy 全部循环次数
 	double m_dReplayInterval;//20240123 gongyiping 时间间隔(s)
 	long m_nFileSize;//文件大小
-	float m_frActionTimeZero[REPLAY_ACTIONTIMEZERO_COUNT];//2023-11-07 wuxinyi 计时起点
+	//float m_frActionTime[REPLAY_ACTIONTIMEZERO_COUNT];//2023-11-07 wuxinyi 计时起点  移至tmt_replay_actionTime
+	tmt_replay_actionTime m_ActionTimeZero[REPLAY_ACTIONTIMEZERO_COUNT];
 	tmt_BinaryIn m_frActionTimebinIn[MAX_BINARYIN_COUNT];//2023-11-07 wuxinyi 动作时间开关量
 	tmt_BinaryIn m_frActionTimeBinInEx[MAX_ExBINARY_COUNT];//动作时间扩展开关量
 	int m_nActionTimeBinLogic;//0-或 1-与
 
 	tmt_BinaryOut m_binOut[MAX_BINARYOUT_COUNT];//开出量
 	tmt_BinaryOut m_binOutEx[MAX_ExBINARY_COUNT];//系统扩展开关量
+
+	int m_nBoutReplayModel;		//开出量回放方式
+	float m_fHoldTime;			//保持时间
+	float m_fDelayTime;			//延时时间
 
     tmt_replay_para()
     {
@@ -293,6 +321,9 @@ typedef struct tmt_replay_para
 		//2024-02-23 wuxinyi 新增开出量模块初始化
 		m_bUseBinaryModule = FALSE;
 		m_oBinaryModule.init();
+		m_nBoutReplayModel = BOUT_REPLAY_MODEL_CH;		//开出量回放方式
+		m_fHoldTime = 0.0f;			//保持时间
+		m_fDelayTime = 0.0f;			//保持时间
 
         for (nIndex=0; nIndex<MAX_BINARYIN_COUNT; nIndex++)
         {
@@ -393,12 +424,12 @@ typedef struct tmt_replay_para
 		int nIndex = 0;
 		for (nIndex=0; nIndex<MAX_BINARYIN_COUNT; nIndex++)
 		{
-			if(nIndex == 0)
-			{
-				m_frActionTimebinIn[nIndex].nSelect = 1;
-
-			}
-			m_frActionTimebinIn[nIndex].nSelect = 0;
+// 			if(nIndex == 0)
+// 			{
+// 				m_frActionTimebinIn[nIndex].nSelect = 1;
+// 
+// 			}
+			m_frActionTimebinIn[nIndex].nSelect = 1;
 			m_frActionTimebinIn[nIndex].nTrigMode = 0;
 		}
 		for (nIndex=0; nIndex<MAX_BINARYIN_COUNT; nIndex++)
@@ -413,7 +444,7 @@ typedef struct tmt_replay_para
 		}
 		for (nIndex=0; nIndex<REPLAY_ACTIONTIMEZERO_COUNT; nIndex++)
 		{
-			m_frActionTimeZero[nIndex] = 0.0f;
+			m_ActionTimeZero[nIndex].init();
 		}
 		m_nActionTimeBinLogic = 0;
     }
@@ -459,7 +490,9 @@ public:
     float	m_frTimeBinExAct[MAX_ExBINARY_COUNT][64];		//每一个开入记录64次变位时间
     int		m_nrBinExSwitchCount[MAX_ExBINARY_COUNT]; //变位次数
     float	m_fTestInTime; //触发时刻相对于实验开始的时间
-
+	long    m_nAction[REPLAY_ACTIONTIMEZERO_COUNT];//Act 表示是否有开入动作
+	float   m_fActionTime[REPLAY_ACTIONTIMEZERO_COUNT];//Time 表示满足开入逻辑下的动作时间
+	float   m_fActionBinAct[REPLAY_ACTIONTIMEZERO_COUNT][MAX_BINARYIN_COUNT];//表示不同计时起点内的动作值
 public:
     virtual void init()
     {
@@ -482,7 +515,53 @@ public:
             }
             m_nrBinExSwitchCount[i] = 0;
         }
+
+		for(int i = 0; i < REPLAY_ACTIONTIMEZERO_COUNT; i++)
+		{
+			for (int j = 0; j < MAX_BINARYIN_COUNT; j++)
+			{
+				m_fActionBinAct[i][j] = 0;
+			}
+
+			m_nAction[i] = 0;
+			m_fActionTime[i] = 0;
+		}
     }
+
+	void CopyOwn(tmt_replay_result *pDest)
+	{
+		pDest->m_fTestInTime = m_fTestInTime;
+		for (int i=0;i<MAX_BINARYIN_COUNT;i++)
+		{
+			for (int j=0;j<64;j++)
+			{
+				pDest->m_frTimeBinAct[i][j] = m_frTimeBinAct[i][j];
+			}
+			pDest->m_nrBinSwitchCount[i] = m_nrBinSwitchCount[i];
+		}
+
+		for(int i = 0; i < g_nBinExCount && i < MAX_ExBINARY_COUNT; i++)
+		{
+			for (int j=0;j<64;j++)
+			{
+				pDest->m_frTimeBinExAct[i][j] = m_frTimeBinExAct[i][j];
+			}
+			pDest->m_nrBinExSwitchCount[i] = m_nrBinExSwitchCount[i];
+		}
+
+		for(int i = 0; i < REPLAY_ACTIONTIMEZERO_COUNT; i++)
+		{
+			for (int j = 0; j < MAX_BINARYIN_COUNT; j++)
+			{
+				pDest->m_fActionBinAct[i][j] = m_fActionBinAct[i][j];
+			}
+
+			pDest->m_nAction[i] = m_nAction[i];
+			pDest->m_fActionTime[i] = m_fActionTime[i];
+		}
+
+	}
+
 
     tmt_replay_result()
     {

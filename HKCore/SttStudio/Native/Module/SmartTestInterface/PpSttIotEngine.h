@@ -1,7 +1,7 @@
 #pragma once
 
 #include "PpXIotEngineBase.h"
-#include "../../Module/MemBuffer/TxRingPtrBuffer.h"
+#include "../../../Module/MemBuffer/TxRingPtrBuffer.h"
 #define STT_PP_IOT_ENGINE_SPY_DATA_MAX_NUM          100//循环缓存最大存储报文数量
 
 

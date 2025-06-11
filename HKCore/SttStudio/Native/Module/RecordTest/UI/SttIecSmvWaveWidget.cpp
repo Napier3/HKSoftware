@@ -1,6 +1,6 @@
 #include "SttIecSmvWaveWidget.h"
-#include "../../Module/API/GlobalConfigApi.h"
-#include "../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../../Module/API/GlobalConfigApi.h"
+#include "../../../../Module/SmartCap/XSmartCapMngr.h"
 #ifdef _PSX_QT_LINUX_
 #include "MUTest/SttIecRecordCbInterface.h"
 #endif
@@ -12,7 +12,7 @@ QSttIecSmvWaveWidget::QSttIecSmvWaveWidget(QWidget *parent)
 : QWidget(parent)
 #endif
 {
-	//m_pIecRcdFuncWidget = this;
+	m_pIecRcdFuncWidget = this;//20250123  suyang 注销会导致在键盘处崩溃
 	m_pWidgetRef = this;
 	m_nCurrRcdChIndex = 0;
 	m_bInitTimeAxis = TRUE;

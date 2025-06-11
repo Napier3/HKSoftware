@@ -1,8 +1,8 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "GuideBookStruDscTool.h"
 #include "JobGuide.h"
 #include "../../../Module/API/FileApi.h"
-#include "../../../SttStudio/Module/SttCmd/GuideBook/SttContents.h"
+#include "../Module/SttCmd/GuideBook/SttContents.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

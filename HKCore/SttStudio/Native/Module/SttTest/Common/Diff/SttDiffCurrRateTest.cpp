@@ -38,7 +38,7 @@ long CSttDiffCurrRateTest::CalReport(UINT nState)
 	if (m_oResults.m_nActFlag)
 	{
 		float fValue = m_oResults.m_fIdiffActValue;
-		m_oDiffCalTool.CurrentCal(&fValue,m_fIbias);
+		m_oDiffCalTool.CurrentCal(&fValue,m_fIbias,m_nEarthing);
 		SetResultValues_I1IeI2Ie();
 		
 	}

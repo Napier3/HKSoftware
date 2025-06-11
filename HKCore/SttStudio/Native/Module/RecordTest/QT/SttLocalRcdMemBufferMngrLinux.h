@@ -1,8 +1,8 @@
 #pragma once
 
 #include "../RingMemBuf.h"
-#include "../../Module/SmartCap/XSmartCapInterface.h"
-#include "../../Module/SmartCap/61850Cap/ProtocolBase/Stt/SttFrameMemBufferMngr.h"
+#include "../../../../Module/SmartCap/XSmartCapInterface.h"
+#include "../../../../Module/SmartCap/61850Cap/ProtocolBase/Stt/SttFrameMemBufferMngr.h"
 
 //RCD_PARSE_BUFFER_MAX_LEN(81920) - 10240
 #define CAPPKG_READ_LEN_ONCE   71680

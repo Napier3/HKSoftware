@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "RptFillInterface.h"
 #include "../../TestControl/SmartTestBaseApp.h"
 #include "../../../../Module/API/FileApi.h"

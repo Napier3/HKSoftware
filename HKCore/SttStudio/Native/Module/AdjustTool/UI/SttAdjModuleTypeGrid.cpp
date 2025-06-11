@@ -5,6 +5,9 @@
 #include "stdafx.h"
 #include "SttAdjModuleTypeGrid.h"
 #include "..\SttAdjBase.h"
+#ifndef NOT_USE_XLANGUAGE
+#include "../../../Local/SttAdjMain/XLanguageResource_SttAdjMain.h"
+#endif
 
 CSttAdjModuleTypeGrid::CSttAdjModuleTypeGrid()
 {
@@ -33,7 +36,12 @@ void CSttAdjModuleTypeGrid::InitGrid()
 
 void CSttAdjModuleTypeGrid::InitGridTitle()
 {
+#ifndef NOT_USE_XLANGUAGE
+	CString astrTitle[4] = {/*_T("±àºÅ")*/g_sLangTxt_Index,/*_T("Ãû³Æ")*/g_sLangTxt_SttAdjMain_Name,
+		/*_T("Ä£¿éID")*/g_sLangTxt_SttAdjMain_ModuleID,_T("VALUE")};
+#else
 	CString astrTitle[4] = {_T("±àºÅ"),_T("Ãû³Æ"),_T("Ä£¿éID"),_T("VALUE")};
+#endif
 	int nWidth[4]={40,120,100,100};
 
 	CExBaseListGrid::InitGridTitle(astrTitle, nWidth, 4);

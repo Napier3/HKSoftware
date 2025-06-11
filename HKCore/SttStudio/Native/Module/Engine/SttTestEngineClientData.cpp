@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "SttTestEngineClientData.h"
 #include "../SttCmdToolMngr.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -328,7 +328,7 @@ long CSttTestEngineClientData::SendCmdOnly(CSttCmdBase *pCmd, BOOL bCompress,BOO
 }
 
 //system command
-long CSttTestEngineClientData::System_SetSysConfig(CDataGroup *pParas,BOOL bDoEvents,CSttCmdData *pRetData)
+long CSttTestEngineClientData::System_SetSysConfig(CDataGroup *pParas,BOOL bDoEvents,CSttCmdData *pRetData,BOOL bSendCmdAsyn)
 {
 	if (m_pSttClientSocket == NULL)
 	{
@@ -339,10 +339,15 @@ long CSttTestEngineClientData::System_SetSysConfig(CDataGroup *pParas,BOOL bDoEv
 	oSysCmd.m_strID = STT_CMD_TYPE_SYSTEM_SetSysConfig;
 	oSysCmd.AppendParas2(*pParas);
 
+	if (bSendCmdAsyn)
+	{
+		return SendCmdAsync(&oSysCmd,g_nTimeOut_System);
+	}
+
 	return SendCmdSync(&oSysCmd,g_nTimeOut_System,pRetData,bDoEvents);
 }
 
-long CSttTestEngineClientData::System_GetSysConfig(BOOL bDoEvents,CSttCmdData *pRetData)
+long CSttTestEngineClientData::System_GetSysConfig(BOOL bDoEvents,CSttCmdData *pRetData,BOOL bSendCmdAsyn)
 {
 	if (m_pSttClientSocket == NULL)
 	{
@@ -351,6 +356,11 @@ long CSttTestEngineClientData::System_GetSysConfig(BOOL bDoEvents,CSttCmdData *p
 
 	CSttSystemCmd oSysCmd;
 	oSysCmd.m_strID = STT_CMD_TYPE_SYSTEM_GetSysConfig;
+
+	if (bSendCmdAsyn)
+	{
+		return SendCmdAsync(&oSysCmd,g_nTimeOut_System);
+	}
 
 	return SendCmdSync(&oSysCmd,g_nTimeOut_System,pRetData,bDoEvents);
 }
@@ -999,7 +1009,7 @@ long CSttTestEngineClientData::Ats_StopTest(BOOL bDoEvents,CSttCmdData *pRetData
 	return nRet;
 }
 
-long CSttTestEngineClientData::Ats_CloseTest(BOOL bDoEvents,CSttCmdData *pRetData)
+long CSttTestEngineClientData::Ats_CloseTest(BOOL bDoEvents,CSttCmdData *pRetData,long nSynMode)
 {
 	if (m_pSttClientSocket == NULL)
 	{
@@ -1008,7 +1018,19 @@ long CSttTestEngineClientData::Ats_CloseTest(BOOL bDoEvents,CSttCmdData *pRetDat
 
 	CSttAtsCmd oAtsCmd;
 	oAtsCmd.m_strID = STT_CMD_TYPE_ATS_CloseTest;
-	return SendCmdSync(&oAtsCmd,g_nTimeOut_Ats,pRetData,bDoEvents);
+
+	long nRet = 0;
+	if(nSynMode == STT_CMD_Send_Async)
+	{
+		nRet = SendCmdAsync(&oAtsCmd,g_nTimeOut_Ats);
+	}
+	else
+	{
+		nRet = SendCmdSync(&oAtsCmd,g_nTimeOut_Ats,pRetData,bDoEvents);
+	}
+
+	return nRet;
+	//return SendCmdSync(&oAtsCmd,g_nTimeOut_Ats,pRetData,bDoEvents);
 }
 
 long CSttTestEngineClientData::Ats_ManuTrigger(BOOL bDoEvents,CSttCmdData *pRetData)
@@ -1184,9 +1206,11 @@ long CSttTestEngineClientData::Ats_ConfigDevice(CDataGroup *pCommParas,BOOL bDoE
 
 	CSttAtsCmd oAtsCmd;
 	oAtsCmd.m_strID = STT_CMD_TYPE_ATS_ConfigDevice;
-
-	pCommParas->m_strID = STT_CMD_PARA_CommConfig;
-	oAtsCmd.AddNewParas(pCommParas);
+// 	pCommParas->m_strID = STT_CMD_PARA_CommConfig;
+// 	oAtsCmd.AddNewParas(pCommParas);
+	//chenling 此处不能直接AddNewParas，报文结构不对
+	CSttParas *pParas = oAtsCmd.GetSttParas();
+	pParas->AppendCloneEx2(*pCommParas);
 	return SendCmdSync(&oAtsCmd,g_nTimeOut_Ats,pRetData,bDoEvents);
 }
 
@@ -2320,6 +2344,12 @@ long CSttTestEngineClientData::Process_SysState_System_GetSysConfig(CSttSysState
 	if (Stt_Is_ExecStatus_Success(nCmdExecState))
 	{
 		//如果需要，更新系统参数
+	}
+
+	if (m_pTestEventRcv != NULL)
+	{
+		CSttParas *pParas = oSysState.GetSttParas();
+		m_pTestEventRcv->OnRecvSysConfigData(pParas);
 	}
 
 	//CSttCmdOverTimeTool::OnSocketReceive_FixedCmd(m_pSttClientSocket,oSysState,nCmdExecState);

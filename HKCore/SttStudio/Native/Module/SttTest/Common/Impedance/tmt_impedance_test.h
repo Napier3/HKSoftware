@@ -85,6 +85,11 @@ public:
 		m_fBoutHoldTime = 0.0f;
 		m_nOutputSwitchMode = 0;
 
+		m_fResistance[0] = 0.800f;			//电阻
+		m_fResistance[1] = 0.800f;
+		m_fReactance[0] = 1.900f;				//电抗
+		m_fReactance[1] = 1.900f;
+
 		for (int nIndex = 0;  nIndex  <  MAX_BINARYIN_COUNT;  nIndex++)
 		{
 			m_nDInputState[nIndex] = STT_IMPEDANCE_BIN_STATE_SINGLE;
@@ -100,6 +105,8 @@ public:
 			pDest->m_fRate[nIndex] = m_fRate[nIndex];
 			pDest->m_fImpedance[nIndex] = m_fImpedance[nIndex];
 			pDest->m_fImpAngle[nIndex] = m_fImpAngle[nIndex];
+			pDest->m_fResistance[nIndex] = m_fResistance[nIndex];
+			pDest->m_fReactance[nIndex] = m_fReactance[nIndex];
 			pDest->m_fSCCurrent[nIndex] = m_fSCCurrent[nIndex];
 			pDest->m_fSCVoltage[nIndex] = m_fSCVoltage[nIndex];
 			pDest->m_nFaultType[nIndex] = m_nFaultType[nIndex];
@@ -109,7 +116,7 @@ public:
 		pDest->m_nCTPoint = m_nCTPoint;
 		pDest->m_nPTPoint = m_nPTPoint;
 		pDest->m_nCalMode = m_nCalMode;
-		pDest->m_fPrepareTime = m_fPrepareTime;
+//        pDest->m_fPrepareTime = m_fPrepareTime;
 		pDest->m_fPreFaultTime = m_fPreFaultTime;
 		pDest->m_fMaxFaultTime = m_fMaxFaultTime;
 		pDest->m_fMarginTime = m_fMarginTime;
@@ -195,6 +202,9 @@ public:
 	float m_fRate[2];// 阻抗系数/过流系数【通过阻抗定值及系数计算阻抗值】
 	float m_fImpedance[2];		//短路阻抗幅值(第一次故障阻抗、第二次故障阻抗)	m_fZ m_fZdev
 	float m_fImpAngle[2];		//阻抗角(第一次故障阻抗、第二次故障阻抗) m_fPhi
+
+	float m_fResistance[2];		//(第一次电阻、第二次电阻)    m_fR
+	float m_fReactance[2];		//(第一次电抗、第二次电抗)	  m_fX       2024-11-21 xueyangfan 用于整组试验上位机下发参数，底层不做处理
 
 	double m_fSCCurrent[2];		//短路电流 原m_fItest  m_fItestdev
 	double m_fSCVoltage[2];		//短路电压 原m_fVtest  m_fVtestdev
@@ -358,6 +368,9 @@ public:
 
 	void SetFault2TripTime(long nTripIndex,long nInputMapState,float fValue)
 	{
+#ifdef _PSX_IDE_QT_
+        (void)nTripIndex;
+#endif
 		if (nInputMapState == STT_IMPEDANCE_BIN_STATE_RECLOCE)
 			return;
 

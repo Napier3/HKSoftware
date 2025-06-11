@@ -6,6 +6,9 @@
 #include "SttAdjDeviceAdjustsGrid.h"
 #include "..\SttAdjDevice.h"
 #include "..\SttAdjModule.h"
+#ifndef NOT_USE_XLANGUAGE
+#include "..\..\..\Local\SttAdjMain\XLanguageResource_SttAdjMain.h"
+#endif
 
 #define ADJ_DV_COL_ModuleType  1
 #define ADJ_DV_COL_ModulePos  2
@@ -46,7 +49,13 @@ void CSttAdjDeviceAdjustsGrid::InitGrid()
 
 void CSttAdjDeviceAdjustsGrid::InitGridTitle()
 {
+#ifndef NOT_USE_XLANGUAGE
+	CString astrTitle[ADJ_DV_COLS] = {/*_T("编号")*/g_sLangTxt_Index,
+		/*_T("模块类型")*/g_sLangTxt_SttAdjMain_ModType, /* _T("模块位置")*/g_sLangTxt_SttAdjMain_ModPos,/* _T("温区")*/g_sLangTxt_SttAdjMain_TempZone,/* _T("通道")*/g_sLangTxt_SttAdjMain_Channel, _T(""),
+		/* _T("档位值")*/g_sLangTxt_SttAdjMain_GearVal,   /*_T("幅值系数")*/g_sLangTxt_SttAdjMain_AmpFactor,/* _T("零漂")*/g_sLangTxt_SttAdjMain_ZeroDrift, /*_T("相位校准")*/g_sLangTxt_SttAdjMain_AngCalib};
+#else
 	CString astrTitle[ADJ_DV_COLS] = {_T("编号"),_T("模块类型"),  _T("模块位置"), _T("温区"),         _T("通道"), _T(""), _T("档位值"),   _T("幅值系数"), _T("零漂"), _T("相位校准")};
+#endif
 	CString astrAttrs[ADJ_DV_COLS] = {_T(""),      _T("ModuleType"), _T("ModulePos"),_T("Temperature"), _T(""),       _T(""), _T("GearValue"), _T("Coef"),         _T("Zero"),   _T("Angle")};
 	int nWidth[ADJ_DV_COLS]={60,120, 120, 120,120,120, 120, 200,200,200};
 

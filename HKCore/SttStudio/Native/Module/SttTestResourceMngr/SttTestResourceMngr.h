@@ -3,8 +3,8 @@
 #include "RtDataMngr/SttGlobalRtDataMngr.h"
 #include "../SttCmd/SttChMaps.h"
 #include "../AdjustTool/SttAdjDevice.h"
-#include "../../Module/XfileMngrBase/XFileMngr.h"
-#include "../../Module/FilterText/FilterTextMngr.h"
+#include "../../../Module/XfileMngrBase/XFileMngr.h"
+#include "../../../Module/FilterText/FilterTextMngr.h"
 #include "TestResource/SttTestResource_Async.h"
 #include "../../../61850/Module/CfgDataMngr/IecCfgDatasMngr.h"
 
@@ -28,6 +28,7 @@ public:
 	long m_nChCountI_Week;//电流通道数(用于弱信号插件)
 
 	long m_nModuleIndex;//模块编号,根据模块类型从1开始编号
+	long m_nIsChTypeChg;//弱信号通道类型是否可变(0:不可变,1:可变,缺省为可变)
 };
 
 class CSttModuleTags :public CTLinkList<CSttModuleTag> 
@@ -99,6 +100,7 @@ public:
 	BOOL HasContrlBlockSelected_IecConfig();
 
 	BOOL SaveCurChMapsFile();//保存当前通道映射文件
+	BOOL SaveAllChMapsFile(const CString &strChMapsPath);//保存当前sync通道映射文件以及4u3i 6u6i文件
 	BOOL SaveCurDeviceFile();//保存当前Device文件
 	void GetAllModuleTags();
 	BOOL CreateDefaultChMapsByDevice(CSttChMaps *pCurChMaps,long nIecFormat,BOOL bHasDigital,BOOL bHasWeek = TRUE);//根据硬件资源生成缺省映射文件，只有在映射文件为空但Device加载成功的情况下调用
@@ -110,7 +112,11 @@ public:
 	void UpdateParasMaxValuesByWeekRates();
 	void UpdateLC_ST_FibersNum();
 	long GetUartCount();//2024.5.8 chenling 获取串口数量
-
+	long GetBinVoltMeas();//2024-11-5 wuxinyi 主板开入电压采集(0-不支持，1-支持)
+	long GetMergeCurTerminal();//20241125 suyang 合并电流端子（-1 不支持合并输出；0 不合并输出； 1  合并为1个通道输出；3 合并为3个通道输出）
+	void IecSysParasToTmtSysParas();//20240828 suyang 新增函数用于更新系统参数中变比、报文输出类型等
+	void TmtSysParasToIecSysParas();//dingxy 20250317 将系统参数同步更新到Iec参数中
+	void GetDeviceMaxVolCurrValues();//获取电压电流的最大值,从现有函数内提取，在进行一次二次值转换前需要调用，用于变比转换 
 
 #ifdef _USE_SoftKeyBoard_
 	void UpdateSoftKeyboardType();//更新键盘当前类型
@@ -135,7 +141,7 @@ protected:
 	BOOL ParseHdRsID(const CString &strHdRsID,long &nChType ,long &nModuleType,long &nModuleIndex,long &nChIndex);
 	BOOL HasMapHdResource();//判断通道映射是否为空,如果为空则设置缺省通道映射
 	void UpdateChNames_UzIz(CSttChMaps *pCurChMaps,CSttTestResourceBase *pTestResouce);//更新U0、I0通道的名称(为统一配电终端和继电保护方式,统一改为U0\I0)
-
+	void UpdateDefaultVolChMapByDevice8U6I(CSttChMaps *pCurChMaps, long nVolModuleCount);
 	long GetDigitalModuleNum();
 	CString m_strModuleTagsSN;
 

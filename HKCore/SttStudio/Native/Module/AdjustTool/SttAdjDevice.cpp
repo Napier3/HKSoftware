@@ -9,13 +9,15 @@
 #include "SttAdjModule.h"
 
 #include "SttMesLocalDb.h"
-
+#include "../../../Module/API/FileApi.h"
 #ifdef _DEBUG
 #undef THIS_FILE
 	static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
-
+#ifndef NOT_USE_XLANGUAGE
+#include "../../../Module/XLanguage/XLanguageMngr.h"
+#endif
 
 
 
@@ -62,12 +64,35 @@ BOOL CSttAdjDevice::OpenSttAdjFile(const CString &strFile)
 		m_pSttAdjRef = new CDataGroup();
 		m_pSttAdjRef->SetParent(this);
 	}
-	
+#ifdef USE_ExBaseFile_AutoTrans_BinaryBsttFile	
+	BOOL bRet = FALSE;
+	CString strFileB = ChangeFilePostfix(strFile, _T("bstt"));//dingxy 20240913 改为二进制文件
+	m_pSttAdjRef->DeleteAll();
+	if (IsFileExist(strFileB))
+	{
+		CLogPrint::LogString(XLOGLEVEL_TRACE, strFileB);
+		bRet = dvm_OpenBinaryFile(m_pSttAdjRef, strFileB, true);
+	}
+	else
+	{
+
+	CDataMngrXmlRWKeys::g_pXmlKeys->m_nIsGroupUseDvmData++;
+		bRet = m_pSttAdjRef->OpenXmlFile(strFile, CDataMngrXmlRWKeys::g_pXmlKeys);
+	CDataMngrXmlRWKeys::g_pXmlKeys->m_nIsGroupUseDvmData--;
+		dvm_SaveBinaryFile(m_pSttAdjRef, strFileB, true);
+	}
+#else
 	m_pSttAdjRef->DeleteAll();
 	CDataMngrXmlRWKeys::g_pXmlKeys->m_nIsGroupUseDvmData++;
 	BOOL bRet = m_pSttAdjRef->OpenXmlFile(strFile, CDataMngrXmlRWKeys::g_pXmlKeys);
 	CDataMngrXmlRWKeys::g_pXmlKeys->m_nIsGroupUseDvmData--;
-
+#ifndef NOT_USE_XLANGUAGE
+	if (strFile.GetLength())
+	{
+		xlang_TranslateByResourceFileEx(m_pSttAdjRef, strFile);
+	}
+#endif
+#endif
 	TransModuleTypeFromLongToString();
 
 	return bRet;
@@ -100,7 +125,10 @@ BOOL CSttAdjDevice::SaveSttAdjFile(const CString &strFile)
 	}
 
 	BOOL bRet = m_pSttAdjRef->SaveXmlFile(strFile, CDataMngrXmlRWKeys::g_pXmlKeys);
-
+#ifdef USE_ExBaseFile_AutoTrans_BinaryBsttFile
+	CString strFileB = ChangeFilePostfix(strFile, _T("bstt"));
+	dvm_SaveBinaryFile(m_pSttAdjRef, strFileB, true);
+#endif
 	return bRet;
 }
 
@@ -309,6 +337,8 @@ void CSttAdjDevice::GetAttrs()
 	pAttrGroup->GetDataValue(STT_ADJ_ID_BoutCount, m_nBoutCount);
 	pAttrGroup->GetDataValue(STT_ADJ_ID_STModeSet, m_nSTModeSet);
 	pAttrGroup->GetDataValue(STT_ADJ_ID_UartCount,m_nUartCount);
+	pAttrGroup->GetDataValue(STT_ADJ_ID_BinVoltMeas,m_nBinVoltMeas);
+	pAttrGroup->GetDataValue(STT_ADJ_ID_MergeCurTerminal,m_nMergeCurTerminal);
 }
 
 //如果装置SN与模块SN一致，则是集成整机，校准记录上传时不更新模块信息，也没有装置模块信息

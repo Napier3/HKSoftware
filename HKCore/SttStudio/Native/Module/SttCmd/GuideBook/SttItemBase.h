@@ -112,3 +112,5 @@ void Stt_EmptyReportDatas(CExBaseList *pList, BOOL bOnlySelect=FALSE);
 BOOL stt_IsItemsAin(const CString &strItemsID);  //判断是否是遥测项目
 BOOL stt_IsItemAin(CExBaseObject *pItemBase);  //判断是否是遥测项目
 BOOL stt_IsItemHasAin(CSttItemBase *pItemBase);  //判断该项目下，是否有遥测项目
+BOOL stt_IsNeedRootNodeTypeItemsRslt(const CString &strItemsID);  //根节点是否需要总结论
+BOOL stt_IsNeedNoneTypeItemsRslt(const CString &strItemsID);  //判断该项目下，是否所有子项目都测试合格

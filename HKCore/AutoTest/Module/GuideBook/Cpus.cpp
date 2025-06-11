@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "Cpus.h"
 #include "Cpu.h"
 #include "GbItemBase.h"

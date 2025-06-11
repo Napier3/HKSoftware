@@ -1,5 +1,5 @@
 #pragma once
-#include "../../../../module/baseclass/exbaseobject.h"
+#include "ExBaseObject.h"
 #include "DeviceClassIDDefine.h"
 #include "DeviceModelXmlKeys.h"
 #include "CmmConfigBase.h"

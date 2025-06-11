@@ -6,6 +6,9 @@
 #include "SttAdjModulesGrid.h"
 #include "../SttAdjBase.h"
 #include "../SttMesLocalDb.h"
+#ifndef NOT_USE_XLANGUAGE
+#include "../../XLangResource_Native.h"
+#endif
 
 CSttAdjModulesGrid::CSttAdjModulesGrid()
 {
@@ -35,7 +38,14 @@ void CSttAdjModulesGrid::InitGrid()
 
 void CSttAdjModulesGrid::InitGridTitle()
 {
+#ifndef NOT_USE_XLANGUAGE
+	CString astrTitle[8] = {/*_T("编号")*/g_sLangTxt_Index, /*_T("模块类型")*/g_sLangTxt_Gradient_ModuleType,
+		/*_T("通道数")*/g_sLangTxt_IEC_ChannelNumber,/*_T("位置号")*/g_sLangTxt_Gradient_LocNumber, 
+		/*_T("型号")*/g_sLangTxt_Report_AppModel, /*_T("序列号")*/g_sLangTxt_Report_AppSN, 
+		/*_T("模块版本")*/g_sLangTxt_Gradient_ModuleVersion, /*_T("生产日期")*/g_sLangTxt_Gradient_ManufactDate};
+#else
 	CString astrTitle[8] = {_T("编号"),_T("模块类型"),_T("通道数"),_T("位置号"), _T("型号"), _T("序列号"), _T("模块版本"), _T("生产日期")};
+#endif
 	CString astrAttrs[8] = {_T(""),_T("ModuleType"), _T("ChannelNum"), _T("ModulePos"), _T("Model"), _T("SN"), _T("FpgaVer"), _T("DateFac")};
 	int nWidth[8]={40,80,60,60, 150, 120, 120, 120};
 

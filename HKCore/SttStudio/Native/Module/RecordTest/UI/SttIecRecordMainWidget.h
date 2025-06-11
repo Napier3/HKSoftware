@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include <QFont>
-#include "../../Module/SmartCap/61850Cap/CapDevice/CapDeviceBase.h"
+#include "../../../../Module/SmartCap/61850Cap/CapDevice/CapDeviceBase.h"
 #include "SttIecRcdFuncInterface.h"
 
 //2022-12-02  lijunqing  
@@ -65,6 +65,16 @@ public://20231017 wxy 外部需要调m_pSttIecRecordDetectWidget，故设为公有
 	QDialog *m_pSttIecRecordDetectWidget;//报文探测界面,显示探测到的全部控制块
 	QDialog *m_pSttIecRecordCbWidget;//进入报文监视界面后,显示单个控制块报文的全部信息
 
+
+//2024-9-10 lijunqing 优化系统程序启动的效率
+protected:
+	bool m_bHasInitFinished;  //是否已经初始化完成，没有初始化，不能进行操作
+	virtual void showEvent(QShowEvent *event);
+	void InitIecRecordMain();
+	CString m_strFuncID;
+	long m_nPkgDetectType;
+
+	QFont m_oFont;
 };
 
 extern QSttIecRecordMainWidget *g_theSttIecRecordMainWidget;

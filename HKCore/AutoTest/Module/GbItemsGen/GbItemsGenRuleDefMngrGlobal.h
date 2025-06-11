@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "../../../Module/BaseClass/ExBaseList.h"
+#include "ExBaseList.h"
 
 #define GbItemsGenMngrCLASSID_BASECLASS       (CLASSID_BASECLASS + 0X00010000)
 #define GbItemsGenMngrCLASSID_EXLISTCLASS       (CLASSID_EXLISTCLASS + 0X00010000)

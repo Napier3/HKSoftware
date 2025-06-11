@@ -4,8 +4,8 @@
 #include <QDialog>
 #include <QFont>
 #include "SttIecCbGrid.h"
-#include "XWndInterface.h"
-#include "../Module/UI/Controls/SttCheckBox.h"
+#include "../../../../Module/OSInterface/XWndInterface.h"
+#include "../../../Module/UI/Controls/SttCheckBox.h"
 //2022-12-02  lijunqing  
 #include "../../Assist/SttAssistGlobalApi.h"
 #include "SttIecRecordWriteFileWidget.h"
@@ -61,6 +61,7 @@ public:
 	bool m_bIecCapWriteFile;
 	bool m_bIsClearCBs;//zhouhj  20220902  增加防止连续多次点击清除按钮
 	long m_nIecType; //20240813 suyang 增加报文探测时IEC类型，用于传给底层SV--1 GOOSE---2  FT3---3  全部---0
+	BOOL m_bStartDetect;//20241022 suyang 增加是否在探测过程
 
 public:
 //	void InitSttIecRecord();
@@ -81,6 +82,9 @@ public:
 
 	//zhouhj 2023.12.4更新报文探测类别
 	void UpdateDetectType(long nPkgDetectType);
+
+	//suyang 20241226 合并单元报文探测为tab类型，点击时自动进入探测界面
+	void MuBeginRecord();
 
 public slots:
 

@@ -117,7 +117,7 @@ long CPpSttIotDevice::Event_OnPkgSpy(CSttParas *pSttParas)
 {
 	if (m_oPkgSpyList.GetDataCount()>=STT_PP_IOT_ENGINE_SPY_DATA_MAX_NUM)
 	{
-		CLogPrint::LogFormatString(XLOGLEVEL_ERROR,_T("报文监听缓存已满."));
+		//CLogPrint::LogFormatString(XLOGLEVEL_ERROR,_T("报文监听缓存已满."));
 		return 0;
 	}
 

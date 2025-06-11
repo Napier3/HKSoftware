@@ -1,6 +1,6 @@
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "SttDiffCurrCalculatTool.h"
-#include "../../Module/API/MathApi.h"
+#include "../../../Module/API/MathApi.h"
 
 #define qSqrt sqrt
 #define SQRT_3 SQRT3
@@ -1014,6 +1014,120 @@ void CSttDiffCurrCalculatTool::Init()
 	m_nKphMode_ElecRailway = 1;
 }
 
+double CSttDiffCurrCalculatTool::CalStdId(double dIr,double dIcdqd,int nKneePoints,double dIp1,double dIp2,double dIp3,
+				double dKid0,double dKid1,double dKid2,double dKid3,double dIsd,
+				long nComBineFeature,long nZeroSeqElimiType,long nFaultType,long nClock)
+{
+	if (nComBineFeature == 0)
+	{
+		return CalStdId(dIr,dIcdqd,nKneePoints,dIp1,dIp2,dIp3,dKid0,dKid1,dKid2,dKid3,dIsd);
+	}
+
+	if (nZeroSeqElimiType == 2)// 2-YD辅助CT
+	{
+		if (nClock%2 == 0)//	Y/Y，D/D 接线方式
+		{
+			if (nFaultType > ABCPhase)//单相故障需要处理
+			{
+				return CalStdId(dIr,dIcdqd*2,nKneePoints,dIp1*2,dIp2*2,dIp3*2,dKid0,dKid1,dKid2,dKid3,dIsd);
+			} 
+			else
+			{
+				return CalStdId(dIr,dIcdqd,nKneePoints,dIp1,dIp2,dIp3,dKid0,dKid1,dKid2,dKid3,dIsd);
+			}
+		} 
+		else
+		{
+			if (nFaultType<ABCPhase)//单相故障需要处理
+			{
+				return CalStdId(dIr,dIcdqd*2,nKneePoints,dIp1*2,dIp2*2,dIp3*2,dKid0,dKid1,dKid2,dKid3,dIsd);
+			} 
+			else
+			{
+				return CalStdId(dIr,dIcdqd,nKneePoints,dIp1,dIp2,dIp3,dKid0,dKid1,dKid2,dKid3,dIsd);
+			}
+		}
+	} 
+	else
+	{
+		if (nFaultType<ABCPhase)//单相故障需要处理
+		{
+			return CalStdId(dIr,dIcdqd*2,nKneePoints,dIp1*2,dIp2*2,dIp3*2,dKid0,dKid1,dKid2,dKid3,dIsd);
+		} 
+		else
+		{
+			return CalStdId(dIr,dIcdqd,nKneePoints,dIp1,dIp2,dIp3,dKid0,dKid1,dKid2,dKid3,dIsd);
+		}
+	}
+}
+
+double CSttDiffCurrCalculatTool::CalStdId(double dIr,double dIcdqd,int nKneePoints,double dIp1,double dIp2,double dIp3,
+				double dKid0,double dKid1,double dKid2,double dKid3,double dIsd)
+{
+	if (dIr < 0.0)
+	{
+		return dIcdqd;
+	}
+
+	double dId = dIcdqd + dIr*dKid0;
+
+	if ((nKneePoints<=0)||(dIr<=dIp1))
+	{
+		return dId;
+	}
+
+	switch (nKneePoints)
+	{
+	case 1:
+		{
+			dId = dIcdqd + dIp1*dKid0 + (dIr - dIp1)*dKid1;
+		}
+		break;
+	case 2:
+		{
+			if (dIr <= dIp2)//当前点在第一段,小于拐点2
+			{
+				//拐点1的Y坐标 + 当前点在第一段的X轴长度 乘 斜率
+				dId = dIcdqd + dIp1*dKid0 + (dIr - dIp1)*dKid1;
+			}
+			else 
+			{
+				dId = dIcdqd + dIp1*dKid0 + dIp2*dKid1 + (dIr - dIp2)*dKid2;
+			}
+		}
+		break;
+	case 3:
+		{
+			if (dIr <= dIp2)//当前点在第一段,小于拐点2
+			{
+				//拐点1的Y坐标 + 当前点在第一段的X轴长度 乘 斜率
+				dId = dIcdqd + dIp1*dKid0 + (dIr - dIp1)*dKid1;
+			}
+			else if (dIr <= dIp3)//当前点在第二段,小于拐点3
+			{
+				//拐点2的Y坐标 + 当前点在第二段的X轴长度 乘 斜率
+				dId = dIcdqd + dIp1*dKid0 + dIp2*dKid1 + (dIr - dIp2)*dKid2;
+			}
+			else //当前点在第三段
+			{
+				dId = dIcdqd + dIp1*dKid0 + dIp2*dKid1 + dIp3*dKid2 + (dIr - dIp3)*dKid3;
+			}
+		}
+		break;
+	default:
+		break;
+	}
+
+	if (dId < dIsd)
+	{
+		return dId;
+	}
+	else
+	{
+		return dIsd;
+	}
+}
+
 /***********************************************************/
 //  根据差动和制动电流计算三相电流
 /***********************************************************/
@@ -1611,6 +1725,3860 @@ void CSttDiffCurrCalculatTool::CurrentCal(float *fId,float fIr)
 	m_arryoCurrent[5].famptitude = fIcp;
 	m_arryoCurrent[5].fphase = fIcpPh;
 	m_arryoCurrent[5].ffre = m_fFreq;
+}
+
+void CSttDiffCurrCalculatTool::CurrentCal_CbopDiff(double dI1,double dI2)
+{
+	float fIa = dI1,fIaPh = 0.0f,fIb = 0.0f,fIbPh = 0.0f,fIc = 0.0f,fIcPh = 0.0f;
+	float fIap = dI2,fIapPh = 0.0f,fIbp = 0.0f,fIbpPh = 0.0f,fIcp = 0.0f,fIcpPh = 0.0f;
+	float ftemp,fphe;
+	float fTmp = 0;
+
+	if(m_nPhase<ABCPhase)//单相故障的处理
+	{
+		int nAngleMode;
+		if(m_nAngleMode>0)  //the way to correct
+		{
+			if(m_nPhase<ABCPhase)
+			{
+				if(m_nWindH==0)
+					nAngleMode=m_nAngleMode;
+
+				if(m_nWindH==1)
+				{
+					if(m_nAngleMode==1)
+						nAngleMode=2;
+
+					if(m_nAngleMode==2)
+						nAngleMode=1;
+				}
+
+				if(nAngleMode==2)
+				{
+					switch(GetMethod(m_nConnectMode,nAngleMode))
+					{
+					case 0:
+						{
+							fIa=fIa/m_fKph*m_fKjxh;
+							fIap=fIap/m_fKpl*m_fKjxl;
+							if(GetSign(m_nConnectMode,nAngleMode)<0)
+								fIaPh+=180.0;
+							if(m_bCTStarPoint)
+								fIaPh+=180.0;
+						}
+						break;
+					case 1:
+						{
+							fIb=fIa/m_fKph*m_fKjxh;
+							fIbp=fIap/m_fKpl*m_fKjxl;
+							if(GetSign(m_nConnectMode,nAngleMode)<0)
+								fIbPh+=180.0;
+							if(m_bCTStarPoint)
+								fIbPh+=180.0;
+						}
+						break;
+					case 2:
+						{
+							fIc=fIa/m_fKph*m_fKjxh;
+							fIcp=fIap/m_fKpl*m_fKjxl;
+							if(GetSign(m_nConnectMode,nAngleMode)<0)
+								fIcPh+=180.0;
+							if(m_bCTStarPoint)
+								fIcPh+=180.0;
+						}
+						break;
+					case 3:
+						{
+							fIa=fIa/m_fKph*m_fKjxh;
+							fIap=fIap/m_fKpl*m_fKjxl;
+							if(GetSign(m_nConnectMode,nAngleMode)<0)
+								fIaPh+=180.0;
+							if(m_bCTStarPoint)
+								fIaPh+=180.0;
+							if(m_nWindH==1&&m_nWindL==0&&m_nAngleMode==1)
+							{
+								fIbp=fIap;
+								fIbpPh=fIapPh+180.0;
+							}
+							else
+							{
+								fIbp=fIa/m_fKpl*m_fKjxl/m_fKjxh;
+								if(GetSign(m_nConnectMode,nAngleMode)<0)
+									fIbpPh=fIaPh-180;
+								else
+									fIbpPh=fIaPh;
+							}
+						}
+						break;
+					case 4:
+						{
+							fIb=fIa/m_fKph*m_fKjxh;
+							fIbp=fIap/m_fKpl*m_fKjxl;
+							fIa=0;
+							fIaPh=0;
+							if(GetSign(m_nConnectMode,nAngleMode)<0)
+								fIbPh+=180.0;
+							if(m_bCTStarPoint)
+								fIbPh+=180.0;
+							if(m_nWindH==1&&m_nWindL==0&&m_nAngleMode==1)
+							{
+								fIcp=fIbp;
+								fIcpPh=fIbpPh+180.0;
+							}
+							else
+							{
+								fIcp=fIa/m_fKpl*m_fKjxl;
+								fIcpPh=fIaPh;
+							}
+						}
+						break;
+					case 5:
+						{
+							if(GetSign(m_nConnectMode,nAngleMode)<0)
+								fIaPh+=180.0;
+							if(m_bCTStarPoint)
+								fIaPh+=180.0;
+							fIa=fIa/m_fKph*m_fKjxh;
+							fIap=fIap/m_fKpl*m_fKjxl;
+							if(m_nWindH==1&&m_nWindL==0&&m_nAngleMode==1)
+							{
+								fIcp=fIap;
+								fIcpPh=fIapPh+180.0;
+							}
+							else
+							{
+								fIcp=fIa/m_fKpl*m_fKjxl/m_fKjxh;
+								if(GetSign(m_nConnectMode,nAngleMode)<0)
+									fIcpPh=fIaPh-180;
+								else
+									fIcpPh=fIaPh;
+							}
+						}
+						break;
+					}
+				}
+
+				if(nAngleMode==1)
+				{
+					switch(GetMethod(m_nConnectMode,nAngleMode))
+					{
+					case 0:
+						{
+							fIa=fIa/m_fKph*m_fKjxh;
+							fIap=fIap/m_fKpl*m_fKjxl;
+							if(GetSign(m_nConnectMode,nAngleMode)<0)
+								fIaPh+=180.0;
+							if(m_bCTStarPoint)
+								fIaPh+=180.0;
+						}
+						break;
+					case 1:
+						{
+							fIb=fIa/m_fKph*m_fKjxh;
+							fIbp=fIap/m_fKpl*m_fKjxl;
+							if(GetSign(m_nConnectMode,nAngleMode)<0)
+								fIbPh+=180.0;
+							if(m_bCTStarPoint)
+								fIbPh+=180.0;
+						}
+						break;
+					case 2:
+						{
+							fIc=fIa/m_fKph*m_fKjxh;
+							fIcp=fIap/m_fKpl*m_fKjxl;
+							if(GetSign(m_nConnectMode,nAngleMode)<0)
+								fIcPh+=180.0;
+							if(m_bCTStarPoint)
+								fIcPh+=180.0;
+						}
+						break;
+					case 3:
+						{
+							fIbPh=fIaPh+180.0;
+							fIap=fIap/m_fKpl*m_fKjxl;
+							fIa=fIa/m_fKph*m_fKjxh;
+							fIb=fIa;
+							if(GetSign(m_nConnectMode,nAngleMode)<0)
+							{
+								fIapPh+=180.0;
+							}
+							if(m_bCTStarPoint)
+								fIapPh+=180.0;
+						}
+						break;
+					case 4:
+						{
+							fIbPh=fIaPh;
+							fIcPh=fIbPh+180.0;
+							fIbp=fIap/m_fKpl*m_fKjxl;
+							fIcpPh=fIapPh;
+							fIb=fIa/m_fKph*m_fKjxh;
+							fIc=fIb;
+							fIa=0;
+							fIaPh=0;
+							if(GetSign(m_nConnectMode,nAngleMode)<0)
+								fIbpPh+=180.0;
+							if(m_bCTStarPoint)
+								fIbpPh+=180.0;
+						}
+						break;
+					case 5:
+						{
+							fIcPh=fIaPh+180.0;
+							fIap=fIap/m_fKpl*m_fKjxl;
+							fIa=fIa/m_fKph*m_fKjxh;
+							fIc=fIa;
+							if(GetSign(m_nConnectMode,nAngleMode)<0)
+								fIapPh+=180.0;
+							if(m_bCTStarPoint)
+								fIapPh+=180.0;
+						}
+						break;
+					case 6:
+						{
+							fIa=fIa/m_fKph*m_fKjxh;
+							fIap=fIap/m_fKpl*m_fKjxl;
+							fIb=fIa;
+							fIbp=fIap;
+							if(GetSign(m_nConnectMode,nAngleMode)<0)
+								fIaPh+=180.0;
+							if(m_bCTStarPoint)
+								fIaPh+=180.0;
+							fIbPh=fIaPh+180.0;
+							fIbpPh=fIapPh+180.0;
+						}
+						break;
+					}
+				}
+			}
+			else
+			{
+				if(m_bCTStarPoint)
+					fIaPh+=180.0;
+				fIa=fIa/m_fKph*m_fKjxh;
+				fIap=fIap/m_fKpl*m_fKjxl;
+				fIapPh-=30.0*m_nConnectMode;  //m_nConnectMode=12,1,2,...11
+				fIa/=m_fKjxh;
+				fIap/=m_fKjxl;
+				fIb=fIa;
+				fIc=fIa;
+				fIbp=fIap;
+				fIcp=fIap;
+				fIbPh=fIaPh-120.0;
+				fIcPh=fIaPh+120.0;
+				fIbpPh=fIapPh-120.0;
+				fIcpPh=fIapPh+120.0;
+			}
+		}
+		else  //外转角
+		{
+			if(m_nPhase<ABCPhase)
+			{
+				fIa=fIa/m_fKph;
+				fIb=fIb/m_fKph;
+				fIc=fIc/m_fKph;
+				fIap=fIap/m_fKpl;
+				fIbp=fIbp/m_fKpl;
+				fIcp=fIcp/m_fKpl;
+			}
+			else
+			{
+				fIa=fIa/m_fKph;
+				fIap=fIap/m_fKpl;
+				fIb=fIa;
+				fIc=fIa;
+				fIbPh=fIaPh-120.0;
+				fIcPh=fIaPh+120.0;
+				fIbp=fIap;
+				fIcp=fIap;
+				fIbpPh=fIapPh-120.0;
+				fIcpPh=fIapPh+120.0;
+			}
+
+			if(m_bCTStarPoint)
+			{
+				fIapPh+=180.0;
+				fIbpPh+=180.0;
+				fIcpPh+=180.0;
+			}
+		}
+
+		if(m_nPhase==BPhase)
+		{
+			ftemp=fIc;
+			fphe=fIcPh;
+			fIc=fIb;
+			fIcPh=fIbPh;
+			fIb=fIa;
+			fIbPh=fIaPh;
+			fIa=ftemp;
+			fIaPh=fphe;
+
+			ftemp=fIcp;
+			fphe=fIcpPh;
+			fIcp=fIbp;
+			fIcpPh=fIbpPh;
+			fIbp=fIap;
+			fIbpPh=fIapPh;
+			fIap=ftemp;
+			fIapPh=fphe;
+		}
+
+		if(m_nPhase==CPhase)
+		{
+			ftemp=fIb;
+			fphe=fIbPh;
+			fIb=fIc;
+			fIbPh=fIcPh;
+			fIc=fIa;
+			fIcPh=fIaPh;
+			fIa=ftemp;
+			fIaPh=fphe;
+
+			ftemp=fIbp;
+			fphe=fIbpPh;
+			fIbp=fIcp;
+			fIbpPh=fIcpPh;
+			fIcp=fIap;
+			fIcpPh=fIapPh;
+			fIap=ftemp;
+			fIapPh=fphe;
+		}
+
+	}
+	else//三相及相间故障的处理
+	{
+		bool bSame = FALSE;
+		if (m_nWindSide == 0)
+			bSame = (m_nWindH == m_nWindL);
+
+		if (m_nWindSide == 1)
+			bSame = (m_nWindH == m_nWindM);
+
+		if (m_nWindSide == 2)
+			bSame = (m_nWindL == m_nWindM);
+
+		//zhouhj 2023.10.9 此处不可能再为单相故障,无需此判断
+		//if (m_nPhase < ABCPhase)	// 单相故障
+		//{
+		//	if (m_nAngleMode==1)	// △侧转角
+		//		CurrentCal_SP_D(fIa,fIaPh,fIb,fIbPh,fIc,fIcPh,fIap,fIapPh,fIbp,fIbpPh,fIcp,fIcpPh,bSame);
+
+		//	if (m_nAngleMode==2)
+		//		CurrentCal_SP_Y(fIa,fIaPh,fIb,fIbPh,fIc,fIcPh,fIap,fIapPh,fIbp,fIbpPh,fIcp,fIcpPh,bSame);
+		//}
+
+		if (m_nPhase > ABCPhase)	// 相间故障
+		{
+			if (m_nAngleMode==1)	// △侧转角
+				CurrentCal_IP_D(fIa,fIaPh,fIb,fIbPh,fIc,fIcPh,fIap,fIapPh,fIbp,fIbpPh,fIcp,fIcpPh,bSame);
+
+			if (m_nAngleMode==2)
+				CurrentCal_IP_Y(fIa,fIaPh,fIb,fIbPh,fIc,fIcPh,fIap,fIapPh,fIbp,fIbpPh,fIcp,fIcpPh,bSame);
+		}
+
+		if(m_nPhase == ABCPhase)// 三相故障
+		{
+			CurrentCal_SP(fIa,fIaPh,fIb,fIbPh,fIc,fIcPh,fIap,fIapPh,fIbp,fIbpPh,fIcp,fIcpPh);
+		}
+
+		// 校正平衡系数
+		fIa /= m_fKph;
+		fIb /= m_fKph;
+		fIc /= m_fKph;
+		fIap /= m_fKpl;
+		fIbp /= m_fKpl;
+		fIcp /= m_fKpl;
+
+		// 校正CT正极性//zhouhj 2023.10.9 对应三相短路,此处不需要再转换相位,在对应的函数中已经做了转换处理
+		if(m_bCTStarPoint && (m_nPhase != ABCPhase))
+		{
+			fIapPh = fIap>0.0001 ? fIapPh+180.0 : fIapPh;
+			fIbpPh = fIbp>0.0001 ? fIbpPh+180.0 : fIbpPh;
+			fIcpPh = fIcp>0.0001 ? fIcpPh+180.0 : fIcpPh;
+		}
+
+		if(m_nPhase==BPhase||m_nPhase==BCPhase)
+		{
+			ftemp =fIc;
+			fphe = fIcPh;
+			fIc = fIb;
+			fIcPh = fIbPh;
+			fIb = fIa;
+			fIbPh = fIaPh;
+			fIa = ftemp;
+			fIaPh = fphe;
+
+			ftemp =fIcp;
+			fphe = fIcpPh;
+			fIcp = fIbp;
+			fIcpPh = fIbpPh;
+			fIbp = fIap;
+			fIbpPh = fIapPh;
+			fIap = ftemp;
+			fIapPh = fphe;
+		}
+
+		if(m_nPhase==CPhase||m_nPhase==CAPhase)
+		{
+			ftemp =fIb;
+			fphe = fIbPh;
+			fIb = fIc;
+			fIbPh = fIcPh;
+			fIc = fIa;
+			fIcPh = fIaPh;
+			fIa = ftemp;
+			fIaPh = fphe;
+
+			ftemp =fIbp;
+			fphe = fIbpPh;
+			fIbp = fIcp;
+			fIbpPh = fIcpPh;
+			fIcp = fIap;
+			fIcpPh = fIapPh;
+			fIap = ftemp;
+			fIapPh = fphe;
+		}
+
+	}
+
+	if(fIa>m_fIOutmax||fIb>m_fIOutmax||fIc>m_fIOutmax
+		||fIap>m_fIOutmax||fIbp>m_fIOutmax||fIcp>m_fIOutmax)
+	{
+		if(fIa>m_fIOutmax)
+			fIa=m_fIOutmax;
+		if(fIb>m_fIOutmax)
+			fIb=m_fIOutmax;
+		if(fIc>m_fIOutmax)
+			fIc=m_fIOutmax;
+		if(fIap>m_fIOutmax)
+			fIap=m_fIOutmax;
+		if(fIbp>m_fIOutmax)
+			fIbp=m_fIOutmax;
+		if(fIcp>m_fIOutmax)
+			fIcp=m_fIOutmax;
+	}
+
+	m_arryoCurrent[0].famptitude = fIa;
+	m_arryoCurrent[0].fphase = fIaPh;
+	m_arryoCurrent[0].ffre = m_fFreq;
+
+	m_arryoCurrent[1].famptitude = fIb;
+	m_arryoCurrent[1].fphase = fIbPh;
+	m_arryoCurrent[1].ffre = m_fFreq;
+
+	m_arryoCurrent[2].famptitude = fIc;
+	m_arryoCurrent[2].fphase = fIcPh;
+	m_arryoCurrent[2].ffre = m_fFreq;
+
+	m_arryoCurrent[3].famptitude = fIap;
+	m_arryoCurrent[3].fphase = fIapPh;
+	m_arryoCurrent[3].ffre = m_fFreq;
+
+	m_arryoCurrent[4].famptitude = fIbp;
+	m_arryoCurrent[4].fphase = fIbpPh;
+	m_arryoCurrent[4].ffre = m_fFreq;
+
+	m_arryoCurrent[5].famptitude = fIcp;
+	m_arryoCurrent[5].fphase = fIcpPh;
+	m_arryoCurrent[5].ffre = m_fFreq;
+}
+
+void CSttDiffCurrCalculatTool::CalIrId_CbopDiff(double dFaultCurrent,long nFaultLocation,double &dIr,double &dId)
+{
+	double dI1 = 0.0f,dI2 = 0.0f;
+
+	switch (nFaultLocation)
+	{
+	case 0://0-高压侧（区内）
+		{
+			dI1 = dFaultCurrent;
+			dI2 = dFaultCurrent;
+		}
+		break;
+	case 1://1-高压侧（区外）
+		{
+			dI1 = dFaultCurrent;
+			dI2 = -dFaultCurrent;
+		}
+		break;
+	case 2://2-低压侧（区内）
+		{
+			dI1 = dFaultCurrent;
+			dI2 = dFaultCurrent;
+		}
+		break;
+	case 3://3-低压侧（区外）
+		{
+			dI1 = dFaultCurrent;
+			dI2 = -dFaultCurrent;
+		}
+		break;
+	default:
+		break;
+	}
+
+	dId = fabs(dI1 + dI2);
+	switch(m_nIbiasCal)//制动方程
+	{
+	case 0:  //(|I1-I2|)/K1或Ir=(|I1+I2|)/K1
+		{
+			dIr = (fabs(dI1) + fabs(dI2)) /m_fFactor1;
+		}
+		break;
+	case 1:  //(|I1|+|I2|*K2)/K1
+		{
+			dIr = (fabs(dI1) + fabs(dI2)*m_fFactor2) /m_fFactor1;
+		}
+		break;
+	case 2:  //max(|I1|,|I2|)
+		{
+			dIr = max(fabs(dI1), fabs(dI2));
+		}
+		break;
+	case 3: //(|Id-|I1|-|I2||)/K1
+		{
+			dIr = (dId - fabs(dI1) - fabs(dI2)) /m_fFactor1;
+		}
+		break;
+	case 4: //|I2|
+		{
+			dIr = fabs(dI2);
+		}
+		break;
+	case 5: // √(K1*I1*I2*Cos(δ)) 
+		{
+			dIr = qSqrt(m_fFactor1 * fabs(dI1 * dI2));
+		}
+		break;
+	}
+    return;
+}
+
+void CSttDiffCurrCalculatTool::CurrentCal_CbopDiff(double dFaultCurrent,long nFaultLocation,long nEarthing)
+{
+	dFaultCurrent *= m_fIet;//换算为实际故障电流安培值
+	double dI1 = 0.0f,dI2 = 0.0f;
+
+	switch (nFaultLocation)
+	{
+	case 0://0-高压侧（区内）
+		{
+			dI1 = dFaultCurrent;
+			dI2 = dFaultCurrent;
+			dI1 /= m_fKph;
+			dI2 /= m_fKpl;
+		}
+		break;
+	case 1://1-高压侧（区外）
+		{
+			dI1 = dFaultCurrent;
+			dI2 = -dFaultCurrent;
+			dI1 /= m_fKph;
+			dI2 /= m_fKpl;
+		}
+		break;
+	case 2://2-低压侧（区内）
+		{
+			dI1 = dFaultCurrent;
+			dI2 = dFaultCurrent;
+			dI1 /= m_fKph;
+			dI2 /= m_fKpl;
+		}
+		break;
+	case 3://3-低压侧（区外）
+		{
+			dI1 = dFaultCurrent;
+			dI2 = -dFaultCurrent;
+			dI1 /= m_fKph;
+			dI2 /= m_fKpl;
+		}
+		break;
+	default:
+		break;
+	}
+
+	//中性点接地模式,还采用之前的模式，三相故障或者相间故障还跟之前保持一致,相间故障默认没有零序电流,三相故障默认三相正序
+	if (nEarthing || (m_nPhase == ABCPhase))
+	{
+		return CurrentCal_CbopDiff(dI1,dI2);
+	}
+
+	//以下为中性点不接地模式,即需要进行零序补偿
+
+	double dIa = 0.0f,dIaPh = 0.0f,dIb = 0.0f,dIbPh = 0.0f,dIc = 0.0f,dIcPh = 0.0f;
+	double dIap = 0.0f,dIapPh = 0.0f,dIbp = 0.0f,dIbpPh = 0.0f,dIcp = 0.0f,dIcpPh = 0.0f;
+
+	switch(m_nAngleMode)
+	{
+	case 1://△侧校正
+		{
+			CurrentCal_ByI1I2_DTrans(dI1,dI2,dIa,dIaPh,dIb,dIbPh,dIc,dIcPh,dIap,dIapPh,dIbp,dIbpPh,dIcp,dIcpPh);
+		}
+		break;
+	case 2://Y侧校正
+		{
+			CurrentCal_ByI1I2_YTrans(dI1,dI2,dIa,dIaPh,dIb,dIbPh,dIc,dIcPh,dIap,dIapPh,dIbp,dIbpPh,dIcp,dIcpPh);
+		}
+		break;
+	default://无校准
+		{
+			switch(m_nPhase)
+			{
+			case APhase:
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1/2;
+					dIbPh = 180.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = dI2;
+					dIapPh = 180.0f;
+					dIbp = dI2/2;
+					dIbpPh = 0.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			case BPhase:
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = dI2/2;
+					dIapPh = 0.0f;
+					dIbp = dI2;
+					dIbpPh = 180.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			case CPhase:
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1/2; 
+					dIbPh = 180.0f;
+					dIc = dI1;
+					dIcPh = 0.0f;
+
+					dIap = dI2/2;
+					dIapPh = 0.0f;
+					dIbp = dI2/2; 
+					dIbpPh = 0.0f;
+					dIcp = dI2;
+					dIcpPh = 180.0f;
+				}
+				break;
+			case ABPhase:
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1;
+					dIbPh = 180.0f;
+					dIc = 0.0f; 
+					dIcPh = 0.0f;
+					dIap = dI2;
+					dIapPh = 180.0f;
+					dIbp = dI2;
+					dIbpPh = 0.0f;
+					dIcp = 0.0f; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			case BCPhase:
+				{
+					dIa = 0.0f;
+					dIaPh = 0.0f;
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1; 
+					dIcPh = 180.0f;
+					dIap = 0.0f;
+					dIapPh = 0.0f;
+					dIbp = dI2;
+					dIbpPh = 180.0f;
+					dIcp = dI2; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			case CAPhase:
+				{
+					dIa = dI1;
+					dIaPh = 180.0f;
+					dIb = 0.0f;
+					dIbPh = 0.0f;
+					dIc = dI1; 
+					dIcPh = 0.0f;
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = 0.0f;
+					dIbpPh = 0.0f;
+					dIcp = dI2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			default:
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1/2;
+					dIbPh = 180.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = dI2;
+					dIapPh = 180.0f;
+					dIbp = dI2/2;
+					dIbpPh = 0.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			}
+		}
+		break;
+	}
+
+	if(dIa>m_fIOutmax)
+		dIa=m_fIOutmax;
+	if(dIb>m_fIOutmax)
+		dIb=m_fIOutmax;
+	if(dIc>m_fIOutmax)
+		dIc=m_fIOutmax;
+	if(dIap>m_fIOutmax)
+		dIap=m_fIOutmax;
+	if(dIbp>m_fIOutmax)
+		dIbp=m_fIOutmax;
+	if(dIcp>m_fIOutmax)
+		dIcp=m_fIOutmax;
+
+	m_arryoCurrent[0].famptitude = dIa;
+	m_arryoCurrent[0].fphase = dIaPh;
+	m_arryoCurrent[0].ffre = m_fFreq;
+
+	m_arryoCurrent[1].famptitude = dIb;
+	m_arryoCurrent[1].fphase = dIbPh;
+	m_arryoCurrent[1].ffre = m_fFreq;
+
+	m_arryoCurrent[2].famptitude = dIc;
+	m_arryoCurrent[2].fphase = dIcPh;
+	m_arryoCurrent[2].ffre = m_fFreq;
+
+	m_arryoCurrent[3].famptitude = dIap;
+	m_arryoCurrent[3].fphase = dIapPh;
+	m_arryoCurrent[3].ffre = m_fFreq;
+
+	m_arryoCurrent[4].famptitude = dIbp;
+	m_arryoCurrent[4].fphase = dIbpPh;
+	m_arryoCurrent[4].ffre = m_fFreq;
+
+	m_arryoCurrent[5].famptitude = dIcp;
+	m_arryoCurrent[5].fphase = dIcpPh;
+	m_arryoCurrent[5].ffre = m_fFreq;
+
+    //如果电流值为负则需逆转相位
+    for(int nIndex=0; nIndex<6; nIndex++)
+    {
+        if(m_arryoCurrent[nIndex].famptitude<0)
+        {
+            m_arryoCurrent[nIndex].fphase += 180.0f;
+            m_arryoCurrent[nIndex].famptitude = -m_arryoCurrent[nIndex].famptitude;
+        }
+        if(m_arryoCurrent[nIndex].fphase > 180)
+        {
+            m_arryoCurrent[nIndex].fphase -= 360.0f;
+        }
+    }
+}
+
+bool CSttDiffCurrCalculatTool::GetI1I2_ByIdIr(float *fId,float fIr,double &dI1,double &dI2)
+{
+	float fIa,fIaPh,fIap,fIapPh;
+	float fTmp = 0;
+
+	switch(m_nIbiasCal)//制动方程
+	{
+	case 0:  //(|I1-I2|)/K1或Ir=(|I1+I2|)/K1
+		{
+			fIa=(*fId+m_fFactor1*fIr)*m_fIet/2.0;
+			fIap=fIa-*fId*m_fIet;
+			fIaPh=0.0;
+			fIapPh=180.0;
+			if(fIap<0.0)
+			{
+				fIap=-fIap;
+				fIapPh=0.0;
+			}
+		}
+		break;
+	case 1:  //(|I1|+|I2|*K2)/K1
+		{
+			if(m_nPhase<ABCPhase)
+			{
+				fTmp = fIr*m_fFactor1-*fId;//zhouhj 20211007 当差动电流太大,导致无法找到次差流值时,需要特殊处理
+
+				if ((fTmp<0)&&(fabs(fTmp)>0.0001))
+				{
+					*fId = fIr*m_fFactor1;
+				}
+
+				fIa=(*fId*m_fFactor2+m_fFactor1*fIr)*m_fIet/(1+m_fFactor2);
+				if(fIa>=*fId*m_fIet)
+					fIap=(fIa-*fId*m_fIet);
+				else
+					fIap=0.0;
+			}
+			else
+			{
+				if((m_fFactor1*fIr)<*fId)
+				{
+					*fId=m_fFactor1*fIr;
+				}
+				fIa=(*fId+m_fFactor1*fIr)*m_fIet/2.0;
+				fIap=(fIa-*fId*m_fIet)/m_fFactor2;
+			}
+
+			fIaPh=0.0;
+			fIapPh=180.0;
+		}
+		break;
+	case 2:  //max(|I1|,|I2|)
+		{
+			if(fIr>*fId)
+			{
+				fIa=fIr*m_fIet;
+				fIap=fIa-*fId*m_fIet;
+				fIaPh=0.0;
+				fIapPh=180.0;
+			}
+			else if(fIr<=(*fId)&&(*fId)<2.0*fIr)
+			{
+				fIa=fIr*m_fIet;
+				fIap=*fId*m_fIet-fIr*m_fIet;
+				fIaPh=0.0;
+				fIapPh=0.0;
+			}
+			else
+			{
+				*fId=2.0*fIr;
+				fIa=fIr*m_fIet;
+				fIap=*fId*m_fIet-fIr*m_fIet;
+				fIaPh=0.0;
+				fIapPh=0.0;
+			}
+		}
+		break;
+	case 3: //(|Id-|I1|-|I2||)/K1
+		{
+			fIa=*fId*m_fIet+m_fFactor1*fIr*m_fIet/2.0;
+			fIap=m_fFactor1*fIr*m_fIet/2.0;
+			fIaPh=0.0;
+			fIapPh=180.0;
+		}
+		break;
+	case 4: //|I2|
+		{
+			if(fIr>*fId)
+			{
+				fIap=fIr*m_fIet;
+				fIa=fIr*m_fIet-*fId*m_fIet;
+				fIaPh=0.0;
+				fIapPh=180.0;
+			}
+			else
+			{
+				fIap=fIr*m_fIet;
+				fIa=*fId*m_fIet-fIr*m_fIet;
+				fIaPh=0.0;
+				fIapPh=0.0;
+			}
+		}
+		break;
+	case 5: // √(K1*I1*I2*Cos(δ))
+		{
+			fIa=(qSqrt(*fId*(*fId)+4*fIr*fIr/m_fFactor1)+(*fId))/2.0*m_fIet;
+			fIap=(qSqrt(*fId*(*fId)+4*fIr*fIr/m_fFactor1)-(*fId))/2.0*m_fIet;
+			fIaPh=0.0;
+			fIapPh=180.0;
+		}
+		break;
+	}
+
+	dI1=fIa/*/m_fKph*/;
+	dI2=fIap/*/m_fKpl*/;
+	return true;
+}
+
+long CSttDiffCurrCalculatTool::GetTransAngleClockValue()
+{
+	long nValue = TransAngleClock_YY12;
+	if (m_nWindH == 0)//高压侧为Y
+	{
+		switch(m_nConnectMode)
+		{
+		case 1: 
+			{
+				nValue = TransAngleClock_YD1;
+			}
+			break;
+		case 2: 
+			{
+				nValue = TransAngleClock_YY2;
+			}
+			break;
+		case 3: 
+			{
+				nValue = TransAngleClock_YD3;
+			}
+			break;
+		case 4: 
+			{
+				nValue = TransAngleClock_YY4;
+			}
+			break;
+		case 5: 
+			{
+				nValue = TransAngleClock_YD5;
+			}
+			break;
+		case 6: 
+			{
+				nValue = TransAngleClock_YY6;
+			}
+			break;
+		case 7: 
+			{
+				nValue = TransAngleClock_YD7;
+			}
+			break;
+		case 8: 
+			{
+				nValue = TransAngleClock_YY8;
+			}
+			break;
+		case 9: 
+			{
+				nValue = TransAngleClock_YD9;
+			}
+			break;
+		case 10: 
+			{
+				nValue = TransAngleClock_YY10;
+			}
+			break;
+		case 11: 
+			{
+				nValue = TransAngleClock_YD11;
+			}
+			break;
+		default: 
+			{
+				nValue = TransAngleClock_YY12;
+			}
+			break;
+		}
+	}
+	else//否则低压侧为Y
+	{
+		switch(m_nConnectMode)
+		{
+		case 1: 
+			{
+				nValue = TransAngleClock_DY1;
+			}
+			break;
+		case 2: 
+			{
+				nValue = TransAngleClock_DD2;
+			}
+			break;
+		case 3: 
+			{
+				nValue = TransAngleClock_DY3;
+			}
+			break;
+		case 4: 
+			{
+				nValue = TransAngleClock_DD4;
+			}
+			break;
+		case 5: 
+			{
+				nValue = TransAngleClock_DY5;
+			}
+			break;
+		case 6: 
+			{
+				nValue = TransAngleClock_DD6;
+			}
+			break;
+		case 7: 
+			{
+				nValue = TransAngleClock_DY7;
+			}
+			break;
+		case 8: 
+			{
+				nValue = TransAngleClock_DD8;
+			}
+			break;
+		case 9: 
+			{
+				nValue = TransAngleClock_DY9;
+			}
+			break;
+		case 10: 
+			{
+				nValue = TransAngleClock_DD10;
+			}
+			break;
+		case 11: 
+			{
+				nValue = TransAngleClock_DY11;
+			}
+			break;
+		default: 
+			{
+				nValue = TransAngleClock_DD12;
+			}
+			break;
+		}
+	}
+
+	return nValue;
+}
+
+void  CSttDiffCurrCalculatTool::CurrentCal(float *fId,float fIr,long nEarthing)
+{
+	//中性点接地模式,还采用之前的模式，三相故障或者相间故障还跟之前保持一致,相间故障默认没有零序电流,三相故障默认三相正序
+	if (nEarthing || (m_nPhase == ABCPhase))
+	{
+		return CurrentCal(fId,fIr);
+	}
+
+	//以下为中性点不接地模式,即需要进行零序补偿
+	double dI1 = 0.0f,dI2 = 0.0f;
+	GetI1I2_ByIdIr(fId,fIr,dI1,dI2);//根据差动电流和制动电流计算高压侧及低压侧电流
+
+	//从I1\I2折算为实际电压电流
+	dI1 /= m_fKph;
+	dI2 /= m_fKpl;
+
+	double dIa = 0.0f,dIaPh = 0.0f,dIb = 0.0f,dIbPh = 0.0f,dIc = 0.0f,dIcPh = 0.0f;
+	double dIap = 0.0f,dIapPh = 0.0f,dIbp = 0.0f,dIbpPh = 0.0f,dIcp = 0.0f,dIcpPh = 0.0f;
+
+	switch(m_nAngleMode)
+	{
+	case 1://△侧校正
+		{
+			CurrentCal_ByI1I2_DTrans(dI1,dI2,dIa,dIaPh,dIb,dIbPh,dIc,dIcPh,dIap,dIapPh,dIbp,dIbpPh,dIcp,dIcpPh);
+		}
+		break;
+	case 2://Y侧校正
+		{
+			CurrentCal_ByI1I2_YTrans(dI1,dI2,dIa,dIaPh,dIb,dIbPh,dIc,dIcPh,dIap,dIapPh,dIbp,dIbpPh,dIcp,dIcpPh);
+		}
+		break;
+	default://无校准
+		{
+			switch(m_nPhase)
+			{
+			case APhase:
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1/2;
+					dIbPh = 180.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = dI2;
+					dIapPh = 180.0f;
+					dIbp = dI2/2;
+					dIbpPh = 0.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			case BPhase:
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = dI2/2;
+					dIapPh = 0.0f;
+					dIbp = dI2;
+					dIbpPh = 180.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			case CPhase:
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1/2; 
+					dIbPh = 180.0f;
+					dIc = dI1;
+					dIcPh = 0.0f;
+
+					dIap = dI2/2;
+					dIapPh = 0.0f;
+					dIbp = dI2/2; 
+					dIbpPh = 0.0f;
+					dIcp = dI2;
+					dIcpPh = 180.0f;
+				}
+				break;
+			case ABPhase:
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1;
+					dIbPh = 180.0f;
+					dIc = 0.0f; 
+					dIcPh = 0.0f;
+					dIap = dI2;
+					dIapPh = 180.0f;
+					dIbp = dI2;
+					dIbpPh = 0.0f;
+					dIcp = 0.0f; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			case BCPhase:
+				{
+					dIa = 0.0f;
+					dIaPh = 0.0f;
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1; 
+					dIcPh = 180.0f;
+					dIap = 0.0f;
+					dIapPh = 0.0f;
+					dIbp = dI2;
+					dIbpPh = 180.0f;
+					dIcp = dI2; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			case CAPhase:
+				{
+					dIa = dI1;
+					dIaPh = 180.0f;
+					dIb = 0.0f;
+					dIbPh = 0.0f;
+					dIc = dI1; 
+					dIcPh = 0.0f;
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = 0.0f;
+					dIbpPh = 0.0f;
+					dIcp = dI2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			default:
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1/2;
+					dIbPh = 180.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = dI2;
+					dIapPh = 180.0f;
+					dIbp = dI2/2;
+					dIbpPh = 0.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			}
+		}
+		break;
+	}
+
+	if(dIa>m_fIOutmax)
+		dIa=m_fIOutmax;
+	if(dIb>m_fIOutmax)
+		dIb=m_fIOutmax;
+	if(dIc>m_fIOutmax)
+		dIc=m_fIOutmax;
+	if(dIap>m_fIOutmax)
+		dIap=m_fIOutmax;
+	if(dIbp>m_fIOutmax)
+		dIbp=m_fIOutmax;
+	if(dIcp>m_fIOutmax)
+		dIcp=m_fIOutmax;
+
+	m_arryoCurrent[0].famptitude = dIa;
+	m_arryoCurrent[0].fphase = dIaPh;
+	m_arryoCurrent[0].ffre = m_fFreq;
+
+	m_arryoCurrent[1].famptitude = dIb;
+	m_arryoCurrent[1].fphase = dIbPh;
+	m_arryoCurrent[1].ffre = m_fFreq;
+
+	m_arryoCurrent[2].famptitude = dIc;
+	m_arryoCurrent[2].fphase = dIcPh;
+	m_arryoCurrent[2].ffre = m_fFreq;
+
+	m_arryoCurrent[3].famptitude = dIap;
+	m_arryoCurrent[3].fphase = dIapPh;
+	m_arryoCurrent[3].ffre = m_fFreq;
+
+	m_arryoCurrent[4].famptitude = dIbp;
+	m_arryoCurrent[4].fphase = dIbpPh;
+	m_arryoCurrent[4].ffre = m_fFreq;
+
+	m_arryoCurrent[5].famptitude = dIcp;
+	m_arryoCurrent[5].fphase = dIcpPh;
+	m_arryoCurrent[5].ffre = m_fFreq;
+
+    //如果电流值为负则需逆转相位
+    for(int nIndex=0; nIndex<6; nIndex++)
+    {
+        if(m_arryoCurrent[nIndex].famptitude<0)
+        {
+            m_arryoCurrent[nIndex].fphase += 180.0f;
+            m_arryoCurrent[nIndex].famptitude = -m_arryoCurrent[nIndex].famptitude;
+        }
+        if(m_arryoCurrent[nIndex].fphase > 180)
+        {
+            m_arryoCurrent[nIndex].fphase -= 360.0f;
+        }
+    }
+}
+
+void CSttDiffCurrCalculatTool::CurrentCal_ByI1I2_DTrans(double dI1,double dI2,double &dIa,double &dIaPh,double &dIb,double &dIbPh,double &dIc,double &dIcPh,
+							  double &dIap,double &dIapPh,double &dIbp,double &dIbpPh,double &dIcp,double &dIcpPh)
+{
+	switch(m_nPhase)//故障相别
+	{
+	case APhase: 
+		{
+			switch(GetTransAngleClockValue())//转角方式及钟点数
+			{
+			case TransAngleClock_YD1: 
+			case TransAngleClock_DY1: 
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1/2;
+					dIbPh = 180.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = 1.5f*dI2/SQRT3;
+					dIapPh = 180.0f;
+					dIbp = 1.5f*dI2/SQRT3;
+					dIbpPh = 0.0f;
+					dIcp = 0.0f; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YY2: 
+			case TransAngleClock_DD2:
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1/2;
+					dIbPh = 180.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = dI2/2;
+					dIapPh = 180.0f;
+					dIbp = dI2;
+					dIbpPh = 0.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YD3: 
+			case TransAngleClock_DY3: 
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1/2;
+					dIbPh = 180.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = 0.0f; 
+					dIapPh = 0.0f;
+					dIbp = 1.5f*dI2/SQRT3;
+					dIbpPh = 0.0f;
+					dIcp = 1.5f*dI2/SQRT3;
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YY4: 
+			case TransAngleClock_DD4: 
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1/2;
+					dIbPh = 180.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = dI2/2;
+					dIapPh = 0.0f;
+					dIbp = dI2/2;
+					dIbpPh = 0.0f;
+					dIcp = dI2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YD5:
+			case TransAngleClock_DY5: 
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1/2;
+					dIbPh = 180.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = 1.5f*dI2/SQRT3;
+					dIapPh = 0.0f;
+					dIbp = 0.0f; 
+					dIbpPh = 180.0f;
+					dIcp = 1.5f*dI2/SQRT3;
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YY6: 
+			case TransAngleClock_DD6:
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1/2;
+					dIbPh = 180.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2/2;
+					dIbpPh = 180.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YD7: 
+			case TransAngleClock_DY7: 
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1/2;
+					dIbPh = 180.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = 1.5f*dI2/SQRT3;
+					dIapPh = 0.0f;
+					dIbp = 1.5f*dI2/SQRT3;
+					dIbpPh = 180.0f;
+					dIcp = 0.0f; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YY8: 
+			case TransAngleClock_DD8: 
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1/2;
+					dIbPh = 180.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = dI2/2;
+					dIapPh = 0.0f;
+					dIbp = dI2;
+					dIbpPh = 180.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YD9: 
+			case TransAngleClock_DY9: 
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1/2;
+					dIbPh = 180.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = 0.0f; 
+					dIapPh = 0.0f;
+					dIbp = 1.5f*dI2/SQRT3;
+					dIbpPh = 180.0f;
+					dIcp = 1.5f*dI2/SQRT3;
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YY10: 
+			case TransAngleClock_DD10: 
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1/2;
+					dIbPh = 180.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = dI2/2;
+					dIapPh = 180.0f;
+					dIbp = dI2/2;
+					dIbpPh = 180.0f;
+					dIcp = dI2; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YD11: 
+			case TransAngleClock_DY11:
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1/2;
+					dIbPh = 180.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = 1.5f*dI2/SQRT3;
+					dIapPh = 180.0f;
+					dIbp = 0.0f; 
+					dIbpPh = 0.0f;
+					dIcp = 1.5f*dI2/SQRT3;
+					dIcpPh = 0.0f;
+				}
+				break;
+			default: 
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1/2;
+					dIbPh = 180.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = dI2;
+					dIapPh = 180.0f;
+					dIbp = dI2/2;
+					dIbpPh = 0.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			}
+		}
+		break;
+	case BPhase: 
+		{
+			switch(GetTransAngleClockValue())//转角方式及钟点数
+			{
+			case TransAngleClock_YD1: 
+			case TransAngleClock_DY1: 
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = 0.0f; 
+					dIapPh = 0.0f;
+					dIbp = 1.5f*dI2/SQRT3;
+					dIbpPh = 180.0f;
+					dIcp = 1.5f*dI2/SQRT3;
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YY2: 
+			case TransAngleClock_DD2:
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = dI2/2;
+					dIapPh = 180.0f;
+					dIbp = dI2/2; 
+					dIbpPh = 180.0f;
+					dIcp = dI2;
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YD3: 
+			case TransAngleClock_DY3: 
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = 1.5f*dI2/SQRT3;
+					dIapPh = 180.0f;
+					dIbp = 0.0f; 
+					dIbpPh = 0.0f;
+					dIcp = 1.5f*dI2/SQRT3;
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YY4: 
+			case TransAngleClock_DD4: 
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = dI2; 
+					dIapPh = 180.0f;
+					dIbp = dI2/2;
+					dIbpPh = 0.0f;
+					dIcp = dI2/2;
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YD5:
+			case TransAngleClock_DY5: 
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = 1.5f*dI2/SQRT3;
+					dIapPh = 180.0f;
+					dIbp = 1.5f*dI2/SQRT3;
+					dIbpPh = 0.0f;
+					dIcp = 0.0f; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YY6: 
+			case TransAngleClock_DD6:
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = dI2/2;
+					dIapPh = 180.0f;
+					dIbp = dI2;
+					dIbpPh = 0.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YD7: 
+			case TransAngleClock_DY7: 
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = 0.0f; 
+					dIapPh = 180.0f;
+					dIbp = 1.5f*dI2/SQRT3;
+					dIbpPh = 0.0f;
+					dIcp = 1.5f*dI2/SQRT3;
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YY8: 
+			case TransAngleClock_DD8: 
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = dI2/2;
+					dIapPh = 0.0f;
+					dIbp = dI2/2; 
+					dIbpPh = 0.0f;
+					dIcp = dI2;
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YD9: 
+			case TransAngleClock_DY9: 
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = 1.5f*dI2/SQRT3;
+					dIapPh = 0.0f;
+					dIbp = 0.0f; 
+					dIbpPh = 0.0f;
+					dIcp = 1.5f*dI2/SQRT3;
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YY10: 
+			case TransAngleClock_DD10: 
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = dI2; 
+					dIapPh = 0.0f;
+					dIbp = dI2/2;
+					dIbpPh = 180.0f;
+					dIcp = dI2/2;
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YD11: 
+			case TransAngleClock_DY11:
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = 1.5f*dI2/SQRT3;
+					dIapPh = 0.0f;
+					dIbp = 1.5f*dI2/SQRT3;
+					dIbpPh = 180.0f;
+					dIcp = 0.0f; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			default: 
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = dI2/2;
+					dIapPh = 0.0f;
+					dIbp = dI2;
+					dIbpPh = 180.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			}
+		}
+		break;
+	case CPhase: 
+		{
+			switch(GetTransAngleClockValue())//转角方式及钟点数
+			{
+			case TransAngleClock_YD1: 
+			case TransAngleClock_DY1: 
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1/2; 
+					dIbPh = 180.0f;
+					dIc = dI1;
+					dIcPh = 0.0f;
+
+					dIap = 1.5f*dI2/SQRT3;
+					dIapPh = 0.0f;
+					dIbp = 0.0f; 
+					dIbpPh = 0.0f;
+					dIcp = 1.5f*dI2/SQRT3;
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YY2: 
+			case TransAngleClock_DD2:
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1/2; 
+					dIbPh = 180.0f;
+					dIc = dI1;
+					dIcPh = 0.0f;
+
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2/2;
+					dIbpPh = 180.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YD3: 
+			case TransAngleClock_DY3: 
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1/2; 
+					dIbPh = 180.0f;
+					dIc = dI1;
+					dIcPh = 0.0f;
+
+					dIap = 1.5f*dI2/SQRT3;
+					dIapPh = 0.0f;
+					dIbp = 1.5f*dI2/SQRT3;
+					dIbpPh = 180.0f;
+					dIcp = 0.0f; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YY4: 
+			case TransAngleClock_DD4: 
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1/2; 
+					dIbPh = 180.0f;
+					dIc = dI1;
+					dIcPh = 0.0f;
+
+					dIap = dI2/2;
+					dIapPh = 0.0f;
+					dIbp = dI2; 
+					dIbpPh = 180.0f;
+					dIcp = dI2/2;
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YD5:
+			case TransAngleClock_DY5: 
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1/2; 
+					dIbPh = 180.0f;
+					dIc = dI1;
+					dIcPh = 0.0f;
+
+					dIap = 0.0f; 
+					dIapPh = 180.0f;
+					dIbp = 1.5f*dI2/SQRT3;
+					dIbpPh = 180.0f;
+					dIcp = 1.5f*dI2/SQRT3;
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YY6: 
+			case TransAngleClock_DD6:
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1/2; 
+					dIbPh = 180.0f;
+					dIc = dI1;
+					dIcPh = 0.0f;
+
+					dIap = dI2/2; 
+					dIapPh = 180.0f;
+					dIbp = dI2/2;
+					dIbpPh = 180.0f;
+					dIcp = dI2;
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YD7: 
+			case TransAngleClock_DY7: 
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1/2; 
+					dIbPh = 180.0f;
+					dIc = dI1;
+					dIcPh = 0.0f;
+
+					dIap = 1.5f*dI2/SQRT3;
+					dIapPh = 180.0f;
+					dIbp = 0.0f; 
+					dIbpPh = 180.0f;
+					dIcp = 1.5f*dI2/SQRT3;
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YY8: 
+			case TransAngleClock_DD8: 
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1/2; 
+					dIbPh = 180.0f;
+					dIc = dI1;
+					dIcPh = 0.0f;
+
+					dIap = dI2;
+					dIapPh = 180.0f;
+					dIbp = dI2/2;
+					dIbpPh = 0.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YD9: 
+			case TransAngleClock_DY9: 
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1/2; 
+					dIbPh = 180.0f;
+					dIc = dI1;
+					dIcPh = 0.0f;
+
+					dIap = 1.5f*dI2/SQRT3;
+					dIapPh = 180.0f;
+					dIbp = 1.5f*dI2/SQRT3;
+					dIbpPh = 0.0f;
+					dIcp = 0.0f; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YY10: 
+			case TransAngleClock_DD10: 
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1/2; 
+					dIbPh = 180.0f;
+					dIc = dI1;
+					dIcPh = 0.0f;
+
+					dIap = dI2/2;
+					dIapPh = 180.0f;
+					dIbp = dI2; 
+					dIbpPh = 0.0f;
+					dIcp = dI2/2;
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YD11: 
+			case TransAngleClock_DY11:
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1/2; 
+					dIbPh = 180.0f;
+					dIc = dI1;
+					dIcPh = 0.0f;
+
+					dIap = 0.0f; 
+					dIapPh = 0.0f;
+					dIbp = 1.5f*dI2/SQRT3;
+					dIbpPh = 0.0f;
+					dIcp = 1.5f*dI2/SQRT3;
+					dIcpPh = 180.0f;
+				}
+				break;
+			default: 
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1/2; 
+					dIbPh = 180.0f;
+					dIc = dI1;
+					dIcPh = 0.0f;
+
+					dIap = dI2/2;
+					dIapPh = 0.0f;
+					dIbp = dI2/2; 
+					dIbpPh = 0.0f;
+					dIcp = dI2;
+					dIcpPh = 180.0f;
+				}
+				break;
+			}
+		}
+		break;
+
+	case ABPhase: 
+		{
+			switch(GetTransAngleClockValue())//转角方式及钟点数
+			{
+			case TransAngleClock_YD1: 
+			case TransAngleClock_DY1: 
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1;
+					dIbPh = 180.0f;
+					dIc = 0.0f; 
+					dIcPh = 0.0f;
+					dIap = dI2/SQRT3;
+					dIapPh = 180.0f;
+					dIbp = 2.0f*dI2/SQRT3;
+					dIbpPh = 0.0f;
+					dIcp = dI2/SQRT3; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YY2: 
+			case TransAngleClock_DD2:
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1;
+					dIbPh = 180.0f;
+					dIc = 0.0f; 
+					dIcPh = 0.0f;
+					dIap = 0;
+					dIapPh = 0.0f;
+					dIbp = dI2;
+					dIbpPh = 0.0f;
+					dIcp = dI2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YD3: 
+			case TransAngleClock_DY3: 
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1;
+					dIbPh = 180.0f;
+					dIc = 0.0f; 
+					dIcPh = 0.0f;
+					dIap = dI2/SQRT3; 
+					dIapPh = 0.0f;
+					dIbp = dI2/SQRT3;
+					dIbpPh = 0.0f;
+					dIcp = 2.0f*dI2/SQRT3;
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YY4: 
+			case TransAngleClock_DD4: 
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1;
+					dIbPh = 180.0f;
+					dIc = 0.0f; 
+					dIcPh = 0.0f;
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = 0.0f;
+					dIbpPh = 0.0f;
+					dIcp = dI2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YD5:
+			case TransAngleClock_DY5: 
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1;
+					dIbPh = 180.0f;
+					dIc = 0.0f; 
+					dIcPh = 0.0f;
+					dIap = 2.0f*dI2/SQRT3;
+					dIapPh = 0.0f;
+					dIbp = dI2/SQRT3; 
+					dIbpPh = 180.0f;
+					dIcp = dI2/SQRT3;
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YY6: 
+			case TransAngleClock_DD6:
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1;
+					dIbPh = 180.0f;
+					dIc = 0.0f; 
+					dIcPh = 0.0f;
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2;
+					dIbpPh = 180.0f;
+					dIcp = 0.0f; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YD7: 
+			case TransAngleClock_DY7: 
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1;
+					dIbPh = 180.0f;
+					dIc = 0.0f; 
+					dIcPh = 0.0f;
+					dIap = dI2/SQRT3;
+					dIapPh = 0.0f;
+					dIbp = 2.0f*dI2/SQRT3;
+					dIbpPh = 180.0f;
+					dIcp = dI2/SQRT3; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YY8: 
+			case TransAngleClock_DD8: 
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1;
+					dIbPh = 180.0f;
+					dIc = 0.0f; 
+					dIcPh = 0.0f;
+					dIap = 0.0;
+					dIapPh = 0.0f;
+					dIbp = dI2;
+					dIbpPh = 180.0f;
+					dIcp = dI2; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YD9: 
+			case TransAngleClock_DY9: 
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1;
+					dIbPh = 180.0f;
+					dIc = 0.0f; 
+					dIcPh = 0.0f;
+					dIap = dI2/SQRT3; 
+					dIapPh = 180.0f;
+					dIbp = dI2/SQRT3;
+					dIbpPh = 180.0f;
+					dIcp = 2.0f*dI2/SQRT3;
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YY10: 
+			case TransAngleClock_DD10: 
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1;
+					dIbPh = 180.0f;
+					dIc = 0.0f; 
+					dIcPh = 0.0f;
+					dIap = dI2;
+					dIapPh = 180.0f;
+					dIbp = 0.0f;
+					dIbpPh = 0.0f;
+					dIcp = dI2; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YD11: 
+			case TransAngleClock_DY11:
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1;
+					dIbPh = 180.0f;
+					dIc = 0.0f; 
+					dIcPh = 0.0f;
+					dIap = 2.0f*dI2/SQRT3;
+					dIapPh = 180.0f;
+					dIbp = dI2/SQRT3; 
+					dIbpPh = 0.0f;
+					dIcp = dI2/SQRT3;
+					dIcpPh = 0.0f;
+				}
+				break;
+			default: 
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1;
+					dIbPh = 180.0f;
+					dIc = 0.0f; 
+					dIcPh = 0.0f;
+					dIap = dI2;
+					dIapPh = 180.0f;
+					dIbp = dI2;
+					dIbpPh = 0.0f;
+					dIcp = 0.0f; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			}
+		}
+		break;
+	case BCPhase: 
+		{
+			switch(GetTransAngleClockValue())//转角方式及钟点数
+			{
+			case TransAngleClock_YD1: 
+			case TransAngleClock_DY1: 
+				{
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1;
+					dIcPh = 180.0f;
+					dIa = 0.0f; 
+					dIaPh = 0.0f;
+					dIbp = dI2/SQRT3;
+					dIbpPh = 180.0f;
+					dIcp = 2.0f*dI2/SQRT3;
+					dIcpPh = 0.0f;
+					dIap = dI2/SQRT3; 
+					dIapPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YY2: 
+			case TransAngleClock_DD2:
+				{
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1;
+					dIcPh = 180.0f;
+					dIa = 0.0f; 
+					dIaPh = 0.0f;
+					dIbp = 0;
+					dIbpPh = 0.0f;
+					dIcp = dI2;
+					dIcpPh = 0.0f;
+					dIap = dI2; 
+					dIapPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YD3: 
+			case TransAngleClock_DY3: 
+				{
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1;
+					dIcPh = 180.0f;
+					dIa = 0.0f; 
+					dIaPh = 0.0f;
+					dIbp = dI2/SQRT3; 
+					dIbpPh = 0.0f;
+					dIcp = dI2/SQRT3;
+					dIcpPh = 0.0f;
+					dIap = 2.0f*dI2/SQRT3;
+					dIapPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YY4: 
+			case TransAngleClock_DD4: 
+				{
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1;
+					dIcPh = 180.0f;
+					dIa = 0.0f; 
+					dIaPh = 0.0f;
+					dIbp = dI2;
+					dIbpPh = 0.0f;
+					dIcp = 0.0f;
+					dIcpPh = 0.0f;
+					dIap = dI2; 
+					dIapPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YD5:
+			case TransAngleClock_DY5: 
+				{
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1;
+					dIcPh = 180.0f;
+					dIa = 0.0f; 
+					dIaPh = 0.0f;
+					dIbp = 2.0f*dI2/SQRT3;
+					dIbpPh = 0.0f;
+					dIcp = dI2/SQRT3; 
+					dIcpPh = 180.0f;
+					dIap = dI2/SQRT3;
+					dIapPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YY6: 
+			case TransAngleClock_DD6:
+				{
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1;
+					dIcPh = 180.0f;
+					dIa = 0.0f; 
+					dIaPh = 0.0f;
+					dIbp = dI2;
+					dIbpPh = 0.0f;
+					dIcp = dI2;
+					dIcpPh = 180.0f;
+					dIap = 0.0f; 
+					dIapPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YD7: 
+			case TransAngleClock_DY7: 
+				{
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1;
+					dIcPh = 180.0f;
+					dIa = 0.0f; 
+					dIaPh = 0.0f;
+					dIbp = dI2/SQRT3;
+					dIbpPh = 0.0f;
+					dIcp = 2.0f*dI2/SQRT3;
+					dIcpPh = 180.0f;
+					dIap = dI2/SQRT3; 
+					dIapPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YY8: 
+			case TransAngleClock_DD8: 
+				{
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1;
+					dIcPh = 180.0f;
+					dIa = 0.0f; 
+					dIaPh = 0.0f;
+					dIbp = 0.0;
+					dIbpPh = 0.0f;
+					dIcp = dI2;
+					dIcpPh = 180.0f;
+					dIap = dI2; 
+					dIapPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YD9: 
+			case TransAngleClock_DY9: 
+				{
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1;
+					dIcPh = 180.0f;
+					dIa = 0.0f; 
+					dIaPh = 0.0f;
+					dIbp = dI2/SQRT3; 
+					dIbpPh = 180.0f;
+					dIcp = dI2/SQRT3;
+					dIcpPh = 180.0f;
+					dIap = 2.0f*dI2/SQRT3;
+					dIapPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YY10: 
+			case TransAngleClock_DD10: 
+				{
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1;
+					dIcPh = 180.0f;
+					dIa = 0.0f; 
+					dIaPh = 0.0f;
+					dIbp = dI2;
+					dIbpPh = 180.0f;
+					dIcp = 0.0f;
+					dIcpPh = 0.0f;
+					dIap = dI2; 
+					dIapPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YD11: 
+			case TransAngleClock_DY11:
+				{
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1;
+					dIcPh = 180.0f;
+					dIa = 0.0f; 
+					dIaPh = 0.0f;
+					dIbp = 2.0f*dI2/SQRT3;
+					dIbpPh = 180.0f;
+					dIcp = dI2/SQRT3; 
+					dIcpPh = 0.0f;
+					dIap = dI2/SQRT3;
+					dIapPh = 0.0f;
+				}
+				break;
+			default: 
+				{
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1;
+					dIcPh = 180.0f;
+					dIa = 0.0f; 
+					dIaPh = 0.0f;
+					dIbp = dI2;
+					dIbpPh = 180.0f;
+					dIcp = dI2;
+					dIcpPh = 0.0f;
+					dIap = 0.0f; 
+					dIapPh = 0.0f;
+				}
+				break;
+			}
+		}
+		break;
+	case CAPhase: 
+		{
+			switch(GetTransAngleClockValue())//转角方式及钟点数
+			{
+				case TransAngleClock_YD1: 
+				case TransAngleClock_DY1: 
+				{
+					dIc = dI1;
+					dIcPh = 0.0f;
+					dIa = dI1;
+					dIaPh = 180.0f;
+					dIb = 0.0f; 
+					dIbPh = 0.0f;
+					dIcp = dI2/SQRT3;
+					dIcpPh = 180.0f;
+					dIap = 2.0f*dI2/SQRT3;
+					dIapPh = 0.0f;
+					dIbp = dI2/SQRT3; 
+					dIbpPh = 180.0f;
+				}
+				break;
+				case TransAngleClock_YY2: 
+				case TransAngleClock_DD2:
+				{
+					dIc = dI1;
+					dIcPh = 0.0f;
+					dIa = dI1;
+					dIaPh = 180.0f;
+					dIb = 0.0f; 
+					dIbPh = 0.0f;
+					dIcp = 0;
+					dIcpPh = 0.0f;
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2; 
+					dIbpPh = 180.0f;
+				}
+				break;
+				case TransAngleClock_YD3: 
+				case TransAngleClock_DY3: 
+				{
+					dIc = dI1;
+					dIcPh = 0.0f;
+					dIa = dI1;
+					dIaPh = 180.0f;
+					dIb = 0.0f; 
+					dIbPh = 0.0f;
+					dIcp = dI2/SQRT3; 
+					dIcpPh = 0.0f;
+					dIap = dI2/SQRT3;
+					dIapPh = 0.0f;
+					dIbp = 2.0f*dI2/SQRT3;
+					dIbpPh = 180.0f;
+				}
+				break;
+				case TransAngleClock_YY4: 
+				case TransAngleClock_DD4: 
+				{
+					dIc = dI1;
+					dIcPh = 0.0f;
+					dIa = dI1;
+					dIaPh = 180.0f;
+					dIb = 0.0f; 
+					dIbPh = 0.0f;
+					dIcp = dI2;
+					dIcpPh = 0.0f;
+					dIap = 0.0f;
+					dIapPh = 0.0f;
+					dIbp = dI2; 
+					dIbpPh = 180.0f;
+				}
+				break;
+				case TransAngleClock_YD5:
+				case TransAngleClock_DY5: 
+				{
+					dIc = dI1;
+					dIcPh = 0.0f;
+					dIa = dI1;
+					dIaPh = 180.0f;
+					dIb = 0.0f; 
+					dIbPh = 0.0f;
+					dIcp = 2.0f*dI2/SQRT3;
+					dIcpPh = 0.0f;
+					dIap = dI2/SQRT3; 
+					dIapPh = 180.0f;
+					dIbp = dI2/SQRT3;
+					dIbpPh = 180.0f;
+				}
+				break;
+				case TransAngleClock_YY6: 
+				case TransAngleClock_DD6:
+				{
+					dIc = dI1;
+					dIcPh = 0.0f;
+					dIa = dI1;
+					dIaPh = 180.0f;
+					dIb = 0.0f; 
+					dIbPh = 0.0f;
+					dIcp = dI2;
+					dIcpPh = 0.0f;
+					dIap = dI2;
+					dIapPh = 180.0f;
+					dIbp = 0.0f; 
+					dIbpPh = 0.0f;
+				}
+				break;
+				case TransAngleClock_YD7: 
+				case TransAngleClock_DY7: 
+				{
+					dIc = dI1;
+					dIcPh = 0.0f;
+					dIa = dI1;
+					dIaPh = 180.0f;
+					dIb = 0.0f; 
+					dIbPh = 0.0f;
+					dIcp = dI2/SQRT3;
+					dIcpPh = 0.0f;
+					dIap = 2.0f*dI2/SQRT3;
+					dIapPh = 180.0f;
+					dIbp = dI2/SQRT3; 
+					dIbpPh = 0.0f;
+				}
+				break;
+				case TransAngleClock_YY8: 
+				case TransAngleClock_DD8: 
+				{
+					dIc = dI1;
+					dIcPh = 0.0f;
+					dIa = dI1;
+					dIaPh = 180.0f;
+					dIb = 0.0f; 
+					dIbPh = 0.0f;
+					dIcp = 0.0;
+					dIcpPh = 0.0f;
+					dIap = dI2;
+					dIapPh = 180.0f;
+					dIbp = dI2; 
+					dIbpPh = 0.0f;
+				}
+				break;
+				case TransAngleClock_YD9: 
+				case TransAngleClock_DY9: 
+				{
+					dIc = dI1;
+					dIcPh = 0.0f;
+					dIa = dI1;
+					dIaPh = 180.0f;
+					dIb = 0.0f; 
+					dIbPh = 0.0f;
+					dIcp = dI2/SQRT3; 
+					dIcpPh = 180.0f;
+					dIap = dI2/SQRT3;
+					dIapPh = 180.0f;
+					dIbp = 2.0f*dI2/SQRT3;
+					dIbpPh = 0.0f;
+				}
+				break;
+				case TransAngleClock_YY10: 
+				case TransAngleClock_DD10: 
+				{
+					dIc = dI1;
+					dIcPh = 0.0f;
+					dIa = dI1;
+					dIaPh = 180.0f;
+					dIb = 0.0f; 
+					dIbPh = 0.0f;
+					dIcp = dI2;
+					dIcpPh = 180.0f;
+					dIap = 0.0f;
+					dIapPh = 0.0f;
+					dIbp = dI2; 
+					dIbpPh = 0.0f;
+				}
+				break;
+				case TransAngleClock_YD11: 
+				case TransAngleClock_DY11:
+				{
+					dIc = dI1;
+					dIcPh = 0.0f;
+					dIa = dI1;
+					dIaPh = 180.0f;
+					dIb = 0.0f; 
+					dIbPh = 0.0f;
+					dIcp = 2.0f*dI2/SQRT3;
+					dIcpPh = 180.0f;
+					dIap = dI2/SQRT3; 
+					dIapPh = 0.0f;
+					dIbp = dI2/SQRT3;
+					dIbpPh = 0.0f;
+				}
+				break;
+			default: 
+			{
+				dIc = dI1;
+				dIcPh = 0.0f;
+				dIa = dI1;
+				dIaPh = 180.0f;
+				dIb = 0.0f; 
+				dIbPh = 0.0f;
+				dIcp = dI2;
+				dIcpPh = 180.0f;
+				dIap = dI2;
+				dIapPh = 0.0f;
+				dIbp = 0.0f; 
+				dIbpPh = 0.0f;
+			}
+			break;
+			}
+		}
+		break;
+	default:
+		break;
+			
+	}
+}
+
+void CSttDiffCurrCalculatTool::CurrentCal_ByI1I2_YTrans(double dI1,double dI2,double &dIa,double &dIaPh,double &dIb,double &dIbPh,double &dIc,double &dIcPh,
+							  double &dIap,double &dIapPh,double &dIbp,double &dIbpPh,double &dIcp,double &dIcpPh)
+{
+	switch(m_nPhase)//故障相别
+	{
+	case APhase: 
+		{
+			switch(GetTransAngleClockValue())//转角方式及钟点数
+			{
+			case TransAngleClock_YD1: 
+			case TransAngleClock_DY1: 
+				{
+					dIa = 1.5f*dI1/SQRT3;
+					dIaPh = 180.0f;
+					dIb = 0.0f; 
+					dIbPh = 0.0f;
+					dIc = 1.5f*dI1/SQRT3;
+					dIcPh = 0.0f;
+
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2/2;
+					dIbpPh = 180.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YY2: 
+			case TransAngleClock_DD2:
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1/2;
+					dIbPh = 180.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+
+					dIap = dI2/2;
+					dIapPh = 180.0f;
+					dIbp = dI2;
+					dIbpPh = 0.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YD3: 
+			case TransAngleClock_DY3: 
+				{
+					dIa = 1.5f*dI1/SQRT3;
+					dIaPh = 0.0f;
+					dIb = 0.0f; 
+					dIbPh = 0.0f;
+					dIc = 1.5f*dI1/SQRT3;
+					dIcPh = 180.0f;
+
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2/2;
+					dIbpPh = 180.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YY4: 
+			case TransAngleClock_DD4: 
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1/2;
+					dIbPh = 180.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+
+					dIap = dI2/2;
+					dIapPh = 0.0f;
+					dIbp = dI2/2;
+					dIbpPh = 0.0f;
+					dIcp = dI2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YD5:
+			case TransAngleClock_DY5: 
+				{
+					dIa = 1.5f*dI1/SQRT3;
+					dIaPh = 0.0f;
+					dIb = 1.5f*dI1/SQRT3;
+					dIbPh = 180.0f;
+					dIc = 0.0f; 
+					dIcPh = 180.0f;
+
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2/2;
+					dIbpPh = 180.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YY6: 
+			case TransAngleClock_DD6:
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1/2;
+					dIbPh = 180.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2/2;
+					dIbpPh = 180.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YD7: 
+			case TransAngleClock_DY7: 
+				{
+					dIa = 1.5f*dI1/SQRT3;
+					dIaPh = 0.0f;
+					dIb = 0.0f; 
+					dIbPh = 180.0f;
+					dIc = 1.5f*dI1/SQRT3;
+					dIcPh = 180.0f;
+
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2/2;
+					dIbpPh = 180.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YY8: 
+			case TransAngleClock_DD8: 
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1/2;
+					dIbPh = 180.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+
+					dIap = dI2/2;
+					dIapPh = 0.0f;
+					dIbp = dI2;
+					dIbpPh = 180.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YD9: 
+			case TransAngleClock_DY9: 
+				{
+					dIa = 1.5f*dI1/SQRT3;
+					dIaPh = 180.0f;
+					dIb = 0.0f; 
+					dIbPh = 0.0f;
+					dIc = 1.5f*dI1/SQRT3;
+					dIcPh = 0.0f;
+
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2/2;
+					dIbpPh = 180.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YY10: 
+			case TransAngleClock_DD10: 
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1/2;
+					dIbPh = 180.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+
+					dIap = dI2/2;
+					dIapPh = 180.0f;
+					dIbp = dI2/2;
+					dIbpPh = 180.0f;
+					dIcp = dI2; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YD11: 
+			case TransAngleClock_DY11:
+				{
+					dIa = 1.5f*dI1/SQRT3;
+					dIaPh = 180.0f;
+					dIb = 1.5f*dI1/SQRT3;
+					dIbPh = 0.0f;
+					dIc = 0.0f; 
+					dIcPh = 0.0f;
+
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2/2;
+					dIbpPh = 180.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			default: 
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1/2;
+					dIbPh = 180.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+
+					dIap = dI2;
+					dIapPh = 180.0f;
+					dIbp = dI2/2;
+					dIbpPh = 0.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			}
+		}
+		break;
+	case BPhase: 
+		{
+			switch(GetTransAngleClockValue())//转角方式及钟点数
+			{
+			case TransAngleClock_YD1: 
+			case TransAngleClock_DY1: 
+				{
+					dIa = 1.5f*dI1/SQRT3;
+					dIaPh = 0.0f;
+					dIb = 1.5f*dI1/SQRT3;
+					dIbPh = 180.0f;
+					dIc = 0.0f; 
+					dIcPh = 0.0f;
+
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2/2;
+					dIbpPh = 180.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YY2: 
+			case TransAngleClock_DD2:
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+
+					dIap = dI2/2;
+					dIapPh = 180.0f;
+					dIbp = dI2/2; 
+					dIbpPh = 180.0f;
+					dIcp = dI2;
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YD3: 
+			case TransAngleClock_DY3: 
+				{
+					dIa = 1.5f*dI1/SQRT3;
+					dIaPh = 180.0f;
+					dIb = 1.5f*dI1/SQRT3;
+					dIbPh = 0.0f;
+					dIc = 0.0f; 
+					dIcPh = 0.0f;
+
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2/2;
+					dIbpPh = 180.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YY4: 
+			case TransAngleClock_DD4: 
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+
+					dIap = dI2; 
+					dIapPh = 180.0f;
+					dIbp = dI2/2;
+					dIbpPh = 0.0f;
+					dIcp = dI2/2;
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YD5:
+			case TransAngleClock_DY5: 
+				{
+					dIa = 0.0f; 
+					dIaPh = 180.0f;
+					dIb = 1.5f*dI1/SQRT3;
+					dIbPh = 0.0f;
+					dIc = 1.5f*dI1/SQRT3;
+					dIcPh = 180.0f;
+
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2/2;
+					dIbpPh = 180.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YY6: 
+			case TransAngleClock_DD6:
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = dI2/2;
+					dIapPh = 180.0f;
+					dIbp = dI2;
+					dIbpPh = 0.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YD7: 
+			case TransAngleClock_DY7: 
+				{
+					dIa = 1.5f*dI1/SQRT3;
+					dIaPh = 180.0f;
+					dIb = 1.5f*dI1/SQRT3;
+					dIbPh = 0.0f;
+					dIc = 0.0f; 
+					dIcPh = 180.0f;
+
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2/2;
+					dIbpPh = 180.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YY8: 
+			case TransAngleClock_DD8: 
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+					dIap = dI2/2;
+					dIapPh = 0.0f;
+					dIbp = dI2/2; 
+					dIbpPh = 0.0f;
+					dIcp = dI2;
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YD9: 
+			case TransAngleClock_DY9: 
+				{
+					dIa = 1.5f*dI1/SQRT3;
+					dIaPh = 0.0f;
+					dIb = 1.5f*dI1/SQRT3;
+					dIbPh = 180.0f;
+					dIc = 0.0f; 
+					dIcPh = 0.0f;
+
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2/2;
+					dIbpPh = 180.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YY10: 
+			case TransAngleClock_DD10: 
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+
+					dIap = dI2; 
+					dIapPh = 0.0f;
+					dIbp = dI2/2;
+					dIbpPh = 180.0f;
+					dIcp = dI2/2;
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YD11: 
+			case TransAngleClock_DY11:
+				{
+					dIa = 0.0f; 
+					dIaPh = 0.0f;
+					dIb = 1.5f*dI1/SQRT3;
+					dIbPh = 180.0f;
+					dIc = 1.5f*dI1/SQRT3;
+					dIcPh = 0.0f;
+
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2/2;
+					dIbpPh = 180.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			default: 
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1/2; 
+					dIcPh = 180.0f;
+
+					dIap = dI2/2;
+					dIapPh = 0.0f;
+					dIbp = dI2;
+					dIbpPh = 180.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			}
+		}
+		break;
+	case CPhase: 
+		{
+			switch(GetTransAngleClockValue())//转角方式及钟点数
+			{
+			case TransAngleClock_YD1: 
+			case TransAngleClock_DY1: 
+				{
+					dIa = 0.0f; 
+					dIaPh = 0.0f;
+					dIb = 1.5f*dI1/SQRT3;
+					dIbPh = 0.0f;
+					dIc = 1.5f*dI1/SQRT3;
+					dIcPh = 180.0f;
+
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2/2;
+					dIbpPh = 180.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YY2: 
+			case TransAngleClock_DD2:
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1/2; 
+					dIbPh = 180.0f;
+					dIc = dI1;
+					dIcPh = 0.0f;
+
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2/2;
+					dIbpPh = 180.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YD3: 
+			case TransAngleClock_DY3: 
+				{
+					dIa = 0.0f; 
+					dIaPh = 0.0f;
+					dIb = 1.5f*dI1/SQRT3;
+					dIbPh = 180.0f;
+					dIc = 1.5f*dI1/SQRT3;
+					dIcPh = 0.0f;
+
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2/2;
+					dIbpPh = 180.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YY4: 
+			case TransAngleClock_DD4: 
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1/2; 
+					dIbPh = 180.0f;
+					dIc = dI1;
+					dIcPh = 0.0f;
+
+					dIap = dI2/2;
+					dIapPh = 0.0f;
+					dIbp = dI2; 
+					dIbpPh = 180.0f;
+					dIcp = dI2/2;
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YD5:
+			case TransAngleClock_DY5: 
+				{
+					dIa = 1.5f*dI1/SQRT3;
+					dIaPh = 180.0f;
+					dIb = 0.0f; 
+					dIbPh = 180.0f;
+					dIc = 1.5f*dI1/SQRT3;
+					dIcPh = 0.0f;
+
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2/2;
+					dIbpPh = 180.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YY6: 
+			case TransAngleClock_DD6:
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1/2; 
+					dIbPh = 180.0f;
+					dIc = dI1;
+					dIcPh = 0.0f;
+
+					dIap = dI2/2; 
+					dIapPh = 180.0f;
+					dIbp = dI2/2;
+					dIbpPh = 180.0f;
+					dIcp = dI2;
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YD7: 
+			case TransAngleClock_DY7: 
+				{
+					dIa = 0.0f; 
+					dIaPh = 180.0f;
+					dIb = 1.5f*dI1/SQRT3;
+					dIbPh = 180.0f;
+					dIc = 1.5f*dI1/SQRT3;
+					dIcPh = 0.0f;
+
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2/2;
+					dIbpPh = 180.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YY8: 
+			case TransAngleClock_DD8: 
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1/2; 
+					dIbPh = 180.0f;
+					dIc = dI1;
+					dIcPh = 0.0f;
+
+					dIap = dI2;
+					dIapPh = 180.0f;
+					dIbp = dI2/2;
+					dIbpPh = 0.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YD9: 
+			case TransAngleClock_DY9: 
+				{
+					dIa = 0.0f; 
+					dIaPh = 0.0f;
+					dIb = 1.5f*dI1/SQRT3;
+					dIbPh = 0.0f;
+					dIc = 1.5f*dI1/SQRT3;
+					dIcPh = 180.0f;
+
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2/2;
+					dIbpPh = 180.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YY10: 
+			case TransAngleClock_DD10: 
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1/2; 
+					dIbPh = 180.0f;
+					dIc = dI1;
+					dIcPh = 0.0f;
+
+					dIap = dI2/2;
+					dIapPh = 180.0f;
+					dIbp = dI2; 
+					dIbpPh = 0.0f;
+					dIcp = dI2/2;
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YD11: 
+			case TransAngleClock_DY11:
+				{
+					dIa = 1.5f*dI1/SQRT3;
+					dIaPh = 0.0f;
+					dIb = 0.0f; 
+					dIbPh = 0.0f;
+					dIc = 1.5f*dI1/SQRT3;
+					dIcPh = 180.0f;
+
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2/2;
+					dIbpPh = 180.0f;
+					dIcp = dI2/2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			default: 
+				{
+					dIa = dI1/2;
+					dIaPh = 180.0f;
+					dIb = dI1/2; 
+					dIbPh = 180.0f;
+					dIc = dI1;
+					dIcPh = 0.0f;
+
+					dIap = dI2/2;
+					dIapPh = 0.0f;
+					dIbp = dI2/2; 
+					dIbpPh = 0.0f;
+					dIcp = dI2;
+					dIcpPh = 180.0f;
+				}
+				break;
+			}
+		}
+		break;
+	case ABPhase: 
+		{
+			switch(GetTransAngleClockValue())//转角方式及钟点数
+			{
+			case TransAngleClock_YD1: 
+			case TransAngleClock_DY1: 
+				{
+					dIa = 2.0f*dI1/SQRT3;
+					dIaPh = 180.0f;
+					dIb = dI1/SQRT3; 
+					dIbPh = 0.0f;
+					dIc = dI1/SQRT3;
+					dIcPh = 0.0f;
+
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2;
+					dIbpPh = 180.0f;
+					dIcp = 0.0f; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YY2: 
+			case TransAngleClock_DD2:
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1;
+					dIbPh = 180.0f;
+					dIc = 0.0f; 
+					dIcPh = 0.0f;
+
+					dIap = 0.0f;
+					dIapPh = 0.0f;
+					dIbp = dI2;
+					dIbpPh = 0.0f;
+					dIcp = dI2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YD3: 
+			case TransAngleClock_DY3: 
+				{
+					dIa = 2.0f*dI1/SQRT3;
+					dIaPh = 0.0f;
+					dIb = dI1/SQRT3; 
+					dIbPh = 180.0f;
+					dIc = dI1/SQRT3;
+					dIcPh = 180.0f;
+
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2;
+					dIbpPh = 180.0f;
+					dIcp = 0.0f; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YY4: 
+			case TransAngleClock_DD4: 
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1;
+					dIbPh = 180.0f;
+					dIc = 0.0f; 
+					dIcPh = 0.0f;
+
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = 0.0f;
+					dIbpPh = 0.0f;
+					dIcp = dI2; 
+					dIcpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YD5:
+			case TransAngleClock_DY5: 
+				{
+					dIa = dI1/SQRT3;
+					dIaPh = 0.0f;
+					dIb = 2.0f*dI1/SQRT3; 
+					dIbPh = 180.0f;
+					dIc = dI1/SQRT3;
+					dIcPh = 0.0f;
+
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2;
+					dIbpPh = 180.0f;
+					dIcp = 0.0f; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YY6: 
+			case TransAngleClock_DD6:
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1;
+					dIbPh = 180.0f;
+					dIc = 0.0f; 
+					dIcPh = 0.0f;
+
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2;
+					dIbpPh = 180.0f;
+					dIcp = 0.0f; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YD7: 
+			case TransAngleClock_DY7: 
+				{
+					dIa = 2.0f*dI1/SQRT3;
+					dIaPh = 0.0f;
+					dIb = dI1/SQRT3; 
+					dIbPh = 180.0f;
+					dIc = dI1/SQRT3;
+					dIcPh = 180.0f;
+
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2;
+					dIbpPh = 180.0f;
+					dIcp = 0.0f; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YY8: 
+			case TransAngleClock_DD8: 
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1;
+					dIbPh = 180.0f;
+					dIc = 0.0f; 
+					dIcPh = 0.0f;
+
+					dIap = 0.0f;
+					dIapPh = 0.0f;
+					dIbp = dI2;
+					dIbpPh = 180.0f;
+					dIcp = dI2; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YD9: 
+			case TransAngleClock_DY9: 
+				{
+					dIa = 2.0f*dI1/SQRT3;
+					dIaPh = 180.0f;
+					dIb = dI1/SQRT3; 
+					dIbPh = 0.0f;
+					dIc = dI1/SQRT3;
+					dIcPh = 0.0f;
+
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2;
+					dIbpPh = 180.0f;
+					dIcp = 0.0f; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YY10: 
+			case TransAngleClock_DD10: 
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1;
+					dIbPh = 180.0f;
+					dIc = 0.0f; 
+					dIcPh = 0.0f;
+
+					dIap = dI2;
+					dIapPh = 180.0f;
+					dIbp = 0.0f;
+					dIbpPh = 0.0f;
+					dIcp = dI2; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YD11: 
+			case TransAngleClock_DY11:
+				{
+					dIa = dI1/SQRT3;
+					dIaPh = 180.0f;
+					dIb = 2.0f*dI1/SQRT3; 
+					dIbPh = 0.0f;
+					dIc = dI1/SQRT3;
+					dIcPh = 180.0f;
+
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2;
+					dIbpPh = 180.0f;
+					dIcp = 0.0f; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			default: 
+				{
+					dIa = dI1;
+					dIaPh = 0.0f;
+					dIb = dI1;
+					dIbPh = 180.0f;
+					dIc = 0.0f; 
+					dIcPh = 0.0f;
+
+					dIap = dI2;
+					dIapPh = 180.0f;
+					dIbp = dI2;
+					dIbpPh = 0.0f;
+					dIcp = 0.0f; 
+					dIcpPh = 0.0f;
+				}
+				break;
+			}
+		}
+		break;
+	case BCPhase: 
+		{
+			switch(GetTransAngleClockValue())//转角方式及钟点数
+			{
+			case TransAngleClock_YD1: 
+			case TransAngleClock_DY1: 
+				{
+					dIb = 2.0f*dI1/SQRT3;
+					dIbPh = 180.0f;
+					dIc = dI1/SQRT3; 
+					dIcPh = 0.0f;
+					dIa = dI1/SQRT3;
+					dIaPh = 0.0f;
+
+					dIbp = dI2;
+					dIbpPh = 0.0f;
+					dIcp = dI2;
+					dIcpPh = 180.0f;
+					dIap = 0.0f; 
+					dIapPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YY2: 
+			case TransAngleClock_DD2:
+				{
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1;
+					dIcPh = 180.0f;
+					dIa = 0.0f; 
+					dIaPh = 0.0f;
+
+					dIbp = 0.0f;
+					dIbpPh = 0.0f;
+					dIcp = dI2;
+					dIcpPh = 0.0f;
+					dIap = dI2; 
+					dIapPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YD3: 
+			case TransAngleClock_DY3: 
+				{
+					dIb = 2.0f*dI1/SQRT3;
+					dIbPh = 0.0f;
+					dIc = dI1/SQRT3; 
+					dIcPh = 180.0f;
+					dIa = dI1/SQRT3;
+					dIaPh = 180.0f;
+
+					dIbp = dI2;
+					dIbpPh = 0.0f;
+					dIcp = dI2;
+					dIcpPh = 180.0f;
+					dIap = 0.0f; 
+					dIapPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YY4: 
+			case TransAngleClock_DD4: 
+				{
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1;
+					dIcPh = 180.0f;
+					dIa = 0.0f; 
+					dIaPh = 0.0f;
+
+					dIbp = dI2;
+					dIbpPh = 0.0f;
+					dIcp = 0.0f;
+					dIcpPh = 0.0f;
+					dIap = dI2; 
+					dIapPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YD5:
+			case TransAngleClock_DY5: 
+				{
+					dIb = dI1/SQRT3;
+					dIbPh = 0.0f;
+					dIc = 2.0f*dI1/SQRT3; 
+					dIcPh = 180.0f;
+					dIa = dI1/SQRT3;
+					dIaPh = 0.0f;
+
+					dIbp = dI2;
+					dIbpPh = 0.0f;
+					dIcp = dI2;
+					dIcpPh = 180.0f;
+					dIap = 0.0f; 
+					dIapPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YY6: 
+			case TransAngleClock_DD6:
+				{
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1;
+					dIcPh = 180.0f;
+					dIa = 0.0f; 
+					dIaPh = 0.0f;
+
+					dIbp = dI2;
+					dIbpPh = 0.0f;
+					dIcp = dI2;
+					dIcpPh = 180.0f;
+					dIap = 0.0f; 
+					dIapPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YD7: 
+			case TransAngleClock_DY7: 
+				{
+					dIb = 2.0f*dI1/SQRT3;
+					dIbPh = 0.0f;
+					dIc = dI1/SQRT3; 
+					dIcPh = 180.0f;
+					dIa = dI1/SQRT3;
+					dIaPh = 180.0f;
+
+					dIbp = dI2;
+					dIbpPh = 0.0f;
+					dIcp = dI2;
+					dIcpPh = 180.0f;
+					dIap = 0.0f; 
+					dIapPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YY8: 
+			case TransAngleClock_DD8: 
+				{
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1;
+					dIcPh = 180.0f;
+					dIa = 0.0f; 
+					dIaPh = 0.0f;
+
+					dIbp = 0.0f;
+					dIbpPh = 0.0f;
+					dIcp = dI2;
+					dIcpPh = 180.0f;
+					dIap = dI2; 
+					dIapPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YD9: 
+			case TransAngleClock_DY9: 
+				{
+					dIb = 2.0f*dI1/SQRT3;
+					dIbPh = 180.0f;
+					dIc = dI1/SQRT3; 
+					dIcPh = 0.0f;
+					dIa = dI1/SQRT3;
+					dIaPh = 0.0f;
+
+					dIbp = dI2;
+					dIbpPh = 0.0f;
+					dIcp = dI2;
+					dIcpPh = 180.0f;
+					dIap = 0.0f; 
+					dIapPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YY10: 
+			case TransAngleClock_DD10: 
+				{
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1;
+					dIcPh = 180.0f;
+					dIa = 0.0f; 
+					dIaPh = 0.0f;
+
+					dIbp = dI2;
+					dIbpPh = 180.0f;
+					dIcp = 0.0f;
+					dIcpPh = 0.0f;
+					dIap = dI2; 
+					dIapPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YD11: 
+			case TransAngleClock_DY11:
+				{
+					dIb = dI1/SQRT3;
+					dIbPh = 180.0f;
+					dIc = 2.0f*dI1/SQRT3; 
+					dIcPh = 0.0f;
+					dIa = dI1/SQRT3;
+					dIaPh = 180.0f;
+
+					dIbp = dI2;
+					dIbpPh = 0.0f;
+					dIcp = dI2;
+					dIcpPh = 180.0f;
+					dIap = 0.0f; 
+					dIapPh = 0.0f;
+				}
+				break;
+			default: 
+				{
+					dIb = dI1;
+					dIbPh = 0.0f;
+					dIc = dI1;
+					dIcPh = 180.0f;
+					dIa = 0.0f; 
+					dIaPh = 0.0f;
+
+					dIbp = dI2;
+					dIbpPh = 180.0f;
+					dIcp = dI2;
+					dIcpPh = 0.0f;
+					dIap = 0.0f; 
+					dIapPh = 0.0f;
+				}
+				break;
+			}
+		}
+		break;
+	case CAPhase: 
+		{
+			switch(GetTransAngleClockValue())//转角方式及钟点数
+			{
+			case TransAngleClock_YD1: 
+			case TransAngleClock_DY1: 
+				{
+					dIc = 2.0f*dI1/SQRT3;
+					dIcPh = 180.0f;
+					dIa = dI1/SQRT3; 
+					dIaPh = 0.0f;
+					dIb = dI1/SQRT3;
+					dIbPh = 0.0f;
+
+					dIcp = dI2;
+					dIcpPh = 0.0f;
+					dIap = dI2;
+					dIapPh = 180.0f;
+					dIbp = 0.0f; 
+					dIbpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YY2: 
+			case TransAngleClock_DD2:
+				{
+					dIc = dI1;
+					dIcPh = 0.0f;
+					dIa = dI1;
+					dIaPh = 180.0f;
+					dIb = 0.0f; 
+					dIbPh = 0.0f;
+
+					dIcp = 0.0f;
+					dIcpPh = 0.0f;
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = dI2; 
+					dIbpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YD3: 
+			case TransAngleClock_DY3: 
+				{
+					dIc = 2.0f*dI1/SQRT3;
+					dIcPh = 0.0f;
+					dIa = dI1/SQRT3; 
+					dIaPh = 180.0f;
+					dIb = dI1/SQRT3;
+					dIbPh = 180.0f;
+
+					dIcp = dI2;
+					dIcpPh = 0.0f;
+					dIap = dI2;
+					dIapPh = 180.0f;
+					dIbp = 0.0f; 
+					dIbpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YY4: 
+			case TransAngleClock_DD4: 
+				{
+					dIc = dI1;
+					dIcPh = 0.0f;
+					dIa = dI1;
+					dIaPh = 180.0f;
+					dIb = 0.0f; 
+					dIbPh = 0.0f;
+
+					dIcp = dI2;
+					dIcpPh = 0.0f;
+					dIap = 0.0f;
+					dIapPh = 0.0f;
+					dIbp = dI2; 
+					dIbpPh = 180.0f;
+				}
+				break;
+			case TransAngleClock_YD5:
+			case TransAngleClock_DY5: 
+				{
+					dIc = dI1/SQRT3;
+					dIcPh = 0.0f;
+					dIa = 2.0f*dI1/SQRT3; 
+					dIaPh = 180.0f;
+					dIb = dI1/SQRT3;
+					dIbPh = 0.0f;
+
+					dIcp = dI2;
+					dIcpPh = 0.0f;
+					dIap = dI2;
+					dIapPh = 180.0f;
+					dIbp = 0.0f; 
+					dIbpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YY6: 
+			case TransAngleClock_DD6:
+				{
+					dIc = dI1;
+					dIcPh = 0.0f;
+					dIa = dI1;
+					dIaPh = 180.0f;
+					dIb = 0.0f; 
+					dIbPh = 0.0f;
+
+					dIcp = dI2;
+					dIcpPh = 0.0f;
+					dIap = dI2;
+					dIapPh = 180.0f;
+					dIbp = 0.0f; 
+					dIbpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YD7: 
+			case TransAngleClock_DY7: 
+				{
+					dIc = 2.0f*dI1/SQRT3;
+					dIcPh = 0.0f;
+					dIa = dI1/SQRT3; 
+					dIaPh = 180.0f;
+					dIb = dI1/SQRT3;
+					dIbPh = 180.0f;
+
+					dIcp = dI2;
+					dIcpPh = 0.0f;
+					dIap = dI2;
+					dIapPh = 180.0f;
+					dIbp = 0.0f; 
+					dIbpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YY8: 
+			case TransAngleClock_DD8: 
+				{
+					dIc = dI1;
+					dIcPh = 0.0f;
+					dIa = dI1;
+					dIaPh = 180.0f;
+					dIb = 0.0f; 
+					dIbPh = 0.0f;
+
+					dIcp = 0.0f;
+					dIcpPh = 0.0f;
+					dIap = dI2;
+					dIapPh = 180.0f;
+					dIbp = dI2; 
+					dIbpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YD9: 
+			case TransAngleClock_DY9: 
+				{
+					dIc = 2.0f*dI1/SQRT3;
+					dIcPh = 180.0f;
+					dIa = dI1/SQRT3; 
+					dIaPh = 0.0f;
+					dIb = dI1/SQRT3;
+					dIbPh = 0.0f;
+
+					dIcp = dI2;
+					dIcpPh = 0.0f;
+					dIap = dI2;
+					dIapPh = 180.0f;
+					dIbp = 0.0f; 
+					dIbpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YY10: 
+			case TransAngleClock_DD10: 
+				{
+					dIc = dI1;
+					dIcPh = 0.0f;
+					dIa = dI1;
+					dIaPh = 180.0f;
+					dIb = 0.0f; 
+					dIbPh = 0.0f;
+
+					dIcp = dI2;
+					dIcpPh = 180.0f;
+					dIap = 0.0f;
+					dIapPh = 0.0f;
+					dIbp = dI2; 
+					dIbpPh = 0.0f;
+				}
+				break;
+			case TransAngleClock_YD11: 
+			case TransAngleClock_DY11:
+				{
+					dIc = dI1/SQRT3;
+					dIcPh = 180.0f;
+					dIa = 2.0f*dI1/SQRT3; 
+					dIaPh = 0.0f;
+					dIb = dI1/SQRT3;
+					dIbPh = 180.0f;
+
+					dIcp = dI2;
+					dIcpPh = 0.0f;
+					dIap = dI2;
+					dIapPh = 180.0f;
+					dIbp = 0.0f; 
+					dIbpPh = 0.0f;
+				}
+				break;
+				default: 
+				{
+					dIc = dI1;
+					dIcPh = 0.0f;
+					dIa = dI1;
+					dIaPh = 180.0f;
+					dIb = 0.0f; 
+					dIbPh = 0.0f;
+
+					dIcp = dI2;
+					dIcpPh = 180.0f;
+					dIap = dI2;
+					dIapPh = 0.0f;
+					dIbp = 0.0f; 
+					dIbpPh = 0.0f;
+				}
+				break;
+			}
+		}
+		break;
+	default:
+		break;
+	}
 }
 
 /***********************************************************/

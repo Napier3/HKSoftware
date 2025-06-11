@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "ComtradeDataBuffer.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 
 CFile m_oCmtrdSaveFile;
 
@@ -16,7 +16,7 @@ CComtradeDataBuffer::~CComtradeDataBuffer()
 {
 	if (m_pDataBuffer != NULL)
 	{
-		delete m_pDataBuffer;
+		delete []m_pDataBuffer;
 		m_pDataBuffer = NULL;
 	}
 }
@@ -27,7 +27,7 @@ void CComtradeDataBuffer::Init(int nBufLen)
 
 	if (m_pDataBuffer != NULL)
 	{
-		delete m_pDataBuffer;
+		delete []m_pDataBuffer;
 	}
 
 	m_pDataBuffer = new float[nBufLen];

@@ -2,8 +2,8 @@
 #define SttPxEngineDsEditGrid_H
 
 #include "../../UI/Module/QExBaseListGridBase/QExBaseListGridBase.h"
-#include "../../Module/DataMngr/DvmDataset.h"
-#include "../../Module/DataMngr/Value.h"
+#include "../../../Module/DataMngr/DvmDataset.h"
+#include "../../../../Module/DataMngr/Value.h"
 
 //该表格用于显示，write指令，关联的数据集的数据
 class CSttPxEngineDsEditGrid : public QExBaseListGridBase

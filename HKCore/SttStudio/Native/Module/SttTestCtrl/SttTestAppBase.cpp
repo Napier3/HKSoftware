@@ -4,7 +4,7 @@
 #include "../UI/Config/Frame/SttFrameConfig.h"
 #include "../UI/Config/MacroTestUI/SttMacroTestUI_TestMacroUIDB.h"
 #include "../SttTestBase/SttMacroXmlKeys.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../SttSocket/SttCmdOverTimeMngr.h"
 #include "../SttSystemConfig/SttSystemConfig.h"
 #include "../HtmlReport/SttXHtmlRptGenFactoryBase.h"
@@ -25,8 +25,8 @@ QRingMemBufShmDebugWidget *g_pRingMemBufShmDebugWidget = NULL;
 #endif
 
 #include "../RecordTest/QT/SttLocalRcdMemBufferMngrLinux.h"
-#include "../../Module/SmartCap/SmartCapCtrl.h"
-#include "../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../Module/SmartCap/SmartCapCtrl.h"
+#include "../../../Module/SmartCap/XSmartCapMngr.h"
 #include "../../../AutoTest/Module/Characteristic/CharacteristicGlobal.h"
 
 #include "../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdAi/GbWzdAiTool.h"
@@ -72,10 +72,10 @@ CSttTestAppBase::~CSttTestAppBase()
 	}
 }
 
-//#include <QtWebKit>
+#include <QtWebKit>
 
 #ifndef _PSX_QT_LINUX_
-#include "../../Module/XMinidmp/XMinidmp.h"
+#include "../../../Module/XMinidmp/XMinidmp.h"
 #endif
 
 void CSttTestAppBase::InitSttTestApp(CXLanguageResourceBase *pLanguage)
@@ -146,13 +146,18 @@ void CSttTestAppBase::IinitGbWzdAiTool()
 
 }
 
+#include "../Engine/PpEngineServerBase/SttPpEngineServer.h"
+#include "../../../IotAtsMngr/Module/PxEngineServer/IotPxEngineServer.h"
 void CSttTestAppBase::ExitSttTestApp()
 {
-	if (m_pTestCtrlCntr != NULL)
+ #ifdef _PSX_QT_LINUX_
+	//if (IsMuTest())//合并单元测试先关闭server
 	{
-		delete m_pTestCtrlCntr;
-		m_pTestCtrlCntr = NULL;
+		CSttPpEngineServer::Release();
+		//CIotPxEngineServer::Release();
+  		CXSmartCapMngr::Release();
 	}
+ #endif
 
 	CSttTestGridDefineXmlRWKeys::Release();
 	CTestMacroRptTemplateXmlRWKeys::Release();
@@ -201,6 +206,12 @@ void CSttTestAppBase::ExitSttTestApp()
 		g_theIotEngineApp = NULL;
 	}
 #endif
+
+	if (m_pTestCtrlCntr != NULL)
+	{
+		delete m_pTestCtrlCntr;
+		m_pTestCtrlCntr = NULL;
+	}
 
 	//2023-2-7  lijunqing
 	Release_GbWzdAiTool();
@@ -291,10 +302,51 @@ bool CSttTestAppBase::IsMuTest(const CString &strMacroID)
 	return false;
 }
 
+bool CSttTestAppBase::IsRemoteAutoTest( const CString &strMacroID )
+{
+	if ((strMacroID == STT_ORG_MACRO_Remote_VolCurAccuracyTest)||
+		(strMacroID == STT_ORG_MACRO_Remote_PowerAccuracyTest)||
+		(strMacroID == STT_ORG_MACRO_Remote_FreqFactorTest)||
+		(strMacroID == STT_ORG_MACRO_Remote_OverCurrTest)||
+		(strMacroID == STT_ORG_MACRO_Remote_ZeroTest) ||
+		(strMacroID == STT_ORG_MACRO_Remote_TURecloseAccTest)||
+		(strMacroID == STT_ORG_MACRO_Remote_AccuracyTest)||
+		(strMacroID == STT_ORG_MACRO_Remote_PriorityDeliveryTest)||
+		(strMacroID == STT_ORG_MACRO_Remote_DualPositionTest) ||
+		(strMacroID == STT_ORG_MACRO_Remote_ResolutionTest) ||
+		(strMacroID == STT_ORG_MACRO_Remote_AntiShakeTest)||
+		(strMacroID == STT_ORG_MACRO_Remote_FreqChangeTest)||
+		(strMacroID == STT_ORG_MACRO_Remote_ThreePhUnbalanceTest)||
+		(strMacroID == STT_ORG_MACRO_Remote_HarmContentTest)||
+		(strMacroID == STT_ORG_MACRO_Remote_PowerFactorTest) ||
+		(strMacroID == STT_ORG_MACRO_Remote_MeasurLimitTest) ||
+		(strMacroID == STT_ORG_MACRO_Remote_InputVolTest)||
+		(strMacroID == STT_ORG_MACRO_Remote_InputCurTest)||
+		(strMacroID == STT_ORG_MACRO_Remote_Test)||
+		(strMacroID == STT_ORG_MACRO_Remote_VolExcLimitTest) ||
+		(strMacroID == STT_ORG_MACRO_Remote_CurExcLimitTest) ||
+		(strMacroID == STT_ORG_MACRO_Remote_LowCurrentTest) ||
+		(strMacroID == STT_ORG_MACRO_Remote_PTAlarmTest) ||
+		(strMacroID == STT_ORG_MACRO_Remote_ProInrushCurTest) ||
+		(strMacroID == STT_ORG_MACRO_Remote_FaultResetTest) ||
+		(strMacroID == STT_ORG_MACRO_Remote_DeadZeroDriftTest)||
+		(strMacroID == STT_ORG_MACRO_Remote_TimeSyncTest)|| 
+		(strMacroID == STT_ORG_MACRO_Remote_ParaRecallTest))
+	{
+		return true;
+	}
+
+	return false;
+}
+
 //zhouhj 2023.12.19 自动测试调用的时候,是否需要进行传参
 bool CSttTestAppBase::SmartTestIsNeedArguments(const CString &strMacroID)
 {
 	if (IsMuTest(strMacroID))
+	{
+		return true;
+	}
+	else if(IsRemoteAutoTest(strMacroID))
 	{
 		return true;
 	}
@@ -328,7 +380,22 @@ bool CSttTestAppBase::SmartTestIsNeedArguments(const CString &strMacroID)
 	{
 		return true;
 	}
-	
+	else if (strMacroID == STT_ORG_MACRO_AnalogCirBreakerTest)//dingxy 20241113 传递给自动测试参数
+	{
+		return true;
+	}
+	else if (strMacroID == STT_ORG_MACRO_ThreeTURecloseAccTest)
+	{
+		return true;
+	}
+	else if (strMacroID == STT_ORG_MACRO_VolTimeTypeSecTest || 
+		strMacroID ==  STT_ORG_MACRO_VolTimeTypeIntTest || 
+		strMacroID ==  STT_ORG_MACRO_VolCurTypeSecTest || 
+		strMacroID ==  STT_ORG_MACRO_VolCurTypeIntTest || 
+		strMacroID ==  STT_ORG_MACRO_AdaptiveTypeSecTest)
+	{
+		return true;
+	}
 	
 	return false;
 }
@@ -408,11 +475,17 @@ void CSttTestAppBase::StartIotProtoServer()
 	{
 		ExitIotProtoServer();
 	}
-
+	//20250312 chenling 默认启动的是e-Protocol/Bin，没有再启动IotEngineServer/Bin
 	CString strPath;
 	strPath = _P_GetInstallPath();
+	strPath += _T("e-Protocol/Bin/");
+	strPath += _T("IotProtoServer.exe");
+	if (!IsFileExist(strPath))
+	{
+		strPath = _P_GetInstallPath();
 	strPath += _T("IotEngineServer/Bin/");
 	strPath += _T("IotProtoServer.exe");
+	}
 
 	//直接启动，运行于后台
 	QSttWgtCmdThread::startDetached_exe(strPath, _T(""));
@@ -489,7 +562,11 @@ void CSttTestAppBase::InitSttIecRecord(CSttTestAppCfg* pSttTestAppCfg)
 	pXSttCap_61850->m_pKeyDB = m_pKeyDB;
 
 	//2022-9-25  lijunqing初始化 g_theHtmlRptGenFactory
+	if (g_theHtmlRptGenFactory != NULL)
+	{
 	g_theHtmlRptGenFactory->m_pDvmDevice = pXSttCap_61850->m_pDvmDevice;
+	}
+	
 
 }
 

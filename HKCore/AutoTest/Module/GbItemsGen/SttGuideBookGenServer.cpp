@@ -1,10 +1,10 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "SttGuideBookGenServer.h"
 #ifndef _not_use_autotest_
 #include "../TCtrlCntrWorkSpace.h"
 #endif
 
-#include "../../../SttStudio/Module/SttGlobalDef.h"
+#include "../Module/SttGlobalDef.h"
 
 
 CSttGuideBookGenServer::CSttGuideBookGenServer(void)

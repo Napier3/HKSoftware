@@ -1382,3 +1382,43 @@ BOOL stt_IsItemHasAin(CSttItemBase *pItemBase)
 
 	return FALSE;
 }
+
+BOOL stt_IsNeedRootNodeTypeItemsRslt( const CString &strItemsID )
+{
+	if (strItemsID == _T("Remote_VolCurAccuracyTest")
+		|| strItemsID == _T("Remote_PowerAccuracyTest")
+		|| strItemsID == _T("Remote_FreqChangeTest")
+		|| strItemsID == _T("Remote_ThreePhUnbalanceTest")
+		|| strItemsID == _T("Remote_HarmContentTest")
+		|| strItemsID == _T("Remote_PowerFactorTest")
+		|| strItemsID == _T("Remote_MeasurLimitTest")
+		|| strItemsID == _T("Remote_InputVolTest")
+		|| strItemsID == _T("Remote_InputCurTest"))
+	{
+		return TRUE;
+	}
+	else
+	{
+		return FALSE;
+	}
+}
+
+BOOL stt_IsNeedNoneTypeItemsRslt( const CString &strItemsID )
+{
+	if (strItemsID == _T("Remote_OverCurrTest")
+		|| strItemsID == _T("Remote_ZeroTest")
+		|| strItemsID == _T("Remote_TURecloseAccTest")
+		|| strItemsID == _T("Remote_FreqFactorTest")
+		|| strItemsID == _T("VolTimeTypeSecTest")
+		|| strItemsID ==  _T("VolTimeTypeIntTest") 
+		|| strItemsID ==  _T("VolCurTypeSecTest") 
+		|| strItemsID ==  _T("VolCurTypeIntTest") 
+		|| strItemsID ==  _T("AdaptiveTypeSecTest"))
+	{
+		return TRUE;
+	}
+	else
+	{
+		return FALSE;
+	}
+}

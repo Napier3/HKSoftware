@@ -1,7 +1,7 @@
 #pragma once
 
 #include "GuideBookDefine.h"
-#include "ScriptText.h"
+#include "scriptText.h"
 #include "MacroTestParaDatas.h"
 
 class CMacroTestPara : public CExBaseList

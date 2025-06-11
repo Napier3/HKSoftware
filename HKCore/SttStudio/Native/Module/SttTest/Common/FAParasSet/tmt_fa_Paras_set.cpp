@@ -87,7 +87,7 @@ void stt_xml_serialize_binary_Quantileout(tmt_FaParasSet *pParas, CSttXmlSeriali
 
 ////////////////////////////////
 /*
-#include"../../Module/API/GlobalConfigApi.h"
+#include"../../../../Module/API/GlobalConfigApi.h"
 
 void stt_xml_serialize_write_FaParasSetTest()
 {

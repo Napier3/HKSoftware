@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../SttStudio/Module/SttGlobalDef.h"
+#include "../Module/SttGlobalDef.h"
 #include "AutoTestGlobalDefine.h"
 #include "../../Module/BaseClass/XObjectRefBase.h"
 #include "../../Module/BaseClass/ExBaseList.h"

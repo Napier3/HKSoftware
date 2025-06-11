@@ -1,5 +1,5 @@
 #pragma once
-#include "cmmchannel.h"
+#include "CmmChannel.h"
 #include "../DeviceModel/CmmTcpClientConfig.h"
 
 #include "../../../../Module/Socket/WinTcpSocket.h"

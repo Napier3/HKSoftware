@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "GuideBook.h"
 #include "Device.h"
 #include "GuideBookDefine.h"

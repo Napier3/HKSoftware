@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../Module/OSInterface/OSInterface.h"
+#include "../../../Module/OSInterface/OSInterface.h"
 #ifdef _PSX_QT_LINUX_
     #include "tmt_adjust_sys_parameter.h"
 #endif
@@ -57,9 +57,14 @@
 #define DC_CURRENT_COMMON_FAULT_TYPE_I4_2                                                    10
 #define DC_CURRENT_COMMON_FAULT_TYPE_I4_3                                                    11
 
+//zhouhj 2024.10.6 差动零序消除方式
+#define STT_DIFF_ZERO_SEQ_ELIMI_TYPE_NULL                                                    0//无
+#define STT_DIFF_ZERO_SEQ_ELIMI_TYPE_ILI0                                                    1//IL-I0
+#define STT_DIFF_ZERO_SEQ_ELIMI_TYPE_YDCT                                                    2//YD辅助CT
+
 
 #define EPSINON 0.000001//float保证精度的最小值
-#define pi 3.14159265357979823846
+#define math_pi 3.14159265357979823846
 
 //递变类型相关宏定义
 #define GRADIENT_MAX_COUNT	  20000//最大递变步数
@@ -107,6 +112,8 @@
 
 #define STT_MACRO_ID_SystemConfig           "SystemConfig"
 #define STT_MACRO_ID_UartConfig             "UartConfig"
+#define STT_MACRO_ID_BinConfig              "BinConfig"
+#define STT_MACRO_ID_DcMeasCfg              "DcMeasCfg"
 #define STT_MACRO_ID_AuxDCOutput            "AuxDCOutput"//增加用于辅助直流输出设置  zhouhj 20211016 增加用于独立设置辅助直流
 #define STT_MACRO_ID_ModulesGearSwitch      "ModulesGearSwitch"//增加用于档位切换//增加用于独立切换档位
 #define STT_MACRO_ID_AppConfig              "AppConfig" //增加用于设置测试仪变比  该ID为兼容旧版接口 zhouhj 20221207
@@ -129,6 +136,11 @@
 #define STT_MACRO_ID_SoeTest                "SoeTest"
 #define STT_MACRO_ID_SmvAbnTest				"SmvAbnTest"
 #define STT_MACRO_ID_GseAbnTest				"GseAbnTest"
+
+#define STT_MACRO_ID_MUAccuracyTest             "MUAccuracyTest"
+#define STT_MACRO_ID_MUFirstCycleTest           "MUFirstCycleTest"
+#define STT_MACRO_ID_MUTimingAccurTest          "MUTimingAccurTest"
+#define STT_MACRO_ID_MUPunctAccurTest           "MUPunctAccurTest"
 
 #define STT_MACRO_ID_SequenceManuTest       "SequenceManuTest"
 #define STT_MACRO_ID_PowerManuTest          "PowerManuTest"
@@ -155,6 +167,7 @@
 #define STT_MACRO_ID_DistanceSearch_I         "DistanceSearch_I"
 #define STT_MACRO_ID_RecloseAcc             "RecloseAcc"
 #define STT_MACRO_ID_TURecloseAcc           "TURecloseAcc"//配网专用重合闸后加速模块
+#define STT_MACRO_ID_TripleRecloseAcc           "TripleRecloseAcc"//三次重合闸后加速
 #define STT_MACRO_ID_StateRecloseAcc             "StateRecloseAcc"//Pnv新增
 #define STT_MACRO_ID_PsuCBOperate           "PsuCBOperate"
 #define STT_MACRO_ID_StateOverCurrent       "StateOverCurrent"
@@ -217,6 +230,7 @@
 #define STT_MACRO_ID_PsuDiffRateTest              "PsuDiffRateTest"
 #define STT_MACRO_ID_PsuDiffQuickTest             "PsuDiffQCurrTest"
 #define STT_MACRO_ID_PsuDiffHarmTest              "PsuDiffHarmTest"
+#define STT_MACRO_ID_PsuDiffHarmTest_I              "PsuDiffHarmTest_I"
 #define STT_MACRO_ID_PsuDiffTimeTest              "PsuDiffTimeTest"
 
 #define STT_MACRO_ID_Diff6IRateRestrainSearchTest             "Diff6IRateRestrainSearch" //差动(6i)相关MacroID
@@ -277,6 +291,31 @@
 #define STT_MACRO_ID_AnsyncStateTest  "AnsyncStateTest"			//异步状态序列
 #define STT_MACRO_ID_AnsyncManualTest	"AnsyncManualTest"		//异步通用试验
 
+#define STT_MACRO_ID_FreqOutputTest	"FreqOutputTest"		//调频输出
+
+#define  STT_MACRO_ID_PrimFreqManualTest "PrimFreqManualTest"	//一次调频通用试验
+#define  STT_MACRO_ID_PrimFreqStateTest "PrimFreqStateTest" 	//一次调频状态序列
+
+typedef struct tmt_step_fault
+{
+public:
+	void init()
+	{
+		fVAmp = fIAmp = fAng = fFre = fZ = fZAng = 0;
+	}
+
+	tmt_step_fault()
+	{
+		init();
+	}
+
+	float fVAmp;
+	float fIAmp;
+	float fAng;
+	float fFre;
+	float fZ;//递变阻抗
+	float fZAng;//递变阻抗角
+} tmt_StepFault;
 
 typedef struct tmt_step_UI
 {
@@ -292,10 +331,12 @@ public:
     tmt_step_UI()
     {
         init();
+		oStepFault.init();
     }
 
     float fU[6][3];	//12*(幅值+相位+fre)
     float fI[6][3];
+	tmt_StepFault oStepFault;
 } tmt_StepUI;
 
 typedef struct tmt_binary_in
@@ -438,7 +479,7 @@ public:
 typedef struct tmt_channel_ramp
 {
 public:
-    int		nIndex;	//递变谐波序号 -1-无递变 0-递变直流 1-递变基波 2~n-递变2~n次谐波
+	int		nIndex;	//递变谐波序号 -1-无递变 0-递变直流分量 1-递变基波(含频率等于0) 2~n-递变2~n次谐波
     //	int		nType;	//递变类型：0-幅值 1-相位 2-频率
     //	int		nMode;	//递变模式：0-阶梯递变	1-滑差
     //	float	fBegin;
@@ -635,11 +676,11 @@ public:
 typedef struct
 {
 public:
-    BOOL    m_bUChange[6][3];//mag   ph   fre
-    BOOL    m_bIChange[6][3];
+	BOOL    m_bUChange[GRADIENT_CHAN_COUNT][3];//mag   ph   fre
+	BOOL    m_bIChange[GRADIENT_CHAN_COUNT][3];
     tmt_StepUI m_uiStepData[GRADIENT_MAX_COUNT];	//递变数据
     int     m_nDiretionMode;//0-m_uiStepData[0]为始值  1-m_uiStepData[m_nStepCount-1]为始值
-    int     m_nStepCount;
+    int     m_nStepCount;	
 } tmt_GradientProcess;
 
 typedef struct tmt_gradient_common
@@ -700,18 +741,18 @@ typedef struct tmt_goose_pub
     BOOL m_bUseFlag;//是否有变位
     BOOL m_bHasTest;//是否有检修位
     int m_nTest;// 是否置检修(0不置检修,1置检修)
-    CString m_strChannel[MAX_GOOSE_CHANNEL_COUNT];
+ 	char m_strChannel[MAX_GOOSE_CHANNEL_COUNT][64];
 
     void init()
     {
         m_bUseFlag = FALSE;
         m_bHasTest = FALSE;
         m_nTest = 0;
-
         for(int nIndex = 0; nIndex < MAX_GOOSE_CHANNEL_COUNT; nIndex++)
         {
-            m_strChannel[nIndex] = "";
+			  m_strChannel[nIndex][0] = 0;
         }
+		
     }
 
     void CopyOwn(tmt_goose_pub *pDest)
@@ -722,7 +763,7 @@ typedef struct tmt_goose_pub
 
         for(int nIndex = 0; nIndex < MAX_GOOSE_CHANNEL_COUNT; nIndex++)
         {
-            pDest->m_strChannel[nIndex] = m_strChannel[nIndex];
+            strcpy(pDest->m_strChannel[nIndex], m_strChannel[nIndex]);
         }
     }
 
@@ -730,6 +771,7 @@ typedef struct tmt_goose_pub
     {
         init();
     }
+
 } tmt_GoosePub;
 
 typedef struct tmt_goose_pubs
@@ -747,12 +789,13 @@ typedef struct tmt_goose_pubs
     {
         init();
     }
+
 } tmt_GoosePubs;
 
 typedef struct tmt_ft3_pub
 {
     BOOL m_bUseFlag;//是否有变位
-    CString m_strChannel[MAX_FT3_CHANNEL_COUNT];
+ 	char m_strChannel[MAX_FT3_CHANNEL_COUNT][64];
 
     void init()
     {
@@ -760,7 +803,7 @@ typedef struct tmt_ft3_pub
 
         for(int nIndex = 0; nIndex < MAX_FT3_CHANNEL_COUNT; nIndex++)
         {
-            m_strChannel[nIndex] = "";
+            m_strChannel[nIndex][0] = 0;
         }
     }
 
@@ -770,7 +813,7 @@ typedef struct tmt_ft3_pub
 
         for(int nIndex = 0; nIndex < MAX_FT3_CHANNEL_COUNT; nIndex++)
         {
-            pDest->m_strChannel[nIndex] = m_strChannel[nIndex];
+            strcpy(pDest->m_strChannel[nIndex], m_strChannel[nIndex]);
         }
     }
 
@@ -778,6 +821,7 @@ typedef struct tmt_ft3_pub
     {
         init();
     }
+
 } tmt_Ft3Pub;
 
 typedef struct tmt_ft3_pubs
@@ -1028,8 +1072,7 @@ typedef struct tmt_async_modules
 /**************故障回放**************/
 
 /**************LtReplay**************/
-#define COMTRADE_REPLAY_PKG_POINTS					600
-#define LT_REPLAY_FRAME_PKG_CNT						3600 //600*6
+#define LT_REPLAY_FRAME_PKG_CNT						3600
 //定义最大 循环 A B 缓存大小
 #define LT_REPLAY_MAX_LOOP_PKG_CNT                  12
 #define LT_REPLAY_MAX_A_PKG_CNT                     120
@@ -1095,7 +1138,7 @@ typedef struct ReplayCoefItems
 
 typedef struct ReplayCoef
 {
-    ReplayCoefItems Items[16];//0-11对应位置1-12，15对应主板小信号或330
+	Drv_ReplayCoefItems Items[16];//0-11对应位置1-12，15对应主板小信号或330
 } Drv_ReplayCoef;
 
 
@@ -1859,158 +1902,162 @@ inline bool Global_CheckBinSelect(tmt_BinaryIn *pBinIn, int nMaxBinNum, bool bLo
 	return false;
 }
 
-static short Leap_year[2][12] =
-{
-    { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 },
-    { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 }
-};
+//zhouhj 2024.12.11 已移植到MathApi.cpp内
+//static short Leap_year[2][12] =
+//{
+//    { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 },
+//    { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 }
+//};
 
-inline void TransTimer_t(unsigned int ntime_t,
-                         short &nYear, short &nMon, short &nDay, short &nHour, short &nMin, short &nSec)
-{
-    nYear = 1970;
-    nMon = 1;
-    nDay = 1;
-    nHour = nMin = nSec = 0;
+//zhouhj 2024.12.11 已移植到MathApi.h内
+// inline void TransTimer_t(unsigned int ntime_t,
+//                          short &nYear, short &nMon, short &nDay, short &nHour, short &nMin, short &nSec)
+// {
+//     nYear = 1970;
+//     nMon = 1;
+//     nDay = 1;
+//     nHour = nMin = nSec = 0;
+// 
+//     while(TRUE)
+//     {
+//         int nIsLeap = 0;
+// 
+//         if((nYear % 4 == 0 && nYear % 100 != 0) || nYear % 400 == 0)
+//         {
+//             nIsLeap = 1;
+//         }
+// 
+//         int nDiff = nIsLeap ? 366 : 365;
+// 
+//         if(ntime_t >= nDiff * 24 * 60 * 60)
+//         {
+//             nYear += 1;
+//             ntime_t -= nDiff * 24 * 60 * 60;
+//         }
+//         else
+//         {
+//             break;
+//         }
+//     }
+// 
+//     while(TRUE)
+//     {
+//         int nIsLeap = 0;
+// 
+//         if((nYear % 4 == 0 && nYear % 100 != 0) || nYear % 400 == 0)
+//         {
+//             nIsLeap = 1;
+//         }
+// 
+//         int nLastDay = Leap_year[nIsLeap][nMon - 1];
+// 
+//         if(ntime_t >= nLastDay * 24 * 60 * 60)
+//         {
+//             nMon += 1;
+//             ntime_t -= nLastDay * 24 * 60 * 60;
+//         }
+//         else
+//         {
+//             break;
+//         }
+//     }
+// 
+//     while(TRUE)
+//     {
+//         if(ntime_t >= 24 * 60 * 60)
+//         {
+//             nDay += 1;
+//             ntime_t -= 24 * 60 * 60;
+//         }
+//         else
+//         {
+//             break;
+//         }
+//     }
+// 
+//     while(TRUE)
+//     {
+//         if(ntime_t >= 60 * 60)
+//         {
+//             nHour += 1;
+//             ntime_t -= 60 * 60;
+//         }
+//         else
+//         {
+//             break;
+//         }
+//     }
+// 
+//     while(TRUE)
+//     {
+//         if(ntime_t >= 60)
+//         {
+//             nMin += 1;
+//             ntime_t -= 60;
+//         }
+//         else
+//         {
+//             break;
+//         }
+//     }
+// 
+//     nSec = ntime_t;
+// }
 
-    while(TRUE)
-    {
-        int nIsLeap = 0;
-
-        if((nYear % 4 == 0 && nYear % 100 != 0) || nYear % 400 == 0)
-        {
-            nIsLeap = 1;
-        }
-
-        int nDiff = nIsLeap ? 366 : 365;
-
-        if(ntime_t >= nDiff * 24 * 60 * 60)
-        {
-            nYear += 1;
-            ntime_t -= nDiff * 24 * 60 * 60;
-        }
-        else
-        {
-            break;
-        }
-    }
-
-    while(TRUE)
-    {
-        int nIsLeap = 0;
-
-        if((nYear % 4 == 0 && nYear % 100 != 0) || nYear % 400 == 0)
-        {
-            nIsLeap = 1;
-        }
-
-        int nLastDay = Leap_year[nIsLeap][nMon - 1];
-
-        if(ntime_t >= nLastDay * 24 * 60 * 60)
-        {
-            nMon += 1;
-            ntime_t -= nLastDay * 24 * 60 * 60;
-        }
-        else
-        {
-            break;
-        }
-    }
-
-    while(TRUE)
-    {
-        if(ntime_t >= 24 * 60 * 60)
-        {
-            nDay += 1;
-            ntime_t -= 24 * 60 * 60;
-        }
-        else
-        {
-            break;
-        }
-    }
-
-    while(TRUE)
-    {
-        if(ntime_t >= 60 * 60)
-        {
-            nHour += 1;
-            ntime_t -= 60 * 60;
-        }
-        else
-        {
-            break;
-        }
-    }
-
-    while(TRUE)
-    {
-        if(ntime_t >= 60)
-        {
-            nMin += 1;
-            ntime_t -= 60;
-        }
-        else
-        {
-            break;
-        }
-    }
-
-    nSec = ntime_t;
-}
-
-inline void TransTimer_To_t(unsigned int &ntime_t,
-                            short nYear, short nMon, short nDay, short nHour, short nMin, short nSec)
-{
-    ntime_t = 0;
-    int nYearRef = 1970;
-
-    while(TRUE)
-    {
-        int nDiffYear = nYear - nYearRef;
-
-        if(nDiffYear == 0)
-        {
-            break;
-        }
-
-        int nIsLeap = 0;
-
-        if((nYearRef % 4 == 0 && nYearRef % 100 != 0) || nYearRef % 400 == 0)
-        {
-            nIsLeap = 1;
-        }
-
-        int nDays = nIsLeap ? 366 : 365;
-        ntime_t += nDays * 24 * 60 * 60;
-        nYearRef++;
-    }
-
-    int nIsLeap = 0;
-
-    if((nYear % 4 == 0 && nYear % 100 != 0) || nYear % 400 == 0)
-    {
-        nIsLeap = 1;
-    }
-
-    int nMonRef = 1;
-
-    while(TRUE)
-    {
-        int nDiffMon = nMon - nMonRef;
-
-        if(nDiffMon == 0)
-        {
-            break;
-        }
-
-        int nLastDay = Leap_year[nIsLeap][nMonRef - 1];
-        ntime_t += nLastDay * 24 * 60 * 60;
-        nMonRef++;
-    }
-
-    ntime_t += (nDay - 1) * 24 * 60 * 60;
-    ntime_t += nHour * 60 * 60;
-    ntime_t += nMin * 60;
-    ntime_t += nSec;
-}
+//zhouhj 2024.12.11 已移植到MathApi.h内
+//zhouhj 2024.12.11 已移植到
+//inline void TransTimer_To_t(unsigned int &ntime_t,
+//                            short nYear, short nMon, short nDay, short nHour, short nMin, short nSec)
+//{
+//    ntime_t = 0;
+//    int nYearRef = 1970;
+//
+//    while(TRUE)
+//    {
+//        int nDiffYear = nYear - nYearRef;
+//
+//        if(nDiffYear == 0)
+//        {
+//            break;
+//        }
+//
+//        int nIsLeap = 0;
+//
+//        if((nYearRef % 4 == 0 && nYearRef % 100 != 0) || nYearRef % 400 == 0)
+//        {
+//            nIsLeap = 1;
+//        }
+//
+//        int nDays = nIsLeap ? 366 : 365;
+//        ntime_t += nDays * 24 * 60 * 60;
+//        nYearRef++;
+//    }
+//
+//    int nIsLeap = 0;
+//
+//    if((nYear % 4 == 0 && nYear % 100 != 0) || nYear % 400 == 0)
+//    {
+//        nIsLeap = 1;
+//    }
+//
+//    int nMonRef = 1;
+//
+//    while(TRUE)
+//    {
+//        int nDiffMon = nMon - nMonRef;
+//
+//        if(nDiffMon == 0)
+//        {
+//            break;
+//        }
+//
+//        int nLastDay = Leap_year[nIsLeap][nMonRef - 1];
+//        ntime_t += nLastDay * 24 * 60 * 60;
+//        nMonRef++;
+//    }
+//
+//    ntime_t += (nDay - 1) * 24 * 60 * 60;
+//    ntime_t += nHour * 60 * 60;
+//    ntime_t += nMin * 60;
+//    ntime_t += nSec;
+//}

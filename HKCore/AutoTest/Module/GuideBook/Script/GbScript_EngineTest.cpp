@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "GbScript_Engine.h"
 
 #ifndef GUIDEBOOK_DEV_MODE

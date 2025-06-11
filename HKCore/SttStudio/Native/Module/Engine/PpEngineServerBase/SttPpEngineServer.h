@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../SttTestEngineServerBase.h"
-#include "../../IotAtsMngr/Module/PxEngineServer/IotPxEngineFactoryBase.h"
+#include "../../../../IotAtsMngr/Module/PxEngineServer/IotPxEngineFactoryBase.h"
 /*
 STT协议的通信引擎服务基类，此基类初始化时，创建CSttPpServerSocket
 接受连接时，创建CSttPpServerClientSocket，实现IOT个性化的处理

@@ -91,6 +91,28 @@ long CSttMacro::XmlWriteOwn(CXmlRWDocBase &oXMLDoc, CXmlRWElementBase &oElement,
     return 0;
 }
 
+void CSttMacro::InitAfterRead()
+{
+	POS pos = GetHeadPosition();
+
+	while (pos != NULL)
+	{
+		CExBaseObject *pObj = GetNext(pos);
+
+		if (pObj->GetClassID() == STTCMDCLASSID_CSTTPARAS)
+		{
+			m_pParas = (CSttParas *)pObj;
+		}
+		else if (pObj->GetClassID() == STTCMDCLASSID_CSTTRESULTS)
+		{
+			m_pResults = (CSttResults *)pObj;
+		}
+		else if (pObj->GetClassID() == STTCMDCLASSID_CSTTSEARCHRESULTS)
+		{
+			m_pSearchResults = (CSttSearchResults *)pObj;
+		}
+	}
+}
 
 CExBaseObject* CSttMacro::CreateNewChild(const CString &strClassID, BOOL &bAddToTail, CXmlRWKeys *pXmlRWKeys)
 {
@@ -135,6 +157,8 @@ long CSttMacro::XmlReadChildren(CXmlRWNodeListBase &oNodes, CXmlRWKeys *pXmlRWKe
 
 CSttParas* CSttMacro::GetParas()
 {
+    InitAfterRead();
+
 	if (m_pParas == NULL)
 	{
 		m_pParas = new CSttParas();

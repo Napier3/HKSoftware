@@ -5,9 +5,9 @@
 #include <QLayout>
 #include "../SttIecRcdFuncInterface.h"
 #include "../../../UI/Module/QExBaseListGridBase/QExBaseListComBoxDelegBase.h"
-#include "../../Module/SmartCap/61850Cap/CapDevice/CapDevice6044.h"
+#include "../../../../../Module/SmartCap/61850Cap/CapDevice/CapDevice6044.h"
 #include "SttIecFT3LineNumberPlanTextEdit.h"
-#include "../../Module/API/HexTransApi.h"
+#include "../../../../../Module/API/HexTransApi.h"
 
 class CSttIecFT3OriginalMsgWidget :  public QWidget, public CSttIecRcdFuncInterface
 {

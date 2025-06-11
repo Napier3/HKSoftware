@@ -1,11 +1,11 @@
 #pragma once
 
 #include "ProtocolEngineInterface.h"
-#include "../../Module/DataMngr/DvmDevice.h"
+#include "../../../Module/DataMngr/DvmDevice.h"
 #include "../TestClient/PpSttIotClient.h"
 #include "../TestClient/SttMacroTestInterface.h"
 #include "../../../Protocol/Module/PxiEngine/PxiEngineGlobal.h"
-#include "../../Module/BaseClass/ExBaseCycleArray.h"
+#include "../../../Module/BaseClass/ExBaseCycleArray.h"
 
 #define WM_ENGINE_SYSTEM_MSG           (WM_USER + 1116)
 #define	WM_COMM_COMMAND		(WM_USER+1117)

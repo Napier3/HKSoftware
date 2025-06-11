@@ -9,6 +9,9 @@
 #include "SttMesLocalDb.h"
 #include "../SttGlobalDef.h"
 #include "../SttCmd/SttParas.h"
+#ifndef NOT_USE_XLANGUAGE
+#include "../XLangResource_Native.h"
+#endif
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -89,6 +92,8 @@ void CSttAdjModule::GetAttrs()
 	pAttrGroup->GetDataValue(STT_ADJ_ID_BoutCount, m_nBoutCount);
 	pAttrGroup->GetDataValue(STT_ADJ_ID_STModeSet, m_nSTModeSet);
 	pAttrGroup->GetDataValue(STT_ADJ_ID_UartCount,m_nUartCount);
+	pAttrGroup->GetDataValue(STT_ADJ_ID_BinVoltMeas,m_nBinVoltMeas);
+	pAttrGroup->GetDataValue(STT_ADJ_ID_MergeCurTerminal,m_nMergeCurTerminal);
 }
 
 CDataGroup* CSttAdjModule::GetHdGear(const CString &strHdGearID)
@@ -317,7 +322,11 @@ CDataGroup* CSttAdjModule::AddNewChMap()
 
 CDataGroup* CSttAdjModule::AddNewChMap(CDataGroup *pMaps)
 {
+#ifndef NOT_USE_XLANGUAGE
+	CDataGroup *pMap = pMaps->AddNewGroup(/*_T("通道映射")*/g_sLangTxt_IEC_ChMaps, _T("ChMap"), _T("ChMap"));
+#else
 	CDataGroup *pMap = pMaps->AddNewGroup(_T("通道映射"), _T("ChMap"), _T("ChMap"));
+#endif
 	pMap->AddNewData(_T("Index"), _T("Index"), _T("long"), _T("0"));
 	pMap->AddNewData(_T("ID"), _T("ID"), _T("long"), _T(""));
 
@@ -593,6 +602,20 @@ BOOL  CSttAdjModule::GetModuleChannelNum(CString &strChannelNum)
 	return TRUE;
 }
 
+BOOL  CSttAdjModule::GetModuleDefChannelNum(long &strDefChannelNum)
+{
+	CDvmData *pModuleDefChannelNum = GetModuleAttrByID(m_pSttAdjRef, STT_ADJ_ID_DefChannelNum);
+
+	if (pModuleDefChannelNum == NULL)
+	{
+		GetModuleChannelNum(strDefChannelNum);
+		return FALSE;
+	}
+
+	strDefChannelNum = CString_To_long(pModuleDefChannelNum->m_strValue);
+	return TRUE;
+}
+
 BOOL CSttAdjModule::GetModuleChannelNum(long &nChannelNum)
 {
 	CString strChannelNum;
@@ -640,12 +663,17 @@ BOOL CSttAdjModule::GetModuleChannelNum(long &nVolChNum,long &nCurChNum)
 	{
 		pObj = pChDefGroup->GetNext(pos);
 
-		if ((pObj->m_strID != STT_ADJ_DATA_TYPE_HdCh)||(pObj->GetClassID() != DTMCLASSID_CDATAGROUP))
+		if (/*(pObj->m_strID != STT_ADJ_DATA_TYPE_HdCh)||*/(pObj->GetClassID() != DTMCLASSID_CDATAGROUP))
 		{
 			continue;
 		}
 
 		pHdChGroup = (CDataGroup*)pObj;
+
+		if(pHdChGroup->m_strDataType != STT_ADJ_DATA_TYPE_HdCh)
+		{
+			continue;
+		}
 
 		if (stt_GetDataValueByID(pHdChGroup,STT_ADJ_ID_EeType,strValue)&&(strValue == STT_ADJ_ID_EeType_Voltage))
 		{
@@ -695,13 +723,19 @@ void CSttAdjModule::AddMaxVolCurrValue_VolCurrModule()
 	{
 		pObj = pChDefGroup->GetNext(pos);
 
-		if ((pObj->m_strID != STT_ADJ_DATA_TYPE_HdCh)||(pObj->GetClassID() != DTMCLASSID_CDATAGROUP))
+		if (/*(pObj->m_strID != STT_ADJ_DATA_TYPE_HdCh)||*/(pObj->GetClassID() != DTMCLASSID_CDATAGROUP))
 		{
 			continue;
 		}
 
 		dCurrValue_AC = 0.0f,dCurrValue_DC = 0.0f;
 		pHdChGroup = (CDataGroup*)pObj;
+
+		if(pHdChGroup->m_strDataType != STT_ADJ_DATA_TYPE_HdCh)
+		{
+			continue;
+		}
+
 		pHdChGroup->GetDataValue("ChACMaxValue",dCurrValue_AC);
 		pHdChGroup->GetDataValue("ChDCMaxValue",dCurrValue_DC);
 
@@ -958,7 +992,50 @@ CDataGroup* CSttAdjModule::AddNewGear(const CString &strT_Range, const CString &
 CDataGroup* CSttAdjModule::AddNewGear(CDataGroup *pSrcGear, CDataGroup *pParent)
 {
 	CDataGroup *pNew =  (CDataGroup*)pSrcGear->Clone();
-	pParent->AddNewChild(pNew, TRUE);
+	CString strName = pNew->m_strName;
+	CString strID = pNew->m_strID;
+
+	long nIndex = 1;
+	char *pszName = NULL;
+
+	CString_to_char(strName, &pszName);
+	char *pEnd = pszName + strlen(pszName);
+	char *pTemp = pEnd-1;
+
+	while (pTemp >= pszName)
+	{
+		if ('0' <= *pTemp && *pTemp <= '9')
+		{
+			pTemp--;
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	if (pTemp != pEnd)
+	{
+		*(pTemp+1) = 0;
+		strName = pszName;
+	}
+	delete pszName;
+	CString strTemp = strName;
+	strTemp = strName + "0";
+	nIndex = 1;
+
+	while(pParent->FindByName(strTemp) != NULL)
+	{
+		//strTemp.Format(_T("%s%d"),strName.GetString(),nIndex++);
+		//qt下，中文乱码
+		strTemp.Format(_T("%d"), nIndex);
+		strTemp = strName + strTemp;
+		nIndex++;
+	}
+
+	pNew->m_strName = strTemp;
+	//pParent->InitNameAndIDForPaste(pNew);
+	pParent->AddNewChild(pNew, FALSE);//不再使用基类的id，name +1逻辑，id不需要改变
 	stt_IncreaseCountData(pParent, STT_ADJ_ID_GearCount);
 
 	SetModifiedFlag(TRUE);
@@ -1175,9 +1252,9 @@ CDataGroup* CSttAdjModule::DeleteGear( const CString &strTrangeID,  const CStrin
 
 
 //2021-5-3 lijunqing
-BOOL CSttAdjModule::DeleteGear(CDataGroup *pParent, const CString &strGearID)
+BOOL CSttAdjModule::DeleteGear(CDataGroup *pParent, const CString &strGearName)
 {
-	CExBaseObject *pFind =  pParent->FindByID(strGearID);
+	CExBaseObject *pFind =  pParent->FindByName(strGearName);
 
 	if (pFind == NULL)
 	{
@@ -1190,18 +1267,18 @@ BOOL CSttAdjModule::DeleteGear(CDataGroup *pParent, const CString &strGearID)
 	}
 
 	pParent->Delete(pFind);
-	stt_DecreaseCountData(pParent, STT_ADJ_ID_GearCount);
+	stt_DecreaseCountData(pParent, STT_ADJ_ID_GearCount,-1);
 
 	SetModifiedFlag(TRUE);
 
 	return TRUE;
 }
 
-BOOL CSttAdjModule::DeleteGear_AllChannel(CDataGroup *pTrange, CDataGroup *pAdjParas, const CString &strWaveID, const CString &strGearID)
+BOOL CSttAdjModule::DeleteGear_AllChannel(CDataGroup *pTrange, CDataGroup *pAdjParas, const CString &strWaveID, const CString &strGearName)
 {
 	if (pAdjParas->m_strDataType != STT_ADJ_DATA_TYPE_ChannelAdj)
 	{
-		return DeleteGear_SingleChannel(pAdjParas, strWaveID, strGearID);
+		return DeleteGear_SingleChannel(pAdjParas, strWaveID, strGearName);
 	}
 
 	CExBaseList listCh;
@@ -1212,7 +1289,7 @@ BOOL CSttAdjModule::DeleteGear_AllChannel(CDataGroup *pTrange, CDataGroup *pAdjP
 	while (pos != NULL)
 	{
 		pAdjCh = (CDataGroup *)listCh.GetNext(pos);
-		DeleteGear_SingleChannel(pAdjCh, strWaveID, strGearID);
+		DeleteGear_SingleChannel(pAdjCh, strWaveID, strGearName);
 	}
 
 	listCh.RemoveAll();
@@ -1220,7 +1297,7 @@ BOOL CSttAdjModule::DeleteGear_AllChannel(CDataGroup *pTrange, CDataGroup *pAdjP
 	return TRUE;
 }
 
-BOOL CSttAdjModule::DeleteGear_SingleChannel(CDataGroup *pAdjParas, const CString &strWaveID, const CString &strGearID)
+BOOL CSttAdjModule::DeleteGear_SingleChannel(CDataGroup *pAdjParas, const CString &strWaveID, const CString &strGearName)
 {
 	if (pAdjParas->m_strDataType == STT_ADJ_DATA_TYPE_ChannelAdj)
 	{
@@ -1231,11 +1308,11 @@ BOOL CSttAdjModule::DeleteGear_SingleChannel(CDataGroup *pAdjParas, const CStrin
 			return FALSE;
 		}
 
-		return DeleteGear(pWave, strGearID);
+		return DeleteGear(pWave, strGearName);
 	}
 	else
 	{//ChWaveAdj
-		return DeleteGear(pAdjParas, strGearID);
+		return DeleteGear(pAdjParas, strGearName);
 	}
 }
 
@@ -1283,6 +1360,42 @@ void CSttAdjModule::SaveBaseObject()
 	CSttMesLocalDb::SaveSttModuleClassFile(m_pSttAdjRef);
 
 	SetModifiedFlagOwn(FALSE);
+}
+
+BOOL CSttAdjModule::GetModuleDefChTypeChg(long &strDefChTypeChg)
+{
+	CDvmData *pModuleDefChTypeChg = GetModuleAttrByID(m_pSttAdjRef, _T("ChTypeChg"));
+
+	if (pModuleDefChTypeChg == NULL)
+	{
+		GetModuleChannelNum(strDefChTypeChg);
+		return FALSE;
+	}
+
+	strDefChTypeChg = CString_To_long(pModuleDefChTypeChg->m_strValue);
+	return TRUE;
+}
+
+BOOL CSttAdjModule::DeleteBinGear( CDataGroup *pParent, const CString &strGearName )
+{
+	CExBaseObject *pFind =  pParent->FindByName(strGearName);
+
+	if (pFind == NULL)
+	{
+		return FALSE;
+	}
+
+	if (pParent->GetChildCount("BinGear") <= 1)
+	{
+		return FALSE;
+	}
+
+	pParent->Delete(pFind);
+	stt_DecreaseCountData(pParent, STT_ADJ_ID_GearCount,-1);
+
+	SetModifiedFlag(TRUE);
+
+	return TRUE;
 }
 
 long stt_adj_HdChDef_GetNum(CDataGroup *pHdChDefine)

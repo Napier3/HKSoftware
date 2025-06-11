@@ -19,7 +19,9 @@ extern long g_dwSttAdjSysParaCurrVersion;// = STT_ADJUST_SYS_PARA_VERSION_1_0;
 #define STT_ADJUST_MODULE_PARA_VERSION_1    1
 #define STT_ADJUST_MODULE_PARA_VERSION_2    2//扩展开关量从4组拆分成8组，配合硬件改动
 #define STT_ADJUST_MODULE_PARA_VERSION_3    3//增加交流电压电流模块属性软件标称最大值
-#define STT_ADJUST_MODULE_PARA_VERSION		STT_ADJUST_MODULE_PARA_VERSION_3
+#define STT_ADJUST_MODULE_PARA_VERSION_4    4//增加电流模块属性软件界面默认通道数
+#define STT_ADJUST_MODULE_PARA_VERSION_5    5//增加数字模块属性千兆口数量
+#define STT_ADJUST_MODULE_PARA_VERSION		STT_ADJUST_MODULE_PARA_VERSION_5
 #ifdef _PSX_IDE_QT_
 extern bool g_bWriteHdInfor;
 #else
@@ -69,6 +71,8 @@ typedef struct stt_Module_Ch_Def
 	long m_nChRsIndex;  // 对应的软件资源编号
 	float m_fChACMaxValue;      //     最大值：ChACMaxValue
 	float m_fChDCMaxValue;      //    最大值：ChDCMaxValue
+	float m_fTotalCurAmp;//临时记录通道的电流总幅
+	long  m_bDC;//临时记录通道的电流频率
 	long m_nChMeasPos;//20220211zhoulei 通道采集的映射位置
 
 	//适配ADMU的FT3
@@ -196,7 +200,7 @@ typedef struct stt_Adjust_Item
 {
 public:
 	float m_fCoef;//幅值系数
-	float m_fZero;//零漂
+	double m_fZero;//零漂
 	float m_fAngle;//相位补偿
 
 	void init()
@@ -458,6 +462,10 @@ typedef struct stt_Module_Attr
 	float m_fChDcMax;  //模块通道出直流最大值
 	float m_fDefChMax;  //软件标称交流最大值，只有交流电压电流模块适用
 	float m_fDefChDcMax;  //软件标称直流最大值，只有交流电压电流模块适用
+	long m_nDefChannelNum;//电流模块软件资源映射通道数，默认等于m_nChannelNum
+	long m_nDAChanNum;//DA放大电路实际数量
+	long m_nADMUBoutNum;//ADMU插件上开出数量
+	long m_nADMUBinNum;//ADMU插件上开入数量
 
 	//模块类型 见宏定义
 	long m_nModuleType;     //m_nvoltorcur;
@@ -485,6 +493,7 @@ typedef struct stt_Module_Attr
 	char m_strFPGAVer[32]; //FPGA版本号
 //	UINT  m_nFiberPortNum;//数字模块光口数 【数字模块目前固定为每个模块8光口】【后续可参考电压、电流配置每个模块的光口数】
 	long m_nFiberPortNum_LC;//LC光口数
+	long m_nFiberPortNum_LC_G;//LC千兆光口数
 	long m_nFiberPortNum_STSend;//STSend光口数
 	long m_nFiberPortNum_STRecv;//STRecv光口数
 
@@ -538,8 +547,13 @@ typedef struct stt_Module_Attr
 		m_nModulePower=0;
 		m_nChMergeMode=STT_CURRENT_ChMergeMode_No;
 		m_nChannelNum=ADJUST_MAX_CHANNEL_COUNT;
+		m_nDefChannelNum = m_nChannelNum;
+		m_nDAChanNum = 6;
+		m_nADMUBoutNum = 0;
+		m_nADMUBinNum = 0;
 		m_nHarmCount=ADJUST_MAX_CH_WAVE_COUNT;
 		m_nFiberPortNum_LC = 0;//LC光口数
+		m_nFiberPortNum_LC_G = 0;
 		m_nFiberPortNum_STSend = 0;//STSend光口数
 		m_nFiberPortNum_STRecv = 0;//STRecv光口数
 		m_nSwitchIn[0] = -1; //默认是无效,0-开出,1-开入
@@ -621,7 +635,8 @@ typedef struct stt_Module
 		if(m_oModuleAttr.m_nModuleType==STT_MODULE_TYPE_DIGITAL_0G8M
 				||m_oModuleAttr.m_nModuleType==STT_MODULE_TYPE_DIGITAL_2G6M
 				||m_oModuleAttr.m_nModuleType==STT_MODULE_TYPE_DIGITAL_4G4M
-				||m_oModuleAttr.m_nModuleType==STT_MODULE_TYPE_FT3)
+				||m_oModuleAttr.m_nModuleType==STT_MODULE_TYPE_FT3
+				||m_oModuleAttr.m_nModuleType==STT_MODULE_TYPE_DIGITAL)
 		{
 			nChannelNum = DIGITAL_CHANNEL_MAX;//数字板在系数文件中通道值是0
 		}
@@ -653,7 +668,6 @@ typedef struct stt_Module
 		{
 			m_fChTmtCoef[nIndex] = 1.0f;
 		}
-
 	}
 
 	//2021-5-2  lijunqing  根据m_dwVersion做初始化处理
@@ -674,6 +688,39 @@ typedef struct stt_Bout_Attrs
 		}
 	}
 }STT_BOUT_ATTRS, *PSTT_BOUT_ATTRS;
+
+typedef struct stt_Bin_Gear
+{
+public:
+	long m_nGearCount;  //硬件采集档位数
+	float m_nGearValue[ADJUST_MAX_GEAR_COUNT];//各档位最大采集值
+	long m_nGearCode[ADJUST_MAX_GEAR_COUNT];//各档位标识
+
+	void init()
+	{
+		long nIndex = 0;
+
+		for (nIndex=0; nIndex < ADJUST_MAX_GEAR_COUNT; nIndex++)
+		{
+			m_nGearValue[nIndex] = 0.0f;
+		}
+
+		m_nGearCount = 5;
+		m_nGearValue[0] = 600.0;
+		m_nGearValue[1] = 100.0;
+		m_nGearValue[2] = 10.0;
+		m_nGearValue[3] = 1.0;
+		m_nGearValue[4] = 0.1;
+		m_nGearCode[0] = 0;
+		m_nGearCode[1] = 1;
+		m_nGearCode[2] = 2;
+		m_nGearCode[3] = 3;
+		m_nGearCode[4] = 4;
+	}
+
+	stt_Bin_Gear(){}
+	virtual ~stt_Bin_Gear(){}
+}STT_BIN_Gear, *PSTT_BIN_Gear;
 
 typedef struct stt_Bin_Adjust
 {
@@ -696,15 +743,39 @@ public:
 	virtual ~stt_Bin_Adjust(){}
 }STT_BIN_ADJUST, *PSTT_BIN_ADJUST;
 
+typedef struct stt_dc_Adjust
+{
+public:
+	long m_nGearCount;  //档位数
+	STT_CHANNEL_GEAR_ADJUST m_oGearAdj[ADJUST_MAX_GEAR_COUNT];
+
+	void init()
+	{
+		m_nGearCount = 1;
+		long nIndex = 0;
+
+		for (nIndex=0; nIndex < ADJUST_MAX_GEAR_COUNT; nIndex++)
+		{
+			m_oGearAdj[nIndex].init();
+		}
+	}
+
+	stt_dc_Adjust(){}
+	virtual ~stt_dc_Adjust(){}
+}STT_DC_ADJUST, *PSTT_DC_ADJUST;
+
 typedef struct stt_Device_Attrs
 {
 	float m_fBaseFre;//额定频率
 	long m_nStateCount;//状态序列容量(个)，改为驱动上报
 	long m_nBinCount;//主板开入数量(个)
 	long m_nBinVoltMeas;//0-无开入电压采集功能，1-有开入电压采集功能
+	long m_nDCMeas;//主板直流测量功能，0-无，1-有
 	long m_nBoutCount;//主板开出数量(个)
 	long m_nBoutReplay;//开出回放(0-不支持，1-支持)
 	float m_fPhaseForMUTest;//合并单元实验相位补偿
+	float m_fBatVCoef;//电池电压采集补偿
+	float m_fBatICoef;//电池电流采集补偿
 //	UINT  m_nInputbinaryMode;//开入量采集模式
 
 //	UINT  m_nSMVTotalSize;//SMV最大组数
@@ -728,6 +799,9 @@ typedef struct stt_Device_Attrs
 	long m_nCheckAuthority;//启用控制权限判断
 	long m_nSTModeSet;//N-主板ST口模式可设置数量 0-不可设置
 	long m_nWindSpeed;//开机后风扇默认模式，//1-正常风速 0-静音风速
+
+	long m_nIndex_System;//Liveupdate
+
 	void init()
 	{
 		m_nCheckAuthority = 0;
@@ -736,9 +810,13 @@ typedef struct stt_Device_Attrs
 		m_fBaseFre=50;
 		m_nBinCount = 10;
 		m_nBinVoltMeas = 0;
+		m_nDCMeas = 0;
 		m_nBoutCount = 8;
 		m_nBoutReplay = 0;
 		m_fPhaseForMUTest = 0.0f;
+		m_fBatVCoef = 1.0f;//电池电压采集补偿
+		m_fBatICoef = 1.0f;//电池电流采集补偿
+		m_nIndex_System = 0;
 		strcpy(m_strDeviceName, "PN");
 		strcpy(m_strSN, "PONV-2020-1001-000");
 		strcpy(m_strFactory, "北京博电新力电气股份有限公司");
@@ -756,6 +834,9 @@ typedef struct stt_Device_System_Parameter
 	STT_DEVICE_ATTRS m_oDeviceAttrs;
 	STT_BOUT_ATTRS m_oBoutTurnOnValue;//开关量导通值
 	STT_BIN_ADJUST m_oBinAdj[16];//开入量采集校准
+	STT_BIN_Gear   m_oBinGear;//开入量采集档位
+	STT_DC_ADJUST m_oDCV;//主板直流电压测量
+	STT_DC_ADJUST m_oDCI[4];//主板直流电流测量,预留4个硬件档
 
 	//模块管理
 	long m_nModuleCount;
@@ -784,6 +865,13 @@ typedef struct stt_Device_System_Parameter
 		for (nIndex=0; nIndex<16; nIndex++)
 		{
 			m_oBinAdj[nIndex].init();
+		}
+
+		m_oBinGear.init();
+		m_oDCV.init();
+		for(nIndex=0; nIndex<4; nIndex++)
+		{
+			m_oDCI[nIndex].init();
 		}
 
 		for (nIndex=0; nIndex<ADJUST_MAX_MODULE_COUNT; nIndex++)
@@ -836,7 +924,7 @@ typedef struct stt_Device_System_Parameter
 					if(m_oModules[k].m_oModuleAttr.m_nModuleType == STT_MODULE_TYPE_WEEK_EX)
 					{
 						if(m_oModules[k].m_oModuleAttr.m_nModulePower == STT_MODULE_WEEK_PN_MAIN
-								|| m_oModules[k].m_oModuleAttr.m_nModulePower == STT_MODULE_WEEK_L336D)
+								|| m_oModules[k].m_oModuleAttr.m_nModulePower == STT_MODULE_WEEK_L336D_ECTEVT)
 						{
 							m_oModules[k].m_oModuleAttr.m_nModuleIndex = 16;//PN主板小信号固定在位置16
 						}
@@ -956,6 +1044,7 @@ typedef struct stt_Device_System_Parameter
 		init_module_ref(m_nModuleCount_D, m_oModules_D, STT_MODULE_TYPE_DIGITAL_0G8M);
 		init_module_ref(m_nModuleCount_D, m_oModules_D, STT_MODULE_TYPE_DIGITAL_2G6M);
 		init_module_ref(m_nModuleCount_D, m_oModules_D, STT_MODULE_TYPE_DIGITAL_4G4M);
+		init_module_ref(m_nModuleCount_D, m_oModules_D, STT_MODULE_TYPE_DIGITAL);
 		init_module_ref(m_nModuleCount_FT3, m_oModules_FT3, STT_MODULE_TYPE_FT3);
 		init_module_ref(m_nModuleCount_S, m_oModules_S, STT_MODULE_TYPE_SWITCH);
 		init_module_ref(m_nModuleCount_WEEK, m_oModules_WEEK, STT_MODULE_TYPE_WEEK_EX);
@@ -993,17 +1082,31 @@ typedef struct stt_Device_System_Parameter
 				pChDef->m_fChACMaxValue = m_oModules_U[nIndex]->m_oModuleAttr.m_fDefChMax;
 				pChDef->m_fChDCMaxValue = m_oModules_U[nIndex]->m_oModuleAttr.m_fDefChDcMax;
 
-				pChWaveAdj = &m_oModules_U[nIndex]->m_oModuleAdjust.m_oTempAdjust[0].m_pChsAdjust[nChanIndex].m_pChWaveAdj[0];
+				PSTT_CHANNEL_ADJUSTS pChsAdjust = m_oModules_U[nIndex]->m_oModuleAdjust.m_oTempAdjust[0].m_pChsAdjust;
+				if(pChsAdjust == NULL)
+				{
+					continue;
+				}
+
+				pChWaveAdj = &pChsAdjust[nChanIndex].m_pChWaveAdj[0];
+				if(pChWaveAdj == NULL)
+				{
+					continue;
+				}
 				long nCount = pChWaveAdj->m_nGearCount;
 				if(nCount > 0)
 				{
 					pChWaveAdj->m_oChGearAdj[nCount - 1].m_fGearValue = pChDef->m_fChDCMaxValue;
 				}
 
-				long nHarmCnt = m_oModules_U[nIndex]->m_oModuleAdjust.m_oTempAdjust[0].m_pChsAdjust[nChanIndex].nHarmCount;
+				long nHarmCnt = pChsAdjust[nChanIndex].nHarmCount;
 				for(int j = 1; j < nHarmCnt; j++)
 				{
-					pChWaveAdj = &m_oModules_U[nIndex]->m_oModuleAdjust.m_oTempAdjust[0].m_pChsAdjust[nChanIndex].m_pChWaveAdj[j];
+					pChWaveAdj = &pChsAdjust[nChanIndex].m_pChWaveAdj[j];
+					if(pChWaveAdj == NULL)
+					{
+						continue;
+					}
 					nCount = pChWaveAdj->m_nGearCount;
 					if(nCount > 0)
 					{
@@ -1028,7 +1131,6 @@ typedef struct stt_Device_System_Parameter
 			}
 
 			nChannelNum = m_oModules_I[nIndex]->m_oModuleAttr.m_nChannelNum;
-
 			float fDefChDcMax1 = m_oModules_I[nIndex]->m_oModuleAttr.m_fDefChMax * 0.5;
 			float fDefChDcMax2 = m_oModules_I[nIndex]->m_oModuleAttr.m_fDefChMax;
 			if(m_oModules_I[nIndex]->m_oModuleAttr.m_fDefChDcMax < fDefChDcMax1
@@ -1046,17 +1148,31 @@ typedef struct stt_Device_System_Parameter
 				pChDef->m_fChACMaxValue = m_oModules_I[nIndex]->m_oModuleAttr.m_fDefChMax;
 				pChDef->m_fChDCMaxValue = m_oModules_I[nIndex]->m_oModuleAttr.m_fDefChDcMax;
 
-				pChWaveAdj = &m_oModules_I[nIndex]->m_oModuleAdjust.m_oTempAdjust[0].m_pChsAdjust[nChanIndex].m_pChWaveAdj[0];
+				PSTT_CHANNEL_ADJUSTS pChsAdjust = m_oModules_I[nIndex]->m_oModuleAdjust.m_oTempAdjust[0].m_pChsAdjust;
+				if(pChsAdjust == NULL)
+				{
+					continue;
+				}
+
+				pChWaveAdj = &pChsAdjust[nChanIndex].m_pChWaveAdj[0];
+				if(pChWaveAdj == NULL)
+				{
+					continue;
+				}
 				long nCount = pChWaveAdj->m_nGearCount;
 				if(nCount > 0)
 				{
 					pChWaveAdj->m_oChGearAdj[nCount - 1].m_fGearValue = pChDef->m_fChDCMaxValue;
 				}
 
-				long nHarmCnt = m_oModules_I[nIndex]->m_oModuleAdjust.m_oTempAdjust[0].m_pChsAdjust[nChanIndex].nHarmCount;
+				long nHarmCnt = pChsAdjust[nChanIndex].nHarmCount;
 				for(int j = 1; j < nHarmCnt; j++)
 				{
-					pChWaveAdj = &m_oModules_I[nIndex]->m_oModuleAdjust.m_oTempAdjust[0].m_pChsAdjust[nChanIndex].m_pChWaveAdj[j];
+					pChWaveAdj = &pChsAdjust[nChanIndex].m_pChWaveAdj[j];
+					if(pChWaveAdj == NULL)
+					{
+						continue;
+					}
 					nCount = pChWaveAdj->m_nGearCount;
 					if(nCount > 0)
 					{
@@ -1065,7 +1181,36 @@ typedef struct stt_Device_System_Parameter
 				}
 			}
 
-			nBeginIndex += nChannelNum;
+			int nDefChannelNum = m_oModules_I[nIndex]->m_oModuleAttr.m_nDefChannelNum;
+			if(nChannelNum != nDefChannelNum && nChannelNum == 6)
+			{
+				if(nDefChannelNum == 3)
+				{
+					for(int nChanIndex = 0; nChanIndex < 3; nChanIndex++)
+					{
+						pChDef = &m_oModules_I[nIndex]->m_oModuleAttr.m_oChDefMap.m_oChDefs.m_oChDef[nChanIndex + 3];
+						pChDef->m_nChRsIndex = nBeginIndex + nChanIndex;
+					}
+					for(int nChanIndex = 0; nChanIndex < 6; nChanIndex++)
+					{
+						m_oModules_I[nIndex]->m_fChTmtCoef[nChanIndex] = 0.5f;
+					}
+				}
+				else if(nDefChannelNum == 1)
+				{
+					for(int nChanIndex = 1; nChanIndex < nChannelNum; nChanIndex++)
+					{
+						pChDef = &m_oModules_I[nIndex]->m_oModuleAttr.m_oChDefMap.m_oChDefs.m_oChDef[nChanIndex];
+						pChDef->m_nChRsIndex = nBeginIndex;
+					}
+					for(int nChanIndex = 0; nChanIndex < 6; nChanIndex++)
+					{
+						m_oModules_I[nIndex]->m_fChTmtCoef[nChanIndex] = 0.166667f;
+					}
+				}
+			}
+
+			nBeginIndex += nDefChannelNum;
 			m_oModules_I[nIndex]->init_ch_drv_pos();
 			m_oModules_I[nIndex]->InitChTmtPos();
 		}
@@ -1184,7 +1329,7 @@ typedef struct stt_Device_System_Parameter
 			if(pModule->m_oModuleAttr.m_nModulePower == STT_MODULE_WEEK_DC6I20mA
 					||pModule->m_oModuleAttr.m_nModulePower == STT_MODULE_WEEK_DC6U10V
 					||pModule->m_oModuleAttr.m_nModulePower == STT_MODULE_WEEK_EVTECT
-					||pModule->m_oModuleAttr.m_nModulePower == STT_MODULE_WEEK_L336D
+					||pModule->m_oModuleAttr.m_nModulePower == STT_MODULE_WEEK_L336D_ECTEVT
 					||pModule->m_oModuleAttr.m_nModulePower == STT_MODULE_WEEK_PIA12DS
 					||pModule->m_oModuleAttr.m_nModulePower == STT_MODULE_WEEK_PNS331
 					||pModule->m_oModuleAttr.m_nModuleType == STT_MODULE_TYPE_ADMU)
@@ -1232,7 +1377,8 @@ typedef struct stt_Device_System_Parameter
 						|| pModuleAttr->m_nModuleType == STT_MODULE_TYPE_DIGITAL_2G6M
 						|| pModuleAttr->m_nModuleType == STT_MODULE_TYPE_DIGITAL_4G4M
 						|| pModuleAttr->m_nModuleType == STT_MODULE_TYPE_FT3
-						|| pModuleAttr->m_nModuleType == STT_MODULE_TYPE_ADMU)
+						|| pModuleAttr->m_nModuleType == STT_MODULE_TYPE_ADMU
+						|| pModuleAttr->m_nModuleType == STT_MODULE_TYPE_DIGITAL)
 				{
 					if(pModuleAttr->m_nModuleIndex == k)
 					{

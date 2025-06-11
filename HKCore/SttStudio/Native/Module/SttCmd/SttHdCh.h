@@ -9,7 +9,7 @@
 #include "SttCmdDefineGlobal.h"
 
 
-#include "../../Module/DataMngr/DvmData.h"
+#include "../../../Module/DataMngr/DvmData.h"
 
 //zhouhj 2023.8.3 用于设置弱信号缺省变比
 #define STT_WEEK_USE_MODE_NORMAL                           0//普通弱信号[120/7.07][30/7.07]

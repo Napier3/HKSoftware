@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "GbScriptFunctions_xvm.h"
 #include "GbScript_System.h"
 #include "GbScript_Engine.h"

@@ -4,7 +4,7 @@
 #define MQTT_QOS_DEFAULT         0
 #define MQTT_TIMEOUT_DEFAULT     2000L 
 
-#include "../../SttStudio/Module/CmmInterface/SttCmmInterface.h"
+#include "../Module/CmmInterface/SttCmmInterface.h"
 #include "SttMqttTopicParser.h"
 
 //Mqtt事件接口

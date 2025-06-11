@@ -7,7 +7,7 @@
 
 #include "stdafx.h"
 #include "SttXDevice.h"
-#include "../../../Sttstudio/Module/SttGlobalDef.h"
+#include "../Module/SttGlobalDef.h"
 #ifdef _DEBUG
 #undef THIS_FILE
 	static char THIS_FILE[]=__FILE__;

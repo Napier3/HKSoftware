@@ -202,6 +202,8 @@ void CSttReport::InitRptDvmDataset(CDvmDataset *pSrc)
         AddNewChild(m_pRptDvmDataset);
     }
 
+	m_pRptDvmDataset->m_strID = pSrc->m_strID;
+	m_pRptDvmDataset->m_strName = pSrc->m_strName;
     m_pRptDvmDataset->AppendCloneEx(*pSrc);
 }
 

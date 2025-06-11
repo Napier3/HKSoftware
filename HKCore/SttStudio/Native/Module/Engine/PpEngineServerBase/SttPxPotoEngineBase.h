@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../IotAtsMngr/Module/PxEngineServer/IotPxEngineDeviceBase.h"
+#include "../../../../IotAtsMngr/Module/PxEngineServer/IotPxEngineDeviceBase.h"
 
 class CSttPxPotoEngineBase : public  CIotPxEngineDeviceBase
 {

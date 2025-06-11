@@ -21,6 +21,7 @@
 //#define STT_MODULE_TYPE_WEEK_EX_48       14	//48路小信号模块插件 统一到STT_MODULE_TYPE_WEEK_EX
 #define STT_MODULE_TYPE_Stable2M         14 //稳控2M
 #define STT_MODULE_TYPE_ADMU			 15 //ADMU
+#define STT_MODULE_TYPE_DIGITAL			 16//统一模式数字板FPGA,9-2+ft3
 
 #define STT_MODULE_TYPE_VOLT_ID             "VOLTAGE"   //模拟量电压插件【解析"通道数" id="ChannelNum"属性】
 #define STT_MODULE_TYPE_CURRENT_ID          "CURRENT"   //模拟量电流插件
@@ -39,6 +40,7 @@
 //#define STT_MODULE_TYPE_WEEK_EX48_ID        "WEEK_48"          //48通道弱信号插件
 #define STT_MODULE_TYPE_Stable2M_ID         "Stable2M" //稳控2M
 #define STT_MODULE_TYPE_ADMU_ID				"ADMU" //ADMU
+#define STT_MODULE_TYPE_DIGITAL_ID			"DIGITAL"
 
 //ModuleTypeID   2021-4-29  LIJUNQING  后续定义了根据ModuleType获得ModuleTypeID的函数
 //ModuleType改变，需修改此函数，函数名：stt_get_module_id_by_type
@@ -103,6 +105,9 @@ inline char* stt_get_module_id_by_type(unsigned int nModuleType)
 		return STT_MODULETYPE_ID_DIGITAL;
 
 	case STT_MODULE_TYPE_DIGITAL_4G4M://     4//4个百兆口,4个千兆口数字板FPGA,9-2+ft3
+		return STT_MODULETYPE_ID_DIGITAL;
+
+	case STT_MODULE_TYPE_DIGITAL://			 //数字板FPGA,9-2+ft3
 		return STT_MODULETYPE_ID_DIGITAL;
 
 	case STT_MODULE_TYPE_DCCURRENT://        5//直流电流插件
@@ -202,6 +207,7 @@ inline char* stt_get_module_id_by_type(unsigned int nModuleType)
 #define STT_ADJ_ID_ModulePos			    _T("ModulePos")
 #define STT_ADJ_ID_ModuleIndex			_T("ModuleIndex")
 #define STT_ADJ_ID_ChannelNum			_T("ChannelNum")
+#define STT_ADJ_ID_DefChannelNum			_T("DefChannelNum")
 #define STT_ADJ_ID_FreqIndex			_T("FreqIndex")
 #define STT_ADJ_ID_FreqSel			_T("FreqSel")
 #define STT_ADJ_ID_SwitchMode			_T("SwitchMode")
@@ -215,7 +221,8 @@ inline char* stt_get_module_id_by_type(unsigned int nModuleType)
 #define STT_ADJ_ID_BoutCount         		_T("BoutCount")
 #define STT_ADJ_ID_STModeSet         		_T("STModeSet")//2023-11-28 suyang 从硬件信息文件中获取ST口模式使能
 #define STT_ADJ_ID_UartCount       _T("UartCount") //chenling 2024.5.8
-
+#define STT_ADJ_ID_BinVoltMeas         		_T("Adj_BinVoltMeas")//2024-11-5 wuxinyi 主板开入电压采集(0-不支持，1-支持)
+#define STT_ADJ_ID_MergeCurTerminal         		_T("MergeCurTerminal")
 #define STT_ADJ_ID_ADJ_MODEL         		_T("Adj_Model")
 #define STT_ADJ_ID_ADJ_DEVICE         		_T("Adj_Device")
 
@@ -254,10 +261,10 @@ inline char* stt_get_module_id_by_type(unsigned int nModuleType)
 #define  STT_MODULE_POWER_UNKNOWN   0//"未定义"
 #define  STT_MODULE_VOLT_V130_130	1//"130伏电压模块"
 #define  STT_MODULE_VOLT_V248_248	2//"248伏电压模块"
-#define  STT_MODULE_VOLT_V270_270	3//"270伏电压模块,无升压器"
-#define  STT_MODULE_VOLT_V270_380	4//"270伏电压模块,有升压器"
+#define  STT_MODULE_VOLT_V270_270	3//"270伏电压模块,无升压器",PTU100老模块
+#define  STT_MODULE_VOLT_V270_380	4//"270伏电压模块,有升压器",PTU100老模块
 #define  STT_MODULE_VOLT_V300_300	5//"300伏电压模块,无升压器"
-#define  STT_MODULE_VOLT_V300_440	6//"300伏电压模块,有升压器"
+#define  STT_MODULE_VOLT_V300_440	6//"300伏电压模块,有升压器",PTU100老模块
 
 #define  STT_MODULE_CURRENT_C12_5		1000//"12.5安电流模块"
 #define  STT_MODULE_CURRENT_C20			1001//"20安电流模块"
@@ -277,11 +284,15 @@ inline char* stt_get_module_id_by_type(unsigned int nModuleType)
 #define  STT_MODULE_WEEK_PN_DC6U6I  2011//"PN6U6I直流小信号模块"
 #define  STT_MODULE_UI_V310_C60		2012//"310伏60安混合模块"
 #define  STT_MODULE_WEEK_PN_MAIN	2013//"PN主板小信号模块"
-#define  STT_MODULE_WEEK_L336D		2014//"L336D小信号模块"
+#define  STT_MODULE_WEEK_L336D_ECTEVT	2014//"L336D小信号模块" ECT*4/EVT*4
 #define  STT_MODULE_UI_PIA0103		2015//"30伏0.1安混合模块"
 #define  STT_MODULE_UI_PNS330_H		2016//"PNS330_H电压电流模块"
 #define  STT_MODULE_UI_PNS330_ABC_20	2017//"PNS330模块电流同向20A"
 #define  STT_MODULE_UI_PNS330_6		2018//"PNS330_6模块"
+#define  STT_MODULE_UI_PNS331_ABC_20	2019//"PNS331模块电流同向20A"
+#define  STT_MODULE_UI_PNS330_H_ABC_20	2020//"PNS330_H模块电流同向20A"
+#define  STT_MODULE_UI_PNS330_H_EX2	2021//"PNS330_H模块电源改型V2"
+#define  STT_MODULE_UI_PNS331_EX2	2022//"PNS330_H模块电源改型V2"
 
 #define STT_MODULE_POWER_UNKNOWN_ID		   "unKnown"
 #define STT_MODULE_VOLT_V130_130_ID        "V130"
@@ -308,17 +319,19 @@ inline char* stt_get_module_id_by_type(unsigned int nModuleType)
 #define  STT_MODULE_WEEK_PN_DC6U6I_ID      "PN_DC6U6I"
 #define  STT_MODULE_UI_V310_C60_ID         "V310C60"
 #define  STT_MODULE_WEEK_PN_MAIN_ID		   "PN_Main"
-#define  STT_MODULE_WEEK_L336D_ID          "L336D"
+#define  STT_MODULE_WEEK_L336D_ECTEVT_ID   "L336D_ECTEVT"
 #define  STT_MODULE_UI_PIA0103_ID          "PIA0103"
 #define  STT_MODULE_UI_PNS330_H_ID         "PNS330_H"
 #define  STT_MODULE_UI_PNS330_ABC_20_ID	   "PNS330_Iabc_20"
 #define  STT_MODULE_UI_PNS330_6_ID		   "PNS330_6"
+#define  STT_MODULE_UI_PNS331_ABC_20_ID	   "PNS331_Iabc_20"
+#define	 STT_MODULE_UI_PNS330_H_ABC_20_ID  "PNS330_H_Iabc_20"
+#define  STT_MODULE_UI_PNS330_H_EX2_ID	   "PNS330_H_EX2"
+#define  STT_MODULE_UI_PNS331_EX2_ID	   "PNS331_EX2"
 
 #define STT_CURRENT_ChMergeMode_No         0
 #define STT_CURRENT_ChMergeMode_1Ch        1
 #define STT_CURRENT_ChMergeMode_3Ch        2
-#define STT_CURRENT_ChMergeMode_3Ch_Fixed  3
-#define STT_CURRENT_ChMergeMode_1Ch_Fixed  4
 
 #endif // TMT_ADJUST_SYS_PARA_MODULE_DEF_H
 

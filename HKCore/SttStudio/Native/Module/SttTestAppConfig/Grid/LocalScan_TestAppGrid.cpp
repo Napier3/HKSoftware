@@ -6,7 +6,9 @@
 #include "../../../../Module/DataMngr/DataGroup.h"
 #include "../../../Module/SttGlobalDef.h"
 #include "../../../Module/SttCmd/SttParas.h"
-
+#ifndef NOT_USE_XLANGUAGE
+#include "../../XLangResource_Native.h"
+#endif
 #define ATS_TESTAPP_LOCALSEARCH_GRID_COLS       4
 
 // CLocalScan_TestAppGrid
@@ -31,7 +33,11 @@ void CLocalScan_TestAppGrid::InitGrid()
 
 void CLocalScan_TestAppGrid::InitGridTitle()
 {
+#ifndef NOT_USE_XLANGUAGE
+	CString astrGridTitle[ATS_TESTAPP_LOCALSEARCH_GRID_COLS] = {/*_T("±‡∫≈")*/g_sLangTxt_Index,/*_T("≤‚ ‘“«–Õ∫≈")*/g_sLangTxt_Native_TestInstrumentModel,/*_T("≤‚ ‘“«±‡∫≈")*/g_sLangTxt_Native_TestInstrumentID,_T("IP")};
+#else
 	CString astrGridTitle[ATS_TESTAPP_LOCALSEARCH_GRID_COLS] = {_T("±‡∫≈"),_T("≤‚ ‘“«–Õ∫≈"),_T("≤‚ ‘“«±‡∫≈"),_T("IP")};
+#endif
 	int iGridWidth[ATS_TESTAPP_LOCALSEARCH_GRID_COLS]={60, 120, 120, 120};
 
 	SetColumnCount(ATS_TESTAPP_LOCALSEARCH_GRID_COLS);

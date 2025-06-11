@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../Module/BaseClass/ExBaseList.h"
+#include "ExBaseList.h"
 #include "../../../Module/DataMngr/DataTypes.h"
 #include "../../../Module/API/GlobalConfigApi.h"
 

@@ -2,6 +2,7 @@
 
 #include"../../SttTestBase/SttXmlSerialize.h"
 #include "tmt_adjust_sys_parameter.h"
+#include "tmt_common_def.h"
 
 //CurrentModulePower
 #define STT_CurrentMODULE_POWER_LOW     0  //低功率
@@ -85,8 +86,13 @@ public:
         }
     }
 
-    void CopyOwn(tmt_gear_set_cur_modules *pDes)
+	BOOL CopyOwn(tmt_gear_set_cur_modules *pDes)
     {
+		if(this == pDes)
+		{
+			return TRUE;
+		}
+
         pDes->m_nCurModuleNum = m_nCurModuleNum;
 
         for(int nIndex = 0; nIndex < ADJUST_MAX_MODULE_COUNT; nIndex++)
@@ -96,6 +102,7 @@ public:
             pDes->m_oCurModuleGear[nIndex].m_nMergeCurTerminal = m_oCurModuleGear[nIndex].m_nMergeCurTerminal;
             pDes->m_oCurModuleGear[nIndex].m_nLargeCurOutTerm = m_oCurModuleGear[nIndex].m_nLargeCurOutTerm;
         }
+		return TRUE;
     }
 
     BOOL MergeCurrHasChanged(tmt_gear_set_cur_modules *pDes)//判断当前合并电流输出是否改变,如果改变了,需要重新进行通道映射
@@ -133,8 +140,24 @@ typedef struct
 
 } tmt_Peripheral;
 
+typedef struct tmt_bin_config
+{
+	int m_nEmpty;//是否为空节点
+	float m_fTripVolt;//翻转门槛
+	void init()
+	{
+		m_nEmpty = 0;
+		m_fTripVolt = 0.0f;
+	}
+	tmt_bin_config()
+	{
+		init();
+	}
+}tmt_BinConfig;
+
 typedef struct tmt_system_paras		// PSU 状态内递变参数
 {
+	tmt_BinConfig m_BinConfig[MAX_BINARYIN_COUNT];//20240909 zhouyangyong 新增用于开关量配置
     float	m_fVNom;			//额定线电压正常100V
     float	m_fINom;            //额定电流正常1A
 	float	m_fFNom;           //频率
@@ -383,6 +406,27 @@ typedef struct tmt_system_paras		// PSU 状态内递变参数
 
         return FALSE;
     }
+
+	BOOL SystemParasIecConfigHasChanged(tmt_system_paras *pDes)//dingxy 20250318 系统参数中iec配置是否发生改变
+	{
+		if (pDes->m_nParaMode != m_nParaMode)
+		{
+			return TRUE;
+		}
+
+		for (int nIndex = 0; nIndex < MAX_DIGITAL_GROUP_NUM; nIndex++)
+		{
+			if (pDes->m_fVPrimary[nIndex] != m_fVPrimary[nIndex] 
+				|| pDes->m_fVSecondary[nIndex] != m_fVSecondary[nIndex]
+				|| pDes->m_fIPrimary[nIndex] != m_fIPrimary[nIndex]
+				|| pDes->m_fISecondary[nIndex] != m_fISecondary[nIndex])
+			{
+				return TRUE;
+			}
+		}
+		
+		return FALSE;
+	}
 
     void CopyOwn(tmt_system_paras *pDes)
     {

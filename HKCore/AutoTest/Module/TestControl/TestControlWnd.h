@@ -42,7 +42,7 @@ class CTestControlBase;
 //2020-11-29  lijunqing
 #define TIMER_EXEC_SAFETY_ITEM    13
 
-#include "../../../SttStudio/Module/SmartTestInterface/ProtocolEngineInterface.h"
+#include "../Module/SmartTestInterface/ProtocolEngineInterface.h"
 
 class CTestControlWnd : public CWnd
 {

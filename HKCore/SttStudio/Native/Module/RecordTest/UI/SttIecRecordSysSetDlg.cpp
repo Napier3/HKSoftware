@@ -1,6 +1,6 @@
 #include "SttIecRecordSysSetDlg.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../../Module/API/GlobalConfigApi.h"
 #include "../../UI/Module/CommonMethod/commonMethod.h"
 #include "../../XLangResource_Native.h"
 

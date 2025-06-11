@@ -103,10 +103,16 @@ public:
 	int	     m_nVarIndexType;//0=电流 1=电压 2=频率
     tmt_ManuGradient m_manuGradient;
 
+   
+#ifndef TMT_STATECOUNT_USE_DEF
+	tmt_GoosePub *m_oGoosePub;
+	tmt_Ft3Pub *m_oFt3Pub;
+#else
     //GoosePub
-    tmt_GoosePub m_oGoosePub[MAX_MODULES_GOOSEPUB_COUNT];
+	tmt_GoosePub m_oGoosePub[MAX_MODULES_GOOSEPUB_COUNT];
     //Ft3Pub
-    tmt_Ft3Pub m_oFt3Pub[MAX_MODULES_FT3PUB_COUNT];
+	tmt_Ft3Pub m_oFt3Pub[MAX_MODULES_FT3PUB_COUNT];
+#endif
     //2M
     tmt_2MOnePortPub m_o2MOnePortPub[MAX_2M_BLOCKS_COUNT];
     int            m_nFuncType;//功能类别  0-常规手动试验  1-MU精度测试  2-MU零漂测试   3-对时精度测试      4-守时精度测试
@@ -166,6 +172,11 @@ public:
         m_nFuncType = TMT_MANU_FUNC_TYPE_Common;
         m_nSelHarm = 0;
         m_nHarmIndex = 2;
+#ifndef TMT_STATECOUNT_USE_DEF
+		m_oFt3Pub = new tmt_Ft3Pub[MAX_MODULES_FT3PUB_COUNT];
+		m_oGoosePub = new tmt_GoosePub[MAX_MODULES_GOOSEPUB_COUNT];
+#endif
+
         m_oMuParas.init();
         m_manuGradient.init();
 
@@ -370,6 +381,22 @@ public:
     {
         init();
     }
+
+	virtual ~tmt_manual_paras()
+	{
+#ifndef TMT_STATECOUNT_USE_DEF
+		if (m_oFt3Pub != NULL)
+		{
+			delete[] m_oFt3Pub;
+			m_oFt3Pub = NULL;
+		}
+		if (m_oGoosePub != NULL)
+		{
+			delete[] m_oGoosePub;
+			m_oGoosePub = NULL;
+		}
+#endif
+	}
 
 } tmt_ManualParas;
 

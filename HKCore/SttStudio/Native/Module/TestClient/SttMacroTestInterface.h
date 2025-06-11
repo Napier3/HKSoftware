@@ -2,7 +2,7 @@
 #include "../SttCmd/SttSysState.h"
 #include "../SttCmd/SttAtsCmd.h"
 
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../../../AutoTest/Module/AutoTestGlobalDefine.h"
 
 
@@ -88,9 +88,20 @@ public:
 		while (pos != NULL)
 		{
 			pData = (CSttMsg *)pMsgs->GetNext(pos);
+
+			if (pData->m_strMsg.Find("[error]") != -1)
+			{
+				strLog = pData->m_strMsg;
+				strLog.Replace("[error]","[tester error]");
+				CLogPrint::LogString(XLOGLEVEL_RESULT, strLog);
+			}
+			else
+			{
 			strLog = _T("*********************");
 			strLog += pData->m_strMsg;
 			CLogPrint::LogString(XLOGLEVEL_TRACE, strLog);
+		}
+
 		}
 
 		return 0;
@@ -119,6 +130,9 @@ public:
 	//2020-10-22  lijunqing 接收设备信息数据，例如：装置信息、模块信息等，以及系统的参数设置等
 	virtual void OnRecvSttDeviceData(CSttSysState &oSysState){}
 	virtual long OnDisConnect(){return 0;}
+
+
+	virtual void OnRecvSysConfigData(CSttParas *pSttParas){} //chenling 2024.10.11 接收GetSysConfig的IP
 
 	//2020-11-29 lijunqing 
 	virtual void OnTestMsg(BYTE *pBuf, long nLen){}
@@ -490,6 +504,7 @@ public:
 
 	virtual void OnReport(const CString &strTestID, long nDeviceIndex, long nReportIndex, long nItemIndex, const CString & strItemID, long nState, CSttParas *pParas) = 0;
 	virtual void OnReport_ReadDevice(CDataGroup *pDeviceGroup){}
+	virtual void OnReport_ReadSystemState(const CString &strMacroID, CDataGroup *pParas){}
 
 	//2022-01-18  lijunqing
 	virtual void On_Ats_Generate(const CString &strAtsCmd, CSttParas *pParas) = 0;

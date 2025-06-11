@@ -2,8 +2,8 @@
 //
 
 #include "stdafx.h"
-#include "../../../../Module/API/FileApi.h"
-#include "../../../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/FileApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "SttNativeCfgMngr.h"
 
 #include "../SttLiveUpdateDef.h"

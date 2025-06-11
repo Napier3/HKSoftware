@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "SttTestAppConfigTool.h"
-#include "../../Module/Socket/XPing.h"
+#include "../../../Module/Socket/XPing.h"
 
 #ifndef _PSX_IDE_QT_
 #ifndef _Not_Use_CSttTestAppConfigDlg_
@@ -18,7 +18,9 @@
 static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
-
+#ifndef NOT_USE_XLANGUAGE
+#include "../XLangResource_Native.h"
+#endif
 //CSttTestAppConfigTool g_oSttTestAppConfigTool;
 
 CSttTestAppConfigTool::CSttTestAppConfigTool()
@@ -72,6 +74,10 @@ CSttTestEngineClientData* CSttTestAppConfigTool::CreateTestEngine(CSttTestAppCfg
 	{
 		pClientEngine = CreateAtsEngine(pSttTestAppCfg, m_strSoftID);
 	}
+	else if (m_strServerID == STT_SOFT_ID_IOT)
+	{
+		pClientEngine = CreateIotEngine(pSttTestAppCfg, m_strSoftID);
+	}
 	else
 	{
 		pClientEngine = CreateTestCtrlEngine(pSttTestAppCfg, m_strSoftID);
@@ -120,6 +126,19 @@ CSttTestEngineClientData* CSttTestAppConfigTool::CreateAtsEngine(CSttTestAppCfg 
 	return m_pClientEngine;
 }
 
+CSttTestEngineClientData* CSttTestAppConfigTool::CreateIotEngine(CSttTestAppCfg *pSttTestAppCfg, const CString &strSoftID)
+{
+	if (pSttTestAppCfg->IsLocal())
+	{
+		Local_ConnectServer(pSttTestAppCfg, pSttTestAppCfg->GetTestAppIP(), STT_PORT_PROTOCOL_MEAS_SERVER, strSoftID);
+	}
+	else
+	{
+		Remote_ConnectServer(pSttTestAppCfg, pSttTestAppCfg->GetCloudIP(), pSttTestAppCfg->GetCloudServerPort());
+	}
+
+	return m_pClientEngine;
+}
 
 void CSttTestAppConfigTool::FreeClientEngine()
 {
@@ -286,7 +305,14 @@ BOOL CSttTestAppConfigTool::Local_ConnectServer(CSttTestAppCfg *pSttTestAppCfg, 
 	if (nExecStatus != STT_CMD_ExecStatus_SUCCESS)
 	{
 		bRet = FALSE;
-		CLogPrint::LogFormatString(XLOGLEVEL_INFOR,_T("Login失败"));
+        CString strMsg;
+//#ifdef NOT_USE_XLANGUAGE
+ //       strMsg = "失败";
+//#else
+ //       strMsg = g_sLangTxt_Native_Fail;
+//#endif
+        strMsg = _T("Login Failed") ;//zhouhj 2025.3.5
+		CLogPrint::LogFormatString(XLOGLEVEL_INFOR,/*_T("Login失败")*/strMsg.GetString());
 	}
 // 	else
 // 	{
@@ -391,7 +417,11 @@ BOOL CSttTestAppConfigTool::IsTestAppExist(CSttTestAppCfg *pSttTestAppCfg)
 
 	if (!bConnect)
 	{
+#ifndef NOT_USE_XLANGUAGE
+        CLogPrint::LogFormatString(XLOGLEVEL_DEBUG,/*_T("测试仪：%s 网络连接不通！")*/g_sLangTxt_Native_TestInstrumentConnectionError.GetString(),strTestAppIP.GetString());
+#else
         CLogPrint::LogFormatString(XLOGLEVEL_DEBUG,_T("测试仪：%s 网络连接不通！"),strTestAppIP.GetString());
+#endif
 	}
 
 	return bConnect;
@@ -409,7 +439,12 @@ BOOL CSttTestAppConfigTool::IsCloudServerExist(CSttTestAppCfg *pSttTestAppCfg)
 
 	if (!bConnect)
 	{
-        CLogPrint::LogFormatString(XLOGLEVEL_TRACE,_T("云服务器：%s 网络连接不通！"),strCloudIP.GetString());
+//#ifndef NOT_USE_XLANGUAGE
+ //       CLogPrint::LogFormatString(XLOGLEVEL_TRACE,/*_T("云服务器：%s 网络连接不通！")*/g_sLangTxt_Native_CloudServerConnectionError.GetString(),strCloudIP.GetString());
+//#else
+ //       CLogPrint::LogFormatString(XLOGLEVEL_TRACE,_T("云服务器：%s 网络连接不通！"),strCloudIP.GetString());
+//#endif
+         CLogPrint::LogFormatString(XLOGLEVEL_TRACE,_T("Cloud Server: %s  Network Connection Not Working"),strCloudIP.GetString());//zhouhj 2025.3.5
 	}
 
 	return bConnect;

@@ -7,11 +7,12 @@
 #pragma once
 
 #include "SttCmtrdCfgDefineGlobal.h"
-#include "../../Module/DataMngr/DataGroup.h"
-#include "../../Module/Record/RtMemBuffer/MemBuffer_Float.h"
-#include "../../Module/Record/Comtrade/ComtradeMngr.h"
+#include "../../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/Record/RtMemBuffer/MemBuffer_Float.h"
+#include "../../../Module/Record/Comtrade/ComtradeMngr.h"
 #include "../../Module/AdjustTool/SttAdjDevice.h"
 #include "../../Module/AdjustTool/SttAdjModule.h"
+#include "../XLangResource_Native.h"
 
 #ifndef REPLAY_DIGITAL_MODULE_CH_NUM
 #define REPLAY_DIGITAL_MODULE_CH_NUM	12	
@@ -132,7 +133,11 @@ public:
 	CComplexMemBuffer_Float *m_pReplayBufBinary1;//回放通道缓存 低位
 	CComplexMemBuffer_Float *m_pReplayBufBinary2;//回放通道缓存 高位
 	void InitReplayBufBinary(long nLength);//初始开出量回放通道缓存
-	void ResetReplayBufBinaryBuf(/*long nLength*/);//设置开出量回访缓存长度
+	void ResetReplayBufBinaryBuf(/*long nLength*/);//设置开出量回访缓存长度	//
+	int m_nBoutReplayModel;//开出量回放方式
+	double m_fHoldTime;			//保持时间
+	double m_fDelayTime;			//保持时间
+
 
 	//弱信号
 	float m_fPTRatio[2];	//PT变比参数
@@ -186,5 +191,6 @@ private:
 	int m_nDigitalModuleCount;
 	int m_nAnalogModuleCount;
 	int m_nWeekModuleCount;
+	CString m_strCurrModel;//当前机器型号
 
 };

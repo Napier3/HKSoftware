@@ -115,9 +115,9 @@ void stt_xml_serialize(PTMT_PARAS_MNGR pParas, CSttXmlSerializeBase *pXmlSierial
 
 
 //表达式计算模块
-//#include "../../Module/Expression/ExprParse.h"
+//#include "../../../../Module/Expression/ExprParse.h"
 
-#include "../../Module/Expression/ExprParse.h"
+#include "../../../../Module/Expression/ExprParse.h"
 
 extern CDataGroup *g_pTmt_TestItemResultRef;
 extern CDataGroup *g_pTmt_SystemParaRef;

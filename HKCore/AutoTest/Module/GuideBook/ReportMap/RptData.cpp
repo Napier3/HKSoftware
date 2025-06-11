@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "RptData.h"
 #include "RptBkmk.h"
 #include "../Device.h"

@@ -1,6 +1,6 @@
 #include "SttIecSmvGrid_Harm_Content.h"
-#include "../../Module/SmartCap/XSmartCapMngr.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../XLangResource_Native.h"
 #define SmvGrid_Harm_Content_MAX_ROW_NUM      33
 

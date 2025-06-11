@@ -37,7 +37,7 @@ public:
 	virtual DWORD GetSystemState() = 0;
 };
 
-class CSttNativeTestEngineInterface : public CPxiDeviceCommCmdMessage, public CSttPkgDispatchInterface
+class CSttNativeTestEngineInterface : public CSttPkgDispatchInterface
 {
 public:
 	CSttNativeTestEngineInterface();
@@ -45,6 +45,7 @@ public:
 
 public:
 	virtual long X_ReturnSysStateToChildren(void *pCommInterface, CSttSysState *pSysState) = 0;
+	virtual long Return_DeviceParameter_AfterLogin(void *pCommInterface, CSttSysState *pSysState) = 0;
 	virtual long X_Ats_InputData(void *pCommInterface, CDataGroup *pDatas,CExBaseList *pMsgs) = 0;
 
 	virtual void OnTimer() = 0;
@@ -72,6 +73,7 @@ public:
 
 public:  //CSttNativeTestEngineInterface
 	virtual long X_ReturnSysStateToChildren(void *pCommInterface, CSttSysState *pSysState);
+	virtual long Return_DeviceParameter_AfterLogin(void *pCommInterface, CSttSysState *pSysState);
 	virtual long X_Ats_InputData(void *pCommInterface, CDataGroup *pDatas,CExBaseList *pMsgs);
 
 public://CSttPkgDispatchInterface

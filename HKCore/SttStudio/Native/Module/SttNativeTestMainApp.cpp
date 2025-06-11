@@ -1,12 +1,12 @@
 #include "SttNativeTestMainApp.h"
 
-#include "../../Module/SttSocket/TestServer/VC/SttTestServerSocket.h"
-#include "../../Module/Engine/SttNativeTestEngine.h"
+#include "../Module/SttSocket/TestServer/VC/SttTestServerSocket.h"
+#include "../Module/Engine/SttNativeTestEngine.h"
 
 //#include "../../Module/SttSocket/SttServerSocketDataBase.h"
 #include "../../../Module/API/GlobalConfigApi.h"
 #include "QNetworkInterface"
-#include "../../Module/API/NetworkInterface.h"
+#include "../Module/API/NetworkInterface.h"
 
 #include "QEventLoop"
 #include "QTimer"

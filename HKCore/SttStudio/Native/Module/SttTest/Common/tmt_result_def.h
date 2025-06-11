@@ -1,7 +1,7 @@
 #pragma once
 
 #include "tmt_common_def.h"
-#include "../../Module/BaseClass/ExBaseObject.h"
+#include "ExBaseObject.h"
 
 #define TMT_RESULT_ID_Time       		_T("Time")
 #define TMT_RESULT_ID_RealTime  		_T("RealTime")
@@ -21,7 +21,7 @@ public:
 	double m_fTime; //开入量变位的真实时间
 	CString m_strTimeStr;//底层上送的时间字符串
 
-	long m_nUdc;			//辅助直流输出
+	//long m_nUdc;			//辅助直流输出
 	long m_nOverHeat;	//过热
 	long m_nIOverLoad;	//电流过载
 	long m_nUOverLoad;	//电压过载
@@ -52,7 +52,7 @@ public:
 		p->m_fActTime = m_fActTime;
 		p->m_fTime = m_fTime;
 
-		p->m_nUdc = m_nUdc;
+		//p->m_nUdc = m_nUdc;
 		p->m_nOverHeat = m_nOverHeat;
 		p->m_nIOverLoad = m_nIOverLoad;
 		p->m_nUOverLoad = m_nUOverLoad;
@@ -86,7 +86,7 @@ public:
 		m_fTime = 0;
 		m_strTimeStr = _T("");
 
-		m_nUdc = 0;
+		//m_nUdc = 0;
 		m_nOverHeat = 0;
 		m_nIOverLoad = 0;
 		m_nUOverLoad = 0;
@@ -124,7 +124,7 @@ public:
 		int i;
 
 		dataGroup.DeleteAll();
-		dataGroup.AddNewData("Udc",m_nUdc);
+		//dataGroup.AddNewData("Udc",m_nUdc);
 		dataGroup.AddNewData("OH",m_nOverHeat);
 		dataGroup.AddNewData("OI",m_nIOverLoad);
 		dataGroup.AddNewData("OV",m_nUOverLoad);

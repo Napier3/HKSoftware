@@ -1,9 +1,9 @@
 #pragma once
 
 #include "../SttCmdDefineGlobal.h"
-#include "../../Module/DataMngr/DvmValues.h"
-#include "../../Module/DataMngr/DvmDataset.h"
-#include "../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/DataMngr/DvmValues.h"
+#include "../../../Module/DataMngr/DvmDataset.h"
+#include "../../../Module/DataMngr/DataGroup.h"
 
 class CSttReport : public CExBaseList
 {

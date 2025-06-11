@@ -17,6 +17,7 @@
 #include "SttSystemCmd.h"
 #include "SttAdjustCmd.h"
 #include "SttTestCmd.h"
+#include "SttIotCmd.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -115,6 +116,10 @@ CExBaseObject* CSttCmdCreator::CreateNewChild(const CString &strClassID, BOOL &b
 	else if (strClassID == pXmlKeys->m_strCSttTestCmdKey)
 	{
 		pNew = new CSttTestCmd;
+	}
+	else if (strClassID == pXmlKeys->m_strCSttIotCmdKey)
+	{
+		pNew = new CSttIotCmd;
 	}
 
 	return pNew;

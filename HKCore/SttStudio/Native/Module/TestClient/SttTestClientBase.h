@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include "../../Module/TestMacro/TestMacros.h"
+#include "../../../Module/TestMacro/TestMacros.h"
 #include "../Engine/SttClientTestEngine.h"
 
 #include "../../Module/SttTestAppConfig/SttTestAppConfigTool.h"
@@ -14,8 +14,8 @@
 #include "../../Module/SttTestAppConfig/Dialog/SttTestAppConfigDlg.h"
 #endif
 
-#include "../../Module/BaseClass/SttFileTransferProgress.h"
-#include "../../Module/BaseClass/XTimer.h"
+#include "../../../Module/BaseClass/SttFileTransferProgress.h"
+#include "../../../Module/BaseClass/XTimer.h"
 
 
 #define STT_TIMER_ID_HEARTBEAT 1827
@@ -42,7 +42,7 @@ public:
 	void AddPkgDispatchInterface(CSttPkgDispatchInterface *p);
 
 	//2023-5-31  shaolei 
-	virtual long SendTestCmd(CSttTestCmd *pTestCmd);
+	virtual long SendTestCmd(CSttCmdBase *pTestCmd);
 	//2022-4-20 shaolei lijunq 
 	virtual long SendTestCmd(BYTE *pBuf, long nLen);
 //////////////////////////////////////////////////////////////////////////

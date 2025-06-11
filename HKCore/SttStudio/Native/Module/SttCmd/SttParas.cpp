@@ -536,7 +536,7 @@ void CSttParas::SearchFiles(const CString &strPath, long nGetSubDirs, long nGetF
 	Search(this, strPath, nGetSubDirs, nGetFiles, strFileType);
 }
 
-#include "../../Module/XfileMngrBase/XFileFindEx.h"
+#include "../../../Module/XfileMngrBase/XFileFindEx.h"
 long CSttParas::Search(CDataGroup *pParent, const CString &strPath, long nGetSubDirs, long nGetFiles, const CString &strFileType)
 {
 	//CFileFind finder;

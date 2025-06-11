@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../../module/baseclass/exbaselist.h"
+#include "ExBaseList.h"
 #include "../../../../Module/MemBuffer/CycleMemBuffer.h"
 
 #define  CMMCLASSID_BASECLASS			(CLASSID_BASECLASS    + 0x00010000 )

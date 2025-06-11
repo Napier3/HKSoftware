@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "XScript_XVM.h"
 #include "GbScript_GlobalDefine.h"
 #include "SmartTestXvm.h"

@@ -1,5 +1,5 @@
 #include <qwt_plot_grid.h>
-#include "../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../../Module/SmartCap/XSmartCapMngr.h"
 #include "SttIecSmvWidget_Harm_Histogram.h"
 #include "../../XLangResource_Native.h"
 CSttIecSmvWidget_Harm_Histogram::CSttIecSmvWidget_Harm_Histogram(QWidget *parent)

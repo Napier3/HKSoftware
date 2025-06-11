@@ -2,8 +2,8 @@
 
 #include "SttIecRecordSysSetDlg.h"
 #include "MUTest/SttMUTestChsSetDlg.h"
-#include "../../Module/SmartCap/XSmartCapMngr.h"
-#include "../../Module/SmartCap/61850Cap/CapDevice/CapDeviceGoose.h"
+#include "../../../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../../Module/SmartCap/61850Cap/CapDevice/CapDeviceGoose.h"
 #include "../../UI/SttTestCntrFrameBase.h"
 #include "SttIecRecordCbWidget.h"
 #include "MUTest/SttMUTestIecCbSelWidget.h"
@@ -209,60 +209,68 @@ void CSttIecRcdFuncInterface::Config()
 		{
 			pIecCfgData = ((CCapDeviceBase*)m_pCapDevice)->GetIecCfgData();
 		}
+		
+		if (g_pSttMUTestIecCbSelWidget != NULL)//防止崩溃
+		{
+			QSttMUTestChsSetDlg oSttMUTestChsSetDlg(pParent,g_pSttMUTestIecCbSelWidget->IsFT3MUTest());
+			oSttMUTestChsSetDlg.setWindowModality(Qt::WindowModal);
+			oSttMUTestChsSetDlg.setFont(*g_pSttGlobalFont);
+			CIecCfgSysParas* pIecCfgSysParas = g_oSttTestResourceMngr.m_oIecDatasMngr.GetSysParasMngr();
+			oSttMUTestChsSetDlg.InitData(pIecCfgData,&g_oCapAnalysisConfig,pIecCfgSysParas->GetPrimRatesIn());
 
-		QSttMUTestChsSetDlg oSttMUTestChsSetDlg(pParent,g_pSttMUTestIecCbSelWidget->IsFT3MUTest());
-		oSttMUTestChsSetDlg.setWindowModality(Qt::WindowModal);
-		oSttMUTestChsSetDlg.setFont(*g_pSttGlobalFont);
-		CIecCfgSysParas* pIecCfgSysParas = g_oSttTestResourceMngr.m_oIecDatasMngr.GetSysParasMngr();
-		oSttMUTestChsSetDlg.InitData(pIecCfgData,&g_oCapAnalysisConfig,pIecCfgSysParas->GetPrimRatesIn());
-
-		//2023/9/7 wjs 加入键盘
+			//2023/9/7 wjs 加入键盘
 #ifdef _USE_SoftKeyBoard_
-		Global_SoftKeyBoardAttachObj(&oSttMUTestChsSetDlg);
+			Global_SoftKeyBoardAttachObj(&oSttMUTestChsSetDlg);
 #endif
 
-		if (oSttMUTestChsSetDlg.exec() == QDialog::Accepted)
-		{
-			if (oSttMUTestChsSetDlg.m_nParasModifyType == STT_MUTEST_CHSSET_MODIFY_TYPE_RateAccLevelDesc)
+			if (oSttMUTestChsSetDlg.exec() == QDialog::Accepted)
 			{
-				g_pSttIecRecordCbWidget->UpdateFirstCirclePlot(STT_MUTEST_CHSSET_MODIFY_TYPE_RateAccLevelDesc);
-//  				QSttMUTestRecordCbWidget *pWidget = (QSttMUTestRecordCbWidget*)g_pSttIecRecordCbWidget;
-// 				pWidget->m_pSttFirstCwWidget->updatePlots();
-				g_oSttTestResourceMngr.SaveDefaultIec61850Config();
-				g_oCapAnalysisConfig.Save();
-				((CXSttCap_61850*)g_theXSmartCapMngr->m_pX61850Cap)->SetPT_CT_Rates(pIecCfgSysParas->GetPrimRatesIn(),bIsFT3Device);
-				g_theXSmartCapMngr->m_pX61850Cap->UpdateAfterMUChsSet();//20220612 在设备完变比后,更新SMV通道的Rate
-				UpdateChName();
-
-				//名称、通道选择及准确度修改会影响到通讯模型,故此处保存模型
-				CXSttCap_61850 *pXSttCap_61850 = g_theXSmartCapMngr->GetSttCap_61850();
-				CString strFile;
-				strFile += _P_GetDBPath();
-				strFile += _T("SttIecRecordDetectDvm.xml");
-				pXSttCap_61850->m_pDvmDevice->OpenXmlFile(strFile, CDataMngrXmlRWKeys::g_pXmlKeys);
-			}
-			else if (oSttMUTestChsSetDlg.m_nParasModifyType == STT_MUTEST_CHSSET_MODIFY_TYPE_ChTypeMap)
-			{
-				g_pSttIecRecordCbWidget->BtnBack();//通道映射修改后,需要重新进入探测界面
-				g_pSttIecRecordCbWidget->UpdateFirstCirclePlot(STT_MUTEST_CHSSET_MODIFY_TYPE_ChTypeMap);
-				//zhouhj 2023.11.2 
-// 				QSttMUTestRecordCbWidget *pWidget = (QSttMUTestRecordCbWidget*)g_pSttIecRecordCbWidget;
-// 				pWidget->m_pSttFirstCwWidget->updatePlots();
-				//如果是Tab模式,则调用刷新接口
-				if (g_pSttIecRecordCbWidget->IsTabUI_Mode())
+#ifdef _USE_SoftKeyBoard_
+				QSoftKeyBoard::ReAttachObj();
+#endif
+				if (oSttMUTestChsSetDlg.m_nParasModifyType == STT_MUTEST_CHSSET_MODIFY_TYPE_RateAccLevelDesc)
 				{
-					if (g_pSttMUTestIecCbSelWidget != NULL)
+					g_pSttIecRecordCbWidget->UpdateFirstCirclePlot(STT_MUTEST_CHSSET_MODIFY_TYPE_RateAccLevelDesc);
+					//  				QSttMUTestRecordCbWidget *pWidget = (QSttMUTestRecordCbWidget*)g_pSttIecRecordCbWidget;
+					// 				pWidget->m_pSttFirstCwWidget->updatePlots();
+					g_oSttTestResourceMngr.SaveDefaultIec61850Config();
+					g_oCapAnalysisConfig.Save();
+					((CXSttCap_61850*)g_theXSmartCapMngr->m_pX61850Cap)->SetPT_CT_Rates(pIecCfgSysParas->GetPrimRatesIn(),bIsFT3Device);
+					g_theXSmartCapMngr->m_pX61850Cap->UpdateAfterMUChsSet();//20220612 在设备完变比后,更新SMV通道的Rate
+					UpdateChName();
+
+					//名称、通道选择及准确度修改会影响到通讯模型,故此处保存模型
+					CXSttCap_61850 *pXSttCap_61850 = g_theXSmartCapMngr->GetSttCap_61850();
+					CString strFile;
+					strFile += _P_GetDBPath();
+					strFile += _T("SttIecRecordDetectDvm.xml");
+					pXSttCap_61850->m_pDvmDevice->OpenXmlFile(strFile, CDataMngrXmlRWKeys::g_pXmlKeys);
+				}
+				else if (oSttMUTestChsSetDlg.m_nParasModifyType == STT_MUTEST_CHSSET_MODIFY_TYPE_ChTypeMap)
+				{
+					g_pSttIecRecordCbWidget->BtnBack();//通道映射修改后,需要重新进入探测界面
+					g_pSttIecRecordCbWidget->UpdateFirstCirclePlot(STT_MUTEST_CHSSET_MODIFY_TYPE_ChTypeMap);
+					//zhouhj 2023.11.2 
+					// 				QSttMUTestRecordCbWidget *pWidget = (QSttMUTestRecordCbWidget*)g_pSttIecRecordCbWidget;
+					// 				pWidget->m_pSttFirstCwWidget->updatePlots();
+					//如果是Tab模式,则调用刷新接口
+					if (g_pSttIecRecordCbWidget->IsTabUI_Mode())
 					{
-						g_pSttMUTestIecCbSelWidget->Refresh_MUTest();
+						if (g_pSttMUTestIecCbSelWidget != NULL)
+						{
+							g_pSttMUTestIecCbSelWidget->Refresh_MUTest();
+						}
 					}
 				}
 			}
-		}
-		
+			else
+			{
 #ifdef _USE_SoftKeyBoard_
-		QSoftKeyBoard::ReAttachObj();
+				QSoftKeyBoard::ReAttachObj();
 #endif
-		
+			}
+		}		
+			
 		//添加当接收通道窗口关闭时，更新主界面
 		IecRcdFunc((CCapDeviceBase *)m_pCapDevice);
 		
@@ -322,14 +330,18 @@ CString stt_iec_rcd_get_ch_value_string(CDvmValue *pCh, BOOL bWithUnit,const CSt
 	CString strText;
 	CString strMag = pCh->GetAttrByID_MmsAttr(_T("$mag"));
 	CString strAng = pCh->GetAttrByID_MmsAttr(_T("$ang"));
+	
+	double dValue = CString_To_double(strMag);
+	CString strMags ;
+	strMags.Format(_T("%.3f"), dValue);
 
 	if (bWithUnit)
 	{
-		strText =  strMag + strUnit + _T("  ") +  strAng + _T("°");
+		strText =  strMags + strUnit + _T("  ") +  strAng + _T("°");
 	}
 	else
 	{
-		strText =  strMag + _T("  ") +  strAng;
+		strText =  strMags + _T("  ") +  strAng;
 	}
 
 	return strText;

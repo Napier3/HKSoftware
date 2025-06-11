@@ -13,7 +13,7 @@
 #ifdef STT_MACRO_TEST_UI_USE_GUIDEBOOK
 #include "../../../AutoTest/Module/GuideBook/Reports.h"
 #endif
-#include "../../Module/DataMngr/DvmDevice.h"
+#include "../../../Module/DataMngr/DvmDevice.h"
 #include "../SttCmd/GuideBook/SttContents.h"
 #include "../SttSocket/SttCmdOverTimeMngr.h"
 
@@ -31,6 +31,7 @@ public:
 	virtual long OnTestCreated() = 0;
 	virtual void OnReport(CExBaseObject *pItem) = 0;
 	virtual void OnReport_ReadDevice(CDataGroup *pDeviceGroup){}
+	virtual void OnReport_ReadSystemState(const CString &strMacroID, CDataGroup *pParas){}
 	virtual void OnAtsGenerate() = 0;
 	virtual void OnAtsGenerateItems(CExBaseObject *pItems, BOOL bUpdateParent=FALSE) = 0;
 	virtual void OnAtsGenerateItems_CmdWzd(CExBaseList *pCmdGrp) = 0;
@@ -63,6 +64,7 @@ public:
 	//2022-3-29  lijunqing
 	virtual long TestItem(const CString &strItemPath);
 	virtual long TestFrom(const CString &strItemPath);
+	virtual void Test_GetSystemState(){};//dingxy 20250321发送GetSystemState命令
 
 #ifdef STT_MACRO_TEST_UI_USE_GUIDEBOOK
     virtual void FillReport(CReports *pReports){}
@@ -152,11 +154,12 @@ public:
 	virtual BOOL OpenTest(const CString &strFileWithPath, const CString &strDvmFile);
 	virtual BOOL ClearReportsRslts(CDataGroup *pParas);  //清除报告数据，形参是预留的参数，可以不传递参数
 
-	virtual void CloseTest(){	};//关闭测试前要干的活 sf 20220318
+	virtual void CloseTest(long nSynMode = STT_CMD_Send_Sync){	};//关闭测试前要干的活 sf 20220318
 
 	//2022-4-14 lijunqing
 	virtual void Ats_IecDetect(long bEnable);
 	virtual void Ats_IecRecord(CDataGroup *pIecRecordParas);
+	virtual void Ats_BinConfig(CDataGroup *pBinConfigParas);//20240922 zhouyangyong 新增用于开入量配置
 
 public:
 	//2022-3-11 lijunqing

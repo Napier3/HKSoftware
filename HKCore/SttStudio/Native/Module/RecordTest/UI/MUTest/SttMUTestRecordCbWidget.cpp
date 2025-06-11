@@ -1,9 +1,9 @@
 #include "SttMUTestRecordCbWidget.h"
 #include "../../../SttTestCtrl/SttTestAppBase.h"
 #include "../../../SttTestCtrl/SttTestCtrlCntrNative.h"
-#include "../../Module/SmartCap/XSmartCapMngr.h"
-#include "../../Module/BaseClass/QT/ExBaseListComboBox.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../../../Module/BaseClass/QT/ExBaseListComboBox.h"
+#include "../../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../../UI/SttTestCntrFrameBase.h"
 
 #include "../SttIecRecordMainWidget.h"
@@ -130,10 +130,12 @@ void QSttMUTestRecordCbWidget::InitUI()
 	strTmp = /*"报文响应时间"*/g_sLangTxt_Gradient_MessResTime; //lcq
 	m_pRealDelayValue_Label = new QLabel(strTmp,this);
 	m_pRealDelayValue_Edit = new QLineEdit;
-	strTmp = /*"通道延时"*/g_sLangTxt_Gradient_ChaDelay; //lcq
+	strTmp = /*"通道延时"*/g_sLangTxt_Gradient_ChanDelay; //lcq
 	m_pDelayChValue_Label = new QLabel(strTmp,this);
 	m_pDelayChValue_Edit = new QLineEdit;
 
+	if (CXLanguageMngr::xlang_IsCurrXLanguageChinese())
+	{
 	strTmp = _T("采样频率");
 	m_pSampFreqLabel = new QLabel(this);
 	m_pSampFreqLabel->setText(strTmp);
@@ -144,17 +146,25 @@ void QSttMUTestRecordCbWidget::InitUI()
 	m_pOutputRateLabel->setText(strTmp);
 	m_pOutputRateEdit = new QLineEdit(this);
 
+	}
 
 	m_pDelayChValue_Edit->setReadOnly(true);
 	m_pRealDelayValue_Edit->setReadOnly(true);
 	m_pDelayValueError_Edit->setReadOnly(true);
-	m_pSampFreqEdit->setReadOnly(true);
-	m_pOutputRateEdit->setReadOnly(true);
+
 	m_pDelayChValue_Edit->setText(_T("--"));
 	m_pRealDelayValue_Edit->setText(_T("--"));
 	m_pDelayValueError_Edit->setText(_T("--"));
+
+	if (CXLanguageMngr::xlang_IsCurrXLanguageChinese())
+	{	
+		m_pSampFreqEdit->setReadOnly(true);
+		m_pOutputRateEdit->setReadOnly(true);
 	m_pSampFreqEdit->setText(_T("--"));
 	m_pOutputRateEdit->setText(_T("--"));
+	}
+
+
 
 // 	strTmp.Format(_T("%.03lf μs"),1.1f);
 // 	m_pDelayValueError_Edit->setText(strTmp);
@@ -162,8 +172,12 @@ void QSttMUTestRecordCbWidget::InitUI()
 	m_pDelayChValue_Edit->setAlignment(Qt::AlignCenter);
 	m_pRealDelayValue_Edit->setAlignment(Qt::AlignCenter);
 	m_pDelayValueError_Edit->setAlignment(Qt::AlignCenter);
+
+	if (CXLanguageMngr::xlang_IsCurrXLanguageChinese())
+	{
 	m_pSampFreqEdit->setAlignment(Qt::AlignCenter);
 	m_pOutputRateEdit->setAlignment(Qt::AlignCenter);
+	}
 
 	m_pBottomBtnHLayout->addWidget(m_pDelayValueError_Label);
 	m_pBottomBtnHLayout->addWidget(m_pDelayValueError_Edit);
@@ -171,10 +185,13 @@ void QSttMUTestRecordCbWidget::InitUI()
 	m_pBottomBtnHLayout->addWidget(m_pRealDelayValue_Edit);
 	m_pBottomBtnHLayout->addWidget(m_pDelayChValue_Label);
 	m_pBottomBtnHLayout->addWidget(m_pDelayChValue_Edit);
+	if (CXLanguageMngr::xlang_IsCurrXLanguageChinese())
+	{
 	m_pBottomBtnHLayout->addWidget(m_pSampFreqLabel);
 	m_pBottomBtnHLayout->addWidget(m_pSampFreqEdit);
 	m_pBottomBtnHLayout->addWidget(m_pOutputRateLabel);
 	m_pBottomBtnHLayout->addWidget(m_pOutputRateEdit);
+	}
 
 	m_pBottomHSpacer1 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 	m_pBottomBtnHLayout->addItem(m_pBottomHSpacer1);
@@ -334,6 +351,10 @@ void QSttMUTestRecordCbWidget::InitUI()
 			}//首周波
 			else if (pDataTypeValue->m_strID == IECRCD_FUNC_Smv_MUFirstCycleTest)
 			{
+				if (g_pTheSttTestApp->GetCurrTestMacroUI() == STT_ORG_MACRO_MUAccuracyTest)//2024-12-3 wuxinyi 精确度测试无需首周波切页
+				{
+					continue;
+				}
  				m_pSttFirstCwWidget = new QSttMUTestFirstCwWidget(this);
  				pCurrWidget = m_pSttFirstCwWidget;
 			}
@@ -381,10 +402,13 @@ void QSttMUTestRecordCbWidget::ShowDelayTimeUI(bool bShow,bool bIsADMUTest)
 	m_pDelayChValue_Label->setVisible(bShow);
 	m_pDelayChValue_Edit->setVisible(bShow);
 
+	if (CXLanguageMngr::xlang_IsCurrXLanguageChinese())
+	{
 	m_pSampFreqEdit->setVisible(bShow);
 	m_pOutputRateEdit->setVisible(bShow);
 	m_pSampFreqLabel->setVisible(bShow);
 	m_pOutputRateLabel->setVisible(bShow);
+	}
 
 	if (bIsADMUTest)
 	{
@@ -449,29 +473,42 @@ void QSttMUTestRecordCbWidget::SetIecRecordCbFont()
 	m_pDelayValueError_Label->setFont(*g_pSttGlobalFont);
 	m_pDelayValueError_Edit->setFont(*g_pSttGlobalFont);
 
+	if (CXLanguageMngr::xlang_IsCurrXLanguageChinese())
+	{
 	m_pSampFreqEdit->setFont(*g_pSttGlobalFont);
 	m_pOutputRateEdit->setFont(*g_pSttGlobalFont);
 	m_pSampFreqLabel->setFont(*g_pSttGlobalFont);
 	m_pOutputRateLabel->setFont(*g_pSttGlobalFont);
+	}
 
 
 	//2024-6-1 wuxinyi 字体修改
 #ifdef 	_PSX_QT_LINUX_
-	QFont newFont= m_pSampFreqEdit->font();
+	QFont newFont= m_pDelayChValue_Edit->font();
     newFont.setPixelSize(12);
 	// 设置新字体
 	m_pDelayChValue_Edit->setFont(newFont);
 	m_pRealDelayValue_Edit->setFont(newFont);
 	m_pDelayValueError_Edit->setFont(newFont);
-	m_pOutputRateEdit->setFont(newFont);
+	
+
+	if (CXLanguageMngr::xlang_IsCurrXLanguageChinese())
+	{
 	m_pSampFreqEdit->setFont(newFont);
+	m_pOutputRateEdit->setFont(newFont);
+	}
 
 	// 还原控件的推荐大小
 	m_pDelayChValue_Edit->setFixedHeight(30);
 	m_pRealDelayValue_Edit->setFixedHeight(30);
 	m_pDelayValueError_Edit->setFixedHeight(30);
-	m_pOutputRateEdit->setFixedHeight(30);
+	
+
+	if (CXLanguageMngr::xlang_IsCurrXLanguageChinese())
+	{
 	m_pSampFreqEdit->setFixedHeight(30);
+	m_pOutputRateEdit->setFixedHeight(30);
+	}
 #endif
 
 }
@@ -816,6 +853,12 @@ void QSttMUTestRecordCbWidget::ExecIecFunc_SetCapAnalysisConfig()
 		QSttIecMUAccuracyWidget *pChildWidget = (QSttIecMUAccuracyWidget*)pCurrWidget;
 		m_pSttIecRcdFuncInterface = pChildWidget;
 	}
+	//首周波
+	else if (m_strIecRcdFuncID == IECRCD_FUNC_Smv_MUFirstCycleTest)
+	{
+		QSttMUTestFirstCwWidget *pChildWidget =  (QSttMUTestFirstCwWidget*)pCurrWidget;
+		m_pSttIecRcdFuncInterface = pChildWidget;
+	}
 	//SMV   MU误差统计
 	else if (m_strIecRcdFuncID == IECRCD_FUNC_Smv_MUErrorStatistics)
 	{
@@ -1051,6 +1094,8 @@ void QSttMUTestRecordCbWidget::UpdateSampFreOutputRateData( CCapDeviceBase *pCap
 		return;
 	}
 	CString strTextTmp;
+	if (CXLanguageMngr::xlang_IsCurrXLanguageChinese())
+	{
 	//采样频率
 	CCapDevice6044 *pDevice6044 = (CCapDevice6044*)pCapDevice;
 	strTextTmp.Format(_T("%ld Hz"),pDevice6044->m_nSmpRate);
@@ -1059,4 +1104,5 @@ void QSttMUTestRecordCbWidget::UpdateSampFreOutputRateData( CCapDeviceBase *pCap
 	//输出速率
 	strTextTmp.Format(_T("%.01lf Mbps"),pDevice6044->m_dBaudRate);
 	m_pOutputRateEdit->setText(strTextTmp);
+	}
 }

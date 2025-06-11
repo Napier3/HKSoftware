@@ -1,6 +1,6 @@
 #include "SttIecSmvGrid_EffecValue.h"
-#include "../../Module/SmartCap/XSmartCapMngr.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include <QApplication>
 
 CSttIecSmvGrid_EffecValue::CSttIecSmvGrid_EffecValue(QWidget* pparent):CSttIecChsGridBase(pparent)

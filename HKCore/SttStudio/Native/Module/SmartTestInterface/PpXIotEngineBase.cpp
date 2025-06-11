@@ -21,7 +21,8 @@ CPpSttIotParas::~CPpSttIotParas()
 { 
 	if (m_pDataInterface != NULL)
 	{
-		m_pDataInterface->DeleteAll();
+		//外部引用的数据对象，不能清除数据。shaolei 2024-12-17  外部使用完会自行释放
+		//m_pDataInterface->DeleteAll();
 		m_pDataInterface = NULL;
 	}
 }
@@ -531,16 +532,6 @@ long CPpSttIotDeviceBase::CommConfig(const CString &strCmmConfig)
 	}
 	
     nRet = X_SendIotCmd(oIotCmd);
-
-    //for debug begin
-    if(nRet > 0)
-    {
-        CString strFile;
-        strFile = _P_GetLibraryPath();
-        strFile += _T("oIotCmdFile_CommConfig.xml");
-        oIotCmd.SaveXmlFile(strFile, CSttCmdDefineXmlRWKeys::g_pXmlKeys);
-    }
-    //for debug end
 
 /*
 	if (nRet == STT_CMD_ExecStatus_SUCCESS)

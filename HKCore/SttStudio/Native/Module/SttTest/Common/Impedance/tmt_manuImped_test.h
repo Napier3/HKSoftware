@@ -45,6 +45,7 @@ public:
 	int		m_nOffsetsMode;			// 零序补偿系数的模式
 	float		m_fAmplitudeOrKr;		// Ko和Z0,Z1： 幅值，Kr,Kx 
 	float		m_fPhaseOrKx;				// Ko和Z0,Z1： 相位，Kr,Kx 
+	float		m_fEndDelayT;			// 触发后延时
 
 	int		m_nFaultType;				// 故障类型(0:A相接地;1:B相接地;2:C相接地;3:AB短路;4:BC短路;5:CA短路;6:AB接地短路;7:BC接地短路;8:CA接地短路;9:三相短路;) 	
 	int		m_nImped;					// 阻抗输入选择
@@ -54,8 +55,10 @@ public:
 	float		m_fX;
 
 	int		m_nFirstMode;				// 变量选择1- Z R X 
-	int		m_nSecondMode;			// 变量选择2 - 幅值 相位	
-	BOOL		m_bAuto;						// 自动递变//20240624 suyang 修改为BOOL类型
+	int		m_nSecondMode;			// 变量选择2 - 幅值 相位
+
+	BOOL    m_bBinStop;//开入停止,接收UpdateParameter时底层更新变量
+        BOOL		m_bAuto;						// 自动递变
 	int		m_bMutation;				// 突变量启动
 	int		m_bLockChanged;		// lock mark
 	float		m_fPrepareTime;			//常态时间(该参数为试验前复归时间,也称作变化前时间,即递变类发生递变前的复归时间,用于搜索阻抗边界,搜索角度等,一般重合闸后加速、距离不用该参数)
@@ -81,10 +84,13 @@ public:
 	float m_fAngleSet;	//相位整定动作值
 	//float m_fHzSet;		//频率整定动作值
 	float m_fImpSet;		//阻抗整定动作值
+	float m_fRSet;	//R整定动作值
+	float m_fXSet;	//X整定动作值
 	float m_fRetCoefSet; //返回系数整定值
 
 	//评估
 	float m_fTimeValue_AbsErr;      //动作时间值绝对误差
+	float m_fTimeValue_AbsErrNeg;      //动作时间值绝对误差负
 	float m_fTimeValue_RelErr;      //动作时间值相对误差
 	long m_nTimeValue_ErrorLogic; 	//动作时间误差判断逻辑
 	float m_fUActVal_AbsErr; 		//电压动作值绝对误差
@@ -102,6 +108,12 @@ public:
 	float m_fImpValue_AbsErr;//阻抗动作值绝对误差
 	float m_fImpValue_RelErr;//阻抗动作值相对误差
 	long m_nImpValue_ErrorLogic; 	//阻抗动作值误差判断逻辑
+	float m_fRValue_AbsErr;//R绝对误差
+	float m_fRValue_RelErr;//R相对误差
+	long m_nRValue_ErrorLogic; 	//R误差判断逻辑
+	float m_fXValue_AbsErr;//X绝对误差
+	float m_fXValue_RelErr;//X相对误差
+	long m_nXValue_ErrorLogic; 	//X误差判断逻辑
 	float m_fRetCoef_AbsErr; 		//返回系数绝对误差
 	float m_fRetCoef_RelErr;		//返回系数相对误差
 	long m_nRetCoef_ErrorLogic; 	//返回系数误差判断逻辑
@@ -129,6 +141,8 @@ public:
 
 		 m_nFirstMode = 0;//变量选择1- Z R X 
 		 m_nSecondMode = 0;//变量选择2 - 幅值 相位
+
+		 m_bBinStop = FALSE;
 		 m_bAuto = false;
 		 m_bMutation = false;		 
 		 m_bLockChanged = false;
@@ -200,8 +214,11 @@ public:
 		 m_fAngleSet = 0;
 		 //m_fHzSet=0;
 		 m_fImpSet = 0;
+		 m_fRSet = 0;
+		 m_fXSet = 0;
 		 m_fRetCoefSet = 0;
 		 m_fTimeValue_AbsErr = 0.001f;
+		 m_fTimeValue_AbsErrNeg = 0.001f;
 		 m_fTimeValue_RelErr = 0.1f;
 		 m_nTimeValue_ErrorLogic = 0;
 		 m_fUActVal_AbsErr = 0.001f;
@@ -219,6 +236,12 @@ public:
 		 m_fImpValue_AbsErr = 0.001f;
 		 m_fImpValue_RelErr = 0.1f;
 		 m_nImpValue_ErrorLogic = 0;
+		 m_fRValue_AbsErr = 0.001f;
+		 m_fRValue_RelErr = 0.1f;
+		 m_nRValue_ErrorLogic = 0;
+		 m_fXValue_AbsErr = 0.001f;
+		 m_fXValue_RelErr = 0.1f;
+		 m_nXValue_ErrorLogic = 0;
 		 m_fRetCoef_AbsErr = 0.001f;
 		 m_fRetCoef_RelErr = 0.1f;
 		 m_nRetCoef_ErrorLogic = 0;		
@@ -250,8 +273,11 @@ public:
 		pDest->m_fAngleSet = m_fAngleSet;
 		//pDest->m_fHzSet = m_fHzSet;
 		pDest->m_fImpSet = m_fImpSet;
+		pDest->m_fRSet = m_fRSet;
+		pDest->m_fXSet = m_fXSet;
 		pDest->m_fRetCoefSet = m_fRetCoefSet;
 		pDest->m_fTimeValue_AbsErr = m_fTimeValue_AbsErr;
+		pDest->m_fTimeValue_AbsErrNeg = m_fTimeValue_AbsErrNeg;
 		pDest->m_fTimeValue_RelErr = m_fTimeValue_RelErr;
 		pDest->m_nTimeValue_ErrorLogic = m_nTimeValue_ErrorLogic;
 		pDest->m_fUActVal_AbsErr = m_fUActVal_AbsErr;
@@ -269,6 +295,12 @@ public:
 		pDest->m_fImpValue_AbsErr = m_fImpValue_AbsErr;
 		pDest->m_fImpValue_RelErr = m_fImpValue_RelErr;
 		pDest->m_nImpValue_ErrorLogic = m_nImpValue_ErrorLogic;
+		pDest->m_fRValue_AbsErr = m_fRValue_AbsErr;
+		pDest->m_fRValue_RelErr = m_fRValue_RelErr;
+		pDest->m_nRValue_ErrorLogic = m_nRValue_ErrorLogic;
+		pDest->m_fXValue_AbsErr = m_fXValue_AbsErr;
+		pDest->m_fXValue_RelErr = m_fXValue_RelErr;
+		pDest->m_nXValue_ErrorLogic = m_nXValue_ErrorLogic;
 		pDest->m_fRetCoef_AbsErr = m_fRetCoef_AbsErr;
 		pDest->m_fRetCoef_RelErr = m_fRetCoef_RelErr;
 		pDest->m_nRetCoef_ErrorLogic = m_nRetCoef_ErrorLogic; 

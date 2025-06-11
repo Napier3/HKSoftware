@@ -36,6 +36,11 @@
 */
 /************************************************************************/
 
+#ifdef use_sttdebuglogwidget
+
+extern long g_sttdebuglogwidget;
+#endif
+
 CSttArgcArgvParser::CSttArgcArgvParser()
 {
 	m_nUseIec = 0;
@@ -83,5 +88,10 @@ void CSttArgcArgvParser::Parser(int argc, char *argv[])
 
 	ParseString(ARGV_CMD_PARA_ID_macro_file, m_strMacroFile);  
 	ParseString(ARGV_CMD_PARA_ID_sscl_path, m_strSsclFilePath);  
+
+#ifdef use_sttdebuglogwidget
+	//2024-9-12 lijunqing 调试模式，监视程序启动的时间
+	ParseLong(ARGV_CMD_PARA_ID_DEBUGLOG, &g_sttdebuglogwidget);
+#endif
 }
 

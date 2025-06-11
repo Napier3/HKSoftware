@@ -2,7 +2,7 @@
 
 #include "PpGlobalDefine.h"
 #include "BbDataRanges.h"
-#include "ppscript.h"
+#include "PpScript.h"
 #include "BbVariables.h"
 #include "ProtocolXmlRWKeys.h"
 #include "BbDataRange.h"

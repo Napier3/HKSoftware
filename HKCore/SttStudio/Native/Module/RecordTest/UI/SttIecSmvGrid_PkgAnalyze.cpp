@@ -1,7 +1,7 @@
 #include "SttIecSmvGrid_PkgAnalyze.h"
-#include "../../Module/SmartCap/XSmartCapMngr.h"
-#include "../../Module/API/MathApi.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../../Module/API/MathApi.h"
+#include "../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 
 /*
 ÏêÏ¸ËµÃ÷£º

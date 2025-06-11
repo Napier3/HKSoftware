@@ -10,7 +10,7 @@ typedef struct tmt_swing_paras
 	float	m_fPowerAngleBegin;	//功角始值
 	float	m_fPowerAngleEnd;	//功角终值
 	float	m_fCycle;			//振荡周期
-	int		m_nSwingCount;		//震荡次数
+	int		m_nSwingCount;		//振荡次数
 	float	m_fRate;			//em/en
 	int		m_nTripPoint;		//跳闸接入点
 	int		m_nTripSpeedUp;		//加速信号接点
@@ -45,6 +45,12 @@ typedef struct tmt_swing_paras
 // 	tmt_BinaryIn  m_binInEx[MAX_ExBINARY_COUNT];
 	tmt_BinaryOut m_binOut[MAX_BINARYOUT_COUNT];	//0-非故障态开出 1-故障态开出
     tmt_BinaryOut m_binOutEx[MAX_ExBINARY_COUNT];//0-非故障态开出 1-故障态开出
+
+	//结果评估
+	float m_fTtripAbsErr;  //绝对误差
+    float m_fTtripAbsErr_Neg;  //绝对误差(-)
+	float m_fTtripRelErr;	//相对误差
+	int m_nTtripErrorLogic;	//误差类型
 
     //GoosePub
     tmt_GoosePub m_oGoosePub[MAX_MODULES_GOOSEPUB_COUNT];
@@ -82,6 +88,9 @@ public:
 		m_fImpTfPh = 78;
 		m_fImpTs = 1;
 		m_fActTimeSet = 1;
+		m_fTtripAbsErr = 0;
+		m_fTtripRelErr = 0;
+		m_nTtripErrorLogic = 0;
 
 		for (int i=0;i<MAX_BINARYIN_COUNT;i++)
 		{

@@ -2,8 +2,8 @@
 
 #include <QMessageBox>
 
-#include "../../Protocol/Module/PxiEngine/PxiEngineGlobal.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../../Protocol/Module/PxiEngine/PxiEngineGlobal.h"
+#include "../../../../Module/API/GlobalConfigApi.h"
 
 extern CPpSttIotEngineClientApp *g_theIotEngineApp;
 

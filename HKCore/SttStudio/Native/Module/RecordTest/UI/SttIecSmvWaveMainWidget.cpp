@@ -1,6 +1,6 @@
 #include "SttIecSmvWaveMainWidget.h"
-#include "../../Module/API/GlobalConfigApi.h"
-#include "../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../../Module/API/GlobalConfigApi.h"
+#include "../../../../Module/SmartCap/XSmartCapMngr.h"
 
 extern QFont *g_pSttGlobalFont;  
 

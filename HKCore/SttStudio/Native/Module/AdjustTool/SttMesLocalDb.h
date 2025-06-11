@@ -5,8 +5,8 @@
 
 #pragma once
 
-#include "../../Module/DataMngr/DataGroup.h"
-#include "../../Module/DataMngr/DataTypes.h"
+#include "../../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/DataMngr/DataTypes.h"
 
 #define STT_MES_LOCAL_DB_SttModuleType  _T("SttModuleType")
 #define STT_MES_LOCAL_DB_SttModuleClass  _T("SttModuleClass")

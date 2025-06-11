@@ -4,7 +4,7 @@
 CSttTestDeviceCfg:
 **************************************/
 
-#include "../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/DataMngr/DataGroup.h"
 
 
 #define TEST_DEVICE_CFG_LOCAL_IP			_T("local-ip")

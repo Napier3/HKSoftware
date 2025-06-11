@@ -4,7 +4,7 @@
 #include "../../Module/API/GlobalConfigApi.h"
 #include "AutoTestXMLRWKeys.h"
 #include "GuideBook/GuideBookDefine.h"
-#include "../../Module/api/FileApi.h"
+#include "../../Module/API/FileApi.h"
 
 #ifndef _PSX_QT_LINUX_
 #include "../../Module/XFileMngrBase/XFileMngr.h"

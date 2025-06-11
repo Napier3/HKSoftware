@@ -1,5 +1,5 @@
 
-#include "../../SttStudio/Module/SttAtsSvr/SttSmartTest.h"
+#include "../Module/SttAtsSvr/SttSmartTest.h"
 //////////////////////////////////////////////////////////////////////////
 //
 void atsrpc_OnGbrptOpened()

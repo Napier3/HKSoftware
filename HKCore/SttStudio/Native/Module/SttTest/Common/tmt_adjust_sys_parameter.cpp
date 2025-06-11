@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "tmt_adjust_sys_parameter.h"
-#include "../../Module/DataMngr/DataGroup.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 
 #ifdef NOT_USE_XLANGUAGE
 #else
@@ -16,6 +16,7 @@ BOOL g_bWriteHdInfor=TRUE;
 #endif
 
 #ifndef _STT_NOT_IN_TEST_SERVER_
+#include "SttSystemConfig.h"
 #ifdef _PSX_QT_LINUX_
 #include "../../SttDevice/Module/FpgaUart/FpgaUart.h"
 #endif
@@ -185,11 +186,11 @@ void stt_xml_serialize_AdjItem(PSTT_ADJUST_ITEM pPara,  CSttXmlSerializeBase *pX
 {
 #ifdef NOT_USE_XLANGUAGE
 	pXmlSerialize->xml_serialize("幅值系数","Coef","","float",pPara->m_fCoef);
-	pXmlSerialize->xml_serialize("零漂","Zero","","float",pPara->m_fZero);
+	pXmlSerialize->xml_serialize("零漂","Zero","","double",pPara->m_fZero);
 	pXmlSerialize->xml_serialize("相位","Angle","","float",pPara->m_fAngle);
 #else
 	pXmlSerialize->xml_serialize(/*"幅值系数"*/g_sLangTxt_Native_AmpFactor.GetString(),"Coef","","float",pPara->m_fCoef);
-	pXmlSerialize->xml_serialize(/*"零漂"*/g_sLangTxt_Gradient_ZeroDrift.GetString(),"Zero","","float",pPara->m_fZero);
+	pXmlSerialize->xml_serialize(/*"零漂"*/g_sLangTxt_Gradient_ZeroDrift.GetString(),"Zero","","double",pPara->m_fZero);
 	pXmlSerialize->xml_serialize(/*"相位"*/g_sLangTxt_Native_Phase.GetString(),"Angle","","float",pPara->m_fAngle);
 #endif
 }
@@ -208,7 +209,7 @@ void stt_xml_serialize(PSTT_ADJUST_ITEM pPara,  CSttXmlSerializeBase *pXmlSerial
 
 void stt_xml_serialize(PSTT_CHANNEL_GEAR_ADJUST pPara,  long nIndex, CSttXmlSerializeBase *pXmlSerialize)
 {
-	#ifdef NOT_USE_XLANGUAGE
+#ifdef NOT_USE_XLANGUAGE
 	CSttXmlSerializeBase *pXmlGear = pXmlSerialize->xml_serialize(stt_ParaGroupKey(),nIndex, "档位", "Gear", "GearAdjust");
 
 #else
@@ -242,7 +243,7 @@ void stt_xml_serialize(PSTT_CHANNEL_WAVE_ADJUST pPara,  const char *pszName, con
 
 	long nIndex = 0;
 
-	for (nIndex=0; nIndex<pPara->m_nGearCount; nIndex++)
+	for (nIndex=0; nIndex<pPara->m_nGearCount && nIndex<ADJUST_MAX_GEAR_COUNT; nIndex++)
 	{
 		stt_xml_serialize(&pPara->m_oChGearAdj[nIndex], nIndex, pXmlChWaveAdj);
 	}
@@ -618,7 +619,8 @@ void stt_xml_serialize(PST_MODULE_ATTR  pPara,  CSttXmlSerializeBase *pXmlSerial
 				||pPara->m_nModuleType==STT_MODULE_TYPE_DIGITAL_4G4M
 				||pPara->m_nModuleType==STT_MODULE_TYPE_FT3
                 ||pPara->m_nModuleType==STT_MODULE_TYPE_SWITCH
-				||pPara->m_nModuleType==STT_MODULE_TYPE_Stable2M)
+				||pPara->m_nModuleType==STT_MODULE_TYPE_Stable2M
+				||pPara->m_nModuleType==STT_MODULE_TYPE_DIGITAL)
 		{
 			pPara->m_nChannelNum = 0;
 			pPara->m_nHarmCount = 0;
@@ -626,11 +628,23 @@ void stt_xml_serialize(PST_MODULE_ATTR  pPara,  CSttXmlSerializeBase *pXmlSerial
             if(stt_xml_serialize_is_read(pXmlModuleAttrs))
             {
                 //读模式下先按模块类型初始化
-                if(pPara->m_nModuleType==STT_MODULE_TYPE_DIGITAL_0G8M
-                        ||pPara->m_nModuleType==STT_MODULE_TYPE_DIGITAL_2G6M
-                        ||pPara->m_nModuleType==STT_MODULE_TYPE_DIGITAL_4G4M)
+				if(pPara->m_nModuleType==STT_MODULE_TYPE_DIGITAL_0G8M)
+				{
+					pPara->m_nFiberPortNum_LC = 8;
+					pPara->m_nFiberPortNum_LC_G = 0;
+					pPara->m_nFiberPortNum_STSend = 6;
+				}
+				else if(pPara->m_nModuleType==STT_MODULE_TYPE_DIGITAL_2G6M
+						||pPara->m_nModuleType==STT_MODULE_TYPE_DIGITAL)
+				{
+					pPara->m_nFiberPortNum_LC = 8;
+					pPara->m_nFiberPortNum_LC_G = 2;
+					pPara->m_nFiberPortNum_STSend = 6;
+				}
+				else if(pPara->m_nModuleType==STT_MODULE_TYPE_DIGITAL_4G4M)
                 {
                     pPara->m_nFiberPortNum_LC = 8;
+					pPara->m_nFiberPortNum_LC_G = 4;
                     pPara->m_nFiberPortNum_STSend = 6;
                 }
                 else if(pPara->m_nModuleType==STT_MODULE_TYPE_FT3)
@@ -642,10 +656,12 @@ void stt_xml_serialize(PST_MODULE_ATTR  pPara,  CSttXmlSerializeBase *pXmlSerial
 
 #ifdef NOT_USE_XLANGUAGE
             pXmlModuleAttrs->xml_serialize("LC光口数","FiberPortNum_LC","","long", pPara->m_nFiberPortNum_LC);
+			pXmlModuleAttrs->xml_serialize("LC千兆光口数","FiberPortNum_LC_G","","long", pPara->m_nFiberPortNum_LC_G);
             pXmlModuleAttrs->xml_serialize("ST发送光口数","FiberPortNum_STSend","","long", pPara->m_nFiberPortNum_STSend);
             pXmlModuleAttrs->xml_serialize("ST接收光口数","FiberPortNum_STRecv","","long", pPara->m_nFiberPortNum_STRecv);
 #else
 	    pXmlModuleAttrs->xml_serialize(/*"LC光口数"*/g_sLangTxt_Native_LCOptPortCount.GetString(),"FiberPortNum_LC","","long", pPara->m_nFiberPortNum_LC);
+		pXmlModuleAttrs->xml_serialize("LC千兆光口数","FiberPortNum_LC_G","","long", pPara->m_nFiberPortNum_LC_G);
 		pXmlModuleAttrs->xml_serialize(/*"ST发送光口数"*/g_sLangTxt_Native_STTxOptPortCount.GetString(),"FiberPortNum_STSend","","long", pPara->m_nFiberPortNum_STSend);
 		pXmlModuleAttrs->xml_serialize(/*"ST接收光口数"*/g_sLangTxt_Native_STRxOptPortCount.GetString(),"FiberPortNum_STRecv","","long", pPara->m_nFiberPortNum_STRecv);
 #endif
@@ -664,6 +680,26 @@ void stt_xml_serialize(PST_MODULE_ATTR  pPara,  CSttXmlSerializeBase *pXmlSerial
 				pXmlModuleAttrs->xml_serialize("LC光口数","FiberPortNum_LC","","long", pPara->m_nFiberPortNum_LC);
 				pXmlModuleAttrs->xml_serialize("ST发送光口数","FiberPortNum_STSend","","long", pPara->m_nFiberPortNum_STSend);
 				pXmlModuleAttrs->xml_serialize("ST接收光口数","FiberPortNum_STRecv","","long", pPara->m_nFiberPortNum_STRecv);
+
+				if(pPara->m_nFiberPortNum_STSend == 1)
+				{
+					pPara->m_nADMUBoutNum = 8;
+					pPara->m_nADMUBinNum = 4;
+				}
+				else
+				{
+					pPara->m_nADMUBoutNum = 6;
+					pPara->m_nADMUBinNum = 2;
+				}
+
+				if(!g_bWriteHdInfor)
+				{
+					if(stt_xml_serialize_is_write(pXmlModuleAttrs)||stt_xml_serialize_is_register(pXmlModuleAttrs))
+					{
+						pXmlModuleAttrs->xml_serialize("开出数量","ADMU_Bout","","long", pPara->m_nADMUBoutNum);
+						pXmlModuleAttrs->xml_serialize("开入数量","ADMU_Bin","","long", pPara->m_nADMUBinNum);
+					}
+				}
 			}
 
 #ifdef NOT_USE_XLANGUAGE
@@ -686,12 +722,31 @@ void stt_xml_serialize(PST_MODULE_ATTR  pPara,  CSttXmlSerializeBase *pXmlSerial
 			pPara->m_fDefChMax = pPara->m_fChMax;
 			pPara->m_fDefChDcMax = pPara->m_fChDcMax;
 		}
+
+		if(pPara->m_nModuleType == STT_MODULE_TYPE_CURRENT)
+		{
+			if(stt_xml_serialize_is_read(pXmlModuleAttrs))
+			{
+				pPara->m_nDefChannelNum = pPara->m_nChannelNum;//初始化
+			}
+			pXmlModuleAttrs->xml_serialize("软件界面默认通道数","DefChannelNum","","long", pPara->m_nDefChannelNum);
+		}
+
 		pXmlModuleAttrs->xml_serialize("软件界面标称交流最大值","DefChMax","","float", pPara->m_fDefChMax);
 		pXmlModuleAttrs->xml_serialize("软件界面标称直流最大值","DefChDcMax","","float", pPara->m_fDefChDcMax);
 		pXmlModuleAttrs->xml_serialize("频率补偿系数","FreCoef","","float", pPara->m_fFreCoef);
 		pXmlModuleAttrs->xml_serialize("数字硬件相位延时","fDigitalDelay","","float", pPara->m_fDigitalDelay);
 		stt_xml_serialize_data_type(pXmlModuleAttrs, "电压电流硬件特性","ModulePower","","ModulePower", pPara->m_nModulePower);
-		stt_xml_serialize_data_type(pXmlModuleAttrs, "电流通道合并模式","ChMergeMode","","ChMergeMode", pPara->m_nChMergeMode);
+		if(pPara->m_nModuleType == STT_MODULE_TYPE_CURRENT)
+		{
+			if(stt_xml_serialize_is_read(pXmlModuleAttrs))
+			{
+				pPara->m_nDAChanNum = pPara->m_nChannelNum;//初始化
+			}
+			pXmlModuleAttrs->xml_serialize("DA放大电路实际数量","DAChanNum","","long", pPara->m_nDAChanNum);
+		}
+
+		stt_xml_serialize_data_type(pXmlModuleAttrs, "软件界面通道切换选项","ChMergeMode","","ChMergeMode", pPara->m_nChMergeMode);
 #else
 //		pXmlModuleAttrs->xml_serialize(/*"直流电压通道最大值"*/g_sLangTxt_Native_DCVoltChMax.GetString(),"UdcMax","","float", pPara->m_fDCVoltMax);
 //		pXmlModuleAttrs->xml_serialize(/*"直流电流通道最大值"*/g_sLangTxt_Native_DCCurrChMax.GetString(),"IdcMax","","float", pPara->m_fDCCurrMax);
@@ -739,7 +794,7 @@ void stt_xml_serialize(PST_MODULE_ATTR  pPara,  CSttXmlSerializeBase *pXmlSerial
 
 		if(pPara->m_nModuleType == STT_MODULE_TYPE_WEEK_EX || pPara->m_nModuleType == STT_MODULE_TYPE_ADMU)
 		{
-			pXmlModuleAttrs->xml_serialize("通道电气类型可变(1:可变,0:不可变)", "ChTypeChg", "", "long", pPara->m_nChTypeChg);
+			pXmlModuleAttrs->xml_serialize("通道电气类型可变(1:可变，0:不可变)", "ChTypeChg", "", "long", pPara->m_nChTypeChg);
 		}
 
 		if(!g_bWriteHdInfor)
@@ -893,6 +948,36 @@ void stt_xml_serialize(PSTT_BOUT_ATTRS pPara, long nBoutCount, CSttXmlSerializeB
 //    pBoutDefXmlAttrs->xml_serialize("开出8导通值", "Bout8", "", "bool", pPara->m_nBout[7]);
 }
 
+void stt_xml_serialize(PSTT_BIN_Gear pPara, CSttXmlSerializeBase *pXmlSerialize)
+{
+	if (g_theAdjParaXmlSerialConfig.m_nBinAttr == 0)
+	{
+		return;
+	}
+#ifdef NOT_USE_XLANGUAGE
+	CSttXmlSerializeBase *pBinGearXmlAttrs = pXmlSerialize->xml_serialize("开入量采集硬件档位", "BinHDGearParas", "BinHDGearParas", stt_ParaGroupKey());
+#else
+	CSttXmlSerializeBase *pBinGearXmlAttrs = pXmlSerialize->xml_serialize("", "BinHDGearParas", "BinHDGearParas", stt_ParaGroupKey());
+#endif
+	if (pBinGearXmlAttrs == NULL)
+	{
+		return;
+	}
+
+	pBinGearXmlAttrs->xml_serialize("档位数","GearCount","","int", pPara->m_nGearCount);
+	for(int i = 0; i < pPara->m_nGearCount && i < 10; i++)
+	{
+		CSttXmlSerializeBase *pBinGear = pBinGearXmlAttrs->xml_serialize(stt_ParaGroupKey(), i, "档位", "Gear", "BinGear");
+		if (pBinGear == NULL)
+		{
+			continue;
+		}
+
+		pBinGear->xml_serialize("档位值","GearValue","","float", pPara->m_nGearValue[i]);
+		pBinGear->xml_serialize("档位标识","GearCode","","long", pPara->m_nGearCode[i]);
+	}
+}
+
 void stt_xml_serialize(PSTT_BIN_ADJUST pPara, long nBinCount, CSttXmlSerializeBase *pXmlSerialize)
 {
 	CString strName, strID;
@@ -916,6 +1001,10 @@ void stt_xml_serialize(PSTT_BIN_ADJUST pPara, long nBinCount, CSttXmlSerializeBa
 		strName.Format("开入%c", strTemp[i]);
 		strID.Format("Bin%c", strTemp[i]);
 		CSttXmlSerializeBase *pBinAdj = pBinAdjXmlAttrs->xml_serialize(strName.GetString(), strID.GetString(), "BinAdj", stt_ParaGroupKey());
+		if (pBinAdj == NULL)
+		{
+			continue;
+		}
 
 		pBinAdj->xml_serialize("档位数","GearCount","","int", pPara[i].m_nGearCount);
 		long nIndex = 0;
@@ -924,6 +1013,17 @@ void stt_xml_serialize(PSTT_BIN_ADJUST pPara, long nBinCount, CSttXmlSerializeBa
 		{
 			stt_xml_serialize(&pPara[i].m_oBinGearAdj[nIndex], nIndex, pBinAdj);
 		}
+	}
+}
+
+void stt_xml_serialize(PSTT_DC_ADJUST pPara, CSttXmlSerializeBase *pXmlSerialize)
+{
+	pXmlSerialize->xml_serialize("档位数","GearCount","","int", pPara->m_nGearCount);
+	long nIndex = 0;
+
+	for (nIndex=0; nIndex < pPara->m_nGearCount && nIndex < ADJUST_MAX_GEAR_COUNT; nIndex++)
+	{
+		stt_xml_serialize(&pPara->m_oGearAdj[nIndex], nIndex, pXmlSerialize);
 	}
 }
 
@@ -947,12 +1047,14 @@ void stt_xml_serialize(PSTT_DEVICE_ATTRS pPara, CSttXmlSerializeBase *pXmlSerial
 	pXmlAttrs->xml_serialize("序列号","SN","","string", pPara->m_strSN);
 	pXmlAttrs->xml_serialize("额定频率","Fnom","","float", pPara->m_fBaseFre);
     pXmlAttrs->xml_serialize("主板开入数量(个)","BinCount","","long", pPara->m_nBinCount);
-	pXmlAttrs->xml_serialize("主板开入电压采集(0-不支持,1-支持)","BinVoltMeas","","long", pPara->m_nBinVoltMeas);
-    pXmlAttrs->xml_serialize("主板开出数量(个)","BoutCount","","long", pPara->m_nBoutCount);
-	pXmlAttrs->xml_serialize("主板开出回放(0-不支持,1-支持)","BoutReplay","","long", pPara->m_nBoutReplay);
+	pXmlAttrs->xml_serialize("主板开入电压采集(0-不支持，1-支持)","BinVoltMeas","","long", pPara->m_nBinVoltMeas);
+	pXmlAttrs->xml_serialize("主板直流测量功能(0-不支持，1-支持)","DCMeas","","long", pPara->m_nDCMeas);
+	pXmlAttrs->xml_serialize("主板开出数量(个)","BoutCount","","long", pPara->m_nBoutCount);	
     pXmlAttrs->xml_serialize("整秒时刻,模拟量绝对相位补偿(度)","PhaseForMUTest","","float", pPara->m_fPhaseForMUTest);
-	pXmlAttrs->xml_serialize("启用控制权限判断(0-不启用,1-启用)","CheckAuthority","","long", pPara->m_nCheckAuthority);
-	pXmlAttrs->xml_serialize("开机后风扇默认模式(0-静音风速,1-正常风速)","WindSpeed","","long", pPara->m_nWindSpeed);
+	pXmlAttrs->xml_serialize("电池电压采集补偿","BatVCoef","","float", pPara->m_fBatVCoef);
+	pXmlAttrs->xml_serialize("电池电流采集补偿","BatICoef","","float", pPara->m_fBatICoef);
+	pXmlAttrs->xml_serialize("启用控制权限判断(0-不启用，1-启用)","CheckAuthority","","long", pPara->m_nCheckAuthority);
+	pXmlAttrs->xml_serialize("开机后风扇默认模式(0-静音风速，1-正常风速)","WindSpeed","","long", pPara->m_nWindSpeed);
 	pXmlAttrs->xml_serialize("生产厂家","Factory","","Factory", pPara->m_strFactory);
 	pXmlAttrs->xml_serialize("生产日期","DateFac","","DateProduce", pPara->m_strDateProduce);
 #else
@@ -973,10 +1075,11 @@ void stt_xml_serialize(PSTT_DEVICE_ATTRS pPara, CSttXmlSerializeBase *pXmlSerial
 #ifdef NOT_USE_XLANGUAGE
 			pXmlAttrs->xml_serialize("TestMngr版本","MngrVer","","MngrVersion", pPara->m_strMngrVer);
 			pXmlAttrs->xml_serialize("TestServer名称","AppName","","AppName", pPara->m_strAppName);
-			pXmlAttrs->xml_serialize("TestServer版本","AppVer","","AppVersion", pPara->m_strAppVer);
-			pXmlAttrs->xml_serialize("主板版本","FpgaVer","","FPGAVersion", pPara->m_strFPGAVer);
-			pXmlAttrs->xml_serialize("驱动版本","DriverVer","","DriverVersion", pPara->m_strDriverVer);
+			pXmlAttrs->xml_serialize("TestServer版本","AppVer","","AppVersion", pPara->m_strAppVer);			
 			pXmlAttrs->xml_serialize("驱动名称","DriverName","","DriverName", pPara->m_strDriverName);
+			pXmlAttrs->xml_serialize("驱动版本","DriverVer","","DriverVersion", pPara->m_strDriverVer);
+			pXmlAttrs->xml_serialize("主板版本","FpgaVer","","FPGAVersion", pPara->m_strFPGAVer);
+			pXmlAttrs->xml_serialize("主板开出回放(0-不支持，1-支持)","BoutReplay","","long", pPara->m_nBoutReplay);
             pXmlAttrs->xml_serialize("主板ST口模式可设置","STModeSet","","STModeSet", pPara->m_nSTModeSet);
 			pXmlAttrs->xml_serialize("状态序列容量(个)","StateCount","","long", pPara->m_nStateCount);
 
@@ -999,6 +1102,23 @@ void stt_xml_serialize(PSTT_DEVICE_ATTRS pPara, CSttXmlSerializeBase *pXmlSerial
 			pXmlAttrs->xml_serialize(/*"驱动名称"*/g_sLangTxt_Native_DrvName.GetString(),"DriverName","","DriverName", pPara->m_strDriverName);
 			pXmlAttrs->xml_serialize(/*"主板ST口模式可设置"*/g_sLangTxt_Native_MainBrdSTPortModeCfg.GetString(),"STModeSet","","STModeSet", pPara->m_nSTModeSet);
 #endif
+
+			long nMergeCurTerminal = /*STT_LARGE_CURRENT_MERGE_NOT_SUPPORT*/-1;
+
+#ifndef _STT_NOT_IN_TEST_SERVER_
+			for(int nIndex=0;nIndex<g_theSystemConfig->m_oGearSetCurModules.m_nCurModuleNum;nIndex++)
+			{
+				tmt_CurModuleGear &oCurModuleGear=g_theSystemConfig->m_oGearSetCurModules.m_oCurModuleGear[nIndex];
+				if(oCurModuleGear.m_nModulePos == 3
+						|| oCurModuleGear.m_nModulePos == 4)
+				{
+					nMergeCurTerminal = oCurModuleGear.m_nMergeCurTerminal;
+					break;
+				}
+			}
+#endif
+			pXmlAttrs->xml_serialize("合并电流端子","MergeCurTerminal","","long", nMergeCurTerminal);
+			pXmlAttrs->xml_serialize("设备升级标识","Index_System","","long", pPara->m_nIndex_System);
 		}
 	}
 
@@ -1025,7 +1145,39 @@ void stt_xml_serialize(PSTT_DEVICESYSTEMPARAMETER pPara, CSttXmlSerializeBase *p
 	stt_xml_serialize(&pPara->m_oBoutTurnOnValue, pPara->m_oDeviceAttrs.m_nBoutCount, pXmlSerialize);
 	if(pPara->m_oDeviceAttrs.m_nBinVoltMeas)
 	{
+		stt_xml_serialize(&pPara->m_oBinGear, pXmlSerialize);
 		stt_xml_serialize(pPara->m_oBinAdj, pPara->m_oDeviceAttrs.m_nBinCount, pXmlSerialize);
+	}
+
+	if(pPara->m_oDeviceAttrs.m_nDCMeas)
+	{
+		if(g_theAdjParaXmlSerialConfig.m_nDCMeasAttr)
+		{
+#ifdef NOT_USE_XLANGUAGE
+		CSttXmlSerializeBase *pDCAdjXmlAttrs = pXmlSerialize->xml_serialize("直流测量校准系数", "DCAdjustParas", "DCAdjustParas", stt_ParaGroupKey());
+#else
+		CSttXmlSerializeBase *pDCAdjXmlAttrs = pXmlSerialize->xml_serialize("", "DCAdjustParas", "DCAdjustParas", stt_ParaGroupKey());
+#endif
+			if (pDCAdjXmlAttrs != NULL)
+			{
+				CSttXmlSerializeBase *pUAdjXmlAttrs = pDCAdjXmlAttrs->xml_serialize("电压", "DCV", "DCAdj", stt_ParaGroupKey());
+				if (pUAdjXmlAttrs != NULL)
+				{
+					stt_xml_serialize(&pPara->m_oDCV,pUAdjXmlAttrs);
+				}
+
+				CString strDCAdjID;
+				for(int i = 0;i < 4;i++)
+				{
+					strDCAdjID.Format("DCI%d",i);
+					CSttXmlSerializeBase *pIAdjXmlAttrs = pDCAdjXmlAttrs->xml_serialize("电流", strDCAdjID.GetString(), "DCAdj", stt_ParaGroupKey());
+					if (pIAdjXmlAttrs != NULL)
+					{
+						stt_xml_serialize(&pPara->m_oDCI[i],pIAdjXmlAttrs);
+					}
+				}
+			}
+		}
 	}
 
 	long nIndex = 0;
@@ -1227,14 +1379,21 @@ PSTT_CHANNEL_WAVE_ADJUST stt_adj_find_ch_wave(PSTT_TRANGE_ADJUST  pTemperatureAd
 		return NULL;
 	}
 	else
-	{//基波和谐波波形
-		if (nFreqSel < 0 || nFreqSel >= pTemperatureAdj->m_pChsAdjust[nChannel].nHarmCount)
+	{
+		PSTT_CHANNEL_ADJUSTS pChsAdjust = pTemperatureAdj->m_pChsAdjust;
+		if(pChsAdjust == NULL)
+		{
+			return NULL;
+		}
+
+		//基波和谐波波形
+		if (nFreqSel < 0 || nFreqSel >= pChsAdjust[nChannel].nHarmCount)
 		{
 			return NULL;
 		}
 		else
 		{//根据通道和波形次数，得到波形校准系数
-			pChWaveAdj = &pTemperatureAdj->m_pChsAdjust[nChannel].m_pChWaveAdj[nFreqSel];
+			pChWaveAdj = &pChsAdjust[nChannel].m_pChWaveAdj[nFreqSel];
 		}
 	}
 
@@ -1285,12 +1444,18 @@ PSTT_CHANNEL_ADJUSTS stt_adj_find_channel(PSTT_MODULE pModule, long nChannel, fl
 		return NULL;
 	}
 
-	if (nChannel < 0 || nChannel >= pModule->m_oModuleAttr.m_nChannelNum)
+	PSTT_CHANNEL_ADJUSTS pChsAdjust = pTemperatureAdj->m_pChsAdjust;
+	if (pChsAdjust == NULL)
 	{
-		return &pTemperatureAdj->m_pChsAdjust[0];
+		return NULL;
 	}
 
-	return &pTemperatureAdj->m_pChsAdjust[nChannel];
+	if (nChannel < 0 || nChannel >= pModule->m_oModuleAttr.m_nChannelNum)
+	{
+		return &pChsAdjust[0];
+	}
+
+	return &pChsAdjust[nChannel];
 }
 
 PSTT_CHANNEL_WAVE_ADJUST stt_adj_find_ch_wave(PSTT_DEVICESYSTEMPARAMETER pDvSysParas, PSTT_MODULE pModule, float fTemperature, long nChannel, long nFreqSel)
@@ -1435,7 +1600,13 @@ PSTT_ADJUST_ITEM stt_adj_find_meas_u_item(float fGearVal,int nModulePos,int nCha
 				return NULL;
 			}
 
-			pChannelAdj = &pTemperatureAdj->m_pChsAdjust[nChannel];
+			PSTT_CHANNEL_ADJUSTS pChsAdjust = pTemperatureAdj->m_pChsAdjust;
+			if (pChsAdjust == NULL)
+			{
+				return NULL;
+			}
+
+			pChannelAdj = &pChsAdjust[nChannel];
 			if(pChannelAdj->m_pChWaveAdj != NULL)
 			{
 				int nGearCount = pChannelAdj->m_pChWaveAdj[nHarm].m_nGearCount;
@@ -1489,7 +1660,13 @@ PSTT_ADJUST_ITEM stt_adj_find_meas_i_item(float fGearVal,int nModulePos,int nCha
 				return NULL;
 			}
 
-			pChannelAdj = &pTemperatureAdj->m_pChsAdjust[nChannel];
+			PSTT_CHANNEL_ADJUSTS pChsAdjust = pTemperatureAdj->m_pChsAdjust;
+			if (pChsAdjust == NULL)
+			{
+				return NULL;
+			}
+
+			pChannelAdj = &pChsAdjust[nChannel];
 			if(pChannelAdj->m_pChWaveAdj != NULL)
 			{
 				int nGearCount = pChannelAdj->m_pChWaveAdj[nHarm].m_nGearCount;

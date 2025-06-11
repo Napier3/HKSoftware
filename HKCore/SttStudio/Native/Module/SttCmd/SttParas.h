@@ -8,9 +8,9 @@
 
 #include "SttCmdDefineGlobal.h"
 
-#include "../../Module/DataMngr/DataGroup.h"
-#include "../../Module/DataMngr/DvmDatasetGroup.h"
-#include "../../Module/DataMngr/DvmDevice.h"
+#include "../../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/DataMngr/DvmDatasetGroup.h"
+#include "../../../Module/DataMngr/DvmDevice.h"
 
 #ifndef STT_CMD_PARAS_NOT_USE_TEST  //2022-10-24  lijunqing
 #include "GuideBook/SttReports.h"

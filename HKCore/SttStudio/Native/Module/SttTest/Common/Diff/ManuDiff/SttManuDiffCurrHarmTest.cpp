@@ -87,7 +87,7 @@ void CSttManuDiffCurrHarmTest::TranslateToStateParas()
  	InitManuDiffParas_6U6I();//在此函数中设置故障前电压电流、开入开出等,并设置故障态电压值
  	//////////////////////////////////////////////////////////////////////////
  	//故障状态
- 	m_oDiffCalTool.CurrentCal(&m_fIdiff,m_fIbias);
+ 	m_oDiffCalTool.CurrentCal(&m_fIdiff,m_fIbias,m_nEarthing);
  	SetResultValues_I1IeI2Ie();
  	m_oResults.m_fIdiffSettingValue = m_fIdiff;
  	ChannelUI_Diff *pChCurrents = m_oDiffCalTool.GetChannelCurrents();

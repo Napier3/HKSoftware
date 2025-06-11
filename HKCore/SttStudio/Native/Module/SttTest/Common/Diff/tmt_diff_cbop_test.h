@@ -4,10 +4,10 @@
 #include "../tmt_common_def.h"
 #include "../SearchBase/tmt_search_base.h"
 
-#define FAULTLOCATION_HIGH_IN  0
-#define FAULTLOCATION_HIGH_OUT  1
-#define FAULTLOCATION_LOW_IN  2
-#define FAULTLOCATION_LOW_OUT  3
+#define FAULTLOCATION_HIGH_IN     0
+#define FAULTLOCATION_HIGH_OUT    1
+#define FAULTLOCATION_LOW_IN      2
+#define FAULTLOCATION_LOW_OUT     3
 
 typedef struct tmt_diff_cbop_paras
 {
@@ -59,8 +59,12 @@ typedef struct tmt_diff_cbop_paras
     //,3-Ir=(|Id-|I1|-|I2||)/K1,4-Ir=|I2|,5-Sqrt(K1*I1*I2*Cos(δ))
 	float	m_fFactor1;				//K1
 	float	m_fFactor2;				//K2
-    int	    m_nComBineFeature;		//组合特性
-    int	    m_nEarthing;			//接地
+
+	//国际版差动新增的3个参数,用于中性点接地零序补偿及复合特性
+    int	    m_nComBineFeature;		//组合特性/复合特性
+	int     m_nZeroSeqElimiType;//零序消除方式  - zhouhj 2024.10.6
+    int	    m_nEarthing;			//中性点是否接地
+
 	BOOL    m_bCBSimulation;		//断路器模拟  S1=不模拟,S2=模拟 0(0:不模拟,1:模拟)
 	float   m_fCBTripTime;			//分闸时间
 	float   m_fCBCloseTime;			//合闸时间
@@ -123,8 +127,11 @@ public:
 		m_nIbiasCal = 1;				 //制动方程 0-Ir=(|I1-I2|)/K1或Ir=(|I1+I2|)/K1,1-Ir=(|I1|+|I2|*K2)/K1,2-Ir=max(|I1|,,|I2|)
 		m_fFactor1 = 2;					 //K1
 		m_fFactor2 = 1;					 //K2
-		m_nComBineFeature = 1;			 //组合特性
-		m_nEarthing = 1;				 //接地
+
+		m_nComBineFeature = 0;			 //组合/复合特性
+		m_nZeroSeqElimiType = STT_DIFF_ZERO_SEQ_ELIMI_TYPE_NULL;//零序消除方式
+		m_nEarthing = 1;				 //中性点是否接地,缺省模式与之前一致为1
+
 		m_bCBSimulation = 0;			 //断路器模拟  S1=不模拟,S2=模拟 0(0:不模拟,1:模拟)
 		m_fCBTripTime  = 100.000f;		 //分闸时间
 		m_fCBCloseTime = 100.000f;		 //合闸时间

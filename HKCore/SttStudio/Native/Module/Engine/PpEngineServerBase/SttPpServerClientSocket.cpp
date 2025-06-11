@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "SttPpServerClientSocket.h"
 #include "../SttTestEngineBase.h"
-#include "../../IotAtsMngr/Module/PxEngineServer/IotPxEngineDeviceBase.h"
-#include "../../IotAtsMngr/Module/PxEngineServer/IotPxEngineServer.h"
+#include "../../../../IotAtsMngr/Module/PxEngineServer/IotPxEngineDeviceBase.h"
+#include "../../../../IotAtsMngr/Module/PxEngineServer/IotPxEngineServer.h"
+#include "../../SttTestBase/SttXmlSerialize.h"
 
 CSttPpServerClientSocket::CSttPpServerClientSocket()
 {
@@ -87,6 +88,11 @@ long CSttPpServerClientSocket::OnTestMsg(BYTE *pBuf, long nLen)
 		return FALSE;
 	}
 
+//	if (nCmdType != STT_CMD_TYPE_DEBUG)
+//	{
+//		SendToAllUser(STT_SOFT_ID_DEBUG, pBuf, nLen);
+//	}
+
 	if (nCmdType == STT_CMD_TYPE_SYSTEM)
 	{
 		bRet = Process_Cmd_System(pBuf, nLen, pszCmdID, pszTestor);
@@ -106,7 +112,24 @@ long CSttPpServerClientSocket::OnTestMsg(BYTE *pBuf, long nLen)
 
 long CSttPpServerClientSocket::Process_Cmd_System(BYTE *pBuf, long nLen, char *pszCmdID, char *pszTestor)
 {
-	return 0;
+	long nRet = 0;
+	CSttSystemCmd oSysCmd;
+	CSttXmlSerializeTool oSttXmlSerializeTool;
+	//  oSysCmd.SetRefSocketData(pClientSocket);
+	char *pszPkgXml = oSysCmd.ParsePkgOnly(pBuf);
+	oSysCmd.SetRefSocketData(this);
+	oSttXmlSerializeTool.CreateXmlSerializeRead(&oSysCmd, pszPkgXml, nLen - STT_PKG_HEAD_LEN);
+
+	if (oSysCmd.m_strID == STT_CMD_TYPE_SYSTEM_Login)
+	{
+		//生成应答命令返回
+		CSttSysState oSysState;
+		oSysState.UpdateSysStateHead(&oSysCmd);
+		oSysState.Set_ExecStatus_Success();
+		SendSysState(&oSysState);	//应答自身登录信息
+//		nRet = Process_Cmd_System_Login(this,oSysCmd);
+	}
+	return nRet;
 }
 
 long CSttPpServerClientSocket::Process_Cmd_IOT(BYTE *pBuf, long nLen, char *pszCmdID, char *pszTestor)

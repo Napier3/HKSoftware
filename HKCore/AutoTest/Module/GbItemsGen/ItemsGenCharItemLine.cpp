@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "ItemsGenCharItemLine.h"
 
 CItemsGenCharItemLine::CItemsGenCharItemLine(void)

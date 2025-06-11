@@ -321,6 +321,7 @@ void CSttTestServerBase::OnTimer()
 
 void CSttTestServerBase::StopAutoTestEvent()
 {
+#ifndef _STT_NOT_IN_TEST_SERVER_
     CSttSocketDataBase* pSocket=m_oSttTestCmd.GetRefSocketData();
     if(pSocket==NULL)
 		return;
@@ -334,6 +335,7 @@ void CSttTestServerBase::StopAutoTestEvent()
 	CSttTestBase *pCurrTest = CSttServerTestCtrlCntr::GetCurrTest();
     if(pCurrTest!=NULL)
         CLogPrint::LogFormatString(XLOGLEVEL_DEBUG, _T("%s %s Stop_AutoTest"),m_pServerSocket->m_strIPLocal.GetString(),pCurrTest->m_strID.GetString());
+#endif
 }
 
 //只检测具有单机测试权限的测试端心跳超时
@@ -396,6 +398,7 @@ void CSttTestServerBase::CheckHeartbeatOverTime()
 
 void CSttTestServerBase::ReturnTestStateEvent(long nEventType, PSTT_TIME pTime, bool bWithEvent)
 {
+ #ifndef _STT_NOT_IN_TEST_SERVER_
 	CSttSysState oSysState;
 	oSysState.UpdateSysStateHead(&m_oSttTestCmd);
 
@@ -479,6 +482,7 @@ void CSttTestServerBase::ReturnTestStateEvent(long nEventType, PSTT_TIME pTime, 
 		// 		}
 		// 		break;
 	}
+#endif
 }
 
 void CSttTestServerBase::ReturnTestEvents()
@@ -690,13 +694,15 @@ void CSttTestServerBase::CheckStopTestAfterRelease(CSttSocketDataBase *pClientSo
             g_theSystemDefaultOutput.m_bUseSysOutput=FALSE;
 			g_theSystemDefaultOutput.StopTest();
 		}
-#endif
-#endif
-		CSttTestBase *pCurrTest = CSttServerTestCtrlCntr::GetCurrTest();
+
+        CSttTestBase *pCurrTest = CSttServerTestCtrlCntr::GetCurrTest();
         if (pCurrTest != NULL)
-		{
-			pCurrTest->Stop();//手动实验老化模式断链不停输出
-		}
+        {
+            pCurrTest->Stop();//手动实验老化模式断链不停输出
+        }
+#endif
+#endif
+
 #ifndef _STT_NOT_IN_TEST_SERVER_
 #ifdef _PSX_QT_LINUX_
 		if(CSttDeviceBase::g_pSttDeviceBase != NULL)
@@ -1397,6 +1403,8 @@ long CSttTestServerBase::Process_Cmd_Test_StopTest(BOOL bReturnAsk)
 	if(bReturnAsk)
 		ReturnSysState(STT_CMD_ExecStatus_ACK);
 
+#ifndef _STT_NOT_IN_TEST_SERVER_
+#ifdef _PSX_QT_LINUX_
 	CSttTestBase *pCurrTest = CSttServerTestCtrlCntr::GetCurrTest();
     if (pCurrTest != NULL)
 	{
@@ -1404,12 +1412,11 @@ long CSttTestServerBase::Process_Cmd_Test_StopTest(BOOL bReturnAsk)
 	}
 	else
 	{
-#ifndef _STT_NOT_IN_TEST_SERVER_
-#ifdef _PSX_QT_LINUX_
 		CSttDeviceBase::g_pSttDeviceBase->SetTestStop();
+    }
 #endif
 #endif
-	}
+
 
 	if(bReturnAsk)
 		ReturnSysState(STT_CMD_ExecStatus_SUCCESS);
@@ -1440,6 +1447,7 @@ void CSttTestServerBase::Ret_Test_SysState(CSttSysState &oSysState, CSttSocketDa
 		, BOOL bBasic, BOOL bParas, BOOL bReport, BOOL bSearchResult
 		, PSTT_TIME pTime, bool bWithEvent)
 {
+#ifndef _STT_NOT_IN_TEST_SERVER_
 	CSttXmlSerializeTool oSttXmlSerializeTool;
 
 	oSysState.Set_ExecStatus_Success();
@@ -1512,14 +1520,14 @@ void CSttTestServerBase::Ret_Test_SysState(CSttSysState &oSysState, CSttSocketDa
 			pCurrTest->SearchReport_XmlSerialize(pXmlSearchReport);
 		}
 	}
-#ifndef _STT_NOT_IN_TEST_SERVER_
+
     if (bWithEvent)
 	{
 		stt_xml_serialize_test_events(pXmlParas);
 	}
-#endif
 
 	Ret_SysState(oSysState, pSttSocketDataBase, oSttXmlSerializeTool);
+#endif
 }
 
 //2020-10-22  lijunqing
@@ -1583,11 +1591,13 @@ long CSttTestServerBase::Process_Trigger(CSttSocketDataBase *pClientSocket
 		, BYTE *pBuf, long nLen, char *pszCmdID, char *pszTestor)
 {//手动触发命令
     CLogPrint::LogString(XLOGLEVEL_INFOR,_T("收到手动触发命令"));
+#ifndef _STT_NOT_IN_TEST_SERVER_
 	CSttTestBase *pCurrTest = CSttServerTestCtrlCntr::GetCurrTest();
     if (pCurrTest != NULL)
 	{
 		pCurrTest->Triger();
 	}
+#endif
 	return 0;
 }
 
@@ -1595,6 +1605,7 @@ long CSttTestServerBase::Process_Comtrade_SendDataFinish(CSttSocketDataBase *pCl
 		, BYTE *pBuf, long nLen, char *pszCmdID, char *pszTestor)
 {//Comtrade数据发送完成命令
     CLogPrint::LogString(XLOGLEVEL_INFOR,_T("收到Comtrade数据块发送完成命令"));
+#ifndef _STT_NOT_IN_TEST_SERVER_
 	CSttTestBase *pCurrTest = CSttServerTestCtrlCntr::GetCurrTest();
 
     int *pTemp = (int *)(&pBuf[STT_PKG_HEAD_LEN+1]);
@@ -1605,12 +1616,14 @@ long CSttTestServerBase::Process_Comtrade_SendDataFinish(CSttSocketDataBase *pCl
 	{
         pCurrTest->OnSendDataFinish(nSendIndex,nSendNum);
 	}
+#endif
 	return 0;
 }
 
 long CSttTestServerBase::Process_Comtrade_SendDataStart(CSttSocketDataBase *pClientSocket, BYTE *pBuf, long nLen, char *pszCmdID, char *pszTestor)
 {
     CLogPrint::LogString(XLOGLEVEL_INFOR,_T("收到Comtrade数据块开始发送命令"));
+#ifndef _STT_NOT_IN_TEST_SERVER_
 	CSttTestBase *pCurrTest = CSttServerTestCtrlCntr::GetCurrTest();
 
     int *pTemp = (int *)(&pBuf[STT_PKG_HEAD_LEN+1]);
@@ -1621,6 +1634,7 @@ long CSttTestServerBase::Process_Comtrade_SendDataStart(CSttSocketDataBase *pCli
 	{
         pCurrTest->OnSendDataStart(nSendIndex,nSendNum);
 	}
+#endif
 
 	return 1;
 }
@@ -1628,12 +1642,14 @@ long CSttTestServerBase::Process_Comtrade_SendDataStart(CSttSocketDataBase *pCli
 void CSttTestServerBase::OnAfterMoveToComtradeBuf(int nIndex,int nDataLen)
 {
     CLogPrint::LogFormatString(XLOGLEVEL_INFOR,_T("OnAfterMoveToComtradeBuf:nIndex[%d],nDataLen[%d]"),nIndex,nDataLen);
+ #ifndef _STT_NOT_IN_TEST_SERVER_
 	CSttTestBase *pCurrTest = CSttServerTestCtrlCntr::GetCurrTest();
 
     if (pCurrTest != NULL)
 	{
         pCurrTest->OnAfterMoveToComtradeBuf(nIndex,nDataLen);
 	}
+#endif
 }
 
 //Debug命令执行

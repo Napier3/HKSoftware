@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "BigComtradeFileRead.h"
-#include "../../Module/API/FileApi.h"
+#include "../../../Module/API/FileApi.h"
 
 
 
@@ -100,7 +100,7 @@ void CBigComtradeFileRead::InitFileReadBuf(long nOnceReadFileLen)
 
 	if (m_pFileReadBuffer != NULL)
 	{
-		delete m_pFileReadBuffer;
+		delete []m_pFileReadBuffer;
 	}
 
 	m_nCurSrcBeginPointIndex = 0;
@@ -214,6 +214,9 @@ void CBigComtradeFileRead::InitChMapConfig()
 	CSttModuleBinaryChComtradeBind *pBinaryCh = NULL;
 	int nBinaryChIndex = 0;
 
+	//波形文件模拟量总通道数
+	int nWaveChCount = pAnalogList->GetCount();
+
 	while(pos != NULL)
 	{
 		pModule = (CSttModuleComtradeBind *)m_pComtradePlayConfigRef->m_oSttModulesComtradeBind.GetNext(pos);
@@ -226,7 +229,7 @@ void CBigComtradeFileRead::InitChMapConfig()
 		while(posCh != NULL)
 		{
 			pCh = (CSttModuleChComtradeBind *)pModule->GetNext(posCh);
-
+			pCh->m_dK = 1.0f;
 			if (m_bAutoGenChABMap)
 			{
 				int nASel = 0;
@@ -258,17 +261,27 @@ void CBigComtradeFileRead::InitChMapConfig()
 				}
 
 					//2024-4-15 wuxinyi 新需求：默勾选第一个插件的第一条通道
-					if(nModulesChCount < 1)//20230914 wxy 总模块通道数超过12，默认不勾选
+// 					if(nModulesChCount < 1)//20230914 wxy 总模块通道数超过12，默认不勾选
+// 				{
+// 					pCh->m_nChSelected = 1;
+// 					//默认勾选  20220519 去除默认勾选,勾选的通道数量统一进行初始化,防止通道数量太多影响数据发送
+// 
+// 				}
+// 				else
+// 				{
+// 					pCh->m_nChSelected = 0;
+// 
+// 				}
+				//2024-9-2 wuxinyi 客户新需求：波形文件实际存在的电压、电流通道大于测试仪通道数量，则全部勾选
+				if(nModulesChCount < nWaveChCount)
 				{
 					pCh->m_nChSelected = 1;
-					//默认勾选  20220519 去除默认勾选,勾选的通道数量统一进行初始化,防止通道数量太多影响数据发送
-
 				}
 				else
 				{
 					pCh->m_nChSelected = 0;
-
 				}
+
 
 				if (nASel == 0)
 				{
@@ -401,66 +414,6 @@ void CBigComtradeFileRead::RefreshChMapConfig()
 			{
 				pCh = (CSttModuleChComtradeBind *)pModule->GetNext(posCh);
 
-				if (m_bAutoGenChABMap)
-				{
-					int nASel = 0;
-					//				CString strName = _T("");
-
-					if (pCh->IsModuleType_U())
-					{
-						if (nUAnalogyNum != 0)
-						{
-							pData = (CComtradeAnalogData *)oUList.GetAt(nUChIndex % nUAnalogyNum);
-							nASel = pData->m_nChannelIndex;
-							pCh->m_nChA_Index = nUChIndex % nUAnalogyNum;//20230821-wxy-初始化通道选择
-							// 						pCh->m_nChB_Index = nUChIndex % nUAnalogyNum;//20230821-wxy-初始化通道选择
-						}
-						nUChIndex++;
-					}
-					else
-					{
-						if (nIAnalogyNum != 0)
-						{
-							pData = (CComtradeAnalogData *)oIList.GetAt(nIChIndex % nIAnalogyNum);
-							nASel = pData->m_nChannelIndex;
-							//						strName = pData->m_strName;
-							pCh->m_nChA_Index = nIChIndex % nIAnalogyNum;//20230821-wxy-初始化通道选择
-							// 						pCh->m_nChB_Index = nIChIndex % nIAnalogyNum;//20230821-wxy-初始化通道选择
-
-						}
-						nIChIndex++;
-					}
-
-// 					//2024-4-15 wuxinyi 新需求：默勾选第一个插件的第一条通道
-// 					if(nModulesChCount < 1)//20230914 wxy 总模块通道数超过12，默认不勾选
-// 					{
-// 						pCh->m_nChSelected = 1;
-// 						//默认勾选  20220519 去除默认勾选,勾选的通道数量统一进行初始化,防止通道数量太多影响数据发送
-// 
-// 					}
-// 					else
-// 					{
-// 						pCh->m_nChSelected = 0;
-// 
-// 					}
-
-					if (nASel == 0)
-					{
-						pCh->InitCh_A(NULL);
-					} 
-					else
-					{
-						pCh->InitCh_A(pData);
-					}
-
-					pCh->InitCh_B(NULL);//20231025 wxy 添加B通道初始化
-					pCh->m_nChB_Index = 0;
-					//pCh->m_dK = 1; //dxy 20240204 按需求变比和通道初一的数值重新打开文件后不初始化
-					pCh->m_fMomentaryVal = 0;
-
-			} 
-			else
-			{
 				if (pCh->IsModuleType_U())
 				{
 					pCh->InitCh_A((CComtradeAnalogData *)oUList.GetAt(pCh->m_nChA_Index - 1));
@@ -474,9 +427,8 @@ void CBigComtradeFileRead::RefreshChMapConfig()
 
 				pCh->m_fMomentaryVal = 0;
 			}
-				nModulesChCount++;
-		}
 	}
+
 		else
 		{
 			if(nBinaryNum < 0)
@@ -979,7 +931,8 @@ BOOL CBigComtradeFileRead::GenerateABBufFromReplayBuf(CComtradeDataBuffer *pABBu
 // #endif
 
 	m_nCurIntervalDeliverPos += nCurFillPoints;
-	delete ppChValue;
+	delete []ppChValue;
+
 	return bRet;
 #else
 	return 0;
@@ -1018,19 +971,19 @@ void CBigComtradeFileRead::ClearTotalBuff()
 {
 	if (m_pFileReadBuffer != NULL)
 	{
-		delete m_pFileReadBuffer;
+		delete []m_pFileReadBuffer;
 		m_pFileReadBuffer = NULL;
 	}
 
 	if (m_pdSamRate != NULL)
 	{
-		delete m_pdSamRate;
+		delete []m_pdSamRate;
 		m_pdSamRate = NULL;
 	}
 
 	if (m_pnDataPoints != NULL)
 	{
-		delete m_pnDataPoints;
+		delete []m_pnDataPoints;
 		m_pnDataPoints = NULL;
 	}
 
@@ -1079,7 +1032,9 @@ BOOL CBigComtradeFileRead::GenerateLoopBuf()
 	}
 	
 //	pLoopBuf->BufferDatas_WriteFile();//20220519 将第一个周波数据写入文件 
-	delete ppChValue;
+
+	//2025-3-20 wuxinyi 修改没有释放完全
+	delete []ppChValue;
 #endif
 
 // 	BOOL bExitFlag = FALSE;
@@ -1714,12 +1669,12 @@ void CBigComtradeFileRead::SetBigFileTotalSmpRates()
 {
 	if (m_pnDataPoints != NULL)
 	{
-		delete m_pnDataPoints;
+		delete []m_pnDataPoints;
 	}
 
 	if (m_pdSamRate != NULL)
 	{
-		delete m_pdSamRate;
+		delete []m_pdSamRate;
 	}
 
 	m_nSamAmount = m_oSrcComtradeFile.m_nSamAmount;
@@ -1920,6 +1875,7 @@ BOOL CBigComtradeFileRead::ReadBigDataAsBINARYMode(const CString& strComtradeFil
 
 	if (!m_oFileRead.Open(strDatFilePath,CFile::modeRead))
 	{
+// 		long nError = GetLastError();
 		CLogPrint::LogFormatString(XLOGLEVEL_ERROR, _T("打开dat文件(%s)失败."), strDatFilePath.GetString());
 		return FALSE;
 	}
@@ -2193,7 +2149,7 @@ BOOL CBigComtradeFileRead::GenerateComtradeChDataFromDataFile_BinaryMode(BOOL bS
 	}
 	else if (nCurTotalReadLength>m_nFileReadBufLen)
 	{
-		delete m_pFileReadBuffer;
+		delete []m_pFileReadBuffer;
 		m_nFileReadBufLen = nCurTotalReadLength;
 		m_pFileReadBuffer = new BYTE[m_nFileReadBufLen];
 	}

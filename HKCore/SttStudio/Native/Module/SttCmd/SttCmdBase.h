@@ -9,7 +9,7 @@
 #include "SttCmdData.h"
 #include "../../Module/SttGlobalDef.h"
 #include "../SttSocket/SttCmdOverTimeMngr.h"
-#include "../../Module/BaseClass/XObjectRefBase.h"
+#include "../../../Module/BaseClass/XObjectRefBase.h"
 
 #include "../CmmInterface/SttCmmInterface.h"
 

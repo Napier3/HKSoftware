@@ -1,5 +1,5 @@
 #pragma once
-#include "../../../module/baseclass/exbaseobject.h"
+#include "ExBaseObject.h"
 #include "../../../Module/MemBuffer/CycleMemBuffer.h"
 
 #include "PpPackageDetail.h"

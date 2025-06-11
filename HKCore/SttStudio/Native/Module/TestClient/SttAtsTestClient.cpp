@@ -1,13 +1,13 @@
 #include "stdafx.h"
 #include "SttAtsTestClient.h"
 #include "../SttTest/Common/tmt_adjust_sys_para_module_def.h"
-#include "../../Module/GpsPcTime/GpsPcTime.h"
+#include "../../../Module/GpsPcTime/GpsPcTime.h"
 #include "../SttTestResourceMngr/RtDataMngr/SttGlobalRtDataMngr.h"
 #include "../SttTestResourceMngr/SttTestResourceMngr.h"
-#include "../../Module/Socket/XPing.h"
+#include "../../../Module/Socket/XPing.h"
 
 #ifndef NOT_USE_XLANGUAGE
-#include "../Module/XLangResource_Native.h"
+#include "../../Module/XLangResource_Native.h"
 #include "../../XLanguage/QT/XLanguageAPI_QT.h""
 #endif
 
@@ -127,7 +127,17 @@ CEventResult *CSttAtsTestClient::InitEvent(const CString &strEventID,double fTim
 	
 	return pEventInfo;
 }
+//断开底层自动测试服务，nPort = STT_PORT_NATIVE_SERVER。
+void CSttAtsTestClient::DisConnectAtsTestServer()
+{
+	if (m_pXClientEngine == NULL)
+	{
+		return ;
+	}
 
+	return m_pXClientEngine->DisConnect();
+
+}
 
 //连接底层自动测试服务，nPort = STT_PORT_NATIVE_SERVER。
 BOOL CSttAtsTestClient::ConnectAtsTestServer(const CString &strIP,long nPort,const CString &strSoftID)
@@ -502,14 +512,14 @@ long CSttAtsTestClient::Ats_AddSafety(CDataGroup *pParas, CExBaseList *pDatas, C
 	return m_pXClientEngine->Ats_AddSafety(pParas, pDatas, pMsgs, bDoEvents, pRetData, nSynMode);
 }
 
-long CSttAtsTestClient::Ats_CloseTest(BOOL bDoEvents,CSttCmdData *pRetData)
+long CSttAtsTestClient::Ats_CloseTest(BOOL bDoEvents,CSttCmdData *pRetData,long nSynMode )
 {
 	if (!ConnectAtsTestServer())
 	{
 		return 0;
 	}
 
-	return m_pXClientEngine->Ats_CloseTest(bDoEvents, pRetData);
+	return m_pXClientEngine->Ats_CloseTest(bDoEvents, pRetData,nSynMode);
 }
 
 long CSttAtsTestClient::Ats_SetItemState(CExBaseList *pSttParas, BOOL bDoEvents,CSttCmdData *pRetData)
@@ -784,96 +794,97 @@ void CSttAtsTestClient::OnException(CDataGroup *pParas)
 	bUShort_New = stt_GetDataValueByID2(pTestGlobalParas, STT_SYS_STATE_ID_UShort, 0);
 	bOverHot_New = stt_GetDataValueByID2(pTestGlobalParas, STT_SYS_STATE_ID_OverHeat, 0);
 	
-	while(pos != NULL)
-	{
-		p = pParas->GetNext(pos);
-
-		if (p->GetClassID() != DTMCLASSID_CDATAGROUP)
-		{
-			continue;
-		}
-
-		pModule = (CDataGroup *)p;
-
-		if (pModule->m_strDataType != _T("Module"))
-		{
-			continue;
-		}
-
-		CString strModuleType;
-		stt_GetDataValueByID(pModule, _T("ModuleType"), strModuleType);
-
-		//解析温度上、中、下
-		float fT1 = 0.0,fT2 = 0.0,fT3 = 0.0;
-		stt_GetDataValueByID(pModule, _T("T1"), fT1);
-		stt_GetDataValueByID(pModule, _T("T2"), fT2);
-		stt_GetDataValueByID(pModule, _T("T3"), fT3);
-
-		if (fT1 > 85)
-		{
-			CLogPrint::LogFormatString(XLOGLEVEL_EXCEPTION,_T("模块(%s,%s)的温度(上)值(%f)超限值85°"),pModule->m_strName.GetString()
-				,strModuleType.GetString(),fT1);
-//			bIsHot = TRUE;
-		}
-
-		if (fT2 > 85)
-		{
-			CLogPrint::LogFormatString(XLOGLEVEL_EXCEPTION,_T("模块(%s,%s)的温度(下)值(%f)超限值85°"),pModule->m_strName.GetString()
-				,strModuleType.GetString(),fT2);
-//			bIsHot = TRUE;
-		}
-
-		if (fT3 > 85)
-		{
-			CLogPrint::LogFormatString(XLOGLEVEL_EXCEPTION,_T("模块(%s,%s)的温度(中)值(%f)超限值85°"),pModule->m_strName.GetString()
-				,strModuleType.GetString(),fT3);
-//			bIsHot = TRUE;
-		}
-
-		posCh = pModule->GetHeadPosition();
-		while(posCh != NULL)
-		{
-			p1 = pModule->GetNext(posCh);
-
-			if (p1->m_strID == _T("DisableType"))
-			{
-				CLogPrint::LogFormatString(XLOGLEVEL_ERROR,_T("%s被禁用(%s),模块类型(%s)."),pModule->m_strName.GetString(),p1->m_strName.GetString(),strModuleType.GetString());
-			}
-
-// 			if (p1->GetClassID() != DTMCLASSID_CDATAGROUP)
+	//dingxy 20250321 移除Module group节点
+// 	while(pos != NULL)
+// 	{
+// 		p = pParas->GetNext(pos);
+// 
+// 		if (p->GetClassID() != DTMCLASSID_CDATAGROUP)
 // 			{
 // 				continue;
 // 			}
 // 
-// 			pCh = (CDataGroup *)p1;
+// 		pModule = (CDataGroup *)p;
 // 
-// 			if (pCh->m_strDataType != _T("Channel"))
+// 		if (pModule->m_strDataType != _T("Module"))
 // 			{
 // 				continue;
 // 			}
-//
-// 			long nIsOverLoad = 0;
-// 			stt_GetDataValueByID(pCh, _T("IsOverLoad"), nIsOverLoad);
 // 
-// 			if (nIsOverLoad)
+// 		CString strModuleType;
+// 		stt_GetDataValueByID(pModule, _T("ModuleType"), strModuleType);
+// 
+// 		//解析温度上、中、下
+// 		float fT1 = 0.0,fT2 = 0.0,fT3 = 0.0;
+// 		stt_GetDataValueByID(pModule, _T("T1"), fT1);
+// 		stt_GetDataValueByID(pModule, _T("T2"), fT2);
+// 		stt_GetDataValueByID(pModule, _T("T3"), fT3);
+// 
+// 		if (fT1 > 85)
+// 		{
+// 			CLogPrint::LogFormatString(XLOGLEVEL_EXCEPTION,_T("模块(%s,%s)的温度(上)值(%f)超限值85°"),pModule->m_strName.GetString()
+// 				,strModuleType.GetString(),fT1);
+// //			bIsHot = TRUE;
+// 		}
+// 
+// 		if (fT2 > 85)
 // 			{
-// 				if (strModuleType == STT_MODULE_TYPE_VOLT_ID)
+// 			CLogPrint::LogFormatString(XLOGLEVEL_EXCEPTION,_T("模块(%s,%s)的温度(下)值(%f)超限值85°"),pModule->m_strName.GetString()
+// 				,strModuleType.GetString(),fT2);
+// //			bIsHot = TRUE;
+// 		}
+// 
+// 		if (fT3 > 85)
 // 				{
-// 					bIsUOverLoad = TRUE;
+// 			CLogPrint::LogFormatString(XLOGLEVEL_EXCEPTION,_T("模块(%s,%s)的温度(中)值(%f)超限值85°"),pModule->m_strName.GetString()
+// 				,strModuleType.GetString(),fT3);
+// //			bIsHot = TRUE;
 // 				}
-// 				else
+// 
+// 		posCh = pModule->GetHeadPosition();
+// 		while(posCh != NULL)
+// 		{
+// 			p1 = pModule->GetNext(posCh);
+// 
+// 			if (p1->m_strID == _T("DisableType"))
 // 				{
-// 					bIsIOverLoad = TRUE;
-// 				}	
+// 				CLogPrint::LogFormatString(XLOGLEVEL_ERROR,_T("%s被禁用(%s),模块类型(%s)."),pModule->m_strName.GetString(),p1->m_strName.GetString(),strModuleType.GetString());
 // 			}
-		}
-	}
+// 
+// // 			if (p1->GetClassID() != DTMCLASSID_CDATAGROUP)
+// // 			{
+// // 				continue;
+// // 			}
+// // 
+// // 			pCh = (CDataGroup *)p1;
+// // 
+// // 			if (pCh->m_strDataType != _T("Channel"))
+// // 			{
+// // 				continue;
+// // 			}
+// //
+// // 			long nIsOverLoad = 0;
+// // 			stt_GetDataValueByID(pCh, _T("IsOverLoad"), nIsOverLoad);
+// // 
+// // 			if (nIsOverLoad)
+// // 			{
+// // 				if (strModuleType == STT_MODULE_TYPE_VOLT_ID)
+// // 				{
+// // 					bIsUOverLoad = TRUE;
+// // 				}
+// // 				else
+// // 				{
+// // 					bIsIOverLoad = TRUE;
+// // 				}	
+// // 			}
+// 		}
+// 			}
 
 	m_pLastEventResult = &m_oCurrEventResult;
 	
-	if((m_pLastEventResult->m_nUOverLoad != (long)bUShort_New)
-		|| (m_pLastEventResult->m_nIOverLoad != (long)bIBreak_New)
-		|| (m_pLastEventResult->m_nOverHeat != (long)bOverHot_New))
+	if((m_pLastEventResult->m_nUOverLoad != /*(long)bUShort_New*/bUShort_New)
+		|| (m_pLastEventResult->m_nIOverLoad != /*(long)bIBreak_New*/bIBreak_New)
+		|| (m_pLastEventResult->m_nOverHeat != /*(long)bOverHot_New)*/bOverHot_New))
 	{
 // 		CEventResult *pEventInfo = (CEventResult *)m_pLastEventResult->Clone();
 		m_pLastEventResult->m_nUOverLoad = bUShort_New;
@@ -899,11 +910,12 @@ void CSttAtsTestClient::OnException(CDataGroup *pParas)
 // 		AppenEventInfo(pEventInfo);
 	}
 
-	long nVal = 0;
-	if (stt_GetDataValueByID(pParas, STT_SYS_STATE_ID_Udc, nVal))
-	{
-		m_oCurrEventResult.m_nUdc = nVal;
-	}
+	//dingxy 20250320 
+//	long nVal = 0;
+// 	if (stt_GetDataValueByID(pParas, STT_SYS_STATE_ID_Udc, nVal))
+// 	{
+// 		m_oCurrEventResult.m_nUdc = nVal;
+// 	}
 }
 
 void CSttAtsTestClient::ValidExceptionTimeOut()
@@ -1112,14 +1124,15 @@ void CSttAtsTestClient::OnTestState(const CString &strMacroID, CDataGroup *pPara
 			}	
 		}
 
-		if (stt_GetDataValueByID(pParas, STT_SYS_STATE_ID_Udc, nVal))
-		{
-			CEventResult *pEventInfo = InitEvent(SYS_STATE_REPORT_OnUdcChanged,fTime,fRealTime,strTimeStr);
-			pEventInfo->m_nUdc = nVal;
-
-			pEventInfo->CopyOwn(&m_oCurrEventResult);
-			AppenEventInfo(pEventInfo);
-		}
+		//dingxy 20250320
+// 		if (stt_GetDataValueByID(pParas, STT_SYS_STATE_ID_Udc, nVal))
+// 		{
+// 			CEventResult *pEventInfo = InitEvent(SYS_STATE_REPORT_OnUdcChanged,fTime,fRealTime,strTimeStr);
+// 			pEventInfo->m_nUdc = nVal;
+// 
+// 			pEventInfo->CopyOwn(&m_oCurrEventResult);
+// 			AppenEventInfo(pEventInfo);
+// 		}
 	}
 }
 
@@ -1222,10 +1235,11 @@ long CSttAtsTestClient::OnRtData(CSttParas *pParas)
 		}
 	}
 
-	if (m_oExceptionTick.GetTickCountLong(FALSE)>STT_EXCEPTION_TIMEOUT)
-	{
-		ValidExceptionTimeOut();
-	}
+	//dingxy 20250321 改为底层处理
+// 	if (m_oExceptionTick.GetTickCountLong(FALSE)>STT_EXCEPTION_TIMEOUT)
+// 	{
+// 		ValidExceptionTimeOut();
+// 	}
 
 	return 1;
 }
@@ -1248,6 +1262,10 @@ void CSttAtsTestClient::OnReport(const CString &strTestID, long nDeviceIndex, lo
 		m_pAtsEventRcv->OnReport_ReadDevice((CDataGroup*)pParas->FindByID(_T("Device")));
 		return;
 	}
+	else if (pParas->m_strID == STT_CMD_TYPE_ADJUST_ReadSystemState)//dingxy 20250320
+	{
+		m_pAtsEventRcv->OnReport_ReadSystemState(STT_CMD_TYPE_ADJUST_ReadSystemState,pParas);
+	} 
 
 	if(!IsAtsRetCmd(pParas))
 	{
@@ -1568,7 +1586,9 @@ void CSttAtsTestClient::Ats_IecDetect(long bEnable)
 	
     QList<QVector<int> > listOfVectors;
 	QVector<int> vector;
-	
+	vector.clear();
+	listOfVectors.clear();
+
 
 	if (g_oSttTestResourceMngr.m_oIecDatasMngr.GetCount() >0)
 	{
@@ -1582,14 +1602,17 @@ void CSttAtsTestClient::Ats_IecDetect(long bEnable)
 				CIecCfg6044CommonInData *pIecCfg6044CommonInData = NULL;
 				POS pos = pIecCfgDatasSmvIn->GetHeadPosition();
 
+				long nPkgLength,nFiberIndex;
+		
 				while(pos)
 				{
 					pIecCfg6044CommonInData = (CIecCfg6044CommonInData *)pIecCfgDatasSmvIn->GetNext(pos);
 
 					if (pIecCfg6044CommonInData->GetClassID() == CFGCLASSID_CIECCFG6044COMMONINDATA)
 					{
-						long nPkgLength = pIecCfg6044CommonInData->GetPkgLength();
-						long nFiberIndex = pIecCfg6044CommonInData->m_nFiberIndex +1;
+						nPkgLength = pIecCfg6044CommonInData->GetPkgLength();
+						nFiberIndex = pIecCfg6044CommonInData->m_nFiberIndex;
+						vector.clear();
 						
 						vector.append(nFiberIndex+1);
 						vector.append(nPkgLength);
@@ -1615,9 +1638,12 @@ void CSttAtsTestClient::Ats_IecDetect(long bEnable)
 			
 		if (nCount > 0)
 		{
+			QVector<int> vectorAtFirst;
+
 			for (int i = 0;i < nCount; i++)
 			{
-				QVector<int> vectorAtFirst = listOfVectors.at(i);
+				vectorAtFirst.clear();
+				vectorAtFirst = listOfVectors.at(i);
 				long nFiberIndex = vectorAtFirst[0];  // 1
 				long nPkgLength = vectorAtFirst[1];
 
@@ -1661,4 +1687,25 @@ BOOL CSttAtsTestClient::Ats_UartConfig(CDataGroup *pUartConfigParas)
 	}
 
 	return m_pXClientEngine->Test_SetParameter(_T("UartConfig"), pUartConfigParas);
+}
+
+void CSttAtsTestClient::Ats_BinConfig(CDataGroup *pBinConfigParas)
+{
+	if (!ConnectAtsTestServer())
+	{
+		return;
+	}
+
+	m_pXClientEngine->Test_SetParameter(_T("BinConfig"), pBinConfigParas);
+}
+
+long CSttAtsTestClient::Ats_GetSystemState(CStringArray &astrTypes, BOOL bDoEvents, CSttCmdData *pRetData )
+{
+	if (!ConnectAtsTestServer())
+	{
+		return 0;
+	}
+
+	long nRet = m_pXClientEngine->Test_GetSystemState(astrTypes, bDoEvents, pRetData);
+	return nRet;
 }

@@ -2,23 +2,22 @@
 #include "ui_SttIecRecordDetectWidget.h"
 #include "../../SttTestCtrl/SttTestAppBase.h"
 #include "../../SttTestCtrl/SttTestCtrlCntrNative.h"
-#include "../../Module/SmartCap/XSmartCapMngr.h"
-#include "../../Module/SmartCap/61850Cap/CapDevice/CapDevice6044.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../../Module/SmartCap/61850Cap/CapDevice/CapDevice6044.h"
+#include "../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../UI/SttTestCntrFrameBase.h"
-#include "../../61850/Module/IecCfgSclTool/SclToIecCfgTool.h"
-#include "../../Module/OSInterface/QT/XMessageBox.h"
+#include "../../../../61850/Module/IecCfgSclTool/SclToIecCfgTool.h"
+#include "../../../../Module/OSInterface/QT/XMessageBox.h"
 #include "MUTest/SttMUTestIecCbSelWidget.h"
 #include "../../XLangResource_Native.h"
 #include "SttIecRecordMainWidget.h"
 #include "SttIecRecordCbWidget.h"
-#include "../../Module/SmartCap/XSmartCapFileWrite.h"
+#include "../../../../Module/SmartCap/XSmartCapFileWrite.h"
 
 //2022-12-02 修改功能ID，导致所有的都要编译，效率低下，所以从头文件中去掉，在任何需要包含的地方进行包含
 #include "../../UI/SttTestCntrCmdDefine.h" 
 
 
-CXWndInterface *g_theCapDeviceMngrMsgRcvWnd = NULL;
 extern QSttIecRecordMainWidget *g_theSttIecRecordMainWidget;
 extern CSttIecRecordCbInterface *g_pSttIecRecordCbWidget;
 QSttIecRecordDetectWidget *g_pSttIecRecordDetectWidget = NULL;
@@ -34,6 +33,7 @@ QSttIecRecordDetectWidget::QSttIecRecordDetectWidget(QFont font, QWidget *parent
 	m_bIecCapWriteFile = 0;
 	m_bIsClearCBs = false;
 	m_bIsFromIecfgFile = FALSE;
+	m_bStartDetect = FALSE;
 	g_theCapDeviceMngrMsgRcvWnd = this;
 	g_pSttIecRecordDetectWidget = this;
 	m_nIecType = 0;
@@ -58,6 +58,13 @@ QSttIecRecordDetectWidget::QSttIecRecordDetectWidget(QFont font, QWidget *parent
 	m_pGridIecCb = new CSttIecCbGrid(this);
 	m_pGridIecCb->setFont(*g_pSttGlobalFont);
 	m_pGridIecCb->horizontalHeader()->setFont(*g_pSttGlobalFont);
+
+	if(g_oSystemParas.m_nIecFormatMeas != STT_IEC_FORMAT_61850_92)
+	{	//20240914 suyang FT3时需要提前设置，否则表头显示错误
+		m_pGridIecCb->m_nIecCbShowType = STT_IECCBGRID_SHOW_TYPE_60044;
+		m_pGridIecCb->m_bViewFT3 = TRUE;
+	}
+
 	m_pGridIecCb->InitGrid();
 	ui->verticalLayout->insertWidget(0,m_pGridIecCb);
 	m_pGridIecCb->AttachDataViewOptrInterface(this);
@@ -152,7 +159,7 @@ void QSttIecRecordDetectWidget::slot_ck_WaveRecordStateChanged(int	nIndex)
 	//2023-1-3 suyang 只做显示提示信息操作
 	if (m_chkWaveRecord->checkState() == Qt::Checked)
 	{
-		QMessageBox::information(this, tr("提示"),tr("进入监视后，开始录波！"));
+		QMessageBox::information(this, g_sLangTxt_Message,g_sLangTxt_Iec_StartRcd);
 	}
 
 
@@ -330,6 +337,12 @@ void QSttIecRecordDetectWidget::UpdateDetectType(long nPkgDetectType)
 	{
 		return;
 	}
+	//20240913 suyang 直接调用m_pGridIecCb的ShowDatas函数
+// 	int nIecCbType = 0;
+// 	if (m_pGridIecCb != NULL)
+// 	{
+// 		nIecCbType = m_pGridIecCb->m_nIecCbShowType;
+// 	}
 
 	if (nPkgDetectType == STT_IEC_DETECT_TYPE_61850)
 	{
@@ -341,6 +354,7 @@ void QSttIecRecordDetectWidget::UpdateDetectType(long nPkgDetectType)
 		ui->m_chkUseGoose->setCheckState(Qt::Checked);
 
 		m_nIecType = STT_IEC_DETECT_TYPE_61850;
+// 		m_pGridIecCb->m_nIecCbShowType = STT_IECCBGRID_SHOW_TYPE_61850;
 	}
 	else if (nPkgDetectType == STT_IEC_DETECT_TYPE_61850_92)
 	{
@@ -351,6 +365,7 @@ void QSttIecRecordDetectWidget::UpdateDetectType(long nPkgDetectType)
 		ui->m_chkUseSmv->setCheckState(Qt::Checked);
 		ui->m_chkUseGoose->setCheckState(Qt::Unchecked);
 		m_nIecType = STT_IEC_DETECT_TYPE_61850_92;
+// 		m_pGridIecCb->m_nIecCbShowType = STT_IECCBGRID_SHOW_TYPE_61850;
 	}
 	else if (nPkgDetectType == STT_IEC_DETECT_TYPE_61850_GS)
 	{
@@ -361,6 +376,7 @@ void QSttIecRecordDetectWidget::UpdateDetectType(long nPkgDetectType)
 		ui->m_chkUseSmv->setCheckState(Qt::Unchecked);
 		ui->m_chkUseGoose->setCheckState(Qt::Checked);
 		m_nIecType = STT_IEC_DETECT_TYPE_61850_GS;
+// 		m_pGridIecCb->m_nIecCbShowType = STT_IECCBGRID_SHOW_TYPE_61850;
 	}
 	else if (nPkgDetectType == STT_IEC_DETECT_TYPE_60044)
 	{
@@ -372,16 +388,31 @@ void QSttIecRecordDetectWidget::UpdateDetectType(long nPkgDetectType)
 		ui->m_chkUseFT3->setCheckState(Qt::Checked);
 //		g_oCapAnalysisConfig.m_nShowPrimaryValue = 0;
 		m_nIecType = STT_IEC_DETECT_TYPE_60044;
+// 		m_pGridIecCb->m_nIecCbShowType = STT_IECCBGRID_SHOW_TYPE_60044;
 		
 	}
 	else
+	{
 		return;
-
+	}
 	m_pGridIecCb->m_bViewSmv = m_bViewSmv;
 	m_pGridIecCb->m_bViewGoose = m_bViewGoose;
 	m_pGridIecCb->m_bViewFT3 = m_bViewFT3;
 	g_theXSmartCapMngr->m_pX61850Cap->m_oCapDeviceAll.UnselectAllCap(!m_bViewSmv,!m_bViewGoose,!m_bViewFT3);
-	UpdateCbGrid();
+	
+// 	//20240913 suyang 此处更改调用ShowDatas，从主界面进入更新报文类型时，界面表格表头显示不对
+//	UpdateCbGrid();
+	if (m_pGridIecCb != NULL)
+	{
+		m_pGridIecCb->ShowDatas(&g_theXSmartCapMngr->m_pX61850Cap->m_oCapDeviceAll);
+	}
+// 	if (m_pGridIecCb != NULL)
+// 	{
+// 		if (m_pGridIecCb->m_nIecCbShowType != nIecCbType)
+// 		{
+// 			m_pGridIecCb->UpdateGridTitle();
+// 		}
+// 	}
 }
 
 BOOL QSttIecRecordDetectWidget::AttachDeviceChMapsBySCL(CCapDeviceBase *pCapDeviceBase)
@@ -605,6 +636,7 @@ void QSttIecRecordDetectWidget::on_m_btnDetect_clicked()
 
 void QSttIecRecordDetectWidget::StartDetect()
 {
+	m_bStartDetect =  TRUE;
 	m_bIsFromIecfgFile = FALSE;
 	g_bSmartCap_RecordNow = FALSE;//启动探测功能的时候就停止录波了,在进入监视界面时,启动录波
 //	ImportIecfg();//20220609 zhouhj 20220609 开始探测时,固定导入配置
@@ -614,9 +646,9 @@ void QSttIecRecordDetectWidget::StartDetect()
 	ui->m_btnDetect->setEnabled(false);
 	ui->m_btnDetectStop->setEnabled(true);
 
-	ui->m_chkUseSmv->setEnabled(false);
-	ui->m_chkUseGoose->setEnabled(false);
-	ui->m_chkUseFT3->setEnabled(false);
+// 	ui->m_chkUseSmv->setEnabled(false);
+// 	ui->m_chkUseGoose->setEnabled(false);
+// 	ui->m_chkUseFT3->setEnabled(false);
 
 	assist_event(Event_ID_IecAddCb, NULL);
 
@@ -684,8 +716,18 @@ void QSttIecRecordDetectWidget::on_m_btnClear_clicked()
 </macro>
 */
 
+void QSttIecRecordDetectWidget::MuBeginRecord()
+{
+	on_m_btnBeginRecord_clicked();
+}
+
 void QSttIecRecordDetectWidget::on_m_btnBeginRecord_clicked()
 {
+	if (m_pGridIecCb->rowCount() < 1)
+	{
+		return;
+	}
+
 	CXSttCap_61850 *pXSttCap_61850 = g_theXSmartCapMngr->GetSttCap_61850();
 	long nSmpRate = 4000;
 	BOOL bIsFT3Device = FALSE;
@@ -733,7 +775,8 @@ void QSttIecRecordDetectWidget::on_m_btnBeginRecord_clicked()
 		pXSttCap_61850->AddDataset_dsRcdStep6U6I();
 	}
 
-	CCapDeviceBase *pSelCapDevice = (CCapDeviceBase*)m_pGridIecCb->GetCurrSelData_BySelect();   //获取第一个选中的控制块
+	//20241228 suyang 多余代码，注销
+	//CCapDeviceBase *pSelCapDevice = (CCapDeviceBase*)m_pGridIecCb->GetCurrSelData_BySelect();   //获取第一个选中的控制块
 
 	//清空所有录波设备、波形计算等;
 	pXSttCap_61850->Reset();
@@ -793,13 +836,13 @@ void QSttIecRecordDetectWidget::on_m_btnBeginRecord_clicked()
 	strFile += _T("SttIecRecordDetectDvm.xml");
 	pXSttCap_61850->m_pDvmDevice->SaveXmlFile(strFile, CDataMngrXmlRWKeys::g_pXmlKeys);
 
-#ifndef _PSX_QT_LINUX_//20230703 在Window下,同时保存一份到e-Protocol下,供自动测试使用
+// #ifndef _PSX_QT_LINUX_//20230703 在Window下,同时保存一份到e-Protocol下,供自动测试使用
 	strFile = _P_GetInstallPath();
 	strFile += _T("e-Protocol/Library/");
 	CreateAllDirectories(strFile);
 	strFile += _T("SttIecRecordDetectDvm.xml");
 	pXSttCap_61850->m_pDvmDevice->SaveXmlFile(strFile, CDataMngrXmlRWKeys::g_pXmlKeys);
-#endif
+// #endif
 //#endif
 
 	ui->m_btnDetect->setEnabled(true);//进入录波后,会自动停止探测命令,故改变按钮使能
@@ -838,6 +881,11 @@ void QSttIecRecordDetectWidget::slot_chkUseSmvClicked()
 		g_theXSmartCapMngr->m_pX61850Cap->m_oCapDeviceAll.UnselectAllCap(false,/*false*/true,true);
 
 		m_nIecType = STT_IEC_DETECT_TYPE_61850_92;
+
+		if (m_bStartDetect)
+		{
+			StartDetect();//20241022 suyang  重新开始探测
+		}
 	} 
 	else
 	{
@@ -864,6 +912,10 @@ void QSttIecRecordDetectWidget::slot_chkUseGooseClicked()
 		g_theXSmartCapMngr->m_pX61850Cap->m_oCapDeviceAll.UnselectAllCap(/*false*/true,false,true);
 
 		m_nIecType = STT_IEC_DETECT_TYPE_61850_GS;
+		if (m_bStartDetect)
+		{
+			StartDetect();//20241022 suyang  重新开始探测
+		}
 	} 
 	else
 	{
@@ -889,6 +941,11 @@ void QSttIecRecordDetectWidget::slot_chkUseFT3Clicked()
 		g_theXSmartCapMngr->m_pX61850Cap->m_oCapDeviceAll.UnselectAllCap(true,true,false);
 
     	m_nIecType = STT_IEC_DETECT_TYPE_60044;
+		if (m_bStartDetect)
+		{
+			StartDetect();//20241022 suyang  重新开始探测
+		}
+
 	} 
 	else
 	{
@@ -909,9 +966,10 @@ void QSttIecRecordDetectWidget::on_m_btnDetectStop_clicked()
     pNative->Ats_IecDetect(0);
 	ui->m_btnDetect->setEnabled(true);
 	ui->m_btnDetectStop->setEnabled(false);
-	ui->m_chkUseSmv->setEnabled(true);
-	ui->m_chkUseGoose->setEnabled(true);
-	ui->m_chkUseFT3->setEnabled(true);
+	m_bStartDetect = FALSE;
+// 	ui->m_chkUseSmv->setEnabled(true);
+// 	ui->m_chkUseGoose->setEnabled(true);
+// 	ui->m_chkUseFT3->setEnabled(true);
 }
 
 void QSttIecRecordDetectWidget::ImportIecfg()

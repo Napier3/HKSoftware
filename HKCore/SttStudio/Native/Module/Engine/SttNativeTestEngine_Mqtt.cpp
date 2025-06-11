@@ -284,40 +284,6 @@ void CSttNativeTestEngine_Mqtt::InitMqttTopicCmbn(const CString &strAtsServiceSN
 
 void CSttNativeTestEngine_Mqtt::OnCommCmdMessage(WPARAM wParam, LPARAM lParam)
 {
-#ifdef _PSX_QT_LINUX_
-    if (m_pSmartTest != NULL)
-    {
-        if (m_pSmartTest->IsTestCreated())
-        {
-            return;
-        }
-    }
-
-    CString strDeviceID;
-    strDeviceID = "0";
-
-    if ( lParam == 1 )
-    {
-        stt_Return_Ats_EngineEvent(strDeviceID, SYS_STATE_EVENT_OnEngineEvent, EngineEvent_CommError);
-        return ;
-    }
-
-    if (lParam == engineCommError)
-    {
-        stt_Return_Ats_EngineEvent(strDeviceID, SYS_STATE_EVENT_OnEngineEvent, EngineEvent_CommError);
-        return ;
-    }
-
-    CPxiDevice *pPxiDevice = g_thePxiEngine->GetItem(wParam);
-    CDvmDataset *pDataset = NULL;
-
-    if (pPxiDevice != NULL)
-    {
-        pDataset = pPxiDevice->FindDvmDataset(pPxiDevice->m_strDatasetPathOfProcedure);
-    }
-
-    stt_Return_Ats_EngineEvent(strDeviceID, SYS_STATE_EVENT_OnEngineEvent, EngineEvent_CommFinish, pDataset);
-#endif
 }
 
 void CSttNativeTestEngine_Mqtt::OnSysMessage(WPARAM wParam, LPARAM lParam)
@@ -387,11 +353,6 @@ long CSttNativeTestEngine_Mqtt::X_Ats_InputData(void *pCommInterface, CDataGroup
 
 CSttNativeTestEngine_Mqtt::CSttNativeTestEngine_Mqtt()
 {
-    //m_pSmartTest = new CSttSmartTest();
-#ifdef _PSX_QT_LINUX_
-    g_thePxiDeviceCommCmdMessage = this;
-#endif
-
 	//服务端管理对象
     g_theNativeTestEngine->AddTail(this);
 
@@ -1230,22 +1191,6 @@ CDvmDataset* CSttNativeTestEngine_Mqtt::Ats_GetDataset(CSttAtsCmd &oAtsCmd)
     CString strDatasetPath;
     oAtsCmd.GetParasDataValueByID(STT_CMD_PARA_DatasetPath, strDatasetPath);
 
-#ifdef _NATIVE_ENGINE_USE_PXIENGINE_
-    CPxiDevice *pPxiDevice = g_thePxiEngine->GetDeviceByIndex(0);
-
-    if (pPxiDevice == NULL)
-    {
-        return NULL;
-    }
-
-    CPxiDataSet *pXiDataset = pPxiDevice->FindDataSet(strDatasetPath);
-
-    if (pXiDataset != NULL)
-    {
-        pDatset = pXiDataset->m_pDataset;
-        delete pXiDataset;
-    }
-#endif
     return pDatset;
 }
 
@@ -1271,21 +1216,6 @@ long CSttNativeTestEngine_Mqtt::Ats_SetDataset(CSttAtsCmd &oAtsCmd)
     CString strDatasetPath;
     oAtsCmd.GetParasDataValueByID(STT_CMD_PARA_DatasetPath, strDatasetPath);
 
-#ifdef _NATIVE_ENGINE_USE_PXIENGINE_
-    CPxiDevice *pPxiDevice = g_thePxiEngine->GetDeviceByIndex(0);
-    CPxiDataSet *pXiDataset = pPxiDevice->FindDataSet(strDatasetPath);
-
-    if (pXiDataset != NULL)
-    {
-        pXiDataset->InitByDataset(pDataset);
-        delete pXiDataset;
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
-#endif
 	return 0;
 }
 
@@ -1300,20 +1230,6 @@ long CSttNativeTestEngine_Mqtt::Ats_SetDataset(CSttAtsCmd &oAtsCmd)
 */
 long CSttNativeTestEngine_Mqtt::Ats_ConfigDevice(CSttAtsCmd &oAtsCmd)
 {
-#ifdef _PSX_QT_LINUX_
-    CPxiDevice *pPxiDevice = NULL;
-    pPxiDevice = g_thePxiEngine->GetDeviceByIndex(0);
-
-    if (pPxiDevice == NULL)
-    {
-        return 0;
-    }
-
-    //STT_CMD_PARA_CommConfig
-    CSttParas *pParas = oAtsCmd.GetSttParas();
-    CDataGroup *pCommConfig = (CDataGroup*)pParas->FindByID(STT_CMD_PARA_CommConfig);
-    pPxiDevice->InitCmmConfig(pCommConfig, TRUE);
-#endif
     return 1;
 }
 
@@ -1654,90 +1570,17 @@ long CSttNativeTestEngine_Mqtt::Process_Cmd_Ats_CreateDevice(void *pClientSocket
     ReturnExecReply(&oAtsCmd, STT_CMD_ExecStatus_ACK);
 
     CString strPpTemplateFile, strDeviceFile, strDeviceID;
-#ifdef _NATIVE_ENGINE_USE_PXIENGINE_
-    CPxiDevice *pPxiDevice = NULL;
-
-    oAtsCmd.GetParasDataValueByID(XPARA_ID_PPXMLFILE, strPpTemplateFile);
-    oAtsCmd.GetParasDataValueByID(XPARA_ID_DVMFILE, strDeviceFile);
-    oAtsCmd.GetParasDataValueByID(DATAID_DEVICEID, strDeviceID);
-
-    //lijunqing 2020-09-09 只考虑单装置
-    //pPxiDevice = g_thePxiEngine->FindDevice(strDeviceID);
-    pPxiDevice = g_thePxiEngine->GetDeviceByIndex(0);
-
-    if (pPxiDevice != NULL)
-    {
-        if (!pPxiDevice->IsConnectSuccessful())
-        {
-            //已经存在，则返回不处理
-            return 0;
-        }
-    }
-    else
-    {
-        pPxiDevice = g_thePxiEngine->CreateDevice(strPpTemplateFile, strDeviceFile, strDeviceID, NULL);
-    }
-#endif
-
     long nRet = Ats_ConfigDevice(oAtsCmd);
 
     //返回系统状态
     CSttSysState oSysState;
     oSysState.UpdateSysStateHead(&oAtsCmd);
     oSysState.Set_ExecStatus(STT_CMD_ExecStatus_SUCCESS);
-#ifdef _NATIVE_ENGINE_USE_PXIENGINE_
-    oSysState.Set_ConnectState(pPxiDevice->IsConnectSuccessful());
-#endif
+
     ReturnSysState(pClientSocket, &oSysState, g_nSttLogServerSpyAllCmd);
 
     return 0;
 }
-
-/*
-long CSttNativeTestEngine_Mqtt::Process_Cmd_Ats_ConnectDevice(void *pClientSocket, CSttAtsCmd &oAtsCmd)
-{
-    ReturnExecReply(&oAtsCmd, STT_CMD_ExecStatus_ACK);
-
-    CString strTemplateFile, strDeviceFile;
-    CString strDeviceIP = _T(""),strTestAppIP = _T("");
-    CSttParas *pParas = oAtsCmd.GetSttParas();
-    BOOL bPpXml = pParas->GetDataValue(XPARA_ID_PPXMLFILE, strTemplateFile);
-    BOOL bDvmFile = pParas->GetDataValue(XPARA_ID_DVMFILE, strDeviceFile);
-
-    CString strCmmConfigKey;
-    strCmmConfigKey = CDeviceModelXmlKeys::g_pXmlRWKeys->m_strCmmConfigKey;
-    CDataGroup *pGroup = (CDataGroup*)pParas->FindByID(strCmmConfigKey);
-    if (pGroup == NULL)
-    {
-        ReturnExecReply(&oAtsCmd, STT_CMD_ExecStatus_FAILURE);
-        return 0;
-    }
-    CDvmData *pData = (CDvmData *)pGroup->GetHead();
-    if (pData == NULL)
-    {
-        ReturnExecReply(&oAtsCmd, STT_CMD_ExecStatus_FAILURE);
-        return 0;
-    }
-
-    pData->GetValueByID(CDeviceModelXmlKeys::g_pXmlRWKeys->m_strRemoteIPKey, strDeviceIP);
-    DWORD nDeviceIP = csIP2dwIP(strDeviceIP);
-    nDeviceIP++;
-    strTestAppIP = dwIP2csIP(nDeviceIP);
-
-// 	CString strCmdInfo;
-// 	strCmdInfo.Format(_T("ifconfig eth0:1 %s netmask 255.255.255.0 up"),strTestAppIP);
-// 	system(strCmdInfo);
-
-    //返回系统状态
-    CSttSysState oSysState;
-    oSysState.UpdateSysStateHead(&oAtsCmd);
-    oSysState.Set_ExecStatus(STT_CMD_ExecStatus_SUCCESS);
-    oSysState.Set_ConnectState(1);
-    ReturnSysState(pClientSocket, &oSysState);
-
-    return 0;
-}
-*/
 
 long CSttNativeTestEngine_Mqtt::Process_Cmd_Ats_ConfigDevice(void *pClientSocket, CSttAtsCmd &oAtsCmd)
 {
@@ -1753,26 +1596,8 @@ long CSttNativeTestEngine_Mqtt::Process_Cmd_Ats_ConfigDevice(void *pClientSocket
     CDataGroup *pCommConfig = (CDataGroup*)pParas->FindByID(STT_CMD_PARA_CommConfig);
 #endif
 
-#ifdef _NATIVE_ENGINE_USE_PXIENGINE_
-    CPxiDevice *pPxiDevice = g_thePxiEngine->GetItem(0);
-
-    if (pPxiDevice == NULL)
-    {
-        oSysState.Set_ExecStatus_Failure();
-        oSysState.Set_ExecStatus(0);
-        CLogPrint::LogString(XLOGLEVEL_DEBUG, _T("ConfigDevice: has no device"));
-
-        return 0;
-    }
-
-    pPxiDevice->InitCmmConfig(pCommConfig, TRUE);
-#endif
-
-
     oSysState.Set_ExecStatus_Success();
-#ifdef _NATIVE_ENGINE_USE_PXIENGINE_
-    oSysState.Set_ConnectState(pPxiDevice->IsConnectSuccessful());
-#endif
+
     ReturnSysState(pClientSocket, &oSysState, g_nSttLogServerSpyAllCmd);
 
     return 0;
@@ -1847,15 +1672,7 @@ long CSttNativeTestEngine_Mqtt::Process_Cmd_Ats_SetDataset(void *pClientSocket, 
     ReturnExecReply(&oAtsCmd, STT_CMD_ExecStatus_ACK);
     CSttSysState oSysState;
     oSysState.UpdateSysStateHead(&oAtsCmd);
-#ifdef _NATIVE_ENGINE_USE_PXIENGINE_
-    CPxiDevice *pPxiDevice = g_thePxiEngine->GetItem(0);
 
-    if (pPxiDevice == NULL)
-    {
-        Return_NoDevice(pClientSocket, oSysState);
-        return 0;
-    }
-#endif
     if (Ats_SetDataset(oAtsCmd))
     {
         oSysState.Set_ExecStatus_Success();
@@ -1889,15 +1706,7 @@ long CSttNativeTestEngine_Mqtt::Process_Cmd_Ats_RunProcedure(void *pClientSocket
 
     CSttSysState oSysState;
     oSysState.UpdateSysStateHead(&oAtsCmd);
-#ifdef _NATIVE_ENGINE_USE_PXIENGINE_
-    CPxiDevice *pPxiDevice = g_thePxiEngine->GetItem(0);
 
-    if (pPxiDevice == NULL)
-    {
-        Return_NoDevice(pClientSocket, oSysState);
-        return 0;
-    }
-#endif
     CDvmData *pData_Procedure = oAtsCmd.FindParasDataByID(STT_CMD_PARA_ProcedureID);
     CDvmData *pData_DS = oAtsCmd.FindParasDataByID(STT_CMD_PARA_DatasetPath);
 
@@ -1965,18 +1774,6 @@ long CSttNativeTestEngine_Mqtt::Process_Cmd_Ats_CloseDevice(void *pClientSocket,
 
     CSttSysState oSysState;
     oSysState.UpdateSysStateHead(&oAtsCmd);
-#ifdef _NATIVE_ENGINE_USE_PXIENGINE_
-    CPxiDevice *pPxiDevice = g_thePxiEngine->GetItem(0);
-
-    if (pPxiDevice == NULL)
-    {
-        Return_NoDevice(pClientSocket, oSysState);
-        return 0;
-    }
-
-    //暂时不考虑多装置的情况
-    pPxiDevice->UnLoad();
-#endif
 
     oSysState.Set_ExecStatus_Success();
     ReturnSysState(pClientSocket, &oSysState, g_nSttLogServerSpyAllCmd);
@@ -1998,15 +1795,6 @@ long CSttNativeTestEngine_Mqtt::Process_Cmd_Ats_CloseDevice(void *pClientSocket,
 long CSttNativeTestEngine_Mqtt::Process_Cmd_Ats_ConfigEngine(void *pClientSocket, CSttAtsCmd &oAtsCmd)
 {
     ReturnExecReply(&oAtsCmd, STT_CMD_ExecStatus_ACK);
-
-    //兼容 两个设置关键字 2020-10-18  lijunqing
-    oAtsCmd.GetParasDataValueByID(STT_CMD_PARA_LogServerDebugInfor,  g_nSttLogServerDebugInfor);
-    oAtsCmd.GetParasDataValueByID(STT_CMD_PARA_LogDebugInfor,  g_nSttLogServerDebugInfor);
-
-    oAtsCmd.GetParasDataValueByID(STT_CMD_PARA_LogDataBind,  g_bLogBindQueryErrorInfor);
-    oAtsCmd.GetParasDataValueByID(STT_CMD_PARA_LogPkg,  g_bLogPackageInfor);
-    oAtsCmd.GetParasDataValueByID(STT_CMD_PARA_LogProtocolDebugInfor,  g_bLogEngineDebugInfor);
-    oAtsCmd.GetParasDataValueByID(STT_CMD_PARA_CloseTestWhenDisconnect,  g_nCloseTestWhenDisconnect);
 
     return 0;
 }
@@ -2792,14 +2580,14 @@ long CSttNativeTestEngine_Mqtt::ValidateSmartTest(void *pClientSocket, CSttSysSt
     return 0;
 }
 
-void CSttNativeTestEngine_Mqtt::Return_DeviceParameter_AfterLogin(void *pClientSocket, CSttSysState &oSysState)
+long CSttNativeTestEngine_Mqtt::Return_DeviceParameter_AfterLogin(void *pCommInterface, CSttSysState *pSysState)
 {
-	oSysState.Free();
-	oSysState.m_strID = STT_CMD_TYPE_ADJUST_ReadDeviceParameter;
-	oSysState.SetReporting();
-	oSysState.m_strRetSttCmd = STT_CMD_SYSSTATE_ADJUST;
+	pSysState->Free();
+	pSysState->m_strID = STT_CMD_TYPE_ADJUST_ReadDeviceParameter;
+	pSysState->SetReporting();
+	pSysState->m_strRetSttCmd = STT_CMD_SYSSTATE_ADJUST;
 
-	CSttParas *pParas = oSysState.GetSttParas();
+	CSttParas *pParas = pSysState->GetSttParas();
 	//原先采用从文件中转换获取，但缺少开入开出信息，故此处改为底层测试服务返回记录保存的报文   shaolei 20220414
 	if (m_pSmartTest != NULL)
 	{
@@ -2848,60 +2636,25 @@ void CSttNativeTestEngine_Mqtt::Return_DeviceParameter_AfterLogin(void *pClientS
 
 			if (pAppVersion == NULL)
 			{
-                pDeviceAttrs->AddNewData(_T("SttTestMainCore版本"), _T("SttTestMainCore_Ver"), _T("AppVersion"), _T("2024.08.15 - 09:30"));
+                pDeviceAttrs->AddNewData(_T("SttTestMainCore版本"), _T("SttTestMainCore_Ver"), _T("AppVersion"), _T("2025.04.02-14:40"));
 			}
 			else
 			{
-                pAppVersion->m_strValue = _T("2024.08.15 - 09:30");
+                pAppVersion->m_strValue = _T("2025.04.02-14:40");
 			}
 		}
 	}
 
 	CSttCmdDefineXmlRWKeys::g_pXmlKeys->m_nXmlOnlyWrite_Id_Value--;
-	 SendSysState(&oSysState);
+	SendSysState(pSysState);
 	CSttCmdDefineXmlRWKeys::g_pXmlKeys->m_nXmlOnlyWrite_Id_Value++;
+
+	return 0;
 }
 
 //2020-11-25  lijunqing
 void CSttNativeTestEngine_Mqtt::OnTimer()
 {
-    if (!g_bLogPackageInfor)
-    {
-        return;
-    }
-
-    long nBegin1, nEnd1, nBegin2, nEnd2, k;
-    CXPpPkgLogTool::GetPpPkgLogIndex(nBegin1, nEnd1, nBegin2, nEnd2);
-
-    if (nBegin1 < 0)
-    {
-        return;
-    }
-
-    CSttSysState oSysState;
-    oSysState.m_strRetType = SYS_STATE_RETTYPE_PACKAGE;
-    oSysState.m_strID = SYS_STATE_RETTYPE_PACKAGE;
-    CSttMsgs *pMsgs = oSysState.GetSttMsgs();
-    CSttMsg *pMsg = NULL;
-
-    for (k=nBegin1; k<=nEnd1; k++)
-    {
-        pMsg = new CSttMsg();
-        pMsgs->AddNewChild(pMsg);
-        CXPpPkgLogTool::PpPkgLogStr(k, pMsg->m_strMsg, pMsg->m_strID);
-    }
-
-    if (nEnd2 >= 0)
-    {
-        for (k=nBegin2; k<=nEnd2; k++)
-        {
-            pMsg = new CSttMsg();
-            pMsgs->AddNewChild(pMsg);
-            CXPpPkgLogTool::PpPkgLogStr(k, pMsg->m_strMsg, pMsg->m_strID);
-        }
-    }
-
-    ReturnSysStateToChildren(NULL, &oSysState);
 }
 
 /*

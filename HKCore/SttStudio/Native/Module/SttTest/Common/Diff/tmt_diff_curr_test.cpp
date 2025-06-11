@@ -235,6 +235,11 @@ void stt_xml_serialize_common_sys_paras(tmt_DiffCurrParas *pParas, CSttXmlSerial
 
   pXmlSierialize->xml_serialize(/* "开入逻辑" */ g_sLangTxt_Native_InLogic.GetString(), "_AndOr", "", "InPutLogic_Psu", pParas->m_nBinLogic);
 #endif
+
+  pXmlSierialize->xml_serialize("复合特性", "ComBineFeature", "","long",pParas->m_nComBineFeature);
+  pXmlSierialize->xml_serialize("零序消除方式", "ZeroSeqElimiType", "","ZeroSeqElimiType",pParas->m_nZeroSeqElimiType);
+  pXmlSierialize->xml_serialize("中性点接地","Earthing","","number",pParas->m_nEarthing);
+
 	stt_xml_serialize_binary_in(pParas->m_binIn,pXmlSierialize);
 	stt_xml_serialize_Exbinary_in(pParas->m_binInEx,pXmlSierialize);
 	stt_xml_serialize_binary_out(pParas->m_binOut, pXmlSierialize);

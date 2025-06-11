@@ -2,7 +2,7 @@
 #define TMT_ADJUST_SYS_PARA_TRANS_H
 
 
-#include "../../Module/DataMngr/DataTypes.h"
+#include "../../../Module/DataMngr/DataTypes.h"
 
 extern CDataTypes *g_pSttAdjSysParaDataTypes;
 

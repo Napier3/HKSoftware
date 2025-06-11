@@ -43,7 +43,11 @@ public:
     tmt_channel m_uiCUR[MAX_CURRENT_COUNT];
 
     //GoosePub
-    tmt_GoosePub m_oGoosePub[MAX_MODULES_GOOSEPUB_COUNT];
+#ifndef TMT_STATECOUNT_USE_DEF
+	tmt_GoosePub *m_oGoosePub;
+#else
+	tmt_GoosePub m_oGoosePub[MAX_MODULES_GOOSEPUB_COUNT];
+#endif
 
     //整定值
 	float m_fTimeSet;   //动作整定时间
@@ -92,8 +96,9 @@ public:
 		m_fIActVal_RelErr = 0.1f; 		
 		m_nIActVal_ErrorLogic = 0; 	
 		m_nVarIndexType = 0;
-
-
+#ifndef TMT_STATECOUNT_USE_DEF
+		m_oGoosePub = new tmt_GoosePub[MAX_MODULES_GOOSEPUB_COUNT];
+#endif
         m_oHarmGradient.init();
         m_oBinaryConfig.init();
 
@@ -112,8 +117,17 @@ public:
             {
                 m_uiVOL[i].Harm[j].fAngle = m_uiCUR[i].Harm[j].fAngle = fAngle[i % 3];
                 m_uiVOL[i].Harm[j].fAmp = m_uiCUR[i].Harm[j].fAmp = 0;
+				if(j >= MAX_HARM_COUNT_UI)//20250118 suyang 当谐波总数大于UI界面显示总数后为FALSE，防止下发给底层还是为TRUE；
+				{ 
+					m_uiVOL[i].Harm[j].m_bSelect = FALSE;
+					m_uiCUR[i].Harm[j].m_bSelect = FALSE;
+				}
+				else
+				{
                 m_uiVOL[i].Harm[j].m_bSelect = TRUE;
-                m_uiCUR[i].Harm[j].m_bSelect = TRUE;
+					m_uiCUR[i].Harm[j].m_bSelect = TRUE;			
+				}
+                
             }
 
             m_uiVOL[i].InterHarm.fAmp = m_uiCUR[i].InterHarm.fAmp = 0;
@@ -204,7 +218,16 @@ public:
     {
         init();
     }
-    virtual ~tmt_harm_paras() {}
+    virtual ~tmt_harm_paras() 
+	{
+#ifndef TMT_STATECOUNT_USE_DEF
+		if (m_oGoosePub != NULL)
+		{
+			delete[] m_oGoosePub;
+			m_oGoosePub = NULL;
+		}
+#endif
+	}
 } tmt_HarmParas;
 
 typedef struct tmt_harm_result

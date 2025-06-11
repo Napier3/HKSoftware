@@ -22,14 +22,17 @@ typedef struct tmt_cb_operate_paras :public tmt_ImpedanceParas
 	float   m_fTtripAbsErr;    //动作时间绝对误差
 	float   m_fTtripRelErr;    //动作时间相对误差
 	float   m_fTSetting;       //动作时间整定值
+	float   m_fTtripAbsErrMinus;//动作时间绝对误差(-)
 
 	float   m_fTtripDAbsErr;     //重合闸动作时间绝对误差
 	float   m_fTtripDRelErr;     //重合闸动作时间相对误差
 	float   m_fDTSetting;        //重合闸动作时间整定值
+	float   m_fTtripDAbsErrMinus;//动作时间绝对误差(-)
 
 	float   m_fTtripAccAbsErr;   //后加速绝对误差
 	float   m_fTtripAccRelErr;   //后加速相对误差
 	float   m_fAccTSetting;      //后加速整定值
+	float   m_fTtripAccAbsErrMinus;//动作时间绝对误差(-)
 
 	long   m_nTtripErrorLogic;     //动作时间误差逻辑判断
 	long   m_nTtripDErrorLogic;   //重合闸动作时间误差逻辑判断
@@ -55,14 +58,17 @@ public:
 		m_fTtripAbsErr = 0.04f;    //动作时间绝对误差
 		m_fTtripRelErr = 0.04f;    //动作时间相对误差
 		m_fTSetting = 0.1f;       //动作时间整定值
+		m_fTtripAbsErrMinus = 0.04f; //动作时间绝对误差(-)
 
 		m_fTtripDAbsErr = 0.04f;     //重合闸动作时间绝对误差
 		m_fTtripDRelErr = 0.04f;     //重合闸动作时间相对误差
 		m_fDTSetting = 1.0f;        //重合闸动作时间整定值
+		m_fTtripDAbsErrMinus = 0.04f;//重合闸动作时间绝对误差(-)
 
 		m_fTtripAccAbsErr = 0.04f;   //后加速绝对误差
 	    m_fTtripAccRelErr = 0.04f;   //后加速相对误差
 		m_fAccTSetting = 0.04f;      //后加速整定值
+		m_fTtripAccAbsErrMinus = 0.04f;//后加速绝对误差(-)
 
 		m_nTtripCheck = 1;     //动作时间误差判断
 		m_nTtripDCheck = 0;    //重合闸动作时间误差判断
@@ -72,7 +78,6 @@ public:
 		m_nTtripDErrorLogic = 0;   //重合闸动作时间误差逻辑判断
 		m_nTtripAccErrorLogic = 0; //后加速动作时间误差逻辑判断
 	} 
-
 
 	tmt_cb_operate_paras &operator = (const tmt_cb_operate_paras &paras)
 	{
@@ -84,6 +89,10 @@ public:
 		m_fImpedance[1] = paras.m_fImpedance[1] ;	
 		m_fImpAngle[0] = paras.m_fImpAngle[0] ;			//阻抗角 m_fPhi
 		m_fImpAngle[1] = paras.m_fImpAngle[1] ;
+		m_fResistance[0] = paras.m_fResistance[0];			//电阻
+		m_fResistance[1] = paras.m_fResistance[1];
+		m_fReactance[0] = paras.m_fReactance[0];			// 电抗
+		m_fReactance[1] = paras.m_fReactance[1];
 		m_fSCCurrent[0]  = paras.m_fSCCurrent[0] ;		//短路电流 原m_fItest  m_fItestdev
 		m_fSCCurrent[1] = paras.m_fSCCurrent[1] ;
 		m_fSCVoltage[0]  = paras.m_fSCVoltage[0] ;		//短路电压 原m_fVtest  m_fVtestdev
@@ -151,14 +160,17 @@ public:
 		m_fTtripAbsErr = paras.m_fTtripAbsErr;    //动作时间绝对误差
 		m_fTtripRelErr = paras.m_fTtripRelErr;    //动作时间相对误差
 		m_fTSetting = paras.m_fTSetting;       //动作时间整定值
+		m_fTtripAbsErrMinus = paras.m_fTtripAbsErrMinus;//动作时间绝对误差(-)
 
 		m_fTtripDAbsErr = paras.m_fTtripDAbsErr;     //重合闸动作时间绝对误差
 		m_fTtripDRelErr = paras.m_fTtripDRelErr;     //重合闸动作时间相对误差
 		m_fDTSetting = paras.m_fDTSetting;       //重合闸动作时间整定值
+		m_fTtripDAbsErrMinus = paras.m_fTtripDAbsErrMinus;//重合闸动作时间绝对误差(-)
 
 		m_fTtripAccAbsErr = paras.m_fTtripAccAbsErr;   //后加速绝对误差
 		m_fTtripAccRelErr = paras.m_fTtripAccRelErr;   //后加速相对误差
 		m_fAccTSetting = paras.m_fAccTSetting;      //后加速整定值
+		m_fTtripAccAbsErrMinus = paras.m_fTtripAccAbsErrMinus;//后加速绝对误差(-)
 
 		m_nTtripCheck = paras.m_nTtripCheck;     //动作时间误差判断
 		m_nTtripDCheck = paras.m_nTtripDCheck;     //重合闸动作时间误差判断

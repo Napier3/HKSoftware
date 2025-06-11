@@ -10,7 +10,7 @@
 
 #include "SttIecRcdFuncInterface.h"
 
-#include "../../Module/SmartCap/61850Cap/Record/CapViewAnalyse.h"
+#include "../../../../Module/SmartCap/61850Cap/Record/CapViewAnalyse.h"
 
 #define STT_IECRCD_WAVE_CHS_PAGE  6
 

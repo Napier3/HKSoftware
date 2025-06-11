@@ -1,7 +1,7 @@
 #ifndef _ComtradeDataBuffer_H_
 #define _ComtradeDataBuffer_H_
 
-#include "../../Module/OSInterface/OSInterface.h"
+#include "../../../Module/OSInterface/OSInterface.h"
 
 //#define _Stt_Cmtrd_Save_File_
 

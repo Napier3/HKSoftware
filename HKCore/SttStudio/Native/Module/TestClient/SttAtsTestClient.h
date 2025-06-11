@@ -47,6 +47,8 @@ public:
 	virtual BOOL ConnectAtsTestServer(const CString &strTestAppIP = _T(""));
 	virtual void FreeXClientEngine();
 	virtual BOOL IsConnectSuccess();
+	
+	void DisConnectAtsTestServer();//20241218 suyang add 断开自动测试
 
 	//ats cmd
 	virtual long Ats_CreateTest(CExBaseList *pSttParas);
@@ -57,7 +59,7 @@ public:
 	virtual long Ats_StartTest(CDataGroup *pTestMacroUI, CDataGroup *pUIParas, CDataGroup *pCommCmd=NULL, CSttContents *pCharacteristic=NULL, BOOL bDoEvents=TRUE, 
 		CSttCmdData *pRetData = NULL,const CString &strDvmFile = _T(""), const CString &strPpXmlFile = _T(""),long nTestMode = TEST_MODE_SINGLETEST);//20230227 zhouhj 增加strDvmFile
 	virtual long Ats_StopTest(BOOL bDoEvents=TRUE,CSttCmdData *pRetData = NULL);
-	virtual long Ats_CloseTest(BOOL bDoEvents=TRUE,CSttCmdData *pRetData = NULL);
+	virtual long Ats_CloseTest(BOOL bDoEvents=TRUE,CSttCmdData *pRetData = NULL,long nSynMode = STT_CMD_Send_Sync);
 	virtual long Ats_SetItemState(CExBaseList *pSttParas, BOOL bDoEvents=TRUE,CSttCmdData *pRetData = NULL);
 	virtual long Ats_SetItemState(const CString &strItemPath,long nSelect,long nEnable,long nShow,BOOL bDoEvents=TRUE,CSttCmdData *pRetData = NULL);
 	virtual long Ats_TestItem (const CString &strItemPath,BOOL bDoEvents=TRUE,CSttCmdData *pRetData = NULL);
@@ -155,7 +157,9 @@ public:
 	virtual void Ats_IecRecord(CDataGroup *pIecRecordParas);
 	virtual long Ats_SetParameter(const CString &strMacroID, CDataGroup *pParas);
 	virtual BOOL Ats_UartConfig(CDataGroup *pUartConfigParas);//chenling 2024.4.28 串口
-
+	virtual void Ats_BinConfig(CDataGroup *pBinConfigParas);//20240922 zhouyangyong 新增用于开入量配置
+	//zhouhj 2025.3.25 增加用于获取系统状态(光功率/硬件监视/档位信息等)
+	virtual long Ats_GetSystemState(CStringArray &astrTypes, BOOL bDoEvents = TRUE, CSttCmdData *pRetData = NULL);
 
 protected:
 	void ValidExceptionTimeOut();

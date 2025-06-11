@@ -1,5 +1,5 @@
 #pragma once
-#include "cmmchannel.h"
+#include "CmmChannel.h"
 #include "../DeviceModel/CmmTcpServerConfig.h"
 #include "CmmNetServer.h"
 #include "CmmTcpServerClientChannel.h"

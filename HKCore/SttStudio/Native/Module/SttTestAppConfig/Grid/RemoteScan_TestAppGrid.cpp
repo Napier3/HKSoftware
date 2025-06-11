@@ -4,7 +4,9 @@
 #include "stdafx.h"
 #include "RemoteScan_TestAppGrid.h"
 #include "../../../Module/SttAuthority/SttTestRemoteRegister.h"
-
+#ifndef NOT_USE_XLANGUAGE
+#include "../../XLangResource_Native.h"
+#endif
 #define ATS_TESTAPP_REMOTESEARCH_GRID_COLS       5
 
 // CRemoteScan_TestAppGrid
@@ -29,7 +31,11 @@ void CRemoteScan_TestAppGrid::InitGrid()
 
 void CRemoteScan_TestAppGrid::InitGridTitle()
 {
+#ifndef NOT_USE_XLANGUAGE
+	CString astrGridTitle[ATS_TESTAPP_REMOTESEARCH_GRID_COLS] = {/*_T("±‡∫≈")*/g_sLangTxt_Index,/*_T("µ•Œª")*/g_sLangTxt_Unit,/*_T("–’√˚")*/g_sLangTxt_Name,/*_T("≤‚ ‘“«–Õ∫≈")*/g_sLangTxt_Native_TestInstrumentModel,/*_T("≤‚ ‘“«±‡∫≈")*/g_sLangTxt_Native_TestInstrumentID};
+#else
 	CString astrGridTitle[ATS_TESTAPP_REMOTESEARCH_GRID_COLS] = {_T("±‡∫≈"),_T("µ•Œª"),_T("–’√˚"),_T("≤‚ ‘“«–Õ∫≈"),_T("≤‚ ‘“«±‡∫≈")};
+#endif
 	int iGridWidth[ATS_TESTAPP_REMOTESEARCH_GRID_COLS]={60, 120, 120, 120, 120};
 
 	SetColumnCount(ATS_TESTAPP_REMOTESEARCH_GRID_COLS);

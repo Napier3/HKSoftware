@@ -33,6 +33,10 @@
 //gyp线电压20230828
 #define LINEVOL_CHANNAL_TYPE_U(x) (x >= 0 && x <= 3)
 #define LINEVOL_CHANNAL_TYPE_I(x) (x >= 4 && x <= 11)
+//wangtao通用实验-功率202408021
+#define POWER_CHANNAL_TYPE_S(x) (x >= 0 && x <= 3)
+#define POWER_CHANNAL_TYPE_P(x) (x >= 4 && x <= 7)
+#define POWER_CHANNAL_TYPE_Q(x) (x >= 8 && x <= 11)
 enum value_type{
 	V_Primary = 0,
 	V_Secondary = 1
@@ -154,7 +158,10 @@ enum para_type
 	ibib2Add_type = 39,					 //ib+ib2
 	icic2Add_type = 40,					 //ic+ic2
 	iaia2Add_ibib2Add_icic2Add_type = 41,//ia+ia2,ib+ib2,ic+ic2
-	iaia2ibib2icic2Add_type = 42		 //ia+ia2+ib+ib2+ic+ic2
+	iaia2ibib2icic2Add_type = 42,		 //ia+ia2+ib+ib2+ic+ic2
+	uf_type = 101,//故障电压 add wangtao 20240911 
+	if_type = 102,//故障电流
+	z_type = 103	//故障阻抗
 };
 
 struct LocalSysPara
@@ -297,6 +304,11 @@ BOOL GetResultStringVoltageActValue(CDvmValues *pValues,BOOL &bHasActValue,CStri
 BOOL GetResultStringCurrentActValue(CDvmValues *pValues,BOOL &bHasActValue,CString &strResultsString,CSttResults &pTestMacroResults);
 BOOL GetResultStringDistanceSearchTest(CDvmValues *pValues,BOOL &bHasActValue,CString &strResultsString,CSttResults &pTestMacroResults);
 BOOL GetResultStringStateTest(CDvmValues *pValues,BOOL &bHasActValue,CString &strResultsString,CSttResults &pTestMacroResults);
+BOOL GetResultStringSwingTest(CDvmValues *pValues,BOOL &bHasActValue,CString &strResultsString,CSttResults &pTestMacroResults);
+//BOOL GetResultStringPsuSwing(CDvmValues *pValues,BOOL &bHasActValue,CString &strResultsString,CSttResults &pTestMacroResults);
+BOOL GetResultStringFaultGradientTest(CDvmValues *pValues, BOOL &bHasActValue, CString &strResultsString, CSttResults &pTestMacroResults);//add wangtao 20240902 处理故障递变测试结果
+BOOL GetResultStringSwingTest(CDvmValues *pValues,BOOL &bHasActValue,CString &strResultsString,CSttResults &pTestMacroResults); //20240906 wanmj 振荡
+BOOL GetResultStringHarmTest(CDvmValues *pValues,BOOL &bHasActValue,CString &strResultsString,CSttResults &pTestMacroResults); //20241219 xueyangfan 谐波
 //从__DATE__获取的生成日期转换为年月日的日期
 CString Global_GetSoftwareGeneVersion(const CString &strVersionString);
 

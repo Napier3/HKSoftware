@@ -7,7 +7,7 @@
 
 #include "stdafx.h"
 #include "SttCmdBase.h"
-#include "../../Module/System/TickCount32.h"
+#include "../../../Module/System/TickCount32.h"
 #ifdef NOT_USE_XLANGUAGE
 #else
 #include "../XLangResource_Native.h"                              
@@ -405,13 +405,11 @@ long CSttCmdBase::DoWait(CSttSocketDataBase_File *pSocket,STT_CMD_INFO *pCmdInfo
 			if (nTickCountLong >= nTimeOut)
 			{
 				nExecStatus = STT_CMD_ExecStatus_TIMEOUT;
-#ifdef NOT_USE_XLANGUAGE
-				CLogPrint::LogFormatString(XLOGLEVEL_INFOR,_T("%s√¸¡Ó£∫≥¨ ±"),m_strID.GetString());
-
-#else
-				CLogPrint::LogFormatString(XLOGLEVEL_INFOR,g_sLangTxt_Native_CommandTimeout.GetString(),m_strID.GetString());
-                        
-#endif
+//#ifdef NOT_USE_XLANGUAGE
+//				CLogPrint::LogFormatString(XLOGLEVEL_INFOR,_T("%s√¸¡Ó£∫≥¨ ±"),m_strID.GetString());
+//#else
+                CLogPrint::LogFormatString(XLOGLEVEL_INFOR,_T("%s(Cmd)£∫timeout"),m_strID.GetString());    //zhouhj 2025.3.5
+//#endif
 				break;
 			}
 		}

@@ -9,7 +9,7 @@
 #include "SttCmdDefineGlobal.h"
 
 #include "SttCmdBase.h"
-#include "../../Module/BaseClass/XObjectRefBase.h"
+#include "../../../Module/BaseClass/XObjectRefBase.h"
 
 //////////////////////////////////////////////////////////////////////////
 //move to SttSysState.h   2022-8-1  lijunqing

@@ -1,7 +1,7 @@
 #include "SttIecSmvGrid_MUAccuracy.h"
-#include "../../Module/SmartCap/XSmartCapMngr.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/SmartCap/XSttRcdInitChDvmData.h"
+#include "../../../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../../Module/SmartCap/XSttRcdInitChDvmData.h"
 #include "../../XLangResource_Native.h"
 
 CSttIecSmvGrid_MUAccuracy::CSttIecSmvGrid_MUAccuracy(QWidget* pparent):CSttIecChsGridBase(pparent)
@@ -11,7 +11,7 @@ CSttIecSmvGrid_MUAccuracy::CSttIecSmvGrid_MUAccuracy(QWidget* pparent):CSttIecCh
 	m_pVolLevelDataType = NULL;
 	m_bZeroDriftMode = FALSE;
 	m_astrGridTitle[0]= /*"通道名称"*/g_sLangTxt_channelname; //lcq
-	m_astrGridTitle[1]=/*"输出值(A/V)"*/g_sLangTxt_outputvalue; //lcq
+	m_astrGridTitle[1]=/*"输出值(A/V)"*/g_sLangTxt_MUoutputvalue; //lcq
 	m_astrGridTitle[2]=/*"输出相位(°)"*/g_sLangTxt_Outputphase; //lcq
 	m_astrGridTitle[3]=/*"实测幅值(A/V)"*/g_sLangTxt_Measureampl; //lcq
 	m_astrGridTitle[4]=/*"实测相位(°)"*/g_sLangTxt_Measuredphase; //lcq

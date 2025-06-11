@@ -1,11 +1,11 @@
 #include "SttIecSmvGrid_MUErrorStatis.h"
-#include "../../Module/SmartCap/XSmartCapMngr.h"
-#include "../../Module/SmartCap/XSttRcdInitChDvmData.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../../Module/SmartCap/XSttRcdInitChDvmData.h"
+#include "../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include <QHeaderView>
 #include <QDesktopWidget>
 #include <QApplication>
-#include "../../AutoTest/Module/XLanguageResourceAts.h"
+#include "../../../../AutoTest/Module/XLanguageResourceAts.h"
 #include "../../XLangResource_Native.h"
 
 
@@ -107,7 +107,7 @@ void CSttIecSmvGrid_MUErrorStatis::InitGridTitle()
 
 	if (rect.width() > 1024)
 	{
-        horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);//平均分布各列
+		horizontalHeader()->setResizeMode(QHeaderView::Stretch);//平均分布各列
 	}
 
 }

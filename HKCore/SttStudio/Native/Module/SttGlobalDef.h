@@ -171,6 +171,8 @@
 #define STT_CMD_TYPE_SYSTEM_CloudTest _T("CloudTest")
 #define STT_CMD_TYPE_SYSTEM_ReadMeas		_T("ReadMeas")
 #define STT_CMD_TYPE_SYSTEM_GetSystemState	_T("GetSystemState")
+//lijunqing 2024-10-26
+#define STT_CMD_TYPE_SYSTEM_License	_T("License")
 
 //测试控制命令
 #define STT_CMD_TYPE_TEST_SetParameter		_T("SetParameter")
@@ -213,7 +215,9 @@
 //校准命令
 #define STT_CMD_TYPE_ADJUST_Adjust				_T("Adjust")
 #define STT_CMD_TYPE_ADJUST_ReadDeviceParameter	_T("ReadDeviceParameter")
+#define STT_CMD_TYPE_ADJUST_ReadSystemState	_T("ReadSystemState")
 #define STT_CMD_TYPE_ADJUST_WriteFile		_T("WriteFile")
+#define STT_CMD_TYPE_ADJUST_ReadSystemState	_T("GetSystemState")	//20250317 huangliang
 
 //系统命令  shaolei 20211028
 #define STT_CMD_TYPE_ADJUST_ChMapsConfig		_T("ChMapsConfig")
@@ -234,6 +238,9 @@
 #define STT_CMD_ATS_MACRO_ID_LineVolManuTest         _T("LineVolManuTest")   //通用实验-线电压
 #define STT_CMD_ATS_MACRO_ID_LowVolTest          _T("LowVolTest")   //低压减载
 #define STT_CMD_ATS_MACRO_ID_LowFreqTest          _T("LowFreqTest")   //低周减载
+#define STT_CMD_ATS_MACRO_ID_PowerManuTest          _T("PowerManuTest")   //通用-功率
+#define STT_CMD_ATS_MACRO_ID_FaultGradientTest          _T("FaultGradientTest")   //故障递变
+#define STT_CMD_ATS_MACRO_ID_ImpedManualTest         _T("ImpedManualTest")   //通用试验（阻抗）
 
 //内部调试命令
 #define STT_CMD_TYPE_DEBUG_GetProcessState	_T("GetProcessState")
@@ -283,6 +290,9 @@
 #define STT_CMD_TYPE_ATS_UpdateItem  		_T("UpdateItem") //shaolei 更新测试项目的参数数据  20220913
 #define STT_CMD_TYPE_ATS_AdjustReport		_T("AdjustReport")   //shaolei 调整报告  20230505
 #define STT_CMD_TYPE_ATS_ClearReportsRslts  _T("ClearReportsRslts")   //shaolei 清除报告数据 2023-7-17
+#define STT_CMD_TYPE_ATS_UpdateReportHead  _T("UpdateReportHead")   //shaolei 更新报告头  2024-8-7
+#define STT_CMD_TYPE_ATS_UpdateCharacteristic  _T("UpdateCharacteristic")   //shaolei 更新特性曲线  2024-8-13
+#define STT_CMD_TYPE_ATS_OfflineSel        _T("OfflineSel")   //shaolei 脱机选择  2025-1-7
 
 //lijunqing 2023-9-12  对于FLow模式，FlowSetBentch、StartTest、CloseTest组成一个流程步骤，整个流程结束使用ExitTest
 #define STT_CMD_TYPE_ATS_ExitTest  _T("ExitTest")
@@ -382,8 +392,10 @@
 #define STT_CMD_PARA_IDTESTER  _T("id-tester")
 #define STT_CMD_PARA_Test_ID  _T("TestID")
 #define STT_CMD_PARA_DeviceID  _T("DeviceID")
+#define STT_CMD_PARA_DeviceName  _T("DeviceName")
 #define STT_CMD_PARA_ItemID  _T("ItemID")
 #define STT_CMD_PARA_ItemName  _T("ItemName")
+#define STT_CMD_PARA_AddPos  _T("AddPos")
 #define STT_CMD_PARA_CommConfig  _T("comm-config")
 #define STT_CMD_PARA_CommConfigs  _T("comm-configs")
 #define STT_CMD_PARA_ItemPath  _T("ItemPath")
@@ -443,6 +455,7 @@
 //2021-8-2  lijunqing
 #define STT_CMD_PARA_BenchSN  _T("BenchSN")
 #define STT_CMD_PARA_DeviceSN  _T("DeviceSN")
+#define STT_CMD_PARA_DeviceModel  _T("DeviceModel")
 //2021-8-3 shaolei
 #define STT_CMD_PARA_TotalItems  _T("TotalItems")
 #define STT_CMD_PARA_CurrItem  _T("CurrItem")
@@ -459,7 +472,8 @@
 #define STT_CMD_PARA_IecCfg_File  _T("_IecCfgFile")
 //2023-5-10 shaolei
 #define STT_CMD_PARA_Record_File_Name  _T("RecordFileName")
-
+//2024-11-4 shaolei
+#define STT_CMD_PARA_Comtrade_File_Path  _T("ComtradeFilePath")
 //liveupdate para
 #define STT_CMD_PARA_LIVEUPDATE_IP			 _T("ip")
 #define STT_CMD_PARA_LIVEUPDATE_PORT		 _T("port")
@@ -488,6 +502,8 @@
 //lijunqing 2020-10-22  for Adjust : ReadDeviceParameter
 #define STT_CMD_PARA_DeviceAttrs  _T("DeviceAttrs")
 #define STT_CMD_PARA_BoutTrunOnValueDef  _T("BoutTrunOnValueDef")
+#define STT_CMD_PARA_BinAttr  _T("BinAttr")
+#define STT_CMD_PARA_DCMeasAttr  _T("DCMeasAttr")
 #define STT_CMD_PARA_ModuleAttrs  _T("ModuleAttrs")
 #define STT_CMD_PARA_ChMapDef  _T("ChMapDef")
 #define STT_CMD_PARA_HdGears  _T("HdGears")
@@ -502,6 +518,9 @@
 #define STT_SYS_DATA_ID_Sync    _T("Sync")
 #define STT_SYS_DATA_ID_Utc_s    _T("Utc_s")
 #define STT_SYS_DATA_ID_Utc_ns    _T("Utc_ns")
+#define STT_SYS_DATA_ID_OverHeat    _T("OverHeat")	//20250317 huangliang
+#define STT_SYS_DATA_ID_IBreak    _T("IBreak")
+#define STT_SYS_DATA_ID_UShort    _T("UShort")
 #define STT_SYS_DATA_ID_StopByHighT    _T("StopByHighT")
 #define STT_SYS_DATA_ID_usezip		_T("use-zip")
 #define STT_SYS_DATA_ID_verzip		_T("ver-zip")
@@ -512,6 +531,15 @@
 #define STT_SYS_DATA_ID_SubIP1		_T("SubIP1")
 #define STT_SYS_DATA_ID_DeviceIP	_T("DeviceIP")
 #define STT_SYS_DATA_ID_Metric		_T("Metric")
+#define STT_SYS_DATA_ID_Mask		_T("Mask")
+
+//lijunqing 2024-10-26
+#define STT_SYS_License_Read	_T("Read")
+#define STT_SYS_License_Write	_T("Write")
+#define STT_SYS_DATA_ID_Admin	_T("Admin")
+#define STT_SYS_License_File	_T("License.xml")
+#define STT_SYS_LicenseMngr_File	_T("LicenseMngr.xml")
+#define STT_SYS_License_Cmd	_T("LicenseCmd")
 
 
 //shaolei  2022-01-07
@@ -525,6 +553,7 @@
 #define STT_CMD_PARA_UIParaFile       _T("ui-para-file")
 #define STT_CMD_PARA_ReportFile       _T("report-file")
 #define STT_CMD_PARA_ParentItemsPath  _T("ParentItemsPath")
+#define STT_CMD_PARA_ItemsPath		  _T("ItemsPath")
 #define STT_CMD_PARA_ItemParas        _T("item-paras")
 #define STT_CMD_PARA_TestMacroParas   _T("test-macro-paras")
 #define STT_CMD_PARA_HasDigital     _T("HasDigital")
@@ -548,18 +577,24 @@
 #define STT_CMD_PARA_SysPara   _T("sys-para")   //测试参数
 //2023-7-19
 #define STT_CMD_PARA_SafetyDatas            _T("safety-datas")
+#define STT_CMD_PARA_LoopTest   _T("LoopTest")
 
 //2022-3-29  lijunqing 
 #define STT_CMD_PARA_generate_items  _T("generate-items")
 #define STT_CMD_PARA_ItemsID           _T("ItemsID")
 #define STT_CMD_PARA_generate_items_create             _T("create")
+#define STT_CMD_PARA_generate_items_create_template             _T("create-template")
 #define STT_CMD_PARA_generate_items_new             _T("new")
 #define STT_CMD_PARA_generate_items_delete           _T("delete")
+#define STT_CMD_PARA_generate_items_delete_batch     _T("delete-batch")
 #define STT_CMD_PARA_generate_items_edit			   _T("edit")
 #define STT_CMD_PARA_generate_items_move            _T("move")
 #define STT_CMD_PARA_generate_items_cmd_wzd		   _T("cmd-wzd")
 #define STT_CMD_PARA_generate_items_cmd_add		   _T("cmd-add")
 #define STT_CMD_PARA_generate_items_macro_add		   _T("macro-add")
+#define STT_CMD_PARA_generate_items_macro_add_batch	   _T("macro-add-batch")
+#define STT_CMD_PARA_generate_items_macro_para_edit		   _T("macro-para-edit")
+#define STT_CMD_PARA_generate_items_macro_para_edit_batch		   _T("macro-para-edit-batch")
 #define STT_CMD_PARA_generate_items_move_up		   _T("move-up")
 #define STT_CMD_PARA_generate_items_move_down		   _T("move-down")
 #define STT_CMD_PARA_generate_items_paste		   _T("item-paste")
@@ -756,6 +791,7 @@
 //2023-3-26  shaolei
 #define XPARA_ID_Time_unit_ms  _T("time-unit-ms")
 #define XPARA_ID_AddDevReset   _T("add-devreset")
+#define XPARA_ID_TaskName   _T("TaskName")
 
 //2021-8-1 shaolei
 #define XPARA_ID_GBXMLFILE_S  _T("gbxml-file_s")
@@ -856,6 +892,7 @@
 #define XPARA_ID_TYPE_SMV92  _T("SMV92")
 #define XPARA_ID_TYPE_SMV91  _T("SMV91")
 #define XPARA_ID_TYPE_FT3        _T("FT3")
+#define XPARA_ID_TYPE_BINARY  _T("BINARY")
 #define XPARA_ID_TYPE_GOOSE    _T("GOOSE") 
 
 
@@ -927,6 +964,10 @@
 	</paras>
 <sys-state>
 */
+
+//lijunqing 2024-10-26
+#define STT_SYS_STATE_ID_License	_T("License")
+
 
 //应答=0  主动上报   1
 #define SYS_STATE_RETTYPE_REPLY                  _T("REPLY")
@@ -1012,3 +1053,33 @@
 #define STT_CMD_ExecStatus_SocketClose	5
 
 #define STT_LOGIN_TEST_ID_USE_RandomNum
+
+#define STT_CMD_License_None		    0
+#define STT_CMD_License_Overdue	1
+#define STT_CMD_License_Exceed	    2
+#define STT_CMD_License_Error	        3
+
+//调试打开DataSheet时间比较长，首先监视打开的每个界面的时间 2024-9-6 lijunqing
+void debug_enter_time_long_log();
+void debug_time_long_log(char *pszText, bool bResetBegin);
+void debug_time_long_log(const char *pszFileOrFunc, long nLine, bool bResetBegin);
+void debug_time_long_log(const char *pszFileOrFunc, long nLine, char *pszTex, bool bResetBegin);
+
+#define STT_CMD_License_None		    0
+#define STT_CMD_License_Overdue	1
+#define STT_CMD_License_Exceed	    2
+#define STT_CMD_License_Error	        3
+
+//20241112 Xuzt 需根据语言切换颜色，不再使用宏
+////20241108 Xuzt 新增矢量图和波形图通道颜色定义
+//#define STT_QT_COLOR_A		    (Qt::red)
+//#define STT_QT_COLOR_B		    (Qt::yellow)
+//#define STT_QT_COLOR_C		    (Qt::blue)
+//#define STT_StyleSheet_COLOR_A  ("background-color: red;")
+//#define STT_StyleSheet_COLOR_B  ("background-color: yellow;")
+//#define STT_StyleSheet_COLOR_C  ("background-color: blue;")
+
+//20241111 Xuzt 部分符号改为unicode码表示，不然在英文系统会显示为乱码
+#define STT_MATH_ohm            ("\u03A9")
+#define STT_MATH_degree			("\u00B0")
+#define STT_MATH_Phi			("\u03A6")//add wangtao 20241116 Φ

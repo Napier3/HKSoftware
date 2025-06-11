@@ -48,7 +48,7 @@ void CSttCmdGuideBookTransTool::Trans(CGuideBook *pGuideBook, CSttGuideBook *pSt
 
 	POS pos = pGuideBook->GetHeadPosition();
 	CExBaseObject *p = NULL;
-	CSttDevice *pNew = NULL;
+	CExBaseObject *pNew = NULL;
 
 	while (pos != NULL)
 	{
@@ -58,7 +58,13 @@ void CSttCmdGuideBookTransTool::Trans(CGuideBook *pGuideBook, CSttGuideBook *pSt
 		{
 			pNew = new CSttDevice();
 			pSttGuideBook->AddNewChild(pNew);
-			Trans((CDevice*)p, pNew);
+			Trans((CDevice*)p, (CSttDevice*)pNew);
+		}
+		else if (p->GetClassID() == GBCLASSID_TESTGLOBALDATASMNGR)
+		{
+			pNew = new CSttTestGlobalDatasMngr();
+			pSttGuideBook->AddNewChild(pNew);
+			Trans((CTestGlobalDatasMngr*)p, (CSttTestGlobalDatasMngr *)pNew);
 		}
 	}
 }
@@ -77,6 +83,20 @@ void CSttCmdGuideBookTransTool::Trans(CDevice *pDevice, CSttDevice *pSttDevice)
 
     TransItemBase(pDevice, pSttDevice);
 	Trans((CExBaseList*)pDevice,  (CExBaseList*)pSttDevice);
+}
+
+void CSttCmdGuideBookTransTool::Trans(CTestGlobalDatasMngr *pDataMngr, CSttTestGlobalDatasMngr *pSttDataMngr)
+{
+	if (pDataMngr == NULL || pSttDataMngr == NULL)
+	{
+		return;
+	}
+
+	pSttDataMngr->m_strName = pDataMngr->m_strName;
+	pSttDataMngr->m_strID = pDataMngr->m_strID;
+
+	pSttDataMngr->DeleteAll();
+	pSttDataMngr->AppendCloneEx2(*pDataMngr);
 }
 
 void CSttCmdGuideBookTransTool::Trans(CExBaseList *pGbList, CExBaseList *pSttParent)

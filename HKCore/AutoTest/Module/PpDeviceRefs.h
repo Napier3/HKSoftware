@@ -7,10 +7,10 @@
 #include "GuideBook/GuideBookInterface.h"
 #include "AutoTestXMLRWKeys.h"
 #include "TCtrlCntrDefine.h"
-#include "../../SttStudio/Module/SttGlobalDef.h"
+#include "../Module/SttGlobalDef.h"
 
 #ifndef  _not_use_autotest_
-#include "../../SttStudio/Module/SmartTestInterface/ProtocolEngineInterface.h"
+#include "../Module/SmartTestInterface/ProtocolEngineInterface.h"
 #endif
 
 #ifdef _USE_SMARTTEST_INTERFACE_ENGINE_STT_

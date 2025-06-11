@@ -5,9 +5,10 @@
 #include "SttTestAppConfigDlg.h"
 #include "../../../Module/SttGlobalDef.h"
 #include "../SttTestAppConfigTool.h"
-
+#ifndef NOT_USE_XLANGUAGE
+#include "../../XLangResource_Native.h"
+#endif
 // CSttTestAppConfigDlg ∂‘ª∞øÚ
-
 //IMPLEMENT_DYNAMIC(CSttTestAppConfigDlg, CDialog)
 
 CSttTestAppConfigDlg::CSttTestAppConfigDlg(CWnd* pParent /*=NULL*/)
@@ -89,7 +90,11 @@ BOOL CSttTestAppConfigDlg::OnInitDialog()
 		}
 
 		CreateChildDynDlg(m_pSttLocalConfigDlg);
+#ifndef NOT_USE_XLANGUAGE
+		m_tabRM.AddTab(m_pSttLocalConfigDlg, /*_T("≤‚ ‘“«≈‰÷√")*/g_sLangTxt_Native_TestInstrumentConfig);
+#else
 		m_tabRM.AddTab(m_pSttLocalConfigDlg, _T("≤‚ ‘“«≈‰÷√"));
+#endif
 	}
 
 	if (m_bSttLocalScanConfigDlg)
@@ -108,7 +113,11 @@ BOOL CSttTestAppConfigDlg::OnInitDialog()
 		}
 		
 		CreateChildDynDlg(m_pSttLocalScanConfigDlg);
+#ifndef NOT_USE_XLANGUAGE
+		m_tabRM.AddTab(m_pSttLocalScanConfigDlg, /*_T("…®√Ëæ÷”ÚÕ¯≤‚ ‘“«")*/g_sLangTxt_Native_ScanLANTestInstrument);
+#else
 		m_tabRM.AddTab(m_pSttLocalScanConfigDlg, _T("…®√Ëæ÷”ÚÕ¯≤‚ ‘“«"));
+#endif
 	}
 
 	if (m_bSttRemoteConfigDlg)
@@ -117,7 +126,13 @@ BOOL CSttTestAppConfigDlg::OnInitDialog()
 		m_pSttRemoteConfigDlg->m_pSttTestAppConfigTool = m_pSttTestAppConfigTool;
 		m_pSttRemoteConfigDlg->m_pSttTestAppCfg = m_pSttTestAppCfg;
 		CreateChildDynDlg(m_pSttRemoteConfigDlg);
+#ifndef USE_STTADJMAIN_XLANGUAGE
+#ifndef NOT_USE_XLANGUAGE
+		m_tabRM.AddTab(m_pSttRemoteConfigDlg, /*_T("÷±Ω”≈‰÷√‘∂≥Ã≤‚ ‘“«")*/g_sLangTxt_Native_DirectConfigRemoteInstrument);
+#else
 		m_tabRM.AddTab(m_pSttRemoteConfigDlg, _T("÷±Ω”≈‰÷√‘∂≥Ã≤‚ ‘“«"));
+#endif
+#endif
 	}
 
 	if (m_bSttRemoteScanConfigDlg)
@@ -126,12 +141,20 @@ BOOL CSttTestAppConfigDlg::OnInitDialog()
 		m_pSttRemoteScanConfigDlg->m_pSttTestAppConfigTool = m_pSttTestAppConfigTool;
 		m_pSttRemoteScanConfigDlg->m_pSttTestAppCfg = m_pSttTestAppCfg;
 		CreateChildDynDlg(m_pSttRemoteScanConfigDlg);
+#ifndef NOT_USE_XLANGUAGE
+		m_tabRM.AddTab(m_pSttRemoteScanConfigDlg, /*_T("…®√Ë‘∂≥Ã≤‚ ‘“«")*/g_sLangTxt_Native_ScanRemoteTestInstrument);
+#else
 		m_tabRM.AddTab(m_pSttRemoteScanConfigDlg, _T("…®√Ë‘∂≥Ã≤‚ ‘“«"));
+#endif
 	}
 
 	MoveWindow(CRect( 0, 0, 650, 300), TRUE);
 	CenterWindow();
+#ifndef NOT_USE_XLANGUAGE
+	SetWindowText(/*_T("≤‚ ‘“«≈‰÷√")*/g_sLangTxt_Native_TestInstrumentConfig);
+#else
 	SetWindowText(_T("≤‚ ‘“«≈‰÷√"));
+#endif
 
 	return TRUE;
 }

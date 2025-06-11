@@ -12,6 +12,7 @@
 
 #include "SttJobGuide.h"
 #include "SttDevice.h"
+#include "SttTestGlobalDatasMngr.h"
 
 class CSttGuideBook : public CSttItemBase
 {
@@ -45,6 +46,7 @@ public:
 	CDvmDataset *m_pGlobalDatas;	//测试的全局数据
 	CDataGroup *m_pItemsTec;  //2023-10-23 shaolei   南瑞windows软件，要求填写到报告中的“技术要求”、“报告数据保留小数位数”可编辑
 	CDataGroup *m_pAinDataMapCfg;  //2023-11-14 遥测参数映射。在导出word报告时，需要反向映射。故增加指针记录到模板中
+	CSttTestGlobalDatasMngr *m_pTestGlobalDatasMngr; //测试全局数据管理：2024-12-11
 
 //重载函数
 public:

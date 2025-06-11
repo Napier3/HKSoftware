@@ -86,6 +86,8 @@ public:
 	virtual long OnDisConnect();
 	virtual void OnTestState(const CString &strMacroID, CDataGroup *pParas);
 	virtual void OnReport_ReadDevice(const CString &strMacroID, CDataGroup *pParas);//读取Device的Report解析函数
+	virtual void OnReport_ReadSystemState(const CString &strMacroID, CDataGroup *pParas);//20250317 huangliang
+
 	virtual long OnRtData(CSttParas *pParas);
 	virtual void OnTestResults(CDataGroup *pResults){};
 	virtual void OnTestInitialize(CEventResult *pEventInfo,CDataGroup *pParas){};
@@ -122,7 +124,7 @@ public:
         virtual void SendIecDetect(long bEnable,long nFT3_CRRType,long nIecType,QList<QVector<int> > oPkgLenthList);
 #endif
 	virtual void SendIecRecord(CDataGroup *pIecRecordParas);
-
+	virtual void SendBinConfig(CDataGroup *pBinconfigParas);
 
 	//2022-4-13  lijunqing
 	virtual void On_IecDetect(CDataGroup *pIecCb) {}

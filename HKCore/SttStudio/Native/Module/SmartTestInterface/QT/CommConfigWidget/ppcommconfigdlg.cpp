@@ -1,7 +1,7 @@
 #include "ppcommconfigdlg.h"
 #include "ui_ppcommconfigdlg.h"
-#include "../../Module/API/GlobalConfigApi.h"
-#include "../../Module/API/FileApi.h"
+#include "../../../../../Module/API/GlobalConfigApi.h"
+#include "../../../../../Module/API/FileApi.h"
 
 
 

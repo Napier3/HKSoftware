@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../Module/baseclass/exbaselist.h"
+#include "ExBaseList.h"
 
 class CItems;
 class CGuideBook;

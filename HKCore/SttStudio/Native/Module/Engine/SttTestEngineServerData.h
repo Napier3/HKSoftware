@@ -65,6 +65,8 @@ public:
 
     //2021-0527  shaolei   add
     virtual long ProcessCmd_CloudTest(CSttSocketDataBase *pClientSocket, CSttSystemCmd &oSysCmd) {return  0;}
+	//2025-03-26 shaolei add
+	virtual long ProcessCmd_GetSystemState(CSttSocketDataBase *pClientSocket, CSttSystemCmd &oSysCmd) {return  0;}
 
 	//ÍË³öµÇÂ¼»ò¶ÏÁ´£¬¼ì²éÊÇ·ñÍ£Ö¹²âÊÔ
 	virtual void CheckStopTestAfterRelease(CSttSocketDataBase *pClientSocket){}

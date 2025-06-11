@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ProtocolEngineInterface.h"
+
 #ifdef _USE_SMARTTEST_INTERFACE_ENGINE_COM_
 #include"PpEngine_COM.h"
 #endif

@@ -9,8 +9,8 @@
 #include <QFont>
 
 #include "SttIecRcdFuncInterface.h"
-#include "../../Module/Axis/MeterAxis.h"
-#include "MemBufferDC.H"
+#include "../../../../Module/Axis/MeterAxis.h"
+#include "../../../../Module/BaseClass/MemBufferDC.H"
 
 
 //////////////////////////////////////////////////////////////////////////

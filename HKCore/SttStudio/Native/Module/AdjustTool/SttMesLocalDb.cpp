@@ -8,7 +8,10 @@
 #include "SttMesLocalDb.h"
 #include "SttAdjBase.h"
 #include "SttAdjModule.h"
-
+#ifndef NOT_USE_XLANGUAGE
+#include "../XLangResource_Native.h"
+#include "../../../Module/XLanguage/XLanguageMngr.h"
+#endif
 #ifdef _DEBUG
 #undef THIS_FILE
 	static char THIS_FILE[]=__FILE__;
@@ -102,9 +105,15 @@ void CSttMesLocalDb::InitHdGearType()
 {
 	m_oHdGearType.m_strName = _T("HdGear");
 	m_oHdGearType.m_strID = _T("HdGear");
+#ifndef NOT_USE_XLANGUAGE
+		m_oHdGearType.AddNewValue(/*"独立直流电流通道硬件档位"*/g_sLangTxt_Native_IndepDCCurrChHWRange, STT_ADJ_HD_GEAR_ID_IDC, "0");
+		m_oHdGearType.AddNewValue(/*"独立直流电压通道硬件档位"*/g_sLangTxt_Native_IndepDCVolChHWRange, STT_ADJ_HD_GEAR_ID_UDC, "1");
+		m_oHdGearType.AddNewValue(/*"模块通道档位"*/g_sLangTxt_Native_ModChRange, STT_ADJ_HD_GEAR_ID_MODULE, "2");
+#else
 	m_oHdGearType.AddNewValue("独立直流电流通道硬件档位", STT_ADJ_HD_GEAR_ID_IDC, "0");
 	m_oHdGearType.AddNewValue("独立直流电压通道硬件档位", STT_ADJ_HD_GEAR_ID_UDC, "1");
 	m_oHdGearType.AddNewValue("模块通道档位", STT_ADJ_HD_GEAR_ID_MODULE, "2");
+#endif
 }
 
 void CSttMesLocalDb::InitChannelDataType()
@@ -120,16 +129,27 @@ void CSttMesLocalDb::InitChannelDataType()
 	//暂时确定为6个通道，最大化，多少后续再完善
 	for (long nCh=0; nCh<12/*6*/; nCh++) //zhouhj 20220304 最大通道数,从6改为12  根据周磊实际需求修改
 	{
+#ifndef NOT_USE_XLANGUAGE
+		strName.Format(/*_T("通道%d")*/g_sLangTxt_Native_ChnN, nCh+1);
+#else
 		strName.Format(_T("通道%d"), nCh+1);
+#endif
 		strID.Format(_T("%s%d"), STT_ADJ_ID_Ch_Module, nCh);
 		m_oChannelDataType.AddNewValue(strName, strID, nCh);
 		m_oChannelSwitchDataType.AddNewValue(strName, strID, nCh);
 	}
+#ifndef NOT_USE_XLANGUAGE
+	m_oChannelDataType.AddNewValue(/*"独立直流电流Idc"*/g_sLangTxt_Native_IndepDCCurrIdc, STT_ADJ_ID_Ch_Idc, "12");//最后一个参数值6改为12
+	m_oChannelDataType.AddNewValue(/*"独立直流电压Udc"*/g_sLangTxt_Native_IndepDCVolUdc, STT_ADJ_ID_Ch_Udc, "13");//最后一个参数值7改为13
+	m_oChannelSwitchDataType.AddNewValue(/*"通道1-通道3"*/g_sLangTxt_Native_ChannelOneToThree, STT_ADJ_ID_Ch_1_3, "12");//最后一个参数值6改为12
+	m_oChannelSwitchDataType.AddNewValue(/*"通道4-通道6"*/g_sLangTxt_Native_ChannelFourToSix, STT_ADJ_ID_Ch_4_6, "13");//最后一个参数值7改为13
 
+#else
 	m_oChannelDataType.AddNewValue("独立直流电流Idc", STT_ADJ_ID_Ch_Idc, "12");//最后一个参数值6改为12
 	m_oChannelDataType.AddNewValue("独立直流电压Udc", STT_ADJ_ID_Ch_Udc, "13");//最后一个参数值7改为13
 	m_oChannelSwitchDataType.AddNewValue("通道1-通道3", STT_ADJ_ID_Ch_1_3, "12");//最后一个参数值6改为12
 	m_oChannelSwitchDataType.AddNewValue("通道4-通道6", STT_ADJ_ID_Ch_4_6, "13");//最后一个参数值7改为13
+#endif
 }
 
 void CSttMesLocalDb::InitChWaveDataType()
@@ -142,9 +162,13 @@ CDataType* CSttMesLocalDb::GetChWaveDataType(CDataType *pDataType, long nHarmCou
 	pDataType->DeleteAll();
 	pDataType->m_strName = _T("Harm");
 	pDataType->m_strID = _T("Harm");
-
+#ifndef NOT_USE_XLANGUAGE
+	pDataType->AddNewValue(/*"直流"*/g_sLangTxt_Native_DC, STT_ADJ_ID_Ch_Wave_DC, "0");
+	pDataType->AddNewValue(/*"基波"*/g_sLangTxt_Native_Fundamental, STT_ADJ_ID_Ch_Wave_Base, "1");
+#else
 	pDataType->AddNewValue("直流", STT_ADJ_ID_Ch_Wave_DC, "0");
 	pDataType->AddNewValue("基波", STT_ADJ_ID_Ch_Wave_Base, "1");
+#endif
 
 	long nIndex = 0;
 	CString strName, strID;
@@ -152,7 +176,11 @@ CDataType* CSttMesLocalDb::GetChWaveDataType(CDataType *pDataType, long nHarmCou
 	//暂时确定为6个通道，最大化，多少后续再完善
 	for (long nCh=2; nCh<=nHarmCount; nCh++)
 	{
+#ifndef NOT_USE_XLANGUAGE
+		strName.Format(/*_T("%d次谐波")*/g_sLangTxt_Native_NthHarmonic, nCh);
+#else
 		strName.Format(_T("%d次谐波"), nCh);
+#endif
 		strID.Format(_T("%s%d"), STT_ADJ_ID_Ch_Wave_Harm, nCh);
 		pDataType->AddNewValue(strName, strID, nCh);
 	}
@@ -169,7 +197,11 @@ void CSttMesLocalDb::InitGearDataType()
 
 	for (long nIndex=0; nIndex<=7; nIndex++)
 	{
+#ifndef NOT_USE_XLANGUAGE
+		strName.Format(/*_T("档位%d")*/g_sLangTxt_Native_GearFormat, nIndex+1);
+#else
 		strName.Format(_T("档位%d"), nIndex+1);
+#endif
 		strID.Format(_T("Gear%d"), nIndex);
 		m_oGearDataType.AddNewValue(strName, strID, nIndex);
 	}
@@ -184,7 +216,11 @@ void CSttMesLocalDb::InitTRangeDataType()
 
 	for (long nIndex=0; nIndex<=7; nIndex++)
 	{
+#ifndef NOT_USE_XLANGUAGE
+		strName.Format(/*_T("温区%d")*/g_sLangTxt_Native_TempzoneFormat, nIndex+1);
+#else
 		strName.Format(_T("温区%d"), nIndex+1);
+#endif
 		strID.Format(_T("T%d"), nIndex);
 		m_oTRangeDataType.AddNewValue(strName, strID, nIndex);
 	}
@@ -276,7 +312,12 @@ void CSttMesLocalDb::InitSttMesLocalDB()
 	CDataMngrXmlRWKeys::g_pXmlKeys->m_nIsGroupUseDvmData++;
 	BOOL bRet = m_pSttMesLocalDB->OpenXmlFile(strFile, CDataMngrXmlRWKeys::g_pXmlKeys);
 	CDataMngrXmlRWKeys::g_pXmlKeys->m_nIsGroupUseDvmData--;
-
+#ifndef NOT_USE_XLANGUAGE
+	if (strFile.GetLength())
+	{
+		xlang_TranslateByResourceFileEx(m_pSttMesLocalDB, strFile);
+	}
+#endif
 	InitModuleTypeDataType();
 }
 
@@ -343,6 +384,12 @@ BOOL CSttMesLocalDb::OpenSttModuleClass(CDataGroup *pNew, const CString &strSttM
 	CDataMngrXmlRWKeys::g_pXmlKeys->m_nIsGroupUseDvmData++;
 	BOOL bRet = pNew->OpenXmlFile(strFile, CDataMngrXmlRWKeys::g_pXmlKeys);
 	CDataMngrXmlRWKeys::g_pXmlKeys->m_nIsGroupUseDvmData--;
+#ifndef NOT_USE_XLANGUAGE
+	if (strFile.GetLength())
+	{
+		xlang_TranslateByResourceFileEx(pNew, strFile);
+	}
+#endif
 
 	return bRet;
 }
@@ -358,7 +405,11 @@ CDataGroup* CSttMesLocalDb::CreateSttModuleClass(const CString &strSttModuleClas
 	}
 	else
 	{
+#ifndef NOT_USE_XLANGUAGE
+		CLogPrint::LogFormatString(XLOGLEVEL_ERROR, /*_T("模块[%s]模板文件不存在")*/g_sLangTxt_Native_TemplateFileNoExit.GetString(), strSttModuleClass.GetString());
+#else
 		CLogPrint::LogFormatString(XLOGLEVEL_ERROR, _T("模块[%s]模板文件不存在"), strSttModuleClass.GetString());
+#endif
 		delete pFind;
 		return NULL;
 	}
@@ -420,13 +471,21 @@ BOOL CSttMesLocalDb::SaveSttModuleClassFile(CDataGroup *pModuleClass)
 	
 	if (!oModule.GetModel(strModuleClass))
 	{
+#ifndef NOT_USE_XLANGUAGE
+		CLogPrint::LogString(XLOGLEVEL_ERROR,/* _T("模块数据错误，没有定义型号")*/g_sLangTxt_Native_ModelDataError_NoModel);
+#else
 		CLogPrint::LogString(XLOGLEVEL_ERROR, _T("模块数据错误，没有定义型号"));
+#endif
 		return FALSE;
 	}
 
 	if (strModuleClass.GetLength() == 0)
 	{
+#ifndef NOT_USE_XLANGUAGE
+		CLogPrint::LogString(XLOGLEVEL_ERROR, /*_T("模块数据错误，型号为空")*/g_sLangTxt_Native_ModelDataError_EmptyModel);
+#else
 		CLogPrint::LogString(XLOGLEVEL_ERROR, _T("模块数据错误，型号为空"));
+#endif
 		return FALSE;
 	}
 
@@ -441,6 +500,10 @@ BOOL CSttMesLocalDb::SaveSttModuleClassFile(CDataGroup *pModuleClass)
 	//2022-2-8  lijunqing 添加到ModuleClass中
 	CDvmData *pModel = oModule.GetModel();
 	CDataGroup *pClasses = GetSttModuleClasses();
+	if (pClasses == NULL)
+	{
+		return bRet;
+	}
 	CDataGroup *pFind = (CDataGroup*)pClasses->FindByID(strModuleClass);
 
 	if (pFind != NULL)
@@ -457,7 +520,16 @@ BOOL CSttMesLocalDb::SaveSttModuleClassFile(CDataGroup *pModuleClass)
 	
 	pModuleClass->m_strName = strName;
 	pModuleClass->m_strID = strID;
-
+#ifndef NOT_USE_XLANGUAGE
+	if (bRet)
+	{
+		CLogPrint::LogFormatString(XLOGLEVEL_TRACE, /*_T("导出【%s】模块系数模板文件成功")*/g_sLangTxt_Native_ExportCoefficientTemplateSuccess.GetString(), strFile.GetString());
+	}
+	else
+	{
+		CLogPrint::LogFormatString(XLOGLEVEL_TRACE, /*_T("导出【%s】模块系数模板文件失败")*/g_sLangTxt_Native_ExportFailure.GetString(), strFile.GetString());
+	}
+#else
 	if (bRet)
 	{
         CLogPrint::LogFormatString(XLOGLEVEL_TRACE, _T("导出【%s】模块系数模板文件成功"), strFile.GetString());
@@ -466,6 +538,7 @@ BOOL CSttMesLocalDb::SaveSttModuleClassFile(CDataGroup *pModuleClass)
 	{
         CLogPrint::LogFormatString(XLOGLEVEL_TRACE, _T("导出【%s】模块系数模板文件失败"), strFile.GetString());
 	}
+#endif
 
 	return bRet;
 }
@@ -553,7 +626,11 @@ CDvmData* CSttMesLocalDb::AddNewModuleType(CDataGroup *pModuleType)
 {
 	long nDataCnt  = pModuleType->GetChildCount(DVMCLASSID_CDVMDATA);
 	CString strName,  strID,  strDataType = _T(""),  strValue;
+#ifndef NOT_USE_XLANGUAGE
+	strName = /*"新模块类型"*/g_sLangTxt_Native_NewModuleType; 
+#else
 	strName = "新模块类型" ; 
+#endif
 	strID = "VOLTAGE";  //2021-5-4  lijunqing  新模块类型，缺省为电压模块
 	strValue.Format(_T("%d"),  nDataCnt );
 
@@ -573,6 +650,19 @@ CDataGroup* CSttMesLocalDb::AddNewModuleClass()
 //添加对应的ModuleClass
 CDataGroup* CSttMesLocalDb::AddNewModuleClass(CDataGroup *pModuleClass)
 {
+#ifndef NOT_USE_XLANGUAGE
+	CDataGroup *pClass = pModuleClass->AddNewGroup(/*_T("模块")*/g_sLangTxt_Module,  _T("Moule"),  _T("Moule"));
+
+	//2021-5-4  lijunqing  "Type" >> "ModuleType"
+	pClass->AddNewData(/*_T("模块类型")*/g_sLangTxt_Gradient_ModuleType, _T("ModuleType"), _T("ModuleType"), _T("0"));
+	pClass->AddNewData(/*_T("模块硬件位置")*/g_sLangTxt_Native_ModuleHardPos, _T("Pos"), _T("long"), _T("2500"));
+	pClass->AddNewData(/*_T("频率")*/g_sLangTxt_Native_Freq, _T("Freq"), _T("float"), _T("2500"));
+	pClass->AddNewData(/*_T("通道数")*/g_sLangTxt_IEC_ChannelNumber, _T("ChannelCount"), _T("long"), _T("4"));
+	pClass->AddNewData(/*_T("型号")*/g_sLangTxt_Report_AppModel, _T("Model"), _T("string"), _T("PUT-4U"));
+	pClass->AddNewData(/*_T("直流电流通道最大值")*/g_sLangTxt_Native_DCCurrChMax, _T("UdcMax"), _T("float"), _T("20"));	
+	pClass->AddNewData(/*_T("直流电压通道最大值")*/g_sLangTxt_Native_DCVoltChMax, _T("IdcMax"), _T("float"), _T("20"));	
+	pClass->AddNewData(/*_T("通道最大值")*/g_sLangTxt_Native_ChMaxValue, _T("ChMax"), _T("float"), _T("20"));
+#else
 	CDataGroup *pClass = pModuleClass->AddNewGroup(_T("模块"),  _T("Moule"),  _T("Moule"));
 
 	//2021-5-4  lijunqing  "Type" >> "ModuleType"
@@ -584,6 +674,7 @@ CDataGroup* CSttMesLocalDb::AddNewModuleClass(CDataGroup *pModuleClass)
 	pClass->AddNewData(_T("直流电流通道最大值"), _T("UdcMax"), _T("float"), _T("20"));	
 	pClass->AddNewData(_T("直流电压通道最大值"), _T("IdcMax"), _T("float"), _T("20"));	
 	pClass->AddNewData(_T("通道最大值"), _T("ChMax"), _T("float"), _T("20"));
+#endif
 
 	return pClass;
 }
@@ -623,8 +714,13 @@ CDataGroup* CSttMesLocalDb::AddNewMode()
 CDataGroup* CSttMesLocalDb::AddNewMode(CDataGroup *pMode)
 {
 	CDataGroup *pNewMode = pMode->AddNewGroup(_T("PTU200L"),  _T("PTU200L"),  _T("SttModel"));
+#ifndef NOT_USE_XLANGUAGE
+	pNewMode->AddNewData(/*_T("型号")*/g_sLangTxt_Report_AppModel,  _T("Model"),  _T("string"),  _T("PTU200L"));
+	pNewMode->AddNewData(/*_T("模块数")*/g_sLangTxt_Native_NumOfModules,  _T("ModuleCount"),  _T("long"),  _T("3"));
+#else
 	pNewMode->AddNewData(_T("型号"),  _T("Model"),  _T("string"),  _T("PTU200L"));
 	pNewMode->AddNewData(_T("模块数"),  _T("ModuleCount"),  _T("long"),  _T("3"));
+#endif
 
 	return pNewMode;
 }

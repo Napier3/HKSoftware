@@ -1,8 +1,8 @@
 #include "stdafx.h"
-#include "../../Module/api/GlobalConfigApi.h"
+#include "../../Module/API/GlobalConfigApi.h"
 #include "GuideBookExportConfig.h"
 
-#include "../../Module/Api/FileApi.h"
+#include "../../Module/API/FileApi.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

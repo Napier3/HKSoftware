@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "RptMapBase.h"
 #include "RptBkmk.h"
 #include "RptData.h"

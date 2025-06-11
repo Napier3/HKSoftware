@@ -51,6 +51,8 @@ public:	//CSttPkgDispatchInterface
 public: //CSttNativeTestEngineInterface
 	virtual long X_ReturnSysStateToChildren(void *pCommInterface, CSttSysState *pSysState) ;
 	virtual long X_Ats_InputData(void *pCommInterface, CDataGroup *pDatas,CExBaseList *pMsgs) ;
+	//shaolei 20220326 
+	virtual long Return_DeviceParameter_AfterLogin(void *pCommInterface, CSttSysState *pSysState);
 
 private:
 	CSttNativeTestEngine_Mqtt();
@@ -152,8 +154,6 @@ protected:
     void Return_NoDevice(void *pClientSocket, CSttSysState &oSysState);
     void Return_Ats_Event(void *pClientSocket, CSttSysState &oSysState);
     long ValidateSmartTest(void *pClientSocket, CSttSysState &oSysState);
-	//shaolei 20220326 
-	void Return_DeviceParameter_AfterLogin(void *pClientSocket, CSttSysState &oSysState);
 
 public:
 	//±¾»ú²âÊÔ¶ËÒýÇæ

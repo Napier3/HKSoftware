@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../Module/Expression/XExprNode.h"
+#include "../../../Module/Expression/XExprNode.h"
 #include "../SttCmdDefineGlobal.h"
 
 class CSttItemRsltExpr : public CXExprNode

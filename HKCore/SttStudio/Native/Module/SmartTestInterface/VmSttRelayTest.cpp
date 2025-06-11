@@ -80,6 +80,7 @@ long CVmSttRelayTest::ComtradeReplayTestStart(CString strComtradeFile,CDataGroup
 {
 	if (!IsFileExist(strComtradeFile))
 	{
+		CLogPrint::LogFormatString(XLOGLEVEL_DEBUG, _T("Comtrade File Not Exist  [%s]"), strComtradeFile.GetString());
 		return -1;
 	}
 

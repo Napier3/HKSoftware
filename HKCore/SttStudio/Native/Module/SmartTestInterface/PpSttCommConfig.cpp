@@ -270,7 +270,7 @@ CDvmData* CPpSttCommConfig::CmmCfg_AddByKey(BSTR bstrKey, BOOL bClearAll)
 {
 	CString strKey;
 	strKey = bstrKey;
-	return CmmCfg_AddByKey(strKey, TRUE);
+	return CmmCfg_AddByKey(strKey, bClearAll);
 }
 
 void CPpSttCommConfig::CmmCfg_DelByKey(const CString &strKey)
@@ -607,6 +607,12 @@ void CPpSttCommConfig::UdpServer_Set_MuticastIP(const CString &strMuticastIP)
     dvmdata_set_value(pUdpServer, CDeviceModelXmlKeys::g_pXmlRWKeys->m_strMulticastIPKey,  strMuticastIP);
 }
 
+void CPpSttCommConfig::UdpServer_Set_Broadcast( long nUse )
+{
+	CDvmData *pUdpServer = Set_UdpServer();
+	dvmdata_set_value(pUdpServer, CDeviceModelXmlKeys::g_pXmlRWKeys->m_strUseBroadcastKey,  nUse);
+}
+
 //UdpClient_Set
 void CPpSttCommConfig::UdpClient_Set_LocalIP(const CString &strLocalIP)
 {
@@ -636,6 +642,12 @@ void CPpSttCommConfig::UdpClient_Set_RemotePort(long nRemotePort)
 }
 
 
+
+void CPpSttCommConfig::UdpClient_Set_Broadcast( long nUse )
+{
+	CDvmData *pUdpClient = Set_UdpClient();
+	dvmdata_set_value(pUdpClient, CDeviceModelXmlKeys::g_pXmlRWKeys->m_strUseBroadcastKey,  nUse);
+}
 
 //TcpClient_Get
 CString CPpSttCommConfig::TcpClient_Get_RemotePort()

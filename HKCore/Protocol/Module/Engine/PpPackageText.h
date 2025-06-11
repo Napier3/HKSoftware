@@ -1,5 +1,5 @@
 #pragma once
-#include "../../../module/baseclass/exbaselist.h"
+#include "ExBaseList.h"
 #include "ProtocolXmlRWKeys.h"
 
 class CPpPackageText :	public CExBaseObject

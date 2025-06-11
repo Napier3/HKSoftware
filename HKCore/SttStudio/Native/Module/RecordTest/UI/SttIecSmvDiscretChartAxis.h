@@ -7,8 +7,8 @@
 #include <qwt_scale_draw.h>
 #include <QVector>
 #include "stdafx.h"
-#include "../../Module/SmartCap/61850Cap/CapDevice/CapAnalysisConfig.h"
-#include "../../Module/SmartCap/61850Cap/CapDevice/CapDevice92.h"
+#include "../../../../Module/SmartCap/61850Cap/CapDevice/CapAnalysisConfig.h"
+#include "../../../../Module/SmartCap/61850Cap/CapDevice/CapDevice92.h"
 
 //static const char *colors[] = {"blue"};
 

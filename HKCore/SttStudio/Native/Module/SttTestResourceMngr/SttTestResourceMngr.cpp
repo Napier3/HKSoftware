@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "SttTestResourceMngr.h"
 #include "../Engine/SttPowerTestEngineBase.h"
 #include "../SttSystemConfig/SttSystemConfig.h"
@@ -6,6 +6,7 @@
 #include "../SttTest/Common/tmt_adjust_sys_parameter.h"
 #include "../SttTest/Common/tmt_test_paras_head.h"
 #include "../SttTestSysGlobalPara.h"
+#include "../../../Module/API/FileApi.h"
 #include <algorithm>
 
 //2023/8/4 wjs修改键盘呢Func区域
@@ -13,12 +14,19 @@
 #include "../UI/SoftKeyboard/SoftKeyBoard.h"
 #endif
 
+#include "../../../Module/Record/RecordGlobalDefine.h"
+//extern double g_dFixFreqCalValue;
+
 
 #ifdef NOT_USE_XLANGUAGE
 #else
 #include "../XLangResource_Native.h"                              
 
 #endif
+
+//2024 lijunqing 优化程序启动速度，因此固定最大状态数
+//重新定义下这个宏，避免引用tmt_state_test_h，如果宏定义值不一样，编译器会报异常的
+#define STATE_MAX_COUNT     100
 
  CSttTestResourceMngr g_oSttTestResourceMngr;
 
@@ -156,7 +164,7 @@ BOOL CSttTestResourceMngr::SelectDeviceFromLocalDB()
 
 //	CLogPrint::LogFormatString(XLOGLEVEL_RESULT,_T("[问题查找](%s)."),strModel.GetString());
 
-	if (strModel.Find(_T("PNS331")) >= 0 || strModel.Find(_T("PDU100")) >= 0 || strModel.Find(_T("PTU200L")) >= 0)//zhouhj 2023.8.3 //chenling20240418系统参数弱信号设置各通道的一次值与二次值变比默认值设置为1:1
+	if (strModel.Find(_T("PNS331")) >= 0 || strModel.Find(_T("PDU100")) >= 0 || strModel.Find(_T("PTU200L")) >= 0 || strModel.Find(_T("PTU100")) >= 0)//zhouhj 2023.8.3 //chenling20240418系统参数弱信号设置各通道的一次值与二次值变比默认值设置为1:1
 	{
 		g_nSttWeekUseMode = STT_WEEK_USE_MODE_DistriTerm;
 	} 
@@ -164,6 +172,14 @@ BOOL CSttTestResourceMngr::SelectDeviceFromLocalDB()
 	{
 		g_nSttWeekUseMode = STT_WEEK_USE_MODE_NORMAL;
 	}
+
+#ifdef _PSX_OS_CENTOS_
+	if(strModel.Find(_T("PN400A")) >= 0)
+	{
+		//20250107 suyang 增加PN400A  centos系统 默认弱信号为 1:1
+		g_nSttWeekUseMode = STT_WEEK_USE_MODE_DistriTerm;
+	}
+#endif
 
 #ifdef _USE_SoftKeyBoard_
 	UpdateSoftKeyboardType();
@@ -204,7 +220,7 @@ BOOL CSttTestResourceMngr::OpenChMapsFile(CSttChMaps *pChMaps,CSttTestResourceBa
 	}
 
 	pChMaps->DeleteAll();
-    return pChMaps->OpenChMapsFile(strChMapFilePath);
+	return pChMaps->OpenChMapsFile(strChMapFilePath);
 }
 
 BOOL CSttTestResourceMngr::OpenChMapsFile(const CString &strChMapsFile)
@@ -254,6 +270,12 @@ BOOL CSttTestResourceMngr::OpenSystemParasFile(const CString &strSysParasPath)
 
 	//解析生成结构体
 	stt_xml_serialize(&g_oSystemParas, pMacroParas);
+
+	if ((g_dFixFreqCalValue>1.0f)&&(g_oSystemParas.m_fFNom>1.0f))
+	{
+		g_dFixFreqCalValue = g_oSystemParas.m_fFNom;
+	}
+
 	return TRUE;
 }
 
@@ -562,6 +584,7 @@ void CSttTestResourceMngr::GetAllModuleTags()
 	long nModuleType = 0;
 	long nModulePos = 0;
 	long nChCount = 0;
+	long nChtypeChg = 0;
 
 	while(pos != NULL)
 	{
@@ -584,7 +607,7 @@ void CSttTestResourceMngr::GetAllModuleTags()
 		nModulePos = 0;
 		nChCount = 0;
 		oAdjModule.GetModulePos(nModulePos);
-		oAdjModule.GetModuleChannelNum(nChCount);
+		oAdjModule.GetModuleDefChannelNum(nChCount);
 
  		if (nModuleType == STT_MODULE_TYPE_VOLT)
  		{
@@ -617,7 +640,16 @@ void CSttTestResourceMngr::GetAllModuleTags()
 		}
 		else if ((nModuleType == STT_MODULE_TYPE_WEEK_EX)/*||(nModuleType == STT_MODULE_TYPE_WEEK_MAIN)*/)
  		{
-			m_oWeak_Tags.AddModuleTag(nModulePos,nModuleType,nChCount);
+			CSttModuleTag* pChildModuleTag = m_oWeak_Tags.AddModuleTag(nModulePos,nModuleType,nChCount);
+			if (oAdjModule.GetModuleDefChTypeChg(nChtypeChg))//dingxy 20250226 不可变时，按照设置的通道映射
+			{
+				pChildModuleTag->m_nIsChTypeChg = nChtypeChg;
+				if (pChildModuleTag->m_nIsChTypeChg == 0)
+				{
+					oAdjModule.GetModuleChannelNum(pChildModuleTag->m_nChCountU_Week,pChildModuleTag->m_nChCountI_Week);
+
+				}
+			}
 		}
 		else
 		{
@@ -662,13 +694,16 @@ CString CSttTestResourceMngr::GetCurrModel()
 */
 BOOL CSttTestResourceMngr::CreateChMaps()
 {
-	if (!HasLoadDevice())//如果没有加载通道映射文件,主动加载通道映射文件
+//#ifndef _PSX_OS_CENTOS_  //Xuzt 暂时屏蔽
+    if (!HasLoadDevice())//如果没有加载通道映射文件,主动加载通道映射文件
+//#endif
 	{
 		SelectDeviceFromLocalDB();
 	}
 
 	if (OpenChMapsFile(&m_oChMaps,m_pTestResouce)&&(HasMapHdResource()))//打开通道映射文件
 	{
+		m_oChMaps.CreateDefaultBinBoutMaps();//20250328 suyang 增加初始化开入开出默认值，不在构造中创建，
 		return TRUE;
 	}
 
@@ -677,6 +712,7 @@ BOOL CSttTestResourceMngr::CreateChMaps()
 		return FALSE;
 	}
 
+	m_oChMaps.CreateDefaultBinBoutMaps();	
 	SaveCurChMapsFile();
 	return TRUE;
 }
@@ -781,6 +817,7 @@ BOOL CSttTestResourceMngr::CreateDefaultChMapsByDevice(CSttChMaps *pCurChMaps,lo
 	}
 
 	pCurChMaps->DeleteAll();
+	pCurChMaps->CreateDefaultBinBoutMaps();		//dingxy 20250217 为开入开出设置默认值
 	CreateDefaultChMapsByDevice_Analog(pCurChMaps);
 
 	if (bHasDigital)
@@ -834,6 +871,8 @@ void CSttTestResourceMngr::UpdateChNames_UzIz(CSttChMaps *pCurChMaps,CSttTestRes
 	long nCurrChNum = pCurChMaps->GetChNum(_T("I"));
 	CSttChMap *pSttChMap = (CSttChMap*)pCurChMaps->FindByID(_T("U4"));
 
+	if (xlang_IsCurrXLanguageChinese())//dingxy 20250121 英文环境下修改通道名称
+	{
 	if (pSttChMap != NULL)
 	{
 		if (nVolChNum == 4)
@@ -847,6 +886,104 @@ void CSttTestResourceMngr::UpdateChNames_UzIz(CSttChMaps *pCurChMaps,CSttTestRes
 			pSttChMap->m_strAlias = _T("Ua2");
 		}
 	}
+	}
+	else
+	{
+		if (pSttChMap != NULL)
+		{
+			if (nVolChNum == 4)
+			{
+				pSttChMap->m_strName = _T("V0");
+				pSttChMap->m_strAlias = _T("V0");
+			}
+			else if (pSttChMap->m_strName == _T("V0"))
+			{
+				pSttChMap->m_strName = _T("Va2");
+				pSttChMap->m_strAlias = _T("Va2");
+			}
+		}
+	}
+	
+
+#ifdef STT_CHMAP_USE_8U6I
+	POS posVol = m_oAnalogU_Tags.GetHeadPosition();
+	CSttModuleTag *pSttVolModuleTag = NULL;
+	int nGroupIndex = 0;//电压通道数为4的电压插件的个数
+	while (posVol)
+	{
+		pSttVolModuleTag = m_oAnalogU_Tags.GetNext(posVol);
+		if (pSttVolModuleTag == NULL)
+		{
+			break;
+		}
+		if (pSttVolModuleTag->m_nChCountU == 4)
+		{
+			nGroupIndex++;
+		}
+	}
+
+	POS posUIVol = m_oAnalogUI_Tags.GetHeadPosition();
+	int nUITagsUModuleCount = 0;
+	while (posUIVol)
+	{
+		pSttVolModuleTag = m_oAnalogUI_Tags.GetNext(posUIVol);
+		if (pSttVolModuleTag)
+		{
+			break;
+		}
+		if (pSttVolModuleTag->m_nChCountU == 4)
+		{
+			nGroupIndex++;
+		}
+		
+		if (pSttVolModuleTag->m_nChCountU > 0)
+		{
+			nUITagsUModuleCount++;
+		}
+	}
+
+	if (nGroupIndex >= 2) //8电压通道处理
+	{
+		pSttChMap = (CSttChMap*)pCurChMaps->FindByID(_T("U7"));
+		if (pSttChMap != NULL)
+		{
+			if (xlang_IsCurrXLanguageChinese())
+			{
+			pSttChMap->m_strName = _T("Uz1");
+			pSttChMap->m_strAlias = _T("Uz1");
+		}
+			else
+			{
+				pSttChMap->m_strName = _T("Vz1");
+				pSttChMap->m_strAlias = _T("Vz1");
+			}
+			
+		}
+		pSttChMap = (CSttChMap*)pCurChMaps->FindByID(_T("U8"));
+		if (pSttChMap != NULL)
+		{
+			if (xlang_IsCurrXLanguageChinese())
+			{
+			pSttChMap->m_strName = _T("Uz2");
+			pSttChMap->m_strAlias = _T("Uz2");
+		}
+			else
+			{
+				pSttChMap->m_strName = _T("Vz2");
+				pSttChMap->m_strAlias = _T("Vz2");
+			}
+			
+		}
+	}
+
+	//只针对8U6I 与电压模块数相等
+	int nVolModuleCount = 0;
+	nVolModuleCount = m_oAnalogU_Tags.GetCount() + nUITagsUModuleCount;
+	if ((nGroupIndex >= 2) && (nGroupIndex == nVolModuleCount))
+	{
+		UpdateDefaultVolChMapByDevice8U6I(pCurChMaps, nGroupIndex);
+	}
+#endif
 
 	pSttChMap = (CSttChMap*)pCurChMaps->FindByID(_T("I4"));
 
@@ -871,12 +1008,25 @@ void CSttTestResourceMngr::UpdateChNames_UzIz(CSttChMaps *pCurChMaps,CSttTestRes
 
 	if ((nVolChNum == 4))
 	{
+		if (xlang_IsCurrXLanguageChinese())
+		{
 		CSttChResource *pSttChResource = (CSttChResource*)pTestResouce->FindByID(_T("U4"));
 
 		if (pSttChResource != NULL)
 		{
 			pSttChResource->m_strName = _T("U0");
 		}
+	}
+		else
+		{
+			CSttChResource *pSttChResource = (CSttChResource*)pTestResouce->FindByID(_T("V4"));
+
+			if (pSttChResource != NULL)
+			{
+				pSttChResource->m_strName = _T("V0");
+			}
+		}
+		
 	}
 
 	if ((nCurrChNum == 4))
@@ -888,7 +1038,151 @@ void CSttTestResourceMngr::UpdateChNames_UzIz(CSttChMaps *pCurChMaps,CSttTestRes
 			pSttChResource->m_strName = _T("I0");
 		}
 	}
+
+#ifdef STT_CHMAP_USE_8U6I
+	if (nGroupIndex >= 2)
+	{
+		CSttChResource *pSttChResource = (CSttChResource*)pTestResouce->FindByID(_T("U7"));
+
+		if (pSttChResource != NULL)
+		{
+			if (xlang_IsCurrXLanguageChinese())
+			{
+			pSttChResource->m_strName = _T("Uz1");
+		}
+			else
+			{
+				pSttChResource->m_strName = _T("Vz1");
+			}
+			
+		}
+
+		pSttChResource = (CSttChResource*)pTestResouce->FindByID(_T("U8"));
+		if (pSttChResource != NULL)
+		{
+			if (xlang_IsCurrXLanguageChinese())
+			{
+			pSttChResource->m_strName = _T("Uz2");
+		}
+			else
+			{
+				pSttChResource->m_strName = _T("Vz2");
+			}
+			
+		}
+	}
+#endif
 	
+}
+
+void CSttTestResourceMngr::UpdateDefaultVolChMapByDevice8U6I(CSttChMaps *pCurChMaps, long nVolModuleCount)
+{
+	CSttChMap *pSttChMap = NULL;
+	CSttModuleTag *pSttModuleTag = NULL;
+	int nVolModuleIndex = 1, nVolChIndex = 1;
+	CString strHdRsName,strSoftRsID,strHdRsID;
+	CSttHdChs *pSttHdChs = NULL;
+	BOOL bUseChineseLanugae = TRUE;
+	if (!xlang_IsCurrXLanguageChinese())
+	{
+		bUseChineseLanugae = FALSE;
+	}
+	POS pos = m_oAnalogU_Tags.GetHeadPosition();
+
+	while(pos)//创建模拟量电压模块缺省通道映射
+	{
+		pSttModuleTag = (CSttModuleTag *)m_oAnalogU_Tags.GetNext(pos);
+		if (pSttModuleTag == NULL)
+		{
+			break;
+		}
+
+		for (int nIndex = 1;nIndex <= pSttModuleTag->m_nChCountU;nIndex++)
+		{
+			//从U4开始改变映射通道
+			if ((nVolModuleIndex == 1) && (nIndex == 4))
+			{
+				strSoftRsID.Format(_T("U%ld"),nVolModuleCount * 4 - nVolModuleCount + nVolModuleIndex);
+				pSttChMap = pCurChMaps->GetChMap(strSoftRsID);
+				if (pSttChMap != NULL)
+				{
+					pSttHdChs = pSttChMap->GetHdChs(STT_MODULETYPE_ID_ANALOG);
+					if (pSttHdChs != NULL)
+					{
+						pSttHdChs->RemoveAll();
+					}
+
+					strHdRsID.Format(_T("U%ld_%ld"),nVolModuleIndex,nIndex);
+					if (bUseChineseLanugae)
+					{
+						strHdRsName.Format(_T("U%ld_%ld"),nVolModuleIndex,nIndex);
+					}
+					else
+					{
+						strHdRsName.Format(_T("V%ld_%ld"),nVolModuleIndex,nIndex);
+					}
+					
+					pSttChMap->AddHdMapCh(STT_MODULETYPE_ID_ANALOG,strHdRsName,strHdRsID);
+					//pSttChMap->InitHdChs_ByString(strHdRsID, STT_MODULETYPE_ID_ANALOG);
+				}
+			}
+			else if (nVolModuleIndex >= 2)
+			{
+				if (nIndex == 4)
+				{
+					strSoftRsID.Format(_T("U%ld"),nVolModuleCount * 4 - nVolModuleCount + nVolModuleIndex);
+					pSttChMap = pCurChMaps->GetChMap(strSoftRsID);
+					if (pSttChMap != NULL)
+					{
+						pSttHdChs = pSttChMap->GetHdChs(STT_MODULETYPE_ID_ANALOG);
+						if (pSttHdChs != NULL)
+						{
+							pSttHdChs->RemoveAll();
+						}
+						strHdRsID.Format(_T("U%ld_%ld"),nVolModuleIndex,nIndex);
+						if (bUseChineseLanugae)
+						{
+							strHdRsName.Format(_T("U%ld_%ld"),nVolModuleIndex,nIndex);
+						}
+						else
+						{
+							strHdRsName.Format(_T("V%ld_%ld"),nVolModuleIndex,nIndex);
+						}
+						pSttChMap->AddHdMapCh(STT_MODULETYPE_ID_ANALOG,strHdRsName,strHdRsID);
+						//pSttChMap->InitHdChs_ByString(strHdRsID, STT_MODULETYPE_ID_ANALOG);
+					}
+				}
+				else
+				{
+					strSoftRsID.Format(_T("U%ld"), nVolChIndex - nVolModuleIndex + 1);
+					pSttChMap = pCurChMaps->GetChMap(strSoftRsID);
+					if (pSttChMap != NULL)
+					{
+						pSttHdChs = pSttChMap->GetHdChs(STT_MODULETYPE_ID_ANALOG);
+						if (pSttHdChs != NULL)
+						{
+							pSttHdChs->RemoveAll();
+						}
+						strHdRsID.Format(_T("U%ld_%ld"),nVolModuleIndex,nIndex);
+						if (bUseChineseLanugae)
+						{
+							strHdRsName.Format(_T("U%ld_%ld"),nVolModuleIndex,nIndex);
+						}
+						else
+						{
+							strHdRsName.Format(_T("V%ld_%ld"),nVolModuleIndex,nIndex);
+						}
+						pSttChMap->AddHdMapCh(STT_MODULETYPE_ID_ANALOG,/*strHdRsID*/strHdRsName,strHdRsID);
+						//pSttChMap->InitHdChs_ByString(strHdRsID, STT_MODULETYPE_ID_ANALOG);
+					}
+				}
+			}
+
+			nVolChIndex++;
+		}
+
+		nVolModuleIndex++;
+	}
 }
 
 void CSttTestResourceMngr::InitLocalSysPara()
@@ -899,7 +1193,11 @@ void CSttTestResourceMngr::InitLocalSysPara()
 	}
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	m_oCurrDevice.GetAttrs();
+#ifdef TMT_STATECOUNT_USE_DEF
+    g_nStateCount = min((long)STATE_MAX_COUNT, m_oCurrDevice.m_nStateCount);
+#else
 	g_nStateCount = m_oCurrDevice.m_nStateCount;
+#endif
 	g_nBinCount = m_oCurrDevice.m_nBinCount;
 	g_nBoutCount = m_oCurrDevice.m_nBoutCount;
 
@@ -1088,12 +1386,29 @@ void CSttTestResourceMngr::InitLocalSysPara()
 	nExBinBoutModuleNum += oCurModuleListRef.GetCount();
 
 	pos = oCurModuleListRef.GetHeadPosition();
-
+	CDvmData* pDvmData = NULL;
 	while (pos != NULL)
 	{
 		pModule = (CDataGroup *)oCurModuleListRef.GetNext(pos);
-		g_nBinExCount += 4;
-		g_nBoutExCount += 8;
+		//chenling 根据实际硬件信息
+// 		g_nBinExCount += 4;
+// 		g_nBoutExCount += 8;
+		pModuleAttrs = (CDataGroup*)pModule->FindByID(_T("ModuleAttrs"));
+		if (pModuleAttrs == NULL)
+		{
+			continue;
+		}
+		pDvmData = (CDvmData*)pModuleAttrs->FindByID(_T("ADMU_Bout"));
+		if (pDvmData != NULL)
+		{
+			g_nBoutExCount += CString_To_long(pDvmData->m_strValue);
+		}
+
+		pDvmData = (CDvmData*)pModuleAttrs->FindByID(_T("ADMU_Bin"));
+		if (pDvmData != NULL)
+		{
+			g_nBinExCount += CString_To_long(pDvmData->m_strValue);
+		}
 	}
 
 	oCurModuleListRef.RemoveAll();
@@ -1176,7 +1491,7 @@ void CSttTestResourceMngr::UpdateLC_ST_FibersNum()
 
 	CDataGroup *pModule = NULL,*pModuleAttrs = NULL;
 	POS pos = oCurModuleListRef.GetHeadPosition();
-	long/* nTotalFiberNum_LC = 0,*/nCurrFiberNum = 0/*,nTotalFiberNum_STSend = 0,*//*nTotalFiberNum_STRecv = 0*/;
+	long nCurrFiberNum = 0,nTotalFiberNum_LC_G = 0;//20250122  suyang 增加千兆口,根据硬件信息读取
 	g_oLocalSysPara.m_nTotalSTRecv_Num = m_oCurrDevice.m_nSTModeSet;
 
 	m_nTotalFiberNum_LC = 0,m_nTotalFiberNum_STSend = 0;
@@ -1202,6 +1517,15 @@ void CSttTestResourceMngr::UpdateLC_ST_FibersNum()
 			g_oLocalSysPara.m_nTotalSTRecv_Num/*nTotalFiberNum_STRecv*/ += nCurrFiberNum;
 			bHasFiberNumSTRecv_Paras = TRUE;
 		}
+
+		//增加读取硬件信息千兆口
+		if (pModuleAttrs->GetDataValue(_T("FiberPortNum_LC_G"),nTotalFiberNum_LC_G))
+		{
+			if (nTotalFiberNum_LC_G > nGFiberLC_num)
+			{
+				nGFiberLC_num = nTotalFiberNum_LC_G;
+			}
+		}
 	}
 
 	if ((m_nTotalFiberNum_LC>1)&&(CCfgDataMngrConstGlobal::GetAppPortFiberNum_LC() != m_nTotalFiberNum_LC))
@@ -1209,7 +1533,7 @@ void CSttTestResourceMngr::UpdateLC_ST_FibersNum()
 		CCfgDataMngrConstGlobal::UpdataAppPortDataType_FiberNum(m_nTotalFiberNum_LC);
 	}
 
-	if (m_nTotalFiberNum_LC>0)
+	if (m_nTotalFiberNum_LC>=0)
 	{
 		g_oLocalSysPara.m_nTotalLC_Num = m_nTotalFiberNum_LC; 
 	}
@@ -1269,6 +1593,20 @@ long CSttTestResourceMngr::GetUartCount()
 	m_oCurrDevice.GetAttrs();
 	long nUartCount = m_oCurrDevice.m_nUartCount;
 	return nUartCount;
+}
+
+long CSttTestResourceMngr::GetBinVoltMeas()
+{
+	m_oCurrDevice.GetAttrs();
+	long nBinVoltMeas =m_oCurrDevice.m_nBinVoltMeas;
+	return nBinVoltMeas;
+}
+
+long CSttTestResourceMngr::GetMergeCurTerminal()
+{
+	m_oCurrDevice.GetAttrs();
+	long nMergeCurTerminal =m_oCurrDevice.m_nMergeCurTerminal;
+	return nMergeCurTerminal;
 }
 
 
@@ -1363,7 +1701,16 @@ void CSttTestResourceMngr::ShowKeyBoardNormalFunc()
 {
 	CDvmData *pDvmData = NULL;
 	//取出NormalVolFunc的值
+	if (g_oSystemParas.m_nParaMode == 0)
+	{
+		pDvmData = (CDvmData*)m_oKeyBoardFuncGroup.FindByID(STT_SOFTKEYBOARD_VOL_NORMAL2);//一次值 键盘使用kV
+	}
+	else
+	{
 	pDvmData = (CDvmData*)m_oKeyBoardFuncGroup.FindByID(STT_SOFTKEYBOARD_VOL_NORMAL);
+	}
+
+	
 
 	if (pDvmData != NULL)
 	{
@@ -1390,7 +1737,16 @@ void CSttTestResourceMngr::ShowKeyBoardWeakFunc()
 	CLogPrint::LogFormatString(XLOGLEVEL_INFOR,_T("切换到弱信号键盘."));
 	CDvmData *pDvmData = NULL;
 	//取出NormalVolFunc的值
+	
+	if (g_oSystemParas.m_nParaMode == 0)
+	{
+		pDvmData = (CDvmData*)m_oKeyBoardFuncGroup.FindByID(STT_SOFTKEYBOARD_VOL_WEAK2);//一次值 键盘使用kV
+	}
+	else
+	{
 	pDvmData = (CDvmData*)m_oKeyBoardFuncGroup.FindByID(STT_SOFTKEYBOARD_VOL_WEAK);
+	}
+	
 
 	if (pDvmData != NULL)
 	{
@@ -1436,74 +1792,99 @@ void CSttTestResourceMngr::ShowKeyBoardWeakFunc()
 // 	}
 // }
 
+void CSttTestResourceMngr::GetDeviceMaxVolCurrValues()
+{
+	g_oLocalSysPara.InitMaxMinVolCurValue();
+
+	CExBaseList oCurModuleListRef;
+	m_oCurrDevice.GetAllModules(&oCurModuleListRef,STT_MODULE_TYPE_VOLT);//获取全部电压模块
+	m_oCurrDevice.GetAllModules(&oCurModuleListRef,STT_MODULE_TYPE_VOLT_CURRENT);//获取全部电压模块
+	
+	CDataGroup *pModule = NULL;
+
+	POS pos = oCurModuleListRef.GetHeadPosition();
+
+	while (pos != NULL)//在该循环中设置电压模块最大值,最小值
+	{
+		pModule = (CDataGroup *)oCurModuleListRef.GetNext(pos);
+		Global_SetModuleMaxMinValue(pModule,&g_oLocalSysPara.m_fAC_VolMax,&g_oLocalSysPara.m_fAC_VolMin,&g_oLocalSysPara.m_fDC_VolMax,&g_oLocalSysPara.m_fDC_VolMin,TRUE);
+	}
+
+	if (g_oLocalSysPara.m_fAC_VolMax <= 0)
+	{
+		g_oLocalSysPara.m_fAC_VolMax = 130;
+	}
+
+	if(g_oLocalSysPara.m_fDC_VolMax <= 0)
+	{
+		g_oLocalSysPara.m_fDC_VolMax = 100;
+	}
+
+	oCurModuleListRef.RemoveAll();
+	m_oCurrDevice.GetAllModules(&oCurModuleListRef,STT_MODULE_TYPE_CURRENT);
+	m_oCurrDevice.GetAllModules(&oCurModuleListRef,STT_MODULE_TYPE_VOLT_CURRENT);
+	
+	pos = oCurModuleListRef.GetHeadPosition();
+
+	while (pos != NULL)//在该循环中设置电流模块最大值,最小值,电流模块功率档位等
+	{
+		pModule = (CDataGroup *)oCurModuleListRef.GetNext(pos);
+		Global_SetModuleMaxMinValue(pModule,&g_oLocalSysPara.m_fAC_CurMax,&g_oLocalSysPara.m_fAC_CurMin,&g_oLocalSysPara.m_fDC_CurMax,&g_oLocalSysPara.m_fDC_CurMin,FALSE);
+	}
+	oCurModuleListRef.RemoveAll();
+	
+	if (g_oLocalSysPara.m_fAC_CurMax <= 0)
+	{
+		g_oLocalSysPara.m_fAC_CurMax = 20;
+	}
+
+	if(g_oLocalSysPara.m_fDC_CurMax <= 0)
+	{
+		g_oLocalSysPara.m_fDC_CurMax = 20;
+	}
+	
+
+	UpdateParasMaxValuesByWeekRates();
+}
+
+
 void CSttTestResourceMngr::ValidIecParasSetSel()
 {
 #ifdef NOT_USE_TEST_RESOURCE_IECFG
 	return;
 #else
-	CIecCfgSysParas* pCIecCfgSysParas = m_oIecDatasMngr.GetSysParasMngr();
 
-	if ((g_oSystemParas.m_nHasAnalog == 0)&&(g_oSystemParas.m_nHasDigital == 1)&&(g_oSystemParas.m_nHasWeek == 0))//如果只有数字信号输出,界面电压电流输出单独设置
-	{
-		if (g_oSystemParas.m_nIecFormat == STT_IEC_FORMAT_61850_92)
-		{
-			if ((pCIecCfgSysParas->m_nPrimParas == 1)
-				|| (pCIecCfgSysParas->m_nPrimParas == 0))
-			{
-				g_oLocalSysPara.m_fAC_VolMax = 1200000;
-				g_oLocalSysPara.m_fAC_VolMin = 1200000;
-				g_oLocalSysPara.m_fAC_CurMax = 120000;
-				g_oLocalSysPara.m_fAC_CurMin = 120000;
+	CIecCfgDatasMngr* oIecDatasMngr =(CIecCfgDatasMngr*) m_oIecDatasMngr.Clone();
+	CIecCfgSysParas* pCIecCfgSysParas = oIecDatasMngr->GetSysParasMngr();
 
-			g_oLocalSysPara.m_fDC_VolMax = 1000000;
-			g_oLocalSysPara.m_fDC_VolMin = 1000000;
-			g_oLocalSysPara.m_fDC_CurMax = 10000;
-			g_oLocalSysPara.m_fDC_CurMin = 10000;
-			}
-		}
-		else if (g_oSystemParas.m_nIecFormat == STT_IEC_FORMAT_60044_8DC)
-		{
-			g_oLocalSysPara.m_fAC_VolMax = 100000;
-			g_oLocalSysPara.m_fAC_VolMin = 100000;
-			g_oLocalSysPara.m_fDC_VolMax = 100000;
-			g_oLocalSysPara.m_fDC_VolMin = 100000;
-	 
-			g_oLocalSysPara.m_fAC_CurMax = 10000;
-			g_oLocalSysPara.m_fAC_CurMin = 10000;
-			g_oLocalSysPara.m_fDC_CurMax = 10000;
-			g_oLocalSysPara.m_fDC_CurMin = 10000;
-		}
-		else
-		{
-			g_oLocalSysPara.m_fAC_VolMax = 1200;
-			g_oLocalSysPara.m_fAC_VolMin = 1200;
-			g_oLocalSysPara.m_fDC_VolMax = 1200;
-			g_oLocalSysPara.m_fDC_VolMin = 1200;
-	 
-			g_oLocalSysPara.m_fAC_CurMax = 200;
-			g_oLocalSysPara.m_fAC_CurMin = 200;
-			g_oLocalSysPara.m_fDC_CurMax = 200;
-			g_oLocalSysPara.m_fDC_CurMin = 200;
-		}
-// 		if (pCIecCfgSysParas->m_nPrimParas == 1)
+
+	//20240910 suyang 采用一次/二次值模式，原先模式先注销
+	
+// 	if ((g_oSystemParas.m_nHasAnalog == 0)&&(g_oSystemParas.m_nHasDigital == 1)&&(g_oSystemParas.m_nHasWeek == 0))//如果只有数字信号输出,界面电压电流输出单独设置
+// 	{
+// 		if (g_oSystemParas.m_nIecFormat == STT_IEC_FORMAT_61850_92)
 // 		{
-// 			g_oLocalSysPara.m_fAC_VolMax = 1000000;
+// 			if ((pCIecCfgSysParas->m_nPrimParas == 1)
+// 				|| (pCIecCfgSysParas->m_nPrimParas == 0))
+// 			{
+// 				g_oLocalSysPara.m_fAC_VolMax = 1200000;
+// 				g_oLocalSysPara.m_fAC_VolMin = 1200000;
+// 				g_oLocalSysPara.m_fAC_CurMax = 120000;
+// 				g_oLocalSysPara.m_fAC_CurMin = 120000;
+// 
+// 			g_oLocalSysPara.m_fDC_VolMax = 1000000;
+// 			g_oLocalSysPara.m_fDC_VolMin = 1000000;
+// 			g_oLocalSysPara.m_fDC_CurMax = 10000;
+// 			g_oLocalSysPara.m_fDC_CurMin = 10000;
+// 			}
+// 		}
+// 		else if (g_oSystemParas.m_nIecFormat == STT_IEC_FORMAT_60044_8DC)
+// 		{
+// 			g_oLocalSysPara.m_fAC_VolMax = 1000000;//应要求改为100 0000
 // 			g_oLocalSysPara.m_fAC_VolMin = 1000000;
 // 			g_oLocalSysPara.m_fDC_VolMax = 1000000;
 // 			g_oLocalSysPara.m_fDC_VolMin = 1000000;
-// 
-// 			g_oLocalSysPara.m_fAC_CurMax = 10000;
-// 			g_oLocalSysPara.m_fAC_CurMin = 10000;
-// 			g_oLocalSysPara.m_fDC_CurMax = 10000;
-// 			g_oLocalSysPara.m_fDC_CurMin = 10000;
-// 		} 
-// 		else if (g_oSystemParas.m_nIecFormat == 2)
-// 		{
-// 			g_oLocalSysPara.m_fAC_VolMax = 100000;
-// 			g_oLocalSysPara.m_fAC_VolMin = 100000;
-// 			g_oLocalSysPara.m_fDC_VolMax = 100000;
-// 			g_oLocalSysPara.m_fDC_VolMin = 100000;
-// 
+// 	 
 // 			g_oLocalSysPara.m_fAC_CurMax = 10000;
 // 			g_oLocalSysPara.m_fAC_CurMin = 10000;
 // 			g_oLocalSysPara.m_fDC_CurMax = 10000;
@@ -1515,18 +1896,386 @@ void CSttTestResourceMngr::ValidIecParasSetSel()
 // 			g_oLocalSysPara.m_fAC_VolMin = 1200;
 // 			g_oLocalSysPara.m_fDC_VolMax = 1200;
 // 			g_oLocalSysPara.m_fDC_VolMin = 1200;
-// 
+// 	 
 // 			g_oLocalSysPara.m_fAC_CurMax = 200;
 // 			g_oLocalSysPara.m_fAC_CurMin = 200;
 // 			g_oLocalSysPara.m_fDC_CurMax = 200;
 // 			g_oLocalSysPara.m_fDC_CurMin = 200;
 // 		}
-	}
-	else if (pCIecCfgSysParas->m_nPrimParas == 1)//只有在存数字量输出的情况下,才能将参数设置设置为一次值
+// // 		if (pCIecCfgSysParas->m_nPrimParas == 1)
+// // 		{
+// // 			g_oLocalSysPara.m_fAC_VolMax = 1000000;
+// // 			g_oLocalSysPara.m_fAC_VolMin = 1000000;
+// // 			g_oLocalSysPara.m_fDC_VolMax = 1000000;
+// // 			g_oLocalSysPara.m_fDC_VolMin = 1000000;
+// // 
+// // 			g_oLocalSysPara.m_fAC_CurMax = 10000;
+// // 			g_oLocalSysPara.m_fAC_CurMin = 10000;
+// // 			g_oLocalSysPara.m_fDC_CurMax = 10000;
+// // 			g_oLocalSysPara.m_fDC_CurMin = 10000;
+// // 		} 
+// // 		else if (g_oSystemParas.m_nIecFormat == 2)
+// // 		{
+// // 			g_oLocalSysPara.m_fAC_VolMax = 100000;
+// // 			g_oLocalSysPara.m_fAC_VolMin = 100000;
+// // 			g_oLocalSysPara.m_fDC_VolMax = 100000;
+// // 			g_oLocalSysPara.m_fDC_VolMin = 100000;
+// // 
+// // 			g_oLocalSysPara.m_fAC_CurMax = 10000;
+// // 			g_oLocalSysPara.m_fAC_CurMin = 10000;
+// // 			g_oLocalSysPara.m_fDC_CurMax = 10000;
+// // 			g_oLocalSysPara.m_fDC_CurMin = 10000;
+// // 		}
+// // 		else
+// // 		{
+// // 			g_oLocalSysPara.m_fAC_VolMax = 1200;
+// // 			g_oLocalSysPara.m_fAC_VolMin = 1200;
+// // 			g_oLocalSysPara.m_fDC_VolMax = 1200;
+// // 			g_oLocalSysPara.m_fDC_VolMin = 1200;
+// // 
+// // 			g_oLocalSysPara.m_fAC_CurMax = 200;
+// // 			g_oLocalSysPara.m_fAC_CurMin = 200;
+// // 			g_oLocalSysPara.m_fDC_CurMax = 200;
+// // 			g_oLocalSysPara.m_fDC_CurMin = 200;
+// // 		}
+// 	}
+// 	else if (pCIecCfgSysParas->m_nPrimParas == 1)//只有在存数字量输出的情况下,才能将参数设置设置为一次值
+// 	{
+// 		pCIecCfgSysParas->m_nPrimParas = 0;
+// 		SaveDefaultIec61850Config();//Iec61850配置修改后保存
+// 		IecSysParasToTmtSysParas();//如果选择一次值，强制为二次值也需要更新一下系统参数tmt
+// 		CLogPrint::LogFormatString(XLOGLEVEL_ERROR,_T("参数设置强制选择为二次值,只有在纯数字量输出的情况下,才能将参数设置为一次值."));
+// 	}
+// 
+// 		
+
+	GetDeviceMaxVolCurrValues();
+	if (pCIecCfgSysParas->m_nPrimParas == 0)
 	{
-		pCIecCfgSysParas->m_nPrimParas = 0;
-		SaveDefaultIec61850Config();//Iec61850配置修改后保存
-		CLogPrint::LogFormatString(XLOGLEVEL_ERROR,_T("参数设置强制选择为二次值,只有在纯数字量输出的情况下,才能将参数设置为一次值."));
+	if ((g_oSystemParas.m_nHasAnalog == 0)&&(g_oSystemParas.m_nHasDigital == 1)&&(g_oSystemParas.m_nHasWeek == 0))//如果只有数字信号输出,界面电压电流输出单独设置
+	{
+		if (g_oSystemParas.m_nIecFormat == STT_IEC_FORMAT_61850_92)
+		{
+				//纯数字 
+				g_oLocalSysPara.m_fAC_VolMax = 1200000;
+				g_oLocalSysPara.m_fAC_VolMin = 1200000;
+				g_oLocalSysPara.m_fAC_CurMax = 120000;
+				g_oLocalSysPara.m_fAC_CurMin = 120000;
+
+			g_oLocalSysPara.m_fDC_VolMax = 1000000;
+			g_oLocalSysPara.m_fDC_VolMin = 1000000;
+			g_oLocalSysPara.m_fDC_CurMax = 10000;
+			g_oLocalSysPara.m_fDC_CurMin = 10000;
+				
+			}
+			else if (g_oSystemParas.m_nIecFormat == STT_IEC_FORMAT_60044_8DC)
+			{
+				g_oLocalSysPara.m_fAC_VolMax = 1000000;//应要求改为100 0000
+				g_oLocalSysPara.m_fAC_VolMin = 1000000;
+				g_oLocalSysPara.m_fDC_VolMax = 1000000;
+				g_oLocalSysPara.m_fDC_VolMin = 1000000;
+
+				g_oLocalSysPara.m_fAC_CurMax = 30000;
+				g_oLocalSysPara.m_fAC_CurMin = 10000;
+				g_oLocalSysPara.m_fDC_CurMax = 10000;
+				g_oLocalSysPara.m_fDC_CurMin = 10000;
+			}
+			else
+			{
+				g_oLocalSysPara.m_fAC_VolMax = 1200;
+				g_oLocalSysPara.m_fAC_VolMin = 1200;
+				g_oLocalSysPara.m_fDC_VolMax = 1200;
+				g_oLocalSysPara.m_fDC_VolMin = 1200;
+
+				g_oLocalSysPara.m_fAC_CurMax = 200;
+				g_oLocalSysPara.m_fAC_CurMin = 200;
+				g_oLocalSysPara.m_fDC_CurMax = 200;
+				g_oLocalSysPara.m_fDC_CurMin = 200;
+			}
+			}
+
+	}
+	else if (pCIecCfgSysParas->m_nPrimParas == 1)
+	{
+		if ((g_oSystemParas.m_nHasAnalog == 0)&&(g_oSystemParas.m_nHasDigital == 1)&&(g_oSystemParas.m_nHasWeek == 0))//纯数字
+		{
+			if (g_oSystemParas.m_nIecFormat == STT_IEC_FORMAT_61850_92)
+			{
+				g_oLocalSysPara.m_fAC_VolMax = 1200;
+				g_oLocalSysPara.m_fAC_VolMin = 1200;
+				g_oLocalSysPara.m_fAC_CurMax = 1200;
+				g_oLocalSysPara.m_fAC_CurMin = 1200;
+
+				g_oLocalSysPara.m_fDC_VolMax = 10000;
+				g_oLocalSysPara.m_fDC_VolMin = 10000;
+				g_oLocalSysPara.m_fDC_CurMax = 10000;
+				g_oLocalSysPara.m_fDC_CurMin = 10000;
+		}
+		else if (g_oSystemParas.m_nIecFormat == STT_IEC_FORMAT_60044_8DC)
+		{
+			g_oLocalSysPara.m_fAC_VolMax = 1000000;//应要求改为100 0000
+			g_oLocalSysPara.m_fAC_VolMin = 1000000;
+			g_oLocalSysPara.m_fDC_VolMax = 1000000;
+			g_oLocalSysPara.m_fDC_VolMin = 1000000;
+
+				g_oLocalSysPara.m_fAC_CurMax = 30000;
+			g_oLocalSysPara.m_fAC_CurMin = 10000;
+			g_oLocalSysPara.m_fDC_CurMax = 10000;
+			g_oLocalSysPara.m_fDC_CurMin = 10000;
+		}
+		else
+		{
+			g_oLocalSysPara.m_fAC_VolMax = 1200;
+			g_oLocalSysPara.m_fAC_VolMin = 1200;
+			g_oLocalSysPara.m_fDC_VolMax = 1200;
+			g_oLocalSysPara.m_fDC_VolMin = 1200;
+
+			g_oLocalSysPara.m_fAC_CurMax = 200;
+			g_oLocalSysPara.m_fAC_CurMin = 200;
+			g_oLocalSysPara.m_fDC_CurMax = 200;
+			g_oLocalSysPara.m_fDC_CurMin = 200;
+		}
+
+
+			return;
+
+		}
+
+		//一次值
+		double dAC_VolMax ,dAC_CurMax,dDC_VolMax,dDC_CurMax;
+
+		CIecCfgPrimRates* pPrimRates = pCIecCfgSysParas->GetPrimRates();
+		POS pos = pPrimRates->GetHeadPosition();
+		CExBaseObject *pCurrObj = NULL;
+
+		CExBaseList oPTList;
+		CExBaseList oCTList;
+
+		while(pos)
+		{
+			pCurrObj = pPrimRates->GetNext(pos);
+
+			if (pCurrObj->m_strID.Find("U") != -1)
+			{
+				oPTList.AddTail(pCurrObj);
+			} 
+			else
+			{
+				oCTList.AddTail(pCurrObj);
+	}
+		}
+
+		int nPTMinValue = 0,nVolMinValue = 0,nCTMinValue = 0,nCurMinValue = 0;
+
+		for (int i =0;i<oPTList.GetCount();i++)
+		{
+			CIecCfgPrimRate *pIecCfgPrimRate = (CIecCfgPrimRate*)oPTList.GetAt(i);
+
+			nVolMinValue =  (pIecCfgPrimRate->m_fPrimValue*1000)/pIecCfgPrimRate->m_fSecondValue;
+
+			if (nVolMinValue > nPTMinValue)
+			{
+				nPTMinValue = nVolMinValue;
+			}	
+		}
+
+		for (int i =0;i<oCTList.GetCount();i++)
+		{
+			CIecCfgPrimRate *pIecCfgPrimRate = (CIecCfgPrimRate*)oCTList.GetAt(i);
+
+			nCurMinValue =  pIecCfgPrimRate->m_fPrimValue/pIecCfgPrimRate->m_fSecondValue;
+
+			if (nCurMinValue > nCTMinValue)
+	{
+				nCTMinValue = nCurMinValue;
+	}
+		}
+
+		
+		dAC_VolMax =  g_oLocalSysPara.m_fAC_VolMax *nPTMinValue;
+		dAC_CurMax = g_oLocalSysPara.m_fAC_CurMax *nCTMinValue;
+		dDC_VolMax = g_oLocalSysPara.m_fDC_VolMax *nPTMinValue;
+		dDC_CurMax = g_oLocalSysPara.m_fDC_CurMax  *nCTMinValue;
+
+		g_oLocalSysPara.m_fAC_VolMax = dAC_VolMax;
+		g_oLocalSysPara.m_fAC_CurMax = dAC_CurMax;
+		g_oLocalSysPara.m_fDC_VolMax = dDC_VolMax;
+		g_oLocalSysPara.m_fDC_CurMax = dDC_CurMax; 		
+
+	}
+
+#endif
+}
+
+void CSttTestResourceMngr::IecSysParasToTmtSysParas()
+{
+	// 更新系统参数中变比及报文输出 
+
+#ifndef NOT_USE_TEST_RESOURCE_IECFG//标记是否使用IEC配置
+
+	CIecCfgDatasMngr* oIecDatasMngr =(CIecCfgDatasMngr*) m_oIecDatasMngr.Clone();
+	CIecCfgSysParas* pCIecCfgSysParas = oIecDatasMngr->GetSysParasMngr();
+	
+	int nParaMode =  pCIecCfgSysParas->m_nPrimParas;//参数设置选择 0-二次值 1-一次值,缺省采用二次值(与系统参数中的该值定义相反)
+
+	if(nParaMode == g_oSystemParas.m_nParaMode)
+	{
+	if (nParaMode == 0)
+	{
+		g_oSystemParas.m_nParaMode = 1;
+	}
+	else if (nParaMode  == 1)
+	{
+		g_oSystemParas.m_nParaMode = 0;
+	}
+#ifdef _USE_SoftKeyBoard_
+		if ((g_nSttWeekUseMode == STT_WEEK_USE_MODE_DistriTerm)
+			&&(g_oSystemParas.m_nHasWeek)&&(!g_oSystemParas.m_nHasAnalog)&&(!g_oSystemParas.m_nHasDigital))
+		{
+			ShowKeyBoardWeakFunc();
+		}
+		else
+		{
+			ShowKeyBoardNormalFunc();
+		}
+
+#endif
+
+	}
+	else
+	{
+		if (nParaMode == 0)
+		{
+			g_oSystemParas.m_nParaMode = 1;
+		}
+		else if (nParaMode  == 1)
+		{
+			g_oSystemParas.m_nParaMode = 0;
+		}
+	}
+
+
+	int nPrimOutput = pCIecCfgSysParas->m_nPrimOutput;
+	g_oSystemParas.m_nPkgOutMode = nPrimOutput;
+
+
+	CIecCfgPrimRates* pPrimRates = pCIecCfgSysParas->GetPrimRates();
+
+	POS pos = pPrimRates->GetHeadPosition();
+	CExBaseObject *pCurrObj = NULL;
+
+	CExBaseList oPTList;
+	CExBaseList oCTList;
+
+	while(pos)
+	{
+		pCurrObj = pPrimRates->GetNext(pos);
+
+		if (pCurrObj->m_strID.Find("U") != -1)
+		{
+			oPTList.AddTail(pCurrObj);
+		} 
+		else
+		{
+			oCTList.AddTail(pCurrObj);
+		}
+	}
+
+
+	for (int i =0;i<oPTList.GetCount();i++)
+	{
+		CIecCfgPrimRate *pIecCfgPrimRate = (CIecCfgPrimRate*)oPTList.GetAt(i);
+
+		g_oSystemParas.m_fVPrimary[i] = pIecCfgPrimRate->m_fPrimValue;
+		g_oSystemParas.m_fVSecondary[i] = pIecCfgPrimRate->m_fSecondValue;
+
+	}
+
+	for (int i =0;i<oCTList.GetCount();i++)
+	{
+		CIecCfgPrimRate *pIecCfgPrimRate = (CIecCfgPrimRate*)oCTList.GetAt(i);
+		g_oSystemParas.m_fIPrimary[i] = pIecCfgPrimRate->m_fPrimValue;
+		g_oSystemParas.m_fISecondary[i] = pIecCfgPrimRate->m_fSecondValue;
+
+	}
+
+#endif
+}
+
+void CSttTestResourceMngr::TmtSysParasToIecSysParas()
+{
+#ifndef NOT_USE_TEST_RESOURCE_IECFG//标记是否使用IEC配置
+
+	CIecCfgSysParas* pCIecCfgSysParas = m_oIecDatasMngr.GetSysParasMngr();
+	int nParaMode =  g_oSystemParas.m_nParaMode;//参数设置选择 0-二次值 1-一次值,缺省采用二次值(与系统参数中的该值定义相反)
+	if(nParaMode == pCIecCfgSysParas->m_nPrimParas)
+	{
+		if (nParaMode == 0)
+		{
+			pCIecCfgSysParas->m_nPrimParas = 1;
+		}
+		else if (nParaMode  == 1)
+		{
+			pCIecCfgSysParas->m_nPrimParas = 0;
+		}
+#ifdef _USE_SoftKeyBoard_
+		if ((g_nSttWeekUseMode == STT_WEEK_USE_MODE_DistriTerm)
+			&&(g_oSystemParas.m_nHasWeek)&&(!g_oSystemParas.m_nHasAnalog)&&(!g_oSystemParas.m_nHasDigital))
+		{
+			ShowKeyBoardWeakFunc();
+		}
+		else
+		{
+			ShowKeyBoardNormalFunc();
+		}
+
+#endif
+
+	}
+	else
+	{
+		if (nParaMode == 0)
+		{
+			pCIecCfgSysParas->m_nPrimParas = 1;
+		}
+		else if (nParaMode  == 1)
+		{
+			pCIecCfgSysParas->m_nPrimParas = 0;
+		}
+	}
+
+// 	int nPrimOutput = g_oSystemParas.m_nPkgOutMode;
+// 	if (nPrimOutput == 0)
+// 	{
+// 		pCIecCfgSysParas->m_nPrimOutput = 1;
+// 	}
+// 	else if (nPrimOutput == 1)
+// 	{
+// 		pCIecCfgSysParas->m_nPrimOutput = 0;
+// 	}
+	
+	CString strPrimRateId;
+	CIecCfgPrimRates* pPrimRates = pCIecCfgSysParas->GetPrimRates();
+	for (int nIndex = 0; nIndex < MAX_DIGITAL_GROUP_NUM; nIndex++)
+	{
+		strPrimRateId.Format(_T("U%d-abc"),nIndex+1);
+		CIecCfgPrimRate *pIecCfgPrimRate = (CIecCfgPrimRate *)pPrimRates->FindByID(strPrimRateId);
+		if (pIecCfgPrimRate)
+		{
+			 pIecCfgPrimRate->m_fPrimValue = g_oSystemParas.m_fVPrimary[nIndex];
+			 pIecCfgPrimRate->m_fSecondValue = g_oSystemParas.m_fVSecondary[nIndex];
+		}
+	}
+
+	for (int nIndex = 0; nIndex < MAX_DIGITAL_GROUP_NUM; nIndex++)
+	{
+		strPrimRateId.Format(_T("I%d-abc"),nIndex+1);
+		CIecCfgPrimRate *pIecCfgPrimRate = (CIecCfgPrimRate *)pPrimRates->FindByID(strPrimRateId);
+		if (pIecCfgPrimRate)
+		{
+			pIecCfgPrimRate->m_fPrimValue = g_oSystemParas.m_fIPrimary[nIndex];
+			pIecCfgPrimRate->m_fSecondValue = g_oSystemParas.m_fISecondary[nIndex];
+		}
 	}
 #endif
 }
@@ -1555,8 +2304,47 @@ BOOL CSttTestResourceMngr::SaveCurChMapsFile()
 		strSavePath += _T("ChMapConfig.sync");
 	}
 
-	return m_oChMaps.SaveChMapsFile(strSavePath);
+	//return m_oChMaps.SaveChMapsFile(strSavePath);
+	return SaveAllChMapsFile(strSavePath);
 }
+
+BOOL CSttTestResourceMngr::SaveAllChMapsFile(const CString &strChMapsPath)
+{
+	bool bRt = false;
+
+	CString strPostfix,str4u3iFile,str6u6iFile;
+	strPostfix = ParseFilePostfix(strChMapsPath);
+
+	CSttChMaps *oSttChMaps = new CSttChMaps;
+	
+	m_oChMaps.Copy(oSttChMaps);
+
+	if (strPostfix ==_T("sync"))
+	{
+		//需要保存 4u3i  6u6i，缺省的new出来
+		
+		oSttChMaps->SaveSyncChMapsFile(strChMapsPath);
+		
+	}
+	else if (strPostfix ==_T("4u3i"))
+	{
+		//需要保存 sync 6u6i； sync需要打开对应文件，查找id，赋值， 6u6i缺省的需要new
+		oSttChMaps->Save4U3IChMapsFile(strChMapsPath);
+	}
+	else if (strPostfix == _T("6u6i"))
+	{
+		//需要保存 sync 4u3i 需要打开对应文件，查找id，赋值
+		
+		oSttChMaps->Save6U6IChMapsFile(strChMapsPath);
+	}
+
+	bRt = m_oChMaps.SaveChMapsFile(strChMapsPath);
+
+	oSttChMaps->DeleteAll();
+	return bRt;
+
+}
+
 
 BOOL CSttTestResourceMngr::SaveCurDeviceFile()
 {
@@ -1600,7 +2388,16 @@ void CSttTestResourceMngr::CreateDefaultChMapsByDevice_Analog(CSttChMaps *pCurCh
 
 			if (pSttChMap == NULL)
 			{
+				if (xlang_IsCurrXLanguageChinese())//dingxy 20250121 按照需求，英文环境下显示未U
+				{
 				strSoftRsName = GetModuleDefaultName(_T("U"),nVolChIndex);
+				}
+				else
+				{
+					strSoftRsName = GetModuleDefaultName(/*_T("U")*/_T("V"),nVolChIndex);
+				}
+
+				
 				pSttChMap = pCurChMaps->AddChMap(strSoftRsName,strSoftRsID);
 			}
 
@@ -1669,7 +2466,13 @@ void CSttTestResourceMngr::CreateDefaultChMapsByDevice_Analog(CSttChMaps *pCurCh
 
 			if (pSttChMap == NULL)
 			{
-				strSoftRsName = GetModuleDefaultName(_T("U"),nVolChIndex);
+				if (xlang_IsCurrXLanguageChinese())
+				{
+					strSoftRsName = GetModuleDefaultName(_T("U"),nVolChIndex);
+				}
+				else
+					strSoftRsName = GetModuleDefaultName(_T("V"),nVolChIndex);
+				
 				pSttChMap = pCurChMaps->AddChMap(strSoftRsName,strSoftRsID);
 			}
 
@@ -1736,7 +2539,15 @@ void CSttTestResourceMngr::CreateDefaultChMapsByDevice_Digital_FT3DC(CSttChMaps 
 	{
 		for (int nChIndex = 1; nChIndex<=3;nChIndex++)
 		{
+			//
+			if (xlang_IsCurrXLanguageChinese())
+			{
 			strSoftRsName.Format(_T("U%ld-%ld"),nGroupIndex,nChIndex);
+			}
+			else
+			{
+				strSoftRsName.Format(_T("V%ld-%ld"),nGroupIndex,nChIndex);
+			}
 			strSoftRsID.Format(_T("U%ld"),nVoltageIndex);
 			pSttChMap = pCurChMaps->AddChMap_FindByID(strSoftRsName,strSoftRsID);
 
@@ -1881,7 +2692,15 @@ void CSttTestResourceMngr::CreateDefaultChMapsByDevice_Digital_FT3(CSttChMaps *p
 
 		if (pSttChMap == NULL)
 		{
+			if (xlang_IsCurrXLanguageChinese())
+			{
 			strSoftRsName = GetModuleDefaultName(_T("U"),nChIndex);
+			}
+			else
+			{
+				strSoftRsName = GetModuleDefaultName(/*_T("U")*/_T("V"),nChIndex);
+			}
+
 			pSttChMap = pCurChMaps->AddChMap(strSoftRsName,strSoftRsID);
 		}
 
@@ -1933,7 +2752,15 @@ void CSttTestResourceMngr::CreateDefaultChMapsByDevice_Digital_IEC92(CSttChMaps 
 
 		if (pSttChMap == NULL)
 		{
+			if (xlang_IsCurrXLanguageChinese())
+			{
 			strSoftRsName = GetModuleDefaultName(_T("U"),nChIndex);
+			}
+			else
+			{
+				strSoftRsName = GetModuleDefaultName(_T("V"),nChIndex);
+			}
+			
 			pSttChMap = pCurChMaps->AddChMap(strSoftRsName,strSoftRsID);
 		}
 
@@ -1997,7 +2824,15 @@ void CSttTestResourceMngr::CreateDefaultChMapsByDevice_Weak(CSttChMaps *pCurChMa
 
 			if (pSttChMap == NULL)
 			{
+				if (xlang_IsCurrXLanguageChinese())
+				{
 				strSoftRsName = GetModuleDefaultName(_T("U"),nChIndex);
+				}
+				else
+				{
+					strSoftRsName = GetModuleDefaultName(_T("V"),nChIndex);
+				}
+				
 				pSttChMap = pCurChMaps->AddChMap(strSoftRsName,strSoftRsID);
 			}
 

@@ -3,14 +3,14 @@
 
 #include <QDialog>
 #include <QFont>
-#include "../../Module/API/StringApi.h"
+#include "../../../../Module/API/StringApi.h"
 
 #include "../PpSttIotEngineClientApp.h"
 #include "SttPxEngineDvmTreeCtrl.h"
 #include "SttPxEngineDsEditGrid.h"
 
 #include "PpSttIotEngineClientAppWnd.h"
-#include "ExBaseCycleArray.h"
+#include "../../../../Module/BaseClass/ExBaseCycleArray.h"
 
 //////////////////////////////////////////////////////////////////////////
 //QPpSttIotEngineClientWidget
@@ -87,6 +87,7 @@ protected:
 	virtual void EnableBtns();
 	virtual void EnableBtns_Connecting_Closeing();  //正在连接、断开时，所有按钮不可点
 	void SetPpIotEngineClientLang();
+	BOOL HasWriteCmdData();//zhouhj 2024.9.19 判断是否包含写命令数据(即是否包含修改的数据)
 
     int m_nTimerID;
     CExBaseCycleArray m_oArrDelete;

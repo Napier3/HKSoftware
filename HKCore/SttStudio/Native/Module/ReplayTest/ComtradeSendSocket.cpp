@@ -3,7 +3,7 @@
 #include "ComtradeBufMngr.h"
 //#include "BigComtradeTransPlay.h"
 #ifdef _PSX_QT_LINUX_
-#include"../../Module/OSInterface/QT/XGlobalDefine_QT.h"
+#include"../../../Module/OSInterface/QT/XGlobalDefine_QT.h"
 #endif
 
 

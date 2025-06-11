@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "tmt_adjust_sys_para_trans.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "tmt_adjust_sys_para_module_def.h"
 #include "../../SttDevice/Module/PowerCtrl/SttPowerCtrlCom.h"
 
@@ -32,6 +32,7 @@ CDataTypes *g_pSttAdjSysParaDataTypes = NULL;
 #ifdef NOT_USE_XLANGUAGE
         pNew->AddNewValue(_T("交流电压插件"), STT_MODULE_TYPE_VOLT_ID,               STT_MODULE_TYPE_VOLT);
         pNew->AddNewValue(_T("交流电流插件"), STT_MODULE_TYPE_CURRENT_ID,         STT_MODULE_TYPE_CURRENT);
+	pNew->AddNewValue(_T("数字板_千/百兆"), STT_MODULE_TYPE_DIGITAL_ID,  STT_MODULE_TYPE_DIGITAL);
         pNew->AddNewValue(_T("8个百兆口数字板"), STT_MODULE_TYPE_DIGITAL_0G8M_ID,  STT_MODULE_TYPE_DIGITAL_0G8M);
         pNew->AddNewValue(_T("6个百兆口,2个千兆口数字板"), STT_MODULE_TYPE_DIGITAL_2G6M_ID,  STT_MODULE_TYPE_DIGITAL_2G6M);
         pNew->AddNewValue(_T("4个百兆口,4个千兆口数字板"), STT_MODULE_TYPE_DIGITAL_4G4M_ID,  STT_MODULE_TYPE_DIGITAL_4G4M);
@@ -119,13 +120,17 @@ CDataTypes *g_pSttAdjSysParaDataTypes = NULL;
         pNew->AddNewValue(_T("6路20毫安直流模块"), STT_MODULE_WEEK_DC6I20mA_ID,    STT_MODULE_WEEK_DC6I20mA);
         pNew->AddNewValue(_T("PN6U6I直流小信号模块"), STT_MODULE_WEEK_PN_DC6U6I_ID,    STT_MODULE_WEEK_PN_DC6U6I);
 		pNew->AddNewValue(_T("PN机箱主板小信号模块"), STT_MODULE_WEEK_PN_MAIN_ID,    STT_MODULE_WEEK_PN_MAIN);
-		pNew->AddNewValue(_T("L336D小信号模块"), STT_MODULE_WEEK_L336D_ID,    STT_MODULE_WEEK_L336D);
+		pNew->AddNewValue(_T("L336D_ECTEVT 模块"), STT_MODULE_WEEK_L336D_ECTEVT_ID,    STT_MODULE_WEEK_L336D_ECTEVT);
 		pNew->AddNewValue(_T("PIA0103 模块"), STT_MODULE_UI_PIA0103_ID,    STT_MODULE_UI_PIA0103);
 		pNew->AddNewValue(_T("PNS330 模块(电流同相最大10安)"), STT_MODULE_UI_PNS330_ID,    STT_MODULE_UI_PNS330);
-		pNew->AddNewValue(_T("PNS330_H 模块"), STT_MODULE_UI_PNS330_H_ID,    STT_MODULE_UI_PNS330_H);
-		pNew->AddNewValue(_T("PNS331 模块"), STT_MODULE_UI_PNS331_ID,    STT_MODULE_UI_PNS331);
 		pNew->AddNewValue(_T("PNS330 模块(电流同相最大20安)"), STT_MODULE_UI_PNS330_ABC_20_ID,    STT_MODULE_UI_PNS330_ABC_20);
+		pNew->AddNewValue(_T("PNS330_H 模块(电流同相最大10安)"), STT_MODULE_UI_PNS330_H_ID,    STT_MODULE_UI_PNS330_H);
+		pNew->AddNewValue(_T("PNS330_H 模块(电流同相最大20安)"), STT_MODULE_UI_PNS330_H_ABC_20_ID,    STT_MODULE_UI_PNS330_H_ABC_20);
+		pNew->AddNewValue(_T("PNS330_H 模块(电源改型V2)"), STT_MODULE_UI_PNS330_H_EX2_ID,    STT_MODULE_UI_PNS330_H_EX2);
 		pNew->AddNewValue(_T("PNS330_6 模块"), STT_MODULE_UI_PNS330_6_ID,    STT_MODULE_UI_PNS330_6);
+		pNew->AddNewValue(_T("PNS331 模块(电流同相最大10安)"), STT_MODULE_UI_PNS331_ID,    STT_MODULE_UI_PNS331);
+		pNew->AddNewValue(_T("PNS331 模块(电流同相最大20安)"), STT_MODULE_UI_PNS331_ABC_20_ID,    STT_MODULE_UI_PNS331_ABC_20);		
+		pNew->AddNewValue(_T("PNS331 模块(电源改型V2)"), STT_MODULE_UI_PNS331_EX2_ID,    STT_MODULE_UI_PNS331_EX2);
 #else
 		pNew->AddNewValue(/*_T("未定义")*/g_sLangTxt_Native_Undefined, STT_MODULE_POWER_UNKNOWN_ID,    STT_MODULE_POWER_UNKNOWN);
 		pNew->AddNewValue(/*_T("130伏电压模块")*/g_sLangTxt_Native_130VVoltageModule, STT_MODULE_VOLT_V130_130_ID,    STT_MODULE_VOLT_V130_130);
@@ -147,22 +152,31 @@ CDataTypes *g_pSttAdjSysParaDataTypes = NULL;
 		pNew->AddNewValue(/*_T("6路10伏直流模块")*/g_sLangTxt_Native_6C10VDCM, STT_MODULE_WEEK_DC6U10V_ID,    STT_MODULE_WEEK_DC6U10V);
 		pNew->AddNewValue(/*_T("6路20毫安直流模块")*/g_sLangTxt_Native_6C20mADC, STT_MODULE_WEEK_DC6I20mA_ID,    STT_MODULE_WEEK_DC6I20mA);
 		pNew->AddNewValue(/*_T("PN6U6I直流小信号模块")*/g_sLangTxt_Native_PN6U6IDCSSM, STT_MODULE_WEEK_PN_DC6U6I_ID,    STT_MODULE_WEEK_PN_DC6U6I);
+		pNew->AddNewValue(/*_T("PN机箱主板小信号模块")*/g_sLangTxt_Native_WeekPNMain, STT_MODULE_WEEK_PN_MAIN_ID,    STT_MODULE_WEEK_PN_MAIN);
+		pNew->AddNewValue(/*_T("L336D_ECTEVT 模块")*/g_sLangTxt_Native_WeeKL336DECTEVT, STT_MODULE_WEEK_L336D_ECTEVT_ID,    STT_MODULE_WEEK_L336D_ECTEVT);
+		pNew->AddNewValue(/*_T("PIA0103 模块")*/g_sLangTxt_Native_PIA0103, STT_MODULE_UI_PIA0103_ID,    STT_MODULE_UI_PIA0103);
+		pNew->AddNewValue(/*_T("PNS330 模块(电流同相最大10安)")*/g_sLangTxt_Native_PNS330UMax10, STT_MODULE_UI_PNS330_ID,    STT_MODULE_UI_PNS330);
+		pNew->AddNewValue(/*_T("PNS330 模块(电流同相最大20安)")*/g_sLangTxt_Native_PNS330ABC_20, STT_MODULE_UI_PNS330_ABC_20_ID,    STT_MODULE_UI_PNS330_ABC_20);
+		pNew->AddNewValue(/*_T("PNS330_H 模块(电流同相最大10安)")*/g_sLangTxt_Native_PNS330_H, STT_MODULE_UI_PNS330_H_ID,    STT_MODULE_UI_PNS330_H);
+		pNew->AddNewValue(/*_T("PNS330_H 模块(电流同相最大20安)")*/g_sLangTxt_Native_H_ABC_20, STT_MODULE_UI_PNS330_H_ABC_20_ID,    STT_MODULE_UI_PNS330_H_ABC_20);
+		pNew->AddNewValue(/*_T("PNS330_H 模块(电源改型V2)")*/g_sLangTxt_Native_PNS330_H_EX2, STT_MODULE_UI_PNS330_H_EX2_ID,    STT_MODULE_UI_PNS330_H_EX2);
+		pNew->AddNewValue(/*_T("PNS330_6 模块")*/g_sLangTxt_Native_PNS330_6, STT_MODULE_UI_PNS330_6_ID,    STT_MODULE_UI_PNS330_6);
+		pNew->AddNewValue(/*_T("PNS331 模块(电流同相最大10安)")*/g_sLangTxt_Native_PNS331UMax10, STT_MODULE_UI_PNS331_ID,    STT_MODULE_UI_PNS331);
+		pNew->AddNewValue(/*_T("PNS331 模块(电流同相最大20安)")*/g_sLangTxt_Native_PNS331_ABC_20, STT_MODULE_UI_PNS331_ABC_20_ID,    STT_MODULE_UI_PNS331_ABC_20);
+		pNew->AddNewValue(/*_T("PNS331 模块(电源改型V2)")*/g_sLangTxt_Native_PNS331_EX2, STT_MODULE_UI_PNS331_EX2_ID,    STT_MODULE_UI_PNS331_EX2);
 #endif
     }
 	void CSttAdjSysParaDataTypes::InitAdjSysParaDataType_CurrentModuleMerge()
     {
         CDataType *pNew = AddNew2(STT_ADJ_ID_ChMergeMode,        STT_ADJ_ID_ChMergeMode);
 #ifdef NOT_USE_XLANGUAGE
-		pNew->AddNewValue(_T("不支持输出合并"), _T("NoChMerge"),    STT_CURRENT_ChMergeMode_No);
-		pNew->AddNewValue(_T("6路可以合并为1路"), _T("ChMerge_1Ch"),    STT_CURRENT_ChMergeMode_1Ch);
-		pNew->AddNewValue(_T("6路可以合并为3路"), _T("ChMerge_3Ch"),    STT_CURRENT_ChMergeMode_3Ch);
-		pNew->AddNewValue(_T("6路固定合并为3路"), _T("ChMerge_3Ch_Fixed"),    STT_CURRENT_ChMergeMode_3Ch_Fixed);
-		pNew->AddNewValue(_T("6路固定合并为1路"), _T("ChMerge_1Ch_Fixed"),    STT_CURRENT_ChMergeMode_1Ch_Fixed);
+		pNew->AddNewValue(_T("不能切换"), _T("NoChMerge"),    STT_CURRENT_ChMergeMode_No);
+		pNew->AddNewValue(_T("6路或1路"), _T("ChMerge_1Ch"),    STT_CURRENT_ChMergeMode_1Ch);
+		pNew->AddNewValue(_T("6路或3路"), _T("ChMerge_3Ch"),    STT_CURRENT_ChMergeMode_3Ch);
 #else
-		pNew->AddNewValue(/*_T("不支持输出合并")*/g_sLangTxt_Native_OutputNotSupported, _T("NoChMerge"),    0);
-		pNew->AddNewValue(/*_T("6路可以合并为1路")*/g_sLangTxt_Native_6to1MergePossible, _T("ChMerge_1Ch"),    1);
-		pNew->AddNewValue(/*_T("6路可以合并为3路")*/g_sLangTxt_Native_6to3MergePossible, _T("ChMerge_3Ch"),    2);
-		pNew->AddNewValue(/*_T("6路固定合并为3路")*/g_sLangTxt_Native_6to3FixedMerge, _T("ChMerge_3Ch_Fixed"),    3);
+		pNew->AddNewValue(/*_T("不能切换")*/g_sLangTxt_Native_OutputNotSupported, _T("NoChMerge"),    0);
+		pNew->AddNewValue(/*_T("6路或1路")*/g_sLangTxt_Native_6to1MergePossible, _T("ChMerge_1Ch"),    1);
+		pNew->AddNewValue(/*_T("6路或3路")*/g_sLangTxt_Native_6to3MergePossible, _T("ChMerge_3Ch"),    2);
 #endif
     }
 

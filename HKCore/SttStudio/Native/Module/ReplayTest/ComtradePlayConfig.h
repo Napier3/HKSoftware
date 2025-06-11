@@ -3,8 +3,8 @@
 #include "SttCmtrdCfgDefineGlobal.h"
 // #include "SttComtradeGroup.h"  //2021-11-2  lijunqing
 #include "SttModuleChComtradeBind.h"
-#include "../../Module/Record/Comtrade/ComtradeMngr.h"
-#include "../../Module/Record/Comtrade/ComtradeRateData.h"
+#include "../../../Module/Record/Comtrade/ComtradeMngr.h"
+#include "../../../Module/Record/Comtrade/ComtradeRateData.h"
 #include "../SttTest/Common/tmt_replay_test.h"
 #include "../SttTest/Common/tmt_system_config.h"
 #include "../SttTestResourceMngr/SttTestResourceMngr.h"

@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "MtDataTypeMngr.h"
 #include "TestMacrosFileMngr.h"
 #include "../XLanguage/XLanguageResource.h"

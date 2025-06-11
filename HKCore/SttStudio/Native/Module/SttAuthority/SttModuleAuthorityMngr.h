@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../Module/BaseClass/ExBaseList.h"
+#include "ExBaseList.h"
 
 class CSttModuleAuthorityMngr : public CExBaseList
 {

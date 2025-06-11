@@ -115,6 +115,11 @@ typedef struct tmt_diff_curr_paras :public tmt_SearchBase
                             //          4:Ir=(|I1'|+|I2'|)/K, 5:Ir=|Imax'-∑Ii'|/K, Ii'≠Imax', 6:Ir=√(－|I1'×I2'| * cosθ)
     int     m_nHarmPos;     //谐波施加侧  0：I1侧， 1：I2侧
     int     m_nY0CorrectMode;//保护内部零序修正方式  0：否 1：是
+
+	//国际版差动新增的3个参数,用于中性点接地零序补偿及复合特性
+	int	    m_nComBineFeature;		//组合特性/复合特性
+	int     m_nZeroSeqElimiType;//零序消除方式  - zhouhj 2024.10.6
+	int	    m_nEarthing;			//中性点是否接地
 public:
 	virtual void init()
 	{
@@ -197,6 +202,12 @@ public:
 		m_fCTSh = 5.000;
 		m_fCTSm = 5.000;
 		m_fCTSl = 5.000;
+
+		m_nY0CorrectMode = 0;
+
+		m_nComBineFeature = 0;			 //组合/复合特性
+		m_nZeroSeqElimiType = STT_DIFF_ZERO_SEQ_ELIMI_TYPE_NULL;//零序消除方式
+		m_nEarthing = 1;				 //中性点是否接地,缺省模式与之前一致为1
 
 		m_nBinLogic = 0;
 

@@ -2,7 +2,7 @@
 #define QCOMMCONFIGSERVERDLG_H
 
 #include <QDialog>
-#include "../../Module/DataMngr/DataGroup.h"
+#include "../../../../../Module/DataMngr/DataGroup.h"
 #include "../../PpSttCommConfig.h"
 
 namespace Ui {

@@ -89,7 +89,16 @@ void CSttDiffCurrHarmTest::TranslateToStateParas()
 	SetStatePreFault_6U6I();//在此函数中设置故障前电压电流、开入开出等,并设置故障态电压值
 	//////////////////////////////////////////////////////////////////////////
 	//故障状态
-	m_oDiffCalTool.CurrentCal(&m_fIdiff,m_fIbias);
+	double dIdiff_old = m_fIdiff;
+	m_oDiffCalTool.CurrentCal(&m_fIdiff,m_fIbias,m_nEarthing);
+
+	while((fabs(dIdiff_old-m_fIdiff)>0.01f)&&(m_fIbias<m_fIdiff))//zhouhj 2025.3.7 目前谐波制动的制动电流为固定值,如差动电流较大时,计算结果会自动将差流降低,
+	{                                                                  //此处增加判断,如果差动电流改变了,且制动电流小于差动电流,则逐渐抬高制动电流值
+		m_fIdiff = dIdiff_old;
+		m_fIbias *=1.2f;
+		m_oDiffCalTool.CurrentCal(&m_fIdiff,m_fIbias,m_nEarthing);
+	}
+
 	SetResultValues_I1IeI2Ie();
 	m_oResults.m_fIdiffSettingValue = m_fIdiff;
 	ChannelUI_Diff *pChCurrents = m_oDiffCalTool.GetChannelCurrents();

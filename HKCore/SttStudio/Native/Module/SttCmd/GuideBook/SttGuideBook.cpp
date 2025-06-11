@@ -8,7 +8,7 @@
 #include "stdafx.h"
 #include "SttGuideBook.h"
 #ifdef _PSX_IDE_QT_
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #endif
 
 #ifdef _DEBUG
@@ -28,6 +28,7 @@ CSttGuideBook::CSttGuideBook()
 	m_pGlobalDatas = NULL;
 	m_pItemsTec = NULL;
 	m_pAinDataMapCfg = NULL;
+	m_pTestGlobalDatasMngr = NULL;
 }
 
 CSttGuideBook::~CSttGuideBook()
@@ -200,7 +201,13 @@ void CSttGuideBook::InitAfterRead()
 			}
 
 			continue;
-		}			
+		}	
+
+		if (nClassID == STTGBXMLCLASSID_TESTGLOBALDATASMNGR)
+		{
+			m_pTestGlobalDatasMngr = (CSttTestGlobalDatasMngr *)p;
+			continue;
+		}
 	}
 
 	CSttItemBase::InitAfterRead();
@@ -383,6 +390,21 @@ BOOL CSttGuideBook::CanPaste(UINT nClassID)
 		return TRUE;
 	}
 
+	if (nClassID == STTGBXMLCLASSID_TESTGLOBALDATASMNGR)
+	{
+		return TRUE;
+	}
+
+	if (nClassID == DTMCLASSID_CDATAGROUP)
+	{
+		return TRUE;
+	}
+
+	if (nClassID == DVMCLASSID_CDVMDATASET)
+	{
+		return TRUE;
+	}
+
 	return FALSE;
 }
 
@@ -407,6 +429,10 @@ CExBaseObject* CSttGuideBook::CreateNewChild(const CString &strClassID, BOOL &bA
 	else if (strClassID == pXmlKeys->m_strCDvmDatasetKey)
 	{
 		pNew = new CDvmDataset();
+	}
+	else if (strClassID == pXmlKeys->m_strTestGlobalDatasMngrKey)
+	{
+		pNew = new CSttTestGlobalDatasMngr();
 	}
 	else
 	{
@@ -436,6 +462,10 @@ CExBaseObject* CSttGuideBook::CreateNewChild(long nClassID/*, BOOL &bAddToTail*/
 	else if (nClassID == DVMCLASSID_CDVMDATASET)
 	{
 		pNew = new CDvmDataset();
+	}
+	else if (nClassID == STTGBXMLCLASSID_TESTGLOBALDATASMNGR)
+	{
+		pNew = new CSttTestGlobalDatasMngr();
 	}
 	else
 	{
@@ -523,7 +553,7 @@ void CSttGuideBook::InitGlobalDatas(CDvmDataset *pGlobalDatas)
 
 void CSttGuideBook::ClearGuideBook()
 {
-	if (m_pGlobalDatas != NULL)
+	/*if (m_pGlobalDatas != NULL)
 	{
 		Remove(m_pGlobalDatas);
 		DeleteAll();
@@ -532,7 +562,12 @@ void CSttGuideBook::ClearGuideBook()
 	else
 	{
 		DeleteAll();
-	}
+	}*/
+
+	DeleteAll();//修改原有写法：清空之后需AppendEx的话需调用InitAfterRead赋值正确指针
+	m_pItemsTec = NULL;
+	m_pAinDataMapCfg = NULL;
+	m_pGlobalDatas = NULL;
 }
 
 void CSttGuideBook::InitDevice()

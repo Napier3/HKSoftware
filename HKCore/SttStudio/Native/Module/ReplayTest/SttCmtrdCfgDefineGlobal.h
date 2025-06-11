@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "../../Module/DataMngr/DataMngrGlobal.h"
+#include "../../../Module/DataMngr/DataMngrGlobal.h"
 
 #define MngrCLASSID_BASECLASS       (CLASSID_BASECLASS + 0X00010000)
 #define MngrCLASSID_EXLISTCLASS       (CLASSID_EXLISTCLASS + 0X00010000)

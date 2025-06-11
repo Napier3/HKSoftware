@@ -177,9 +177,9 @@ typedef struct tmt_state_abnormal_goose		// GOOSE异常参数
 	BOOL    m_bDataSet_Sel;
 	char	m_strDataSet[MAX_PATH];
 	BOOL	m_bStNumSet_Sel;
-	int		m_nStNum;	
+	unsigned int	m_nStNum;//20240924 Xuzt int不支持该数据范围，修改为uint	
 	BOOL	m_bSqNumSet_Sel;
-	int		m_nSqNum;	
+	unsigned int		m_nSqNum;	
 	BOOL	m_bTtlSet_Sel;
 	int		m_nTimeAllowToLive;    // 允许生存时间单位毫秒
 	BOOL    m_bAppID_Sel;

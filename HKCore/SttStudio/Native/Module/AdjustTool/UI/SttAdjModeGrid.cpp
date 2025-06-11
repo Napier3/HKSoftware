@@ -5,6 +5,9 @@
 
 #include "stdafx.h"
 #include "SttAdjModeGrid.h"
+#ifndef NOT_USE_XLANGUAGE
+#include "../../../Local/SttAdjMain/XLanguageResource_SttAdjMain.h"
+#endif
 
 CSttAdjModeGrid::CSttAdjModeGrid()
 {
@@ -36,7 +39,11 @@ void CSttAdjModeGrid::InitGrid()
 
 void CSttAdjModeGrid::InitGridTitle()
 {
+#ifndef NOT_USE_XLANGUAGE
+	CString astrTitle[5] = {/*_T("编号")*/g_sLangTxt_Index,  /*_T("名称")*/g_sLangTxt_SttAdjMain_Name,  /*_T("类型")*/g_sLangTxt_Type, /* _T("型号")*/g_sLangTxt_SttAdjMain_AppModel,   /*_T("模块数")*/g_sLangTxt_SttAdjMain_ModuleCount};//模块ID
+#else
 	CString astrTitle[5] = {_T("编号"),  _T("名称"),  _T("类型"),  _T("型号"),   _T("模块数")};//模块ID
+#endif
 	CString astrAttrs[5] = {_T(""),  _T("name"),  _T("id"),  _T("value"),  _T("value")};
 	int nWidth[5]  =  {40,  120,  100,  100,  100};
 
@@ -73,10 +80,17 @@ void CSttAdjModeGrid::ShowData(CExBaseObject *pData, int& nRow, BOOL bInsertRow)
 		}
 		else if (pDvmData_Value->m_strID=="Type")//此时获取ID=="Model" 此时的VALUE值；
 		{
+#ifndef NOT_USE_XLANGUAGE
+			if (pDvmData_Value->m_strValue=="0")
+				strType  = /*"装置"*/g_sLangTxt_SttAdjMain_Device;
+			if (pDvmData_Value->m_strValue=="1")
+				strType  = /*"模块"*/g_sLangTxt_Module;
+#else
 			if (pDvmData_Value->m_strValue=="0")
 				strType  = "装置";
 			if (pDvmData_Value->m_strValue=="1")
 				strType  = "模块";
+#endif
 		}
 		
 	}

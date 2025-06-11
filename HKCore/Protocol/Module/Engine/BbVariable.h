@@ -2,7 +2,7 @@
 
 class CBbVarValue;
 
-#include "../../../module/baseclass/ExBaseObject.h"
+#include "ExBaseObject.h"
 #include "ProtocolXmlRWKeys.h"
 #include "BbVarValue.h"
 

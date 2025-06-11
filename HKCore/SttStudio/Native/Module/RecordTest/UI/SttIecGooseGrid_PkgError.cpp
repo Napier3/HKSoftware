@@ -1,5 +1,5 @@
 #include "SttIecGooseGrid_PkgError.h"
-#include "../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../../Module/SmartCap/XSmartCapMngr.h"
 #include "../../XLangResource_Native.h"
 #include <QHeaderView>
 
@@ -72,7 +72,7 @@ void CSttIecGooseGrid_PkgError::InitGridTitle()
 	m_nGridWidth[1] = 100;
 
 	QExBaseListGridBase::InitGridTitle(astrGridTitle, m_nGridWidth, 2);
-    horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);//平均分布各列
+	horizontalHeader()->setResizeMode(QHeaderView::Stretch);//平均分布各列
 
 }
 void CSttIecGooseGrid_PkgError::ShowData(CExBaseObject *pData, int& nRow, BOOL bInsertRow)

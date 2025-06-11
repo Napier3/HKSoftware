@@ -4,9 +4,9 @@
 #include "../../UI/Module/QExBaseListGridBase/QExBaseListGridBase.h"
 
 
-#include "../../Module/SmartCap/61850Cap/CapDevice/CapDeviceBase.h"
-#include "../../Module/SmartCap/61850Cap/CapDevice/CapDeviceSmvCh.h"
-#include "../../Module/SmartCap/61850Cap/CapDevice/CapDeviceGooseCh.h"
+#include "../../../../Module/SmartCap/61850Cap/CapDevice/CapDeviceBase.h"
+#include "../../../../Module/SmartCap/61850Cap/CapDevice/CapDeviceSmvCh.h"
+#include "../../../../Module/SmartCap/61850Cap/CapDevice/CapDeviceGooseCh.h"
 
 //表格显示类型分为两种,即9-2,GOOSE； FT3，两者需要显示的列不同
 #define STT_IECCBGRID_SHOW_TYPE_61850                  0
@@ -30,6 +30,7 @@ public:
 public:
 	virtual void InitGrid();
 	virtual void InitGridTitle();
+// 	void UpdateGridTitle();//dingxy 20240902 更新控制块表头
 
 	virtual void ShowDatas(CExBaseList *pDatas, BOOL bResetScrollBars=TRUE);
 	virtual void ShowData(CExBaseObject *pData, int& nRow, BOOL bInsertRow=TRUE);
@@ -49,7 +50,7 @@ public:
 	void UpdateCapDeviceLinkState();
 	CExBaseObject* GetCurrSelData_BySelect();
 	CExBaseList* GetAllSelectedCbs();
-// 	BOOL ValidSetSelectCbsState(CCapDeviceBase *pCapDeviceBase);
+ 	BOOL ValidSetSelectCbsState(CCapDeviceBase *pCapDeviceBase);
 
 	static void EndEditCell_SelectCB(int nRow, int nCol,QGV_ITEM *pCell, QExBaseListGridBase *pGrid);
 
@@ -59,8 +60,8 @@ protected:
 
 	void ShowData_61850(CExBaseObject *pData, int& nRow, BOOL bInsertRow=TRUE);
 	void ShowData_60044(CExBaseObject *pData, int& nRow, BOOL bInsertRow=TRUE);
-// public slots:
-// 	void slot_UpdateSelectCbsState();
+public slots:
+	void slot_UpdateSelectCbsState();
 };
 
 void ShowColorRow(QExBaseListGridBase* pGridCtrl, int nMatchState, int nRow, int nCols);

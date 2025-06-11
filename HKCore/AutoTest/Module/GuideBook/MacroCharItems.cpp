@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "MacroCharItems.h"
 #include "Safety.h"
 #include "MacroTest.h"

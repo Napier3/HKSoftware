@@ -6,7 +6,7 @@
 
 #include "stdafx.h"
 #include "SttCmdDefineGlobal.h"
-#include "../../Module/Expression/XExprGlobal.h"
+#include "../../../Module/Expression/XExprGlobal.h"
 #ifdef _DEBUG
 #undef THIS_FILE
 	static char THIS_FILE[]=__FILE__;
@@ -219,6 +219,19 @@ CSttCmdDefineXmlRWKeys::CSttCmdDefineXmlRWKeys()
 	//shaolei 2023-6-20
 	m_strRptTitleKey = L"rpt-title";
 	m_strTitleLevelKey = L"title-level";
+
+    //lijunqing 2024-10-25
+    m_strCSttLicenseMngrKey = L"license-mngr";
+    m_strCSttLicenseKey = L"license";
+    m_strCSttLicenseModuleKey = L"module";
+    m_strKeyKey = L"key";
+    m_strYearKey = L"year";
+    m_strMonthKey = L"month";
+    m_strDayKey = L"day";
+    m_strDaysKey = L"days";
+    m_strTimesKey = L"times";
+	m_strCurrTimesKey = L"currtimes";
+	m_strTestGlobalDatasMngrKey = L"test-global-datas-mngr";  //shaolei 2024-12-11
 }
 
 CSttCmdDefineXmlRWKeys::~CSttCmdDefineXmlRWKeys()
@@ -460,7 +473,7 @@ void CTestDataTypeMngrConstGlobal::Init_K0CalModeDataType()
 
 void CTestDataTypeMngrConstGlobal::Init_UzCKDataType()
 {
-	CDataType *pDataType = m_oTestDataTypes.AddNew2(_T("PsuVzRefPhase"), _T("PsuVzRefPhase"));
+	CDataType *pDataType = m_oTestDataTypes.AddNew2(_T("VzPhDefine"), _T("VzPhDefine"));
 	pDataType->AddNewValue(_T("Va相位"), _T(""), _T("0"));
 	pDataType->AddNewValue(_T("Vb相位"), _T(""), _T("1"));
 	pDataType->AddNewValue(_T("Vc相位"), _T(""), _T("2"));

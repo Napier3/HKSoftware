@@ -167,7 +167,7 @@ void stt_xml_serialize_ErrorValues(PTT_SystemParas pSystemParas, CSttXmlSerializ
 void stt_xml_serialize(PTT_SystemParas pSystemParas, CSttXmlSerializeBase *pXmlSierialize)
 {
     stt_xml_serialize_SystemParas(pSystemParas, pXmlSierialize);
-
+	stt_xml_serialize_AppConfig(pSystemParas, pXmlSierialize);//dingxy 20250317 增加初始化变比
 #ifdef _STT_NOT_IN_TEST_SERVER_
 	stt_xml_serialize_AuxDC(pSystemParas, pXmlSierialize);//20240226 底层关闭系统参数修改辅助直流入口
 	stt_xml_serialize_ModulesGearSwitch(pSystemParas, pXmlSierialize);//20240513 硬件部要求,底层关闭系统参数修改电流功率入口
@@ -190,9 +190,9 @@ void stt_xml_serialize_AuxDC(PTT_SystemParas pSystemParas, CSttXmlSerializeBase 
 void stt_xml_serialize_AppConfig(PTT_SystemParas pSystemParas, CSttXmlSerializeBase *pXmlSierialize) //zhouhj 20221207 增加用于设置变比
 {
 #ifdef NOT_USE_XLANGUAGE
-	pXmlSierialize->xml_serialize("输出模拟量", "HasAnalog", " ", "number", pSystemParas->m_nHasAnalog);
-	pXmlSierialize->xml_serialize("输出数字量", "HasDigital", " ", "number", pSystemParas->m_nHasDigital);
-	pXmlSierialize->xml_serialize("输出弱信号", "HasWeek", " ", "number", pSystemParas->m_nHasWeek);
+	//pXmlSierialize->xml_serialize("输出模拟量", "HasAnalog", " ", "number", pSystemParas->m_nHasAnalog);
+	//pXmlSierialize->xml_serialize("输出数字量", "HasDigital", " ", "number", pSystemParas->m_nHasDigital);
+	//pXmlSierialize->xml_serialize("输出弱信号", "HasWeek", " ", "number", pSystemParas->m_nHasWeek);
     pXmlSierialize->xml_serialize("电压变比一次值(第1组)", "_UaPrimary", "kV", "float", pSystemParas->m_fVPrimary[0]);
     pXmlSierialize->xml_serialize("电压变比一次值(第2组)", "_UxPrimary", "kV", "float", pSystemParas->m_fVPrimary[1]);
     pXmlSierialize->xml_serialize("电压变比一次值(第3组)", "_UuPrimary", "kV", "float", pSystemParas->m_fVPrimary[2]);
@@ -218,9 +218,9 @@ void stt_xml_serialize_AppConfig(PTT_SystemParas pSystemParas, CSttXmlSerializeB
     pXmlSierialize->xml_serialize("电流变比二次值(第5组)", "_I5Secondary", "A", "float", pSystemParas->m_fISecondary[4]);
     pXmlSierialize->xml_serialize("电流变比二次值(第6组)", "_I6Secondary", "A", "float", pSystemParas->m_fISecondary[5]);
 #else
-	pXmlSierialize->xml_serialize("输出模拟量", "HasAnalog", " ", "number", pSystemParas->m_nHasAnalog);
-	pXmlSierialize->xml_serialize("输出数字量", "HasDigital", " ", "number", pSystemParas->m_nHasDigital);
-	pXmlSierialize->xml_serialize("输出弱信号", "HasWeek", " ", "number", pSystemParas->m_nHasWeek);
+	//pXmlSierialize->xml_serialize("输出模拟量", "HasAnalog", " ", "number", pSystemParas->m_nHasAnalog);
+	//pXmlSierialize->xml_serialize("输出数字量", "HasDigital", " ", "number", pSystemParas->m_nHasDigital);
+	//pXmlSierialize->xml_serialize("输出弱信号", "HasWeek", " ", "number", pSystemParas->m_nHasWeek);
   pXmlSierialize->xml_serialize(/* "电压变比一次值(第1组)" */ g_sLangTxt_Native_VoltageRatioPrimary1.GetString(), "_UaPrimary", "kV", "float", pSystemParas->m_fVPrimary[0]);
   pXmlSierialize->xml_serialize(/* "电压变比一次值(第2组)" */ g_sLangTxt_Native_VoltageRatioPrimary2.GetString(), "_UxPrimary", "kV", "float", pSystemParas->m_fVPrimary[1]);
   pXmlSierialize->xml_serialize(/* "电压变比一次值(第3组)" */ g_sLangTxt_Native_VoltageRatioPrimary3.GetString(), "_UuPrimary", "kV", "float", pSystemParas->m_fVPrimary[2]);
@@ -331,8 +331,8 @@ void stt_xml_serialize_SystemParas(PTT_SystemParas pSystemParas, CSttXmlSerializ
 }
 
 
-#include "../Module/SttCmd/SttTestCmd.h"
-#include"../../Module/API/GlobalConfigApi.h"
+#include "../../SttCmd/SttTestCmd.h"
+#include"../../../Module/API/GlobalConfigApi.h"
 
 void stt_xml_serialize_write_SystemConfig()
 {

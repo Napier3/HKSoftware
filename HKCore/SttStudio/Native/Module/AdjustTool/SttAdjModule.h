@@ -61,9 +61,10 @@ public:
 	CDataGroup* DeleteGear_AllGear( const CString &strTrangeID, int &nCmbChannelIndex, int &nCmbWaveIndex, const CString &strCurID, int &nIndex);
 
 	//2021-5-3 lijunqing
-	BOOL DeleteGear(CDataGroup *pParent, const CString &strGearID);	
-	BOOL DeleteGear_AllChannel(CDataGroup *pTrange, CDataGroup *pAdjParas, const CString &strWaveID, const CString &strGearID);
-	BOOL DeleteGear_SingleChannel(CDataGroup *pAdjParas, const CString &strWaveID, const CString &strGearID);
+	BOOL DeleteGear(CDataGroup *pParent, const CString &strGearName);	
+	BOOL DeleteBinGear(CDataGroup *pParent, const CString &strGearName);	
+	BOOL DeleteGear_AllChannel(CDataGroup *pTrange, CDataGroup *pAdjParas, const CString &strWaveID, const CString &strGearName);
+	BOOL DeleteGear_SingleChannel(CDataGroup *pAdjParas, const CString &strWaveID, const CString &strGearName);
 
 	void  SetTrangID_ChannelID(CString strChannelID[] , CString strChWaveID[]);
 
@@ -81,7 +82,9 @@ public:
 	CDvmData*  GetModuleChannelNum(CDataGroup *pModule);
 	BOOL   GetModuleChannelNum(CString &strChannelNum);
 	BOOL GetModuleChannelNum(long &nChannelNum);
+	BOOL GetModuleDefChannelNum(long &strDefChannelNum);//Xuzt 2024.9.10 获取DefChannelNum节点，之前只用ChannelNum，现在显示通道数量时使用新的节点
 	BOOL GetModuleChannelNum(long &nVolChNum,long &nCurChNum);//zhouhj 20211006 对于电压电流混合模块,需要从通道映射中获取
+	BOOL GetModuleDefChTypeChg(long &strDefChTypeChg); //dingxy 20250226 获取通道电气类型可变
 	void AddMaxVolCurrValue_VolCurrModule();//zhouhj 20220424  对电压电流混合插件增加交流、直流电压的最大值属性
 	long		 GetModuleIndex();
 	BOOL  GetModule_Type_Index(CString &strModuleType, long &nModuleIndex);

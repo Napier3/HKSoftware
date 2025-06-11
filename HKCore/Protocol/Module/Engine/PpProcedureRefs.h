@@ -1,5 +1,5 @@
 #pragma once
-#include "../../../module/baseclass/exbaselist.h"
+#include "ExBaseList.h"
 #include "PpGlobalDefine.h"
 #include "ProtocolXmlRWKeys.h"
 class CPpProcedureRefs :	public CExBaseList

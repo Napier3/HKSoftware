@@ -1,5 +1,5 @@
 #pragma once
-#include "../../../module/baseclass/ExBaseObject.h"
+#include "ExBaseObject.h"
 
 #include "ProtocolXmlRWKeys.h"
 

@@ -9,7 +9,7 @@
 #include "../SttCmdDefineGlobal.h"
 
 
-#include "../../Module/DataMngr/DvmDataset.h"
+#include "../../../Module/DataMngr/DvmDataset.h"
 
 class CSttSysParas : public CDvmDataset
 {

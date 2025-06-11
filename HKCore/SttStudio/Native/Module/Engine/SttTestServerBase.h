@@ -3,9 +3,11 @@
 #include "SttTestEngineServerBase.h"
 #include "../SttSocket/SttServerSocketDataBase.h"
 #include "../SttTestBase/SttXmlSerialize.h"
-#include "SttServerTestCtrlCntr.h"
+#include"../SttTest/Common/tmt_rtdata_def.h"
+
 
 #ifndef _STT_NOT_IN_TEST_SERVER_
+#include "SttServerTestCtrlCntr.h"
 #ifdef _PSX_IDE_QT_
 #include "QT/SttMqttEngine.h"
 #else
