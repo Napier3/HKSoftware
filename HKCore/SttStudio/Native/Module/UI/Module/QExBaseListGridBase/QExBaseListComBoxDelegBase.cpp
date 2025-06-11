@@ -2,9 +2,9 @@
 #include <QLineEdit>
 #include <QApplication>
 #include "../ScrollCtrl/ScrollComboBox.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include <QPainter>
-
+#include <math.h>
 //////////////////////////////////////////////////////////////////////////
 
 QExBaseListItemDelegateBase::QExBaseListItemDelegateBase(QObject *parent)
@@ -533,3 +533,250 @@ void QExBaseListComBoxDelegBase::updateEditorGeometry(QWidget *editor, const QSt
 
 
 //////////////////////////////////////////////////////////////////////////
+//20240913 huangliang 添加可编辑下拉框
+QExBaseListEditComBoxDelegBase::QExBaseListEditComBoxDelegBase(QObject *parent)
+	: QExBaseListComBoxDelegBase(parent)
+{
+	m_bEditable = TRUE;
+	m_bFirstClicked = TRUE;
+}
+
+QExBaseListEditComBoxDelegBase::~QExBaseListEditComBoxDelegBase()
+{
+}
+
+QWidget *QExBaseListEditComBoxDelegBase::createEditor(QWidget *parent, const QStyleOptionViewItem &,
+	const QModelIndex &index) const
+{
+	if (!m_bEditable)
+	{
+		return NULL;
+	}
+
+	QGV_ITEM* pCurItem = GetCurrItem(index);
+
+	if (pCurItem == NULL)
+	{
+		return NULL;
+	}
+
+	if (pCurItem->lParam == 0)
+	{
+		return NULL;
+	}
+
+	PEXBASECELLDATA pVCellData = (PEXBASECELLDATA)pCurItem->lParam;
+	CDataType* pDataType = (CDataType*)pVCellData->pExBaseList;
+
+	if (pDataType != NULL)
+	{
+		QScrollComboBox *pComboBox = new QScrollComboBox(parent);
+#ifdef _PSX_QT_LINUX_//linux下需要特殊处理下
+		pComboBox->SetIgnoreFirstHidePopup(true);
+#endif
+		pComboBox->setEditable(true);
+		return pComboBox;
+	}
+	else
+	{
+		return new QLineEdit(parent);
+	}
+}
+
+void QExBaseListEditComBoxDelegBase::setEditorData(QWidget *editor, const QModelIndex &index) const
+{
+	if (!m_bEditable)
+	{
+		return;
+	}
+
+	QGV_ITEM* pCurItem = GetCurrItem(index);
+
+	if (pCurItem == NULL)
+	{
+		return;
+	}
+
+	if (pCurItem->lParam == 0)
+	{
+		return;
+	}
+
+	PEXBASECELLDATA pVCellData = (PEXBASECELLDATA)pCurItem->lParam;
+	ASSERT(pVCellData->pExBaseList != NULL);
+	CDataType* pDataType = (CDataType*)pVCellData->pExBaseList;
+
+	if (pDataType != NULL)
+	{
+		QScrollComboBox *pComboBox = qobject_cast<QScrollComboBox *>(editor);
+		pComboBox->clear();
+		int nCurIndex = -1, nIndex = 0;
+		CString strItem = index.model()->data(index, Qt::EditRole).toString();
+		CDataTypeValue* pDataTypeValue = NULL;
+		POS pos = pDataType->GetHeadPosition();
+
+		while (pos)
+		{
+			pDataTypeValue = (CDataTypeValue*)pDataType->GetNext(pos);
+
+			if (pDataTypeValue->m_strName == strItem)
+			{
+				nCurIndex = nIndex;
+			}
+
+			pComboBox->addItem(pDataTypeValue->m_strName);
+			nIndex++;
+		}
+
+		//20241009 huangliang 没找到什么时候默认选择了第一项，这里把没找到的文本添加到第一项里
+		if (nCurIndex < 0 && strItem != _T(""))
+		{
+			pComboBox->insertItem(0, strItem);
+			nCurIndex = 0;
+		}
+
+		if (nCurIndex >= 0)
+		{
+			pComboBox->setCurrentIndex(nCurIndex);
+
+			if (pComboBox->isHidden())
+			{
+				pComboBox->showPopup();
+			}
+		}
+	}
+	else
+	{
+		QLineEdit *lineEdit = static_cast <QLineEdit*>(editor);
+		lineEdit->setText(index.model()->data(index, Qt::EditRole).toString());
+	}
+}
+
+void QExBaseListEditComBoxDelegBase::setModelData(QWidget *editor, QAbstractItemModel *model,
+	const QModelIndex &index) const
+{
+	if (!m_bEditable)
+	{
+		return;
+	}
+
+	QGV_ITEM* pCurItem = GetCurrItem(index);
+
+	if (pCurItem == NULL)
+	{
+		return;
+	}
+
+	if (pCurItem->lParam == 0)
+	{
+		return;
+	}
+
+	PEXBASECELLDATA pVCellData = (PEXBASECELLDATA)pCurItem->lParam;
+
+	if (pVCellData->pExBaseList != NULL)
+	{		
+		QComboBox *comboBox = qobject_cast<QComboBox *>(editor);
+		QString sCurrentText = comboBox->currentText();
+		model->setData(index, comboBox->currentText(), Qt::EditRole);
+		CDataType* pDataType = (CDataType*)pVCellData->pExBaseList;
+		QString strItem = index.model()->data(index, Qt::EditRole).toString();
+		CDataTypeValue* pDataTypeValue = (CDataTypeValue*)pDataType->GetAtIndex(comboBox->currentIndex());
+
+		if (pDataTypeValue == NULL)
+		{
+			return;
+		}
+
+		ASSERT(pDataTypeValue);
+		BOOL bHasChanged = FALSE;
+
+		if (pVCellData->nVt == VCD_STRING)
+		{
+			if (pCurItem->nReserved == QT_GRID_COMBOBOX_StringType_DataTypeIndex)
+			{
+				long nIndex1 = CString_To_long(*pVCellData->pString);
+				long nIndex2 = CString_To_long(pDataTypeValue->m_strIndex);
+				//*(pVCellData->pString) = pDataTypeValue->m_strIndex;
+				if (nIndex1 != nIndex2)
+				{
+					*(pVCellData->pString) = pDataTypeValue->m_strIndex;
+					bHasChanged = TRUE;
+				}
+			}
+			else
+			{
+				if (*(pVCellData->pString) != pDataTypeValue->m_strID)
+				{
+					*(pVCellData->pString) = pDataTypeValue->m_strID;
+					bHasChanged = TRUE;
+				}
+			}
+		}
+		else if (pVCellData->nVt == VCD_LONG)
+		{
+			long nDataTypeIndex = pDataTypeValue->GetIndex();
+
+			if (*(pVCellData->pnValue) != nDataTypeIndex)
+			{
+				*(pVCellData->pnValue) = nDataTypeIndex;
+				bHasChanged = TRUE;
+			}
+		}
+		else if (pVCellData->nVt == VCD_DOUBLE)
+		{
+			double dDataTypeIndex = pDataTypeValue->GetIndex();
+
+			if (fabs(dDataTypeIndex - *(pVCellData->pdValue))>0.001f)
+			{
+				*(pVCellData->pdValue) = dDataTypeIndex;
+				bHasChanged = TRUE;
+			}
+		}
+		else if (pVCellData->nVt == VCD_FLOAT)
+		{
+			double dDataTypeIndex = pDataTypeValue->GetIndex();
+
+			if (fabs(dDataTypeIndex - *(pVCellData->pfValue))>0.001f)
+			{
+				*(pVCellData->pfValue) = dDataTypeIndex;
+				bHasChanged = TRUE;
+			}
+		}
+		else if (pVCellData->nVt == VCD_DWORD)
+		{
+			DWORD nDataTypeIndex = pDataTypeValue->GetIndex();
+
+			if (*(pVCellData->pdwValue) != nDataTypeIndex)
+			{
+				*(pVCellData->pdwValue) = nDataTypeIndex;
+				bHasChanged = TRUE;
+			}
+		}
+
+		if (bHasChanged)
+		{
+			QExBaseListGridBase *pExBaseListGridBase = qobject_cast<QExBaseListGridBase *>(parent());
+
+			if (pExBaseListGridBase != NULL)
+			{
+				pExBaseListGridBase->SetModifiedFlag(pVCellData->pObj);
+			}
+		}
+
+		//		*pVCellData->pString = pDataTypeValue->m_strID;   
+	}
+	else
+	{
+		QLineEdit *pLineEdit = qobject_cast<QLineEdit *>(editor);
+		QString text = pLineEdit->text();
+		model->setData(index, text, Qt::EditRole);
+		*pVCellData->pString = text;
+	}
+
+	if (pCurItem->m_pEditFunc != NULL)
+	{
+		QExBaseListGridBase *pExBaseListGridBase = qobject_cast<QExBaseListGridBase *>(parent());
+		pCurItem->m_pEditFunc(index.row(), index.column(), pCurItem, pExBaseListGridBase);
+	}
+}

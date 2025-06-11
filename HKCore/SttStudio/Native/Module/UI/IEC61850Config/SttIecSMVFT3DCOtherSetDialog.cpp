@@ -1,6 +1,6 @@
 #include "SttIecSMVFT3DCOtherSetDialog.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../SttTestCntrFrameBase.h"
 #include "../../XLangResource_Native.h"
 

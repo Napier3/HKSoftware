@@ -2,7 +2,7 @@
 
 #include <QAbstractItemView>
 
-#include "../../Module/Log/LogPrint.h"
+#include "../../../Module/Log/LogPrint.h"
 //#include "../../SttTestCntrFrameBase.h"
 
 extern long g_nComBoxItemHeight;// = 50

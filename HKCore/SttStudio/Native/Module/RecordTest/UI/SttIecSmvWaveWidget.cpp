@@ -1,6 +1,6 @@
 #include "SttIecSmvWaveWidget.h"
-#include "../../../../Module/API/GlobalConfigApi.h"
-#include "../../../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/SmartCap/XSmartCapMngr.h"
 #ifdef _PSX_QT_LINUX_
 #include "MUTest/SttIecRecordCbInterface.h"
 #endif

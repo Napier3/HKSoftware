@@ -1,9 +1,9 @@
 #include "QSttMUParasWidget.h"
-#include "../Module/XLangResource_Native.h"
-#include "../../Module/OSInterface/OSInterface.h"
-#include "../../Module/XLanguage/XLanguageMngr.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/XLangResource_Native.h"
+#include "../../../Module/OSInterface/OSInterface.h"
+#include "../../../Module/XLanguage/XLanguageMngr.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../Module/CommonMethod/commonMethod.h"
 #include "../Controls/SttCheckBox.h"
 
@@ -17,7 +17,17 @@ QSttMUParasWidget::QSttMUParasWidget(BOOL *pbTmtParaChanged,QWidget *parent)
 	m_pTestMethodHBoxLayout = NULL;
 	m_pInterPolMethodRadio = NULL;
 	m_pSynchMethodRadio = NULL;
+	m_bHasInitFinished = false;
+}
+
+void QSttMUParasWidget::showEvent(QShowEvent *event)
+{
+	if (!m_bHasInitFinished)
+	{
 	InitUI();
+		m_bHasInitFinished = true;
+	}
+	QWidget::showEvent(event);
 }
 
 QSttMUParasWidget::~QSttMUParasWidget()

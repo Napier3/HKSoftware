@@ -13,7 +13,7 @@
 #include <QLabel>
 #include "../Module/CommonCtrl_QT/QFloatLineEdit.h"
 #include "../Module/CommonCtrl_QT/QNumberCheckBox.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgSmvInDatas.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgSmvInDatas.h"
 #include "Grid/IecCfgSmvData92InGrid.h"
 
 class QSttIecSMV92InWidget : public QSttIecConfigWidgetBase, public CIecConfigInterface

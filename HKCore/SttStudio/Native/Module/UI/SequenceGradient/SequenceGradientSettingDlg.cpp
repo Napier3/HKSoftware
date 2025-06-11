@@ -1,6 +1,6 @@
 #include "SequenceGradientSettingDlg.h"
 #include "ui_SequenceGradientSettingDlg.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../SttTestSysGlobalPara.h"
 #include "../Module/SttUIDefine.h"
 #include "../Module/CommonMethod/commonMethod.h"
@@ -38,8 +38,8 @@ void QSequenceGradientSettingDlg::InitLanguage()
 	ui->m_rbAnd->setText(strText);
 	xlang_GetLangStrByFile(strText, "Native_LogicOr");
 	ui->m_rbOr->setText(strText);
-	ui->tabWidget->setTabText(NUM_ZERO,g_sLangTxt_Native_Bin);//开入量LCQ
-	ui->tabWidget->setTabText(NUM_ONE,g_sLangTxt_Native_Bout);  //开出量LCQ
+	ui->tabWidget->setTabText(NUM_ZERO,/*g_sLangTxt_Native_Bin*/g_sLangTxt_InputValue);//开入量LCQ
+	ui->tabWidget->setTabText(NUM_ONE,/*g_sLangTxt_Native_Bout*/g_sLangTxt_OutputValue);  //开出量LCQ
 
 	xlang_SetLangStrToWidget(ui->m_gbNormal, "Gradient_Normal", XLang_Ctrls_QGroupBox);//正常态
 	xlang_SetLangStrToWidget(ui->m_gbError, "Gradient_Failure", XLang_Ctrls_QGroupBox);//故障态

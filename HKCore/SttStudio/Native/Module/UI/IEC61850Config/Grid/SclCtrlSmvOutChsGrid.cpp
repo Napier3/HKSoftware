@@ -1,8 +1,8 @@
 #include "SclCtrlSmvOutChsGrid.h"
-#include "../../61850/Module/SCL/SclIecCfgDatas.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/API/GlobalConfigApi.h"
-#include "../../61850/Module/GlobalDataMngr/IecGlobalDataMngr.h"
+#include "../../../61850/Module/SCL/SclIecCfgDatas.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
+#include "../../../61850/Module/GlobalDataMngr/IecGlobalDataMngr.h"
 #include "../../../XLangResource_Native.h"
 
 QSclCtrlSmvOutChsGrid::QSclCtrlSmvOutChsGrid(QWidget* pparent):QSclCtrlChsGridBase(pparent)

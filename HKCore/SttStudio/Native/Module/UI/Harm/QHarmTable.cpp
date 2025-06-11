@@ -2,8 +2,8 @@
 #include <QHeaderView>
 #include <qmath.h>
 #include "../Module/CommonMethod/commonMethod.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/XLanguage/XLanguageMngr.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/XLanguageMngr.h"
 #include "../Module/XLangResource_Native.h"
 
 #ifdef _USE_SoftKeyBoard_	
@@ -44,6 +44,7 @@ QHarmTable::QHarmTable(QWidget *parent)
 	m_pArrUI = NULL;
 	m_pChResource = NULL;
 	m_nChIndex = 0;
+	m_nParaSetSecondValue = V_Secondary;
 
 	m_pCurrKeyboardItem = NULL;
 	m_bRunning = FALSE;
@@ -63,7 +64,7 @@ void QHarmTable::InitUI()
 
 	QHeaderView* pLeft = this->verticalHeader();
 	pLeft->setDefaultSectionSize(25);
-    pLeft->setSectionsClickable(false);
+	pLeft->setSectionsClickable(false);
 	pLeft->setVisible(false);
 
 	QFont font1 = this->horizontalHeader()->font();
@@ -112,6 +113,8 @@ void QHarmTable::SetData( CSttChResource *pChResource,tmt_channel *pArrUI )
 
 void QHarmTable::InitTable()
 {
+	setUpdatesEnabled(false); //2024-9-11 lijunqing 优化程序打开效率
+
 	ASSERT(m_pChResource);
 	QTableWidgetItem* pCurrHarmItem = NULL;
 
@@ -130,13 +133,22 @@ void QHarmTable::InitTable()
 	xlang_GetLangStrByFile(strPhase, "Native_Angle");
 	xlang_GetLangStrByFile(strContent, "Harm_Content");
 
-	if (strChannel.Find('U') >= 0)
+	if(strChannel.Find('U') >= 0 || 
+		strChannel.Find('V') >= 0)          //dingxy 20250225 幅值单位修改
 	{
-		strAmplitude += "(V)";
+		if(m_nParaSetSecondValue == V_Primary)
+		{
+			strAmplitude += "(kV)";
+		}
+		else
+		{
+			strAmplitude += "(V)";
+		}
 	}
 	else
+	{
 		strAmplitude += "(A)";
-	
+	}
 #ifndef _PSX_QT_LINUX_
 	strPhase += QString::fromLocal8Bit("(°)");
 #else
@@ -153,7 +165,12 @@ void QHarmTable::InitTable()
 	this->setColumnWidth(STT_HARM_TABLE_COL_Phase,88);
 	this->setColumnWidth(STT_HARM_TABLE_COL_HarmRate,140);
 	setHorizontalHeaderLabels(headers);
-	
+	CString strNative_DC, strNative_Fundamental, strHarmCount;
+	xlang_GetLangStrByFile(strNative_DC, "Native_DC");
+	xlang_GetLangStrByFile(strNative_Fundamental, "Native_Fundamental");
+	xlang_GetLangStrByFile(strHarmCount, "Harm_Times");
+	CString strHarm;
+
 	for (int row = 0;  row  <  nMaxRowCount;  row++)
 	{
 		for (int col  =  0;  col  <  HarmColunmCount;  col++)
@@ -163,7 +180,13 @@ void QHarmTable::InitTable()
 			if(col == STT_HARM_TABLE_COL_Select)
 			{
 				pCurrHarmItem->setFlags(pCurrHarmItem->flags() & (~Qt::ItemIsEditable));
-
+				if ((row == 0) || (row == 1))
+				{
+					pCurrHarmItem->setCheckState(Qt::Checked);//dingxy 20240912 直流基波通道勾选框默认不可编辑
+					pCurrHarmItem->setFlags(Qt::NoItemFlags);
+				}
+				else 
+				{
 				if (m_pArrUI[m_nChIndex].Harm[row].m_bSelect)
 				{
 					pCurrHarmItem->setCheckState(Qt::Checked);
@@ -172,27 +195,8 @@ void QHarmTable::InitTable()
 				{
 					pCurrHarmItem->setCheckState(Qt::Unchecked);
 				}
-				// 				if (row == STT_HARM_TABLE_ROW_DC)
-				// 				{
-				// 					pCurrHarmItem->setCheckState(Qt::Checked);
-				// 				}
-				// 				else if (row == STT_HARM_TABLE_ROW_Base)
-				// 				{
-				// 					pCurrHarmItem->setCheckState(Qt::Checked);
-				// 					pCurrHarmItem->setFlags(Qt::NoItemFlags);
-				// 					setSelect(row  -  1,  true);							//初始化基波始终使能
-				// 				}
-				// 				else
-				// 				{
-				// 					if (m_pArrUI[m_nChIndex].Harm[row - 1].m_bSelect  && row <= 30)
-				// 					{
-				// 						pCurrHarmItem->setCheckState(Qt::Checked);
-				// 					}
-				// 					else
-				// 					{
-				// 						pCurrHarmItem->setCheckState(Qt::Unchecked);
-				// 					}
-				// 				}
+				}
+				
 			}
 			else if(col == STT_HARM_TABLE_COL_Desc)
 			{
@@ -201,32 +205,22 @@ void QHarmTable::InitTable()
 
 				if (row == STT_HARM_TABLE_ROW_DC)
 				{
-					CString str;
-					xlang_GetLangStrByFile(str, "Native_DC");
-					pCurrHarmItem->setText(str);
+					pCurrHarmItem->setText(strNative_DC);
 				}
 				else if (row == STT_HARM_TABLE_ROW_Base)
 				{
-					CString str;
-					xlang_GetLangStrByFile(str, "Native_Fundamental");
-					pCurrHarmItem->setText(str);
+					pCurrHarmItem->setText(strNative_Fundamental);
 				}
 				else
 				{
-					CString strHarmCount;
-					xlang_GetLangStrByFile(strHarmCount, "Harm_Times");
-
-					CString strHarm;
+					strHarm.Format("%d",row);
 					if (CXLanguageMngr::xlang_IsCurrXLanguageChinese())
 					{
-						strHarm.Format("%d",row);
 						strHarm += strHarmCount;
 					}
 					else
 					{
-						strHarm.Format("%d",row);
 						strHarm = strHarmCount + strHarm;
-						//strHarm = QString("Harm %1").arg(row);
 					}
 
 					pCurrHarmItem->setText(strHarm);
@@ -241,6 +235,51 @@ void QHarmTable::InitTable()
 	getSelectHarmStringList(m_HarmStringList);
 	changeColor();
 	updataTableData();
+
+	setUpdatesEnabled(true); //2024-9-11 lijunqing 优化程序打开效率
+}
+
+void QHarmTable::SetParaSetSecondValue(int nParaSetSecondValue)
+{
+	m_nParaSetSecondValue = nParaSetSecondValue;
+
+
+	QStringList headers;
+
+	CString strEnable,strChannel, strAmplitude, strPhase, strContent;//使能，通道，幅值，相位，谐波含有率
+	xlang_GetLangStrByFile(strEnable, "Harm_Enable");
+	strChannel = m_pChResource->m_strName;
+	xlang_GetLangStrByFile(strAmplitude, "Native_Amplitude");
+	xlang_GetLangStrByFile(strPhase, "Native_Angle");
+	xlang_GetLangStrByFile(strContent, "Harm_Content");
+
+	if (strChannel.Find('U') >= 0 || 
+		strChannel.Find('V') >= 0)
+	{
+		if (m_nParaSetSecondValue == V_Primary)
+		{
+			strAmplitude += "(kV)";
+		}
+		else
+		{
+			strAmplitude += "(V)";
+		}
+
+	}
+	else
+	{
+		strAmplitude += "(A)";
+	}
+#ifndef _PSX_QT_LINUX_
+	strPhase += QString::fromLocal8Bit("(°)");
+#else
+	strPhase += "(°)";
+#endif
+	strContent += "(%)";
+	headers << strEnable << strChannel << strAmplitude << strPhase << strContent;
+
+	setHorizontalHeaderLabels(headers);
+
 }
 
 void QHarmTable::changeColor()
@@ -287,18 +326,61 @@ void QHarmTable::updataTableData(long  nHarmIndex)
 			}
 		}
 
+		float fUMax = 0,fIMax = 0;
+		if (g_oSystemParas.m_nHasWeek)//弱信号限制
+		{
 		if (m_pChResource->m_strName.Find('U') >= 0)
 		{
-			if (m_pArrUI[m_nChIndex].Harm[i].fAmp > g_oLocalSysPara.m_fAC_VolMax)	
+				if (m_pChResource->m_strName == _T("U0"))
+				{
+					fUMax = 8.300;
+				}
+				else
+				{
+#ifdef _PSX_OS_CENTOS_
+					fUMax = 10.000;
+
+#else
+					fUMax = 4.200;
+#endif
+				}
+			}
+			else if (m_pChResource->m_strName.Find('I') >= 0)
 			{
-				fValueTemp = g_oLocalSysPara.m_fAC_VolMax;	
-				m_pArrUI[m_nChIndex].Harm[i].fAmp = g_oLocalSysPara.m_fAC_VolMax;
+				if (m_pChResource->m_strName == _T("I0"))
+				{
+					fIMax = 4.200;
+				}
+				else
+				{
+					fIMax = 21.000;
+				}
+			}
+
+			if (i == 0)
+			{
+				fUMax = fUMax * 1.414;
+				fIMax = fIMax* 1.414;
+			}
+			}
+			else
+			{
+				fUMax = g_oLocalSysPara.m_fAC_VolMax;
+				fIMax = g_oLocalSysPara.m_fAC_CurMax;
+			}
+
+		if (m_pChResource->m_strName.Find('U') >= 0)
+		{
+			if (m_pArrUI[m_nChIndex].Harm[i].fAmp > fUMax)	
+			{
+				fValueTemp = fUMax;	
+				m_pArrUI[m_nChIndex].Harm[i].fAmp = fUMax;
 			}
 		}
-		else if (m_pArrUI[m_nChIndex].Harm[i].fAmp > g_oLocalSysPara.m_fAC_CurMax)	
+		else if (m_pArrUI[m_nChIndex].Harm[i].fAmp > fIMax)	
 		{
-			fValueTemp = g_oLocalSysPara.m_fAC_CurMax;	
-			m_pArrUI[m_nChIndex].Harm[i].fAmp = g_oLocalSysPara.m_fAC_CurMax;
+			fValueTemp = fIMax;	
+			m_pArrUI[m_nChIndex].Harm[i].fAmp = fIMax;
 		}
 
 		item(i, STT_HARM_TABLE_COL_Amp)->setText(QString::number(fValueTemp,  'f',  3));
@@ -306,14 +388,10 @@ void QHarmTable::updataTableData(long  nHarmIndex)
 		item(i, STT_HARM_TABLE_COL_HarmRate)->setText(QString::number(m_pArrUI[m_nChIndex].Harm[i].fContent,  'f',  2));
 	}
 
+	item(STT_HARM_TABLE_ROW_DC, STT_HARM_TABLE_COL_Phase)->setText(QString::number(0, 'f', 1));
 	item(STT_HARM_TABLE_ROW_Base, STT_HARM_TABLE_COL_HarmRate)->setText(QString::number(100, 'f', 1));
 	item(STT_HARM_TABLE_ROW_DC, STT_HARM_TABLE_COL_HarmRate)->setFlags(Qt::NoItemFlags);
-// 	item(MAX_HARM_COUNT_UI, 2 )->setText(QString::number(0,  'f',  3));
-// 	item(MAX_HARM_COUNT_UI, 3 )->setText(QString::number(0, 'f', 1));
-// 	item(MAX_HARM_COUNT_UI, 4 )->setText(QString::number(0,  'f',  2));
-// 	item(MAX_HARM_COUNT_UI + 1, 2 )->setText(QString::number(0,  'f',  3));
-// 	item(MAX_HARM_COUNT_UI + 1, 3 )->setText(QString::number(0, 'f', 1));
-// 	item(MAX_HARM_COUNT_UI + 1, 4 )->setText(QString::number(0,  'f',  2));
+	item(STT_HARM_TABLE_ROW_DC, STT_HARM_TABLE_COL_Phase)->setFlags(Qt::NoItemFlags);     //2024-12-17 xueyangfan 直流相位灰化 
 	
 	connect(this, SIGNAL(cellChanged ( int , int )), this, SLOT(slot_OnCellChanged(int ,int)));
 	connect(this,SIGNAL(itemDoubleClicked(QTableWidgetItem *)),this,SLOT(slot_OnItemDoubleClicked(QTableWidgetItem *)),Qt::UniqueConnection);
@@ -386,6 +464,68 @@ void QHarmTable::slot_OnCellChanged( int nRow,int nCol)
 
 	QString strEnterValue = pItem->text();
 	float  fEnterValue = strEnterValue.toFloat();
+	float fUMax = 0,fIMax = 0;
+
+	if (g_oSystemParas.m_nHasWeek)//弱信号限制
+	{
+		
+		if (nRow == STT_HARM_TABLE_ROW_DC)
+		{
+			if (m_pChResource->m_strName == _T("U0"))
+			{
+				fUMax = 8.300 * 1.414;
+			}
+			else if(m_pChResource->m_strName == _T("I0"))
+			{
+				fIMax = 4.200 * 1.414;
+			}
+			else
+			{
+#ifdef _PSX_OS_CENTOS_
+				fUMax = 14.140;
+
+#else
+				fUMax = 5.9388;
+#endif
+				fIMax = 29.694;
+			}
+
+		}
+		else
+		{
+			if (m_pChResource->m_strName == _T("U0"))
+			{
+				fUMax = 8.300;
+			}
+			else if(m_pChResource->m_strName == _T("I0"))
+			{
+				fIMax = 4.200;
+			}
+			else
+			{
+#ifdef _PSX_OS_CENTOS_
+				fUMax = 10.000;
+
+#else
+				fUMax = 4.200;
+#endif
+				fIMax = 21.000;
+			}
+		}
+	}
+	else
+	{
+		if (nRow == STT_HARM_TABLE_ROW_DC)
+		{
+			fUMax = g_oLocalSysPara.m_fDC_VolMax;
+			fIMax = g_oLocalSysPara.m_fDC_VolMax;
+		}
+		else
+		{
+			fUMax = g_oLocalSysPara.m_fAC_VolMax;
+			fIMax = g_oLocalSysPara.m_fAC_CurMax;
+		}
+	}
 
 	if (nCol == STT_HARM_TABLE_COL_Amp)
 	{
@@ -394,22 +534,22 @@ void QHarmTable::slot_OnCellChanged( int nRow,int nCol)
 		{
 			if (bIsU)
 			{
-				if (fEnterValue  >  g_oLocalSysPara.m_fDC_VolMax)
+				if (fEnterValue  >  /*g_oLocalSysPara.m_fDC_VolMax*/fUMax)
 				{
-					pItem->setText(QString::number(g_oLocalSysPara.m_fDC_VolMax,  'f', 2));
+					pItem->setText(QString::number(/*g_oLocalSysPara.m_fDC_VolMax*/fUMax,  'f', 2));
 					//QString strTemp =  tr("输入的电压超出范围") + QString::number(g_oLocalSysPara.m_fDC_VolMax,  'f', 2) + tr("V !");
-                    QString strTemp =  g_sLangTxt_State_InVolOutofRange.GetString() + QString::number(g_oLocalSysPara.m_fDC_VolMax,  'f', 2) + tr("V !"); //输入的电压超出范围 lcq 3.14
+                    QString strTemp =  g_sLangTxt_State_InVolOutofRange.GetString() + QString::number(/*g_oLocalSysPara.m_fDC_VolMax*/fUMax,  'f', 2) + tr("V !"); //输入的电压超出范围 lcq 3.14
 					CLogPrint::LogString(XLOGLEVEL_ERROR,strTemp);
 					return;
 				}
 			}
 			else
 			{
-				if (fEnterValue  > g_oLocalSysPara.m_fDC_CurMax)
+				if (fEnterValue  > /*g_oLocalSysPara.m_fDC_CurMax*/fIMax)
 				{
-					pItem->setText(QString::number(g_oLocalSysPara.m_fDC_CurMax,  'f', 2));
+					pItem->setText(QString::number(/*g_oLocalSysPara.m_fDC_CurMax*/fIMax,  'f', 2));
 					//QString strTemp =  tr("输入的电流超出范围") + QString::number(g_oLocalSysPara.m_fDC_CurMax,  'f', 2) + tr("A !");
-                    QString strTemp =  g_sLangTxt_State_InCurOutofrange.GetString() + QString::number(g_oLocalSysPara.m_fDC_CurMax,  'f', 2) + tr("A !");//输入的电流超出范围lcq 3.14
+                    QString strTemp =  g_sLangTxt_State_InCurOutofrange.GetString() + QString::number(/*g_oLocalSysPara.m_fDC_CurMax*/fIMax,  'f', 2) + tr("A !");//输入的电流超出范围lcq 3.14
 					CLogPrint::LogString(XLOGLEVEL_ERROR,strTemp);
 					return;
 				}
@@ -420,22 +560,22 @@ void QHarmTable::slot_OnCellChanged( int nRow,int nCol)
 			if (bIsU)
 			{
 
-				if (fEnterValue  >  g_oLocalSysPara.m_fAC_VolMax)
+				if (fEnterValue  >  /*g_oLocalSysPara.m_fAC_VolMax*/fUMax)
 				{
-					pItem->setText(QString::number(g_oLocalSysPara.m_fAC_VolMax,  'f', 2));
+					pItem->setText(QString::number(/*g_oLocalSysPara.m_fAC_VolMax*/fUMax,  'f', 2));
 					//QString strTemp =  tr("输入的电压超出范围") + QString::number(g_oLocalSysPara.m_fAC_VolMax,  'f', 2) + tr("V !");
-                    QString strTemp =  g_sLangTxt_State_InVolOutofRange.GetString() + QString::number(g_oLocalSysPara.m_fDC_VolMax,  'f', 2) + tr("V !"); //输入的电压超出范围 lcq 3.14
+                    QString strTemp =  g_sLangTxt_State_InVolOutofRange.GetString() + QString::number(/*g_oLocalSysPara.m_fDC_VolMax*/fUMax,  'f', 2) + tr("V !"); //输入的电压超出范围 lcq 3.14
 					CLogPrint::LogString(XLOGLEVEL_ERROR,strTemp);
 					return;
 				}
 			}
 			else
 			{
-				if (fEnterValue  > g_oLocalSysPara.m_fAC_CurMax)
+				if (fEnterValue  > /*g_oLocalSysPara.m_fAC_CurMax*/fIMax)
 				{
-					pItem->setText(QString::number(g_oLocalSysPara.m_fAC_CurMax,  'f', 2));
+					pItem->setText(QString::number(/*g_oLocalSysPara.m_fAC_CurMax*/fIMax,  'f', 2));
 					//QString strTemp =  tr("输入的电流超出范围") + QString::number(g_oLocalSysPara.m_fAC_CurMax,  'f', 2) + tr("A !");
-                    QString strTemp =  g_sLangTxt_State_InCurOutofrange.GetString() + QString::number(g_oLocalSysPara.m_fDC_CurMax,  'f', 2) + tr("A !");//输入的电流超出范围lcq 3.14
+                    QString strTemp =  g_sLangTxt_State_InCurOutofrange.GetString() + QString::number(/*g_oLocalSysPara.m_fDC_CurMax*/fIMax,  'f', 2) + tr("A !");//输入的电流超出范围lcq 3.14
 					CLogPrint::LogString(XLOGLEVEL_ERROR,strTemp);
 					return;
 				}
@@ -448,6 +588,8 @@ void QHarmTable::slot_OnCellChanged( int nRow,int nCol)
 
 	if (nCol == STT_HARM_TABLE_COL_Select)
 	{
+		if ((nRow != STT_HARM_TABLE_ROW_DC)&&(nRow != STT_HARM_TABLE_ROW_Base))
+		{
 		getSelectHarmStringList(m_HarmStringList);
 
 		if (pItem->checkState() != Qt::Unchecked)
@@ -480,12 +622,10 @@ void QHarmTable::slot_OnCellChanged( int nRow,int nCol)
 		}
 
 		bChanged  =  true;
-
-// 		if (m_nChangeFlag==0)
-// 		{
-// 			emit sig_CheckStateChanged();
-// 		}
 		emit sig_ChanelValueChanged();	
+
+		}
+		
 	}
 	else if (nCol > STT_HARM_TABLE_COL_Desc)
 	{
@@ -513,9 +653,13 @@ void QHarmTable::slot_OnCellChanged( int nRow,int nCol)
 		说明：sig_ChanelValueChanged   sig_WaveValueChanged  这两个信号的区别是一个连接到主框架，一个没有连接到主框架，只用来更新图形。
 ******************************************************************************************************************************************************************************************/
 
-		if (bChanged)	
-			emit sig_ChIndexChanged(m_nChIndex);
+		//2025-2-11 chenling 在判断谐波通道勾选时也需更新谐波图，故挪至判断之外
+// 		if (bChanged)	
+// 			emit sig_ChIndexChanged(m_nChIndex);
 	}
+
+	if (bChanged)
+			emit sig_ChIndexChanged(m_nChIndex);
 
 	if(g_oSystemParas.m_nHasAnalog || g_oSystemParas.m_nHasWeek)
 	{
@@ -544,9 +688,13 @@ void QHarmTable::slot_OnCellChanged( int nRow,int nCol)
 // 		}
 	}
 
-	connect(this,   SIGNAL(cellChanged ( int ,  int )),   this,  SLOT(slot_OnCellChanged(int ,  int)));
+	connect(this,   SIGNAL(cellChanged ( int ,  int )),   this,  SLOT(slot_OnCellChanged(int ,  int)),Qt::UniqueConnection);
 
+	if (m_pCurrKeyboardItem != NULL )
+	{	
 	emit sig_updataParas();
+	}
+// 	emit sig_updataParas();
 }
 
 void QHarmTable::slot_UpdataVamp(QString strValue)

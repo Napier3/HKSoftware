@@ -40,12 +40,12 @@ public slots:
 signals:
 private slots:
     void on_m_edtDevIP_textChanged(const QString &arg1);
+	void on_m_edtLocalIP_textChanged(const QString &arg1);
     void on_m_edtDevPort_textChanged(const QString &arg1);
 	void on_m_cmbEngineID_currentIndexChanged(int index);
 	void on_m_cmbDeviceType_currentIndexChanged(int index);
     void on_m_chkTSettingUnit_ms_clicked();
 	void on_m_chkAddDevReset_clicked();
-
 
 private:
     Ui::QSttCreateNewTestWidget *ui;

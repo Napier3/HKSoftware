@@ -5,7 +5,7 @@
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 
-#include "../../Module/BaseClass/ExBaseObject.h"
+#include "../../../Module/BaseClass/ExBaseObject.h"
 
 class QSttSclIedTreeItem : public QTreeWidgetItem
 {

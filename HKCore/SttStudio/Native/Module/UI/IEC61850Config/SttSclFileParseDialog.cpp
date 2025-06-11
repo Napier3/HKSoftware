@@ -7,14 +7,14 @@
 #include "../SttTestCntrFrameBase.h"
 #endif
 #include "SttSclIedTreeItem.h"
-#include "../../61850/Module/IecCfgSclTool/SclToIecCfgTool.h"
-#include "../../61850/Module/SCL/SclFileMngr/XSclFileMngr.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/OSInterface/QT/XMessageBox.h"
+#include "../../../61850/Module/IecCfgSclTool/SclToIecCfgTool.h"
+#include "../../../61850/Module/SCL/SclFileMngr/XSclFileMngr.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/OSInterface/QT/XMessageBox.h"
 #include "../Module/CommonMethod/commonMethod.h"
 #include "../SCL/QSttSelSclFileDlg.h"
 #include "../Module/XLangResource_Native.h"
-#include "../../Module/System/TickCount32.h"
+#include "../../../Module/System/TickCount32.h"
 #include "../../XLangResource_Native.h"
 
 
@@ -293,7 +293,14 @@ void QSttSclFileParseDialog::InitUI()
 	m_pOneKeyCfg_PushButton = new QPushButton(strConfig);
 	m_pImportIecCfg_PushButton = new QPushButton(strImport);
 	m_pCancel_PushButton = new QPushButton(strCancle);
-	m_pOneKeyCfg_PushButton->setFixedWidth(130);
+	if(CXLanguageMngr::xlang_IsCurrXLanguageChinese())
+	{
+		m_pOneKeyCfg_PushButton->setFixedWidth(130);
+	}
+	else
+	{
+		m_pOneKeyCfg_PushButton->setFixedWidth(180);
+	}
 	m_pImportIecCfg_PushButton->setFixedWidth(80);
 	m_pCancel_PushButton->setFixedWidth(80);
 	m_pSclFileBottom_HBoxLayout->addWidget(m_pSCLSelect_PushButton);
@@ -356,7 +363,7 @@ void QSttSclFileParseDialog::InitIedInforDatas()
 	if (m_pSttSclParseProgDlg == NULL)
 	{
 		m_pSttSclParseProgDlg = new QSttProgDlg(NULL);
-		m_pSttSclParseProgDlg->initUI(/*_T("SCL加载进度条")*/g_sLangTxt_LoadSCLFilesProgressBar.GetString(),/*_T("正在加载SCL文件,请稍侯...")*/g_sLangTxt_LoadSCLFiles.GetString());
+        m_pSttSclParseProgDlg->initUI(_T("SCL加载进度条"),_T("正在加载SCL文件,请稍侯..."));
 	}
 
 	m_pSttSclParseProgDlg->setModal(false);

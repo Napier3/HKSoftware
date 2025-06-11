@@ -11,6 +11,8 @@ QSttMacroParaEditViewTerminalAutoTest::QSttMacroParaEditViewTerminalAutoTest(QWi
 	g_TerminalAutoTest = this;
 	m_pMuTerminalTreeWidget = NULL;
 	m_pMuTerminalTabWidget = NULL;
+	m_pGoutMapChs = NULL;
+	m_pGinMapChs = NULL;
 	
 	OpenTestTestMngrFile(_T(""));
 	m_strInitBinIn= _T("");
@@ -456,6 +458,10 @@ void QSttMacroParaEditViewTerminalAutoTest::UpdateMapValue(CIecCfgChsBase *pIecC
 	QString strSoeDevID,strSoeDevValue,strSoeAppID,strSoeAppValue,strSoeCheck;
 
 	CIecCfgDataGooseChBase *pIecCfgCh = NULL;
+	if (pIecCfgChsBase == NULL)
+	{
+		return;
+	}
 	POS pos = pIecCfgChsBase->GetHeadPosition();
 	while(pos)
 	{

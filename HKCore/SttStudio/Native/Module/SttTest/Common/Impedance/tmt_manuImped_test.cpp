@@ -43,16 +43,16 @@ void stt_xml_serialize_Manu_Imped(tmt_ManualImpedParas *pParas, CSttXmlSerialize
 	pXmlSierialize->xml_serialize("故障前时间","FaultBeTime","","number",pParas->m_fPreFaultTime); 
 	pXmlSierialize->xml_serialize("是否突变量启动","Mutation","","BOOL",pParas->m_bMutation);
 
-	pXmlSierialize->xml_serialize(/*"变化模式"*/g_sLangTxt_Native_change_mode.GetString(), "Mode", "", "UIVariateMode", pParas->m_manuImpedGradient.nMode);
-	pXmlSierialize->xml_serialize(/*"变化始值"*/g_sLangTxt_Gradient_Init.GetString(), "Start", "", "number", pParas->m_manuImpedGradient.fStart);
-	pXmlSierialize->xml_serialize(/*"变化终值"*/g_sLangTxt_Gradient_Finish.GetString(), "End", "", "number", pParas->m_manuImpedGradient.fEnd);
-	pXmlSierialize->xml_serialize(/*"变化步长"*/g_sLangTxt_Gradient_Step.GetString(), "Step", "", "number", pParas->m_manuImpedGradient.fStep);
-	pXmlSierialize->xml_serialize(/*"每步时间"*/g_sLangTxt_Native_step_time.GetString(), "StepTime", "", "number", pParas->m_manuImpedGradient.fStepTime);
-	pXmlSierialize->xml_serialize(/*"触发延时"*/g_sLangTxt_Native_trigger_delay.GetString(), "TrigDelay", "", "number", pParas->m_manuImpedGradient.fTrigDelay);
-	pXmlSierialize->xml_serialize(/*"是否开入停止"*/g_sLangTxt_Native_YNInputStop.GetString(), "bBinStop", "", "BOOL", pParas->m_bBinStop);
-	pXmlSierialize->xml_serialize(/*"开入逻辑"*/g_sLangTxt_Native_InLogic.GetString(), "_AndOr", "", "InPutLogic_Psu", pParas->m_nBinLogic);
-	pXmlSierialize->xml_serialize(/*"是否锁定"*/g_sLangTxt_Native_YN_locked.GetString(), "_bLock", "", "number", pParas->m_bLockChanged);
-	pXmlSierialize->xml_serialize(/*"是否自动递变"*/g_sLangTxt_Native_YN_autoevo.GetString(), "_bAuto", "", "BOOL", pParas->m_bAuto);
+    pXmlSierialize->xml_serialize("变化模式", "Mode", "", "UIVariateMode", pParas->m_manuImpedGradient.nMode);
+    pXmlSierialize->xml_serialize("变化始值", "Start", "", "number", pParas->m_manuImpedGradient.fStart);
+    pXmlSierialize->xml_serialize("变化终值", "End", "", "number", pParas->m_manuImpedGradient.fEnd);
+    pXmlSierialize->xml_serialize("变化步长", "Step", "", "number", pParas->m_manuImpedGradient.fStep);
+    pXmlSierialize->xml_serialize("每步时间", "StepTime", "", "number", pParas->m_manuImpedGradient.fStepTime);
+    pXmlSierialize->xml_serialize("触发延时", "TrigDelay", "", "number", pParas->m_manuImpedGradient.fTrigDelay);
+    pXmlSierialize->xml_serialize("是否开入停止", "bBinStop", "", "BOOL", pParas->m_bBinStop);
+    pXmlSierialize->xml_serialize("开入逻辑", "_AndOr", "", "InPutLogic_Psu", pParas->m_nBinLogic);
+    pXmlSierialize->xml_serialize("是否锁定", "_bLock", "", "number", pParas->m_bLockChanged);
+    pXmlSierialize->xml_serialize("是否自动递变", "_bAuto", "", "BOOL", pParas->m_bAuto);
 }
 void stt_xml_serialize(tmt_ManualImpedParas *pParas, CSttXmlSerializeBase *pXmlSierialize)
 {
@@ -337,7 +337,7 @@ void stt_xml_serialize(tmt_ManualImpedResult *pResults, CSttXmlSerializeBase *pX
 }
 
 #include"../../../SttCmd/SttTestCmd.h"
-#include"../../../../../Module/API/GlobalConfigApi.h"
+#include"../../../Module/API/GlobalConfigApi.h"
 void stt_xml_serialize_write_ManuImpedTest()
 {
     tmt_ManualImpedTest oManualTest;

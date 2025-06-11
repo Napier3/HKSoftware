@@ -1,6 +1,6 @@
 #include "SttIntelBoutToGinParaWidget.h"
 #include <QGridLayout>
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 
 QSttIntelBoutToGinParaWidget::QSttIntelBoutToGinParaWidget(CIecCfgGinDatas* pCfgGinDatas ,bool bInitEditable)
 {

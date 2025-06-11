@@ -1,7 +1,7 @@
 #include "SttPxEngineDsEditGrid.h"
 #include "../../UI/Module/CommonCtrl_QT/QIecWidgetDelegate.h"
-#include "../../../../Module/DataMngr/DvmData.h"
-#include "../../../../Module/DataMngr/Value.h"
+#include "../../../Module/DataMngr/DvmData.h"
+#include "../../../Module/DataMngr/Value.h"
 
 
 //////////////////////////////////////////////////////////////////////////

@@ -2,7 +2,7 @@
 #define QLUMINOUSPOWERGRID_H
 
 #include "../QExBaseListGridBase/QExBaseListGridBase.h"
-#include "../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/DataMngr/DataGroup.h"
 
 class QLuminousPowerGrid: public QExBaseListGridBase
 {

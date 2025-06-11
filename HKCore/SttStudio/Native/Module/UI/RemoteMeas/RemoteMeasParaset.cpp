@@ -227,12 +227,12 @@ void RemoteMeasParaSet::initData()
 
 	if (m_UCHannelTableList.size()>=1)
 	{
-		m_UCHannelTableList[0]->setTableData(m_pArrUIVOL);
+		m_UCHannelTableList[0]->setTableData(m_pArrUIVOL, true);
 	}
 
 	if (m_ICHannelTableList.size()>=1)
 	{
-		m_ICHannelTableList[0]->setTableData(m_pArrUICUR);
+		m_ICHannelTableList[0]->setTableData(m_pArrUICUR, true);
 	}
 
 	if (m_RemoteMeasTableList.size()>=1)
@@ -293,16 +293,16 @@ void RemoteMeasParaSet::setData(tmt_channel *pArrUIVOL,tmt_channel *pArrUICUR)
 	m_pArrUICUR = pArrUICUR;
 }
 
-void RemoteMeasParaSet::setMaxMinAndEDVal()
+void RemoteMeasParaSet::setMaxMinAndEDVal(bool bCanUpdateTable)
 {
-	setUAmpMaxMinValue();
-	setIAmpMaxMinValue();
+	setUAmpMaxMinValue(bCanUpdateTable);
+	setIAmpMaxMinValue(bCanUpdateTable);
 
 	setUAmpEDValue(g_oSystemParas.m_fVNom);
 	setIAmpEDValue(g_oSystemParas.m_fINom);
 }
 
-void RemoteMeasParaSet::setUAmpMaxMinValue()
+void RemoteMeasParaSet::setUAmpMaxMinValue(bool bCanUpdateTable)
 {
 	int num = 0;
 	num = m_UCHannelTableList.size();
@@ -310,7 +310,7 @@ void RemoteMeasParaSet::setUAmpMaxMinValue()
 	{
 		if(m_pArrUIVOL[0].Harm[1].bDC)
 		{
-			m_UCHannelTableList[i]->setAmpMaxMinValue(g_oLocalSysPara.m_fDC_VolMax,0);
+			m_UCHannelTableList[i]->setAmpMaxMinValue(g_oLocalSysPara.m_fDC_VolMax,0, bCanUpdateTable);
 		}
 		else
 		{
@@ -322,13 +322,13 @@ void RemoteMeasParaSet::setUAmpMaxMinValue()
 // 			}
 // 			else 
 			{
-			m_UCHannelTableList[i]->setAmpMaxMinValue(g_oLocalSysPara.m_fAC_VolMax,0);
+			m_UCHannelTableList[i]->setAmpMaxMinValue(g_oLocalSysPara.m_fAC_VolMax,0, bCanUpdateTable);
 			}
 		}
 	}
 }
 
-void RemoteMeasParaSet::setIAmpMaxMinValue()
+void RemoteMeasParaSet::setIAmpMaxMinValue(bool bCanUpdateTable)
 {
 	int num = 0;
 	num = m_ICHannelTableList.size();
@@ -336,7 +336,7 @@ void RemoteMeasParaSet::setIAmpMaxMinValue()
 	{
 		if (m_pArrUIVOL[0].Harm[1].bDC)
 		{
-			m_ICHannelTableList[i]->setAmpMaxMinValue(g_oLocalSysPara.m_fDC_CurMax ,0);
+			m_ICHannelTableList[i]->setAmpMaxMinValue(g_oLocalSysPara.m_fDC_CurMax ,0, bCanUpdateTable);
 		}
 		else
 		{
@@ -348,7 +348,7 @@ void RemoteMeasParaSet::setIAmpMaxMinValue()
 // 			}
 // 			else 
 			{
-			m_ICHannelTableList[i]->setAmpMaxMinValue(g_oLocalSysPara.m_fAC_CurMax,0);
+			m_ICHannelTableList[i]->setAmpMaxMinValue(g_oLocalSysPara.m_fAC_CurMax,0, bCanUpdateTable);
 			}
 		}
 	}

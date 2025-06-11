@@ -1,7 +1,7 @@
 #include "DeviceAttrsGrid.h"
-#include "../../Module/DataMngr/DvmData.h"
+#include "../../../Module/DataMngr/DvmData.h"
 #include "../Module/XLangResource_Native.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 
 CDeviceAttrsGrid::CDeviceAttrsGrid(QWidget* pparent):QExBaseListGridBase(pparent)
 {

@@ -37,6 +37,8 @@ public:
 	void TimerStop(bool bUpdate = false);
 	virtual void timerEvent(QTimerEvent * );
 
+	void SetParaSetSecondValue(int nParaSetSecondValue);
+	int m_nParaSetSecondValue;
 
 private:
 	void setPropertyOfParaSet();

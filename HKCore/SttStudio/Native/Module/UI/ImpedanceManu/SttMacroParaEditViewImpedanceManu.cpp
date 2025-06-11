@@ -1,7 +1,7 @@
 #include "SttMacroParaEditViewImpedanceManu.h"
 #include "ui_SttMacroParaEditViewManual.h"
 #include "../../SmartCap/XSmartCapMngr.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../SttTest/Common/tmt_manu_test.h"
 #include "../SttTestCntrFrameBase.h"
 #include "../../SttTestResourceMngr/TestResource/SttTestResource_Sync.h"
@@ -31,11 +31,14 @@ QSttMacroParaEditViewImpedanceManu::QSttMacroParaEditViewImpedanceManu(QWidget *
 	m_pGooseParaWidget = NULL;
 	m_pFT3OutParaWidget = NULL;
 
+	memset(m_uiVOL, 0, MAX_VOLTAGE_COUNT * sizeof(tmt_channel));
+	memset(m_uiCUR, 0, MAX_VOLTAGE_COUNT * sizeof(tmt_channel));
+
 	m_strParaFileTitle = "通用试验阻抗模板文件";
 	m_strParaFileTitle = g_sLangTxt_componenttest;//"通用序分量试验模板文件";
 	m_strParaFilePostfix = "project(*.mntxml)";
 	m_strDefaultParaFile = _P_GetConfigPath();
-	m_strDefaultParaFile.append("ImpedanceManuTest.mntxml");
+	m_strDefaultParaFile.append("ImpedManualTest.mntxml");
 
 	//先初始化Resource才能设置最大最小值
 	m_pOriginalSttTestResource = g_theTestCntrFrame->GetSttTestResource();
@@ -49,44 +52,46 @@ QSttMacroParaEditViewImpedanceManu::QSttMacroParaEditViewImpedanceManu(QWidget *
 
 	InitIVView();
 	InitParasView();
+	
+	m_pImpedanceManuWidget->SetData(g_oSttTestResourceMngr.m_pTestResouce, m_pManualImpedParas, 0);
+	g_pImpedanceManuTest = this;
 	InitConnect();
 
-	m_pImpedanceManuWidget->SetData(g_oSttTestResourceMngr.m_pTestResouce, m_pManualImpedParas, 0);
-    g_pImpedanceManuTest = this;
 
 	SetDatas(NULL);
 	g_theTestCntrFrame->UpdateButtonStateByID(STT_CNTR_CMD_ManuTriger,false,false);	
+	g_theTestCntrFrame->InitPowerWidget(m_uiVOL,m_uiCUR);
 	setFocusPolicy(Qt::StrongFocus);
 }
 
 void QSttMacroParaEditViewImpedanceManu::InitLanuage()
 {
-	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->m_pbn_Lock, "Manual_Lock", XLang_Ctrls_QPushButton);
-	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->m_pFaultTypeLabel, "Gradient_FailType", XLang_Ctrls_QLabel);
-	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->m_pCalModeLabel, "Impedance_CalMode", XLang_Ctrls_QLabel);
-	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->m_pImpedlabel, "Impedance_Choose", XLang_Ctrls_QLabel);
-	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->m_pDLLabel, "Impedance_ShortCurr", XLang_Ctrls_QLabel);
-	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->m_pTrigDelayLabel, "Impedance_Delayed", XLang_Ctrls_QLabel);
-	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->m_pVarSelecLabel, "Impedance_VarChoose", XLang_Ctrls_QLabel);
-	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->m_pCacuTypeLabel, "Impedance_Mode", XLang_Ctrls_QLabel);
-	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->m_pAmpLabel, "Native_Amplitude", XLang_Ctrls_QLabel);
-	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->m_pAngleLabel, "Native_Angle", XLang_Ctrls_QLabel);
-	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->m_pStartLabel, "Gradient_Init", XLang_Ctrls_QLabel);
-	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->m_pEndLabel, "Gradient_Finish", XLang_Ctrls_QLabel);
-	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->m_pTimeLabel, "Impedance_Time", XLang_Ctrls_QLabel);
-	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->m_pStepLabel, "Gradient_Step", XLang_Ctrls_QLabel);
+	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->ui->m_pLock_PushButton, "Manual_Lock", XLang_Ctrls_QPushButton);
+	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->ui->m_pFaultTypeLabel, "State_FaultType", XLang_Ctrls_QLabel);
+	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->ui->m_pCalModeLabel, "Impedance_CalMode", XLang_Ctrls_QLabel);
+	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->ui->m_pImpedlabel, "Impedance_Choose", XLang_Ctrls_QLabel);
+	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->ui->m_pDLLabel, "Impedance_ShortCurr", XLang_Ctrls_QLabel);
+	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->ui->m_pTrigDelayLabel, "Impedance_Delayed", XLang_Ctrls_QLabel);
+	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->ui->m_pVarSelecLabel, "Impedance_VarChoose", XLang_Ctrls_QLabel);
+	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->ui->m_pCacuTypeLabel, "Impedance_Mode", XLang_Ctrls_QLabel);
+	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->ui->m_pAmpLabel, "Native_Amplitude", XLang_Ctrls_QLabel);
+	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->ui->m_pAngleLabel, "Native_Angle", XLang_Ctrls_QLabel);
+	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->ui->m_pStartLabel, "Gradient_Init", XLang_Ctrls_QLabel);
+	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->ui->m_pEndLabel, "Gradient_Finish", XLang_Ctrls_QLabel);
+	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->ui->m_pTimeLabel, "Impedance_Time", XLang_Ctrls_QLabel);
+	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->ui->m_pStepLabel, "Gradient_Step", XLang_Ctrls_QLabel);
 	//xlang_SetLangStrToWidget(m_pImpedanceManuWidget->m_PrepareTimeLabel, "Native_NormTime", XLang_Ctrls_QLabel);
 	//xlang_SetLangStrToWidget(m_pImpedanceManuWidget->m_PreFaultTimeLabel, "Native_PreFautTime", XLang_Ctrls_QLabel);
-	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->m_pChangeTypeLabel, "Impedance_ChangeType", XLang_Ctrls_QLabel);
+	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->ui->m_pChangeTypeLabel, "Impedance_ChangeType", XLang_Ctrls_QLabel);
 	//xlang_SetLangStrToWidget(m_pImpedanceManuWidget->m_pActTimeLabel, "Gradient_ActionTime", XLang_Ctrls_QLabel);
 
-	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->m_pAuto_CheckBox, "Impedance_Auto", XLang_Ctrls_QCheckBox);
-	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->m_pMutation_CheckBox, "Impedance_Mutation", XLang_Ctrls_QCheckBox);
+	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->ui->m_pAuto_CheckBox, "Impedance_Auto", XLang_Ctrls_QCheckBox);
+	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->ui->m_pMutation_CheckBox, "Impedance_Mutation", XLang_Ctrls_QCheckBox);
 
-	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->m_pBoutGroupBox, "Manual_OutSetting", XLang_Ctrls_QGroupBox);
-	xlang_SetLangStrToWidget_Txt(m_pImpedanceManuWidget->m_pBinarySet_PushButton,g_sLangTxt_Native_Switch,XLang_Ctrls_QPushButton);
+	xlang_SetLangStrToWidget(m_pImpedanceManuWidget->ui->m_pBoutGroupBox, "Manual_OutSetting", XLang_Ctrls_QGroupBox);
+	xlang_SetLangStrToWidget_Txt(m_pImpedanceManuWidget->ui->m_pBinarySet_PushButton,g_sLangTxt_Native_Switch,XLang_Ctrls_QPushButton);
 
-	xlang_SetLangStrToWidget_Txt(m_pImpedanceManuWidget->m_pEstimate_PushButton,g_sLangTxt_State_Estimate,XLang_Ctrls_QPushButton);
+	xlang_SetLangStrToWidget_Txt(m_pImpedanceManuWidget->ui->m_pEstimate_PushButton,g_sLangTxt_State_Estimate,XLang_Ctrls_QPushButton);
 }
 
 QSttMacroParaEditViewImpedanceManu::~QSttMacroParaEditViewImpedanceManu()
@@ -97,7 +102,7 @@ void QSttMacroParaEditViewImpedanceManu::InitUI()
 {
 	m_pImpedanceManuWidget = new QImpedanceManuWidget(this);
 	m_pImpedanceManuWidget->InitUI();
-	setLayout(m_pImpedanceManuWidget->m_pMainGridLayout);
+	setLayout(m_pImpedanceManuWidget->ui->gridLayout);
 }
 
 void QSttMacroParaEditViewImpedanceManu::SendUpdateParameter()
@@ -109,40 +114,40 @@ void QSttMacroParaEditViewImpedanceManu::CopyBinaryConfig(BOOL b)
 {
 	if(b)
 	{
-		g_theTestCntrFrame->GetBinaryConfig()->m_nBinLogic = m_pManualImpedParas->m_nBinLogic;
+		 g_theTestCntrFrame->GetBinaryConfig()->m_nBinLogic = m_pManualImpedParas->m_nBinLogic;
 		for (int i=0;i<MAX_BINARYIN_COUNT;i++){
-			g_theTestCntrFrame->GetBinaryConfig()->m_binIn[i].nSelect = m_pManualImpedParas->m_binIn[i].nSelect;
+			 g_theTestCntrFrame->GetBinaryConfig()->m_binIn[i].nSelect = m_pManualImpedParas->m_binIn[i].nSelect;
 		}
 
 		for (int i=0;i<MAX_BINARYOUT_COUNT;i++){
-			g_theTestCntrFrame->GetBinaryConfig()->m_binOut[i].nState = m_pManualImpedParas->m_binOut[i].nState;
+			 g_theTestCntrFrame->GetBinaryConfig()->m_binOut[i].nState = m_pManualImpedParas->m_binOut[i].nState;
 		}
 
 		for (int i=0;i<MAX_ExBINARY_COUNT;i++){
-			g_theTestCntrFrame->GetBinaryConfig()->m_binInEx[i].nSelect = m_pManualImpedParas->m_binInEx[i].nSelect;
+			 g_theTestCntrFrame->GetBinaryConfig()->m_binInEx[i].nSelect = m_pManualImpedParas->m_binInEx[i].nSelect;
 		}
 
 		for (int i=0;i<MAX_ExBINARY_COUNT;i++){
-			g_theTestCntrFrame->GetBinaryConfig()->m_binOutEx[i].nState = m_pManualImpedParas->m_binOutEx[i].nState;
+			 g_theTestCntrFrame->GetBinaryConfig()->m_binOutEx[i].nState = m_pManualImpedParas->m_binOutEx[i].nState;
 		}
 	}
 	else
 	{
-		m_pManualImpedParas->m_nBinLogic = g_theTestCntrFrame->GetBinaryConfig()->m_nBinLogic;
+		m_pManualImpedParas->m_nBinLogic =  g_theTestCntrFrame->GetBinaryConfig()->m_nBinLogic;
 		for (int i=0;i<MAX_BINARYIN_COUNT;i++){
-			m_pManualImpedParas->m_binIn[i].nSelect = g_theTestCntrFrame->GetBinaryConfig()->m_binIn[i].nSelect;
+			m_pManualImpedParas->m_binIn[i].nSelect =  g_theTestCntrFrame->GetBinaryConfig()->m_binIn[i].nSelect;
 		}
 
 		for (int i=0;i<MAX_BINARYOUT_COUNT;i++){
-			m_pManualImpedParas->m_binOut[i].nState = g_theTestCntrFrame->GetBinaryConfig()->m_binOut[i].nState;
+			m_pManualImpedParas->m_binOut[i].nState =  g_theTestCntrFrame->GetBinaryConfig()->m_binOut[i].nState;
 		}
 
 		for (int i=0;i<MAX_ExBINARY_COUNT;i++){
-			m_pManualImpedParas->m_binInEx[i].nSelect = g_theTestCntrFrame->GetBinaryConfig()->m_binInEx[i].nSelect;
+			m_pManualImpedParas->m_binInEx[i].nSelect =  g_theTestCntrFrame->GetBinaryConfig()->m_binInEx[i].nSelect;
 		}
 
 		for (int i=0;i<MAX_ExBINARY_COUNT;i++){
-			m_pManualImpedParas->m_binOutEx[i].nState = g_theTestCntrFrame->GetBinaryConfig()->m_binOutEx[i].nState;
+			m_pManualImpedParas->m_binOutEx[i].nState =  g_theTestCntrFrame->GetBinaryConfig()->m_binOutEx[i].nState;
 		}
 	}
 }
@@ -150,25 +155,63 @@ void QSttMacroParaEditViewImpedanceManu::CopyBinaryConfig(BOOL b)
 void QSttMacroParaEditViewImpedanceManu::InitConnect()
 {
 	m_pImpedanceManuWidget->InitConnect();
-	connect(m_pImpedanceManuWidget->m_pBinarySet_PushButton, SIGNAL(clicked()), this, SLOT(slot_BinarySetPushButton_clicked()));
-	connect(m_pImpedanceManuWidget->m_pEstimate_PushButton, SIGNAL(clicked()), this, SLOT(slot_EstimatePushButton_clicked()));
+	connect(m_pImpedanceManuWidget->ui->m_pCmb_FaultType,SIGNAL(currentIndexChanged(int)),this,SLOT(slot_CmbErrorTypeIndexChanged(int)));//故障类型
+	connect(m_pImpedanceManuWidget->ui->m_pCmb_CalMode,SIGNAL(currentIndexChanged(int)),this,SLOT(slot_CmbCalModeIndexChanged(int)));//阻抗类型
+	connect(m_pImpedanceManuWidget->ui->m_pCmb_CacuType,SIGNAL(currentIndexChanged(int)),this,SLOT(slot_CmbCacuTypeIndexChanged(int)));//零系补偿模式ko
+	connect(m_pImpedanceManuWidget->ui->m_pCmb_FirstMode,SIGNAL(currentIndexChanged(int)),this,SLOT(slot_CmbFirstModeIndexChanged(int)));
+	connect(m_pImpedanceManuWidget->ui->m_pCmb_SecondMode,SIGNAL(currentIndexChanged(int)),this,SLOT(slot_CmbSecondModeIndexChanged(int)));
+	connect(m_pImpedanceManuWidget->ui->m_pCmb_ChangeType,SIGNAL(currentIndexChanged(int)),this,SLOT(slot_CmbChangeTypeIndexChanged(int)));
+
+	//阻抗输入选择
+	connect(m_pImpedanceManuWidget->ui->m_pRad_Z, SIGNAL(toggled(bool )), this, SLOT(slot_RadioZPhiAndRX_StateChanged()));
+	connect(m_pImpedanceManuWidget->ui->m_pRad_RX, SIGNAL(toggled(bool )), this, SLOT(slot_RadioZPhiAndRX_StateChanged()));
+
+	connect(m_pImpedanceManuWidget->ui->m_pAuto_CheckBox, SIGNAL(stateChanged (int)), this, SLOT(slot_Chb_AutoStateChanged(int)));
+	connect(m_pImpedanceManuWidget->ui->m_pMutation_CheckBox, SIGNAL(stateChanged (int)), this, SLOT(slot_Chb_MutationStateChanged(int)));
+
+	connect(m_pImpedanceManuWidget->ui->m_pBout_CheckBox0, SIGNAL(clicked ()), this, SLOT(slot_ck_Out1StateChanged()));
+	connect(m_pImpedanceManuWidget->ui->m_pBout_CheckBox1, SIGNAL(clicked ()), this, SLOT(slot_ck_Out2StateChanged()));
+	connect(m_pImpedanceManuWidget->ui->m_pBout_CheckBox2, SIGNAL(clicked ()), this, SLOT(slot_ck_Out3StateChanged()));
+	connect(m_pImpedanceManuWidget->ui->m_pBout_CheckBox3, SIGNAL(clicked ()), this, SLOT(slot_ck_Out4StateChanged()));
+
+	connect(m_pImpedanceManuWidget->ui->m_pZEdit,SIGNAL(editingFinished()),this,SLOT(slot_Edit_Changed()));
+	connect(m_pImpedanceManuWidget->ui->m_pPhiEdit,SIGNAL(editingFinished()),this,SLOT(slot_Edit_Changed()));
+	connect(m_pImpedanceManuWidget->ui->m_pREdit,SIGNAL(editingFinished()),this,SLOT(slot_Edit_Changed()));
+	connect(m_pImpedanceManuWidget->ui->m_pXEdit,SIGNAL(editingFinished()),this,SLOT(slot_Edit_Changed()));
+	connect(m_pImpedanceManuWidget->ui->m_pShortIOrZsAmpEdit,SIGNAL(editingFinished()),this,SLOT(slot_Edit_Changed()));
+	connect(m_pImpedanceManuWidget->ui->m_pShortIOrZsAngleEdit,SIGNAL(editingFinished()),this,SLOT(slot_Edit_Changed()));
+	connect(m_pImpedanceManuWidget->ui->m_PrepareTimeEdit,SIGNAL(editingFinished()),this,SLOT(slot_Edit_Changed()));
+	connect(m_pImpedanceManuWidget->ui->m_PreFaultTimeEdit,SIGNAL(editingFinished()),this,SLOT(slot_Edit_Changed()));
+	connect(m_pImpedanceManuWidget->ui->m_pStepEdit,SIGNAL(editingFinished()),this,SLOT(slot_Edit_Changed()));
+	connect(m_pImpedanceManuWidget->ui->m_pStartEdit,SIGNAL(editingFinished()),this,SLOT(slot_Edit_Changed()));
+	connect(m_pImpedanceManuWidget->ui->m_pTimeEdit,SIGNAL(editingFinished()),this,SLOT(slot_Edit_Changed()));
+	connect(m_pImpedanceManuWidget->ui->m_pEndEdit,SIGNAL(editingFinished()),this,SLOT(slot_Edit_Changed()));
+	connect(m_pImpedanceManuWidget->ui->m_pTrigDelayEdit,SIGNAL(editingFinished()),this,SLOT(slot_Edit_Changed()));
+	connect(m_pImpedanceManuWidget->ui->m_pAmpEdit,SIGNAL(editingFinished()),this,SLOT(slot_Edit_Changed()));
+	connect(m_pImpedanceManuWidget->ui->m_pAngleEdit,SIGNAL(editingFinished()),this,SLOT(slot_Edit_Changed()));
+
+	connect(m_pImpedanceManuWidget->ui->m_pbn_Down, SIGNAL(clicked()), this, SLOT(slot_PushButton_clicked()));
+	connect(m_pImpedanceManuWidget->ui->m_pbn_Up, SIGNAL(clicked()), this, SLOT(slot_PushButton_clicked()));
+	connect(m_pImpedanceManuWidget->ui->m_pLock_PushButton, SIGNAL(clicked()), this, SLOT(slot_Lock_PushButton_clicked()));
+	connect(m_pImpedanceManuWidget->ui->m_pBinarySet_PushButton, SIGNAL(clicked()), this, SLOT(slot_BinarySetPushButton_clicked()));
+	connect(m_pImpedanceManuWidget->ui->m_pEstimate_PushButton, SIGNAL(clicked()), this, SLOT(slot_EstimatePushButton_clicked()));
 	connect(this, SIGNAL(sig_updataParas()), this,SLOT(slot_updateParas()));
 }
 
 CSttTestResourceBase* QSttMacroParaEditViewImpedanceManu::CreateTestResource()
 {
-	m_pOriginalSttTestResource = g_theTestCntrFrame->GetSttTestResource();
+	m_pOriginalSttTestResource =  g_theTestCntrFrame->GetSttTestResource();
 	return m_pOriginalSttTestResource;
 }
 
 void QSttMacroParaEditViewImpedanceManu::SerializeTestParas(CSttXmlSerializeBase *pMacroParas, PTMT_PARAS_HEAD pParas,
-									long nVolRsNum,long nCurRsNum,long nBinExNum,long nBoutExNum,BOOL bHasGoosePub)
+															long nVolRsNum,long nCurRsNum,long nBinExNum,long nBoutExNum,BOOL bHasGoosePub)
 {
 	//yzj 2022-2-21 开始测试前要保持该值为0
-	//if(!g_theTestCntrFrame->IsTestStarted())
-	//{
-		//m_pManualImpedParas->m_bBinStop = FALSE;
-	//}
+	if(!g_theTestCntrFrame->IsTestStarted())
+	{
+		m_pManualImpedParas->m_bBinStop = FALSE;
+	}
 
 	tmt_ManualImpedTest *pTmtManualImpedTest = (tmt_ManualImpedTest *)pParas;
 
@@ -198,75 +241,75 @@ void QSttMacroParaEditViewImpedanceManu::OnTestResults(CDataGroup *pResults)
 
 void QSttMacroParaEditViewImpedanceManu::InitBinaryInBinaryOutUI()
 {
-	GlobalSetQcheckState_BinaryOut(m_pImpedanceManuWidget->m_pBout_CheckBox[0],m_pManualImpedParas->m_binOut,0);
-	GlobalSetQcheckState_BinaryOut(m_pImpedanceManuWidget->m_pBout_CheckBox[1],m_pManualImpedParas->m_binOut,1);
-	GlobalSetQcheckState_BinaryOut(m_pImpedanceManuWidget->m_pBout_CheckBox[2],m_pManualImpedParas->m_binOut,2);
-	GlobalSetQcheckState_BinaryOut(m_pImpedanceManuWidget->m_pBout_CheckBox[3],m_pManualImpedParas->m_binOut,3);
+	GlobalSetQcheckState_BinaryOut(m_pImpedanceManuWidget->ui->m_pBout_CheckBox0,m_pManualImpedParas->m_binOut,0);
+	GlobalSetQcheckState_BinaryOut(m_pImpedanceManuWidget->ui->m_pBout_CheckBox1,m_pManualImpedParas->m_binOut,1);
+	GlobalSetQcheckState_BinaryOut(m_pImpedanceManuWidget->ui->m_pBout_CheckBox2,m_pManualImpedParas->m_binOut,2);
+	GlobalSetQcheckState_BinaryOut(m_pImpedanceManuWidget->ui->m_pBout_CheckBox3,m_pManualImpedParas->m_binOut,3);
 }
 
 void QSttMacroParaEditViewImpedanceManu::SetManualOtherParasFont()
 {
-	m_pImpedanceManuWidget->m_pBoutGroupBox->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pFaultTypeLabel->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pCalModeLabel->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pImpedlabel->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pZLabel->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pRXLabel->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pDLLabel->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pVarSelecLabel->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_PrepareTimeLabel->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_PreFaultTimeLabel->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pStepLabel->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pStartLabel->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pTimeLabel->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pEndLabel->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pTrigDelayLabel->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pChangeTypeLabel->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pBoutGroupBox->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pFaultTypeLabel->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pCalModeLabel->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pImpedlabel->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pZLabel->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pRXLabel->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pDLLabel->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pVarSelecLabel->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_PrepareTimeLabel->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_PreFaultTimeLabel->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pStepLabel->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pStartLabel->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pTimeLabel->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pEndLabel->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pTrigDelayLabel->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pChangeTypeLabel->setFont(*g_pSttGlobalFont);
 	//m_pImpedanceManuWidget->m_pActTimeLabel->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pCacuTypeLabel->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pAmpLabel->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pAngleLabel->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pCacuTypeLabel->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pAmpLabel->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pAngleLabel->setFont(*g_pSttGlobalFont);
 
-	m_pImpedanceManuWidget->m_pCmb_CalMode->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pCmb_FaultType->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pCmb_FirstMode->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pCmb_SecondMode->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pCmb_CacuType->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pCmb_ChangeType->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pRad_Z->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pRad_RX->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pAuto_CheckBox->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pMutation_CheckBox->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pCmb_CalMode->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pCmb_FaultType->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pCmb_FirstMode->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pCmb_SecondMode->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pCmb_CacuType->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pCmb_ChangeType->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pRad_Z->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pRad_RX->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pAuto_CheckBox->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pMutation_CheckBox->setFont(*g_pSttGlobalFont);
 
-	m_pImpedanceManuWidget->m_pPhiEdit->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pZEdit->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pXEdit->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pREdit->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pShortIOrZsAmpEdit->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pShortIOrZsAngleEdit->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_PrepareTimeEdit->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_PreFaultTimeEdit->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pStepEdit->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pStartEdit->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pTimeEdit->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pEndEdit->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pTrigDelayEdit->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pPhiEdit->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pZEdit->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pXEdit->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pREdit->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pShortIOrZsAmpEdit->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pShortIOrZsAngleEdit->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_PrepareTimeEdit->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_PreFaultTimeEdit->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pStepEdit->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pStartEdit->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pTimeEdit->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pEndEdit->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pTrigDelayEdit->setFont(*g_pSttGlobalFont);
 	//m_pImpedanceManuWidget->m_pActTimeEdit->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pAmpEdit->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pAngleEdit->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pAmpEdit->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pAngleEdit->setFont(*g_pSttGlobalFont);
 
-	m_pImpedanceManuWidget->m_pBout_CheckBox[0]->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pBout_CheckBox[1]->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pBout_CheckBox[2]->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pBout_CheckBox[3]->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pBout_CheckBox0->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pBout_CheckBox1->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pBout_CheckBox2->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pBout_CheckBox3->setFont(*g_pSttGlobalFont);
 
 	//m_pImpedanceManuWidget->m_pbn_Clear->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pbn_Up->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pbn_Down->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pbn_Lock->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pbn_Up->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pbn_Down->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pLock_PushButton->setFont(*g_pSttGlobalFont);
 
-	m_pImpedanceManuWidget->m_pBinarySet_PushButton->setFont(*g_pSttGlobalFont);
-	m_pImpedanceManuWidget->m_pEstimate_PushButton->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pBinarySet_PushButton->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pEstimate_PushButton->setFont(*g_pSttGlobalFont);
 }
 
 void QSttMacroParaEditViewImpedanceManu::InitOtherParasUI()
@@ -376,23 +419,23 @@ void QSttMacroParaEditViewImpedanceManu::UpdateFT3Tab_UI(CIecCfgDatasSMV* pIecCf
 	else if ((m_pFT3OutParaWidget != NULL)&&(g_oSystemParas.IsDigitalOutputFT3())&&(g_oSttTestResourceMngr.m_nTotalFiberNum_STSend> 0))
 	{
 		if(nFT3Block > 0)
-	{
-		disconnect(m_pFT3OutParaWidget, SIGNAL(sig_FT3DataChanged()), this, SLOT(slot_FT3DataChanged()));
-		m_pFT3OutParaWidget->InitFT3Table(pIecCfgDatasSMV);
-		connect(m_pFT3OutParaWidget, SIGNAL(sig_FT3DataChanged()), this, SLOT(slot_FT3DataChanged()));
-	}
+		{
+			disconnect(m_pFT3OutParaWidget, SIGNAL(sig_FT3DataChanged()), this, SLOT(slot_FT3DataChanged()));
+			m_pFT3OutParaWidget->InitFT3Table(pIecCfgDatasSMV);
+			connect(m_pFT3OutParaWidget, SIGNAL(sig_FT3DataChanged()), this, SLOT(slot_FT3DataChanged()));
+		}
 		else
 		{
 			disconnect(m_pFT3OutParaWidget, SIGNAL(sig_FT3DataChanged()), this, SLOT(slot_FT3DataChanged()));
 			RemoveFT3OutParaWidget();
 		}
-		
+
 	}
 }
 
 void QSttMacroParaEditViewImpedanceManu::slot_GooseDataChanged()
 {
-	if (g_theTestCntrFrame->IsTestStarted())
+	if ( g_theTestCntrFrame->IsTestStarted())
 	{		
 		slot_updateParas();
 	}
@@ -402,7 +445,7 @@ void QSttMacroParaEditViewImpedanceManu::slot_GooseDataChanged()
 
 void QSttMacroParaEditViewImpedanceManu::slot_FT3DataChanged()
 {
-	if (g_theTestCntrFrame->IsTestStarted())
+	if ( g_theTestCntrFrame->IsTestStarted())
 	{		
 		slot_updateParas();
 	}
@@ -418,7 +461,7 @@ void QSttMacroParaEditViewImpedanceManu::UpdateBinBoutExTab()
 void QSttMacroParaEditViewImpedanceManu::UpdateManualParas()
 {
 	m_pImpedanceManuWidget->UpdateData();
-	
+
 	UpdateBinBoutExTab();
 	UpdateGoutTab();
 	UpdateFT3Tab();
@@ -431,13 +474,13 @@ void QSttMacroParaEditViewImpedanceManu::ClearResult(PTMT_PARAS_HEAD pHead)
 
 void QSttMacroParaEditViewImpedanceManu::InitStyle()
 {
-	((QSttCheckBox*)m_pImpedanceManuWidget->m_pAuto_CheckBox)->InitStyleSheet();
-	((QSttCheckBox*)m_pImpedanceManuWidget->m_pMutation_CheckBox)->InitStyleSheet();
-	((QSttCheckBox*)m_pImpedanceManuWidget->m_pBout_CheckBox[0])->InitStyleSheet();
-	((QSttCheckBox*)m_pImpedanceManuWidget->m_pBout_CheckBox[1])->InitStyleSheet();
-	((QSttCheckBox*)m_pImpedanceManuWidget->m_pBout_CheckBox[2])->InitStyleSheet();
-	((QSttCheckBox*)m_pImpedanceManuWidget->m_pBout_CheckBox[3])->InitStyleSheet();
-	((QSttTabWidget*)m_pImpedanceManuWidget->m_pImpedanceManuTab)->InitStyleSheet();
+	((QSttCheckBox*)m_pImpedanceManuWidget->ui->m_pAuto_CheckBox)->InitStyleSheet();
+	((QSttCheckBox*)m_pImpedanceManuWidget->ui->m_pMutation_CheckBox)->InitStyleSheet();
+	((QSttCheckBox*)m_pImpedanceManuWidget->ui->m_pBout_CheckBox0)->InitStyleSheet();
+	((QSttCheckBox*)m_pImpedanceManuWidget->ui->m_pBout_CheckBox1)->InitStyleSheet();
+	((QSttCheckBox*)m_pImpedanceManuWidget->ui->m_pBout_CheckBox2)->InitStyleSheet();
+	((QSttCheckBox*)m_pImpedanceManuWidget->ui->m_pBout_CheckBox3)->InitStyleSheet();
+	((QSttTabWidget*)m_pImpedanceManuWidget->ui->m_pImpedanceManuTab)->InitStyleSheet();
 }
 
 void QSttMacroParaEditViewImpedanceManu::InitParasView()
@@ -451,14 +494,14 @@ void QSttMacroParaEditViewImpedanceManu::InitParasView()
 void QSttMacroParaEditViewImpedanceManu::InitIVView()
 {  
 	setFont(*g_pSttGlobalFont);
- 	m_pImpedanceManuWidget->m_pImpedanceManuTab->setFont(*g_pSttGlobalFont);
+	m_pImpedanceManuWidget->ui->m_pImpedanceManuTab->setFont(*g_pSttGlobalFont);
 }
 
 void QSttMacroParaEditViewImpedanceManu::slot_SwitchStateChanged()
 {
 	m_pImpedanceManuWidget->UpdateData();//更新开出量状态
 
-	if (g_theTestCntrFrame->IsTestStarted() && !m_pManualImpedParas->m_bLockChanged)
+	if ( g_theTestCntrFrame->IsTestStarted() && !m_pManualImpedParas->m_bLockChanged)
 	{
 		SendUpdateParameter();
 	}
@@ -494,24 +537,24 @@ void QSttMacroParaEditViewImpedanceManu::OnViewTestStart()
 	}
 
 	g_oSttTestResourceMngr.m_oRtDataMngr.m_pMacroChannels->ClearHisDatas();
-	g_theTestCntrFrame->ClearInfoWidget();
+	 g_theTestCntrFrame->ClearInfoWidget();
 	m_pImpedanceManuWidget->StartInit();
 
-	if(m_pImpedanceManuWidget->m_pAuto_CheckBox->isChecked() && m_pGooseParaWidget)
+	if(m_pImpedanceManuWidget->ui->m_pAuto_CheckBox->isChecked() && m_pGooseParaWidget)
 	{
 		m_pGooseParaWidget->setDisabled(true);
 	}
 
-	if(m_pImpedanceManuWidget->m_pAuto_CheckBox->isChecked() && m_pFT3OutParaWidget)
+	if(m_pImpedanceManuWidget->ui->m_pAuto_CheckBox->isChecked() && m_pFT3OutParaWidget)
 	{
 		m_pFT3OutParaWidget->setDisabled(true);
 	}
 
-	g_theTestCntrFrame->StartStateMonitor();
-	g_theTestCntrFrame->StartVectorWidget();
-	g_theTestCntrFrame->StartPowerWidget();
+	 g_theTestCntrFrame->StartStateMonitor();
+	 g_theTestCntrFrame->StartVectorWidget();
+	 g_theTestCntrFrame->StartPowerWidget();
 
-	g_theTestCntrFrame->EnableManualTriggerButton(false);
+	 g_theTestCntrFrame->EnableManualTriggerButton(false);
 }
 
 void QSttMacroParaEditViewImpedanceManu::OnViewTestStop()
@@ -526,7 +569,7 @@ void QSttMacroParaEditViewImpedanceManu::OnViewTestStop()
 		m_pFT3OutParaWidget->SetRunState(STT_UI_RUN_STATE_Stoped);
 		m_pFT3OutParaWidget->SetGooseDisabled(FALSE);
 	}
-	
+
 	m_pImpedanceManuWidget->StopInit();
 	if(m_pGooseParaWidget)
 	{
@@ -537,15 +580,301 @@ void QSttMacroParaEditViewImpedanceManu::OnViewTestStop()
 	{
 		m_pFT3OutParaWidget->setDisabled(false);
 	}
-	g_theTestCntrFrame->StopStateMonitor();
-	g_theTestCntrFrame->StopVectorWidget(false);//20220628 zhouhj 暂时改为不更新界面参数,防止界面参数被修改为0
-	g_theTestCntrFrame->StopPowerWidget(false);
+	 g_theTestCntrFrame->StopStateMonitor();
+	 g_theTestCntrFrame->StopVectorWidget(false);//20220628 zhouhj 暂时改为不更新界面参数,防止界面参数被修改为0
+	 g_theTestCntrFrame->StopPowerWidget(false);
 
-	m_pImpedanceManuWidget->m_pBoutGroupBox->setEnabled(true);
-	m_pImpedanceManuWidget->m_pBinarySet_PushButton->setEnabled(true);
-	m_pImpedanceManuWidget->m_pEstimate_PushButton->setEnabled(true);
+	m_pImpedanceManuWidget->ui->m_pBoutGroupBox->setEnabled(true);
+	m_pImpedanceManuWidget->ui->m_pBinarySet_PushButton->setEnabled(true);
+	m_pImpedanceManuWidget->ui->m_pEstimate_PushButton->setEnabled(true);
 }
 
+void QSttMacroParaEditViewImpedanceManu::slot_Lock_PushButton_clicked()
+{
+	m_pImpedanceManuWidget->slot_pbn_LockClicked();
+
+	if (g_theTestCntrFrame->IsTestStarted() && (!m_pManualImpedParas->m_bLockChanged))  //解锁状态
+	{
+		SendUpdateParameter();
+	}
+
+	SetParaChanged();
+}
+
+void QSttMacroParaEditViewImpedanceManu::slot_PushButton_clicked()
+{
+	if(m_bIsChanging)
+	{
+		return;
+	}
+
+	SetParaChanged();
+
+	emit sig_updataParas();
+}
+
+void QSttMacroParaEditViewImpedanceManu::slot_Edit_Changed()
+{
+	SetParaChanged();
+	emit sig_updataParas();
+}
+
+void QSttMacroParaEditViewImpedanceManu::slot_CmbErrorTypeIndexChanged(int index)
+{
+	if(m_pImpedanceManuWidget->ui->m_pCmb_FaultType->IsScrolling())
+	{
+		return;
+	}	
+	if (index == -1)
+	{
+		return;
+	}
+
+
+	m_pImpedanceManuWidget->slot_CmbErrorTypeIndexChanged(index);
+	CalPhaseValues();
+	slot_Edit_Changed();
+
+	SetParaChanged();
+}
+
+void QSttMacroParaEditViewImpedanceManu::slot_CmbCalModeIndexChanged(int index)
+{
+	if(m_pImpedanceManuWidget->ui->m_pCmb_CalMode->IsScrolling())
+	{
+		return;
+	}	
+
+	if (index == -1)
+	{
+		return;
+	}
+
+	m_pImpedanceManuWidget->slot_CmbCalModeIndexChanged(index);
+	CalPhaseValues();
+	slot_Edit_Changed();
+	SetParaChanged();
+}
+
+void QSttMacroParaEditViewImpedanceManu::slot_CmbCacuTypeIndexChanged(int index)
+{
+	if(m_pImpedanceManuWidget->ui->m_pCmb_CacuType->IsScrolling())
+	{
+		return;
+	}	
+
+	if (index == -1)
+	{
+		return;
+	}
+
+	m_pImpedanceManuWidget->slot_CmbCacuTypeIndexChanged(index);
+	CalPhaseValues();
+	slot_Edit_Changed();
+	SetParaChanged();
+}
+
+void QSttMacroParaEditViewImpedanceManu::slot_CmbFirstModeIndexChanged(int index)
+{
+	if(m_pImpedanceManuWidget->ui->m_pCmb_FirstMode->IsScrolling())
+	{
+		return;
+	}	
+
+	m_pImpedanceManuWidget->slot_CmbFirstModeIndexChanged(index);
+	SetParaChanged();
+}
+
+
+void QSttMacroParaEditViewImpedanceManu::slot_CmbSecondModeIndexChanged(int index)
+{
+	if(m_pImpedanceManuWidget->ui->m_pCmb_SecondMode->IsScrolling())
+	{
+		return;
+	}	
+
+	m_pImpedanceManuWidget->slot_CmbSecondModeIndexChanged(index);
+	SetParaChanged();
+}
+
+void QSttMacroParaEditViewImpedanceManu::slot_CmbChangeTypeIndexChanged(int index)
+{
+	if(m_pImpedanceManuWidget->ui->m_pCmb_ChangeType->IsScrolling())
+	{
+		return;
+	}	
+
+	m_pImpedanceManuWidget->slot_CmbChangeTypeIndexChanged(index);
+	SetParaChanged();
+}
+
+void QSttMacroParaEditViewImpedanceManu::slot_RadioZPhiAndRX_StateChanged()
+{
+	m_pImpedanceManuWidget->slot_RadioZPhiAndRX_StateChanged();
+	SetParaChanged();
+}
+
+
+
+void QSttMacroParaEditViewImpedanceManu::CalPhaseValues() 
+{
+
+	Complex p1,p2;
+	float m_fImax = 5000;
+	float m_fVmax = 5000000;
+	float m_fVnom = g_oSystemParas.m_fVNom/SQRT3;
+	int nPhaseRef[11]={1,2,0,2,0,1,2,0,1,0,0};
+	if(m_pManualImpedParas->m_fSCVoltage<0.0)m_pManualImpedParas->m_fSCVoltage=0.0;
+	if(m_pManualImpedParas->m_fSCVoltage>m_fVmax)m_pManualImpedParas->m_fSCVoltage=m_fVmax;
+
+	if(m_pManualImpedParas->m_fSCCurrent<0.0)m_pManualImpedParas->m_fSCCurrent=0.0;
+	if(m_pManualImpedParas->m_fSCCurrent>m_fImax)m_pManualImpedParas->m_fSCCurrent=m_fImax;
+	m_pImpedanceManuWidget->OnRXValue();
+
+	CFaultCalculat m_FaultCalculat;
+	Complex m_fVa=p1.polar(m_fVnom,0.0);
+	Complex m_fVb=p1.polar(m_fVnom,-120.0);
+	Complex m_fVc=p1.polar(m_fVnom,120.0);
+	Complex m_fIa=p1.polar(0,0.0);
+	Complex m_fIb=p1.polar(0,-120.0);
+	Complex m_fIc=p1.polar(0,120.0);
+
+	float nAngle[11] = {p1.arg(m_fVb),p1.arg(m_fVc),p1.arg(m_fVa),p1.arg(m_fVc),p1.arg(m_fVa),p1.arg(m_fVb),p1.arg(m_fVc),p1.arg(m_fVa),p1.arg(m_fVb),p1.arg(m_fVa),p1.arg(m_fVa)};
+
+	float m_fKr = m_pManualImpedParas->m_fAmplitudeOrKr;
+	float m_fKx = m_pManualImpedParas->m_fPhaseOrKx;
+	float m_fPhi = m_pManualImpedParas->m_fZAngle;
+	float m_fZ = m_pManualImpedParas->m_fZAmp;
+	float m_fZSZL = fabs(m_pManualImpedParas->m_fSZSAmp/m_pManualImpedParas->m_fSZSAngle);
+	p1=m_FaultCalculat.GroundFactor(m_pManualImpedParas->m_nOffsetsMode,m_fKr,m_fKx,m_fPhi);
+	float m_fK0l=p2.norm(p1);
+	float m_fK0lPh=p2.arg(p1);
+	Complex fV1,fV2,fV3,fI1,fI2,fI3;
+	double fIt,fVt;
+	float fValueFactor;
+
+	fIt=m_pManualImpedParas->m_fSCCurrent;
+	fVt=m_pManualImpedParas->m_fSCVoltage;
+	m_FaultCalculat.Calculat(1.0, 1, 1, m_pManualImpedParas->m_nCalMode, m_pManualImpedParas->m_nFaultType,
+		nPhaseRef[m_pManualImpedParas->m_nFaultType],nAngle[m_pManualImpedParas->m_nFaultType],
+		m_fVmax,m_fVnom,m_fImax,
+		&fIt,&fVt,
+		p1.polar(0,0),
+		p1.polar(m_fZ,m_fPhi),p1.polar(m_fK0l,m_fK0lPh),
+		p1.polar(m_fZ*m_fZSZL,m_fPhi),
+		p1.polar(m_fK0l,m_fK0lPh),
+		&fV1,&fV2,&fV3,&fI1,&fI2,&fI3);
+	m_fVa=fV1;
+	m_fVb=fV2;
+	m_fVc=fV3;
+	m_fIa=fI1;
+	m_fIb=fI2;
+	m_fIc=fI3;
+	m_pManualImpedParas->m_fSCCurrent=fIt;
+	m_pManualImpedParas->m_fSCVoltage=fVt;
+
+	QList<tmt_Channel> CHUList;
+	QList<tmt_Channel> CHIList;
+	tmt_Channel channelPara;
+
+	float fAcVMax = g_oLocalSysPara.m_fAC_VolMax;
+	float fAcIMax = g_oLocalSysPara.m_fAC_CurMax;
+
+	Complex p11;
+
+	m_pManualImpedParas->m_uiCUR[0].Harm[1].fAmp = (p11.norm(m_fIa) > fAcIMax)? fAcIMax:p11.norm(m_fIa);
+	m_pManualImpedParas->m_uiCUR[1].Harm[1].fAmp = (p11.norm(m_fIb) > fAcIMax)? fAcIMax:p11.norm(m_fIb);
+	m_pManualImpedParas->m_uiCUR[2].Harm[1].fAmp = (p11.norm(m_fIc) > fAcIMax)? fAcIMax:p11.norm(m_fIc);
+	m_pManualImpedParas->m_uiCUR[0].Harm[1].fAngle = p11.arg(m_fIa);
+	m_pManualImpedParas->m_uiCUR[1].Harm[1].fAngle = p11.arg(m_fIb);
+	m_pManualImpedParas->m_uiCUR[2].Harm[1].fAngle = p11.arg(m_fIc);
+
+	m_pManualImpedParas->m_uiVOL[0].Harm[1].fAmp  = (p11.norm(m_fVa) > fAcVMax)? fAcVMax:p11.norm(m_fVa);
+	m_pManualImpedParas->m_uiVOL[1].Harm[1].fAmp  = (p11.norm(m_fVb) > fAcVMax)? fAcVMax:p11.norm(m_fVb);
+	m_pManualImpedParas->m_uiVOL[2].Harm[1].fAmp  = (p11.norm(m_fVc) > fAcVMax)? fAcVMax:p11.norm(m_fVc);
+	m_pManualImpedParas->m_uiVOL[0].Harm[1].fAngle = p11.arg(m_fVa);
+	m_pManualImpedParas->m_uiVOL[1].Harm[1].fAngle = p11.arg(m_fVb);
+	m_pManualImpedParas->m_uiVOL[2].Harm[1].fAngle = p11.arg(m_fVc);
+
+
+
+
+}
+
+
+void QSttMacroParaEditViewImpedanceManu::slot_Chb_AutoStateChanged(int index)
+{
+	m_pImpedanceManuWidget->slot_Chb_AutoStateChanged(index);
+	SetParaChanged();
+}
+
+void QSttMacroParaEditViewImpedanceManu::slot_Chb_MutationStateChanged(int index)
+{
+	m_pImpedanceManuWidget->slot_Chb_MutationStateChanged(index);
+	SetParaChanged();
+}
+
+void QSttMacroParaEditViewImpedanceManu::slot_ck_Out1StateChanged()
+{
+	m_pImpedanceManuWidget->slot_ck_Out1StateChanged();
+	slot_SwitchStateChanged();
+}
+
+void QSttMacroParaEditViewImpedanceManu::slot_ck_Out2StateChanged()
+{
+	m_pImpedanceManuWidget->slot_ck_Out2StateChanged();
+	slot_SwitchStateChanged();
+}
+
+void QSttMacroParaEditViewImpedanceManu::slot_ck_Out3StateChanged()
+{
+	m_pImpedanceManuWidget->slot_ck_Out3StateChanged();
+	slot_SwitchStateChanged();
+}
+
+void QSttMacroParaEditViewImpedanceManu::slot_ck_Out4StateChanged()
+{
+	m_pImpedanceManuWidget->slot_ck_Out4StateChanged();
+	slot_SwitchStateChanged();
+}
+
+CString QSttMacroParaEditViewImpedanceManu::GetMacroTestResultUnit()
+{
+	if (m_pImpedanceManuWidget == NULL)
+	{
+		return _T("");
+	}
+
+	long nUnitType = m_pImpedanceManuWidget->ui->m_pCmb_SecondMode->currentIndex();
+
+	CString strUnit;
+
+	switch (nUnitType)
+	{
+	case amplitude_type:
+		if (m_pImpedanceManuWidget->ui->m_pCmb_FirstMode->currentText() ==/*"短路电流"*/g_sLangTxt_Native_ShortCircuit)
+		{
+			strUnit = _T("A");
+		}
+		else if (m_pImpedanceManuWidget->ui->m_pCmb_FirstMode->currentText() ==/*"短路电压"*/g_sLangTxt_Native_ShortCircuitV)
+		{
+			strUnit = _T("V");
+		}
+		else
+		{
+			strUnit = /*_T("Ω")*/g_sLangTxt_AxisUnitOmega;
+		}
+		break;
+	case phasor_type:
+		strUnit = /*_T("°")*/g_sLangTxt_AxisUnitAng;	
+		break;
+	default:
+		strUnit = "";
+		break;
+	}
+	return strUnit;
+
+}
 void QSttMacroParaEditViewImpedanceManu::slot_updateParas()
 {
 	if (g_theTestCntrFrame->IsTestStarted() && (!m_pManualImpedParas->m_bLockChanged))  //解锁状态
@@ -553,10 +882,12 @@ void QSttMacroParaEditViewImpedanceManu::slot_updateParas()
 		SendUpdateParameter();
 	}
 
+	CalPhaseValues();
 	g_theTestCntrFrame->UpdateVectorData();
 	g_theTestCntrFrame->UpdatePowerData();
-	
+
 	SetParaChanged();
+
 }                        
 
 void QSttMacroParaEditViewImpedanceManu::ShowReport(CDvmValues *pValues)
@@ -593,7 +924,7 @@ CString QSttMacroParaEditViewImpedanceManu::GetDefaultParaFile()
 {
 	CString strFile;
 	strFile = _P_GetConfigPath();
-	strFile += STT_ORG_MACRO_ImpedanceManuTest;
+	strFile += STT_ORG_MACRO_ImpedManualTest;
 	strFile += _T(".");
 	strFile += "mntxml";
 
@@ -623,6 +954,15 @@ void QSttMacroParaEditViewImpedanceManu::GetDatas(CDataGroup *pParas)
 //判断使用的keyboard类型
 //void QSttMacroParaEditViewImpedanceManu::slot_edit_changed(QSttLineEdit* pEditLine, bool bIsNor)
 //{
+
+////20240802 gongyiping 
+//if (pEditLine->inherits(STT_SETTING_LINEEDIT_ClassID/*"QSettingEdit"*/))
+//{
+//	if (((QSettingLineEdit*)pEditLine)->IsSetting())
+//	{
+//		return;
+//	}
+//}
 //	if (pEditLine->text().isEmpty())
 //	{
 //		pEditLine->setText("0.0");
@@ -630,33 +970,33 @@ void QSttMacroParaEditViewImpedanceManu::GetDatas(CDataGroup *pParas)
 //
 //	QString str = pEditLine->text();
 
-	//if(bIsNor == FALSE)
-	//{
-	//	QString strVar = m_pSequenceManualWidget->m_pChSelect_ComboBox->currentText();
-	//	int nIdx = m_pSequenceManualWidget->m_pChGradientType_ComboBox->currentIndex();
-	//	switch(nIdx)
-	//	{
-	//	case 0: 
-	//		if(strVar.contains("U"))
-	//		{
-	//			GetWidgetBoard_DigitData(0,str,pEditLine,this);
-	//		}
-	//		else
-	//		{
-	//			GetWidgetBoard_DigitData(1,str,pEditLine,this);
-	//		}
-	//		break;
-	//	case 1: GetWidgetBoard_DigitData(2,str,pEditLine,this); break;
-	//	case 2: GetWidgetBoard_DigitData(3,str,pEditLine,this); break;
-	//	default:
-	//		break;
-	//	}
+//if(bIsNor == FALSE)
+//{
+//	QString strVar = m_pSequenceManualWidget->m_pChSelect_ComboBox->currentText();
+//	int nIdx = m_pSequenceManualWidget->m_pChGradientType_ComboBox->currentIndex();
+//	switch(nIdx)
+//	{
+//	case 0: 
+//		if(strVar.contains("U"))
+//		{
+//			GetWidgetBoard_DigitData(0,str,pEditLine,this);
+//		}
+//		else
+//		{
+//			GetWidgetBoard_DigitData(1,str,pEditLine,this);
+//		}
+//		break;
+//	case 1: GetWidgetBoard_DigitData(2,str,pEditLine,this); break;
+//	case 2: GetWidgetBoard_DigitData(3,str,pEditLine,this); break;
+//	default:
+//		break;
+//	}
 
-	//}
-	//else
-	//{
-		//GetWidgetBoard_DigitData(4,str,pEditLine,this);
-	//}
+//}
+//else
+//{
+//GetWidgetBoard_DigitData(4,str,pEditLine,this);
+//}
 //}
 
 void QSttMacroParaEditViewImpedanceManu::AddGooseParaWidget(CIecCfgGoutDatas* pCfgGoutDatas)
@@ -668,9 +1008,9 @@ void QSttMacroParaEditViewImpedanceManu::AddGooseParaWidget(CIecCfgGoutDatas* pC
 
 	m_pGooseParaWidget = new QGooseParaWidget(pCfgGoutDatas,TRUE);
 	int nInsertPos = 2;
-    CString strTitle;
+	CString strTitle;
 	xlang_GetLangStrByFile(strTitle,"Native_GooseDataSet");
-	m_pImpedanceManuWidget->m_pImpedanceManuTab->insertTab(nInsertPos,m_pGooseParaWidget,strTitle);
+	m_pImpedanceManuWidget->ui->m_pImpedanceManuTab->insertTab(nInsertPos,m_pGooseParaWidget,strTitle);
 }
 
 void QSttMacroParaEditViewImpedanceManu::AddFT3OutParaWidget(CIecCfgDatasSMV* pIecCfgDatasSMV)
@@ -682,10 +1022,10 @@ void QSttMacroParaEditViewImpedanceManu::AddFT3OutParaWidget(CIecCfgDatasSMV* pI
 
 	m_pFT3OutParaWidget = new QFT3OutParaWidget(pIecCfgDatasSMV,TRUE);
 	int nInsertPos = 3;
-	
+
 	CString strTitle;
 	strTitle=_T("FT3发布");
-	m_pImpedanceManuWidget->m_pImpedanceManuTab->insertTab(nInsertPos,m_pFT3OutParaWidget,strTitle);
+	m_pImpedanceManuWidget->ui->m_pImpedanceManuTab->insertTab(nInsertPos,m_pFT3OutParaWidget,strTitle);
 }
 
 void QSttMacroParaEditViewImpedanceManu::RemoveGooseParaWidget()
@@ -695,8 +1035,8 @@ void QSttMacroParaEditViewImpedanceManu::RemoveGooseParaWidget()
 		return;
 	}
 
-	int nIndex = m_pImpedanceManuWidget->m_pImpedanceManuTab->indexOf(m_pGooseParaWidget);
-	m_pImpedanceManuWidget->m_pImpedanceManuTab->removeTab(nIndex);
+	int nIndex = m_pImpedanceManuWidget->ui->m_pImpedanceManuTab->indexOf(m_pGooseParaWidget);
+	m_pImpedanceManuWidget->ui->m_pImpedanceManuTab->removeTab(nIndex);
 
 	delete m_pGooseParaWidget;
 	m_pGooseParaWidget = NULL;
@@ -709,8 +1049,8 @@ void QSttMacroParaEditViewImpedanceManu::RemoveFT3OutParaWidget()
 		return;
 	}
 
-	int nIndex = m_pImpedanceManuWidget->m_pImpedanceManuTab->indexOf(m_pFT3OutParaWidget);
-	m_pImpedanceManuWidget->m_pImpedanceManuTab->removeTab(nIndex);
+	int nIndex = m_pImpedanceManuWidget->ui->m_pImpedanceManuTab->indexOf(m_pFT3OutParaWidget);
+	m_pImpedanceManuWidget->ui->m_pImpedanceManuTab->removeTab(nIndex);
 
 	delete m_pFT3OutParaWidget;
 	m_pFT3OutParaWidget = NULL;
@@ -718,13 +1058,13 @@ void QSttMacroParaEditViewImpedanceManu::RemoveFT3OutParaWidget()
 
 bool QSttMacroParaEditViewImpedanceManu::ExistGooseParaWidget()
 {
-	int nIndex = m_pImpedanceManuWidget->m_pImpedanceManuTab->indexOf(m_pGooseParaWidget);
+	int nIndex = m_pImpedanceManuWidget->ui->m_pImpedanceManuTab->indexOf(m_pGooseParaWidget);
 	return (nIndex>=0);
 }
 
 bool QSttMacroParaEditViewImpedanceManu::ExistFT3OutParaWidget()
 {
-	int nIndex = m_pImpedanceManuWidget->m_pImpedanceManuTab->indexOf(m_pFT3OutParaWidget);
+	int nIndex = m_pImpedanceManuWidget->ui->m_pImpedanceManuTab->indexOf(m_pFT3OutParaWidget);
 	return (nIndex>=0);
 }
 
@@ -732,7 +1072,7 @@ void QSttMacroParaEditViewImpedanceManu::EnableGooseParaWidget(bool b)
 {
 	if (ExistGooseParaWidget())
 	{
-		m_pImpedanceManuWidget->m_pImpedanceManuTab->setTabEnabled(m_pImpedanceManuWidget->m_pImpedanceManuTab->indexOf(m_pGooseParaWidget),b);
+		m_pImpedanceManuWidget->ui->m_pImpedanceManuTab->setTabEnabled(m_pImpedanceManuWidget->ui->m_pImpedanceManuTab->indexOf(m_pGooseParaWidget),b);
 	}
 }
 
@@ -740,7 +1080,7 @@ void QSttMacroParaEditViewImpedanceManu::EnableFT3OutParaWidget(bool b)
 {
 	if (ExistFT3OutParaWidget())
 	{
-		m_pImpedanceManuWidget->m_pImpedanceManuTab->setTabEnabled(m_pImpedanceManuWidget->m_pImpedanceManuTab->indexOf(m_pFT3OutParaWidget),b);
+		m_pImpedanceManuWidget->ui->m_pImpedanceManuTab->setTabEnabled(m_pImpedanceManuWidget->ui->m_pImpedanceManuTab->indexOf(m_pFT3OutParaWidget),b);
 	}
 }
 
@@ -750,13 +1090,15 @@ void QSttMacroParaEditViewImpedanceManu::SetDatas(CDataGroup *pDataset)
 	{
 		CSttDataGroupSerializeRead oRead(pDataset);
 		stt_xml_serialize(m_pManualImpedParas, &oRead);
+		ReadModeDataSaveMaps(&oRead);	//20240913 huangliang 保存模板中定值关联关系
 	}
 	g_theTestCntrFrame->InitVectorWidget(m_pManualImpedParas->m_uiVOL,m_pManualImpedParas->m_uiCUR);
 	g_theTestCntrFrame->InitPowerWidget(m_pManualImpedParas->m_uiVOL,m_pManualImpedParas->m_uiCUR);
-    g_theTestCntrFrame->InitStateMonitor();
-    g_theTestCntrFrame->ClearInfoWidget();
+	g_theTestCntrFrame->InitStateMonitor();
+	g_theTestCntrFrame->ClearInfoWidget();
 
-    UpdateManualParas();
+	CalPhaseValues();
+	UpdateManualParas();
 }
 
 void QSttMacroParaEditViewImpedanceManu::slot_BinarySetPushButton_clicked()
@@ -768,11 +1110,14 @@ void QSttMacroParaEditViewImpedanceManu::slot_BinarySetPushButton_clicked()
 	oManualBinBoutDlg.setWindowModality(Qt::WindowModal);//模态窗口
 	oManualBinBoutDlg.DelayedSetVisible();
 	//m_pImpedanceManuWidget->m_pTrigDelayEdit->setText(QString::number(m_pManualImpedParas->m_manuImpedGradient.fTrigDelay,'f',3)+"S");
-	
+
 #ifdef _USE_SoftKeyBoard_
 	QSoftKeyBoard::AttachObj(&oManualBinBoutDlg);
 #endif
-	oManualBinBoutDlg.exec();
+	if (oManualBinBoutDlg.exec() == QDialog::Accepted)
+	{
+		emit sig_updataParas();
+	}
 #ifdef _USE_SoftKeyBoard_ 
 	QSoftKeyBoard::ReAttachObj();
 #endif

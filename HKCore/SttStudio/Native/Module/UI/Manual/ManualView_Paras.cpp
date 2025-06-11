@@ -1,11 +1,12 @@
 //#include "stdafx.h"
 #include "ManualView_Paras.h"
-#include "../Module/XLangResource_Native.h"
+#include "../../../Module/XLangResource_Native.h"
 #include "../Module/CommonMethod/commonMethod.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "SttMacroParaEditViewManual.h"
 //#include "QSttManualBinBoutDlg.h"
 #include "../SttTestCntrFrameBase.h"
+#include "../../SttTest/Common/PrimFreq/tmt_prim_freq_manu_test.h"
 
 QManualView_Paras::QManualView_Paras()
 {
@@ -40,12 +41,36 @@ QManualView_Paras::QManualView_Paras()
 	m_pCbInJ = 0;*/
 //	m_pBtnAnd = 0;
 //	m_pBtnOr = 0;
+	m_pComboBoxHarm = NULL;
 
     m_pCbOld = 0;
     m_pCbAuto = 0;
     m_pCbDC = 0;
 	m_nChanneType = 0;
 	m_nUnitType = 0;
+	m_nParaSetSecondValue = 1;
+
+	m_pGrpPulseSignal = NULL;
+	m_pChkPulseEnable = NULL;
+	m_pLblPulseType = NULL;
+	m_pCbbPulseType = NULL;
+	m_pLblPulseWidth = NULL;
+	m_pEditPulseWidth = NULL;
+	m_pLblPeakValue = NULL;
+	m_pCbbPeakValue = NULL;
+	m_pLblPulseFreq = NULL;
+	m_pEditPulseFreq = NULL;
+	m_pDcLayout = NULL;
+	m_pGrpDcSignal = NULL;
+	m_pChkDcEnable = NULL;
+	m_pLblDc1 = NULL;
+	m_pCbbDcChangeType = NULL;
+	m_pEditDcChangeValue = NULL;
+
+	m_pLblDc2 = NULL;
+	m_pEditDc2 = NULL;
+	m_pEditDc1 = NULL;
+	m_pBtnMapping = NULL;
 }
 
 QManualView_Paras::~QManualView_Paras()
@@ -77,8 +102,8 @@ void QManualView_Paras::Init()
 	m_pBtnMinus->setDisabled(true);
 	m_pBtnLock->setDisabled(true);
 //	m_pCheckBoxHarm->setDisabled(false);
-	m_pComboBoxHarm->setDisabled(true);
-	m_pComboBoxHarm->setFixedWidth(120);
+	if(m_pComboBoxHarm)m_pComboBoxHarm->setDisabled(true);
+	if(m_pComboBoxHarm)m_pComboBoxHarm->setFixedWidth(120);
 
 #ifdef _PSX_QT_WINDOWS_
 	CString strImagePath = _P_GetResourcePath();
@@ -91,7 +116,7 @@ void QManualView_Paras::Init()
 	strImagePath = ":/ctrls/images/Unlock.png";
 	m_imgUnlock.addFile(strImagePath);
 #endif
-
+	
 	m_pBtnLock->setIcon(m_imgUnlock);
 	m_pBtnLock->setIconSize(QSize(m_pBtnAdd->height(), m_pBtnAdd->height()));
 	//2023/10/8 wjs 取消对lock按钮的固定大小
@@ -101,6 +126,10 @@ void QManualView_Paras::Init()
 
 void QManualView_Paras::InitHarmCombox()
 {
+	if(m_pComboBoxHarm == NULL)
+	{
+		return;
+	}
 	m_pComboBoxHarm->clear();
 	CString strHarmDesc,strID;
 	strHarmDesc = /*"次谐波"*/g_sLangTxt_State_HarmCount; //lcq
@@ -233,6 +262,29 @@ void QManualView_Paras::SetUnitType (int index)
     CString strTemp;
 	xlang_GetLangStrByFile(strTemp, "Manual_Step");
 	m_pLabStep->setText(strTemp.mid(0, m_pLabStep->text().lastIndexOf("(") + 1) + strText + "):");
+
+	switch(index)
+	{
+	case 0: 
+		if(m_nChanneType)
+		{
+			strText = "A"; 
+		}
+		else
+		{
+			if (m_nParaSetSecondValue == 0)
+			{
+				strText = "kV"; 
+			}
+			else
+			{
+				strText = "V"; 
+			}
+		}
+		break;
+	}
+
+
 	xlang_GetLangStrByFile(strTemp, "Manual_InitVal");
 	m_pLabInitVal->setText(strTemp.mid(0, m_pLabInitVal->text().lastIndexOf("(") + 1) + strText + "):");
 	xlang_GetLangStrByFile(strTemp, "Manual_FinishVal");
@@ -334,9 +386,9 @@ void QManualView_Paras::UpdateData()
 // 	}
 
 	//老化、直流、自动
+	if(m_pCbOld)
+	{
 	m_pCbOld->setChecked(m_pManualParas->m_bAging);
-	m_pCbAuto->setChecked(m_pManualParas->m_bAuto);
-
 	if (m_pManualParas->m_bDC)
 	{
 		m_pCbDC->setCheckState(Qt::Checked);
@@ -345,7 +397,14 @@ void QManualView_Paras::UpdateData()
 	{
 		m_pCbDC->setCheckState(Qt::Unchecked);
 	}
+	}
+	if(m_pCbAuto)
+	{
+		m_pCbAuto->setChecked(m_pManualParas->m_bAuto);
+	}
 
+	if(m_pEditUdc)
+	{
 	if (g_oSystemParas.m_fAuxDC_Vol == 0)
 	{
 		m_pEditUdc->setDisabled(false);
@@ -356,7 +415,22 @@ void QManualView_Paras::UpdateData()
 		m_pEditUdc->setDisabled(true);
 		m_pEditUdc->setText(QString::number(g_oSystemParas.m_fAuxDC_Vol,'f',3));
 	}
+	}
 
+	if(m_pGrpPulseSignal)
+	{
+		tmt_PrimFreqManualParas *pParas = (tmt_PrimFreqManualParas *)m_pManualParas;
+		m_pGrpPulseSignal->setChecked((pParas->m_nOutputType == 1)?true:false);
+		m_pGrpDcSignal->setChecked((pParas->m_nOutputType == 2)?true:false);
+		m_pCbbPulseType->setCurrentIndex(pParas->m_nSpeedPulseType);
+		m_pEditPulseWidth->setText(QString::number(pParas->m_nPulseWidth,'f',0));
+		m_pCbbPeakValue->setCurrentIndex(pParas->m_nPeakToPeakTypeIndex);
+		m_pEditPulseFreq->setText(QString::number(pParas->m_fPulseFreqHz,'f',4));
+		m_pEditDc1->setText(QString::number(pParas->m_frCurrentDc[0],'f',4));
+		m_pEditDc2->setText(QString::number(pParas->m_frCurrentDc[1],'f',4));
+		m_pCbbDcChangeType->setCurrentIndex(pParas->m_nDcOutputMode);
+		m_pEditDcChangeValue->setText(QString::number(pParas->m_fDcOutputValue,'f',4));
+	}
 	/*m_pEditDelayed->setText(QString::number(m_pManualParas->m_manuGradient.fTrigDelay,'f',2));
 	m_pEditDelayed->setDisabled(bAuto);*/
 }
@@ -417,11 +491,17 @@ void QManualView_Paras::InitGradientVarList()
 	while(pos)
 	{
 		pCurTypeValue = (CDataTypeValue *)m_oGradientChs.GetNext(pos);
+// #ifndef _PSX_QT_LINUX_
+// 		m_pCbbChannel->addItem(pCurTypeValue->m_strID);
+// #else
+// 		m_pCbbChannel->addItem(pCurTypeValue->m_strID.GetString());
+// #endif
 #ifndef _PSX_QT_LINUX_
-		m_pCbbChannel->addItem(pCurTypeValue->m_strID);
+			m_pCbbChannel->addItem(pCurTypeValue->m_strName);//dingxy 20250121 英文环境下修改通道名称
 #else
-		m_pCbbChannel->addItem(pCurTypeValue->m_strID.GetString());
+			m_pCbbChannel->addItem(pCurTypeValue->m_strName.GetString());
 #endif
+
 	}
 }
 
@@ -452,6 +532,44 @@ float QManualView_Paras::slot_lne_Changed(QLineEdit* pLineEdit)
 	float fAcIMax = g_oLocalSysPara.m_fAC_CurMax;
 	float fDcVMax = g_oLocalSysPara.m_fDC_VolMax;
 	float fDcIMax = g_oLocalSysPara.m_fDC_CurMax;
+	
+	float fUMax = 0,fIMax = 0;
+	if (g_oSystemParas.m_nHasWeek)
+	{
+		if (strvar == _T("U0"))
+		{
+			fUMax = 8.300;
+		}
+		else if(strvar == _T("I0"))
+		{
+			fIMax = 4.200;
+		}
+		else
+		{
+#ifdef _PSX_OS_CENTOS_
+			fUMax = 10.000;
+
+#else
+			fUMax = 4.200;
+#endif
+			fIMax = 21.000;
+		}
+	}
+	else
+	{
+		if (m_pManualParas->m_bDC)
+		{
+			fUMax = fDcVMax;
+			fIMax = fDcIMax;
+		}
+		else
+		{
+			fUMax = fAcVMax;
+			fIMax = fAcIMax;
+		}
+	}
+
+
 	switch (index)
 	{
 	case 0:
@@ -460,24 +578,24 @@ float QManualView_Paras::slot_lne_Changed(QLineEdit* pLineEdit)
 			{
 				if (strvar.contains("U"))
 				{
-					if (fv>fDcVMax)
+					if (fv>/*fDcVMax*/fUMax)
 					{
-						fv = fDcVMax;
+						fv = /*fDcVMax*/fUMax;
 					}
-					if (fv<(fDcVMax*(-1)))
+					if (fv<(/*fDcVMax*/fUMax*(-1)))
 					{
-						fv = fDcVMax*(-1);
+						fv = /*fDcVMax*/fUMax*(-1);
 					}
 				}
 				else if (strvar.contains("I"))
 				{
-					if (fv>fDcIMax)
+					if (fv>/*fDcIMax*/fIMax)
 					{
-						fv = fDcIMax;
+						fv = /*fDcIMax*/fIMax;
 					}
-					if (fv<(fDcIMax*(-1)))
+					if (fv<(/*fDcIMax*/fIMax*(-1)))
 					{
-						fv = fDcIMax*(-1);
+						fv = /*fDcIMax*/fIMax*(-1);
 					}
 				}
 			}
@@ -485,9 +603,9 @@ float QManualView_Paras::slot_lne_Changed(QLineEdit* pLineEdit)
 			{
 				if (strvar.contains("U"))
 				{
-					if (fv>fAcVMax)
+					if (fv>/*fAcVMax*/fUMax)
 					{
-						fv = fAcVMax;
+						fv = /*fAcVMax*/fUMax;
 					}
 
 					if (fv<0)
@@ -497,9 +615,9 @@ float QManualView_Paras::slot_lne_Changed(QLineEdit* pLineEdit)
 				}
 				else if (strvar.contains("I"))
 				{
-					if (fv>fAcIMax)
+					if (fv>/*fAcIMax*/fIMax)
 					{
-						fv = fAcIMax;
+						fv = /*fAcIMax*/fIMax;
 					}
 
 					if (fv<0)
@@ -512,6 +630,8 @@ float QManualView_Paras::slot_lne_Changed(QLineEdit* pLineEdit)
 		break;
 	case 1:
 		{
+			//未做限制
+			fv = setLimit(0,99999,fv);
 			fv = setAngleLimit(fv);
 		}
 		break;
@@ -597,6 +717,42 @@ void QManualView_Paras::slot_lne_stepChanged()
 	float fDcVMax = g_oLocalSysPara.m_fDC_VolMax;
 	float fDcIMax = g_oLocalSysPara.m_fDC_CurMax;
 
+	float fUMax = 0,fIMax = 0;
+	if (g_oSystemParas.m_nHasWeek)
+	{
+		if (strvar == _T("U0"))
+		{
+			fUMax = 8.300;
+		}
+		else if(strvar == _T("I0"))
+		{
+			fIMax = 4.200;
+		}
+		else
+		{
+#ifdef _PSX_OS_CENTOS_
+			fUMax = 10.000;
+
+#else
+			fUMax = 4.200;
+#endif
+			fIMax = 21.000;
+		}
+	}
+	else
+	{
+		if (m_pManualParas->m_bDC)
+		{
+			fUMax = fDcVMax;
+			fIMax = fDcIMax;
+		}
+		else
+		{
+			fUMax = fAcVMax;
+			fIMax = fAcIMax;
+		}
+	}
+
 	switch (index)
 	{
 	case 0:
@@ -605,26 +761,26 @@ void QManualView_Paras::slot_lne_stepChanged()
 			{
 				if (strvar.contains("U"))
 				{
-					if (fv>fDcVMax)
+					if (fv>/*fDcVMax*/fUMax)
 					{
-						fv = fDcVMax;
+						fv = /*fDcVMax*/fUMax;
 					}
 
-					if (fv<(fDcVMax*(-1)))
+					if (fv<(/*fDcVMax*/fUMax*(-1)))
 					{
-						fv = fDcVMax*(-1);
+						fv = /*fDcVMax*/fUMax*(-1);
 					}
 				}
 				else if (strvar.contains("I"))
 				{
-					if (fv>fDcIMax)
+					if (fv>/*fDcIMax*/fIMax)
 					{
-						fv = fDcIMax;
+						fv = /*fDcIMax*/fIMax;
 					}
 
-					if (fv<(fDcIMax*(-1)))
+					if (fv<(/*fDcIMax*/fIMax*(-1)))
 					{
-						fv = fDcIMax*(-1);
+						fv = /*fDcIMax*/fIMax*(-1);
 					}
 				}
 			}
@@ -632,9 +788,9 @@ void QManualView_Paras::slot_lne_stepChanged()
 			{
 				if (strvar.contains("U"))
 				{
-					if (fv>fAcVMax)
+					if (fv>/*fAcVMax*/fUMax)
 					{
-						fv = fAcVMax;
+						fv = /*fAcVMax*/fUMax;
 					}
 
 					if (fv<0)
@@ -644,9 +800,9 @@ void QManualView_Paras::slot_lne_stepChanged()
 				}
 				else if (strvar.contains("I"))
 				{
-					if (fv>fAcIMax)
+					if (fv>/*fAcIMax*/fIMax)
 					{
-						fv = fAcIMax;
+						fv = /*fAcIMax*/fIMax;
 					}
 
 					if (fv<0)
@@ -659,6 +815,7 @@ void QManualView_Paras::slot_lne_stepChanged()
 		break;
 	case 1:
 		{
+			fv = setLimit(0,99999,fv);
 			fv = setAngleLimit(fv);
 			if (fv < 0.1)
 			{
@@ -709,7 +866,7 @@ void QManualView_Paras::slot_lne_UdcChanged()
 	float fv = m_pEditUdc->text().toFloat();
 	CSttAdjDevice *pCurDevice = &g_oSttTestResourceMngr.m_oCurrDevice;
 
-	if(pCurDevice->m_strModel.Find(_T("PTU200L")) >= 0) //chenling 2024.8.8 PTU22L Udc范围0-60
+	if(pCurDevice->m_strModel.Find(_T("PTU200L")) >= 0 || pCurDevice->m_strModel.Find(_T("PTU100A")) >= 0) //chenling 2024.8.8 PTU22L Udc范围0-60
 	{
 		fv = setLimit(0,60,fv);
 		m_pEditUdc->setText(QString::number(fv,'f',3));
@@ -778,7 +935,7 @@ void QManualView_Paras::ChannelTableItemValue_AllFreq(float fstep,int AddOrMinus
 
 			if (pChObj != NULL)
 			{
-				emit sig_ChannelTableItemValue(pChObj->m_strName,fstep,fre_type,AddOrMinus,bDC);
+				emit sig_ChannelTableItemValue(/*pChObj->m_strName*/pChObj->m_strID,fstep,fre_type,AddOrMinus,bDC);//dingxy 20250122 改为通过ID
 			}
 
 			strChID.Format(_T("I%ld"),nChIndex+1);
@@ -786,7 +943,7 @@ void QManualView_Paras::ChannelTableItemValue_AllFreq(float fstep,int AddOrMinus
 
 			if (pChObj != NULL)
 			{
-				emit sig_ChannelTableItemValue(pChObj->m_strName,fstep,fre_type,AddOrMinus,bDC);
+				emit sig_ChannelTableItemValue(/*pChObj->m_strName*/pChObj->m_strID,fstep,fre_type,AddOrMinus,bDC);
 			}
 		}
 	}
@@ -808,6 +965,7 @@ void QManualView_Paras::slot_btn_AddClicked()
 		}
 	}
 
+	str = pDataTypeValue->m_strID;
 	switch (index)
 	{
 	case amplitude_type:
@@ -848,6 +1006,7 @@ void QManualView_Paras::slot_btn_MinusClicked()
 		}
 	}
 
+	str = pDataTypeValue->m_strID;
 	switch (index)
 	{
 	case amplitude_type:
@@ -874,6 +1033,10 @@ void QManualView_Paras::slot_btn_MinusClicked()
 
 void QManualView_Paras::slot_cb_OldClicked()
 {
+	if(m_pCbOld == NULL)
+	{
+		return;
+	}
 	bool bIsChecked = m_pCbOld->isChecked();
 	if(m_pManualParas->m_bAging != bIsChecked)
 	{
@@ -948,6 +1111,10 @@ void QManualView_Paras::slot_cbb_SelectChanged(int index)
 
 void QManualView_Paras::slot_cbb_ChannelChanged(int index)
 {
+	if(index < 0)
+	{
+		return;
+	}
 	CDataTypeValue *pCurDataTypeValue = (CDataTypeValue*)m_oGradientChs.GetAtIndex(index);
 
 	if(!pCurDataTypeValue)
@@ -962,14 +1129,33 @@ void QManualView_Paras::slot_cbb_ChannelChanged(int index)
 		CLogPrint::LogFormatString(XLOGLEVEL_ASSIST,g_sLangTxt_Gradient_CurinDCincrement.GetString());  //lcq 3.13 当前为直流输出模式,不可切换为频率递变.
 		return;
 	}
+// 
+// 	//20241231 suyang 按要求在电压转换为电流时，始终值为0，防止电压输入始值终值大于电流的始值终值
+// 	if (m_pCbbSelect->currentIndex()== 0)//幅值
+// 	{
+// 		if((m_pCbbChannel->currentText().indexOf("I") != -1)&&(!g_pManualTest->m_strCbbChannel.isEmpty()))
+// 		{
+// 			if ((g_pManualTest->m_strCbbChannel.Find(_T("U")) == 0)	)
+// 			{
+// 				m_pEditFinishVal->setText("0.000");
+// 				m_pEditInitVal->setText("0.000");
+// 
+// 			}
+// 		}
+// 	}
+
 
 	m_pManualParas->m_nGradientChSelect = pCurDataTypeValue->GetIndex();
 
-	m_nChanneType = 1;
+	int nChanneType = 1;
+	m_pManualParas->m_nGradientChSelect = pCurDataTypeValue->GetIndex();
+	CString strSel = pCurDataTypeValue->m_strID;
+	// 	m_nChanneType = 1;
 
-	if(m_pCbbChannel->currentText().indexOf("U") != -1)
+	if (strSel.indexOf("U") != -1)
 	{
-		m_nChanneType = 0;
+		//m_nChanneType = 0;
+		nChanneType = 0;
 	}
 
 	if ((pCurDataTypeValue->GetIndex() == freAll_type)
@@ -978,7 +1164,31 @@ void QManualView_Paras::slot_cbb_ChannelChanged(int index)
 		m_pCbbSelect->setCurrentIndex(2);
 	} 
 
+	//2024-9-29 wuxinyi 修改通道，始值和终值自动修改到对应最大值
+	if (nChanneType != m_nChanneType)
+	{
+		m_nChanneType = nChanneType;
+
+		slot_lne_endChanged();
+		slot_lne_startChanged();
+
+		float fStartValue = m_pEditInitVal->text().toFloat();
+		float fEndValue = m_pEditFinishVal->text().toFloat();
+
+		if ((fEndValue - fStartValue) <= 0.00001)
+		{
+			m_pEditInitVal->setText(_T("0.000"));
+			slot_lne_startChanged();
+		}
+	}
+
+
 	SetUnitType(m_pCbbSelect->currentIndex());
+
+
+	slot_lne_startChanged();
+	slot_lne_endChanged();
+	slot_lne_stepChanged();
 };
 
 void QManualView_Paras::slot_cbb_ChangeTypeChanged(int index)
@@ -1142,22 +1352,20 @@ void QManualView_Paras::StartInit()
 	//m_pEditReturnTime->setText("");
 
 	bool bAuto = m_pManualParas->m_bAuto;
+	if (m_pBtnAdd) m_pBtnAdd->setDisabled(bAuto);
+	if (m_pBtnMinus) m_pBtnMinus->setDisabled(bAuto);
+	if (m_pBtnLock) m_pBtnLock->setDisabled(bAuto);
+	if (m_pCbbChangeType) m_pCbbChangeType->setDisabled(bAuto);
+	if (m_pCbbChannel) m_pCbbChannel->setDisabled(bAuto);
+	if (m_pCbbSelect) m_pCbbSelect->setDisabled(bAuto);
+	if (m_pEditStep) m_pEditStep->setDisabled(bAuto);
 
-	m_pBtnAdd->setDisabled(bAuto);
-	m_pBtnMinus->setDisabled(bAuto);
-	m_pBtnLock->setDisabled(bAuto);
-
-	m_pCbbChangeType->setDisabled(bAuto);
-	m_pCbbChannel->setDisabled(bAuto);
-	m_pCbbSelect->setDisabled(bAuto);
-	m_pEditStep->setDisabled(bAuto);
-
-	if(m_pCbDC->isChecked())
+	if (m_pCbDC && m_pCbDC->isChecked()) 
 	{
-		m_pCbbSelect->setDisabled(true);
+		if (m_pCbbSelect) m_pCbbSelect->setDisabled(true);
 	}
 
-	m_pEditUdc->setDisabled(true);
+	if (m_pEditUdc) m_pEditUdc->setDisabled(true);
 
 	//m_pEditDelayed->setDisabled(true);
 
@@ -1213,62 +1421,106 @@ void QManualView_Paras::StartInit()
 	/*m_pBtnAnd->setDisabled(true);
 	m_pBtnOr->setDisabled(true);*/
 
-	m_pEditTime->setDisabled(true);
-	m_pEditInitVal->setDisabled(true);
-	m_pEditFinishVal->setDisabled(true);
+	if (m_pEditTime) m_pEditTime->setDisabled(true);
+	if (m_pEditInitVal) m_pEditInitVal->setDisabled(true);
+	if (m_pEditFinishVal) m_pEditFinishVal->setDisabled(true);
 
 #ifdef _PSX_QT_LINUX_
-	m_pCbOld->setDisabled(true);//zhouhj 在脱机模式下,固定将老化不可编辑
+	if (m_pCbOld) m_pCbOld->setDisabled(true); // zhouhj 在脱机模式下,固定将老化不可编辑
 #else
-	m_pCbOld->setDisabled(true);
+	if (m_pCbOld) m_pCbOld->setDisabled(true);
 #endif
-	m_pCbAuto->setDisabled(true);
-	m_pCbDC->setDisabled(true);
+
+	if (m_pCbAuto) m_pCbAuto->setDisabled(true);
+	if (m_pCbDC) m_pCbDC->setDisabled(true);
+
+
+	if (m_pGrpPulseSignal) m_pGrpPulseSignal->setDisabled(true);
+	if (m_pChkPulseEnable) m_pChkPulseEnable->setDisabled(true);
+	if (m_pLblPulseType) m_pLblPulseType->setDisabled(true);
+	if (m_pCbbPulseType) m_pCbbPulseType->setDisabled(true);
+	if (m_pLblPulseWidth) m_pLblPulseWidth->setDisabled(true);
+	if (m_pEditPulseWidth) m_pEditPulseWidth->setDisabled(true);
+	if (m_pLblPeakValue) m_pLblPeakValue->setDisabled(true);
+	if (m_pCbbPeakValue) m_pCbbPeakValue->setDisabled(true);
+	if (m_pLblPulseFreq) m_pLblPulseFreq->setDisabled(true);
+	if (m_pEditPulseFreq) m_pEditPulseFreq->setDisabled(true);
+	if (m_pGrpDcSignal) m_pGrpDcSignal->setDisabled(true);
+	if (m_pChkDcEnable) m_pChkDcEnable->setDisabled(true);
+	if (m_pLblDc1) m_pLblDc1->setDisabled(true);
+	if (m_pEditDc1) m_pEditDc1->setDisabled(true);
+	if (m_pCbbDcChangeType) m_pCbbDcChangeType->setDisabled(true);
+	if (m_pEditDcChangeValue) m_pEditDcChangeValue->setDisabled(true);
+	if (m_pLblDc2) m_pLblDc2->setDisabled(true);
+	if (m_pEditDc2) m_pEditDc2->setDisabled(true);
+	if (m_pBtnMapping) m_pBtnMapping->setDisabled(true);
+
 }
 
 void QManualView_Paras::StopInit()
 {
 	m_bControlLock = true;
 	m_pManualParas->m_bLockChanged = false;
-	//xlang_SetLangStrToWidget(m_pBtnLock, "Manual_Lock", XLang_Ctrls_QPushButton);
+
+	// xlang_SetLangStrToWidget(m_pBtnLock, "Manual_Lock", XLang_Ctrls_QPushButton);
+	if (m_pBtnLock) {
 	m_pBtnLock->setIcon(m_imgUnlock);
 	m_pBtnLock->setDisabled(true);
-
-	m_pBtnAdd->setDisabled(m_pManualParas->m_bAuto);
-	m_pBtnMinus->setDisabled(m_pManualParas->m_bAuto);
-
-	m_pCbbChannel->setDisabled(false);
-	m_pCbbSelect->setDisabled(false);
-	m_pCbbChangeType->setDisabled(false);
-	m_pEditStep->setDisabled(false);
-
-	if(m_pCbDC->isChecked())
-	{
-		m_pCbbSelect->setDisabled(true);
 	}
 
-	m_pEditTime->setDisabled(!m_pManualParas->m_bAuto);
-	m_pEditInitVal->setDisabled(!m_pManualParas->m_bAuto);
-	m_pEditFinishVal->setDisabled(!m_pManualParas->m_bAuto);
+	if (m_pBtnAdd) m_pBtnAdd->setDisabled(m_pManualParas->m_bAuto);
+	if (m_pBtnMinus) m_pBtnMinus->setDisabled(m_pManualParas->m_bAuto);
 
-	m_pCbAuto->setDisabled(false);
+	if (m_pCbbChannel) m_pCbbChannel->setDisabled(false);
+	if (m_pCbbSelect) m_pCbbSelect->setDisabled(false);
+	if (m_pCbbChangeType) m_pCbbChangeType->setDisabled(false);
+	if (m_pEditStep) m_pEditStep->setDisabled(false);
 
-	if (g_oSystemParas.m_fAuxDC_Vol == 0)
-	{
-		m_pEditUdc->setDisabled(false);
+	if (m_pCbDC && m_pCbDC->isChecked()) {
+		if (m_pCbbSelect) m_pCbbSelect->setDisabled(true);
 	}
-	//m_pEditUdc->setDisabled(false);
+
+	if (m_pEditTime) m_pEditTime->setDisabled(!m_pManualParas->m_bAuto);
+	if (m_pEditInitVal) m_pEditInitVal->setDisabled(!m_pManualParas->m_bAuto);
+	if (m_pEditFinishVal) m_pEditFinishVal->setDisabled(!m_pManualParas->m_bAuto);
+
+	if (m_pCbAuto) m_pCbAuto->setDisabled(false);
+
+	if (g_oSystemParas.m_fAuxDC_Vol == 0) {
+		if (m_pEditUdc) m_pEditUdc->setDisabled(false);
+	}
+
+	// m_pEditUdc->setDisabled(false);
 
 #ifdef _PSX_QT_LINUX_
-	m_pCbOld->setDisabled(true);//zhouhj 在脱机模式下,固定将老化不可编辑
+	if (m_pCbOld) m_pCbOld->setDisabled(true); // zhouhj 在脱机模式下,固定将老化不可编辑
 #else
-	m_pCbOld->setDisabled(false);
+	if (m_pCbOld) m_pCbOld->setDisabled(false);
 #endif
 
-	m_pCbDC->setDisabled(false);
-	//m_pEditDelayed->setDisabled(false);
+	if (m_pCbDC) m_pCbDC->setDisabled(false);
+	// m_pEditDelayed->setDisabled(false);
 
-	m_pManualParas->m_bLockChanged = false;		
+	// 将 setDisabled(true) 改为 setDisabled(false) 并补充缺少的 `if` 语句
+	if (m_pGrpPulseSignal) m_pGrpPulseSignal->setDisabled(false);
+	if (m_pChkPulseEnable) m_pChkPulseEnable->setDisabled(false);
+	if (m_pLblPulseType) m_pLblPulseType->setDisabled(false);
+	if (m_pCbbPulseType) m_pCbbPulseType->setDisabled(false);
+	if (m_pLblPulseWidth) m_pLblPulseWidth->setDisabled(false);
+	if (m_pEditPulseWidth) m_pEditPulseWidth->setDisabled(false);
+	if (m_pLblPeakValue) m_pLblPeakValue->setDisabled(false);
+	if (m_pCbbPeakValue) m_pCbbPeakValue->setDisabled(false);
+	if (m_pLblPulseFreq) m_pLblPulseFreq->setDisabled(false);
+	if (m_pEditPulseFreq) m_pEditPulseFreq->setDisabled(false);
+	if (m_pGrpDcSignal) m_pGrpDcSignal->setDisabled(false);
+	if (m_pChkDcEnable) m_pChkDcEnable->setDisabled(false);
+	if (m_pLblDc1) m_pLblDc1->setDisabled(false);
+	if (m_pEditDc1) m_pEditDc1->setDisabled(false);
+	if (m_pCbbDcChangeType) m_pCbbDcChangeType->setDisabled(false);
+	if (m_pEditDcChangeValue) m_pEditDcChangeValue->setDisabled(false);
+	if (m_pLblDc2) m_pLblDc2->setDisabled(false);
+	if (m_pEditDc2) m_pEditDc2->setDisabled(false);
+	if (m_pBtnMapping) m_pBtnMapping->setDisabled(false);
 
 // 	m_pCbOut1->setDisabled(false);
 // 	m_pCbOut2->setDisabled(false);
@@ -1326,14 +1578,35 @@ void QManualView_Paras::StopInit()
 
 void QManualView_Paras::slot_UpdateUdcEditEnabled()
 {
-	if (g_oSystemParas.m_fAuxDC_Vol == 0)
+	float nAuxDCVul = g_oSystemParas.m_fAuxDC_Vol;
+	if ( nAuxDCVul == 0)
 	{
+		if (m_pManualParas->m_fVolAux != 0)
+	{
+			nAuxDCVul = m_pManualParas->m_fVolAux;
+		}
 		m_pEditUdc->setDisabled(false);
 	}
 	else
 	{
 		m_pEditUdc->setDisabled(true);
 	}
+	
 
-	m_pEditUdc->setText(QString::number(g_oSystemParas.m_fAuxDC_Vol,'f',3));
+	m_pEditUdc->setText(QString::number(nAuxDCVul,'f',3));
+}
+void QManualView_Paras::SetParaSetSecondValue(int nParaSetSecondValue)
+{
+	m_nParaSetSecondValue = nParaSetSecondValue;
+	SetUnitType (m_pCbbSelect->currentIndex());
+
+}
+long QManualView_Paras::GetChanneType()
+{
+	return m_nChanneType;
+}
+
+long QManualView_Paras::GetCbbSelect()
+{
+	return m_pCbbSelect->currentIndex();
 }

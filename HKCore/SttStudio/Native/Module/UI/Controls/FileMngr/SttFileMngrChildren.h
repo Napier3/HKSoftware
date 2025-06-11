@@ -9,10 +9,10 @@
 #include <QFile>
 
 #include "SttFileViewGrid.h"
-#include "../../Module/XfileMngrBase/XFileMngr.h"
+#include "../../../Module/XfileMngrBase/XFileMngr.h"
 #include "../../Module/QExBaseListGridBase/QExBaseListGridBase.h"
 #include "../../Module/CommonCtrl_QT/QSttProgDlg.h"
-#include "../../Module/DataMngr/DvmData.h"
+#include "../../../Module/DataMngr/DvmData.h"
 
 class QSttFileMngrChildren : public QDialog,public CExBaseListGridOptrInterface
 {

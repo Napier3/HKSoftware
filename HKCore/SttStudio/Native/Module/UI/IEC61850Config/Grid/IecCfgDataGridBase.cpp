@@ -1,7 +1,7 @@
 #include "IecCfgDataGridBase.h"
-#include "../../61850/Module/CfgDataMngr/IecCfg92Data.h"
-#include "../../61850/Module/CfgDataMngr/IecCfg6044CommonData.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgDatasBase.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfg92Data.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfg6044CommonData.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgDatasBase.h"
 #include <QApplication>
 #include "../Module/XLangResource_Native.h"
 #include "IecCfgChsGridBase.h"

@@ -67,39 +67,39 @@ void QSttMacroParaEditViewOtherSetDlg::InitUI()
 #endif
 	this->setWindowIcon(QIcon(strPngPath));
 	
-	CString strTitle = _T("其他设置");
+    CString strTitle = _T("其他设置");
 	this->setWindowTitle(strTitle);
 	CString strGroupbox;
     strGroupbox = _T("参数设置");
     m_pGroupBox_L->setTitle(strGroupbox);
-	strGroupbox = _T("PPS设置");
+    strGroupbox = _T("PPS设置");
     m_pGroupBox_R->setTitle(strGroupbox);
 	CString strLabel;
-	strLabel = _T("接收报文类型");
+    strLabel = _T("接收报文类型");
     m_pReceivLabel->setText(strLabel);
-	strLabel = _T("测试方法");
+    strLabel = _T("测试方法");
     m_pTestLabel->setText(strLabel);
-	strLabel = _T("B码输出逻辑");
+    strLabel = _T("B码输出逻辑");
     m_pBOutputLabel->setText(strLabel);	
 
 	m_pRCombox->addItem(_T("IEC-61850-9-2"));
 	m_pRCombox->addItem(_T("IEC-60044-8(FT3)"));
-	m_pTCombox->addItem(_T("同步法"));
-	m_pTCombox->addItem(_T("插值法"));
-	m_pBCombox->addItem(_T("正逻辑"));
-	m_pBCombox->addItem(_T("负逻辑"));
+    m_pTCombox->addItem(_T("同步法"));
+    m_pTCombox->addItem(_T("插值法"));
+    m_pBCombox->addItem(_T("正逻辑"));
+    m_pBCombox->addItem(_T("负逻辑"));
 	
 	CString strRButton;
     strRButton = _T("无PPS");
     m_pNoPPSRButton->setText(strRButton);
-	strRButton = _T("上升沿有效");
+    strRButton = _T("上升沿有效");
 	m_pRiseRButton->setText(strRButton);
-	strRButton = _T("下降沿有效");
+    strRButton = _T("下降沿有效");
 	m_pFallRButton->setText(strRButton);
 	CString strButton;
     strButton = _T("确认");
     m_pButton_OK->setText(strButton);
-	strButton = _T("取消");
+	strButton = /*_T("取消")*/g_sLangTxt_Cancel;
 	m_pButton_Cancel->setText(strButton);
 
 	m_pPPssetlayout->addWidget(m_pRiseRButton,0,0,1,1);

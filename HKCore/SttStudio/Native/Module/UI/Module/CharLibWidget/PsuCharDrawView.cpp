@@ -1,8 +1,8 @@
 #include "PsuCharDrawView.h"
 #include "../../../SttTestBase/SttComplexp.h"
-#include "../../Module/API/GloblaDrawFunctions.h"
-#include "../../Module/XDrawBase/XDrawMngrDescartes.h"
-#include "../../Module/XDrawBase/XDrawMngrLogarithm.h"
+#include "../../../Module/API/GloblaDrawFunctions.h"
+#include "../../../Module/XDrawBase/XDrawMngrDescartes.h"
+#include "../../../Module/XDrawBase/XDrawMngrLogarithm.h"
 #include "../../../XLangResource_Native.h"
 
 CPsuCharDrawView::CPsuCharDrawView(void)
@@ -20,6 +20,7 @@ CPsuCharDrawView::CPsuCharDrawView(void)
 	m_strUnitMag = _T("¶∏");
 	m_bIsShowText = true;
 	m_bIsShowAng = false;
+	m_bIsShowTestPoint = true;
 
 	m_strInstructInit_Text = /*_T("+:≥ı º")*/g_sLangTxt_Gradient_PInitial; //lcq
 	m_strInstructSelect_Text = /*_T("+:—°÷–")*/g_sLangTxt_Gradient_PSelected; //lcq
@@ -617,9 +618,12 @@ void CPsuCharDrawView::Draw(CDC *pDC, double fZoomRatio,const CPoint &ptOffset)
 			rc = CRect(ptPoint.x, ptPoint.y, ptPoint.x + strPt.GetLength() * 16, ptPoint.y + 36);
 		}
 		
-		CmDrawTextRect(pDC, strPt, m_crAxisInstructInit_FontColor,
+		if (m_bIsShowTestPoint)
+		{
+			CmDrawTextRect(pDC, strPt, m_crAxisInstructInit_FontColor,
 			&rc, RGB(0,255,0), m_lfAxisInstruct_Font,
 			TRANSPARENT,DT_VCENTER|DT_LEFT,0);
+		}
 	}
 
 	m_oCharDrawList.LogicPointToDevicePoint(pAxisInterface);
@@ -642,6 +646,11 @@ void CPsuCharDrawView::SetIsShowText( bool bIsShowText )
 void CPsuCharDrawView::SetIsShowAng(bool bIsShowAng)
 {
 	m_bIsShowAng = bIsShowAng;
+}
+
+void CPsuCharDrawView::SetIsShowTestPoint(bool bIsShowTestPoint)
+{
+	m_bIsShowTestPoint = bIsShowTestPoint;
 }
 
 void CPsuCharDrawView::UpdateAxisType(const CString& strAxis,BOOL bLockXY)

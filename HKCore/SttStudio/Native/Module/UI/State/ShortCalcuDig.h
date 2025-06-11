@@ -35,6 +35,8 @@ public:
 		, tmt_channel *uiVOL,tmt_channel *uiCUR
 		, ShortCalcuPara para,QWidget *parent = 0);
 	~ShortCalcuDig();
+
+	void SetParaSetSecondValue(int nParaSetSecondValue);
 	
 signals:
 	void sig_ShortCalcuOk(ShortCalcuPara &);

@@ -6,7 +6,7 @@
 #include "../Module/SttTest/Common/Abnormal/tmt_abnormal_test.h"
 #include "../../Controls/SttLineEdit.h"
 #include "ui_SmvAbnormalParaset.h"
-#include "../../61850/Module/CfgDataMngr/IecCfg92Data.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfg92Data.h"
 #include "../../../SttTest/Common/tmt_state_test.h"
 
 
@@ -26,6 +26,9 @@ public:
 	void startInit();
 	void stopInit();
 	void SetSmvAbnormalParasetFont();
+
+	void SetParaSetSecondValue(int nParaSetSecondValue);
+	int m_nParaSetSecondValue;
 
 //	CIecCfg92Data* GetSMVDataByIndex(int nFindIndex);
 //	BOOL SetAbnSmvMessage(CIecCfg92Data* pIecCfgSmvData);

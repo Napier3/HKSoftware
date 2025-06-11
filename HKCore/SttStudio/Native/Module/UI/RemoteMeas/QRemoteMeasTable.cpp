@@ -2,10 +2,10 @@
 #include <QHeaderView>
 #include <qmath.h>
 #include "../Module/CommonMethod/commonMethod.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/XLanguage/XLanguageMngr.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/XLanguageMngr.h"
 #include "../Module/XLangResource_Native.h"
-#include "../../Module/DataMngr/DvmDevice.h"
+#include "../../../Module/DataMngr/DvmDevice.h"
 #include "../../SttTestCtrl/SttTestAppBase.h"
 #include "SttMacroParaEditViewRemoteMeas.h"
 #include "../../SttTestBase/SttComplexp.h"
@@ -50,7 +50,7 @@ void QRemoteMeasTable::InitUI()
 
 	QHeaderView* pLeft = this->verticalHeader();
 	pLeft->setDefaultSectionSize(25);
-    pLeft->setSectionsClickable(false);
+	pLeft->setSectionsClickable(false);
 	pLeft->setVisible(false);
 
 	QFont font1 = this->horizontalHeader()->font();
@@ -73,7 +73,7 @@ void QRemoteMeasTable::InitUI()
 	QDesktopWidget *pDeskTop = QApplication::desktop();
 	QRect rcScreen = pDeskTop->screenGeometry();
 	this->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    this->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+	this->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	//this->horizontalHeader()->setStretchLastSection(true);
 	QFont font3 = this->horizontalHeader()->font();
 	font3.setPointSize(20);

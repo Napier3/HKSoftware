@@ -28,8 +28,8 @@ void SttCCommCfgPkgMonitorRightGrid::InitGrid()
 	resizeColumnToContents(0);
 	//SetEditable(FALSE);
 	SetRowCount(1);
-    verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    verticalHeader()->setSectionResizeMode(0,QHeaderView::ResizeToContents);
+	verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+	verticalHeader()->setSectionResizeMode(0,QHeaderView::ResizeToContents);
 }
 
 void SttCCommCfgPkgMonitorRightGrid::InitGridTitle()

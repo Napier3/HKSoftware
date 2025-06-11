@@ -1,8 +1,8 @@
 #include "SttIecSMVFT3InitValueSetDialog.h"
 //#include "../SttTestCntrFrameBase.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../XLangResource_Native.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 
 QSttIecSMVFT3InitValueSetDialog::QSttIecSMVFT3InitValueSetDialog(long dwValue,QWidget *parent)
 {

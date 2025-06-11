@@ -6,8 +6,7 @@
 #include <QPushButton>
 #include <QAction>
 #include <QMenu>
-#include "../../AutoTest/Module/Characteristic/CharacteristicLib.h"
-#include "../../AutoTest/Module/Characteristic/Characteristics.h"
+#include "../../../AutoTest/Module/Characteristic/CharacteristicLib.h"
 #include "PsuCharDrawView.h"
 
 #define STT_Charact_ToolBtn_Width                  45//右侧放大、缩小、上移、下移等按钮的宽度  20230206 zhouhj

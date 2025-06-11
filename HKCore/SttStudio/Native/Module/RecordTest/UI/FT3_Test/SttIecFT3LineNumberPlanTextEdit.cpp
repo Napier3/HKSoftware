@@ -7,7 +7,7 @@
 #include <QSize>
 #include <QPainter>
 #include <QTextBlock>
-#include "../../../../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 
 QSttIecFT3LineNumberPlanTextEdit::QSttIecFT3LineNumberPlanTextEdit(QWidget *parent) : QPlainTextEdit(parent)//
 {

@@ -3,7 +3,7 @@
 #include <QList>
 #include <QPen>
 #include "../../SttTestCntrFrameBase.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include"../Module/SttCmd/SttChMap.h"
 
 QVectorWidget::QVectorWidget(QWidget *parent)
@@ -17,6 +17,7 @@ QVectorWidget::QVectorWidget(QWidget *parent)
 	m_NeedUGroup = 0;
 	m_NeedIGroup = 0;
 	m_nCurrentGroup = 1;
+	m_nParaSetSecondValue = 1;
 
 	m_bDCTest = false;
 
@@ -876,6 +877,8 @@ void QVectorWidget::showEvent(QShowEvent *)
 	setPropertyOfParaSet();
 	setUIMax();
 	initData();
+
+	SetParaSetSecondValue(m_nParaSetSecondValue);
 }
 
 void QVectorWidget::SetVectorMode(int nVectorType, CDataGroup *pGroup)
@@ -966,4 +969,50 @@ void QVectorWidget::SetDatas_PowerDir(CDataGroup *pGroup)
 			m_pDiagram->setMTAAngle(fMaxSensAngle);
 	}
 	update();
+}
+
+void QVectorWidget::SetParaSetSecondValue(int nParaSetSecondValue)
+{
+	ASSERT(m_pVectorSttTestResource);
+	m_nParaSetSecondValue = nParaSetSecondValue;
+	QStringList str;
+	str.clear();
+	
+	if (m_nParaSetSecondValue == 0)
+	{
+		if (m_pVectorSttTestResource->m_oVolChRsListRef.GetCount()>0 && m_pVectorSttTestResource->m_oCurChRsListRef.GetCount()>0)
+		{
+			str<<tr("kV")<<tr("kV")<<tr("kV")<<tr("A")<<tr("A")<<tr("A");
+		}
+		else if (m_pVectorSttTestResource->m_oVolChRsListRef.GetCount() <=0 && m_pVectorSttTestResource->m_oCurChRsListRef.GetCount() >0)
+		{
+			str<<tr("A")<<tr("A")<<tr("A");
+		}
+		else if (m_pVectorSttTestResource->m_oVolChRsListRef.GetCount() >0 && m_pVectorSttTestResource->m_oCurChRsListRef.GetCount() <=0)
+		{
+			str<<tr("kV")<<tr("kV")<<tr("kV");
+		}
+	}
+	else
+	{
+		if (m_pVectorSttTestResource->m_oVolChRsListRef.GetCount()>0 && m_pVectorSttTestResource->m_oCurChRsListRef.GetCount()>0)
+		{
+			str<<tr("V")<<tr("V")<<tr("V")<<tr("A")<<tr("A")<<tr("A");
+		}
+		else if (m_pVectorSttTestResource->m_oVolChRsListRef.GetCount() <=0 && m_pVectorSttTestResource->m_oCurChRsListRef.GetCount() >0)
+		{
+			str<<tr("A")<<tr("A")<<tr("A");
+		}
+		else if (m_pVectorSttTestResource->m_oVolChRsListRef.GetCount() >0 && m_pVectorSttTestResource->m_oCurChRsListRef.GetCount() <=0)
+		{
+			str<<tr("V")<<tr("V")<<tr("V");
+		}
+	}
+
+	if (m_pDiagram != NULL)
+	{
+		m_pDiagram->m_nParaSetSecondValue = m_nParaSetSecondValue;
+		m_pDiagram->setUnitOfTable(str);
+	}
+
 }

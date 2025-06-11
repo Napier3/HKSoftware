@@ -53,10 +53,9 @@ public:
 	///////////////////////////////////////////////////
 	//FT3 goose 数据更新
 	virtual void UpdateGoutTab(BOOL bUpdateList = FALSE);//如果需要数字输出，初始化goose页面以及更新tab页面
-	virtual void UpdateFT3Tab(BOOL bUpdateList = FALSE);
-
 	void UpdateGoutTab_UI(CIecCfgGoutDatas* pCfgGoutDatas);
 	void UpdateFT3Tab_UI(CIecCfgDatasSMV* pIecCfgDatasSMV);
+	void UpdateFT3Tab(BOOL bUpdateList = FALSE);
 	//void UpdateBinBoutExTab();//更新开关量扩展界面 暂时没有
 	//goose 界面 添加 删除
 	void AddGooseParaWidget(CIecCfgGoutDatas* pCfgGoutDatas);
@@ -68,9 +67,9 @@ public:
 	void RemoveFT3OutParaWidget(); 
 	void EnableFT3OutParaWidget(bool b);
 	bool ExistFT3OutParaWidget();
-
 signals:
-
+	//add wangtao 20240817 发送信号,更新实时图Y坐标轴范围
+	void sig_YRangeChanged(changed_type type, QString strTitle, float fdown, float fup);
 
 public slots:
 	void on_ReturnType_currentIndexChanged(int nIndex);
@@ -99,7 +98,10 @@ public slots:
 	void on_EditFaultBeforeVm_Finish();	  //故障前电压
 	void on_EditFaultBeforeVa_Finish();	  //故障前电流
 	void on_EditFaultBeforeAngle_Finish();//故障前相角
-
+	
+	void GetStateMonitorYRange(float ftime, float fv, float fstart, float fend, float &down);//计算状态图Y轴最大值
+	void SetStateMonitorYRange();//设置状态图Y轴范围
+	void ConvertChannelAndType();//将故障模式和变化量转换成通道和类型
 public:
 	virtual void InitLanuage();
 	//读取序列化
@@ -122,7 +124,8 @@ public:
 	//根据路径获取参数文件  grtxml 测试文件
 	virtual CString GetDefaultParaFile(); 
 	virtual bool IsValidTestParasFile(const CString& strParasFile,bool bOpen = true);
-
+	virtual void UpdatePrimParaSetUI(){}//20240923 suyang 更新界面一次值/二次值显示
+	virtual BOOL IsUseSecondParaSet(){ return TRUE; }//20240923 suyang 是否显示二次值	
 
 private:
 	//参数结构体
@@ -141,6 +144,11 @@ private:
 	int									 m_nOutNormalError;
 	//当前的 edit 限制的类型 根据commbox 选择电压电流决定
 	int									 m_nEditControlType;
+
+	CDataType m_oGradientChs;
+	CString m_strUnit; //变量单位
+	int m_nChannel;//通道
+	int m_nType;//类型
 
 private:
 	Ui::QSttMacroParaEditViewFaultGradient *ui;

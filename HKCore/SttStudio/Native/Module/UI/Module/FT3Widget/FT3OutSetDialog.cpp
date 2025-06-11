@@ -1,5 +1,5 @@
 #include "FT3OutSetDialog.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../../../XLangResource_Native.h"
 
 

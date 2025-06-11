@@ -1,6 +1,7 @@
 #ifndef QCBOPERATEADDMULTRESULTASSESS_H
 #define QCBOPERATEADDMULTRESULTASSESS_H
 
+#include <QLabel>
 #include <QDialog>
 #include <QTableWidget>
 #include "../../Controls/SttCheckBox.h"
@@ -10,6 +11,8 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include "../../../UI/Module/QExBaseListGridBase/QExBaseListComBoxDelegBase.h"
+#include "../../../UI/Controls/SettingCtrls/QSettingLineEdit.h"
+#include "../../../TestUI/Interface/QModalDlgInterface.h"
 
 class CBOperateResultAssessGrid : public QDialog
 {
@@ -23,16 +26,15 @@ public:
 	void InitFont();
 	void InitConnections(); 
 	void UpdataResultAssess();
-	bool eventFilter(QObject *obj, QEvent *event);
-
+	//bool eventFilter(QObject *obj, QEvent *event);
+	void UpdateTable(int nIndex, int row);
 public:
 	QStringList headers;
 	QTableWidget *m_pResultTableWidget;
 	QTableWidgetItem *item;
-
-	QSttCheckBox *m_pChbActionTime;
-	QSttCheckBox *m_pChbTripTime;
-	QSttCheckBox *m_pChbAccTime;
+	QLabel *m_pLabActionTime;
+	QLabel *m_pLabTripTime;
+	QLabel *m_pLabAccTime;
 
 	tmt_CBOperateTest m_oCBOperateTest;
 	tmt_CBOperateParas *m_oCBOperateParas;
@@ -55,14 +57,23 @@ public:
 	QTableWidgetItem *m_pItem8;
 	QTableWidgetItem *m_pItem9;
 
+	QTableWidgetItem *m_pItem10;
+	QTableWidgetItem *m_pItem11;
+	QTableWidgetItem *m_pItem12;
+
+
 public slots:
 	void slot_btnOK_Clicked();
 	void slot_btnCancel_Clicked();
-	 
-	void slot_ChbActionTime(bool state);
-	void slot_ChbTripTime(bool state);
-	void slot_ChbAccTime(bool state);
+
+	void slot_CmbActionTime(int nIndex);
+	void slot_CmbTripTime(int nIndex);
+	void slot_CmbAccTime(int nIndex);
+
 	void slot_cellClicked(int row ,int col);
+	void slot_Item3();
+	void slot_Item6();
+	void slot_Item9();
 };
 
 #endif

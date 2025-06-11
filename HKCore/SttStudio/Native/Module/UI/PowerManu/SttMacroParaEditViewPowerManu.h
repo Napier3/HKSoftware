@@ -34,10 +34,12 @@ public:
     explicit QSttMacroParaEditViewPowerManu(QWidget *parent = 0);
     virtual ~QSttMacroParaEditViewPowerManu();
 
+	virtual void InitBinaryInBinaryOutUI();//20240913 huangliang 改为虚函数
+
 private:
 	void InitUI();
 	void SendUpdateParameter();
-	void InitBinaryInBinaryOutUI();
+	//void InitBinaryInBinaryOutUI();	//20240913 huangliang 改为虚函数
 	void InitOtherParasUI();
 	void SetManualOtherParasFont();
 	void InitStyle();
@@ -66,6 +68,9 @@ public:
 	virtual bool IsValidTestParasFile(const CString& strParasFile,bool bOpen = true);
 	virtual PTMT_PARAS_HEAD GetTestParas() { return &m_oManualTest;}
 	virtual char* GetMacroID(){ return STT_ORG_MACRO_PowerManuTest; }
+	virtual void UpdatePrimParaSetUI(){}//20240923 suyang 更新界面一次值/二次值显示
+	virtual BOOL IsUseSecondParaSet(){ return TRUE; }//20240923 suyang 是否显示二次值	
+
 
     void InitParasView();
     void InitPVView();
@@ -78,6 +83,7 @@ public:
 	virtual void ShowReport(CDvmValues *pValues);
 	virtual void GetDatas(CDataGroup *pParas);
 	virtual void SetDatas(CDataGroup *pParas);
+	virtual CString GetMacroTestResultUnit();//2024-10-30 wuxinyi 获取结果参数单位
 
 	void slot_edit_changed(QSttLineEdit* pEditLine, bool bIsNor = FALSE);
 

@@ -3,7 +3,7 @@
 
 #include <QPushButton>
 
-#include "../../Module/XfileMngrBase/XFolder.h"
+#include "../../../Module/XfileMngrBase/XFolder.h"
 #include "SttFileMngrChildren.h"
 
 // class QSttFileMngrChildren;

@@ -1,7 +1,7 @@
 #include "SttMacroParaEditViewRemoteMeas.h"
 #include "ui_SttMacroParaEditViewManual.h"
 #include "../../SmartCap/XSmartCapMngr.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../SttTest/Common/tmt_manu_test.h"
 #include "../SttTestCntrFrameBase.h"
 #include "../../SttTestResourceMngr/TestResource/SttTestResource_Sync.h"
@@ -23,9 +23,12 @@ QSttMacroParaEditViewRemoteMeas::QSttMacroParaEditViewRemoteMeas(QWidget *parent
 {
 	setWindowFlags(Qt::FramelessWindowHint);
 	g_pTheSttTestApp->IinitGbWzdAiTool();
+
+	debug_time_long_log("QSttMacroParaEditViewRemoteMeas g_pTheSttTestApp->IinitGbWzdAiTool()", true);
 	g_pRemoteMeas = this;
 
 	InitUI();
+	debug_time_long_log("QSttMacroParaEditViewRemoteMeas InitUI", true);
 	InitLanuage();
 	m_bTmtParaChanged = FALSE;
 	m_bIsChanging = FALSE;
@@ -46,22 +49,29 @@ QSttMacroParaEditViewRemoteMeas::QSttMacroParaEditViewRemoteMeas(QWidget *parent
 	m_pManualParas = &m_oManualTest.m_oManuParas;
 
 	OpenTestTestMngrFile(m_strDefaultParaFile);
+	debug_time_long_log("QSttMacroParaEditViewRemoteMeas OpenTestTestMngrFile", true);
 
 	//CopyBinaryConfig();
 	g_theTestCntrFrame->UpdateToolButtons();
-
+	debug_time_long_log("QSttMacroParaEditViewRemoteMeas g_theTestCntrFrame->UpdateToolButtons();", true);
 	InitParasView();
+	debug_time_long_log("QSttMacroParaEditViewRemoteMeas InitParasView", true);
 	InitConnect();
 
 	m_pRemoteMeasWidget->SetData(g_oSttTestResourceMngr.m_pTestResouce, m_pManualParas, 0);
+	debug_time_long_log("QSttMacroParaEditViewRemoteMeas m_pRemoteMeasWidget->SetData", true);
 	m_pBtnWidget->setData(m_pManualParas);
+	debug_time_long_log("QSttMacroParaEditViewRemoteMeas m_pBtnWidget->setData(m_pManualParas);", true);
 	InitIVView();
+	debug_time_long_log("QSttMacroParaEditViewRemoteMeas InitIVView();", true);
 
 	SetDatas(NULL);
+	debug_time_long_log("QSttMacroParaEditViewRemoteMeas SetDatas(NULL);", true);
 
 	g_theTestCntrFrame->UpdateButtonStateByID(STT_CNTR_CMD_ManuTriger,false,false);
 	
-	g_theTestCntrFrame->InitPowerWidget(m_uiVOL,m_uiCUR);
+	//g_theTestCntrFrame->InitPowerWidget(m_uiVOL,m_uiCUR);//20240926 suyang  优化系统程序启动的效率 在SetDatas中已经初始化
+	//debug_time_long_log("QSttMacroParaEditViewRemoteMeas g_theTestCntrFrame->InitPowerWidget(m_uiVOL,m_uiCUR)", true);
 	m_nReadCount = 0;
 	connect(&m_oRemoteMeasTimer,   SIGNAL(timeout()),    this,   SLOT(slot_Timer()));
 	m_oRemoteMeasTimer.start(1000);
@@ -859,11 +869,12 @@ void QSttMacroParaEditViewRemoteMeas::slot_Timer()
 	{
 		return;
 	}
-
+#ifdef _PSX_QT_LINUX_
 	if (g_theTestCntrFrame->m_pActiveWidget != this)
 	{
 		return;
 	}
+#endif
 
 	m_nReadCount++;
 

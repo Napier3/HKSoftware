@@ -3,8 +3,8 @@
 #include "../Module/SttTest/Common/tmt_system_config.h"
 #include "../Module/SttCmd/SttParas.h"
 #include "../Module/SttCmd/SttMacro.h"
-#include "../Module/UI/Interface/SttHtmlViewApi.h"
 #include "../SttTestCntrFrameBase.h"
+#include "../SttTestCntrFrameApi.h"
 #include "../../XLangResource_Native.h"
 #include "../../XLangResource_Native.h"
 
@@ -82,6 +82,14 @@ void CSttMacroParaEditViewOriginal::initTestParas()
 	InitUI_OpenParas();
 }
 
+void CSttMacroParaEditViewOriginal::ReadModeDataSaveMaps(CSttDataGroupSerializeRead *pRead)//20240913 huangliang 定值关联Maps记录
+{
+	if (pRead == NULL)
+		return;
+	CDataMaps *pMaps = pRead->GetTopDvmDataMap();
+	RecordDvmDataMap(pMaps);
+}
+
 BOOL CSttMacroParaEditViewOriginal::OpenTestTestMngrFile(const CString& strParasFile)
 {
 	if (g_pTheSttTestApp->m_pTestMacroUI == NULL)
@@ -111,6 +119,10 @@ BOOL CSttMacroParaEditViewOriginal::OpenTestTestMngrFile(const CString& strParas
 		SerializeTestParas(&oRead, pCurrTmtPara,g_oSttTestResourceMngr.m_pTestResouce->GetVolRsNum(),g_oSttTestResourceMngr.m_pTestResouce->GetVCurRsNum(),
 			g_oLocalSysPara.m_nCHBinInExNum,g_oLocalSysPara.m_nCHBinOutExNum,g_oSystemParas.m_nHasDigital);
 		//		stt_xml_serialize(pCurrTmtPara, &oRead);
+
+		//20240619 huangliang 从模型数据中更新名称到Maps中,记录下Map关联数据
+		CDataMaps *pMaps = oRead.GetTopDvmDataMap();
+		RecordDvmDataMap(pMaps);
 		return TRUE;
 	}
 	
@@ -177,6 +189,10 @@ BOOL CSttMacroParaEditViewOriginal::SaveTestMngrFile(const CString& strParasFile
 	{
 		CDataGroup  oDataGroup;
 		CSttDataGroupSerializeRegister oRegister(&oDataGroup);
+
+		//20240621 huangliang  保存时添加Map对应关系
+		oRegister.SetSettingDvmMaps(&m_oDvmDataMaps);
+
 		PTMT_PARAS_HEAD pCurrTmtPara = GetTestParas();
 		SerializeTestParas(&oRegister, pCurrTmtPara,g_oSttTestResourceMngr.m_pTestResouce->GetVolRsNum(),g_oSttTestResourceMngr.m_pTestResouce->GetVCurRsNum(),
 			g_oLocalSysPara.m_nCHBinInExNum,g_oLocalSysPara.m_nCHBinOutExNum,g_oSystemParas.m_nHasDigital);
@@ -185,6 +201,10 @@ BOOL CSttMacroParaEditViewOriginal::SaveTestMngrFile(const CString& strParasFile
 		strPath = _P_GetDBPath();
 		strPath += "atsgen/";
 		strPath += g_pTheSttTestApp->m_pTestMacroUI->m_strUI_ParaFile;
+#ifdef USE_ExBaseFile_AutoTrans_BinaryBsttFile
+		CString strPathB = ChangeFilePostfix(strPath, _T("bstt"));
+		dvm_SaveBinaryFile(&oDataGroup, strPathB, true);//dingxy 20240913 改为二进制文件
+#endif
 		oDataGroup.SaveXmlFile(strPath,CDataMngrXmlRWKeys::g_pXmlKeys);
 		return TRUE;
 	}
@@ -503,6 +523,8 @@ void CSttMacroParaEditViewOriginal::GetAtsCmdDataParas(CDataGroup* pDataGroup)
 //	CSttTestCmd oSttCmd;
 //	CSttMacro *pMacro = oSttCmd.GetSttMacro(TRUE,FALSE,FALSE);
 
+	////2024-9-12 lijunqing 优化系统程序启动的效率  直接生成Group对象，注释以下代码
+	/*
 	CSttMacro *pMacro = new CSttMacro();
 
 	CSttXmlSerializeTool oSttXmlSerializeTool;
@@ -538,6 +560,38 @@ void CSttMacroParaEditViewOriginal::GetAtsCmdDataParas(CDataGroup* pDataGroup)
 	pDataGroup->m_strID = pDataGroup->m_strName;
 
 	delete pMacro;
+*/////2024-9-12 lijunqing 优化系统程序启动的效率  直接生成Group对象
+
+	////2024-9-12 lijunqing 优化系统程序启动的效率  直接生成Group对象
+	ASSERT(m_pSttTestResource);
+	PTMT_PARAS_HEAD p = GetTestParas();
+
+
+	CSttMacro *pMacro = new CSttMacro();
+
+	CSttXmlSerializeTool oSttXmlSerializeTool;
+	CSttXmlSerializeBase* pMacroSerializeBase = oSttXmlSerializeTool.CreateXmlSerializeWrite(pMacro);
+
+	//20240621 huangliang  保存时添加Map对应关系
+	pMacroSerializeBase->SetSettingDvmMaps(&m_oDvmDataMaps);
+
+	CSttDataGroupSerializeRegister oRegister(pDataGroup);
+	pDataGroup->m_strName = "paras";
+	pDataGroup->m_strID = "paras";
+	pDataGroup->m_strDataType = "paras";
+
+	if (g_oSttSystemConfig.GetSelSysPata())//zhouhj 2024.5.19 在保存模板时固定增加该参数
+	{
+		double dVNom = g_oSystemParas.m_fVNom/SQRT3;
+		oRegister.xml_serialize("额定电压", STT_XML_SERIALIZE_SYS_PARA_ID_VNom, "", "number", dVNom);
+		oRegister.xml_serialize("额定电流", STT_XML_SERIALIZE_SYS_PARA_ID_INom, "", "number", g_oSystemParas.m_fINom);
+		oRegister.xml_serialize("额定频率", STT_XML_SERIALIZE_SYS_PARA_ID_FNom, "", "number", g_oSystemParas.m_fFNom);
+	}
+
+	SerializeTestParas(&oRegister, p, g_oSttTestResourceMngr.m_pTestResouce->GetVolRsNum(), 
+		g_oSttTestResourceMngr.m_pTestResouce->GetVCurRsNum(),
+		0,0,g_oSystemParas.m_nHasDigital);
+
 }
 
 long CSttMacroParaEditViewOriginal::GetMacroItemsXml(const CString &strMacroItemsID, char **ppszItemsXml)
@@ -605,7 +659,7 @@ void CSttMacroParaEditViewOriginal::slot_GoutMapChanged()
 
 float GlobalSetResultValue(CDvmValue* pResultValue,int nDecimalNum)
 {
-	if (pResultValue->m_strValue == /*"未动作"*/g_sLangTxt_State_NoActioned)
+	if (pResultValue->m_strValue == /*"未动作"*//*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact)
 	{
 		return 0.0f;
 	}
@@ -615,3 +669,14 @@ float GlobalSetResultValue(CDvmValue* pResultValue,int nDecimalNum)
 	return fTripValue;
 }
 
+void CSttMacroParaEditViewOriginal::UpdatePrimParaSetUI()
+{
+	g_oSttTestResourceMngr.IecSysParasToTmtSysParas();
+	//g_oSttTestResourceMngr.SaveSystemParasFile();
+	g_theTestCntrFrame->UpdatePrimParaSetUI(TRUE,TRUE,TRUE,IsUseSecondParaSet());
+}
+
+BOOL CSttMacroParaEditViewOriginal::IsUseSecondParaSet()
+{
+	return g_oSystemParas.m_nParaMode;
+}

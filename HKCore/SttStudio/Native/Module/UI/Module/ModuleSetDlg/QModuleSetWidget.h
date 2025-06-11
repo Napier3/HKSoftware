@@ -23,15 +23,17 @@ public:
 	QModuleSetWidget(QWidget *parent = 0);
 	~QModuleSetWidget();
 
-	void initUI(STT_SystemParas *pSysParas);
+	void initUI(/*STT_SystemParas *pSysParas*/);
 	void ReleaseUI();
+	void InitConnection();
+	void DisConnection();
 	void InitDatas();//从系统参数中初始化界面选择
 	void SaveDatas();//将界面参数保存到系统参数中
 	void SetModuleFont();
-
-protected:
+	void SetSysParas(STT_SystemParas *pSysParas);//dingxy 20250320 数据分离
 	void UpdateCurSelModuleUI();//更新当前选择的模块的界面逻辑
 
+protected:
 	QVBoxLayout *m_pModuleSet_VBoxLayout;
 
 //	QGroupBox *m_pStdValues_GroupBox;//额定值Group

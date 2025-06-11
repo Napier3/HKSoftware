@@ -1,7 +1,7 @@
 #include "QFloatLineEdit.h"
 #include"QCovDoubleValidator.h"
-#include "../../Module/OSInterface/OSInterface.h"
-#include "../../Module/API/StringApi.h"
+#include "../../../Module/OSInterface/OSInterface.h"
+#include "../../../Module/API/StringApi.h"
 
 QFloatLineEdit::QFloatLineEdit(QWidget *parent)
 	: QNumberLineEditBase(parent)

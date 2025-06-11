@@ -1,7 +1,7 @@
 #include "SttFileDlgBase.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../../XLangResource_Native.h"
-#include "../../Module/OSInterface/QT/XMessageBox.h"
+#include "../../../Module/OSInterface/QT/XMessageBox.h"
 #include <QFile>  
 #include <QTextStream>  
 
@@ -40,6 +40,8 @@ QSttFileDlgBase::QSttFileDlgBase(const CString &strFolderPath,QStringList &astrP
 	m_pExternalPathCheckBox = NULL;
 	m_pSttFileMngrTree = NULL;
 	m_pCurrSelObj = NULL;
+	m_bIsCheckExternalPath = true;
+
 // 	long nLenth = getAvailableMemoryLinux();
 // 	CString strTitle,strMsg;
 // 	strTitle = "提示";
@@ -121,8 +123,17 @@ void QSttFileDlgBase::InitUI()
 
 	if (GetUsbRootFolderPath(strUsbPath))
 	{
-		m_pExternalPathCheckBox->setChecked(true);
+	//20250213 suyang 应要求修改，插入U盘时不显示U盘路径。显示系统中默认的路径
+		if (m_bIsCheckExternalPath)
+		{
+			m_pExternalPathCheckBox->setChecked(true);
+			m_pExternalPathCheckBox->setEnabled(false);
+		}
+		else
+		{
+		m_pExternalPathCheckBox->setChecked(false);
 		m_pExternalPathCheckBox->setEnabled(true);
+		}
 	} 
 	else
 	{

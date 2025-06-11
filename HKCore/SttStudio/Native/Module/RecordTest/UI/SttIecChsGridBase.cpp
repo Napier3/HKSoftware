@@ -1,8 +1,8 @@
 #include "SttIecChsGridBase.h"
-#include "../../../../61850/Module/CfgDataMngr/IecCfgDataMngrGlobal.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgDataMngrGlobal.h"
 #include "SttIecRcdFuncInterface.h"
-#include "../../../../Module/API/GlobalConfigApi.h"
-#include "../../../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/SmartCap/XSmartCapMngr.h"
 #include "../../XLangResource_Native.h"
 
 

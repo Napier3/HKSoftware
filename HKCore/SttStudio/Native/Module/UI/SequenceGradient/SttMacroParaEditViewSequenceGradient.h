@@ -109,6 +109,9 @@ public:
 	void UpdateFT3Tab_UI(CIecCfgDatasSMV* pIecCfgDatasSMV);
 	virtual void UpdateFT3Tab(BOOL bUpdateList = FALSE);
 	virtual void UpdateBinBoutExTab();//更新开关量扩展界面
+	virtual void UpdatePrimParaSetUI(){}//20240923 suyang 更新界面一次值/二次值显示
+	virtual BOOL IsUseSecondParaSet(){ return TRUE; }//20240923 suyang 是否显示二次值	
+
 
 	void AddGooseParaWidget(CIecCfgGoutDatas* pCfgGoutDatas);
 	void RemoveGooseParaWidget();

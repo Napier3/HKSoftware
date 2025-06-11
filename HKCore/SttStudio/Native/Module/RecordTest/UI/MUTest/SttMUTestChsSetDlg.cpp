@@ -1,11 +1,11 @@
 #include "SttMUTestChsSetDlg.h"
-#include "../../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../../../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../../../UI/Module/CommonMethod/commonMethod.h"
 #include "../../../XLangResource_Native.h"
 #include "SttIecRecordCbInterface.h"
 #include "../../../UI/SttTestCntrFrameBase.h"
-#include "../../../../../Module/OSInterface/QT/XMessageBox.h"
+#include "../../../Module/OSInterface/QT/XMessageBox.h"
 
 
 QSttMUTestChsSetDlg::QSttMUTestChsSetDlg(QWidget *parent,BOOL bIsFT3MUTest)

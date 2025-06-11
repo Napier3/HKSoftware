@@ -1,8 +1,8 @@
 #include "powerdiagramwidget.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../../SttTestCntrFrameBase.h"
 #include "../../../XLangResource_Native.h"
-#include "../../Module/XLanguage/XLanguageResource.h"
+#include "../../../Module/XLanguage/XLanguageResource.h"
 #include <math.h>
 #include <QPainter>
 #include <QPaintEvent>
@@ -23,6 +23,7 @@ PowerDiagramWidget::PowerDiagramWidget(QWidget *parent) :
 	m_nNeedUGroup = 0;
 	m_nNeedIGroup = 0;
 	m_nCurrentGroup = 0;
+	m_nParaSetSecondValue = 1;
 	m_pVOL = NULL;
 	m_pCUR = NULL;
 	m_pPowerSttTestResource = NULL;
@@ -936,7 +937,16 @@ void PowerDiagramWidget::UpdateVolValue(CSttMacroChannel *pSttVolCh,float *pfAtt
 	}
 
 	CString strText;
+	
+	if (m_nParaSetSecondValue == 0)
+	{
+		strText.Format(_T("%.3fkV"),pfAttribute[0]);
+	}
+	else
+	{
 	strText.Format(_T("%.3fV"),pfAttribute[0]);
+	}
+	
 	pAmpVol_Edit->setText(strText);
 	
 	strText.Format(_T("%.3f°"),pfAttribute[1]);
@@ -1194,7 +1204,14 @@ void PowerDiagramWidget::GetPhaseVolValue(tmt_Channel* pVOL,QLineEdit *pAmpVol_E
 {
 	CString strText;
 
+	if (m_nParaSetSecondValue == 0)
+	{
+		strText.Format(_T("%.3fkV"),pVOL->Harm[1].fAmp);
+	}
+	else
+	{
 	strText.Format(_T("%.3fV"),pVOL->Harm[1].fAmp);
+	}
 	pAmpVol_Edit->setText(strText);
 
 	strText.Format(_T("%.3f°"),pVOL->Harm[1].fAngle);
@@ -1212,7 +1229,16 @@ void PowerDiagramWidget::GetLineVolValue(tmt_Channel*pA, tmt_Channel*pB,QLineEdi
 	Complex result= m_oCompA-m_oCompB;
 	CString strText;
 	double fAmp=result.norm();
+
+	if (m_nParaSetSecondValue == 0)
+	{
+		strText.Format(_T("%.3fkV"),fAmp);
+	}
+	else
+	{
 	strText.Format(_T("%.3fV"),fAmp);
+	}
+	
 	pAmpVol_Edit->setText(strText);
 	
 	double fAngle=result.arg();
@@ -1256,9 +1282,9 @@ void PowerDiagramWidget::cmbVolSetChanged()
 		}
 		else if(m_combVolSet->currentIndex()==STT_POWER_VolSetType_SE)
 		{			
-			GetPositiveSeqValue(&m_pVOL[i],&m_pVOL[i+1],&m_pVOL[i+2],m_editVa0,m_editVa1);
-			GetNegativeSeqValue(&m_pVOL[i],&m_pVOL[i+1],&m_pVOL[i+2],m_editVb0,m_editVb1);
-			GetZeroSeqValue(&m_pVOL[i],&m_pVOL[i+1],&m_pVOL[i+2],m_editVc0,m_editVc1);
+			GetPositiveSeqValue(&m_pVOL[i],&m_pVOL[i+1],&m_pVOL[i+2],m_editVa0,m_editVa1,STT_POWER_VolSetType_SE);
+			GetNegativeSeqValue(&m_pVOL[i],&m_pVOL[i+1],&m_pVOL[i+2],m_editVb0,m_editVb1,STT_POWER_VolSetType_SE);
+			GetZeroSeqValue(&m_pVOL[i],&m_pVOL[i+1],&m_pVOL[i+2],m_editVc0,m_editVc1,STT_POWER_VolSetType_SE);
 		}
 	}
 	else
@@ -1270,7 +1296,7 @@ void PowerDiagramWidget::cmbVolSetChanged()
 }
 
 //正序
-void PowerDiagramWidget::GetPositiveSeqValue(tmt_Channel*pA, tmt_Channel*pB, tmt_Channel*pC,QLineEdit *pAmp_Edit,QLineEdit *pAngle_Edit)
+void PowerDiagramWidget::GetPositiveSeqValue(tmt_Channel*pA, tmt_Channel*pB, tmt_Channel*pC,QLineEdit *pAmp_Edit,QLineEdit *pAngle_Edit,int nCurorVol)
 {
 	Complex oAlpha = m_pPowerComplex->aoperator(120);
 	m_oCompA = m_pPowerComplex->polar(pA->Harm[1].fAmp, pA->Harm[1].fAngle);
@@ -1280,7 +1306,23 @@ void PowerDiagramWidget::GetPositiveSeqValue(tmt_Channel*pA, tmt_Channel*pB, tmt
 	Complex result = (m_oCompA + oAlpha*m_oCompB + oAlpha*oAlpha*m_oCompC)/3.0;	
 	CString strText;
 	double fAmp=result.norm();
+	if (nCurorVol == STT_POWER_CurSetType_SE)
+	{
+		//电流序分量
+		strText.Format(_T("%.3fA"),fAmp);
+	}
+	else
+	{
+	if (m_nParaSetSecondValue == 0)
+	{
+		strText.Format(_T("%.3fkV"),fAmp);
+	}
+	else
+	{
 	strText.Format(_T("%.3fV"),fAmp);
+	}
+	}
+	
 	pAmp_Edit->setText(strText);
 
 	double fAngle=result.arg();
@@ -1292,7 +1334,7 @@ void PowerDiagramWidget::GetPositiveSeqValue(tmt_Channel*pA, tmt_Channel*pB, tmt
 }
 
 //负序
-void PowerDiagramWidget::GetNegativeSeqValue(tmt_Channel*pA, tmt_Channel*pB, tmt_Channel*pC,QLineEdit *pAmp_Edit,QLineEdit *pAngle_Edit)
+void PowerDiagramWidget::GetNegativeSeqValue(tmt_Channel*pA, tmt_Channel*pB, tmt_Channel*pC,QLineEdit *pAmp_Edit,QLineEdit *pAngle_Edit,int nCurorVol)
 {
 	Complex oAlpha = m_pPowerComplex->aoperator(120);
 	m_oCompA = m_pPowerComplex->polar(pA->Harm[1].fAmp, pA->Harm[1].fAngle);
@@ -1302,7 +1344,24 @@ void PowerDiagramWidget::GetNegativeSeqValue(tmt_Channel*pA, tmt_Channel*pB, tmt
 	Complex result = (m_oCompA + oAlpha*oAlpha*m_oCompB + oAlpha*m_oCompC)/3.0;
 	CString strText;
 	double fAmp=result.norm();
+	if (nCurorVol == STT_POWER_CurSetType_SE)
+	{
+		//电流序分量
+		strText.Format(_T("%.3fA"),fAmp);
+	}
+	else
+	{
+	if (m_nParaSetSecondValue == 0)
+	{
+		strText.Format(_T("%.3fkV"),fAmp);
+	}
+	else
+	{
 	strText.Format(_T("%.3fV"),fAmp);
+	}
+	}
+
+	
 	pAmp_Edit->setText(strText);
 
 	double fAngle=result.arg();
@@ -1313,7 +1372,7 @@ void PowerDiagramWidget::GetNegativeSeqValue(tmt_Channel*pA, tmt_Channel*pB, tmt
 // 	pFreq_Edit->setText(strText);
 }
 //零序
-void PowerDiagramWidget::GetZeroSeqValue(tmt_Channel*pA, tmt_Channel*pB, tmt_Channel*pC,QLineEdit *pAmp_Edit,QLineEdit *pAngle_Edit)
+void PowerDiagramWidget::GetZeroSeqValue(tmt_Channel*pA, tmt_Channel*pB, tmt_Channel*pC,QLineEdit *pAmp_Edit,QLineEdit *pAngle_Edit,int nCurorVol)
 {
 	m_oCompA = m_pPowerComplex->polar(pA->Harm[1].fAmp, pA->Harm[1].fAngle);
 	m_oCompB = m_pPowerComplex->polar(pB->Harm[1].fAmp, pB->Harm[1].fAngle);
@@ -1322,7 +1381,24 @@ void PowerDiagramWidget::GetZeroSeqValue(tmt_Channel*pA, tmt_Channel*pB, tmt_Cha
 	Complex result = (m_oCompA + m_oCompB + m_oCompC)/3.0;
 	CString strText;
 	double fAmp=result.norm();
+	if (nCurorVol == STT_POWER_CurSetType_SE)
+	{
+		//电流序分量
+		strText.Format(_T("%.3fA"),fAmp);
+	}
+	else
+	{
+	if (m_nParaSetSecondValue == 0)
+	{
+		strText.Format(_T("%.3fkV"),fAmp);
+	}
+	else
+	{
 	strText.Format(_T("%.3fV"),fAmp);
+	}
+	}
+	
+	
 	pAmp_Edit->setText(strText);
 
 	double fAngle=result.arg();    
@@ -1362,7 +1438,15 @@ void PowerDiagramWidget::UpdateVolPositiveSeqValueTest(CSttMacroChannel *pSttVol
 	Complex result = (m_oCompA + oAlpha*m_oCompB + oAlpha*oAlpha*m_oCompC)/3.0;	
 	CString strText;
 	double fAmp=result.norm();
+	if (m_nParaSetSecondValue == 0)
+	{
+		strText.Format(_T("%.3fkV"),fAmp);
+	}
+	else
+	{
 	strText.Format(_T("%.3fV"),fAmp);
+	}
+	
 	pVolAmp_Edit->setText(strText);
 
 	double fAngle=result.arg();
@@ -1402,7 +1486,14 @@ void PowerDiagramWidget::UpdateVolNegativeSeqValueTest(CSttMacroChannel *pSttVol
 	Complex result = (m_oCompA + oAlpha*oAlpha*m_oCompB + oAlpha*m_oCompC)/3.0;
 	CString strText;
 	double fAmp=result.norm();
+	if (m_nParaSetSecondValue == 0)
+	{
+		strText.Format(_T("%.3fkV"),fAmp);
+	}
+	else
+	{
 	strText.Format(_T("%.3fV"),fAmp);
+	}
 	pVolAmp_Edit->setText(strText);
 
 	double fAngle=result.arg();
@@ -1442,7 +1533,15 @@ void PowerDiagramWidget::UpdateVolZeroSeqValueTest(CSttMacroChannel *pSttVolChA,
 	Complex result = (m_oCompA + m_oCompB + m_oCompC)/3.0;
 	CString strText;
 	double fAmp=result.norm();
+	if (m_nParaSetSecondValue == 0)
+	{
+		strText.Format(_T("%.3fkV"),fAmp);
+	}
+	else
+	{
 	strText.Format(_T("%.3fV"),fAmp);
+	}
+	
 	pVolAmp_Edit->setText(strText);
 
 	double fAngle=result.arg();
@@ -1474,7 +1573,16 @@ void PowerDiagramWidget::UpdateVolLineValueTest(CSttMacroChannel *pSttVolChA,CSt
 	Complex result = m_oCompA - m_oCompB;
 	CString strText;
 	double fAmp=result.norm();
+
+	if (m_nParaSetSecondValue == 0)
+	{
+		strText.Format(_T("%.3fkV"),fAmp);
+	}
+	else
+	{
 	strText.Format(_T("%.3fV"),fAmp);
+	}
+	
 	pVolAmp_Edit->setText(strText);
 
 	double fAngle=result.arg();
@@ -1562,9 +1670,9 @@ void PowerDiagramWidget::cmbCurSetChanged()
 		}
 		else if(m_combCurSet->currentIndex()==STT_POWER_CurSetType_SE)
 		{	
-			GetPositiveSeqValue(&m_pCUR[i],&m_pCUR[i+1],&m_pCUR[i+2],m_editIa0,m_editIa1);
-			GetNegativeSeqValue(&m_pCUR[i],&m_pCUR[i+1],&m_pCUR[i+2],m_editIb0,m_editIb1);
-			GetZeroSeqValue(&m_pCUR[i],&m_pCUR[i+1],&m_pCUR[i+2],m_editIc0,m_editIc1);
+			GetPositiveSeqValue(&m_pCUR[i],&m_pCUR[i+1],&m_pCUR[i+2],m_editIa0,m_editIa1,STT_POWER_CurSetType_SE);
+			GetNegativeSeqValue(&m_pCUR[i],&m_pCUR[i+1],&m_pCUR[i+2],m_editIb0,m_editIb1,STT_POWER_CurSetType_SE);
+			GetZeroSeqValue(&m_pCUR[i],&m_pCUR[i+1],&m_pCUR[i+2],m_editIc0,m_editIc1,STT_POWER_CurSetType_SE);
 		}		
 	}
 	else
@@ -1575,7 +1683,7 @@ void PowerDiagramWidget::cmbCurSetChanged()
 
 void PowerDiagramWidget::UpdateCurPositiveSeqValueTest(CSttMacroChannel *pSttCurChA,CSttMacroChannel *pSttCurChB,CSttMacroChannel *pSttCurChC
 												,float *pfAttributeA,float *pfAttributeB,float *pfAttributeC
-												,QLineEdit *pCurAmp_Edit,QLineEdit *pCurAngle_Edit)
+												,QLineEdit *pCurAmp_Edit,QLineEdit *pCurAngle_Edit,int nCurorVol)
 												
 {
 	if (pSttCurChA != NULL)
@@ -1605,7 +1713,24 @@ void PowerDiagramWidget::UpdateCurPositiveSeqValueTest(CSttMacroChannel *pSttCur
 	Complex result = (m_oCompA + oAlpha*m_oCompB + oAlpha*oAlpha*m_oCompC)/3.0;	
 	CString strText;
 	double fAmp=result.norm();
+	if (nCurorVol == STT_POWER_CurSetType_SE)
+	{
+		//电流序分量
+		strText.Format(_T("%.3fA"),fAmp);
+	}
+	else
+	{
+	if (m_nParaSetSecondValue == 0)
+	{
+		strText.Format(_T("%.3fkV"),fAmp);
+	}
+	else
+	{
 	strText.Format(_T("%.3fV"),fAmp);
+	}
+
+	}
+
 	pCurAmp_Edit->setText(strText);
 
 	double fAngle=result.arg();
@@ -1615,7 +1740,7 @@ void PowerDiagramWidget::UpdateCurPositiveSeqValueTest(CSttMacroChannel *pSttCur
 
 void PowerDiagramWidget::UpdateCurNegativeSeqValueTest(CSttMacroChannel *pSttCurChA,CSttMacroChannel *pSttCurChB,CSttMacroChannel *pSttCurChC
 								   ,float *pfAttributeA,float *pfAttributeB,float *pfAttributeC
-								   ,QLineEdit *pCurAmp_Edit,QLineEdit *pCurAngle_Edit)
+								   ,QLineEdit *pCurAmp_Edit,QLineEdit *pCurAngle_Edit,int nCurorVol)
 {
 	if (pSttCurChA != NULL)
 	{
@@ -1644,7 +1769,23 @@ void PowerDiagramWidget::UpdateCurNegativeSeqValueTest(CSttMacroChannel *pSttCur
 	Complex result = (m_oCompA + oAlpha*oAlpha*m_oCompB + oAlpha*m_oCompC)/3.0;
 	CString strText;
 	double fAmp=result.norm();
+	if (nCurorVol == STT_POWER_CurSetType_SE)
+	{
+		//电流序分量
+		strText.Format(_T("%.3fA"),fAmp);
+	}
+	else
+	{
+	if (m_nParaSetSecondValue == 0)
+	{
+		strText.Format(_T("%.3fkV"),fAmp);
+	}
+	else
+	{
 	strText.Format(_T("%.3fV"),fAmp);
+	}
+	}
+	
 	pCurAmp_Edit->setText(strText);
 
 	double fAngle=result.arg();
@@ -1654,7 +1795,7 @@ void PowerDiagramWidget::UpdateCurNegativeSeqValueTest(CSttMacroChannel *pSttCur
 
 void PowerDiagramWidget::UpdateCurZeroSeqValueTest(CSttMacroChannel *pSttCurChA,CSttMacroChannel *pSttCurChB,CSttMacroChannel *pSttCurChC
 												   ,float *pfAttributeA,float *pfAttributeB,float *pfAttributeC
-												   ,QLineEdit *pCurAmp_Edit,QLineEdit *pCurAngle_Edit)
+												   ,QLineEdit *pCurAmp_Edit,QLineEdit *pCurAngle_Edit,int nCurorVol)
 {
 	if (pSttCurChA != NULL)
 	{
@@ -1683,7 +1824,23 @@ void PowerDiagramWidget::UpdateCurZeroSeqValueTest(CSttMacroChannel *pSttCurChA,
 	Complex result = (m_oCompA + m_oCompB + m_oCompC)/3.0;
 	CString strText;
 	double fAmp=result.norm();
+	if (nCurorVol == STT_POWER_CurSetType_SE)
+	{
+		//电流序分量
+		strText.Format(_T("%.3fA"),fAmp);
+	}
+	else
+	{
+	if (m_nParaSetSecondValue == 0)
+	{
+		strText.Format(_T("%.3fkV"),fAmp);
+	}
+	else
+	{
 	strText.Format(_T("%.3fV"),fAmp);
+	}
+	}
+	
 	pCurAmp_Edit->setText(strText);
 
 	double fAngle=result.arg();
@@ -1716,13 +1873,13 @@ void PowerDiagramWidget::getCurSetChangedTest()
 	{
 		UpdateCurPositiveSeqValueTest(pMacroChCur_A,pMacroChCur_B,pMacroChCur_C
 		                          ,m_fAttributeA,m_fAttributeB,m_fAttributeC
-		                          ,m_editIa0,m_editIa1);
+		                          ,m_editIa0,m_editIa1,STT_POWER_CurSetType_SE);
 		UpdateCurNegativeSeqValueTest(pMacroChCur_A,pMacroChCur_B,pMacroChCur_C
 		 ,m_fAttributeA,m_fAttributeB,m_fAttributeC
-		 ,m_editIb0,m_editIb1);
+		 ,m_editIb0,m_editIb1,STT_POWER_CurSetType_SE);
 		UpdateCurZeroSeqValueTest(pMacroChCur_A,pMacroChCur_B,pMacroChCur_C
 		 ,m_fAttributeA,m_fAttributeB,m_fAttributeC
-		 ,m_editIc0,m_editIc1);
+		 ,m_editIc0,m_editIc1,STT_POWER_CurSetType_SE);
 	}
 }
 
@@ -1864,7 +2021,14 @@ void PowerDiagramWidget::getGroupVolPhaseEdit()
 
 		if (nVolrChs >= 1)
 		{
+			if (m_nParaSetSecondValue == 0)
+			{
+				str.Format(_T("%.3fkV"),m_pVOL[i].Harm[1].fAmp);
+			}
+			else
+			{
 			str.Format(_T("%.3fV"),m_pVOL[i].Harm[1].fAmp);
+			}
 			m_editVa0->setText(str);
 			str.Format(_T("%.3f°"),m_pVOL[i].Harm[1].fAngle);
 			m_editVa1->setText(str);
@@ -1881,7 +2045,14 @@ void PowerDiagramWidget::getGroupVolPhaseEdit()
 
 		if (nVolrChs >= 2)
 		{
+			if (m_nParaSetSecondValue == 0)
+			{
+				str.Format(_T("%.3fkV"),m_pVOL[i+1].Harm[1].fAmp);
+			}
+			else
+			{
 			str.Format(_T("%.3fV"),m_pVOL[i+1].Harm[1].fAmp);
+			}
 			m_editVb0->setText(str);
 			str.Format(_T("%.3f°"),m_pVOL[i+1].Harm[1].fAngle);
 			m_editVb1->setText(str);
@@ -1898,7 +2069,14 @@ void PowerDiagramWidget::getGroupVolPhaseEdit()
 
 		if (nVolrChs >= 3)
 		{
+			if (m_nParaSetSecondValue == 0)
+			{
+				str.Format(_T("%.3fkV"),m_pVOL[i+2].Harm[1].fAmp);
+			}
+			else
+			{
 			str.Format(_T("%.3fV"),m_pVOL[i+2].Harm[1].fAmp);
+			}
 			m_editVc0->setText(str);
 			str.Format(_T("%.3f°"),m_pVOL[i+2].Harm[1].fAngle);
 			m_editVc1->setText(str);
@@ -1950,7 +2128,14 @@ void PowerDiagramWidget::getGroupVolPhaseEditTest()
 
 	if (nVolrChs >= 1)
 	{
+		if (m_nParaSetSecondValue == 0)
+		{
+			str.Format(_T("%.3fkV"),m_fAttributeA[0]);
+		}
+		else
+		{
 		str.Format(_T("%.3fV"),m_fAttributeA[0]);
+		}
 		m_editVa0->setText(str);
 		str.Format(_T("%.3f°"),m_fAttributeA[1]);
 		m_editVa1->setText(str);
@@ -1967,7 +2152,14 @@ void PowerDiagramWidget::getGroupVolPhaseEditTest()
 
 	if (nVolrChs >= 2)
 	{
+		if (m_nParaSetSecondValue == 0)
+		{
+			str.Format(_T("%.3fkV"),m_fAttributeB[0]);
+		}
+		else
+		{
 		str.Format(_T("%.3fV"),m_fAttributeB[0]);
+		}
 		m_editVb0->setText(str);
 		str.Format(_T("%.3f°"),m_fAttributeB[1]);
 		m_editVb1->setText(str);
@@ -1984,7 +2176,14 @@ void PowerDiagramWidget::getGroupVolPhaseEditTest()
 
 	if (nVolrChs >= 3)
 	{
+		if (m_nParaSetSecondValue == 0)
+		{
+			str.Format(_T("%.3fkV"),m_fAttributeC[0]);
+		}
+		else
+		{
 		str.Format(_T("%.3fV"),m_fAttributeC[0]);
+		}
 		m_editVc0->setText(str);
 		str.Format(_T("%.3f°"),m_fAttributeC[1]);
 		m_editVc1->setText(str);

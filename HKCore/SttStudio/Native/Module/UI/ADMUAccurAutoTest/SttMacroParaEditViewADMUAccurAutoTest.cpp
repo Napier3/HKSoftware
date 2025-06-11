@@ -4,7 +4,7 @@
 #ifdef _USE_SoftKeyBoard_	
 #include "../SoftKeyboard/SoftKeyBoard.h"
 #endif
-#include "../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../Module/SmartCap/XSmartCapMngr.h"
 
 QSttMacroParaEditViewAdmuAccurAutoTest *g_pAdmuAccurAutoTest = NULL;
 
@@ -542,6 +542,8 @@ void QSttMacroParaEditViewAdmuAccurAutoTest::InitUI()
 	{
 		setLayout(pMainLayout);
 		}
+#else
+	setLayout(pMainLayout);
 #endif
 }
 

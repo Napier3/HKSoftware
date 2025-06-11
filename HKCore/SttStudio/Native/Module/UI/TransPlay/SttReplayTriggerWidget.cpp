@@ -2,7 +2,7 @@
 #include "../Module/CommonMethod/commonMethod.h"
 #include "../Controls/SttLineEdit.h"
 #include "../Controls/SttCheckBox.h"
-#include "../Module/XLangResource_Native.h"
+#include"../Module/XLangResource_Native.h"
 #include "SttMacroParaEditViewTransPlay.h"
 
 CSttReplayTriggerWidget::CSttReplayTriggerWidget(QWidget *pParent)
@@ -109,7 +109,7 @@ void CSttReplayTriggerWidget::initUI()
 	m_pcmbTripAfterMode->setVisible(false);
 
 	m_pGroupBox_PutInSet = new QGroupBox();
-	m_pGroupBox_PutInSet->setTitle(g_sLangTxt_Native_Bin);
+	m_pGroupBox_PutInSet->setTitle(/*g_sLangTxt_Native_Bin*/g_sLangTxt_InputValue);
 	m_pGridLayout_PutInSet = new QGridLayout;
 	m_pGroupBox_PutInSet->setLayout(m_pGridLayout_PutInSet);
 

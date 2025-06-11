@@ -1,7 +1,7 @@
 #include "SttMacroParaEditViewIntelligentTerminal.h"
 #include "ui_SttMacroParaEditViewManual.h"
 #include "../../SmartCap/XSmartCapMngr.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../SttTest/Common/tmt_manu_test.h"
 #include "../SttTestCntrFrameBase.h"
 #include "../../SttTestResourceMngr/TestResource/SttTestResource_Sync.h"

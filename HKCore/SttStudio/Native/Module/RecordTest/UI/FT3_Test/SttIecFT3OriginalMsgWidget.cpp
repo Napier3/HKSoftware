@@ -1,6 +1,6 @@
 #include "SttIecFT3OriginalMsgWidget.h"
-#include "../../../../../Module/SmartCap/XSmartCapMngr.h"
-#include "../../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../../XLangResource_Native.h"
 #include "../../../UI/Module/CommonMethod/commonMethod.h"
 

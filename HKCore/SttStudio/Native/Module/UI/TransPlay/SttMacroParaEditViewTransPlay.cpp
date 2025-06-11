@@ -5,7 +5,7 @@
 #include "../Module/PopupDialog/SttPopupOpenDialog.h"
 #include <QApplication>
 #ifdef _PSX_QT_LINUX_
-#include"../../Module/OSInterface/QT/XGlobalDefine_QT.h"
+#include"../../../Module/OSInterface/QT/XGlobalDefine_QT.h"
 #endif
 #include "../Module/PopupDialog/SttFileMngrTool.h"
 #include "../../XLangResource_Native.h"
@@ -32,6 +32,20 @@ QSttMacroParaEditViewTransPlay::QSttMacroParaEditViewTransPlay(QWidget *parent, 
 	m_bReadComtradeFile = false;
 	m_pSttOpenComtradeFileThread = NULL;
 	m_pSttInsertWaveThread = NULL;
+
+	//可使用数字量 2024--6-19 wuxinyi 保证故障回放输出，暂时放出
+	if (!g_oSystemParas.m_nHasAnalog)
+	{
+		g_oSystemParas.m_nHasAnalog = 1;
+		m_bSystemParasChanged = TRUE;
+	}
+
+	if (g_oSystemParas.m_nHasDigital)
+	{
+		g_oSystemParas.m_nHasDigital = 0;
+		m_bSystemParasChanged = TRUE;
+	}
+
 
 	m_pOriginalSttTestResource = g_theTestCntrFrame->GetSttTestResource();
 	g_theTestCntrFrame->InitTestResource();
@@ -101,6 +115,16 @@ void QSttMacroParaEditViewTransPlay::SetDatas(CDataGroup *pDataset)
 
 bool QSttMacroParaEditViewTransPlay::PrepStartTest()
 {
+	if (!g_theBigComtradeTransPlay->m_bUseConnectServer)
+	{
+		bool bRet =	g_theBigComtradeTransPlay->CreateSttComtradeSocket();
+
+		if (!bRet)
+		{
+			CLogPrint::LogString(XLOGLEVEL_RESULT,_T("连接测试仪底层服务失败，无法开始测试！"));
+			return false;
+		}
+	}
 	if(m_pSttOpenComtradeFileThread && !m_pSttProgDlg->isHidden())//正在解析波形文件
 	{
 		CLogPrint::LogString(XLOGLEVEL_RESULT,_T("当前正在解析波形文件，无法开始测试，请等待解析完成再开始测试！"));
@@ -108,7 +132,7 @@ bool QSttMacroParaEditViewTransPlay::PrepStartTest()
 	}
 	if (!m_bReadComtradeFile)
 	{
-        CLogPrint::LogString(XLOGLEVEL_RESULT,g_sLangTxt_ReplayStarttest.GetString());
+        CLogPrint::LogString(XLOGLEVEL_RESULT,"g_sLangTxt_starttest2.GetString()");
 		return false;
 	}
 
@@ -178,17 +202,17 @@ bool QSttMacroParaEditViewTransPlay::PrepStartTest()
 // 	m_bSystemParasChanged = FALSE;
 
 	//可使用数字量 2024--6-19 wuxinyi 保证故障回放输出，暂时放出
-// 	if (!g_oSystemParas.m_nHasAnalog)
-// 	{
-// 		g_oSystemParas.m_nHasAnalog = 1;
-// 		m_bSystemParasChanged = TRUE;
-// 	}
-// 
-// 	if (g_oSystemParas.m_nHasDigital)
-// 	{
-// 		g_oSystemParas.m_nHasDigital = 0;
-// 		m_bSystemParasChanged = TRUE;
-// 	}
+	if (!g_oSystemParas.m_nHasAnalog)
+	{
+		g_oSystemParas.m_nHasAnalog = 1;
+		m_bSystemParasChanged = TRUE;
+	}
+
+	if (g_oSystemParas.m_nHasDigital)
+	{
+		g_oSystemParas.m_nHasDigital = 0;
+		m_bSystemParasChanged = TRUE;
+	}
 
 	if (m_bSystemParasChanged)
 	{
@@ -334,6 +358,13 @@ void QSttMacroParaEditViewTransPlay::OpenComtradeFile()
 	}
 
 	m_strComtradeFilePath = strFileName;
+
+	if (!g_theBigComtradeTransPlay->ConnectServerState())
+	{
+		CTickCount32 oTickCount;
+		oTickCount.DoEvents(300);
+	}
+
 #ifdef _PSX_QT_LINUX_
     pthread_create(&m_pSttOpenComtradeFileThread,NULL,SttOpenComtradeFileThread,(LPVOID)this );
 #else
@@ -526,7 +557,7 @@ void QSttMacroParaEditViewTransPlay::StartInsertWaveThread()
 #else
 	m_pSttInsertWaveThread = CreateThread(NULL,NULL,(LPTHREAD_START_ROUTINE)SttInsertWaveThread,(LPVOID)this,0,NULL);
 #endif
-	StartProgDlg(_T("正在生成新的波形,请稍等...."));
+    StartProgDlg("g_sLangTxt_ReplayTest_InsertWaveTip");
 }
 
 #ifdef _PSX_QT_LINUX_
@@ -555,7 +586,7 @@ UINT QSttMacroParaEditViewTransPlay::SttInsertWaveThread( LPVOID pParam )
 		{
 			long nBegin = g_theBigComtradeTransPlay->m_oComtradePlayConfig.m_oWaveEditParas.m_oInsertWaveData.m_nBeginPoint;
 			long nEnd = g_theBigComtradeTransPlay->m_oComtradePlayConfig.m_oWaveEditParas.m_oInsertWaveData.m_nEndPoint;
-			g_theBigComtradeTransPlay->m_oBigComtradeFileRead.InsertCyclePointsByPoint(nBegin, nEnd,nEnd, nCycNum);
+			g_theBigComtradeTransPlay->m_oBigComtradeFileRead.InsertCyclePointsByPoint(nBegin-1, nEnd-1,nEnd-1, nCycNum);//界面1为起点，实际数组从0为起点，故减一
 		}
 	}
 	else if(nType == REPLAYTEST_INSERT_TYPE_NORMAL)
@@ -584,7 +615,7 @@ void QSttMacroParaEditViewTransPlay::ReCoveryWave()
 	m_pSttOpenComtradeFileThread =  CreateThread(NULL,NULL,(LPTHREAD_START_ROUTINE)SttOpenComtradeFileThread,(LPVOID)this,0,NULL);
 #endif
 	CString strProgTitle;
-	strProgTitle = _T("波形正在复归，请稍等....");
+    strProgTitle = "g_sLangTxt_ReplayTest_RecoverWaveTip";
 	StartProgDlg(strProgTitle);
 }
 
@@ -600,12 +631,12 @@ bool QSttMacroParaEditViewTransPlay::isNeedAnalogModule()
 		return false;
 	}
 
-	if (g_theBigComtradeTransPlay->m_oComtradePlayConfig.m_oSttModulesComtradeBind.GetAnalogModuleCount() > 0) 
-	{
-		return true;
-	}
+// 	if (g_theBigComtradeTransPlay->m_oComtradePlayConfig.m_oSttModulesComtradeBind.GetAnalogModuleCount() > 0) 
+// 	{
+// 		return true;
+// 	}
 
-	return false;
+	return true;
 }
 
 bool QSttMacroParaEditViewTransPlay::isNeedDigitalModule()
@@ -620,12 +651,12 @@ bool QSttMacroParaEditViewTransPlay::isNeedDigitalModule()
 		return false;
 	}
 
-	if (g_theBigComtradeTransPlay->m_oComtradePlayConfig.m_oSttModulesComtradeBind.GetDigitalModuleCount() > 0) 
-	{
-		return true;
-	}
+// 	if (g_theBigComtradeTransPlay->m_oComtradePlayConfig.m_oSttModulesComtradeBind.GetDigitalModuleCount() > 0) 
+// 	{
+// 		return true;
+// 	}
 
-	return false;
+	return true;
 }
 
 
@@ -641,12 +672,12 @@ bool QSttMacroParaEditViewTransPlay::isNeedWeekModule()
 		return false;
 	}
 
-	if (g_theBigComtradeTransPlay->m_oComtradePlayConfig.m_oSttModulesComtradeBind.GetWeekModuleCount() > 0) 
-	{
-		return true;
-	}
+// 	if (g_theBigComtradeTransPlay->m_oComtradePlayConfig.m_oSttModulesComtradeBind.GetWeekModuleCount() > 0) 
+// 	{
+// 		return true;
+// 	}
 
-	return false;
+	return true;
 }
 
 

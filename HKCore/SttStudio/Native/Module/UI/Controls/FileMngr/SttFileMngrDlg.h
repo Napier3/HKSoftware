@@ -8,7 +8,7 @@
 #include <QDialog>
 
 #include "SttFileTypeMngrGrid.h"
-#include "../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/DataMngr/DataGroup.h"
 #include "../../Module/QExBaseListGridBase/QExBaseListGridBase.h"
 
 //#define USE_SttFileMngrChildren

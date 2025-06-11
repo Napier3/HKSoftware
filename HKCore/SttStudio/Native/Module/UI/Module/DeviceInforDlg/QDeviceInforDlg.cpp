@@ -44,11 +44,11 @@ void QDeviceInforDlg::ReleaseUI()
 		delete m_pVLayout;
 		m_pVLayout = NULL;
 	}
-	if (m_pDeviceAttrGroup != NULL)
-	{
-		delete m_pDeviceAttrGroup;
-		m_pDeviceAttrGroup = NULL;
-	}
+// 	if (m_pDeviceAttrGroup != NULL)
+// 	{
+// 		delete m_pDeviceAttrGroup;
+// 		m_pDeviceAttrGroup = NULL;
+// 	}
 }
 
 void QDeviceInforDlg::initUI(BOOL bEnableCmbSel)
@@ -165,6 +165,7 @@ void QDeviceInforDlg::InitDatas()
 	if (bHasLoadDev)
 	{
 		InitVersionViewCfg();
+
 		CDataGroup *pSttAdjRef = g_oSttTestResourceMngr.m_oCurrDevice.m_pSttAdjRef;
 
 		if (pSttAdjRef != NULL)
@@ -195,21 +196,43 @@ void QDeviceInforDlg::InitDatas()
 		}
 
 		m_pDeviceAttrGroup = g_oSttTestResourceMngr.m_oCurrDevice.AddNewDeviceModelByVersionViewCfg(&m_oVersionViewCfg);
+		
+		if (m_pDeviceAttrGroup == NULL)
+		{
+			return;//如果为空，则不走下面数据 20250318 suyang
+		}
+		else
+		{
+			m_pModulesGrid->ShowDatas(m_pDeviceAttrGroup);
+		}
+
         pAttrGroup = (CDataGroup*)m_pDeviceAttrGroup->FindByID(_T("DeviceAttrs"));
 
 		if (pAttrGroup)
 		{
-		}
 		m_pDevcieAttrsGrid->ShowDatas(pAttrGroup);
-		m_pModuleAttrsGrid->ShowDatas(NULL);
-		m_pModulesGrid->ShowDatas(m_pDeviceAttrGroup);
-
+		}
+		else
+		{
+			m_pDevcieAttrsGrid->ShowDatas(NULL);
+		}
+		
+		//m_pModuleAttrsGrid->ShowDatas(NULL);
+	
 		CDataGroup *pModuleGroup = (CDataGroup*)m_pDeviceAttrGroup->FindByID(_T("Module"));
 
 		if (pModuleGroup != NULL)
 		{
 			CDataGroup* pAttrGroupModule = (CDataGroup*)pModuleGroup->FindByID(_T("ModuleAttrs"));
+			if(pAttrGroupModule)
+			{
 			m_pModuleAttrsGrid->ShowDatas(pAttrGroupModule);
+		}
+			else
+			{
+				m_pModuleAttrsGrid->ShowDatas(NULL);
+			}
+			
 		}
 	}
 

@@ -43,19 +43,19 @@ void QShortTimeOverGrid::DCStateChanged()
 	m_pParaSetImp->DCStateChanged(m_ndc_type, m_bDC);
 }
 
-void QShortTimeOverGrid::setUAmpMaxMinValue()
+void QShortTimeOverGrid::setUAmpMaxMinValue(bool bCanUpdateTable)
 {
 	if (m_pParaSetImp != NULL)
 	{
-		m_pParaSetImp->setUAmpMaxMinValue();
+		m_pParaSetImp->setUAmpMaxMinValue(bCanUpdateTable);
 	}
 }
 
-void QShortTimeOverGrid::setIAmpMaxMinValue()
+void QShortTimeOverGrid::setIAmpMaxMinValue(bool bCanUpdateTable)
 {
 	if (m_pParaSetImp != NULL)
 	{
-		m_pParaSetImp->setIAmpMaxMinValue();
+		m_pParaSetImp->setIAmpMaxMinValue(bCanUpdateTable);
 	}
 }
 
@@ -175,7 +175,7 @@ void QShortTimeOverGrid::initData()
 {
 	if (m_pParaSetImp != NULL)
 	{
-		m_pParaSetImp->initData();
+		m_pParaSetImp->initData(true);
 	}
 }
 
@@ -276,7 +276,7 @@ void QShortTimeOverGrid::SetBasicTestParaSetImp(QShortTimeOverGridImp* pParaSetI
 	m_pParaSetImp = pParaSetImp;
 }
 
-void QShortTimeOverGrid::setMaxMinAndEDVal()
+void QShortTimeOverGrid::setMaxMinAndEDVal(bool bCanUpdateTable)
 {
 	if (m_pParaSetImp != NULL)
 	{

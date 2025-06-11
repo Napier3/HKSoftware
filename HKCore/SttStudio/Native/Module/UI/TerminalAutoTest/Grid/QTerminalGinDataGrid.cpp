@@ -1,9 +1,9 @@
 #include "QTerminalGinDataGrid.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgGinData.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgGinData.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../../Module/CommonMethod/commonMethod.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgDatasBase.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgDatasBase.h"
 
 QTerminalGinDataGrid::QTerminalGinDataGrid(QWidget* pparent):CIecCfgDataGridBase(pparent)
 {

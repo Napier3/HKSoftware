@@ -44,7 +44,7 @@ Q_DECLARE_METATYPE(MOUDLEType);
 #define MAXHARMCOUNT 51  //32
 
 #define MAXHZ 3000
-#define HKpi 3.14159265357979823846
+#define HK_pi 3.14159265357979823846
 #define G3 1.7320508
 #define G2 1.4142135623731
 #define FRADIO 1.1
@@ -163,7 +163,7 @@ struct ShortCalcuPara
 
 	bool isSame(const ShortCalcuPara &right)
 	{
-        bool bSame = true;
+           bool bSame = true;
 		if(nRadio != right.nRadio || bZPhi != right.bZPhi || bRX != right.bRX || bPrimaryPara != right.bPrimaryPara
 		   || nFaultType != right.nFaultType || fZ != right.fZ || fR != right.fR || fX != right.fX || fPhi != right.fPhi
 		   || fImax != right.fImax || fVmax != right.fVmax || fKr != right.fKr || fKx != right.fKx || fDLI != right.fDLI

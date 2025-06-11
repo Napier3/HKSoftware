@@ -1,5 +1,5 @@
 #include "SttFileTypeMngrGrid.h"
-#include "../../Module/DataMngr/DvmData.h"
+#include "../../../Module/DataMngr/DvmData.h"
 #include "../../../XLangResource_Native.h"
 #include "SttFileMngrChildren.h"
 #include <QApplication>

@@ -15,7 +15,7 @@
 #include "../Module/ScrollCtrl/ScrollComboBox.h"
 #include "../Controls/SttCheckBox.h"
 #include "../Interface/SttMacroParaEditViewOriginal.h"
-#include "../../Module/BaseClass/QT/ExBaseListComboBox.h"
+#include "../../../Module/BaseClass/QT/ExBaseListComboBox.h"
 
 class QSttMacroParaEditViewSoeWidget : public CSttMacroParaEditViewOriginal
 {
@@ -43,7 +43,7 @@ public:
 
 	virtual void UpdateDeviceModelRef();
 	virtual void AddShowSoeReports(CDvmDataset *pSoeRptDataset);
-	virtual BOOL GetDatas_Reports( CSttReport *pReport,const CString &strItemID = "");
+	virtual BOOL GetDatas_Reports( CSttReport *pReport,CSttItemBase *pSttItem);
 
 	void InitData();
 	void InitIntervalListDatas();
@@ -62,6 +62,7 @@ public:
 	
 	QLabel* m_pInterSelect;
 	CExBaseListComboBox *m_pInterSelect_ComboBox;//间隔选择下拉框
+	QPushButton* m_pBtnClearEventRecords;//清空事件记录
 
 	QSttMacroParaEditViewSoeTable *m_pSoeFirstGrid;
 	QSttMacroParaEditViewSoeTable *m_pSoeSecondGrid;
@@ -78,6 +79,8 @@ public slots:
 	void slot_EditTestCount();
 	void slot_Check_LoopTest(bool checked);
 	void slot_InterSelectIndexChanged(int nIndex);
+	void slot_btn_ClearClearEventRecordsClicked();
+
 };
 
 extern QSttMacroParaEditViewSoeWidget* g_pSoeTest;

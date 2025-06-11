@@ -3,7 +3,7 @@
 
 #include <QToolButton>
 #include "../Config/Frame/SttFrame_XBar.h"
-#include "../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/DataMngr/DataGroup.h"
 #include "../SttStyleSheetGlobalDefine.h"
 
 class QSttToolButtonBase : public QToolButton

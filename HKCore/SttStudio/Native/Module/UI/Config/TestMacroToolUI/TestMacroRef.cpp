@@ -19,6 +19,7 @@ CTestMacroRef::CTestMacroRef()
 	//初始化属性
 
 	//初始化成员变量
+	m_isChecked = false;
 }
 
 CTestMacroRef::~CTestMacroRef()

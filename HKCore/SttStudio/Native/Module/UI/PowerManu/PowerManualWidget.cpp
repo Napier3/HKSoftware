@@ -2,7 +2,7 @@
 #include "PowerManualWidget.h"
 
 #include "../Module/CommonMethod/commonMethod.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "SttMacroParaEditViewPowerManu.h"
 #include "../SttTestCntrFrameBase.h"
 #include "../Module/XLangResource_Native.h"
@@ -50,32 +50,32 @@ void QPowerManualWidget::InitUI()
 	m_pPowerManuTab->addTab(m_pVolCurr_Widget,g_sLangTxt_sequence);
 
 	//strText = _T("通道选择:");//TODO 改为变量选择 wangtao 20240612
-	m_pChSelect_Label = new QLabel(_T("变量选择:"),this);
+	m_pChSelect_Label = new QLabel(/*_T("变量选择:")*/(g_sLangTxt_Impedance_VarChoose+ ":"),this);
 	m_pChSelect_ComboBox = new QScrollComboBox(this);
 	//strText = _T("步长时间:");
 	m_pStepTime_Label = new QLabel(g_sLangTxt_steplength,this);
-	m_pStepTime_LineEdit = new QSttLineEdit(this);
+	m_pStepTime_LineEdit = new QSettingLineEdit(this);
 	//strText = _T("自动");
 	m_pAuto_CheckBox = new QSttCheckBox(g_sLangTxt_Manual_Auto,this);
 
 	//strText = _T("始值(VA):");
-	m_pStartValue_Label = new QLabel(_T("始值(VA):"),this);
-	m_pStartValue_LineEdit = new QSttLineEdit(this);
+	m_pStartValue_Label = new QLabel(/*_T("始值(VA):")*/(g_sLangTxt_State_BeginVal + "(VA):"),this);
+	m_pStartValue_LineEdit = new QSettingLineEdit(this);
 
 	//strText = _T("终值(VA):");
-	m_pEndValue_Label = new QLabel(_T("终值(VA):"),this);
-	m_pEndValue_LineEdit = new QSttLineEdit(this);
+	m_pEndValue_Label = new QLabel(/*_T("终值(VA):")*/(g_sLangTxt_State_EndVal + "(VA):"),this);
+	m_pEndValue_LineEdit = new QSettingLineEdit(this);
 
 	//strText = _T("变化步长(VA):");
-	m_pStepValue_Label = new QLabel(_T("变化步长(VA):")  ,this);
-	m_pStepValue_LineEdit = new QSttLineEdit(this);
+	m_pStepValue_Label = new QLabel(/*_T("变化步长(VA):")*/g_sLangTxt_Gradient_Step + "(VA):"  ,this);
+	m_pStepValue_LineEdit = new QSettingLineEdit(this);
 
 	//strText = _T("变化方式:");
 	m_pChangedType_Label = new QLabel(g_sLangTxt_Manual_ChangeType,this);
 	m_pChangedType_ComboBox = new QScrollComboBox(this);
 
 	//strText = _T("开出量");
-	m_pBoutGroupBox = new QGroupBox(g_sLangTxt_Native_Bout,this);
+	m_pBoutGroupBox = new QGroupBox(/*g_sLangTxt_Native_Bout*/g_sLangTxt_OutputValue,this);
 	//2023/10/9 - wjs 开出量宽度改小，使其他按钮内容可以显示全
 	//m_pBoutGroupBox->setFixedWidth(110);
 	//2023/10/9 - wjs 设置为可动态调整
@@ -187,11 +187,19 @@ void QPowerManualWidget::InitUI()
 	m_pThirdRowWidget = new QWidget(this);
 	m_pMainGridLayout->addWidget(m_pThirdRowWidget, 3, 0, 1, 10);
 	m_pThirdRowLayout =new QHBoxLayout(m_pThirdRowWidget);
+	m_pThirdRowLayout->setAlignment(Qt::AlignRight);
 	//m_pThirdRowLayout->addWidget(m_pFreq_Label);
 	//m_pThirdRowLayout->addWidget(m_pFreq_LineEdit);
 	m_pThirdRowLayout->addWidget(m_pLock_PushButton);
+	QSpacerItem *spacer = new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+	m_pThirdRowLayout->addSpacerItem(spacer);
 	m_pThirdRowLayout->addWidget(m_pAdd_PushButton);
+	spacer = new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+	m_pThirdRowLayout->addSpacerItem(spacer);
 	m_pThirdRowLayout->addWidget(m_pMinus_PushButton);
+	spacer = new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+	m_pThirdRowLayout->addSpacerItem(spacer);
+	//m_pThirdRowLayout->addSpacing(70);
 	m_pThirdRowLayout->addWidget(m_pBinarySet_PushButton);
 	m_pThirdRowLayout->addWidget(m_pEstimate_PushButton);
 
@@ -260,16 +268,15 @@ void QPowerManualWidget::SetUnitType (int index)
 		break;
 	}
 
-	//TODO wangtao 20240613 增加功率相关多语言
     CString strTemp; 
 	//xlang_GetLangStrByFile(strTemp, "Manual_Step");
-	strTemp = _T("变化步长(VA):");
+	strTemp = /*_T("变化步长(VA):")*/g_sLangTxt_Gradient_Step + "(VA):";
 	m_pStepValue_Label->setText(strTemp.mid(0, m_pStepValue_Label->text().lastIndexOf("(") + 1) + strText + "):");
 	//xlang_GetLangStrByFile(strTemp, "Manual_InitVal");
-    strTemp = _T("始值(VA):");
+    strTemp = /*_T("始值(VA):")*/g_sLangTxt_State_BeginVal + "(VA):";
 	m_pStartValue_Label->setText(strTemp.mid(0, m_pStartValue_Label->text().lastIndexOf("(") + 1) + strText + "):");
 	//xlang_GetLangStrByFile(strTemp, "Manual_FinishVal");
-    strTemp = _T("终值(VA):");
+    strTemp = /*_T("终值(VA):")*/g_sLangTxt_State_EndVal + "(VA):";
 	m_pEndValue_Label->setText(strTemp.mid(0, m_pEndValue_Label->text().lastIndexOf("(") + 1) + strText + "):");
 };
 
@@ -292,9 +299,9 @@ void QPowerManualWidget::UpdateData()
 
 	//递变参数
 	InitGradientData();
-	slot_lne_startChanged();
-	slot_lne_endChanged();
-	slot_lne_stepChanged();
+// 	slot_lne_startChanged();//20250320 suyang 初始化不需要进行转换
+// 	slot_lne_endChanged();
+// 	slot_lne_stepChanged();
 	//slot_Freq_LineEdit_Changed();
 
 	m_pAdd_PushButton->setDisabled(bAuto);
@@ -322,12 +329,21 @@ void QPowerManualWidget::InitGradientData()
 	}
 	else
 	{*/
-		m_pStartValue_LineEdit->setText(QString::number(m_pManualParas->m_oPowerGradient.fStart,'f',3));  //有效位数改为三位 20210912 sf
-		m_pEndValue_LineEdit->setText(QString::number(m_pManualParas->m_oPowerGradient.fEnd,'f',3));
-		m_pStepValue_LineEdit->setText(QString::number(m_pManualParas->m_oPowerGradient.fStep,'f',3));
-	//}
+// 		//20240801 gongyiping 
+// 		//m_pStartValue_LineEdit->setText(QString::number(m_pManualParas->m_oPowerGradient.fStart,'f',3));  //有效位数改为三位 20210912 sf
+// 		((QSettingLineEdit*)m_pStartValue_LineEdit)->UpdateStructText(CVariantDataAddress(&m_pManualParas->m_oPowerGradient.fStart), 3);
+// 		//m_pEndValue_LineEdit->setText(QString::number(m_pManualParas->m_oPowerGradient.fEnd,'f',3));
+// 		((QSettingLineEdit*)m_pEndValue_LineEdit)->UpdateStructText(CVariantDataAddress(&m_pManualParas->m_oPowerGradient.fEnd), 3);
+// 		//m_pStepValue_LineEdit->setText(QString::number(m_pManualParas->m_oPowerGradient.fStep,'f',3));
+// 		((QSettingLineEdit*)m_pStepValue_LineEdit)->UpdateStructText(CVariantDataAddress(&m_pManualParas->m_oPowerGradient.fStep), 3);
+// 	//}
 
+	m_pEndValue_LineEdit->setText(QString::number(m_pManualParas->m_oPowerGradient.fEnd,'f',3));
+	m_pStepValue_LineEdit->setText(QString::number(m_pManualParas->m_oPowerGradient.fStep,'f',3));
+	m_pStartValue_LineEdit->setText(QString::number(m_pManualParas->m_oPowerGradient.fStart,'f',3));
+	//20240801 gongyiping 
 	m_pStepTime_LineEdit->setText(QString::number(m_pManualParas->m_oPowerGradient.fStepTime,'f',3));
+	//((QSettingLineEdit*)m_pStepTime_LineEdit)->UpdateStructText(CVariantDataAddress(&m_pManualParas->m_oPowerGradient.fStepTime), 3);
 
 	m_pChangedType_ComboBox->setCurrentIndex(m_pManualParas->m_oPowerGradient.nMode);
 
@@ -391,38 +407,49 @@ void QPowerManualWidget::InitGradientVar(Sequence_type vartype)
 
 float QPowerManualWidget::slot_lne_Changed(QLineEdit* pLineEdit)
 {
+	//20240801 gongyiping 
+	if (pLineEdit->inherits(STT_SETTING_LINEEDIT_ClassID/*"QSettingEdit"*/))
+				{
+		if (((QSettingLineEdit*)pLineEdit)->IsSetting())
+				{
+			float fv = ((QSettingLineEdit*)pLineEdit)->GetValue().toFloat();
+			return fv;
+				}
+			}
+
 	float fv = pLineEdit->text().toFloat();
-	QString strvar = m_pChSelect_ComboBox->currentText();
-	//int index = m_pChGradientType_ComboBox->currentIndex();
-	float fAcVMax = g_oLocalSysPara.m_fAC_VolMax;
-	float fAcIMax = g_oLocalSysPara.m_fAC_CurMax;
-	float fDcVMax = g_oLocalSysPara.m_fDC_VolMax;
-	float fDcIMax = g_oLocalSysPara.m_fDC_CurMax;
+    fv = setLimit(0,660000000.000,fv); //最大限值
+//	QString strvar = m_pChSelect_ComboBox->currentText();
+//	//int index = m_pChGradientType_ComboBox->currentIndex();
+//	float fAcVMax = g_oLocalSysPara.m_fAC_VolMax;
+//	float fAcIMax = g_oLocalSysPara.m_fAC_CurMax;
+//	float fDcVMax = g_oLocalSysPara.m_fDC_VolMax;
+//	float fDcIMax = g_oLocalSysPara.m_fDC_CurMax;
 
-			if (strvar.contains("U"))
-			{
-				if (fv>fAcVMax)
-				{
-					fv = fAcVMax;
-				}
+//			if (strvar.contains("U"))
+//			{
+//				if (fv>fAcVMax)
+//				{
+//					fv = fAcVMax;
+//				}
 
-				if (fv<0)
-				{
-					fv = 0;
-				}
-			}
-			else if (strvar.contains("I"))
-			{
-				if (fv>fAcIMax)
-				{
-					fv = fAcIMax;
-				}
+//				if (fv<0)
+//				{
+//					fv = 0;
+//				}
+//			}
+//			else if (strvar.contains("I"))
+//			{
+//				if (fv>fAcIMax)
+//				{
+//					fv = fAcIMax;
+//				}
 
-				if (fv<0)
-				{
-					fv = 0;
-				}
-			}
+//				if (fv<0)
+//				{
+//					fv = 0;
+//				}
+//			}
 		pLineEdit->setText(QString::number(fv,'f',3));
 	
 
@@ -489,43 +516,48 @@ void QPowerManualWidget::slot_lne_endChanged()
 void QPowerManualWidget::slot_lne_stepChanged()
 {
 	float fv = m_pStepValue_LineEdit->text().toFloat();
+    float fMinValue = 0;
+    float fMaxValue = 660000000;
 	if (qAbs(fv)<=EPSINON)
 	{
-		fv = 0.001;
+        fMinValue = 0.001;
 	}
 
-	QString strvar = m_pChSelect_ComboBox->currentText();
-	//int index = m_pChGradientType_ComboBox->currentIndex();
-	float fAcVMax = g_oLocalSysPara.m_fAC_VolMax;
-	float fAcIMax = g_oLocalSysPara.m_fAC_CurMax;
-	float fDcVMax = g_oLocalSysPara.m_fDC_VolMax;
-	float fDcIMax = g_oLocalSysPara.m_fDC_CurMax;
+    fv = setLimit(fMinValue,fMaxValue,fv); //最大限值
 
 
-			if (strvar.contains("U"))
-			{
-				if (fv>fAcVMax)
-				{
-					fv = fAcVMax;
-				}
+//	QString strvar = m_pChSelect_ComboBox->currentText();
+//	//int index = m_pChGradientType_ComboBox->currentIndex();
+//	float fAcVMax = g_oLocalSysPara.m_fAC_VolMax;
+//	float fAcIMax = g_oLocalSysPara.m_fAC_CurMax;
+//	float fDcVMax = g_oLocalSysPara.m_fDC_VolMax;
+//	float fDcIMax = g_oLocalSysPara.m_fDC_CurMax;
 
-				if (fv<0)
-				{
-					fv = 0.001;
-				}
-			}
-			else if (strvar.contains("I"))
-			{
-				if (fv>fAcIMax)
-				{
-					fv = fAcIMax;
-				}
 
-				if (fv<0)
-				{
-					fv = 0.001;
-				}
-			}
+//			if (strvar.contains("U"))
+//			{
+//				if (fv>fAcVMax)
+//				{
+//					fv = fAcVMax;
+//				}
+
+//				if (fv<0)
+//				{
+//					fv = 0.001;
+//				}
+//			}
+//			else if (strvar.contains("I"))
+//			{
+//				if (fv>fAcIMax)
+//				{
+//					fv = fAcIMax;
+//				}
+
+//				if (fv<0)
+//				{
+//					fv = 0.001;
+//				}
+//			}
 
 
 	m_pManualParas->m_oPowerGradient.fStep = fv;
@@ -534,6 +566,16 @@ void QPowerManualWidget::slot_lne_stepChanged()
 
 void QPowerManualWidget::slot_lne_steptimeChanged()
 {
+	//20240801 gongyiping 
+	if (m_pStepTime_LineEdit->inherits(STT_SETTING_LINEEDIT_ClassID/*"QSettingEdit"*/))
+	{
+		if (((QSettingLineEdit*)m_pStepTime_LineEdit)->IsSetting())
+		{
+			return;
+		}
+	}
+
+
 	float fv = m_pStepTime_LineEdit->text().toFloat();
 	fv = setLimit(0,999.999,fv);
 
@@ -716,24 +758,21 @@ void QPowerManualWidget::slot_cbb_ChannelChanged(int index)
 
 	m_pManualParas->m_nGradientChSelect = pCurDataTypeValue->GetIndex();
 
-	m_nChanneType = 1;
- 
-	int nVariableType = 0;
 	if(m_pChSelect_ComboBox->currentText().indexOf("S") != -1)
 	{
-		nVariableType = 0;
+		m_nChanneType = 0;
 	}
 	else if (m_pChSelect_ComboBox->currentText().indexOf("P") != -1)
 	{
-		nVariableType = 1;
+		m_nChanneType = 1;
 	} 
 	else
 	{
-        nVariableType = 2;
+		m_nChanneType = 2;
 	}
 
 
-	SetUnitType(nVariableType);
+	SetUnitType(m_nChanneType);
 };
 
 void QPowerManualWidget::slot_cbb_ChangeTypeChanged(int index)
@@ -872,4 +911,22 @@ void QPowerManualWidget::slot_currentChangedTabWidget(int nCurrIndex)
 	m_pMinus_PushButton->setVisible(bVisibleBottomCtrls);
 	m_pBinarySet_PushButton->setVisible(bVisibleBottomCtrls);
 	m_pEstimate_PushButton->setVisible(bVisibleBottomCtrls);
+
+    m_pChSelect_Label->setVisible(bVisibleBottomCtrls);
+    m_pChSelect_ComboBox->setVisible(bVisibleBottomCtrls);
+    m_pStepTime_Label->setVisible(bVisibleBottomCtrls);
+    m_pStepTime_LineEdit->setVisible(bVisibleBottomCtrls);
+    m_pAuto_CheckBox->setVisible(bVisibleBottomCtrls);
+    m_pStartValue_Label->setVisible(bVisibleBottomCtrls);
+    m_pStartValue_LineEdit->setVisible(bVisibleBottomCtrls);
+    m_pEndValue_Label->setVisible(bVisibleBottomCtrls);
+    m_pEndValue_LineEdit->setVisible(bVisibleBottomCtrls);
+    m_pStepValue_Label->setVisible(bVisibleBottomCtrls);
+    m_pStepValue_LineEdit->setVisible(bVisibleBottomCtrls);
+    m_pChangedType_Label->setVisible(bVisibleBottomCtrls);
+    m_pChangedType_ComboBox->setVisible(bVisibleBottomCtrls);
+    m_pFirstRowWidget->setVisible(bVisibleBottomCtrls);
+    m_pSecondRowWidget->setVisible(bVisibleBottomCtrls);
+    m_pThirdRowWidget->setVisible(bVisibleBottomCtrls);
+
 }

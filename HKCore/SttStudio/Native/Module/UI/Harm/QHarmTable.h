@@ -84,6 +84,9 @@ public:
 
 	BOOL m_bRunning;
 
+	int m_nParaSetSecondValue;				//0:显示一次值 1:显示二次值
+	void SetParaSetSecondValue(int nParaSetSecondValue);
+
 signals:
 	void sig_ChanelValueChanged();
 //	void sig_CheckStateChanged();

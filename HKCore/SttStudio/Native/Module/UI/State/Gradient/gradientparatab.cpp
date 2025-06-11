@@ -1,6 +1,6 @@
 #include "gradientparatab.h"
 #include "gradientparaset.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 //#include "../../SttTestCntrFrameBase.h"
 #include "../../Controls/SttTabWidget.h"
 #include "../Module/XLangResource_Native.h"
@@ -11,6 +11,7 @@ GradientParaTab::GradientParaTab(QWidget *parent)
 	m_AmpParaWidget = NULL;
 	m_FreqParaWidget = NULL;
 	m_pVBoxLayout = NULL;
+	m_nParaSetSecondValue = 1;
 
 	m_tabWidget = new QSttTabWidget(this);
 	connect(m_tabWidget,SIGNAL(currentChanged(int)),this,SLOT(slot_TabPageChanged(int)));
@@ -91,12 +92,15 @@ void GradientParaTab::setData(CSttTestResourceBase *pSttTestResource,tmt_StatePa
 	{
 		m_AmpParaWidget->setPropertyOfParaSet(pSttTestResource,pStatePara,GRADIENT_AMP);
 		m_AmpParaWidget->setMaxMinVal();
+		m_AmpParaWidget->SetParaSetSecondValue(m_nParaSetSecondValue);
+
 	}
 
 	if (m_FreqParaWidget)
 	{
 		m_FreqParaWidget->setPropertyOfParaSet(pSttTestResource,pStatePara,GRADIENT_FRE);
 		m_FreqParaWidget->setMaxMinVal();
+		m_FreqParaWidget->SetParaSetSecondValue(m_nParaSetSecondValue);
 	}
 }
 

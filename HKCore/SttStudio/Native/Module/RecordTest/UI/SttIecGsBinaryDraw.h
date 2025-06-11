@@ -4,7 +4,7 @@
 
 #include "../../BinaryDraw/XBinaryDrawBase.h"
 
-#include "../../../../Module/SmartCap/61850Cap/ProtocolBase/ProtocolGlobalDef.h" 
+#include "../../../Module/SmartCap/61850Cap/ProtocolBase/ProtocolGlobalDef.h" 
 
 #define BINARY_NOT_BINARY_COLOR   RGB(255, 255, 255)
 #define BINARY_COLOR_0X84_0    RGB(255, 255, 0)

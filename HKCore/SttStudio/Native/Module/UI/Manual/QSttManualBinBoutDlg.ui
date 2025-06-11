@@ -510,7 +510,7 @@
   <customwidget>
    <class>QSttLineEdit</class>
    <extends>QLineEdit</extends>
-   <header location="global">../Module/UI/Controls/SttLineEdit.h</header>
+   <header>../Module/UI/Controls/SttLineEdit.h</header>
   </customwidget>
   <customwidget>
    <class>QSttCheckBox</class>

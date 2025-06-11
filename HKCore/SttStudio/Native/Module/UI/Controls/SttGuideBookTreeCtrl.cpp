@@ -1,7 +1,7 @@
 #include "SttGuideBookTreeCtrl.h"
 #include "../../SttCmd/GuideBook/SttItems.h"
-#include "../../AutoTest/Module/AutoTestGlobalDefine.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../AutoTest/Module/AutoTestGlobalDefine.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 
 //////////////////////////////////////////////////////////////////////////
 //QExBaseTreeWidgetItem

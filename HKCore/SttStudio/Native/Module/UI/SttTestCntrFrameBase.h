@@ -7,7 +7,10 @@
 #include <QLabel>
 #include <QMessageBox>
 
+//#include "Webkit/SttMacroParaEditViewHtml.h"
+//#include "Webkit/SttReportViewHtml.h"
 #include "Interface/SttMacroParaEditViewMngr.h"
+
 #include "Config/Frame/SttFrameConfig.h"
 #include "Config/MacroTestUI/SttMacroTestUI_TestMacroUIDB.h"
 #include "Controls/SttGuideBookTreeCtrl.h"
@@ -38,14 +41,14 @@
 #include "Module/CharLibWidget/CharEditMainWidget.h"
 #include "../LiveUpdate/UpdateConfig/VerUpdateCfgMngr.h"
 #include "../SttSocket/TestTerminal/SttClientSocketBase.h"
-#include "../../Module/MemBuffer/TxRingPtrBuffer.h"
+#include "../../../Module/MemBuffer/TxRingPtrBuffer.h"
 #include "../SttSocket/Multicast/SttMulticastClientSocket.h"
 #include "../SttTestAppConfig/SttTestAppCfg.h"
 #include "../../../AutoTest/Module/Characteristic/QT/SttCharacterDrawPng.h"
 #include "Module/ChRsMap/QChMapsDlg.h"
 #include "IEC61850Config/SttIecConfigDialog.h"
 #include "Module/DCOutput/QAuxDCOutputDlg.h"
-#include "../../Module/TestMacro/TestMacros.h"
+#include "../../../Module/TestMacro/TestMacros.h"
 
 #include "../SttCmd/GuideBook/SttContents.h"
 
@@ -57,6 +60,7 @@
 #include "RemoteCtrl/SttMacroParaEditViewRemoteCtrl.h"
 #include "../SmartTestInterface/QT/PpSttIotEngineClientWidgetMain.h"
 #include "Module/CommConfigurationDlg/PkgMonitor/QSttCommCfgPkgMonitorWidget.h"
+#include "../UI/Interface/SttHtmlViewApi.h"
 
 
 
@@ -106,6 +110,7 @@ public:
 	virtual long OnTestCreated();
 	virtual void OnReport(CExBaseObject *pItem) ;
 	virtual void OnReport_ReadDevice(CDataGroup *pDeviceGroup);
+	virtual void OnReport_ReadSystemState(const CString &strMacroID, CDataGroup *pParas);
 	virtual void OnAtsGenerate();
 	virtual void OnAtsGenerateItems(CExBaseObject *pItems, BOOL bUpdateParent=FALSE);
 	virtual void OnAtsGenerateItems_CmdWzd(CExBaseList *pCmdGrp);
@@ -116,6 +121,9 @@ public:
 
 	virtual void FillReport(CExBaseObject *pItem);
 	virtual void FillReport();
+	virtual void FillReport_OnlyHtmlRpt(CExBaseObject *pItem);//只更新html报告内容,不更新原始界面的结果显示,及不打印测试结果
+	virtual void FillReport_HtmlRptDataByGuideBook(CExBaseList *pItems);
+	virtual void FillReport_HtmlRptData();
 
 	virtual void CreateSttMacroParaEditView(CSttMacroTestUI_TestMacroUI *pTestMacroUI);
 	virtual void AdjustMacroEditWidgetToFrame(CSttMacroTestUI_TestMacroUI *pTestMacroUI);
@@ -175,6 +183,8 @@ public:
 //	CSttTestResourceBase *m_pSttTestResource;//zhouhj 20220319 放入CSttTestCtrlCntrBase类中
 
 	CSttTestResourceBase* GetSttTestResource();
+	CSttMacroParaEditInterface* GetCurrMacroParaEditInterface();
+
 	void InitTestResource();
 	void OnUpdateTestResource(BOOL bCreateChMaps);
 //	void initLocalSysPara();
@@ -187,7 +197,10 @@ public:
 	virtual void UpdateRptHtml();
 	virtual void GetMacroItemsXml(const CString strItemID, char **ppszReport, long &nLen,const CString &strParentPath);
 	void UpdateResultWidget(CSttReport *pReport,const CString &strItemName,const CString &strMacroID);//更新结果显示窗口
+	CString GetMacroTestResultUnit();//dingxy 20241127 填充动作值单位
 	void OpenDialog(const CString &strDialogID);//主界面进入后的对话框ID，打开主界面进入后的对话框界面
+	void OpenDialogModal(const CString &strDialogID, bool bNeedConnect);
+	void OpenDialogModeless(const CString &strDialogID, bool bNeedConnect);
 
 	BOOL HasManuTrigerBtn();//zhouhj 20220403 判断当前测试功能是否包含手动触发
 	BOOL IsManuTriger_HtmlFaultTrigMode();//zhouhj 20220404 根据当前下发参数,判断是否为手动触发模式
@@ -209,6 +222,7 @@ public:
 	virtual BOOL CreateCommCfgPkgMnWidget(); //chenling 20240301 创建报文监听界面
 	virtual void UpDateUdcVal(){};//20240626 suyang 新增函数 将设备中辅助直流值与系统参数中辅助直流统一
 	virtual BOOL CreateRemoteCtrlWidget();//2024.8.15 chenling 创建遥控的界面
+	virtual void UpdatePrimParaSetUI(bool IsStateMonitor,bool IsVector,bool IsPowerDiagram,bool IsUseSecondParaSet){}//20240918 suyang 增加函数用于更新界面一次/二次值显示
 
 public://界面
 	CSttFrame_Button *m_pStartTestBtn;
@@ -306,6 +320,7 @@ protected:
 
 	BOOL m_bIsRunningStartStopCmd;//zhouhj 2024.4.1 增加用于标记当前是否正在执行开始,停止操作,如果正在执行,则忽略当前操作
 	BOOL m_bIsUpdateStateTestFirstReportColor;//dingxy 20240705 增加用于标记是否将第一个测试项的报告状态置为初始化状态
+	BOOL m_bIsRtDataUpdateChMaps_System;//20241121 suyang 用于在RtData更新了电流档位等参数后是否更新通道映射以及系统参数；
 
 protected:
 	CSttTestCtrlCntrBase *m_pTestCtrlCntrBase;     //当前框架关联绑定的测试控制中心
@@ -337,8 +352,8 @@ protected:
 	//信息图
 	QInfoWidget* m_pInfoWidget;
 	
-	//FA参数设置
-	QSttFAParasSetDialog *m_pSttFaParasSetDialog;
+	////FA参数设置
+    QSttFAParasSetDialog *m_pSttFaParasSetDialog;
 
 
 
@@ -387,7 +402,7 @@ public:
 	CString GetCharLibWidgetID();
     
 	void InitPowerWidget(tmt_channel* pVOL,tmt_channel* pCUR,QWidget* pParent = NULL);
-	void InitFAParasSetDialog(QWidget* pParent = NULL);
+    void InitFAParasSetDialog(QWidget* pParent = NULL);
 	void UpdatePowerWidget(tmt_channel* pVOL,tmt_channel* pCUR,CExBaseList* pVolChList,CExBaseList* m_pCurChList);
 	void UpdatePowerData();
 	void StartPowerWidget();
@@ -399,6 +414,7 @@ public:
 	void StartVectorWidget();
 	void SetVectorGradient(bool bIsGradient);
 	void StopVectorWidget(bool bUpdate = false);
+	void SetPlotAcDcMaxMinValue( bool bDC,double fUMin,double fUMax,double fIMin,double fIMax );//20241030 suyang 设置状态图电压电流大小
 
 	void InitInfoWidget(QWidget* pParent = NULL);
 	void ClearInfoWidget();
@@ -430,6 +446,7 @@ public:
 
 	bool IsTestStarted();
 	bool IsStateTest();
+	bool IsUseStateIndex();
 	bool IsMultiTestItems();//判断当前测试项是否为多测试项
 	bool HasCharChanged();//判断特性曲线是否改变
 	void AddTestPoints(double dX, double dY,BOOL bAct);
@@ -486,9 +503,10 @@ public:
 
 	virtual void InitRemoteCtrlTest(bool bActiveRemoteCtrl, bool bStart,bool bShowMenuBtns = true);//2023-12-25  zhangyq
 	void InitRemoteCtrl();
-	void UpdateDeviceModelRef();//更新设备数据模型关联信息 zhouhj 2024.3.18
+	virtual void UpdateDeviceModelRef();//更新设备数据模型关联信息 zhouhj 2024.3.18
 	virtual void keyPressEvent(QKeyEvent *event);
 	bool keyPressEvent_Exec(int nKeyValue);      //20240510 xueyangfan  开始测试 手动触发 停止测试按键响应 
+	virtual BOOL IsAutoTest(){return FALSE;}
 
 public:
 	virtual void OnCmd_Menu();
@@ -594,6 +612,8 @@ public:
 	void OnCmd_Assist();	//2022-12-02  lijunqing
 
 	void OnCmd_FAParasSetDialog(); //FA参数设置Dialog  xueyangfan 2024-1-23
+	void onCmd_BinBoutCommMap();//2024.9.25 chenling 开入开出通讯映射
+
 
 	virtual void InitIecCapTest(bool bActiveIecCap, bool bStartDetect,bool bShowMenuBtns = true);//2022-12-27  lijunqing  //参数3为是否显示菜单等按钮,IEC探测时,不需要显示
 
@@ -603,13 +623,15 @@ public:
 
 	virtual void OnCmd_OutputDebug(); //输出调试 lcq 2023 8-24
 	void OnCmd_Minimize();// 最小化 zhouyangyong 2024-2-26
+	void OnCmd_BinConfig();//开入配置 zhouyangyong 2024-09-23
 	void OnUpdateRtCurrModules(CDataGroup *pRtSycTime);  //20240530 xueyangfan 获取实时数据更新电流模块实时值
 	void OnUpdateRtInputDev(CDataGroup *pRtSycTime);	//20240530	xueyangfan 获取实时数据更新鼠标键盘
 
 	void OnUpdateRtHardConfig( CDataGroup *pRtSycTime );//2024-6-25 wuxinyi 更新系统参数中的硬件设置信息
 	BOOL m_bUpdateHardCfgFromRealTime;//是否需要根据实时数据更新硬件设置信息
-	BOOL m_bUpdateOutputPowerFromRealTime;//是否需要根据实时数据更新的输出功率
-
+	BOOL m_bUpdateOutputPowerFromRealTime;//是否需要根据GetSystemState更新的输出功率
+	BOOL m_bOutputTypeHasChanged;//chenling 20250212判断输出类型选择是否有变化
+	float m_fUdc;//dingxy 20250321 记录当前辅助直流输出值
 
 signals:
 	void sig_MenuButtonClick(QString);
@@ -636,6 +658,9 @@ signals:
 	void sig_OnInputData(CDataGroup *, CExBaseList *);//接线提示项目执行，形参为CSttParas* pParas, CExBaseList* pMsgs;
 	void sig_OnImportDvm(CExBaseList *);  //导入模型后，根据新生成的通讯命令，弹窗逐个配置通讯参数
 	void sig_InitImportDvmFile_Widget(CExBaseList *);  //打开配置通讯命令参数的对话框
+	void sig_SendChMapsConfig();//20241223 suyang启用信号方式更新通道映射
+	void sig_UpdateReportSysState(CDataGroup* pSystemState);
+	void sig_UpdateModulesGearSwitchInfo();//dingxy 20250320 更新输出功率界面数据
 
 // 	void sig_UpdateAuxDCEdit();//suyang 20240603 在弹出框中设置直流后更新界面 辅助直流编辑框状态
 
@@ -669,18 +694,26 @@ public slots:
 	virtual void slot_OnItemStateChanged_Frame(CExBaseObject *pItem);
 	virtual void slot_OnInputData(CDataGroup *pParas, CExBaseList *pMsgs);
 	virtual void slot_OnImportDvm(CExBaseList *pListItems);
+	virtual void slot_BinBoutCommMapDataUpdate(CDataGroup *pDataGroup);//chenling 2024.9.27 更新开入开出通讯映射
+	virtual void slot_UpdateFAParasData(CDataGroup *pDataGroup);//FA参数更新
+
 
 	//zhouhj 2023.10.16 更换更新方案,删除此函数
 //	virtual void slot_UpdateMUTimeAccurRlt(CDvmData *pSVDelayData);//20220825 更新时间精度测试结果
 	virtual void slot_OnFreeCommCmdWzdWidget();
 	virtual void slot_CloseMenu();
 	virtual void slot_UpdateRptHtml();
-	void slot_UpdateModulesGear(BOOL bMergeCurrHasChanged);//zhouhj 20211016 更新测试仪档位信息
+	void slot_UpdateModulesGear(BOOL bMergeCurrHasChanged, BOOL bCurrModulePowerHigh);//zhouhj 20211016 更新测试仪档位信息
 	void slot_FillReportImg(QString strItemPath);//zhouhj 2023.8.22
 	void slot_MsgBox(QString strTitle,QString strMsg);
 
 	//zhouhj 2023.12.6 从window程序派生类移入
 	void slot_OnConfigDevice(CDataGroup *pCommCfg);
+	
+	void slot_SendChMapsConfig();
+	void slot_UpdateReportSysState(CDataGroup* pSystemState);//dingxy 20250320 更新输出功率中CurrModules数据
+
+
 public:
 	//shaolei 2022-03-19 根据项目ID，更新参数，目前只适用于Iec61850Config、ChMapsConfig、SystemConfig
 	void Ats_SetItemPara(const CString &strItemID);
@@ -697,6 +730,22 @@ public:
 	virtual BOOL IsNeedAddAft();//是否需要添加测试后恢复
 	virtual void ItemPaste_RootNode(CSttItems *pDestItems, CExBaseObject *pCurrentSel);  //项目粘贴后，处理报告
 	virtual void UpdateStatusBar_Btns(const CString &strID, const CString &strValue);  //更新底部状态灯
+
+//2024-9-10 lijunqing 优化系统程序启动的效率
+public slots:
+	virtual void slot_OpenMacroTest(unsigned long nAddrParser);
+
+signals:
+	void sig_OpenMacroTest(unsigned long nAddrParser);
+
+public:
+	void emit_OpenMacroTest(unsigned long nAddrParser);
+#ifdef _PSX_QT_LINUX_
+	virtual void InitMeasServer();
+	virtual void ExitMeasServer();
+#endif
+
+	void ShowItems_TreeView(CExBaseList *pCurTestItems);//20241016 zhangyq 发送更新项目列表信号
 };
 
 
@@ -705,6 +754,18 @@ extern long g_nLogDebugInfor;
 extern QFont *g_pSttGlobalFont;  //2022-9-16  lijunqing
 extern double g_dUIShowCoef; // 界面显示缩放比例
 
+extern int g_nUpdateMultiMacroParaEditView;//chenling 2024.11.25打开模板，跳过刷树和打开模块界面
+//void  Stt_Global_SettingSelect(QObject *parent, const CString &sFormat, const CString &sName);	//20240815 huangliang 添加参数
+void  Stt_Global_SettingParent(QWidget *parent);	//20240802 huangliang 设置定值相关的父级
+void Stt_Global_SettingParent(QWidget *parent, QWidget *pDlgParent);	//20240806 huangliang 适用于在模态对话框中使用结构体地址编辑定值关联
+
+
+void Stt_Global_NoticeUpdateBinBinary();	//20240912 huangliang 更新通知各界面刷新信息
+QString Stt_Global_GetBinBoutNameForIndex(int iBin, int iIndex);	//20240913 huangliang 取出开入开出量名称,iBin为0开入，1扩展开入，2开出，3扩展开出
+QString Stt_Global_GetBinBoutNameForIndex_NoUseDefault(int iBin, int iIndex);	//20241011 huangliang 获取映射后的开入开出名称
+void Stt_Global_GetBinBoutMaxWidth();	//20241012 huangliang 获取开入开出映射后的最大宽度
+
+int Stt_Global_GetdesktopWidgetSizeLevel();	//20241107 huangliang 获取分辨率等级
 
 extern CDataGroup *g_pGlobalDatas;
 BOOL Stt_CalParaExpression(const CString &strExpress, double &dValue, BOOL bLogError, CValues *pValues=NULL);

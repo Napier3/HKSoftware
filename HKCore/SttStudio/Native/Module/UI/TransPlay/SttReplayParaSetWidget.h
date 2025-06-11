@@ -6,7 +6,7 @@
 
 #include "../Module/CommonMethod/commonMethod.h"
 //#include "define.h"
-#include "../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/DataMngr/DataGroup.h"
 //#include "../Module/TestWinFrame/testwinbase.h"
 #include "SttReplayWaveformEditWidget.h"
 

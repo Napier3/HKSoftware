@@ -2,7 +2,7 @@
 
 //2022-12-02  lijunqing  
 #include "../../../Assist/SttAssistGlobalApi.h"
-#include "../../../../../Module/SmartCap/61850Cap/CapDevice/CapDeviceBase.h"
+#include "../../../Module/SmartCap/61850Cap/CapDevice/CapDeviceBase.h"
 
 #define STT_IEC_RECORD_TIMER_DEFAULT_VALUE              0.5f
 

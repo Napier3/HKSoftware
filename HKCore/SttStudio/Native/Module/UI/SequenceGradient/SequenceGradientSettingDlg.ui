@@ -710,12 +710,6 @@ width: 24px;  height: 24px;
  </widget>
  <customwidgets>
   <customwidget>
-   <class>QSttTabWidget</class>
-   <extends>QTabWidget</extends>
-   <header>../Module/UI/Controls/SttTabWidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>QSttCheckBox</class>
    <extends>QCheckBox</extends>
    <header>../Module/UI/Controls/SttCheckBox.h</header>
@@ -724,6 +718,12 @@ width: 24px;  height: 24px;
    <class>QSttGroupBox</class>
    <extends>QGroupBox</extends>
    <header>../Module/UI/Controls/SttGroupBox.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QSttTabWidget</class>
+   <extends>QTabWidget</extends>
+   <header>../Module/UI/Controls/SttTabWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

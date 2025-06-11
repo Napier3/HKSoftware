@@ -20,9 +20,9 @@
 #include "SttIecGinWidget.h"
 #include "SttIecGoutWidget.h"
 #include "SttIecChsEditWidget.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgDatasMngr.h"
-#include "../../61850/Module/SCL_Qt/QSclFileRead.h"
-#include "../../61850/Module/SCL/SclIecCfgDatas.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgDatasMngr.h"
+#include "../../../61850/Module/SCL_Qt/QSclFileRead.h"
+#include "../../../61850/Module/SCL/SclIecCfgDatas.h"
 #include "../Controls/SttToolButtonBase.h"
 #include <QToolButton>
 

@@ -2,7 +2,7 @@
 #define STTFILEMNGRTOOL_H
 
 
-#include "../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/DataMngr/DataGroup.h"
 
 #define STT_FILE_MNGR_SCD                  _T("SCD") //SCD文件
 #define STT_FILE_MNGR_Comtrade             _T("Comtrade") //录波文件

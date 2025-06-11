@@ -1,6 +1,6 @@
 #include "QSttManualBinBoutDlg.h"
 #include "ui_QSttManualBinBoutDlg.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../SttTestSysGlobalPara.h"
 #include "../Module/SttUIDefine.h"
 #include "../Module/CommonMethod/commonMethod.h"
@@ -66,8 +66,8 @@ void QSttManualBinBoutDlg::InitLanguage()
 	/*CString strText;
 	xlang_GetLangStrByFile(strText, "Native_BinX");*/
 	
-	xlang_SetLangStrToWidget(ui->m_boxInSetting, "Native_Bin", XLang_Ctrls_QGroupBox);
-	xlang_SetLangStrToWidget(ui->m_boxOutSetting, "Native_Bout", XLang_Ctrls_QGroupBox);
+	xlang_SetLangStrToWidget(ui->m_boxInSetting, "sInputValue", XLang_Ctrls_QGroupBox);
+	xlang_SetLangStrToWidget(ui->m_boxOutSetting, "sOutputValue", XLang_Ctrls_QGroupBox);
 	xlang_SetLangStrToWidget_Txt(ui->m_btnOK,g_sLangTxt_OK,XLang_Ctrls_QPushButton); //确定—LCQ
     xlang_SetLangStrToWidget_Txt(ui->m_btnCancel,g_sLangTxt_Cancel,XLang_Ctrls_QPushButton);//取消-LCQ
     xlang_SetLangStrToWidget_Txt(ui->m_rdOr,g_sLangTxt_Native_LogicOr,XLang_Ctrls_QRadioButton);//逻辑或—LCQ

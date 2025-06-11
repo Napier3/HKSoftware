@@ -1,6 +1,6 @@
 #include "SttIecSMV92OtherSetDialog.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../SttTestCntrFrameBase.h"
 
 QSttIecSMV92OtherSetDialog::QSttIecSMV92OtherSetDialog(QWidget *parent)

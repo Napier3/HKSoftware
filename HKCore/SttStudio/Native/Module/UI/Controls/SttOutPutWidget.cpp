@@ -1,5 +1,5 @@
 #include "SttOutPutWidget.h"
-#include "../../Module/OSInterface/OSInterface.h"
+#include "../../../Module/OSInterface/OSInterface.h"
 
 QSttOutPutWidget::QSttOutPutWidget(QWidget *parent) :
     QWidget(parent)

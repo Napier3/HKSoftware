@@ -3,7 +3,7 @@
 #pragma once
 
 #include "../../BinaryDraw/XBinaryDrawView.h"
-#include "../../../../Module/SmartCap/61850Cap/ProtocolBase/ProtocolGlobalDef.h" 
+#include "../../../Module/SmartCap/61850Cap/ProtocolBase/ProtocolGlobalDef.h" 
 
 //////////////////////////////////////////////////////////////////////////
 //CSttIecGsBinaryDraw

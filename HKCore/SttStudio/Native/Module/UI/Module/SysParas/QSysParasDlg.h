@@ -1,15 +1,21 @@
 #ifndef QSYSPARASDLG_H
 #define QSYSPARASDLG_H
+#define IecCfgSysParas_USE_Grid
 
 #include <QDialog>
 #include <QTableWidget>
 #include <QVBoxLayout>
-#include "../../../Module/SttTestResourceMngr/SttTestResourceMngr.h"
+#include "../Module/SttTestResourceMngr/SttTestResourceMngr.h"
 #include "../ChRsMap/QChMapsWidget.h"
 #include "QWeakSetWidget.h"
 #include "QSysParasWidget.h"
 #include "../ModuleSetDlg/QModuleSetWidget.h"
-#include "../../../Module/SttTest/Common/tmt_system_config.h"
+#include "../Module/SttTest/Common/tmt_system_config.h"
+#ifdef IecCfgSysParas_USE_Grid
+	#include "QSysParasCfgWidget.h"
+#else
+#include "QSysParasCfgWidget_NoGrid.h"
+#endif
 
 class QSysParasDlg : public QDialog
 {
@@ -44,6 +50,12 @@ protected:
 
 	CSttChMaps m_oSttChMaps;
 	STT_SystemParas m_oSysParas;
+
+#ifdef IecCfgSysParas_USE_Grid
+	QSysParasCfgWidget *m_pSysParasCfg;
+#else
+	QSysParasCfgWidget_NoGrid *m_pSysParasCfg;
+#endif
 
 public slots:
 	void slot_OKClicked();

@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "SttDiffCurrCalculatTool.h"
 #include "../../../Module/API/MathApi.h"
 

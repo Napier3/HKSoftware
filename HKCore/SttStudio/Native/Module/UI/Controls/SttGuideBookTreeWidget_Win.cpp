@@ -31,6 +31,7 @@ QSttGuideBookTreeWidget_Win::QSttGuideBookTreeWidget_Win(CExBaseObject *pSttGuid
 	//树形节点鼠标移动事件 sf 20220329
     connect(m_pTreeCtrl,SIGNAL(sig_MouseMoveGbTree(QMouseEvent*)),this,SLOT(slot_SttMouseMoveEventGbTree(QMouseEvent*)));
 	setContextMenuPolicy (Qt::CustomContextMenu);
+	m_bIsExeItemSelChanged = TRUE;
  }
 
 void QSttGuideBookTreeWidget_Win::InitButton()
@@ -75,6 +76,11 @@ BOOL QSttGuideBookTreeWidget_Win::OnItemBDblClk(CExBaseListTreeCtrl  *pTreeCtrl,
 
 void QSttGuideBookTreeWidget_Win::OnItemSelChanged(CExBaseListTreeCtrl *pTreeCtrl, CExBaseObject *pSelObj)
 {
+	//chenling20250210 	修改系统参数会重写生成模板，节点找不到闪退
+	if(!m_bIsExeItemSelChanged)
+	{
+		return;
+	}
 	CSttItems *pItems = (CSttItems *)Stt_GetFirstParentItems(pSelObj, GBITEMS_NODETYPE_ROOTNODE, TRUE);
 
 	if (g_theTestCntrFrame->IsTestStarted())
@@ -313,6 +319,10 @@ void QSttGuideBookTreeWidget_Win::slot_OnBtnEditCurr()
 	g_theGbSmartGenWzd->EditItems(pParent->GetIDPathEx(STTGBXMLCLASSID_CSTTDEVICE, FALSE), strItemsID, strItemsName, m_pCurrSelGbItem
 		, nRepeatTimes, nRptTitle, nTitleLevel);
 	g_theTestCntrFrame->FillRptTitle(m_pCurrSelGbItem);//2023.7.25 zhouhj 更新当前测试项标题
+	if (m_pCurrSelGbItem->GetClassID() == STTGBXMLCLASSID_CSTTCOMMCMD)
+	{
+		g_theTestCntrFrame->ViewCmdEditWidget(m_pCurrSelGbItem);
+	}
 }
 
 void QSttGuideBookTreeWidget_Win::slot_OnBtnDeleteCurr()
@@ -475,6 +485,10 @@ void QSttGuideBookTreeWidget_Win::slot_OnBtnMoveUp()
 	strParentItemPath = pParent->GetIDPathEx(STTGBXMLCLASSID_CSTTDEVICE, FALSE);
 	g_theGbSmartGenWzd->MoveItem(strParentItemPath, pCurr, STT_CMD_PARA_generate_items_move_up);
 	//g_theGbSmartGenWzd->SaveSmartGenWzdFile();
+
+	CString strItemID;
+	strItemID = pCurr->GetIDPathEx(STTGBXMLCLASSID_CSTTDEVICE, FALSE);
+	g_theTestCntrFrame->GetReportViewHtml()->MoveRptPos(strParentItemPath,strItemID,_T("0"));
 }
 
 void QSttGuideBookTreeWidget_Win::slot_OnBtnMoveDown()
@@ -504,6 +518,10 @@ void QSttGuideBookTreeWidget_Win::slot_OnBtnMoveDown()
 	strParentItemPath = pParent->GetIDPathEx(STTGBXMLCLASSID_CSTTDEVICE, FALSE);
 	g_theGbSmartGenWzd->MoveItem(strParentItemPath, pCurr, STT_CMD_PARA_generate_items_move_down);
 	//g_theGbSmartGenWzd->SaveSmartGenWzdFile();
+
+	CString strItemID;
+	strItemID = pCurr->GetIDPathEx(STTGBXMLCLASSID_CSTTDEVICE, FALSE);
+	g_theTestCntrFrame->GetReportViewHtml()->MoveRptPos(strParentItemPath,strItemID,_T("1"));
 }
 
 void QSttGuideBookTreeWidget_Win::slot_OnBtnItemCopy()
@@ -1567,6 +1585,11 @@ void QSttGuideBookTreeWidget_Win::After_OnBtnSaveCurr_ItemEdit(CGbWzdItemEdit *p
 
 	CSttGuideBook *pGuideBook = (CSttGuideBook *)g_pTheSttTestApp->m_pTestCtrlCntr->GetGuideBook();
 	CSttItemBase *pParentItem = stt_gb_find_itembase(pGuideBook, pItemEdit->m_strParentItemsID);
+	if (pParentItem == NULL)
+	{
+		return;
+	}
+	
 	CSttItemBase *pItem = (CSttItemBase *)pParentItem->FindByID(pItemEdit->m_strItemsID_Old);   //编辑前的项目
 	CSttItemBase *pItemNew = (CSttItemBase *)pItem->Clone();
 	pItemNew->m_strID = pItemEdit->m_strItemsID;
@@ -1993,7 +2016,7 @@ BOOL QSttGuideBookTreeWidget_Win::IsContinueTest_FromTree(int nType)
 		return FALSE;
 	}
 	
-	if (nType == 0)
+	if (nType == 0 && m_pCurrSelRootNode != NULL)//Xuzt 2024.9.14 m_pCurrSelRootNode可能为空指针
 	{
 		if (stt_IsItemHasAin((CSttItemBase *)m_pCurrSelRootNode))
 		{

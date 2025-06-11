@@ -5,7 +5,7 @@
 #include "SttIecRcdFuncInterface.h"
 #include "SttIecGsBinaryDraw.h"
 #include "SttIecGsBinaryDrawView.h"
-#include "../../../../Module/MemBuffer/TxRingPtrBuffer.h"
+#include "../../../Module/MemBuffer/TxRingPtrBuffer.h"
 
 #define GOOSE_TURNSPY_MAX_DATAS_NUM                            2000
 

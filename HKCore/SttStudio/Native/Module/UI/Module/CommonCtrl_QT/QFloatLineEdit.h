@@ -3,7 +3,7 @@
 
 #include <QMouseEvent>
 #include "QCovDoubleValidator.h"
-#include "OSInterface.h"
+#include "../../../Module/OSInterface/OSInterface.h"
 
 class QFloatLineEdit : public QNumberLineEditBase
 {

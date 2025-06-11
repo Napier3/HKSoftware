@@ -2,10 +2,10 @@
 #define QGINDATACHSGRID_H
 
 #include "../../IEC61850Config/Grid/IecCfgChsGridBase.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgGinCh.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgGinDatas.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgGinChs.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgGinData.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgGinCh.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgGinDatas.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgGinChs.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgGinData.h"
 #include "../../IEC61850Config/Grid/IecCfgGinChsGrid.h"
 
 #define GINDATACHS_GRID_COLS		4

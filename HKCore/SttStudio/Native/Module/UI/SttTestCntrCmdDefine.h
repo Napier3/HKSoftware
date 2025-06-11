@@ -44,7 +44,7 @@
 #define STT_CNTR_CMD_DeviceComView		"DeviceComView"
 // #define STT_CNTR_CMD_VectorDrawView	"VectorDrawView"//20231108 suyang 重复删除
 #define STT_CNTR_CMD_WaveDrawView		"WaveDrawView"
-#define STT_CNTR_CMD_StateDrawView		"StateDrawView"
+// #define STT_CNTR_CMD_StateDrawView		"StateDrawView"//20240909 suyang 重复删除
 //#define STT_CNTR_CMD_CharaView			"CharaView" //20220803 zhouhj 重复删除
 #define STT_CNTR_CMD_SequenceView		"SequenceView"
 #define STT_CNTR_CMD_InfoView				"InfoView"
@@ -78,7 +78,8 @@
 #define STT_CNTR_CMD_TransPcapFile         "TransPcapFile" //将Socket保存的转换生成Pcap文件  zhouhj 2023.8.4
 #define STT_CNTR_CMD_ImportDvmFile         "ImportDvmFile" //导入模型文件，模型替换  shaolei 2023-8-14
 #define STT_CNTR_CMD_Minimize				"Minimize"//最小化 zhouyangyong 2024-2-26
-
+#define STT_CNTR_CMD_BinConfig				"BinConfig"//开入配置 2024-09-23 zhouyangyong
+#define  STT_CNTR_CMD_BinBoutCommMap       "BinBoutCommMap"
 //2023-2-21  lijunqing 被测装置通信后台
 #define STT_CNTR_CMD_PpIotEngineClient           "PpIotEngineClient" //装置通讯
 
@@ -128,6 +129,10 @@
 #define STT_ORG_MACRO_ShortTimeOverTest			"ShortTimeOverTest"
 
 #define  STT_ORG_MACRO_VolTimeTypeSecTest			"VolTimeTypeSecTest"  // 电压时间型分段模式  xueyangfan  2024.01.22  
+#define  STT_ORG_MACRO_VolTimeTypeIntTest			"VolTimeTypeIntTest"  // 电压时间型联络模式
+#define  STT_ORG_MACRO_VolCurTypeSecTest			"VolCurTypeSecTest"  // 电压电流型分段模式
+#define  STT_ORG_MACRO_VolCurTypeIntTest			"VolCurTypeIntTest"  // 电压电流型联络模式
+#define  STT_ORG_MACRO_AdaptiveTypeSecTest			"AdaptiveTypeSecTest"  // 自适应型选段模式
 #define STT_CNTR_CMD_FAParasSetDialog       "FAParasSetDialog"   //FA参数设置  xueyangfan 2024-01-22
 #define  STT_ORG_MACRO_AntiShakeTimeTest            "AntiShakeTimeTest"   //防抖时间测试         xueyangfan  2024.03.05
 
@@ -145,8 +150,12 @@
 #define  STT_ORG_MACRO_TerminalAutoTest            "TerminalAutoTest" //20231120chenling智能终端自动测试
 #define  STT_ORG_MACRO_IntelligentTest         "IntelligentTest"//20231125gongyiping智能终端测试
 
+#define  STT_ORG_MACRO_ImpedManualTest               "ImpedManualTest" //2024.6.11 zhangyq通用试验（阻抗）  国际版移植
 #define  STT_ORG_MACRO_ImpedanceManuTest               "ImpedanceManuTest" //2024.6.11 zhangyq通用试验（阻抗）
 #define  STT_ORG_MACRO_CBOperateTest          "CBOperateTest" 
+#define  STT_ORG_MACRO_AnalogCirBreakerTest     "AnalogCirBreakerTest"//模拟断路器
+#define  STT_ORG_MACRO_ThreeTURecloseAccTest    "ThreeTURecloseAccTest" //三次重合闸
+#define  STT_ORG_MACRO_FreqOutputTest    "FreqOutputTest" //调频输出
 
 //2022-10-3  shaolei
 #define  STT_ORG_MACRO_Iec61850Config       "Iec61850Config"
@@ -162,7 +171,9 @@
 #define  STT_HTML_MACRO_OverCurrentTest        "OverCurrentTest"
 #define  STT_HTML_MACRO_RecloseAccTest         "RecloseAccTest"
 //#define  STT_HTML_MACRO_CBOperateTest         "CBOperateTest"  zhouhj 2024.6.20 该功能已改为原生界面
-
+#define  STT_ORG_MACRO_SwingTest             "SwingTest"    //2024-12-31 国际版移植 xueyangfan
+#define  STT_ORG_MACRO_PrimFreqManuTest             "PrimFreqManuTest"	//一次调频通用试验
+#define  STT_ORG_MACRO_PrimFreqStateTest             "PrimFreqStateTest"	//一次调频状态序列
 
 //从主界面进入,在测试控制程序打开对话框界面的对话框的ID
 // #define STT_OPENDIALOG_ID_OnlineUpdate            "OnlineUpdate"//在线升级 //部分已在上面定义,改为统一定义
@@ -173,9 +184,35 @@
 // #define STT_OPENDIALOG_ID_FileMngr                 "FileMngr"//文件管理
 // #define STT_OPENDIALOG_ID_LanguageSet             "LanguageSet"//语言设置
 
-
-
-
+//2024.7.30 331自动测试相关模块
+#define  STT_ORG_MACRO_Remote_VolCurAccuracyTest         "Remote_VolCurAccuracyTest"  //电压电流基本误差
+#define  STT_ORG_MACRO_Remote_PowerAccuracyTest         "Remote_PowerAccuracyTest"  //有功无功基本误差
+#define  STT_ORG_MACRO_Remote_FreqFactorTest         "Remote_FreqFactorTest"  //频率功率因素基本误差
+#define  STT_ORG_MACRO_Remote_OverCurrTest         "Remote_OverCurrTest"  //过流保护
+#define  STT_ORG_MACRO_Remote_ZeroTest        "Remote_ZeroTest"           //零序保护
+#define  STT_ORG_MACRO_Remote_TURecloseAccTest         "Remote_TURecloseAccTest"  //重合闸及后加速
+#define  STT_ORG_MACRO_Remote_AccuracyTest         "Remote_AccuracyTest"  //遥信正确性
+#define  STT_ORG_MACRO_Remote_PriorityDeliveryTest         "Remote_PriorityDeliveryTest" //遥信优先上送
+#define  STT_ORG_MACRO_Remote_DualPositionTest         "Remote_DualPositionTest" //双位置遥信
+#define  STT_ORG_MACRO_Remote_ResolutionTest         "Remote_ResolutionTest" //遥信分辨率测试
+#define  STT_ORG_MACRO_Remote_AntiShakeTest         "Remote_AntiShakeTest" //遥信防抖测试
+#define  STT_ORG_MACRO_Remote_FreqChangeTest         "Remote_FreqChangeTest"  //频率变化
+#define  STT_ORG_MACRO_Remote_ThreePhUnbalanceTest     "Remote_ThreePhUnbalanceTest"//三相不平衡变化
+#define  STT_ORG_MACRO_Remote_HarmContentTest          "Remote_HarmContentTest"  //谐波含量
+#define  STT_ORG_MACRO_Remote_PowerFactorTest            "Remote_PowerFactorTest"  //功率因素       
+#define  STT_ORG_MACRO_Remote_MeasurLimitTest            "Remote_MeasurLimitTest"    //被测量超限变化       
+#define  STT_ORG_MACRO_Remote_InputVolTest            "Remote_InputVolTest"     // 输入电压变化     
+#define  STT_ORG_MACRO_Remote_InputCurTest            "Remote_InputCurTest"     //输入电流变化
+#define  STT_ORG_MACRO_Remote_Test                    "RemoteTest"     //遥控测试    
+#define  STT_ORG_MACRO_Remote_VolExcLimitTest         "Remote_VolExcLimitTest" //电压越限
+#define  STT_ORG_MACRO_Remote_CurExcLimitTest         "Remote_CurExcLimitTest" //电流越限
+#define  STT_ORG_MACRO_Remote_LowCurrentTest       "Remote_LowCurrentTest" //小电流接地
+#define  STT_ORG_MACRO_Remote_PTAlarmTest             "Remote_PTAlarmTest" //PT断线告警
+#define  STT_ORG_MACRO_Remote_ProInrushCurTest        "Remote_ProInrushCurTest" //防励磁涌流保护
+#define  STT_ORG_MACRO_Remote_FaultResetTest           "Remote_FaultResetTest"//故障复归
+#define  STT_ORG_MACRO_Remote_DeadZeroDriftTest       "Remote_DeadZeroDriftTest"//死区零漂
+#define  STT_ORG_MACRO_Remote_TimeSyncTest       "Remote_TimeSyncTest"//2024.12.3 zhagnyq 对时
+#define  STT_ORG_MACRO_Remote_ParaRecallTest       "Remote_ParaRecallTest"//2024.12.5 zhagnyq 固有参数调阅
 //debug
 #define STT_DEBUG_SetDatas     "debugSetDatas"
 #define STT_DEBUG_SetDatasFile1     "debugSetDatasFile1"

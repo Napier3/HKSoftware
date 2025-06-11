@@ -1,7 +1,7 @@
 ﻿#ifndef STTPOPUPOPENDIALOG_H
 #define STTPOPUPOPENDIALOG_H
 
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "SttFileDlgBase.h"
 #define STT_IECCONFIG_FILE_SCALE    2//zhouhj 2024.2.3 SCD解析
 

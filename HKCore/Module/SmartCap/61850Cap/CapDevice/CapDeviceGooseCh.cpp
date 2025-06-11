@@ -7,7 +7,7 @@
 
 #include "stdafx.h"
 #include "CapDeviceGooseCh.h"
-#include "../../../../61850/Module/CfgDataMngr/IecCfgDataGooseChBase.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgDataGooseChBase.h"
 
 CCapDeviceGooseCh::CCapDeviceGooseCh()
 {

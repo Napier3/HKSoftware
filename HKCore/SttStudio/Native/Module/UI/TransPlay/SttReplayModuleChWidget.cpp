@@ -4,7 +4,7 @@
 #include "../Module/CommonMethod/commonMethod.h"
 #include "../Controls/SttCheckBox.h"
 #include "../Module/XLangResource_Native.h"
-#include"../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include"../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 
 extern QFont *g_pSttGlobalFont;
 
@@ -36,13 +36,13 @@ void CSttReplayModuleChWidget::initUI()
 	m_pGridLayout_RcdChs = new QGridLayout;
 	xlang_GetLangStrByFile(g_sLangTxt_Display,"Display");
 	m_plbChanel = new QLabel(g_sLangTxt_Display);
-	m_plbChanel->setFixedHeight(30);
+	m_plbChanel->setMinimumHeight(30);
 	xlang_GetLangStrByFile(g_sLangTxt_AChannel,"AChannel");
 	m_plbChanelA = new QLabel(g_sLangTxt_AChannel);
-	m_plbChanelA->setFixedHeight(30);
+	m_plbChanelA->setMinimumHeight(30);
 	xlang_GetLangStrByFile(g_sLangTxt_BChannel,"BChannel");
 	m_plbChanelB = new QLabel(g_sLangTxt_BChannel);
-	m_plbChanelB->setFixedHeight(30);
+	m_plbChanelB->setMinimumHeight(30);
 
 	BOOL bWeekChChangeModule = (m_pModuleInfo->IsWeekTypeModule() && m_pModuleInfo->IsWeekChTypeChg())? TRUE : FALSE;
 
@@ -79,7 +79,7 @@ void CSttReplayModuleChWidget::initUI()
 		if(bWeekChChangeModule)
 		{
 			pWeekChTypeBox = new QScrollComboBox();
-			pWeekChTypeBox->setFixedWidth(70);
+			pWeekChTypeBox->setMaximumWidth(70);
 			pWeekChTypeBox->setMinimumHeight(30);
 			pWeekChTypeBox->addItem(g_sLangTxt_Native_Voltage.GetString());
 			pWeekChTypeBox->addItem(g_sLangTxt_Native_Current.GetString());
@@ -104,7 +104,7 @@ void CSttReplayModuleChWidget::initUI()
 // 		m_pGridLayout_RcdChs->addWidget(pChSel, nChIndex, 0, 1, 2);
 
 		pAChSel = new QScrollComboBox();
-		pAChSel->setFixedWidth(200);
+		pAChSel->setMaximumWidth(200);
 		pAChSel->setMinimumHeight(30);
 		pAChSel->setMaxVisibleItems(12);
 		m_AChSelList.append(pAChSel);
@@ -116,12 +116,12 @@ void CSttReplayModuleChWidget::initUI()
 		m_OptrSubLabelList.append(plbOptrSub);
 // 		m_pGridLayout_RcdChs->addWidget(plbOptrSub, nChIndex, 6, 1, 1,Qt::AlignHCenter);
 //		m_pGridLayout_RcdChs->setAlignment(plbOptrSub,Qt::AlignCenter);
-//		plbOptrSub->setFixedWidth(30);
+//		plbOptrSub->setMaximumWidth(30);
 //		plbOptrSub->setAlignment(Qt::AlignCenter);
 		
 
 		pBChSel = new QScrollComboBox();
-		pBChSel->setFixedWidth(200);
+		pBChSel->setMaximumWidth(200);
 		pBChSel->setMinimumHeight(30);
 		pBChSel->setMaxVisibleItems(12);
 		m_BChSelList.append(pBChSel);
@@ -140,7 +140,7 @@ void CSttReplayModuleChWidget::initUI()
 		pedtK = new QSttLineEdit(this);
 		pedtK->setAlignment(Qt::AlignHCenter);
 		pedtK->setMinimumHeight(30);
-		pedtK->setFixedWidth(70);
+		pedtK->setMaximumWidth(70);
 		pedtK->setText(tr("1.0"));
 		pedtK->setFont(*g_pSttGlobalFont);
 		m_KEditList.append(pedtK);
@@ -230,11 +230,11 @@ void CSttReplayModuleChWidget::initUI()
 	m_pTimeDiff_Edit->SetValue(0.0f);
 //	m_pTimeDiff_Edit->setDisabled(true);
 
-	m_pVolMax_Edit->setFixedWidth(90);
-	m_pCurMax_Edit->setFixedWidth(90);
-	m_pTimeA_Edit->setFixedWidth(90);
-	m_pTimeB_Edit->setFixedWidth(90);
-	m_pTimeDiff_Edit->setFixedWidth(90);
+	m_pVolMax_Edit->setMinimumWidth(90);
+	m_pCurMax_Edit->setMinimumWidth(90);
+	m_pTimeA_Edit->setMinimumWidth(90);
+	m_pTimeB_Edit->setMinimumWidth(90);
+	m_pTimeDiff_Edit->setMinimumWidth(90);
 
 	m_pVolMax_Edit->setReadOnly(true);
 	m_pCurMax_Edit->setReadOnly(true);
@@ -276,11 +276,11 @@ void CSttReplayModuleChWidget::initUI()
 //	m_pGridLayout_MaxMinValues->setVerticalSpacing(10);//设置垂直间距
 	m_pGridLayout_MaxMinValues->setHorizontalSpacing(10);//设置水平间距
 
-// 	m_pVolMax_Label->setFixedWidth(120);;
-// 	m_pCurMax_Label->setFixedWidth(120);;
-// 	m_pTimeA_Label->setFixedWidth(120);;
-// 	m_pTimeB_Label->setFixedWidth(120);;
-// 	m_pTimeDiff_Label->setFixedWidth(120);
+// 	m_pVolMax_Label->setMaximumWidth(120);;
+// 	m_pCurMax_Label->setMaximumWidth(120);;
+// 	m_pTimeA_Label->setMaximumWidth(120);;
+// 	m_pTimeB_Label->setMaximumWidth(120);;
+// 	m_pTimeDiff_Label->setMaximumWidth(120);
 // 
 // 	m_pGridLayout_MaxMinValues->setAlignment(m_pVolMax_Label,Qt::AlignRight);
 // 	m_pGridLayout_MaxMinValues->setAlignment(m_pCurMax_Label,Qt::AlignRight);

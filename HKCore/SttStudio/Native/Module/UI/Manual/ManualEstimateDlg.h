@@ -23,6 +23,7 @@ public:
 	bool eventFilter(QObject *obj, QEvent *event);
 	virtual void mousePressEvent(QMouseEvent *);
 
+	int m_nParaSetSecondValue;
 private:
 	QComboBox* NewErrorType();
 	QComboBox* AbsErrorType();
@@ -47,6 +48,7 @@ public:
 
 public:
 	void InitUI();
+	int m_nParaSetSecondValue;
 
 protected slots:
 	void slot_btnOK_Clicked();

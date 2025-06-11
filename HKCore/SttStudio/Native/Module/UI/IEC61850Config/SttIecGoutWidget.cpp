@@ -6,8 +6,8 @@
 #include <QKeyEvent>
 #include <QHeaderView>
 #include "SttIecSMV92OtherSetDialog.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../Module/CommonMethod/commonMethod.h"
 //#include "../SttTestCntrFrameBase.h"
 

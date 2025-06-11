@@ -6,8 +6,8 @@
 #include "ui_CharEditWidget_Diff.h"
 #include "CharEditWidgetBase.h"
 #include "CharEditMainWidget.h"
-#include "../../Module/FaultCal/DiffCharCal.h"
-#include "../../AutoTest/Module/Characteristic/Characteristic.h"
+#include "../../../Module/FaultCal/DiffCharCal.h"
+#include "../../../AutoTest/Module/Characteristic/Characteristic.h"
 #include <QStackedWidget>
 #include <QHBoxLayout>
 #include <QVBoxLayout>

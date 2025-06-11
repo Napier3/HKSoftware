@@ -5,14 +5,15 @@
 #include <QLabel>
 #include <QCheckBox>
 #include <QHeaderView>
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../XLangResource_Native.h"
 #include "SttMacroParaEditViewLineVoltManu.h"
 #include "../../XLangResource_Native.h"
 
 LineVoltEstimateGrid::LineVoltEstimateGrid(int rows, int columns, QWidget* parent) : QTableWidget(rows, columns, parent)
 {
-
+	m_bRunning = FALSE;
+	installEventFilter(this);
 }
 
 LineVoltEstimateGrid::~LineVoltEstimateGrid()
@@ -28,7 +29,7 @@ void LineVoltEstimateGrid::InitGrid()
 	strRelError = g_sLangTxt_StateEstimate_RelError;//相对误差(%)
 	strRelError += "(%)";
 	xlang_GetLangStrByFile(strAbsError, "StateEstimate_AbsError");//绝对误差
-	xlang_GetLangStrByFile(strSettingValue, "State_SettingValue");//整定值
+	xlang_GetLangStrByFile(strSettingValue, "sSetValue");//整定值
 
 	setHorizontalHeaderLabels(QStringList() << strName << strErrorType << strRelError << strAbsError << strSettingValue);
 	setColumnWidth(0, 120);
@@ -259,6 +260,34 @@ void LineVoltEstimateGrid::slot_OnCellChanged(int row,int col)
 	}
 
 	connect(this,SIGNAL(cellChanged (int,int)),this,SLOT(slot_OnCellChanged(int ,int)),Qt::UniqueConnection);
+}
+
+
+bool LineVoltEstimateGrid::eventFilter(QObject *obj, QEvent *event)
+{
+	if (event->type() == QEvent::MouseButtonDblClick)
+	{
+		QMouseEvent *pMouseEvent = (QMouseEvent *)event;
+		m_bRunning = TRUE;
+		mouseDoubleClickEvent((QMouseEvent *)pMouseEvent);
+		m_bRunning = FALSE;
+		return true;
+	}
+
+	return QTableWidget::eventFilter(obj,event);
+}
+
+void LineVoltEstimateGrid::mousePressEvent(QMouseEvent * event)
+{
+	if (m_bRunning)
+	{
+		QTableWidget::mousePressEvent(event);
+		return;
+	}
+
+	QMouseEvent *pEvent = new QMouseEvent(QEvent::MouseButtonDblClick,event->pos(),Qt::LeftButton,Qt::LeftButton,Qt::NoModifier);
+	QApplication::postEvent(this,pEvent);
+	QTableWidget::mousePressEvent(event);
 }
 
 LineVoltManualEstimateDlg::LineVoltManualEstimateDlg(tmt_LinevoltManuParas* pParas, QWidget* parent) : QDialog(parent)

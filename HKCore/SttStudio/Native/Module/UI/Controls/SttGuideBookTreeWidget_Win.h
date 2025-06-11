@@ -19,6 +19,7 @@ public:
 
 	BOOL m_bTreeUpdateFinish;
 	BOOL m_bTreeCheckStateChanging;
+	BOOL m_bIsExeItemSelChanged;//chenling 20250210 防止生成模板命令还未执行完成，节点找不到会OnItemSelChanged中断
 
 	//LINUX暂时不开放编辑功能
 //#ifndef _PSX_QT_LINUX_

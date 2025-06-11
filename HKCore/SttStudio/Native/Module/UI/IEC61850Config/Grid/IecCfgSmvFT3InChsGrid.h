@@ -2,7 +2,7 @@
 #define IECCFGSMVFT3InCHSGRID_H
 
 #include "IecCfgChsGridBase.h"
-#include "../../61850/Module/CfgDataMngr/IecCfg6044CommonChIn.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfg6044CommonChIn.h"
 
 
 #define IECCFGSMVFT3InCHS_GRID_COLS		7

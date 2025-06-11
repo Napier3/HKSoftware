@@ -2,13 +2,13 @@
 #include "../SttTestCntrFrameBase.h"
 #include "../Module/XLangResource_Native.h"
 #include "QSttMacroParaEditViewAntiShakeTime.h"
-#include "../../Module/XLanguage/XLanguageResource.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/XLanguageResource.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "Grid/QSttAntiShakeTimeTestItemsGroupGrid.h"
 #include "Grid/QSttAntiShakeTimeDinEventGroupGrid.h"
 #include "../Module/CommonCtrl_QT/QLongLineEdit.h"
 //#ifdef _PSX_QT_WINDOWS_
-//#include "../../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbSmartGenWzd.h"
+//#include "../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbSmartGenWzd.h"
 //extern CGbSmartGenWzd *g_theGbSmartGenWzd;
 //#endif
 
@@ -17,6 +17,7 @@ QSttMacroParaEditViewAntiShakeTime::QSttMacroParaEditViewAntiShakeTime(QWidget *
 {
 
 	g_pTheSttTestApp->IinitGbWzdAiTool();
+	debug_time_long_log("QSttMacroParaEditViewAntiShakeTime setWindowFlags", true);
 	g_pAntiShakeTime = this;
 	m_pTestRecordsGroupGrid = NULL;
 	m_pDinEventGroupGrid = NULL;
@@ -42,10 +43,15 @@ QSttMacroParaEditViewAntiShakeTime::QSttMacroParaEditViewAntiShakeTime(QWidget *
 	m_pBtnDeleteTestItem = NULL;
 
 	OpenXmlFile();
+	debug_time_long_log("QSttMacroParaEditViewAntiShakeTime OpenXmlFile", true);
 	InitUI();
+	debug_time_long_log("QSttMacroParaEditViewAntiShakeTime InitUI", true);
 	InitConnections();
+	debug_time_long_log("QSttMacroParaEditViewAntiShakeTime InitConnections", true);
 	InitData();
+	debug_time_long_log("QSttMacroParaEditViewAntiShakeTime InitData", true);
 	DelCmbBoutSetData();
+	debug_time_long_log("QSttMacroParaEditViewAntiShakeTime DelCmbBoutSetData", true);
 }
 
 QSttMacroParaEditViewAntiShakeTime::~QSttMacroParaEditViewAntiShakeTime()
@@ -94,24 +100,38 @@ void QSttMacroParaEditViewAntiShakeTime::InitUI()
 	strText = _T("删除测试项");
 	m_pBtnDeleteTestItem = new QPushButton(this);
 	m_pBtnDeleteTestItem->setText(strText);
+	strText = _T("清空事件记录");
+	QPushButton *pBtnClearSoeRecord = new QPushButton(this);
+	pBtnClearSoeRecord->setText(strText);
+	pBtnClearSoeRecord->setFont(*g_pSttGlobalFont);
+	connect(pBtnClearSoeRecord, SIGNAL(clicked()), this, SLOT(slot_btn_ClearClearEventRecordsClicked()));	
+
+
 	QGridLayout *pTopGridLayout = new QGridLayout();
-	pTopGridLayout->addWidget(m_pLabelInterval, 0, 1);
-	pTopGridLayout->addWidget(m_pCmbIntervalSelect, 0, 2);
-	pTopGridLayout->addWidget(m_pLabelTestObject, 0, 3);
-	pTopGridLayout->addWidget(m_pCmbTestObject, 0, 4);
-	pTopGridLayout->addWidget(m_pLabelAntiShakeTime, 0, 5);
-	pTopGridLayout->addWidget(m_pEditAntiShakeTime, 0, 6);
-	pTopGridLayout->addWidget(m_pLabelTimeMsec, 0, 7);
-	pTopGridLayout->addWidget(m_pLabelSOEResolution, 0, 8);
-	pTopGridLayout->addWidget(m_pEditSOEResolution, 0, 9);
-	pTopGridLayout->addWidget(m_pLabelSOEMsec, 0, 10);
-	pTopGridLayout->addWidget(m_pLabelBoutSet, 1, 1);
-	pTopGridLayout->addWidget(m_pCmbBoutSet, 1, 2);
-	pTopGridLayout->addWidget(m_pLabelInitState, 1, 3);
-	pTopGridLayout->addWidget(m_pCmbInitState, 1, 4);
-	pTopGridLayout->addWidget(m_pBtnAddTestItem, 1, 6 ,1 ,2);
-	pTopGridLayout->addWidget(m_pBtnDeleteTestItem, 1, 9,1 ,2);
-	
+	pTopGridLayout->addWidget(m_pLabelInterval, 0, 0,1,1);
+	pTopGridLayout->addWidget(m_pCmbIntervalSelect, 0, 1,1,1);
+	pTopGridLayout->addWidget(m_pLabelTestObject, 0, 2,1,1);
+	pTopGridLayout->addWidget(m_pCmbTestObject, 0, 3,1,1);
+	pTopGridLayout->addWidget(m_pLabelAntiShakeTime, 0, 4,1,1);
+	pTopGridLayout->addWidget(m_pEditAntiShakeTime, 0, 5,1,1);
+	pTopGridLayout->addWidget(m_pLabelTimeMsec, 0, 6,1,1);
+	pTopGridLayout->addWidget(m_pLabelSOEResolution, 0, 7,1,1);
+	pTopGridLayout->addWidget(m_pEditSOEResolution, 0, 8,1,1);
+	pTopGridLayout->addWidget(m_pLabelSOEMsec, 0, 9,1,1);
+	pTopGridLayout->addWidget(m_pLabelBoutSet, 1, 0,1,1);
+	pTopGridLayout->addWidget(m_pCmbBoutSet, 1, 1,1,1);
+	pTopGridLayout->addWidget(m_pLabelInitState, 1, 2,1,1);
+	pTopGridLayout->addWidget(m_pCmbInitState, 1, 3,1,1);
+// 	pTopGridLayout->addWidget(m_pBtnAddTestItem, 1, 6 ,1 ,2);
+// 	pTopGridLayout->addWidget(m_pBtnDeleteTestItem, 1, 9,1 ,2);
+	QHBoxLayout *pBtnHBoxLayout = new QHBoxLayout();
+	pBtnHBoxLayout->addWidget(m_pBtnAddTestItem);
+	pBtnHBoxLayout->addWidget(m_pBtnDeleteTestItem);
+	pBtnHBoxLayout->addWidget(pBtnClearSoeRecord);
+	QWidget *pBtnContainer = new QWidget();
+	pBtnContainer->setLayout(pBtnHBoxLayout);
+	pTopGridLayout->addWidget(pBtnContainer, 1, 5, 1, 4);
+
 	m_pTestRecordsGroupGrid = new QSttAntiShakeTimeTestItemsGroupGrid();
 	m_pTestRecordsGroupGrid->setFont(*g_pSttGlobalFont);
 	m_pTestRecordsGroupGrid->horizontalHeader()->setFont(*g_pSttGlobalFont);
@@ -234,7 +254,7 @@ void QSttMacroParaEditViewAntiShakeTime::InitIntervalListDatas()
 			continue;
 		}
 
-		if (pCurObj->m_strID == _T("report"))
+		if (pCurObj->m_strID == _T("report")|| pCurObj->m_strID == _T("CommMessage"))
 		{
 			continue;
 		}
@@ -805,7 +825,7 @@ void QSttMacroParaEditViewAntiShakeTime::slot_EditAntiShakeTime()
 		pData->m_strValue = strNewText;
 		m_oTestRecordsDataGroup.AddNewChild(pData);
 	}
-	m_pEditAntiShakeTime->setText(QString::number(fValue));
+	m_pEditAntiShakeTime->setText(QString::number(fValue,'f', 0));
 
 	//SaveXmlParas();
 }
@@ -831,9 +851,19 @@ void QSttMacroParaEditViewAntiShakeTime::slot_EditSOEResolution()
 		pData->m_strValue = strNewText;
 		m_oTestRecordsDataGroup.AddNewChild(pData);
 	}
-	m_pEditSOEResolution->setText(QString::number(fValue));
+	m_pEditSOEResolution->setText(QString::number(fValue,'f', 0));
 
 	//SaveXmlParas();
+}
+
+void QSttMacroParaEditViewAntiShakeTime::slot_btn_ClearClearEventRecordsClicked()
+{
+	if (m_pDinEventGroupGrid == NULL)
+	{
+		return;
+	}
+	m_pDinEventGroupGrid->clearContents();
+	m_pDinEventGroupGrid->setRowCount(0);
 }
 
 void QSttMacroParaEditViewAntiShakeTime::InitData()
@@ -1054,8 +1084,14 @@ void QSttMacroParaEditViewAntiShakeTime::GetSelectObject()
 	}
 }
 
-BOOL QSttMacroParaEditViewAntiShakeTime::GetDatas_Reports( CSttReport *pReport,const CString &strItemID /*= ""*/ )
+BOOL QSttMacroParaEditViewAntiShakeTime::GetDatas_Reports( CSttReport *pReport,CSttItemBase *pSttItem)
 {
+	if (pSttItem == NULL)
+	{
+		return FALSE;
+	}
+	CString strItemID = pSttItem->GetIDPathEx(STTGBXMLCLASSID_CSTTDEVICE, FALSE);
+
 	if(strItemID.Find(_T("ReadCount")) == -1)
 	{
 		return FALSE;
@@ -1125,7 +1161,15 @@ BOOL QSttMacroParaEditViewAntiShakeTime::GetDatas_Reports( CSttReport *pReport,c
 		CDvmData *pActualTimesData = (CDvmData *)pRptDvmDataset->FindByID(pChannelData->m_strValue);
 		if (pActualTimesData != NULL)
 		{
+			CDvmValue* pActualTimesValue = pActualTimesData->FindValueByID(_T("$st_all"));//dingxy 20241113 实际变位次数
+			if (pActualTimesValue != NULL)
+			{
+				strValue = pActualTimesValue->m_strValue;
+			}
+			else
+			{
 			strValue = pActualTimesData->m_strValue;
+		}
 		}
 		else
 		{
@@ -1233,6 +1277,7 @@ int QSttMacroParaEditViewAntiShakeTime::FindBoutChans(CString strName)
 void QSttMacroParaEditViewAntiShakeTime::GetDatas( CDataGroup *pParas )
 {
 	ASSERT(pParas != NULL);
+	m_oTestRecordsDataGroup.Copy(pParas);//dingxy 20241114 getdata
 	SaveXmlParas();
 }
 

@@ -1,7 +1,7 @@
 #ifndef CPPSTTIOTENGINEDEVICEBASE_H
 #define CPPSTTIOTENGINEDEVICEBASE_H
 
-#include "../../../../Module/DataMngr/DvmDevice.h"
+#include "../../../Module/DataMngr/DvmDevice.h"
 #include "../../SttCmd/SttSysState.h"
 
 class CPpSttIotEngineDeviceBase

@@ -2,7 +2,7 @@
 #define CPPSTTIOTMEASDEVICE_H
 
 #include "../PpEngineServerBase/SttPxPotoEngineBase.h"
-#include "../../../../Module/SmartCap/X61850CapBase.h"
+#include "../../Module/SmartCap/X61850CapBase.h"
 
 class CPpSttIotMeasDevice : public CSttPxPotoEngineBase
 {

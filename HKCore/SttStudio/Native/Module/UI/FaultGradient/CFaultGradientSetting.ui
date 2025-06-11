@@ -24,7 +24,7 @@
         </font>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="m_tabBIn">
         <attribute name="title">
@@ -41,9 +41,7 @@
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>C</string>
@@ -58,9 +56,7 @@ width: 24px;  height: 24px;
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>A</string>
@@ -75,9 +71,7 @@ width: 24px;  height: 24px;
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>B</string>
@@ -92,9 +86,7 @@ width: 24px;  height: 24px;
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>D</string>
@@ -109,9 +101,7 @@ width: 24px;  height: 24px;
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>E</string>
@@ -130,9 +120,7 @@ width: 24px;  height: 24px;
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>F</string>
@@ -147,9 +135,7 @@ width: 24px;  height: 24px;
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>G</string>
@@ -164,9 +150,7 @@ width: 24px;  height: 24px;
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>I</string>
@@ -181,9 +165,7 @@ width: 24px;  height: 24px;
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>H</string>
@@ -198,9 +180,7 @@ width: 24px;  height: 24px;
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>J</string>
@@ -292,9 +272,7 @@ width: 24px;  height: 24px;
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>3</string>
@@ -312,9 +290,7 @@ width: 24px;  height: 24px;
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>4</string>
@@ -332,9 +308,7 @@ width: 24px;  height: 24px;
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>6</string>
@@ -352,9 +326,7 @@ width: 24px;  height: 24px;
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>7</string>
@@ -372,9 +344,7 @@ width: 24px;  height: 24px;
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>2</string>
@@ -392,9 +362,7 @@ width: 24px;  height: 24px;
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>10</string>
@@ -412,9 +380,7 @@ width: 24px;  height: 24px;
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>8</string>
@@ -432,9 +398,7 @@ width: 24px;  height: 24px;
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>5</string>
@@ -452,9 +416,7 @@ width: 24px;  height: 24px;
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>9</string>
@@ -472,9 +434,7 @@ width: 24px;  height: 24px;
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>1</string>
@@ -505,9 +465,7 @@ width: 24px;  height: 24px;
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>10</string>
@@ -525,9 +483,7 @@ width: 24px;  height: 24px;
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>4</string>
@@ -545,9 +501,7 @@ width: 24px;  height: 24px;
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>2</string>
@@ -565,9 +519,7 @@ width: 24px;  height: 24px;
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>7</string>
@@ -585,9 +537,7 @@ width: 24px;  height: 24px;
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>5</string>
@@ -605,9 +555,7 @@ width: 24px;  height: 24px;
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>6</string>
@@ -625,9 +573,7 @@ width: 24px;  height: 24px;
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>9</string>
@@ -645,9 +591,7 @@ width: 24px;  height: 24px;
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>1</string>
@@ -665,9 +609,7 @@ width: 24px;  height: 24px;
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>8</string>
@@ -685,9 +627,7 @@ width: 24px;  height: 24px;
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>3</string>
@@ -767,26 +707,26 @@ width: 24px;  height: 24px;
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
+   <class>QSttCheckBox</class>
+   <extends>QCheckBox</extends>
+   <header>../Module/UI/Controls/SttCheckBox.h</header>
+  </customwidget>
+  <customwidget>
    <class>QSttTabWidget</class>
    <extends>QTabWidget</extends>
    <header>../Module/UI/Controls/SttTabWidget.h</header>
    <container>1</container>
   </customwidget>
-  <customwidget>
-   <class>QSttCheckBox</class>
-   <extends>QCheckBox</extends>
-   <header>../Module/UI/Controls/SttCheckBox.h</header>
-  </customwidget>
  </customwidgets>
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="btnGrpError">
+  <buttongroup name="btnGrpNormal">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
-  <buttongroup name="btnGrpNormal">
+  <buttongroup name="btnGrpError">
    <property name="exclusive">
     <bool>false</bool>
    </property>

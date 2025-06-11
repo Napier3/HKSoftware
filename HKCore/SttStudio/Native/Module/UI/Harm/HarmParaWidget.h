@@ -47,13 +47,15 @@ public:
 	void SetHarmParaFont();
 
 	bool IsChannelValid();
+	void SetParaSetSecondValue(int nParaSetSecondValue);
+
 
 public:
 	CSttTestResourceBase* m_pTestResource;
 	tmt_HarmParas* m_pHarmParas;
 	QStringList m_strHarmList;
 
-	int m_nDispMode;				//0:显示一次值 1:显示二次值
+	int m_nParaSetSecondValue;				//0:显示一次值 1:显示二次值
 	CDataType m_oGradientChs;				//递变通道选择对象
 	long m_nHarmGradType;//谐波递变类型 0：幅值  1：百分比
 	CString m_strChanelText;

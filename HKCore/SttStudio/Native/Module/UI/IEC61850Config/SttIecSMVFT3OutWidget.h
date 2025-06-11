@@ -12,9 +12,9 @@
 #include <QCheckBox>
 #include "../Module/CommonCtrl_QT/QFloatLineEdit.h"
 #include "../Module/CommonCtrl_QT/QNumberCheckBox.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgSMVDatas.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgSMVDatas.h"
 #include "Grid/IecCfgSmvDataFT3Grid.h"
-#include "../../Module/BaseClass/QT/ExBaseListComboBox.h"
+#include "../../../Module/BaseClass/QT/ExBaseListComboBox.h"
 
 //2023/10/12 wjs 
 #include "SttIecSMVFT3DCOtherSetDialog.h"

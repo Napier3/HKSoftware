@@ -1,6 +1,6 @@
 #include "SttReplayWeekModuleChWidget.h"
 // #include "../Module/XLangResource_Native.h"
-// #include"../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+// #include"../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "SttReplayParaSetWidget.h"
 
 extern QFont *g_pSttGlobalFont;

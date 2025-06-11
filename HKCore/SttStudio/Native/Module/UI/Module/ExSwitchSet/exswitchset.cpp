@@ -36,7 +36,7 @@ void ExSwitchSet::initUI()
 	QGridLayout *gridLayout,*gridLayout_2;
 
 	setObjectName(QString::fromUtf8("ExSwitchSet"));
-	resize(400, 300);
+	//resize(400, 300);
 
 	gridLayout_2 = new QGridLayout(this);
 	gridLayout_2->setSpacing(6);
@@ -58,8 +58,8 @@ void ExSwitchSet::initUI()
 //	ck_SelectAll->setText(tr("ȫѡ"));
 	ck_SelectAll->setText(strSelectAll);
 	QFont font1 = ck_SelectAll->font();
-	font1.setPointSize(20);
-    ck_SelectAll->setFont(font1);
+// 	font1.setPointSize(20);
+//  ck_SelectAll->setFont(font1);
 
 	horizontalLayout->addWidget(ck_SelectAll);
 
@@ -161,7 +161,7 @@ void ExSwitchSet::initTable()
 	
 	QFont font1 = m_pTable->horizontalHeader()->font();
 	font1.setBold(true);
-	font1.setPointSize(20);
+	//font1.setPointSize(20);
 	m_pTable->horizontalHeader()->setFont(font1);
 	m_pTable->horizontalHeader()->setStyleSheet("QHeaderView::section{background:skyblue;}"); //���ñ�ͷ����ɫ
 	m_pTable->setStyleSheet("selection-background-color: grey;selection-color: black");
@@ -175,8 +175,8 @@ void ExSwitchSet::initTable()
 	nColumns = nMaxColIndex+1;
 
 	CString strName_In,strName_Out;
-	xlang_GetLangStrByFile(strName_In,"Native_Bin");
-	xlang_GetLangStrByFile(strName_Out,"Native_Bout");
+	xlang_GetLangStrByFile(strName_In,"sInputValue");
+	xlang_GetLangStrByFile(strName_Out,"sOutputValue");
 
 	for (int i=0;i<nColumns;i++)
 	{
@@ -238,9 +238,9 @@ void ExSwitchSet::initTable()
 		m_pTable->setItem(i%8,i/8,pitem);
 	}
 
-	QFont font2 = m_pTable->font();
-	font2.setPointSize(20);
-	m_pTable->setFont(font2);
+// 	QFont font2 = m_pTable->font();
+// 	font2.setPointSize(20);
+// 	m_pTable->setFont(font2);
 }
 
 void ExSwitchSet::initTableData()

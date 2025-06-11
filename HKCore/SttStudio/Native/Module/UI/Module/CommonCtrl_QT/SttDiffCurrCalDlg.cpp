@@ -1,7 +1,7 @@
 #include "SttDiffCurrCalDlg.h"
 #include "../Module/XLangResource_Native.h"
 #include "../../../SttTestResourceMngr/SttTestResourceMngr.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 
 SttDiffCurrCalDlg::SttDiffCurrCalDlg(QWidget *parent)
 	: QDialog(parent)

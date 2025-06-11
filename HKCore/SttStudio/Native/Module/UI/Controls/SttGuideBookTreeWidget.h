@@ -42,11 +42,19 @@ public:
 
 protected://Linux暂时没试
 	BOOL m_bHasButtonsShow;
+	BOOL m_bTreeCheckStateChanging;
 
 public:
 	virtual void After_SaveCurr(const CString &strRootNodePath);
 	virtual void ExpandRootNode();
-
+	void ExpandRootNode(CSttItems *pItems);
+	void SwitchMacroViewByCurrSel(CExBaseObject *pSel);//切换对应模块界面
+	virtual void OnItemCheckChanged(CExBaseListTreeCtrl *pTreeCtrl, CExBaseObject *pSelObj);//更新树节点的勾选状态
+	virtual void UpdateParentCheckState(QSttGuideBookTreeItem* pParent);
+	virtual void UpdateChildCheckState(QSttGuideBookTreeItem* pItem);
+	long SendSetItemState(CSttItemBase *pItemBase);
+	virtual void SetCheckBoxEnable(BOOL bEnable);
+	virtual void SetChildCheckBoxEnable(QSttGuideBookTreeItem* pItem, BOOL bEnable);
 signals:
 
 public slots:

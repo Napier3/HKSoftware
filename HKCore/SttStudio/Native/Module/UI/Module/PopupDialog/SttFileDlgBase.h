@@ -50,6 +50,8 @@ public:
 
 //	BOOL m_bUseCodeConversion;//是否使用编码转换,即UTF8转GBK
 
+	BOOL m_bIsCheckExternalPath;//20250305 suyang 增加判断是否显示U盘路径勾选
+
 public slots:
 	virtual void slot_TreeItemClicked(QTreeWidgetItem*, int);
 	virtual void slot_ExternalPathStateChanged(int nState);

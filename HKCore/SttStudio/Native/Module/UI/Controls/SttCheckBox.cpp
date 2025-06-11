@@ -1,6 +1,6 @@
 #include "SttCheckBox.h"
-#include "../../Module/OSInterface/OSInterface.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/OSInterface/OSInterface.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 //#include "../SttTestCntrFrameBase.h"
 
 QSttCheckBox::QSttCheckBox(QWidget *parent)

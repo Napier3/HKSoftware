@@ -1,7 +1,7 @@
 #include "SttSelSclIedGrid.h"
-#include "../../61850/Module/SCL/SclIecCfgDatas.h"
+#include "../../../61850/Module/SCL/SclIecCfgDatas.h"
 #include "../../XLangResource_Native.h"
-#include "../../61850/Module/XLanguageResourcePp_Mms.h"
+#include "../../../61850/Module/XLanguageResourcePp_Mms.h"
 
 CSttSelSclIedGrid::CSttSelSclIedGrid(QWidget *parent): QExBaseListGridBase(parent)
 {

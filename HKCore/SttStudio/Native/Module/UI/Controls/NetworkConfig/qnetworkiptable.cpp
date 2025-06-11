@@ -1,9 +1,9 @@
 #include "qnetworkiptable.h"
 
 #include <QApplication>
-#include "../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/DataMngr/DataGroup.h"
 #include "../../../SttGlobalDef.h"
-#include "../../61850/Module/XLanguageResourcePp_Mms.h"
+#include "../../../61850/Module/XLanguageResourcePp_Mms.h"
 
 
 QNetworkIpTable::QNetworkIpTable(QWidget *parent)

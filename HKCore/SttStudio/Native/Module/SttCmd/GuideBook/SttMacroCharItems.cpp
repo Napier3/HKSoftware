@@ -7,7 +7,7 @@
 
 #include "stdafx.h"
 #include "SttMacroCharItems.h"
-//#include "../../../../AutoTest/Module/Characteristic/Characteristic.h"
+//#include "../../../AutoTest/Module/Characteristic/Characteristic.h"
 #include "SttItems.h"
 
 #ifdef _DEBUG

@@ -36,6 +36,7 @@ public:
 	BSTR m_strPicKey; //pic
 	BSTR m_strFormatKey; //format
 	BSTR m_strValueKey; //value
+	BSTR m_strMutiSelectKey; //UseMutiSelect
 
 public:
 	static BSTR CCommcmdRefKey()  {   return g_pXmlKeys->m_strCCommcmdRefKey;  }
@@ -45,6 +46,7 @@ public:
 	static BSTR PicKey()  {   return g_pXmlKeys->m_strPicKey;  }
 	static BSTR FormatKey()  {   return g_pXmlKeys->m_strFormatKey;  }
 	static BSTR ValueKey()  {   return g_pXmlKeys->m_strValueKey;  }
+	static BSTR MutiSelectKey()  {   return g_pXmlKeys->m_strMutiSelectKey;  }
 };
 
 

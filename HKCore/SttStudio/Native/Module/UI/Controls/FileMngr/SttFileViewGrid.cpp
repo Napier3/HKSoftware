@@ -1,6 +1,6 @@
 #include "SttFileViewGrid.h"
-#include "../../Module/DataMngr/ShortData.h"
-#include "../../Module/XfileMngrBase/XFolder.h"
+#include "../../../Module/DataMngr/ShortData.h"
+#include "../../../Module/XfileMngrBase/XFolder.h"
 #include "../../../XLangResource_Native.h"
 #include <QApplication>
 #include <QProcess>

@@ -1,8 +1,8 @@
 #include "IecCfgGoutChsGrid.h"
 #include <QCheckBox>
 #include <QHeaderView>
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../CommonMethod/commonMethod.h"
 #include "../SttUIDefine.h"
 

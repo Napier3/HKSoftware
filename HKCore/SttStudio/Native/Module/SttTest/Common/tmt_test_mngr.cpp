@@ -4,7 +4,7 @@
 #else
 #include "../../XLangResource_Native.h"                              
 #endif
-#include "../../../../AutoTest/Module/XLanguageResourceAts.h"
+#include "../../../AutoTest/Module/XLanguageResourceAts.h"
 
 
 

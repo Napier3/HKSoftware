@@ -1,5 +1,5 @@
 #include "SttMacroParaEditViewRemoteCtrl.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../SttTestCntrFrameBase.h"
 #include "../../SttTestResourceMngr/TestResource/SttTestResource_Sync.h"
 #include "../../SttGlobalDef.h"
@@ -18,20 +18,38 @@ QSttMacroParaEditViewRemoteCtrl* g_pRemoteCtrl = NULL;
 
 QSttMacroParaEditViewRemoteCtrl::QSttMacroParaEditViewRemoteCtrl(QWidget *parent) 
 {
-	setWindowFlags(Qt::FramelessWindowHint);
-	g_pTheSttTestApp->IinitGbWzdAiTool();
 	g_pRemoteCtrl = this;
 	m_nReadCount = 0;
+	m_bHasInitFinished = false;
+	m_nRecordIndex = 0;
+
+//	g_theTestCntrFrame->UpdateButtonStateByID(STT_CNTR_CMD_ManuTriger,false,false);
+}
+
+void QSttMacroParaEditViewRemoteCtrl::showEvent(QShowEvent *event)
+{
+	InitMacroParaEditViewRemoteCtr();
+	QWidget::showEvent(event);
+}
+
+void QSttMacroParaEditViewRemoteCtrl::InitMacroParaEditViewRemoteCtr()
+{
+	if (m_bHasInitFinished)
+	{
+		return;
+	}
+
+	setWindowFlags(Qt::FramelessWindowHint);
+	g_pTheSttTestApp->IinitGbWzdAiTool();
 
 	InitUI();
 	SetManualOtherParasFont();
+	SatrtRemoteCtrlTimer();
 	InitConnect();
 
 	m_pBtnWidget->setData();
 	InitGirdData();
-	m_nRecordIndex = 0;
-
-//	g_theTestCntrFrame->UpdateButtonStateByID(STT_CNTR_CMD_ManuTriger,false,false);
+	m_bHasInitFinished = true;
 }
 
 QSttMacroParaEditViewRemoteCtrl::~QSttMacroParaEditViewRemoteCtrl()
@@ -60,6 +78,28 @@ void QSttMacroParaEditViewRemoteCtrl::InitUI()
 // 	g_theTestCntrFrame->Ats_UpdateParameter();
 // }
 
+void QSttMacroParaEditViewRemoteCtrl::SatrtRemoteCtrlTimer()
+{
+	if (m_oRemoteCtrlTimer.isActive()) 
+	{
+		return;
+	}
+	m_nReadCount = 0;
+	connect(&m_oRemoteCtrlTimer,SIGNAL(timeout()),this,SLOT(slot_RemoteCtrlTimer()));
+	m_oRemoteCtrlTimer.start(3000);
+}
+
+void QSttMacroParaEditViewRemoteCtrl::StopRemoteCtrlTimer()
+{
+	if (!m_oRemoteCtrlTimer.isActive()) 
+	{
+		return;
+	}
+	
+	m_oRemoteCtrlTimer.stop();
+	disconnect(&m_oRemoteCtrlTimer,SIGNAL(timeout()),this,SLOT(slot_RemoteCtrlTimer()));
+}
+
 void QSttMacroParaEditViewRemoteCtrl::InitConnect()
 {
 	connect(m_pBtnWidget->m_pInterSelect_ComboBox,SIGNAL(currentIndexChanged(int)),this,SLOT(slot_InterSelectIndexChanged(int)));
@@ -71,9 +111,6 @@ void QSttMacroParaEditViewRemoteCtrl::InitConnect()
 
 	connect(this, SIGNAL(sig_updataParas()), this,SLOT(slot_updateParas()));
 //	connect(this, SIGNAL(sig_UpdateExeResult(long)), this,SLOT(slot_UpdateExeResult(long)));
-	m_nReadCount = 0;
-	connect(&m_oRemoteCtrlTimer,   SIGNAL(timeout()),    this,   SLOT(slot_RemoteCtrlTimer()));
-	m_oRemoteCtrlTimer.start(3000);
 }
 
 void QSttMacroParaEditViewRemoteCtrl::StartTest()
@@ -289,10 +326,12 @@ void QSttMacroParaEditViewRemoteCtrl::slot_RemoteCtrlTimer()
 		return;
 	}
 
+#ifdef _PSX_QT_LINUX_
 	if (g_theTestCntrFrame->m_pActiveWidget != this)
 	{
 		return;
 	}
+#endif
 
 	if (m_nReadCount == 0)
 	{
@@ -332,7 +371,7 @@ void QSttMacroParaEditViewRemoteCtrl::UpdateExeResult(QString strID,long nErrorI
 	m_pBtnWidget->m_pRemoteCtrlGridFirst->UpdateExcRlt(nErrorInfor);
 
 
-	if(strID == CMDID_writeenasel)
+	if(strID == /*CMDID_writeenasel*/CMDID_SingleDoutSelect)
 	{
 		if (nErrorInfor)
 		{
@@ -345,7 +384,7 @@ void QSttMacroParaEditViewRemoteCtrl::UpdateExeResult(QString strID,long nErrorI
 			m_pBtnWidget->m_pRemoteCtrlCancel_Button->setEnabled(true);
 		}
 	}
-	else if (strID == CMDID_writeenaoper || strID == CMDID_writeenarevk)
+	else if (strID == /*CMDID_writeenaoper*/CMDID_SingleDoutExecute || strID == /*CMDID_writeenarevk*/CMDID_SingleDoutQuash)
 	{
 		if (nErrorInfor)
 		{
@@ -386,15 +425,15 @@ void QSttMacroParaEditViewRemoteCtrl::UpdateEventGrid()
 	pEventStruct->strChannelSelectName = strChannelSelectName;
 	pEventStruct->strOperationSelectName = strOperationSelectName;
 
-	if(g_theTestCntrFrame->m_pEngineClientWidget->m_pPpDeviceClient->m_strProcedureID == CMDID_writeenasel)
+	if(g_theTestCntrFrame->m_pEngineClientWidget->m_pPpDeviceClient->m_strProcedureID == /*CMDID_writeenasel*/CMDID_SingleDoutSelect)
 	{
 		pEventStruct->strActionName = _T("遥控预置");
 	}
-	else if(g_theTestCntrFrame->m_pEngineClientWidget->m_pPpDeviceClient->m_strProcedureID == CMDID_writeenaoper)
+	else if(g_theTestCntrFrame->m_pEngineClientWidget->m_pPpDeviceClient->m_strProcedureID == /*CMDID_writeenaoper*/CMDID_SingleDoutExecute)
 	{
 		pEventStruct->strActionName = _T("遥控执行");
 	}
-	else if(g_theTestCntrFrame->m_pEngineClientWidget->m_pPpDeviceClient->m_strProcedureID == CMDID_writeenarevk)
+	else if(g_theTestCntrFrame->m_pEngineClientWidget->m_pPpDeviceClient->m_strProcedureID == /*CMDID_writeenarevk*/CMDID_SingleDoutQuash)
 	{
 		pEventStruct->strActionName = _T("遥控撤销");
 	}
@@ -422,8 +461,12 @@ void QSttMacroParaEditViewRemoteCtrl::UpdateEventGrid()
 
 void QSttMacroParaEditViewRemoteCtrl::UpdateDeviceModelRef()
 {
+	InitMacroParaEditViewRemoteCtr();
 	disconnect(m_pBtnWidget->m_pInterSelect_ComboBox,SIGNAL(currentIndexChanged(int)),this,SLOT(slot_InterSelectIndexChanged(int)));
+	if (g_pTheSttTestApp && g_theTestCntrFrame && (g_theTestCntrFrame->m_pEngineClientWidget))
+	{
 	g_pTheSttTestApp->m_pDvmDevice = g_theTestCntrFrame->m_pEngineClientWidget->m_pDvmDevice;//遥控切换点表数据更新，间隔选择下拉框值刷新
+	}
 	m_pBtnWidget->initInterSelectData();
 	connect(m_pBtnWidget->m_pInterSelect_ComboBox,SIGNAL(currentIndexChanged(int)),this,SLOT(slot_InterSelectIndexChanged(int)));
 }

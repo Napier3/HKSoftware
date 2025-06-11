@@ -52,40 +52,70 @@ class QwtPlotPanner;
 
 extern QColor g_arrColor[MAX_COLOR_NUM];
 extern QString GetCurveStyleSheet(long nColorIndex);
+extern QString Stt_Global_GetBinBoutNameForIndex_NoUseDefault(int iBin, int iIndex);	//20241011 huangliang 取出开入开出量名称
+
+extern int g_nNewPlotWidth;	//20241012 huangliang 记录开入开出最大字符长度
+extern int g_nUITableWidth_Left;	//20241018 huangliang 记录开始时U/I图表刻度的宽度
+extern int g_nUITableWidth_Right;
+extern bool g_HL_bFristShow;
+extern bool g_HL_bSingle;
+
+QString Stt_Global_GetBinBoutNewString(const QString &strValue, bool bLeft);	//20241012 huangliang 依据最大宽度获取最新字符串，iAddLen为负值时即偏移量
+QString Stt_Global_GetUINewString(const QString &strValue, bool bLeft);
+
+int Stt_Global_GetNewPosition(int iFontWith);	//20241028 huangliang 计算状态图上文字信息
 
 //自画坐标轴,以字符方式显示所有的通道
 class BinBoutYScaleDraw: public QwtScaleDraw        
 {
 public:
-	BinBoutYScaleDraw()
+	bool bLeftShow;	//20241012 huangliang 区分左右显示
+	BinBoutYScaleDraw(bool bLeft)
 	{
+		bLeftShow = bLeft;
 	}
 	virtual QwtText label( double v ) const  //重绘坐标轴 刻度值
 	{
-		if(v <= g_nBinCount)
+		QString strValue;
+		if (v <= g_nBinCount)
 		{
-			return QwtText(QString("   %1").arg(QChar('A' - 1 + (int)v)));
+			//20240913 huangliang 取开入
+			strValue = Stt_Global_GetBinBoutNameForIndex_NoUseDefault(0, -1 + (int)v);
+			if (strValue == "")
+				strValue = QString("%1").arg(QChar('A' - 1 + (int)v));
 		}
-		else if(v <= 20)
+		else if (v <= 20)
 		{
-			return QwtText(QString("   %1").arg((int)v - g_nBinCount));		
+			//20240913 huangliang 取开出
+			strValue = Stt_Global_GetBinBoutNameForIndex_NoUseDefault(2, (int)v - g_nBinCount - 1);
+			if (strValue == "")
+				strValue = QString("%1").arg((int)v - g_nBinCount);
 		}
 		else
 		{
-			return QwtText(" ");
+			strValue = " ";
 		}
+
+		//20241018 huangliang 添加最小长度，先默认为4，和UIYScaleDraw中最大值长度保持一致
+		QString sValue = Stt_Global_GetBinBoutNewString(strValue, bLeftShow);
+		return QwtText(sValue);
 	}
 };
 
-class UIYScaleDraw: public QwtScaleDraw        //自画坐标轴
+class UIYScaleDraw : public QwtScaleDraw        //自画坐标轴
 {
 public:
-	UIYScaleDraw()
+	bool bLeftShow;	//20241012 huangliang 区分左右显示
+	UIYScaleDraw(bool bLeft)
 	{
+		bLeftShow = bLeft;
 	}
-	virtual QwtText label( double v ) const  //重绘坐标轴 刻度值
+	virtual QwtText label(double v) const  //重绘坐标轴 刻度值
 	{
-		return QwtText(QString::number( v) );
+		//20241012 huangliang 重新计算字符串，实际只需计算一个值
+		QString sValue = Stt_Global_GetUINewString(QString::number(v), bLeftShow);
+		return QwtText(sValue);
+		//return QwtText(QString::number( v) );
 	}
 };
 
@@ -150,7 +180,7 @@ public:
 
 class QStateMonitorPlot : public QwtPlot
 {
-Q_OBJECT
+	Q_OBJECT
 public:
 	double m_dRealTime;//测试启动的绝对时间
 	double m_dLastTime;//测试启动的相对时间

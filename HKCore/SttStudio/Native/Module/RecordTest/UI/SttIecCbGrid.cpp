@@ -1,8 +1,8 @@
 #include "SttIecCbGrid.h"
 #include "../../UI/Module/CommonCtrl_QT/QIecWidgetDelegate.h"
-#include "../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../XLangResource_Native.h"
-#include "../../../../Module/SmartCap/61850Cap/CapDevice/CapDevice6044.h"
+#include "../../../Module/SmartCap/61850Cap/CapDevice/CapDevice6044.h"
 
 
 #define CAPDEVICEGRID_COLS			6

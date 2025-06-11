@@ -2,7 +2,7 @@
 #include "../../SttTestCntrFrameBase.h"
 #include "../CommonMethod/commonMethod.h"
 #include <QHeaderView>
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include <QLabel>
 #include "../../../XLangResource_Native.h"
 

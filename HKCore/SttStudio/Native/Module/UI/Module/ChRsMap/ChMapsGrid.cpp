@@ -1,6 +1,7 @@
 #include "ChMapsGrid.h"
 #include "../Module/SttCmd/SttChMap.h"
 #include "../../SttTestCntrFrameBase.h"
+#include <QApplication>
 
 #define CHMAPS_GRID_COL_INDEX_NAME                    0
 //#define CHMAPS_GRID_COL_INDEX_ID                      1
@@ -54,6 +55,15 @@ void CChMapsGrid::InitGridTitle()
 
 void CChMapsGrid::ShowData(CExBaseObject *pData, int& nRow, BOOL bInsertRow)
 {
+	if (pData->m_strID.Find("Bin") >= 0)
+	{
+		return;
+	}
+	else if (pData->m_strID.Find("Bout") >= 0)
+	{
+		return;
+	}
+
 	ASSERT(pData);
 	CSttChMap *pChMap = (CSttChMap *)pData;
 	Show_String(pData,nRow,0,&pChMap->m_strName,EndEditCell_String); 

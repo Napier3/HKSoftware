@@ -1,8 +1,8 @@
 #include "SttPopupOpenDialog.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include <QDirIterator>
-#include"../../Module/API/StringConvert/String_Utf8_To_Gbk.h"
-#include"../../Module/API/StringConvert/String_Gbk_To_Utf8.h"
+#include"../../../Module/API/StringConvert/String_Utf8_To_Gbk.h"
+#include"../../../Module/API/StringConvert/String_Gbk_To_Utf8.h"
 //#include "../../SttTestCntrFrameBase.h"
 
 QSttPopupOpenDialog::QSttPopupOpenDialog(const CString &strFolderPath,QStringList &astrPostfix ,QWidget *parent,BOOL UseCodeConversion)

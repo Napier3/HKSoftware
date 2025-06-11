@@ -62,12 +62,12 @@ protected:
 	QScrollComboBox *m_pTimeZoneSet_ComboBox;
 	QGridLayout *m_pOtherSet_GridLayout;
 	
-	QLabel *m_pFanMode_Label;
-	QButtonGroup *m_pFanModeBtnGroup;
-	QRadioButton *m_pNormal_RadioButton;
-	QRadioButton *m_pMute_RadioButton;
-	QHBoxLayout *m_pFanMode_HBoxLayout;
-	
+// 	QLabel *m_pFanMode_Label;
+// 	QButtonGroup *m_pFanModeBtnGroup;
+// 	QRadioButton *m_pNormal_RadioButton;
+// 	QRadioButton *m_pMute_RadioButton;
+// 	QHBoxLayout *m_pFanMode_HBoxLayout;
+// 	
 
 	QPushButton *m_pOK_PushButton;
 	QPushButton *m_pCancel_PushButton;

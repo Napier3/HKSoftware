@@ -1,10 +1,10 @@
 #ifndef QGOUTDATACHSGRID_H
 #define QGOUTDATACHSGRID_H
 #include "../../IEC61850Config/Grid/IecCfgChsGridBase.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgGoutCh.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgGoutDatas.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgGoutChs.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgGoutData.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgGoutCh.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgGoutDatas.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgGoutChs.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgGoutData.h"
 
 #define GOUTDATACHS_GRID_COLS		4
 class QGoutMapComBoxDelegBase : public QIecCfgChsComBoxDelegBase

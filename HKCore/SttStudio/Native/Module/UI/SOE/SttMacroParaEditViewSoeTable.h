@@ -11,7 +11,7 @@
 #include "../Module/ScrollCtrl/ScrollComboBox.h"
 #include "../Module/CommonCtrl_QT/CommonCtrlInterface.h"
 #include "../Module/QExBaseListGridBase/QExBaseListComBoxDelegBase.h"
-#include "../../Module/DataMngr/DvmDataset.h"
+#include "../../../Module/DataMngr/DvmDataset.h"
 
 #define STT_SOE_FirstTABLE_COL_Index                 0//ÐòºÅ
 #define STT_SOE_FirstTABLE_COL_Select                1 //Ñ¡Ôñ 
@@ -81,7 +81,7 @@ public:
 	void InitData(tmt_SoeParas *pSoeParas);
 	virtual void UpdateText(const QString &strText);
 #ifdef _PSX_QT_LINUX_
-	bool eventFilter(QObject *obj, QEvent *event);
+	//bool eventFilter(QObject *obj, QEvent *event);
 	virtual void mousePressEvent(QMouseEvent *);
 #endif
 	void setInitStateComboxSoeDelegate(int row,QTableWidgetItem *pItem,tmt_SoeParas *pSoeParas);

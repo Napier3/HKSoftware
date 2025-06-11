@@ -5,7 +5,9 @@
 #define QModePair QPair<QWidget*, Keyboard::tagMode>
 
 #define  STT_SOFTKEYBOARD_VOL_NORMAL             _T("SoftKeyBoard_Vol_Normal")
+#define  STT_SOFTKEYBOARD_VOL_NORMAL2             _T("SoftKeyBoard_Vol_Normal2")
 #define  STT_SOFTKEYBOARD_VOL_WEAK				 _T("SoftKeyBoard_Vol_Weak")
+#define  STT_SOFTKEYBOARD_VOL_WEAK2				 _T("SoftKeyBoard_Vol_Weak2")
 #define  STT_SOFTKEYBOARD_CUR_NORMAL             _T("SoftKeyBoard_Cur_Normal")
 #define  STT_SOFTKEYBOARD_CUR_WEAK			     _T("SoftKeyBoard_Cur_Weak")
 #define STT_KEYBOARD_PERCENTAGE				   	_T("KeyBoard-Percentage") //百分比键盘
@@ -84,7 +86,7 @@ public slots:
 	void OnTimer();
 	void updateChanged(const QString& strValue);
 	void deleteChanged();
-	void microFocusChanged();
+    //void microFocusChanged();
 
 public:
 	//对外的绑定函数

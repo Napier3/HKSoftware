@@ -65,6 +65,10 @@ public:
 	virtual bool IsValidTestParasFile(const CString& strParasFile,bool bOpen = true);
 	virtual PTMT_PARAS_HEAD GetTestParas() { return &m_oManualTest;}
 	virtual char* GetMacroID(){ return STT_ORG_MACRO_SequenceManuTest; }
+	virtual void UpdatePrimParaSetUI(){}//20240923 suyang 更新界面一次值/二次值显示
+	virtual BOOL IsUseSecondParaSet(){ return TRUE; }//20240923 suyang 是否显示二次值	
+	virtual void SetPlotAcDcMaxMinValue();	
+
 
     void InitParasView();
     void InitIVView();

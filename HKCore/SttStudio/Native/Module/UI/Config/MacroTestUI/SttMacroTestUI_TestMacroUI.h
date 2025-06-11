@@ -7,7 +7,7 @@
 #pragma once
 
 #include "SttTestCtrrlMacroTestUIMngrGlobal.h"
-#include "../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/DataMngr/DataGroup.h"
 
 class CSttMacroTestUI_TestMacroUI : public CExBaseObject
 {

@@ -1,5 +1,5 @@
 #include "SttToolButtonBase.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 
 QSttToolButtonBase::QSttToolButtonBase(CExBaseObject *pCfgData,QWidget *parent)
 : QToolButton(parent)

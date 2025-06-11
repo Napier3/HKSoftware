@@ -66,6 +66,9 @@ public:
 	CSttTestResourceBase *m_pSttTestResource;
 	bool m_bControlLock;
 
+	int m_nParaSetSecondValue;				//0:显示一次值 1:显示二次值
+	void SetParaSetSecondValue(int nParaSetSecondValue);
+
 public:
 	QVBoxLayout *m_pVBoxLayout_Main;
 	QHarmParaTable *m_pParaTable;
@@ -146,6 +149,7 @@ public slots:
 
 	void slot_ResetChangeFlag(int nValue);
 //	void slot_CheckStateChanged();
+	void slot_updateHarmParas();
 };
 
 #endif // QHARMWIDGET_H

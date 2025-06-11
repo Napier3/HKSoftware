@@ -1,7 +1,7 @@
 #ifndef CSTTCHARACTERDRAWPNG_H
 #define CSTTCHARACTERDRAWPNG_H
-#include "../../../../AutoTest/Module/Characteristic/SttCharacterDrawForTest.h"
-#include "../../../../Module/QT/Png64/DrawPngBase64.h"
+#include "../../../AutoTest/Module/Characteristic/SttCharacterDrawForTest.h"
+#include "../../../Module/QT/Png64/DrawPngBase64.h"
 
 class CSttCharacterDrawPng : public CSttCharacterDrawForTest, public CDrawPngBase64
 {

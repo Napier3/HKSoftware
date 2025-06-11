@@ -1,10 +1,10 @@
 #include "PpSttIotEngineClientWidget.h"
 #include "ui_PpSttIotEngineClientWidget.h"
 
-#include "../../../../Protocol/Module/PxiEngine/PxiEngineGlobal.h"
-#include "../../../../IotProtoServer/Module/SttPxCommCmdDef.h"
+#include "../../../Protocol/Module/PxiEngine/PxiEngineGlobal.h"
+#include "../../../IotProtoServer/Module/SttPxCommCmdDef.h"
 
-#include "../../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdAi/GbWzdAiTool.h"
+#include "../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdAi/GbWzdAiTool.h"
 #include "qsttmmsbrcbctrlwidget.h"
 #include "qsttzoneindexsetdlg.h"
 #include "../../XLangResource_Native.h"
@@ -891,7 +891,7 @@ void QPpSttIotEngineClientWidget::EnableBtns_Connecting_Closeing()
 	ui->m_btnEnumDataset->setEnabled(false);
 }
 
-#include "CommConfigWidget/PpCommConfigDlg.h"
+#include "CommConfigWidget/ppcommconfigdlg.h"
 
 void QPpSttIotEngineClientWidget::on_m_btnConfigDevice_clicked()
 {
@@ -1058,7 +1058,7 @@ void QPpSttIotEngineClientWidget::on_m_btnSaveDvmFile_clicked()
 
 //2023-2-7  lijunqing  下面部分的代码，用于调试功能用
 /*
-#include "../../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdAi/GbWzdAiTool.h"
+#include "../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdAi/GbWzdAiTool.h"
 #include "../../UI/Interface/SttHtmlViewApi.h"
 #include "../../SttTestCtrl/SttTestAppBase.h"
 */

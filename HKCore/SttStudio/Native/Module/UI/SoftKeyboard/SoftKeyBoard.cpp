@@ -1,7 +1,7 @@
 #include "SoftKeyBoard.h"
 #include "../../XLangResource_Native.h"
 #include "../../SttTestResourceMngr/TestResource/SttTestResourceBase.h"
-#include "../../Module/API/MathApi.h"
+#include "../../../Module/API/MathApi.h"
 
 QSoftKeyBoard* g_pSoftKeyBoard = NULL;
 
@@ -21,11 +21,15 @@ QSoftKeyBoard::~QSoftKeyBoard()
 void QSoftKeyBoard::SetUserFunc(bool bUserFun, const QString& strFun1, const QString& strFun2,
 				 const QString& strFun3, const QString& strFun4)
 {
+	if (m_pKeyBoard)
+	{
 	m_pKeyBoard->SetUserFunSetup(bUserFun);
 	if(bUserFun)
 	{
 		m_pKeyBoard->SetUserFunString(strFun1, strFun2, strFun3, strFun4);
 	}
+	}
+
 }
 
 void QSoftKeyBoard::DisableUserFunc()
@@ -38,14 +42,22 @@ void QSoftKeyBoard::DisableUserFunc()
 
 void QSoftKeyBoard::SetDefaultFunc()
 {
+	if (m_pKeyBoard)
+	{
 	m_pKeyBoard->SetUserFunSetup(false);
 	m_pKeyBoard->SetInputType(Keyboard::ONLYNUMBER);
+	}
+	
 }
 
 void QSoftKeyBoard::SetLanguageFunc()
 {
+	if (m_pKeyBoard)
+	{
 	m_pKeyBoard->SetDefaultFunc();
 	m_pKeyBoard->SetInputType(Keyboard::NUMBER);
+	}
+	
 }
 
 void QSoftKeyBoard::SetLanguageKeyboard()
@@ -66,17 +78,29 @@ void QSoftKeyBoard::SetDefaultKeyboard()
 
 void QSoftKeyBoard::SetSmoothState(bool bSmooth)
 {
+	if (m_pKeyBoard)
+	{
 	m_pKeyBoard->SetSmooth(bSmooth);
+	}
+	
 }
 
 void QSoftKeyBoard::ShowPanel()
 {
+	if (m_pKeyBoard)
+	{
 	m_pKeyBoard->ShowSmoothEdit();
+	}
+	
 }
 
 void QSoftKeyBoard::HidePanel()
 {
+	if (m_pKeyBoard)
+	{
 	m_pKeyBoard->HidePanel();
+	}
+	
 }
 
 void QSoftKeyBoard::AttachObj(QWidget* pWidget,Keyboard::tagMode oDefault)
@@ -250,66 +274,70 @@ void QSoftKeyBoard::OnTimer()
 
 void QSoftKeyBoard::updateChanged(const QString& strValue)
 {
-    //QKeyEvent keyPress(QEvent::KeyPress, 0, Qt::NoModifier, QString(strValue));
+	QKeyEvent keyPress(QEvent::KeyPress, 0, Qt::NoModifier, QString(strValue));
     //QApplication::sendEvent(m_pCurWebFrame->parent()->parent(), &keyPress);
 }
 
 void QSoftKeyBoard::deleteChanged()
 {
-    //QKeyEvent keyPress(QEvent::KeyPress, Qt::Key_Backspace, Qt::NoModifier, QString());
+	QKeyEvent keyPress(QEvent::KeyPress, Qt::Key_Backspace, Qt::NoModifier, QString());
     //QApplication::sendEvent(m_pCurWebFrame->parent()->parent(), &keyPress);
 }
-
+/*
 void QSoftKeyBoard::microFocusChanged()
 {
     //QWebView* pObj = (QWebView*)sender()->parent();
     //QWebPage* pPage = pObj->page();
     //QWebFrame* pFrame = pPage->mainFrame();
-    //
-    //QVariant var = pFrame->evaluateJavaScript("document.activeElement.attributes.type.value");
-    //QString strlocalName = var.toString();
-    //if(strlocalName == "input"
-    //	|| strlocalName == "text")
-    //{
-    //	//input数字键盘
-    //	m_pKeyBoard->SetUserFunSetup(false);
-    //	m_pCurWebFrame = pFrame;
-    //	var = pFrame->evaluateJavaScript("document.activeElement.id");
-    //	QString strID = var.toString();
-    //	bool bIsSameCtrlID = m_pKeyBoard->IsSameWebCtrlID(strID);
-    //	m_pKeyBoard->SetWebAttribute(m_pCurWebFrame, strID);
-    //	var = pFrame->evaluateJavaScript("document.activeElement.value");
-    //	QString strVal = var.toString();
-    //	m_pKeyBoard->ShowWebPanel(strVal);
-    //	var = pFrame->evaluateJavaScript("document.activeElement.getBoundingClientRect()");
-    //	QMap<QString, QVariant> map = var.toMap();
-    //	QVariant varX = map.value("left");
-    //	QVariant varY = map.value("top");
-    //	QVariant varWidth = map.value("width");
-    //	QVariant varHeight = map.value("height");
-    //	m_pKeyBoard->UpdateShowRect(varX.toInt(), varY.toInt(), varWidth.toInt(), varHeight.toInt());
-    //	m_pKeyBoard->UpdateBtnsRect();
-    //
-    //	if (!bIsSameCtrlID)
-    //	{
-    //		m_pKeyBoard->m_strOriginalText = strVal;
-    //	}
-    //
-    //	if (!m_pKeyBoard->GetSelectAll())//初次弹出键盘时,选中全部字符内容
-    //	{
-    //		pFrame->evaluateJavaScript("document.activeElement.setSelectionRange(0, document.activeElement.value.length)");
-    //	}
-    //}
-    //else
-    //{
-    //	m_pKeyBoard->CheckWebAttribute();
-    //	m_pKeyBoard->setVisible(false);
-    //}
-}
 
+	QVariant var = pFrame->evaluateJavaScript("document.activeElement.attributes.type.value");
+	QString strlocalName = var.toString();
+	if(strlocalName == "input"
+		|| strlocalName == "text")
+	{	
+		//input数字键盘
+		m_pKeyBoard->SetUserFunSetup(false);
+        //m_pCurWebFrame = pFrame;
+		var = pFrame->evaluateJavaScript("document.activeElement.id");
+		QString strID = var.toString();
+		bool bIsSameCtrlID = m_pKeyBoard->IsSameWebCtrlID(strID);
+        //m_pKeyBoard->SetWebAttribute(m_pCurWebFrame, strID);
+		var = pFrame->evaluateJavaScript("document.activeElement.value");
+		QString strVal = var.toString();
+		m_pKeyBoard->ShowWebPanel(strVal);
+		var = pFrame->evaluateJavaScript("document.activeElement.getBoundingClientRect()");
+		QMap<QString, QVariant> map = var.toMap();
+		QVariant varX = map.value("left");
+		QVariant varY = map.value("top");
+		QVariant varWidth = map.value("width");
+		QVariant varHeight = map.value("height");
+		m_pKeyBoard->UpdateShowRect(varX.toInt(), varY.toInt(), varWidth.toInt(), varHeight.toInt());
+		m_pKeyBoard->UpdateBtnsRect();
+
+		if (!bIsSameCtrlID)
+		{
+			m_pKeyBoard->m_strOriginalText = strVal;
+		}
+
+		if (!m_pKeyBoard->GetSelectAll())//初次弹出键盘时,选中全部字符内容
+		{
+			pFrame->evaluateJavaScript("document.activeElement.setSelectionRange(0, document.activeElement.value.length)");
+		}
+	}
+	else
+	{
+        //m_pKeyBoard->CheckWebAttribute();
+		m_pKeyBoard->setVisible(false);
+	}
+}
+*/
 void QSoftKeyBoard::GetFuncNum(QString& strText)
 {
-	if(strText.indexOf("V") == strText.length() - 1)
+	if(strText.indexOf("kV") == strText.length() - 2)//20241021 suyang 增加键盘对kV的处理
+	{
+		strText = strText.left(strText.length() - 2);
+	}
+	else if(strText.indexOf("V") == strText.length() - 1)
 	{
 		strText = strText.left(strText.length() - 1);
 	}
@@ -321,6 +349,7 @@ void QSoftKeyBoard::GetFuncNum(QString& strText)
 	{
 		strText = strText.left(strText.length() - 2);
 	}
+	
 }
 
 void QSoftKeyBoard::slot_clickFunc1(QPushButton* pBtn)
@@ -411,22 +440,30 @@ void QSoftKeyBoard::HideSmoothKeyboard()
 
 void QSoftKeyBoard::SetSoftKeyBoardType(long nType)
 {
+	if (m_pKeyBoard)
+	{
 	//2023/8/16 wjs 将传入的百分比类型给KeyBoard
 	m_pKeyBoard->SetKeyBoardType(nType);
+	}
+	
 }
 
 void QSoftKeyBoard::SetMinusBtnText(QString strText)
 {
+	if (m_pKeyBoard)
+	{
 	m_pKeyBoard->SetMinusBtnText(strText);
+	}
+	
 }
 
 void QSoftKeyBoard::Attach330Channel(QObject* pReceiver, long nType)
 {
 	if(g_pSoftKeyBoard)
 	{
-		g_oKeyBoardBtnDescs.m_strVolFunc1.Format(_T("%dV"), (int)g_oSystemParas.m_fVNom);
-		g_oKeyBoardBtnDescs.m_strVolFunc2.Format(_T("%0.3fV"), g_oSystemParas.m_fVNom/SQRT3);
-		g_oKeyBoardBtnDescs.m_strCurFunc3.Format(_T("%dA"), (int)g_oSystemParas.m_fINom);
+// 		g_oKeyBoardBtnDescs.m_strVolFunc1.Format(_T("%dV"), (int)g_oSystemParas.m_fVNom);
+// 		g_oKeyBoardBtnDescs.m_strVolFunc2.Format(_T("%0.3fV"), g_oSystemParas.m_fVNom/SQRT3);//20241017 suyang 根据配置文件显示单位，不需要在此设置
+		//g_oKeyBoardBtnDescs.m_strCurFunc3.Format(_T("%dA"), (int)g_oSystemParas.m_fINom);//20250211  suyang 
 		g_oKeyBoardBtnDescs.m_strFreqFunc2.Format(_T("%dHz"), (int)g_oSystemParas.m_fFNom);
 
 		g_pSoftKeyBoard->disconnect(SIGNAL(sig_clickFunc1(QString)));

@@ -13,7 +13,7 @@
 #include <QTimerEvent>
 #include <QLineEdit>
 #include "SttCommCfgProtocolTemplateGrid.h"
-#include "../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/DataMngr/DataGroup.h"
 
 
 class QSttCommCfgProtocolTemplateDlg : public QDialog

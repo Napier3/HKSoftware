@@ -91,6 +91,10 @@ public:
 	bool ExistFT3OutParaWidget();
 
 	void CalPhaseValues();
+
+	virtual void UpdatePrimParaSetUI(){}//20240923 suyang 更新界面一次值/二次值显示
+	virtual BOOL IsUseSecondParaSet(){ return TRUE; }//20240923 suyang 是否显示二次值	
+
 	
 signals:
 	void sig_updataParas();

@@ -12,7 +12,28 @@ QOscillogramWidget::QOscillogramWidget(QWidget *parent )
 	m_nVolFlag = 0;
 	m_nGroupIndex = -1;
 	generagelsinData();
+	m_bHasInitFinished = false;
 }
+
+void QOscillogramWidget::InitOscillogramWidget()
+{
+	updateWidget();
+	selectDataChanged();
+}
+
+
+void QOscillogramWidget::showEvent(QShowEvent *event)
+{
+	if (!m_bHasInitFinished)
+	{
+		InitOscillogramWidget();
+		exportOscillogram();
+		m_bHasInitFinished = true;
+	}
+
+	QWidget::showEvent(event);
+}
+
 QOscillogramWidget::~QOscillogramWidget()
 {
 	m_oGroupResourceRef_Cur.RemoveAll();
@@ -123,6 +144,7 @@ void QOscillogramWidget::updateWidget()
 
 	this->setLayout(V1Layout);
 
+	m_PlotList_Volt.append(pV1);
 	m_PlotList.append(pV1);
 	m_PlotList.append(pPI1);
 
@@ -130,7 +152,17 @@ void QOscillogramWidget::updateWidget()
 	QFont font;
 	font.setBold(true);
 	t.setFont(font);
+
+	if(m_nParaSetSecondValue ==0)
+	{
+		t.setText("U(kV)");
+
+	}
+	else
+	{
 	t.setText("U(V)");
+	}
+
 	pV1->setAxisTitle(QwtPlot::yLeft, t);
 	t.setText("I(A)");
 	pPI1->setAxisTitle(QwtPlot::yLeft, t);
@@ -138,6 +170,43 @@ void QOscillogramWidget::updateWidget()
 	update();
 
 }
+
+void QOscillogramWidget::SetParaSetSecondValue(int nParaSetSecondValue)
+{
+	if (m_nParaSetSecondValue == nParaSetSecondValue)
+	{
+		return;
+	}
+
+	m_nParaSetSecondValue = nParaSetSecondValue;
+
+	int num = m_PlotList_Volt.size();
+
+	QwtText t;
+	QFont font;
+	font.setBold(true);
+	font.setPointSize(11);
+	t.setFont(font);
+
+	for(int i= 0;i<num;i++)
+	{
+		PlotOscillogram *pV1 = m_PlotList_Volt.at(i);
+		if(m_nParaSetSecondValue ==0)
+		{
+			t.setText("U(kV)");
+
+		}
+		else
+		{
+			t.setText("U(V)");
+		}
+
+		pV1->setAxisTitle( QwtPlot::yLeft,  t );
+
+	}
+
+}
+
 void QOscillogramWidget::slot_UpdateOscillogramI(bool b)
 {
 	POS pos = m_oGroupResourceRef_Cur.GetHeadPosition();
@@ -447,6 +516,11 @@ void QOscillogramWidget::selectDataChanged()
 }
 void QOscillogramWidget::exportOscillogram()
 {
+	if (m_PlotList.size() <= 0)
+	{
+		return;
+	}
+
 	float VMax = getVMax(1);
 	PlotOscillogram *pV = m_PlotList.at(0);
 	pV->UpdateYInterval(VMax * RADIO);

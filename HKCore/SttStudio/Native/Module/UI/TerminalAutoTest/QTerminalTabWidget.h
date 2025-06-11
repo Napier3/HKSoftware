@@ -4,11 +4,11 @@
 #include <QWidget>
 #include <QTabWidget>
 #include "Grid/QTerminalGooseGrid.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgChsBase.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgGoutChs.h"
-#include "../../Module/BaseClass/ExBaseList.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgGinChs.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgGinDatas.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgChsBase.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgGoutChs.h"
+#include "../../../Module/BaseClass/ExBaseList.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgGinChs.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgGinDatas.h"
 
 #define MU_TAB_TYPE_GOOSETOBIN		    0//GOOSE转开入
 #define MU_TAB_TYPE_BOUTTOGOOSE	        1//开出转GOOSE

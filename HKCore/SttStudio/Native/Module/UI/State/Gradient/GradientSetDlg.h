@@ -80,7 +80,11 @@ public:
 	void updateGradientType(int nType);
 	void setGradientType(int nType);
 
+	int m_nParaSetSecondValue;
+	void SetParaSetSecondValue(int nParaSetSecondValue);
+
 	void closeEvent(QCloseEvent *event);
+
 };
 
 #endif

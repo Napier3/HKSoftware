@@ -1,5 +1,5 @@
 #include "SmvAbnormalChannelSelect.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../../XLangResource_Native.h"
 #include "../../Controls/SttCheckBox.h"
 

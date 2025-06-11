@@ -1,7 +1,7 @@
 #include "SttIecSmvMeterAxisWidget.h"
-#include "../../../../Module/API/GlobalConfigApi.h"
-#include "../../../../Module/API/GloblaDrawFunctions.h"
-#include "../../../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GloblaDrawFunctions.h"
+#include "../../../Module/SmartCap/XSmartCapMngr.h"
 
 #define STT_MeterAxis_Max_Width  220
 #define STT_MeterAxis_Title_Height  40

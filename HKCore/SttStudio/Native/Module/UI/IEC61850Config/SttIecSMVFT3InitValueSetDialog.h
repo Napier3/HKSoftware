@@ -12,9 +12,9 @@
 #include <QPushButton>
 #include <QLabel>
 #include <QString>
-#include "../../Module/API/GlobalConfigApi.h"	//提供Cstring
-// #include "../../Module/DataMngr/DataType.h"
-// #include"../../Module/BaseClass/ExBaseOptrInterface.h"
+#include "../../../Module/API/GlobalConfigApi.h"	//提供Cstring
+// #include "../../../Module/DataMngr/DataType.h"
+// #include"../../../../Module/BaseClass/ExBaseOptrInterface.h"
 #define IECCFG_COMMON_FT3_BIT_NUM                16
 
 class QSttIecSMVFT3InitValueSetDialog : public QDialog

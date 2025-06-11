@@ -20,7 +20,7 @@
 
 
 #include "../Module/CommonCtrl_QT/QFloatLineEdit.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgSysParas.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgSysParas.h"
 
 class QSttIecSysCfgWidget : public QWidget, public CIecConfigInterface
 {

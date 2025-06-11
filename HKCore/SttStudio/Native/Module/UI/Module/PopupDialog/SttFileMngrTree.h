@@ -5,9 +5,9 @@
 #include <QObject>
 #include <QMouseEvent>
 #include <QTreeWidgetItem>
-#include "../../Module/DataMngr/DvmData.h"
-#include "../../Module/XfileMngrBase/XFileMngr.h"
-#include "../../Module/BaseClass/QT/ExBaseListTreeCtrl.h"
+#include "../../../Module/DataMngr/DvmData.h"
+#include "../../../Module/XfileMngrBase/XFileMngr.h"
+#include "../../../Module/BaseClass/QT/ExBaseListTreeCtrl.h"
 #include "../ScrollCtrl/ScrollTreeWidget.h"
 
 class QSttFileMngrTree : public QScrollTreeWidget

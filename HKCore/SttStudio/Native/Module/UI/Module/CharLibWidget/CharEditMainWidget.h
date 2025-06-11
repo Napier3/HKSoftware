@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QItemDelegate>
 #include "ui_CharEditMainWidget.h"
-#include "OSInterface.h"
+#include "../../../Module/OSInterface/OSInterface.h"
 #include "QImpCharactWidget.h"
 #include "CharEditWidgetBase.h"
 

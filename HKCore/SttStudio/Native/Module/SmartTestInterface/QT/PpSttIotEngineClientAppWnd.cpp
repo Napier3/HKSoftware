@@ -1,7 +1,7 @@
 #include "PpSttIotEngineClientAppWnd.h"
 
-#include "../../../../Protocol/Module/PxiEngine/PxiEngineGlobal.h"
-#include "../../../../IotProtoServer/Module/SttPxCommCmdDef.h"
+#include "../../../Protocol/Module/PxiEngine/PxiEngineGlobal.h"
+#include "../../../IotProtoServer/Module/SttPxCommCmdDef.h"
 
 #include "PpSttIotEngineClientWidget.h"
 

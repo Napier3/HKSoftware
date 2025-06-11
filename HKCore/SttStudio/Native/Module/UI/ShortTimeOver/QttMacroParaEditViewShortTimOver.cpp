@@ -3,7 +3,7 @@
 
 #include "../Module/XLangResource_Native.h"
 #include "../Module/SttTestResourceMngr/TestResource/SttTestResource_Sync.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 
 #include "../SttTestCntrFrameBase.h"
 #include "../../SttGlobalDef.h"
@@ -254,7 +254,7 @@ void QttMacroParaEditViewShortTimOver::UpdateStateParas_Base()
 	if (m_pUIParaWidget)
 	{
 		m_pUIParaWidget->setData(m_pSTOverPara->m_uiVOL,m_pSTOverPara->m_uiCUR);
-		m_pUIParaWidget->initData();
+		m_pUIParaWidget->initData(true);
 	}
 
 	// 	if(m_pParaTab->m_pStateParaWidget)
@@ -301,24 +301,6 @@ void QttMacroParaEditViewShortTimOver::OnViewTestStart()
 	g_theTestCntrFrame->StartStateMonitor();
 	g_theTestCntrFrame->StartVectorWidget();
 	g_theTestCntrFrame->StartPowerWidget();
-
-
-	/*CString strStateName;
-
-	for(int i = 0; i < m_oStateTest.m_oStateParas.m_nStateNumbers; i++)
-	{
-		if(m_oStateTest.m_oStateParas.m_paraState[i].m_bSelected)
-		{
-			strStateName = m_oStateTest.m_oStateParas.m_paraState[i].m_strName;
-
-			if (strStateName.IsEmpty())
-			{
-				strStateName = g_sLangTxt_State;
-				strStateName.AppendFormat(_T("%ld"),i+1);
-			}
-			m_mapState.insert(m_mapState.size(),strStateName );
-		}
-	}*/
 }
 
 void QttMacroParaEditViewShortTimOver::OnViewTestStop()
@@ -415,7 +397,7 @@ void QttMacroParaEditViewShortTimOver::UpdateTestResource(BOOL bCreateChMaps)
 	if (m_pUIParaWidget)
 	{
 		m_pUIParaWidget->initUI(g_theTestCntrFrame->GetSttTestResource());
-		m_pUIParaWidget->initData();
+		m_pUIParaWidget->initData(true);
 		m_pUIParaWidget->setMaxMinAndEDVal();
 	}
 

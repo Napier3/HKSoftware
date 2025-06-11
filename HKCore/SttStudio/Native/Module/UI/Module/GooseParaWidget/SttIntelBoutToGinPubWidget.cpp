@@ -4,7 +4,7 @@
 
 #include "../SttUIDefine.h"
 #include "../Module/SttTestSysGlobalPara.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../SttTestCntrFrameBase.h"
 #include "../../Controls/SttCheckBox.h"
 #include "SttIntelBoutToGinParaWidget.h"

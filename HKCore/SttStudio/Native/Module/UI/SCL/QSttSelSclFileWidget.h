@@ -6,8 +6,8 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 #include "SttSelSclFileGrid.h"
-#include "../../61850/Module/SCL_Qt/QSclFileRead.h"
-#include "../../61850/Module/SCL/SclIecCfgDatas.h"
+#include "../../../61850/Module/SCL_Qt/QSclFileRead.h"
+#include "../../../61850/Module/SCL/SclIecCfgDatas.h"
 
 typedef struct  stt_SCL_file_save_paras
 {

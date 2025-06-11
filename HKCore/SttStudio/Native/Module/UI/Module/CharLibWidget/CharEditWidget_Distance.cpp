@@ -2,12 +2,12 @@
 #include "../ZKCharaCurve/QCharElementDlg.h"
 #include "../ZKCharaCurve/QZKFeatureAddDig.h"
 #include "../../SttTestCntrFrameBase.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../Module/CommonMethod/commonMethod.h"
 #include "QCharacteristicEditDlg.h"
 #include "../../../XLangResource_Native.h"
-#include "../../Module/XLanguage/XLanguageResource.h"
-#include "../../AutoTest/Module/XLanguageResourceAts.h"
+#include "../../../Module/XLanguage/XLanguageResource.h"
+#include "../../../AutoTest/Module/XLanguageResourceAts.h"
 
 #ifdef _USE_SoftKeyBoard_
 #include "../../SoftKeyboard/SoftKeyBoard.h"
@@ -84,6 +84,8 @@ void QCharEditGrid_Character::slot_CurrentCellChanged(int currentRow, int curren
 	if (currentRow>=0)
 	{
 		OnDataSelChanged(currentRow,currentColumn);
+
+		emit sig_UpdateCurrData();
 	}
 
 //	emit cellClicked(currentRow, currentColumn);
@@ -684,6 +686,7 @@ void QCharEditWidget_DistanceSearch::InitConnect()
 	connect(this, SIGNAL(sig_CharChanged(CExBaseObject *,int)), pMainWidget,SLOT(slot_UpdateDrawCharacters(CExBaseObject *,int)));
 	connect(m_pGridParam, SIGNAL(sig_CharChanged(CExBaseObject *)), pMainWidget,SLOT(slot_UpdateDrawCharacters(CExBaseObject *)));
 	connect(m_pGridTestPoint, SIGNAL(sig_CharChanged(CExBaseObject *)), pMainWidget,SLOT(slot_UpdateDrawCharacters(CExBaseObject *)));
+	connect(m_pGridCharacter, SIGNAL(sig_UpdateCurrData ()), this, SLOT(slot_UpdateCharacters()));
 }
 
 void QCharEditWidget_DistanceSearch::InitChar()
@@ -698,7 +701,14 @@ void QCharEditWidget_DistanceSearch::InitChar()
 	pMainWidget->m_pImpCharactWidget->m_pCharacterDrawView->SetIsShowAng(true);
 }
 
-
+void QCharEditWidget_DistanceSearch::slot_UpdateCharacters()
+{
+	//20250218 suyang 增加处理第一个表格切换后更新下面两个表格显示  再重新对m_oLineCache进行填充
+	
+	m_oLineCache.RemoveAll();
+	ShowGridDatas_CharElements();
+	ShowGridDatas_CharVariables();
+}
 void QCharEditWidget_DistanceSearch::slot_ZkAddChar(CCharacteristic *pObj)
 {
 	CCharacteristic *pNew = (CCharacteristic*)pObj->Clone();
@@ -873,7 +883,9 @@ void QCharEditWidget_DistanceSearch::slot_ZkPbnEditClicked()
 	CCharacterArea *pCharArea = pCurrCharaOb->GetCharacterArea();
 
 	QCharElementDlg dlg(pObj,this);
+	dlg.InitParaCache(&m_oLineCache);
 	dlg.setFont(*g_pSttGlobalFont);
+	dlg.SetParaData();
 
 #ifdef _USE_SoftKeyBoard_
 	QSoftKeyBoard::AttachObj(&dlg,Keyboard::NUMBER);
@@ -968,16 +980,37 @@ void QCharEditWidget_DistanceSearch::AddCharacter()
 
 void QCharEditWidget_DistanceSearch::ShowGridDatas_CharElements()
 {
-	CCharacteristic *pCurrCharaOb =  (CCharacteristic*)m_pGridCharacter->GetCurrSelData();
+	//先清空对象里面所有数据
+	m_oLineCache.RemoveAll();
 
+	CCharacteristic *pCurrCharaOb =  (CCharacteristic*)m_pGridCharacter->GetCurrSelData();
+	
 	if (pCurrCharaOb)
 	{
-		m_pGridTestPoint->ShowDatas(pCurrCharaOb->GetCharacterArea());
+		CCharacterArea *pArea = pCurrCharaOb->GetCharacterArea();
+		m_pGridTestPoint->ShowDatas(pArea);
+
+		//重新对m_oLineCache增加子节点
+		POS pos = pArea->GetHeadPosition();
+		CExBaseObject *pObj = NULL;
+	
+		while(pos)
+		{
+			pObj = pArea->GetNext(pos);
+			if(pObj)
+			{
+				m_oLineCache.AddNewChild((CExBaseObject *)pObj->Clone());
+			}
+		}
+
 	} 
 	else
 	{
 		m_pGridTestPoint->ShowDatas(NULL);
 	}
+	
+
+
 	
 }
 
@@ -1270,7 +1303,9 @@ void QCharEditWidget_DistSearchOne::slot_ZkPbnInsertClicked()
 	}
 	m_oLineCache.AddNewChild((CCharElement*)pNew->Clone());
 
-	if (pNew->GetClassID() == CHARCLASSID_CCHARELEMENTMHO)
+	//透镜同理
+	if (pNew->GetClassID() == CHARCLASSID_CCHARELEMENTMHO
+		|| pNew->GetClassID() == CHARCLASSID_CCHARELEMENTLENS)
 	{
 		pCharArea->DeleteChildren();
 		pCharArea->AddNewChild(pNew);
@@ -1285,6 +1320,7 @@ void QCharEditWidget_DistSearchOne::slot_ZkPbnInsertClicked()
 		pNew->SetParent(pCharArea);
 	}
 
+	UpdateInsertButtonState(pCharArea);
 	int rowCount = m_pGridTestPoint->rowCount();
 	m_pGridTestPoint->ShowDatas(pCharArea);
 	m_pGridTestPoint->setFocus();
@@ -1310,6 +1346,7 @@ void QCharEditWidget_DistSearchOne::slot_ZkPbnRemoveClicked()
 	emit sig_CharChanged(NULL,TRUE);
 
 	m_pGridTestPoint->setCurrentCell(0,2);	
+	UpdateInsertButtonState(pCharArea);
 	UpdateBtnEnable();
 }
 
@@ -1325,7 +1362,18 @@ void QCharEditWidget_DistSearchOne::slot_ZkPbnEditClicked()
 	CCharacteristic *pCurrCharaOb = GetCharacteristic();
 	CCharacterArea *pCharArea = pCurrCharaOb->GetCharacterArea();
 	QCharElementDlg dlg(pObj,this);
+
+// 	CCharElement *pNew = dlg.GetNewElement();
+// 	//记录用户输入
+// 	if(m_oLineCache.FindByID(pNew->m_strID))
+// 	{
+// 		m_oLineCache.DeleteByID(pNew->m_strID);
+// 	}
+// 	m_oLineCache.AddNewChild((CCharElement*)pNew->Clone());
+
+	dlg.InitParaCache(&m_oLineCache);
 	dlg.setFont(*g_pSttGlobalFont);
+	dlg.SetParaData();
 
 #ifdef _USE_SoftKeyBoard_
 	QSoftKeyBoard::AttachObj(&dlg,Keyboard::NUMBER);
@@ -1360,6 +1408,7 @@ void QCharEditWidget_DistSearchOne::slot_ZkPbnEditClicked()
 		//pCharArea->AddNewChild();
 	}
 
+	UpdateInsertButtonState(pCharArea);
 	m_pGridTestPoint->ShowDatas(pCharArea);
 	emit sig_CharChanged(NULL,TRUE);
 }
@@ -1387,6 +1436,8 @@ void QCharEditWidget_DistSearchOne::UpdateZKFeature(BOOL bSetting)
 	pMainWidget->m_bSetting = bSetting;
 	ShowGridDatas_CharElements();
 	ShowGridDatas_CharVariables();
+    CCharacterArea* pCharacterArea = pCurrCharaOb->GetCharacterArea();
+	UpdateInsertButtonState(pCharacterArea);
 }
 
 void QCharEditWidget_DistSearchOne::UpdateCharacters(BOOL bCharChaged)
@@ -1397,11 +1448,30 @@ void QCharEditWidget_DistSearchOne::UpdateCharacters(BOOL bCharChaged)
 
 void QCharEditWidget_DistSearchOne::ShowGridDatas_CharElements()
 {
+
+	//先清空对象里面所有数据
+	m_oLineCache.RemoveAll();
 	CCharacteristic *pCurrCharaOb = GetCharacteristic();
 
 	if (pCurrCharaOb)
 	{
-		m_pGridTestPoint->ShowDatas(pCurrCharaOb->GetCharacterArea());
+		CCharacterArea *pArea = pCurrCharaOb->GetCharacterArea();
+
+		m_pGridTestPoint->ShowDatas(pArea);
+
+		//重新对m_oLineCache增加子节点
+		POS pos = pArea->GetHeadPosition();
+		CExBaseObject *pObj = NULL;
+
+		while(pos)
+		{
+			pObj = pArea->GetNext(pos);
+			if(pObj)
+			{
+				m_oLineCache.AddNewChild((CExBaseObject *)pObj->Clone());
+			}
+		}
+
 	} 
 	else
 	{
@@ -1468,5 +1538,29 @@ void QCharEditWidget_DistSearchOne::UpdateBtnEnable()
 	{
 		m_pModify_Button->setEnabled(false);
 		m_pDelete_Button->setEnabled(false);
+	}
+}
+
+void QCharEditWidget_DistSearchOne::UpdateInsertButtonState(CCharacterArea* pCharacterArea)
+{
+	//dingxy 20250307 当边类型是圆或者透镜时，不可插入元素
+	POS posArea = pCharacterArea->GetHeadPosition();
+	CCharElement *pCharElement = NULL;
+	bool bIsMHO = FALSE;
+	while (posArea)
+	{
+		pCharElement = (CCharElement*)pCharacterArea->GetNext(posArea);
+		if (pCharElement->GetClassID() == CHARCLASSID_CCHARELEMENTMHO
+			|| pCharElement->GetClassID() == CHARCLASSID_CCHARELEMENTLENS)
+		{
+			m_pInsert_Button->setEnabled(FALSE);
+			bIsMHO = TRUE;
+			break;
+		}
+	}
+
+	if (!bIsMHO)
+	{
+		m_pInsert_Button->setEnabled(TRUE);
 	}
 }

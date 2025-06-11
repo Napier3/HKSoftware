@@ -1,11 +1,11 @@
 #include "SttIecSmvGrid_ChAttr.h"
-#include "../../../../Module/SmartCap/XSmartCapMngr.h"
-#include "../../../../Module/API/MathApi.h"
-#include "../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include <QtGui/QApplication>
+#include "../../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../Module/API/MathApi.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include <QApplication>
 #include "SttIecRecordCbWidget.h"
 #include "../../XLangResource_Native.h"
-#include "../../../../Module/XLanguage/XLanguageResource.h"
+#include "../../../Module/XLanguage/XLanguageResource.h"
 
 
 

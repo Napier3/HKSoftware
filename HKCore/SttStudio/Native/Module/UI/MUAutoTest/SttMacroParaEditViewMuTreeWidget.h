@@ -11,9 +11,9 @@
 #include <QHeaderView>
 #include <QStyleFactory>
 
-#include "../../Module/OSInterface/QT/CString_QT.h"
-#include "../../Module/API/GlobalConfigApi.h"
-#include "../../Module/BaseClass/QT/ExBaseListTreeCtrl.h"
+#include "../../../Module/OSInterface/QT/CString_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/BaseClass/QT/ExBaseListTreeCtrl.h"
 #include "../Module/ScrollCtrl/ScrollTreeWidget.h"
 
 class QSttMacroParaEditViewMuTreeWidget : public QWidget 

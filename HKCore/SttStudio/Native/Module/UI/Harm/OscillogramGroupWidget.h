@@ -17,7 +17,6 @@ public:
 	OscillogramGroupWidget(QWidget *parent = 0);
 	~OscillogramGroupWidget();
 	void initUI(CSttTestResourceBase *m_pSttTestResource);
-	void UpdateUI(CSttTestResourceBase *m_pSttTestResource);
 
 	void setArrUIVOL(tmt_channel *pArrUIVOL);
 	void setArrUICUR(tmt_channel *pArrUICUR);
@@ -45,6 +44,11 @@ public:
 
 	CSttTestResourceBase *m_pSttTestResource;
 	void setArrUIAdress();
+	void InitGroupWidget();//为了调用protected:InitOscillogramGroupWidget函数
+
+
+	int m_nParaSetSecondValue;
+	void SetParaSetSecondValue(int nParaSetSecondValue);
 
 public slots:
 	void slot_ChnIndexChanged(int nIndex);
@@ -52,6 +56,12 @@ public slots:
 	void slot_ValueChanged(int nVolCurIndex, int nVolCurFlag);
 	void slot_updateOscillogramGroup();
 
+//2024-9-11 lijunqing 优化系统程序启动的效率
+protected:
+	bool m_bHasInitFinished;  //是否已经初始化完成，没有初始化，不能进行操作
+	virtual void showEvent(QShowEvent *event);
+	void InitOscillogramGroupWidget();
+	void ChnIndexChanged();
 };
 
 extern QFont *g_pSttGlobalFont; 

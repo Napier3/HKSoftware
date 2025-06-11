@@ -5,7 +5,7 @@
 #include "../../XLangResource_Native.h"
 
 #include "../../XLangResource_Native.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 
 QSttAddMacroWidget::QSttAddMacroWidget(QFont font, QWidget *parent) :
     QDialog(parent),

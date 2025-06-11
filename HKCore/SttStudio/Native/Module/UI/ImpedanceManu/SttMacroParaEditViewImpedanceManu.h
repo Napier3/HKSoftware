@@ -10,7 +10,7 @@
 #include "../Module/FT3Widget/FT3OutParaWidget.h"
 class QSttMacroParaEditViewImpedanceManu : public CSttMacroParaEditViewOriginal
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
 	QImpedanceManuWidget *m_pImpedanceManuWidget;
@@ -18,18 +18,23 @@ public:
 	tmt_ManualImpedTest m_oManualImpedTest;
 	tmt_ManualImpedParas *m_pManualImpedParas;
 
+	tmt_channel m_uiVOL[MAX_VOLTAGE_COUNT];
+	tmt_channel m_uiCUR[MAX_CURRENT_COUNT];
+
 	bool m_bIsChanging;//判断+和-按钮所造成的更改是否已经完成,未完成时不允许发送下一次SetItemPara
 	QGooseParaWidget* m_pGooseParaWidget;
 	QFT3OutParaWidget* m_pFT3OutParaWidget;
 
 public:
-    explicit QSttMacroParaEditViewImpedanceManu(QWidget *parent = 0);
-    virtual ~QSttMacroParaEditViewImpedanceManu();
+	explicit QSttMacroParaEditViewImpedanceManu(QWidget *parent = 0);
+	virtual ~QSttMacroParaEditViewImpedanceManu();
+
+	virtual void InitBinaryInBinaryOutUI();//20240913 huangliang 改为虚函数
 
 private:
 	void InitUI();
 	void SendUpdateParameter();
-	void InitBinaryInBinaryOutUI();
+	//void InitBinaryInBinaryOutUI();	//20240913 huangliang 改为虚函数
 	void InitOtherParasUI();
 	void SetManualOtherParasFont();
 	void InitStyle();
@@ -52,14 +57,15 @@ public:
 	virtual void UpdateFT3Tab(BOOL bUpdateList = FALSE);
 	virtual void UpdateBinBoutExTab();//更新开关量扩展界面
 	virtual void UpdateManualParas();
+	void CalPhaseValues();
 
 	virtual CString GetDefaultParaFile();
 	virtual bool IsValidTestParasFile(const CString& strParasFile,bool bOpen = true);
 	virtual PTMT_PARAS_HEAD GetTestParas() { return &m_oManualImpedTest;}
-	virtual char* GetMacroID(){ return STT_ORG_MACRO_ImpedanceManuTest; }
+	virtual char* GetMacroID(){ return STT_ORG_MACRO_ImpedManualTest; }
 
-    void InitParasView();
-    void InitIVView();
+	void InitParasView();
+	void InitIVView();
 	void slot_SwitchStateChanged();
 
 	virtual void OnViewTestLink(BOOL b);
@@ -69,7 +75,7 @@ public:
 	virtual void ShowReport(CDvmValues *pValues);
 	virtual void GetDatas(CDataGroup *pParas);
 	virtual void SetDatas(CDataGroup *pParas);
-
+	virtual CString GetMacroTestResultUnit();
 	//void slot_edit_changed(QSttLineEdit* pEditLine, bool bIsNor = FALSE);
 
 	void AddGooseParaWidget(CIecCfgGoutDatas* pCfgGoutDatas);
@@ -81,17 +87,38 @@ public:
 	void RemoveFT3OutParaWidget(); 
 	void EnableFT3OutParaWidget(bool b);
 	bool ExistFT3OutParaWidget();
-	
+
+	virtual void UpdatePrimParaSetUI(){}//20240923 suyang 更新界面一次值/二次值显示
+	virtual BOOL IsUseSecondParaSet(){ return TRUE; }//20240923 suyang 是否显示二次值	
+
 signals:
 	void sig_updataParas();
 
 
-protected slots:
-	void slot_BinarySetPushButton_clicked();
-	void slot_updateParas();
-	void slot_GooseDataChanged();
-	void slot_FT3DataChanged();
-	void slot_EstimatePushButton_clicked();
+	protected slots:
+		void slot_Edit_Changed();
+		void slot_Lock_PushButton_clicked();
+		void slot_PushButton_clicked();
+		void slot_BinarySetPushButton_clicked();
+		void slot_updateParas();
+		void slot_GooseDataChanged();
+		void slot_FT3DataChanged();
+		void slot_EstimatePushButton_clicked();
+
+		void slot_CmbErrorTypeIndexChanged(int);
+		void slot_CmbCalModeIndexChanged(int);
+		void slot_CmbCacuTypeIndexChanged(int);
+		void slot_CmbFirstModeIndexChanged(int);  //变量选择1
+		void slot_CmbSecondModeIndexChanged(int);//变量选择2
+		void slot_CmbChangeTypeIndexChanged(int);
+		void slot_RadioZPhiAndRX_StateChanged();
+		void slot_Chb_AutoStateChanged(int);//自动递变
+		void slot_Chb_MutationStateChanged(int);//突变量启动
+
+		void slot_ck_Out1StateChanged();
+		void slot_ck_Out2StateChanged();
+		void slot_ck_Out3StateChanged();
+		void slot_ck_Out4StateChanged();
 };
 
 extern QSttMacroParaEditViewImpedanceManu* g_pImpedanceManuTest;

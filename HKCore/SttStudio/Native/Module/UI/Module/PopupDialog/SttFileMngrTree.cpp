@@ -4,11 +4,11 @@
 #include <QHeaderView>
 #include <QStyleFactory>
 #include <QIcon>
-#include "../../Module/API/GlobalConfigApi.h"
-#include "../../Module/API/StringConvert/String_Utf8_To_Gbk.h"
+#include "../../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/StringConvert/String_Utf8_To_Gbk.h"
 #include "../../../XLangResource_Native.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/XLanguage/XLanguageResource.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/XLanguageResource.h"
 //#include "../../SttTestCntrFrameBase.h"
 #include <QApplication>
 #include <QTextCodec>

@@ -822,7 +822,7 @@ void stt_xml_serialize_ex(tmt_GradientParas *pParas, CSttXmlSerializeBase *pXmlS
 
 #include"../../SttCmd/SttTestCmd.h"
 #include"tmt_gradient_test.h"
-#include"../../../../Module/API/GlobalConfigApi.h"
+#include"../../../Module/API/GlobalConfigApi.h"
 
 void stt_xml_serialize_write_GradientTest()
 {

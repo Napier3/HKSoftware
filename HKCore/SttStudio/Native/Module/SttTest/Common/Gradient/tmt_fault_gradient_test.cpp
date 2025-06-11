@@ -97,15 +97,15 @@ void stt_xml_serialize_binary_out(tmt_faultGradientParas *pParas, CSttXmlSeriali
 //整定值 
 void stt_xml_serialize_FaultGradientSetting(tmt_faultGradientParas *pParas,CSttXmlSerializeBase *pXmlSierialize)
 {
-	pXmlSierialize->xml_serialize(/*"电压整定动作值"*/g_sLangTxt_Native_VolSetActValue.GetString(), "USet", "V", "float", pParas->m_fUSet);
-	pXmlSierialize->xml_serialize(/*"电流整定动作值"*/g_sLangTxt_Native_CurSetActValue.GetString(), "ISet", "A", "float", pParas->m_fISet);
+    pXmlSierialize->xml_serialize("电压整定动作值", "USet", "V", "float", pParas->m_fUSet);
+    pXmlSierialize->xml_serialize("电流整定动作值", "ISet", "A", "float", pParas->m_fISet);
 	pXmlSierialize->xml_serialize("阻抗角整定动作值", "ImpAngleSet", "°", "float", pParas->m_fImpAngleSet);
 	pXmlSierialize->xml_serialize("短路阻抗整定动作值", "ShortZImp", "Ω", "float", pParas->m_fShortZImp);
-	pXmlSierialize->xml_serialize(/*"频率整定动作值"*/g_sLangTxt_Native_FreqSetActValue.GetString(), "HzSet", "Hz", "float", pParas->m_fHzSet);
-	pXmlSierialize->xml_serialize(/*"边界角1整定值"*/g_sLangTxt_Native_BoundaryAngle1SetVal.GetString(), "AngleFSet", "°", "float", pParas->m_fAngleFSet);
-	pXmlSierialize->xml_serialize(/*"边界角2整定值"*/g_sLangTxt_Native_BoundaryAngle2SetVal.GetString(), "AngleSSet", "°", "float", pParas->m_fAngleSSet);
-	pXmlSierialize->xml_serialize(/*"最大灵敏角整定值"*/g_sLangTxt_Native_MaxSensitivityAngleSetVal.GetString(), "MaxAngleSet", "°", "float", pParas->m_fMaxAngleSet);
-	pXmlSierialize->xml_serialize(/*"返回系数整定值"*/g_sLangTxt_Native_FeedbackCoefSettingVal.GetString(), "RetCoefSet", "", "float", pParas->m_fRetCoefSet);
+    pXmlSierialize->xml_serialize("频率整定动作值", "HzSet", "Hz", "float", pParas->m_fHzSet);
+    pXmlSierialize->xml_serialize("边界角1整定值", "AngleFSet", "°", "float", pParas->m_fAngleFSet);
+    pXmlSierialize->xml_serialize("边界角2整定值", "AngleSSet", "°", "float", pParas->m_fAngleSSet);
+    pXmlSierialize->xml_serialize("最大灵敏角整定值", "MaxAngleSet", "°", "float", pParas->m_fMaxAngleSet);
+    pXmlSierialize->xml_serialize("返回系数整定值", "RetCoefSet", "", "float", pParas->m_fRetCoefSet);
 }
 
 //评估 误差值 
@@ -126,12 +126,12 @@ void stt_xml_serialize_FaultGradientError(tmt_faultGradientParas *pParas,CSttXml
 	pXmlSierialize->xml_serialize("频率动作值绝对误差","HzActVal_AbsErr","","float",pParas->m_fHzActVal_AbsErr);	
 	pXmlSierialize->xml_serialize("频率动作值相对误差","HzActVal_RelErr","","float",pParas->m_fHzActVal_RelErr);	
 	pXmlSierialize->xml_serialize("频率动作值误差判断逻辑","HzActVal_ErrorLogic","","number",pParas->m_nHzActVal_ErrorLogic);	
-	pXmlSierialize->xml_serialize(/*"边界角1绝对误差"*/g_sLangTxt_Native_BndryAng1AbsErr.GetString(), "AngleF_AbsErr", "°", "float", pParas->m_fAngleF_AbsErr);
-	pXmlSierialize->xml_serialize(/*"边界角1相对误差"*/g_sLangTxt_Native_BndryAng1RelErr.GetString(), "AngleF_RelErr", "", "float", pParas->m_fAngleF_RelErr);
-	pXmlSierialize->xml_serialize(/*"边界角1误差判断逻辑"*/g_sLangTxt_Native_BndryAng1ErrDetectLogic.GetString(), "AngleF_ErrorLogic", "", "number", pParas->m_nAngleF_ErrorLogic);
-	pXmlSierialize->xml_serialize(/*"边界角2绝对误差"*/g_sLangTxt_Native_BndryAng2AbsErr.GetString(), "AngleS_AbsErr", "°", "float", pParas->m_fAngleS_AbsErr);
-	pXmlSierialize->xml_serialize(/*"边界角2相对误差"*/g_sLangTxt_Native_BndryAng2RelErr.GetString(), "AngleS_RelErr", "", "float", pParas->m_fAngleS_RelErr);
-	pXmlSierialize->xml_serialize(/*"边界角2误差判断逻辑"*/g_sLangTxt_Native_BndryAng2ErrDetectLogic.GetString(), "AngleS_ErrorLogic", "", "number", pParas->m_nAngleS_ErrorLogic);
+    pXmlSierialize->xml_serialize("边界角1绝对误差", "AngleF_AbsErr", "°", "float", pParas->m_fAngleF_AbsErr);
+    pXmlSierialize->xml_serialize("边界角1相对误差", "AngleF_RelErr", "", "float", pParas->m_fAngleF_RelErr);
+    pXmlSierialize->xml_serialize("边界角1误差判断逻辑", "AngleF_ErrorLogic", "", "number", pParas->m_nAngleF_ErrorLogic);
+    pXmlSierialize->xml_serialize("边界角2绝对误差", "AngleS_AbsErr", "°", "float", pParas->m_fAngleS_AbsErr);
+    pXmlSierialize->xml_serialize("边界角2相对误差", "AngleS_RelErr", "", "float", pParas->m_fAngleS_RelErr);
+    pXmlSierialize->xml_serialize("边界角2误差判断逻辑", "AngleS_ErrorLogic", "", "number", pParas->m_nAngleS_ErrorLogic);
 	pXmlSierialize->xml_serialize("最大灵敏角绝对误差","MaxAngle_AbsErr","°","float",pParas->m_fMaxAngle_AbsErr);	
 	pXmlSierialize->xml_serialize("最大灵敏角相对误差","MaxAngle_RelErr","","float",pParas->m_fMaxAngle_RelErr);
 	pXmlSierialize->xml_serialize("最大灵敏角误差判断逻辑","MaxAngle_ErrorLogic","","number",pParas->m_nMaxAngle_ErrorLogic);	
@@ -198,7 +198,7 @@ void stt_xml_serialize(tmt_faultGradientResult *pResults, CSttXmlSerializeBase *
 	}
 }
 
-#include"../../../../../Module/API/GlobalConfigApi.h"
+#include"../../../Module/API/GlobalConfigApi.h"
 void stt_xml_serialize_write_FaultGradientTest()
 {
 	tmt_faultGradientTest oFGTest;

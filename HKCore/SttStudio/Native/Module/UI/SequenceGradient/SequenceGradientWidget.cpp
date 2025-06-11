@@ -1,5 +1,5 @@
 #include "../Module/SttUIDefine.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../SttTestResourceMngr/SttTestResourceMngr.h"
 #include "../Module/XLangResource_Native.h"
 #include "SequenceGradientWidget.h"
@@ -92,13 +92,15 @@ void QSequenceGradientWidget::InitData(tmt_GradientParasEx* pGradientParas)
 	while (pos)
 	{
 		CSttChMap* pCh = (CSttChMap*)g_oSttTestResourceMngr.m_oChMaps.GetNext(pos);
-		if((pCh->m_strName.indexOf("U") != -1) && (nVoltIndex < 3))
+		if((/*pCh->m_strName*/pCh->m_strID.indexOf("U") != -1) && (nVoltIndex < 3))//dingxy 20250121 英文环境下修改通道映射名称
 		{
 			QGradientGroupData* pData = new QGradientGroupData;
 			pData->m_pfAmp = &pGradientParas->m_uiVOL[0][nVoltIndex].Harm[1].fAmp;
 			pData->m_pfAngle = &pGradientParas->m_uiVOL[0][nVoltIndex].Harm[1].fAngle;
 			pData->m_pfFreq = &pGradientParas->m_uiVOL[0][nVoltIndex].Harm[1].fFreq;
-			pData->m_strName = pCh->m_strName;
+			//pData->m_strName = pCh->m_strName;
+			if (xlang_IsCurrXLanguageChinese())
+			{
 			if (nVoltIndex == 2)
 			{
 				pData->m_strName.Format(_T("U1-%1d"), nVoltIndex - 2);
@@ -107,6 +109,19 @@ void QSequenceGradientWidget::InitData(tmt_GradientParasEx* pGradientParas)
 			{
 				pData->m_strName.Format(_T("U1-%1d"), nVoltIndex + 1);
 			}
+			}
+			else
+			{
+				if (nVoltIndex == 2)
+				{
+					pData->m_strName.Format(_T("V1-%1d"), nVoltIndex - 2);
+				}
+				else
+				{
+					pData->m_strName.Format(_T("V1-%1d"), nVoltIndex + 1);
+				}
+			}
+			
 			
 			m_oNormalVoltList.AddNewChild(pData);
 
@@ -114,7 +129,9 @@ void QSequenceGradientWidget::InitData(tmt_GradientParasEx* pGradientParas)
 			pData->m_pfAmp = &pGradientParas->m_uiVOL[2][nVoltIndex].Harm[1].fAmp;
 			pData->m_pfAngle = &pGradientParas->m_uiVOL[2][nVoltIndex].Harm[1].fAngle;
 			pData->m_pfFreq = &pGradientParas->m_uiVOL[2][nVoltIndex].Harm[1].fFreq;
-			pData->m_strName = pCh->m_strName;
+			//pData->m_strName = pCh->m_strName;
+			if (xlang_IsCurrXLanguageChinese())
+			{
 			if (nVoltIndex == 2)
 			{
 				pData->m_strName.Format(_T("U1-%1d"), nVoltIndex - 2);
@@ -123,6 +140,19 @@ void QSequenceGradientWidget::InitData(tmt_GradientParasEx* pGradientParas)
 			{
 				pData->m_strName.Format(_T("U1-%1d"), nVoltIndex + 1);
 			}
+			}
+			else
+			{
+				if (nVoltIndex == 2)
+				{
+					pData->m_strName.Format(_T("V1-%1d"), nVoltIndex - 2);
+				}
+				else
+				{
+					pData->m_strName.Format(_T("V1-%1d"), nVoltIndex + 1);
+				}
+			}
+			
 			m_oFaultVoltList.AddNewChild(pData);
 
 			nVoltIndex++;

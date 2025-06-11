@@ -30,7 +30,40 @@ QSttCommCfgDeviceWidget::QSttCommCfgDeviceWidget(QWidget *parent)
 
 QSttCommCfgDeviceWidget::~QSttCommCfgDeviceWidget()
 {
+	if (m_pDvmTeleMeasureGrid)
+	{
+		delete m_pDvmTeleMeasureGrid;
+		m_pDvmTeleMeasureGrid = NULL;
+	}
 
+	if (m_pDvmTeleParaCommGrid)
+	{
+		delete m_pDvmTeleParaCommGrid;
+		m_pDvmTeleParaCommGrid = NULL;
+	}
+
+	if (m_pEditZoneNum)
+	{
+		delete m_pEditZoneNum;
+		m_pEditZoneNum = NULL;
+	}
+
+	if (m_pBtnWriteZone)
+	{
+		delete m_pBtnWriteZone;
+		m_pBtnWriteZone = NULL;
+	}
+	if (m_pBtnCmCfg)
+	{
+		delete m_pBtnCmCfg;
+		m_pBtnCmCfg = NULL;
+	}
+
+	if (m_pLabelZoneNum)
+	{
+		delete m_pLabelZoneNum;
+		m_pLabelZoneNum = NULL;
+	}
 }
 
 void QSttCommCfgDeviceWidget::initUI()
@@ -194,21 +227,21 @@ void QSttCommCfgDeviceWidget::OnCommCommandMsg(CPpSttIotDeviceClient *pIotDevice
 		{
 			emit sig_FinishRunProcedure(CMDID_writesetting);
 		}
-		else if (pIotDevice->m_strProcedureID == CMDID_writeena)
+		else if (pIotDevice->m_strProcedureID == /*CMDID_writeena*/CMDID_SingleDout)
 		{
-			emit sig_FinishRunProcedure(CMDID_writeena);
+			emit sig_FinishRunProcedure(/*CMDID_writeena*/CMDID_SingleDout);
 		}
-		else if (pIotDevice->m_strProcedureID == CMDID_writeenasel)
+		else if (pIotDevice->m_strProcedureID == /*CMDID_writeenasel*/CMDID_SingleDoutSelect)
 		{
-			emit sig_FinishRunProcedure(CMDID_writeenasel);
+			emit sig_FinishRunProcedure(/*CMDID_writeenasel*/CMDID_SingleDoutSelect);
 		}
-		else if (pIotDevice->m_strProcedureID == CMDID_writeenaoper)
+		else if (pIotDevice->m_strProcedureID == /*CMDID_writeenaoper*/CMDID_SingleDoutExecute)
 		{
-			emit sig_FinishRunProcedure(CMDID_writeenaoper);
+			emit sig_FinishRunProcedure(/*CMDID_writeenaoper*/CMDID_SingleDoutExecute);
 		}
-		else if (pIotDevice->m_strProcedureID == CMDID_writeenarevk)
+		else if (pIotDevice->m_strProcedureID == /*CMDID_writeenarevk*/CMDID_SingleDoutQuash)
 		{
-			emit sig_FinishRunProcedure(CMDID_writeenarevk);
+			emit sig_FinishRunProcedure(/*CMDID_writeenarevk*/CMDID_SingleDoutQuash);
 		}
 	}
 
@@ -348,7 +381,10 @@ void QSttCommCfgDeviceWidget::OpenPpSttCommConfigFile()
 	{
 		return;
 	}
+	CString strPath;
+	strPath = _P_GetInstallPath();
 	CString strPpXmlFile = oCommConfig.Get_PpxmlFile();
+	strPpXmlFile = strPath + _T("e-Protocol/Template/")+ strPpXmlFile;
 	if (strPpXmlFile.IsEmpty())
 	{
 		QMessageBox oChkBox(QMessageBox::Information, CString("提示"), CString("ppxml-file配置参数空,请首先去通讯配置界面选择"), QMessageBox::Ok);
@@ -356,12 +392,15 @@ void QSttCommCfgDeviceWidget::OpenPpSttCommConfigFile()
 		oChkBox.exec();
 		return;
 	}
-	int nPos = strPpXmlFile.ReverseFind('.');
-	if (nPos > 0)
-	{
-		strPpXmlFile=strPpXmlFile.Left(nPos);
-	}
+// 	int nPos = strPpXmlFile.ReverseFind('.');
+// 	if (nPos > 0)
+// 	{
+// 		strPpXmlFile=strPpXmlFile.Left(nPos);
+// 	}
 	CString strDvmFile = oCommConfig.Get_DvmFile();
+
+	strDvmFile = strPath + _T("e-Protocol/Library/")+ strDvmFile;
+
 	if (strDvmFile.IsEmpty())
 	{
 		QMessageBox oChkBox(QMessageBox::Information, CString("提示"), CString("dvm-file配置参数空,请首先去通讯配置界面选择"), QMessageBox::Ok);
@@ -370,13 +409,13 @@ void QSttCommCfgDeviceWidget::OpenPpSttCommConfigFile()
 		return;
 	}
 	//绝对路径
-	CString strPointTbPath = Global_GetPointTbFilePath();
-	strDvmFile.replace(strPointTbPath,"",Qt::CaseInsensitive);
+	//CString strPointTbPath = Global_GetPointTbFilePath();
+	//strDvmFile.replace(strPointTbPath,"",Qt::CaseInsensitive);
 
 	//CString dvmFilePath = strPointTbPath + strPpXmlFile +CString("/")+ strDvmFile;
-	CString dvmFilePath = strPointTbPath + strDvmFile;
-	CString strPointSubPath = strPointTbPath + strPpXmlFile;
-	if (!::IsFileExist(dvmFilePath))
+	//CString dvmFilePath = strPointTbPath + strDvmFile;
+	//CString strPointSubPath = strPointTbPath + strPpXmlFile;
+	if (!::IsFileExist(/*dvmFilePath*/strDvmFile))
 	{
 		return; 
 	}
@@ -391,7 +430,7 @@ void QSttCommCfgDeviceWidget::OpenPpSttCommConfigFile()
 		m_pDvmDevice->DeleteAll();
 	}
 
-	m_pDvmDevice->OpenXmlFile(dvmFilePath, CDataMngrXmlRWKeys::g_pXmlKeys);
+	m_pDvmDevice->OpenXmlFile(/*dvmFilePath*/strDvmFile, CDataMngrXmlRWKeys::g_pXmlKeys);
 	ShowDvmDevice(m_pDvmDevice);
 	
 	//导入新的点表文件清空表格数据
@@ -584,19 +623,19 @@ void QSttCommCfgDeviceWidget::slot_DevCommWriteZoneBtnClicked()
 
 BOOL QSttCommCfgDeviceWidget::IsRemoteCtrlRunProcedure(const QString &strID)
 {
-	if (strID == CMDID_writeena)
+	if (strID == /*CMDID_writeena*/CMDID_SingleDout)
 	{
 		return TRUE;
 	}
-	else if (strID == CMDID_writeenasel)
+	else if (strID == /*CMDID_writeenasel*/CMDID_SingleDoutSelect)
 	{
 		return TRUE;
 	}
-	else if (strID == CMDID_writeenaoper)
+	else if (strID == /*CMDID_writeenaoper*/CMDID_SingleDoutExecute)
 	{
 		return TRUE;
 	}
-	else if (strID == CMDID_writeenarevk)
+	else if (strID == /*CMDID_writeenarevk*/CMDID_SingleDoutQuash)
 	{
 		return TRUE;
 	}
@@ -626,7 +665,7 @@ void QSttCommCfgDeviceWidget::slot_FinishRunProcedure(QString strID)
 	{
 		strMsg = "修改数据成功.";
 	}
-	else if (strID == CMDID_writeena)
+	else if (strID == /*CMDID_writeena*/CMDID_SingleDout)
 	{
 		if (nHasError)
 		{
@@ -637,7 +676,7 @@ void QSttCommCfgDeviceWidget::slot_FinishRunProcedure(QString strID)
 			strMsg = "遥控执行成功.";
 		}
 	}
-	else if (strID == CMDID_writeenasel)
+	else if (strID == /*CMDID_writeenasel*/CMDID_SingleDoutSelect)
 	{
 		if (nHasError)
 		{
@@ -648,7 +687,7 @@ void QSttCommCfgDeviceWidget::slot_FinishRunProcedure(QString strID)
 			strMsg = "遥控预置成功.";
 		}
 	}
-	else if (strID == CMDID_writeenaoper)
+	else if (strID == /*CMDID_writeenaoper*/CMDID_SingleDoutExecute)
 	{
 		if (nHasError)
 		{
@@ -659,7 +698,7 @@ void QSttCommCfgDeviceWidget::slot_FinishRunProcedure(QString strID)
 			strMsg = "遥控执行成功.";
 		}
 	}
-	else if (strID == CMDID_writeenarevk)
+	else if (strID == /*CMDID_writeenarevk*/CMDID_SingleDoutQuash)
 	{
 		if (nHasError)
 		{
@@ -686,10 +725,22 @@ void QSttCommCfgDeviceWidget::SetLinuxDeviceIP(CPpSttCommConfig *pCommConfig)
 	CString strSubMask = "255.255.255.0";
 	CString strPpXmlFile = pCommConfig->Get_PpxmlFile();
 //	QSttCommCfgMainDlg dlg;// = new QSttCommCfgMainDlg();
-    CDvmData* pDvmData = Global_OpenPpxmlFile(strPpXmlFile);
+	CString strFolderPath;
+	strFolderPath = _P_GetInstallPath();
+	strFolderPath += _T("e-Protocol/Template/");
+	strFolderPath += strPpXmlFile; 
+    CExBaseList* pPpxmlFileData = Global_OpenPpxmlFile(strFolderPath);
+	if (pPpxmlFileData->GetCount() == 0)
+	{
+		return;
+	}
+	CDvmData *pDvmData = NULL;
+	CDvmValue *pDvmValueLocalIp = NULL;
+	//tcp-client
+    pDvmData = (CDvmData*)pPpxmlFileData->FindByID(CString("tcp-client"));
 	if (pDvmData != NULL)
 	{
-		CDvmValue *pDvmValueLocalIp = (CDvmValue*)pDvmData->FindByID(CString("local-ip"));
+		pDvmValueLocalIp = (CDvmValue*)pDvmData->FindByID(CString("local-ip"));
 		CDvmValue *pDvmValueLocalPort = (CDvmValue*)pDvmData->FindByID(CString("SubnetMask"));
 		if ((pDvmValueLocalIp != NULL) && (pDvmValueLocalPort != NULL))
 		{
@@ -702,6 +753,56 @@ void QSttCommCfgDeviceWidget::SetLinuxDeviceIP(CPpSttCommConfig *pCommConfig)
 		strLocalIp = pCommConfig->TcpClient_Get_LocalIP();
 	}
 	Global_SetLinuxDevIP(strLocalIp,  strSubMask);
+
+	//udp-client
+    pDvmData = (CDvmData*)pPpxmlFileData->FindByID(CString("udp-client"));
+	if (pDvmData != NULL)
+	{
+		pDvmValueLocalIp = (CDvmValue*)pDvmData->FindByID(CString("local-ip"));
+		if (pDvmValueLocalIp)
+		{
+			strLocalIp = pDvmValueLocalIp->m_strValue;
+		}
+	}
+	if (strLocalIp.IsEmpty())
+	{
+		strLocalIp = pCommConfig->UdpClient_Get_LocalIP();
+	}
+	Global_SetLinuxDevIP(strLocalIp,  strSubMask);
+
+	//udp-server
+    pDvmData = (CDvmData*)pPpxmlFileData->FindByID(CString("udp-server"));
+	if (pDvmData != NULL)
+	{
+		pDvmValueLocalIp = (CDvmValue*)pDvmData->FindByID(CString("local-ip"));
+		if (pDvmValueLocalIp)
+		{
+			strLocalIp = pDvmValueLocalIp->m_strValue;
+		}
+	}
+	if (strLocalIp.IsEmpty())
+	{
+		strLocalIp = pCommConfig->UdpServer_Get_LocalIP();
+	}
+	Global_SetLinuxDevIP(strLocalIp,  strSubMask);
+
+
+	//tcp-server
+    pDvmData = (CDvmData*)pPpxmlFileData->FindByID(CString("tcp-server"));
+	if (pDvmData != NULL)
+	{
+		pDvmValueLocalIp = (CDvmValue*)pDvmData->FindByID(CString("local-ip"));
+		if (pDvmValueLocalIp)
+		{
+			strLocalIp = pDvmValueLocalIp->m_strValue;
+		}
+	}
+	if (strLocalIp.IsEmpty())
+	{
+		strLocalIp = pCommConfig->TcpServer_Get_LocalIP();
+	}
+	Global_SetLinuxDevIP(strLocalIp,  strSubMask);
+
 #endif
 }
 

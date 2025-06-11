@@ -1,8 +1,8 @@
 #include "SttIecSysParasWidget.h"
 #include "SttIecSysParasOtherSetDialog.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/API/GlobalConfigApi.h"
-#include "../../Module/XLanguage/XLanguageMngr.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/XLanguage/XLanguageMngr.h"
 #include "../Module/CommonMethod/commonMethod.h"
 #include "../Module/ScrollCtrl/ScrollComboBox.h"
 

@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include <QFont>
-#include "../../../../Module/SmartCap/61850Cap/CapDevice/CapDeviceBase.h"
+#include "../../../Module/SmartCap/61850Cap/CapDevice/CapDeviceBase.h"
 #include "SttIecRcdFuncInterface.h"
 
 //2022-12-02  lijunqing  

@@ -1,8 +1,8 @@
 #include "SttIecSmvGrid_PkgError.h"
-#include "../../../../Module/SmartCap/XSmartCapMngr.h"
-#include "../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../XLangResource_Native.h"
-#include "../../../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 
 #include <QHeaderView>
 
@@ -27,7 +27,7 @@ void CSttIecSmvGrid_PkgError::InitGridTitle()
 	m_nGridWidth[1] = 100;
 
 	QExBaseListGridBase::InitGridTitle(astrGridTitle, m_nGridWidth, 2);
-	horizontalHeader()->setResizeMode(QHeaderView::Stretch);//平均分布各列
+    horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);//平均分布各列
 
 }
 

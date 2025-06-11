@@ -150,6 +150,15 @@ void GradientParaSet::initUI(CSttTestResourceBase *pSttTestResource)
 	}
 }
 
+void GradientParaSet::SetParaSetSecondValue(int nParaSetSecondValue)
+{
+	int num = m_UCHannelTableList.size();
+	for (int i =0; i<num; i++)
+	{
+		m_UCHannelTableList[i]->setHeaderOfTable(nParaSetSecondValue);
+	}
+}
+
 void GradientParaSet::initData()
 {
 	if ((m_pGradientParaSetSttTestResource == NULL)||(m_pArrUIVOL == NULL)||(m_pArrUICUR == NULL))

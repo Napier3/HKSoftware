@@ -4,8 +4,8 @@
 #include <QDialog>
 #include <QPushButton>
 #include "../Module/XLangResource_Native.h"
-#include "../../Module/XLanguage/XLanguageResource.h"
-#include "../../AutoTest/Module/XLanguageResourceAts.h"
+#include "../../../Module/XLanguage/XLanguageResource.h"
+#include "../../../AutoTest/Module/XLanguageResourceAts.h"
 
 
 QStateEditGrid::QStateEditGrid(QWidget* pParent) : QExBaseListGridBase(pParent)

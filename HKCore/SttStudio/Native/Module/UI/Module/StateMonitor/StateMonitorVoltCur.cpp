@@ -7,8 +7,10 @@ QColor CurveColor[4] = {Qt::yellow,Qt::green,Qt::red,Qt::magenta};
 
 QStateMonitorVoltCur::QStateMonitorVoltCur(QWidget* parent)
 {
+	m_nShowLableCount = 0;
 	m_nChannel = -1;
 	m_ChangeType = 0;
+	m_nParaSetSecondValue = 1;
 	m_labelText.setParent(this->canvas());
 	m_labelText.setStyleSheet(" QLabel{  background-color:black;color: rgb(85, 255, 0); }");
 	m_labelValue.setParent(this->canvas());
@@ -108,17 +110,43 @@ void QStateMonitorVoltCur::InitCurve(CExBaseList* pChlUDatasList, CExBaseList* p
 			//电压
 			QwtPlotCurve *pCurveV = m_oCurveList[nIndexV];
 			nVColorIndex = nIndexV % MAX_COLOR_NUM;
+			if (m_nParaSetSecondValue ==1)
+			{
 			pCurveV->setTitle("V");
+			}
+			else
+			{
+				pCurveV->setTitle("kV");
+			}
+			
 			pCurveV->setPen( CurveColor[nVColorIndex], 2.5 );
 			pCurveV->setYAxis(QwtPlot::yLeft);
 
 			m_vecChlLabel[nIndexV]->setStyleSheet(GetCurveStyleSheet(nVColorIndex));
 			m_vecChlLabel[nIndexV]->setText(pChl->m_strName);
+
+			if (xlang_IsCurrXLanguageChinese())
+			{
 			m_vecChlLabel[nIndexV]->setGeometry(60 + 120 * nIndexV, 8, 30, nHeight);
+
+			}
+			else
+			{
+				m_vecChlLabel[nIndexV]->setGeometry(140 + 120 * nIndexV, 8,30, nHeight);
+
+			}
 			m_vecChlLabel[nIndexV]->setFont(oFont);
 
 			m_vecChlValue[nIndexV]->setStyleSheet(GetCurveStyleSheet(nVColorIndex));
+			if (xlang_IsCurrXLanguageChinese())
+			{
 			m_vecChlValue[nIndexV]->setGeometry(90 + 120 * nIndexV, 8, 90, nHeight);
+			}
+			else
+			{
+				m_vecChlValue[nIndexV]->setGeometry(160 + 120 * nIndexV,8, 120, nHeight);
+
+			}
 			m_vecChlValue[nIndexV]->setFont(oFont);
 
 			nIndexV++;
@@ -137,14 +165,31 @@ void QStateMonitorVoltCur::InitCurve(CExBaseList* pChlUDatasList, CExBaseList* p
 
 			m_vecChlLabel[nIndexV + nIndexI]->setStyleSheet(GetCurveStyleSheet(nIColorIndex));
 			m_vecChlLabel[nIndexV + nIndexI]->setText(pChl->m_strName);
+			if (xlang_IsCurrXLanguageChinese())
+			{
 			m_vecChlLabel[nIndexV + nIndexI]->setGeometry(nIndexV * 120 + 60 + 120 * nIndexI, 8, 30, nHeight);
+			}
+			else
+			{
+				m_vecChlLabel[nIndexV + nIndexI]->setGeometry(nIndexV * 120 + 140 + 120 * nIndexI, 8, 30, nHeight);
+			}
 
 			m_vecChlValue[nIndexV + nIndexI]->setStyleSheet(GetCurveStyleSheet(nIColorIndex));
+
+			if (xlang_IsCurrXLanguageChinese())
+			{
 			m_vecChlValue[nIndexV + nIndexI]->setGeometry(nIndexV * 120 + 90 + 120 * nIndexI, 8, 90, nHeight);
+
+			}
+			else
+			{
+				m_vecChlValue[nIndexV + nIndexI]->setGeometry(nIndexV * 120 + 170 + 120 * nIndexI, 8, 90, nHeight);
+			}
 
 			nIndexI++;
 		}
 
+		m_nShowLableCount = nIndexV + nIndexI;
 		for (int i = 0; i < nIndexI + nIndexV; i++)
 		{
 			m_vecChlLabel[i]->show();
@@ -162,7 +207,16 @@ void QStateMonitorVoltCur::InitCurve(CExBaseList* pChlUDatasList, CExBaseList* p
 
 	if (m_ChangeType == 0)   //20210908 sf 兼容幅值相位频率
 	{
+		if (m_nParaSetSecondValue == 0)
+		{
+            UpdateYTtile(tr("电压(V)")+"(kV)",9,TRUE);
+		}
+		else
+		{
         UpdateYTtile(tr("电压(V)")+"(V)",9,TRUE);
+		}
+		
+
         UpdateYTtile(tr("电流(A)")+"(A)",9,FALSE);
 	}
 	else if (m_ChangeType == 1)
@@ -172,7 +226,7 @@ void QStateMonitorVoltCur::InitCurve(CExBaseList* pChlUDatasList, CExBaseList* p
 	}
 	else
 	{
-		UpdateYTtile(/*tr("频率(Hz)")*/g_sLangTxt_Frequency ,9,TRUE);
+        UpdateYTtile(tr("频率(Hz)") ,9,TRUE);
 		UpdateYTtile(tr(""),9,FALSE);
 	}
 }
@@ -211,11 +265,20 @@ void QStateMonitorVoltCur::InitYTick(double fUMin, double fUMax, double fIMin, d
 	}
 
 	UpdateYScale(nIMin,nIMax,FALSE);
+	int iWith = QString::number(nUMax).toLocal8Bit().length();	//20241105 huangliang 记录电压电流的最大宽度
+	if (g_nUITableWidth_Left < iWith)
+		g_nUITableWidth_Left = iWith;
+	iWith = QString::number(nIMax).toLocal8Bit().length();
+	if (g_nUITableWidth_Right < iWith)
+		g_nUITableWidth_Right = iWith;
+	if (g_nUITableWidth_Right < 9)
+		g_nUITableWidth_Right = 9;
 
-	setAxisScaleDraw(QwtPlot::yLeft,new UIYScaleDraw());
+
+	setAxisScaleDraw(QwtPlot::yLeft,new UIYScaleDraw(true));
 	setAxisScale(QwtPlot::yLeft,nUMin,nUMax);
 
-	setAxisScaleDraw(QwtPlot::yRight,new UIYScaleDraw());
+	setAxisScaleDraw(QwtPlot::yRight,new UIYScaleDraw(false));
 	setAxisScale(QwtPlot::yRight,nIMin,nIMax);
 }
 
@@ -322,13 +385,35 @@ void QStateMonitorVoltCur::UpdateValueText()
 		{
 			CString strText = "[";
 			strText += QString::number(pCurvePoints->samples().last().y());
+			
+			if (m_ChangeType == 0)
+			{
 			if(pMacroCh->m_strID.contains("I"))
 			{
 				strText += "A]";
 			}
 			else
 			{
+				if (m_nParaSetSecondValue == 1)
+				{
 				strText += "V]";
+
+				}
+				else
+				{
+					strText += "kV]";
+
+				}
+
+				}
+			}
+			else if (m_ChangeType == 1)
+			{
+				strText += CString("°]");
+			}
+			else
+			{
+				strText += "Hz]";
 			}
 
 			if(m_vecChlValue.size())
@@ -602,7 +687,15 @@ void QStateMonitorVoltCur::ChangeType(int type)
 
 	if (m_ChangeType == 0)   //20210908 sf 兼容幅值相位频率
 	{
+		if (m_nParaSetSecondValue == 0)
+		{
+            UpdateYTtile(tr("电压(V)")+"(kV)",9,TRUE);
+		}
+		else
+		{
         UpdateYTtile(tr("电压(V)")+"(V)",9,TRUE);
+		}
+
         UpdateYTtile(tr("电流(A)")+"(A)",9,FALSE);
 	}
 	else if (m_ChangeType == 1)
@@ -612,7 +705,24 @@ void QStateMonitorVoltCur::ChangeType(int type)
 	}
 	else
 	{
-		UpdateYTtile(/*tr("频率(Hz)")*/g_sLangTxt_Frequency ,9,TRUE);
+        UpdateYTtile(tr("频率(Hz)") ,9,TRUE);
 		UpdateYTtile(tr(""),9,FALSE);
+	}
+}
+
+void QStateMonitorVoltCur::UpdateCurvetile()
+{
+	if (m_ChangeType == 0)  
+	{
+		if (m_nParaSetSecondValue == 0)
+		{
+            UpdateYTtile(tr("电压(V)")+"(kV)",9,TRUE);
+		}
+		else
+		{
+            UpdateYTtile(tr("电压(V)")+"(V)",9,TRUE);
+		}
+
+        UpdateYTtile(tr("电流(A)")+"(A)",9,FALSE);
 	}
 }

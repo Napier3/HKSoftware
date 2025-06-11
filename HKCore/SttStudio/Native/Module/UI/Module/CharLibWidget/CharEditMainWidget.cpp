@@ -1,12 +1,12 @@
 #include "CharEditMainWidget.h"
 #include <QComboBox>
-#include "../../Module/DataMngr/DvmDataset.h"
-#include "../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/DataMngr/DvmDataset.h"
+#include "../../../Module/DataMngr/DataGroup.h"
 //#include "../../../SttTest/Common/tmt_test_mngr.h"
-#include "../../AutoTest/Module/Characteristic/CharElementMho.h"
+#include "../../../AutoTest/Module/Characteristic/CharElementMho.h"
 #include "../ZKCharaCurve/QZKFeatureAddDig.h"
 #include "../../SttTestCntrFrameBase.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../../SttTestCtrl/SttTestAppBase.h"
 #include "CharInverseSet.h"
 #include "../ZKCharaCurve/QCharElementDlg.h"
@@ -438,7 +438,7 @@ void QCharEditMainWidget::AddTestResultPoint(CExBaseList* pValue)
 		pY = (CDvmValue*)pValues->FindByID("TripId");
 
 
-			if ((pY != NULL)&&(pY->m_strValue != /*_T("未动作")*/g_sLangTxt_State_NoActioned))//lcq
+			if ((pY != NULL)&&(pY->m_strValue != /*_T("未动作")*//*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact))//lcq
 		{
 			bHasAct = TRUE;
 		}
@@ -452,7 +452,7 @@ void QCharEditMainWidget::AddTestResultPoint(CExBaseList* pValue)
 			pX = (CDvmValue*)pValues->FindByID("TripRHarm");
 			pY = (CDvmValue*)pValues->FindByID("Id");
 
-			if ((pX != NULL)&&(pX->m_strValue != /*_T("未动作")*/g_sLangTxt_State_NoActioned))//lcq
+			if ((pX != NULL)&&(pX->m_strValue != /*_T("未动作")*//*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact))//lcq
 			{
 				bHasAct = TRUE;
 			}

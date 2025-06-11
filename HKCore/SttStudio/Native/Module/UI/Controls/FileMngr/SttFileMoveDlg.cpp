@@ -1,15 +1,15 @@
 #include "SttFileMoveDlg.h"
 #include "SttXFolderButton.h"
 
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../../../SttTestResourceMngr/SttTestResourceMngr.h"
-#include "../../Module/OSInterface/QT/XMessageBox.h"
+#include "../../../Module/OSInterface/QT/XMessageBox.h"
 #include "../../Module/CommonMethod/commonMethod.h"
-#include "../../Module/XfileMngrBase/XFolder.h"
+#include "../../../Module/XfileMngrBase/XFolder.h"
 #include "../../Module/PopupDialog/SttPopupOpenDialog.h"
 #include "../../Module/PopupDialog/SttPopupSaveAsDialog.h"
-#include "../../Module/OSInterface/QT/XMessageBox.h"
+#include "../../../Module/OSInterface/QT/XMessageBox.h"
 #include "../Module/XLangResource_Native.h"
 
 #ifdef _USE_SoftKeyBoard_
@@ -294,6 +294,7 @@ void QSttFileMoveDlg::slot_ExportClicked()
 	}
 
 	QSttPopupSaveAsDialog oSavedlg(strUsbPath, m_astrFileTypesPostfix,m_pCurrSelData->m_strName, this);
+	oSavedlg.m_bIsCheckExternalPath = TRUE;
 	oSavedlg.InitUI();
 
 #ifdef _USE_SoftKeyBoard_

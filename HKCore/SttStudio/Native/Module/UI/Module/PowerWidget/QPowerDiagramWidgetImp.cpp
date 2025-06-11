@@ -12,6 +12,8 @@ QPowerDiagramWidgetImp::QPowerDiagramWidgetImp(QWidget *parent)
 	m_pCUR = NULL;//初始电流
 	m_pVolChList = NULL;//全部电压通道资源索引
 	m_pCurChList = NULL; //全部电流通道资源索引
+	
+	m_nParaSetSecondValue = 1;
 
 	m_nTimerID = -1;
 }
@@ -31,7 +33,8 @@ void QPowerDiagramWidgetImp::showEvent(QShowEvent *)
 
 	m_pPowerWidget = new PowerDiagramWidget(this);
 	InitSttInfWidget(m_pPowerWidget);
-
+	
+	m_pPowerWidget->m_nParaSetSecondValue = m_nParaSetSecondValue;
 	setPropertyOfParaSet();
 	setData();
 	initData();
@@ -146,3 +149,13 @@ void QPowerDiagramWidgetImp::timerEvent(QTimerEvent *event)
 	}
 }
 
+void QPowerDiagramWidgetImp::SetParaSetSecondValue(int nParaSetSecondValue)
+{
+	m_nParaSetSecondValue = nParaSetSecondValue;
+
+	if (m_pPowerWidget != NULL)
+	{
+		m_pPowerWidget->m_nParaSetSecondValue = m_nParaSetSecondValue;
+		m_pPowerWidget->initData();
+	}
+}

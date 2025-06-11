@@ -15,7 +15,7 @@ class QSttMacroParaEditViewTransPlay: public CSttMacroParaEditViewOriginal
 	Q_OBJECT
 
 public:
-    QSttMacroParaEditViewTransPlay(QWidget *parent = 0, Qt::WindowFlags flags = Qt::WindowFlags());
+    QSttMacroParaEditViewTransPlay(QWidget *parent = 0, Qt::WindowFlags flags = 0);
 	virtual ~QSttMacroParaEditViewTransPlay();
 
 	virtual void SetDatas(CDataGroup *pParas);
@@ -25,6 +25,9 @@ public:
 	virtual void SerializeTestParas(CSttXmlSerializeBase *pMacroParas, PTMT_PARAS_HEAD pParas,
 		long nVolRsNum,long nCurRsNum,long nBinExNum,long nBoutExNum,BOOL bHasGoosePub);
 	virtual void UpdateTestResource(BOOL bCreateChMaps);
+	virtual void UpdatePrimParaSetUI(){}//20240923 suyang 更新界面一次值/二次值显示
+	virtual BOOL IsUseSecondParaSet(){ return TRUE; }//20240923 suyang 是否显示二次值	
+
 
 public:
 	void initUI();

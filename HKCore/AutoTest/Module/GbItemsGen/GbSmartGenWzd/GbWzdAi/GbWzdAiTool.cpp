@@ -2,7 +2,7 @@
 #include "GbWzdAiTool.h"
 #include "GbWzdAiSwitch.h"
 
-#include "../../../../../IotProtoServer/Module/SttPxCommCmdDef.h"
+#include "../../../IotProtoServer/Module/SttPxCommCmdDef.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

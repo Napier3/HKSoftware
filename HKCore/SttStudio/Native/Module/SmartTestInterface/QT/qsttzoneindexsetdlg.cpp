@@ -1,6 +1,6 @@
 #include "qsttzoneindexsetdlg.h"
 #include "ui_qsttzoneindexsetdlg.h"
-#include "../../../../Module/OSInterface/OSInterface.h"
+#include "../../../Module/OSInterface/OSInterface.h"
 
 QSttZoneIndexSetDlg::QSttZoneIndexSetDlg(long nZoneIndex, QWidget *parent) :
     QDialog(parent),

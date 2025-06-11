@@ -2,8 +2,8 @@
 #define CHMAPSGRID_H
 
 #include "../QExBaseListGridBase/QExBaseListGridBase.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #define CHMAPS_GRID_COLS		4
 
 class CChMapsGrid : public QExBaseListGridBase

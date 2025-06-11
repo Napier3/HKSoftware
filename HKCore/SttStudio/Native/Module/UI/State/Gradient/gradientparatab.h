@@ -25,6 +25,8 @@ public:
 	void saveData();
 	void updateGradientType(int nType);
 	void InitLinearStepGradient();
+	
+	int m_nParaSetSecondValue;
 private:
 	QVBoxLayout* m_pVBoxLayout;
 

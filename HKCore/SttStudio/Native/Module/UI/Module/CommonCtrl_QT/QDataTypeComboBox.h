@@ -1,8 +1,8 @@
 #ifndef QDATATYPECOMBOBOX_H
 #define QDATATYPECOMBOBOX_H
 
-#include "../../Module/DataMngr/DataType.h"
-#include "../../Module/BaseClass/QT/ExBaseListComboBox.h"
+#include "../../../Module/DataMngr/DataType.h"
+#include "../../../Module/BaseClass/QT/ExBaseListComboBox.h"
 
 class QDataTypeComboBox : public CExBaseListComboBox
 {

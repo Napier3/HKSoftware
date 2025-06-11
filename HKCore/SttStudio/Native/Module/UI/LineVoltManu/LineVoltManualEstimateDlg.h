@@ -19,7 +19,9 @@ public:
 	void CbbErrorType(int nIndex, CString strText);
 	void ComboxModelStyle(QComboBox *pCombox);
 
-
+	BOOL m_bRunning;
+	bool eventFilter(QObject *obj, QEvent *event);
+	virtual void mousePressEvent(QMouseEvent *);
 private:
 	QComboBox* NewErrorType();
 	QComboBox* AbsErrorType();

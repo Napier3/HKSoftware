@@ -3,7 +3,7 @@
 #include <QRegExp>
 #include "SttMacroParaEditViewGooseAbnormal.h"
 #include "../Module/XLangResource_Native.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 
 //2023/10/26 wjs
 #ifdef _USE_SoftKeyBoard_

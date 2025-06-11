@@ -1,6 +1,6 @@
 #include "SttMacroParaEditViewSequenceGradient.h"
 #include "ui_SttMacroParaEditViewSequenceGradient.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "SequenceGradientSettingDlg.h"
 #include "../SttTestCntrFrameBase.h"
 #include "../../SttTestResourceMngr/TestResource/SttTestResource_4U3I.h"
@@ -12,7 +12,7 @@
 #include"../Module/XLangResource_Native.h"
 //#include "GradientEstimateDlg.h"
 //#include "GradientSettingValueDlg.h"
-#include "../../Module/XLanguage/XLanguageResource.h"
+#include "../../../Module/XLanguage/XLanguageResource.h"
 
 #ifdef _USE_SoftKeyBoard_
 #include "../SoftKeyboard/SoftKeyBoard.h"
@@ -115,7 +115,7 @@ void QSttMacroParaEditViewSequenceGradient::InitLanuage()
 	ui->m_rbAnd->setText(strText);
 	xlang_GetLangStrByFile(strText, "Native_LogicOr");//逻辑或
 	ui->m_rbOr->setText(strText);
-	xlang_SetLangStrToWidget(ui->m_gpBin, "Native_Bin", XLang_Ctrls_QGroupBox);//开入量
+	xlang_SetLangStrToWidget(ui->m_gpBin, "sInputValue", XLang_Ctrls_QGroupBox);//开入量
 	xlang_SetLangStrToWidget(ui->m_gpBoutNormal, "Gradient_Normal", XLang_Ctrls_QGroupBox);//开出量正常态
 	xlang_SetLangStrToWidget(ui->m_gpBoutError, "Gradient_Failure", XLang_Ctrls_QGroupBox);//开出量故障态
 	xlang_GetLangStrByFile(strText, "Native_BinX");
@@ -140,7 +140,7 @@ void QSttMacroParaEditViewSequenceGradient::InitLanuage()
 	ui->m_cbBOut2_E->setText(/*strText +*/ "2");
 	ui->m_cbBOut3_E->setText(/*strText +*/ "3");
 	ui->m_cbBOut4_E->setText(/*strText +*/ "4");
-	xlang_GetLangStrByFile(strText,"Native_Bout");//开出量
+	xlang_GetLangStrByFile(strText,"sOutputValue");//开出量
 	CString str;
 	xlang_GetLangStrByFile(str,"Gradient_Normal");
 	ui->m_gpBoutNormal->setTitle(strText+str);
@@ -226,7 +226,7 @@ void QSttMacroParaEditViewSequenceGradient::InitUI()
 	initMaxPositiveEdit(ui->m_editFinish);
 	initMaxPositiveEdit(ui->m_editStep);
 	initMaxPositiveEdit(ui->m_editTime);//故障时间
-
+	ui->m_cbbVar->setMaxVisibleItems(6);
 	InitQList();//初始化变量类型以及类型下拉框的值
 	UpdateSequenceGradientChs();
 
@@ -499,15 +499,15 @@ void QSttMacroParaEditViewSequenceGradient::UpdateSequenceGradientChs()
 	while(pos)
 	{
 		pCurTypeValue = (CDataTypeValue *)m_oSequenceGradientChs.GetNext(pos);
-		if ((pCurTypeValue->m_strID == "U1-1") || (pCurTypeValue->m_strID == "U1-2") || (pCurTypeValue->m_strID == "U1-0"))
-		{
-			ui->m_cbbVar->addItem(pCurTypeValue->m_strID.GetString());
-		}
-		if ((pCurTypeValue->m_strID == "I1-1") || (pCurTypeValue->m_strID == "I1-2") || (pCurTypeValue->m_strID == "I1-0"))
-		{
-			ui->m_cbbVar->addItem(pCurTypeValue->m_strID.GetString());
-		}
-		
+// 		if ((pCurTypeValue->m_strID == "U1-1") || (pCurTypeValue->m_strID == "U1-2") || (pCurTypeValue->m_strID == "U1-0"))
+// 		{
+// 			ui->m_cbbVar->addItem(pCurTypeValue->m_strID.GetString());
+// 		}
+// 		if ((pCurTypeValue->m_strID == "I1-1") || (pCurTypeValue->m_strID == "I1-2") || (pCurTypeValue->m_strID == "I1-0"))
+// 		{
+// 			ui->m_cbbVar->addItem(pCurTypeValue->m_strID.GetString());
+// 		}
+		ui->m_cbbVar->addItem(pCurTypeValue->m_strName);//dingxy 20250123 根据通道映射修改通道名称
 	}
 	connect(ui->m_cbbVar, SIGNAL(currentIndexChanged(int)), this, SLOT(on_m_cbbVar_currentIndexChanged(int)));
 }

@@ -3,7 +3,7 @@
 #include "../../../Module/DataMngr/DvmDevice.h"
 #include "GbSmartGenWzdGlobal.h"
 #include "DvmContents.h"
-#include "../../../../SttStudio/Module/SttGlobalDef.h"
+#include "../Module/SttGlobalDef.h"
 #include "../../../../Module/API/GlobalConfigApi.h"
 
 class CGbWzdXItemBase : public CDataGroup

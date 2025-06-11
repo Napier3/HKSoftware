@@ -3,8 +3,8 @@
 
 #include "../QExBaseListGridBase/QExBaseListGridBase.h"
 #include "../QExBaseListGridBase/QExBaseListComBoxDelegBase.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #define STTFILESELECT_GRID_COLS		2
 
 class CSttFileSelectGrid : public QExBaseListGridBase

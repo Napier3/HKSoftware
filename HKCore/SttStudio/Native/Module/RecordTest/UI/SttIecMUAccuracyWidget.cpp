@@ -1,5 +1,5 @@
 #include "SttIecMUAccuracyWidget.h"
-#include "../../../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../Module/SmartCap/XSmartCapMngr.h"
 #include "../../UI/SttTestCntrFrameBase.h"
 #include "../../XLangResource_Native.h"
 

@@ -12,7 +12,7 @@
 
 #include "../Module/SttTest/Common/tmt_manu_test.h"
 #include "../Module/ScrollCtrl/ScrollComboBox.h"
-#include "../../Module/BaseClass/QT/ExBaseListComboBox.h"
+#include "../../../Module/BaseClass/QT/ExBaseListComboBox.h"
 #include "RemoteMeasParaset.h"
 
 

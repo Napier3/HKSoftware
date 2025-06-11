@@ -11,7 +11,7 @@
 #include <QFormLayout>
 #include <QPushButton>
 #include <QLabel>
-#include "../../61850/Module/CfgDataMngr/IecCfgChsBase.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgChsBase.h"
 #include "Grid/IecCfgSmv92ChsGrid.h"
 #include "Grid/IecCfgSmv92InChsGrid.h"
 #include "Grid/IecCfgSmvFT3OutChsGrid.h"

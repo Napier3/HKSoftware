@@ -7,9 +7,9 @@
 
 #include "stdafx.h"
 #include "SttFrameConfig.h"
-#include "../../Module/API/GlobalConfigApi.h"
-#include "../../Module/API/FileApi.h"
-#include "../../Module/XLanguage/XLanguageMngr.h"
+#include "../../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/FileApi.h"
+#include "../../../Module/XLanguage/XLanguageMngr.h"
 #include "../../SttTestCntrCmdDefine.h"
 
 #ifdef _DEBUG

@@ -1,12 +1,12 @@
 #include "SttMacroParaEditViewManual.h"
 #include "ui_SttMacroParaEditViewManual.h"
 #include "../../SmartCap/XSmartCapMngr.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../SttTest/Common/tmt_manu_test.h"
 #include "../SttTestCntrFrameBase.h"
 #include "../../SttTestResourceMngr/TestResource/SttTestResource_Sync.h"
 #include "../../SttGlobalDef.h"
-//#include "../../Module/SmartCap/X61850CapBase.h"
+//#include "../../../Module/SmartCap/X61850CapBase.h"
 // #include "../../Engine/PpMeas/PpSttIotMeasServer.h"  //2022-10-5  lijunqing
 #include "../../SttTestCtrl/SttTestCtrlCntrNative.h"
 #include "../Controls/SttCheckBox.h"
@@ -23,30 +23,29 @@
 QSttMacroParaEditViewManual* g_pManualTest = NULL;
 #define  STT_MODULE_L336D          "L336D"
 
-QSttMacroParaEditViewManual::QSttMacroParaEditViewManual(QWidget *parent) :
-    m_pManualTest_UI(new Ui::QSttMacroParaEditViewManual)
+QSttMacroParaEditViewManual::QSttMacroParaEditViewManual(QWidget *parent) 
+		: QSttMacroParaEditViewManualBase(parent),   
+		m_pManualTest_UI(new Ui::QSttMacroParaEditViewManual) 
 {
+	g_pManualTest = this;
+
 	m_pSetMUTestRpt_CheckBox = NULL;
 	m_nIecFormatMeas = g_oSystemParas.m_nIecFormatMeas;
 	m_nBCodeMode = g_oSystemParas.m_nBCodeMode;
 	m_pRefresh_Button = NULL;
-// 	m_pSttMUParasWidget = NULL;
 	m_pSttMUTimeTestWidget = NULL;
-
-	if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> begin QSttMacroParaEditViewManual -  >>");	}
+	m_pExBinParaWidget = NULL;	//扩展开入设置
+	m_pExBoutParaWidget = NULL;	//扩展开出设置
 
     m_pManualTest_UI->setupUi(this);
-	setWindowFlags(Qt::FramelessWindowHint);
+	debug_time_long_log("MacroParaEditViewManual setupUi", true);
 
 #ifdef _PSX_QT_WINDOWS_
 	setMaximumSize(QSize(5000, 5000));
 #endif
 
-	if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> ---------- QSttMacroParaEditViewManual -  1 >>");	}
-
 	InitLanuage();
-
-	if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> ---------- QSttMacroParaEditViewManual -  2 >>");	}
+	debug_time_long_log("MacroParaEditViewManualInitLanuage ", true);
 
 	m_bTmtParaChanged = FALSE;
 	m_bIsChanging = FALSE;
@@ -55,39 +54,44 @@ QSttMacroParaEditViewManual::QSttMacroParaEditViewManual(QWidget *parent) :
 	//m_strParaFileTitle = "通用试验模板文件";
 	m_strParaFileTitle = g_sLangTxt_State_Genexperfile;//通用试验模板文件 lcq 3.14
 	m_strParaFilePostfix = "project(*.mntxml)";
-	m_strDefaultParaFile = _P_GetConfigPath();
-	m_strDefaultParaFile.append("ManualTest.mntxml");
+// 	m_strDefaultParaFile = _P_GetConfigPath();
+// 	m_strDefaultParaFile.append("ManualTest.mntxml");//dingxy 20240919 统一采用配置文件中参数文件因此注释
 
 	//先初始化Resource才能设置最大最小值
 	m_pOriginalSttTestResource = g_theTestCntrFrame->GetSttTestResource();
 //	CreateTestResource();
 	g_theTestCntrFrame->InitTestResource();
-
-	if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> ---------- QSttMacroParaEditViewManual -  3 >>");	}
+	debug_time_long_log("MacroParaEditViewManual InitTestResource", true);
 
 	m_pManualParas = &m_oManualTest.m_oManuParas;
 
 	if (g_oSystemParas.m_nHasDigital)//zhouhj 在打开测试模板前先初始化当前GOOSE发布数据
 	{
 		InitGoosePubDataGroups();
+		debug_time_long_log("MacroParaEditViewManualInitGoosePubDataGroups ", true);
+
 		InitFT3PubDataGroups();
+		debug_time_long_log("MacroParaEditViewManual InitFT3PubDataGroups", true);
 	}
 
 	OpenTestTestMngrFile(m_strDefaultParaFile);
-
-	if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> ---------- QSttMacroParaEditViewManual -  4 >>");	}
+	debug_time_long_log("MacroParaEditViewManual OpenTestTestMngrFile", true);
 
 	CopyBinaryConfig();
+	debug_time_long_log("MacroParaEditViewManual CopyBinaryConfig", true);
 	//g_theTestCntrFrame->UpdateToolButtons();//QSttTestCntrFrameBase::OpenMacroTestUI_Test会再次重复刷新
 
 	this->InitIVView();
+	debug_time_long_log("MacroParaEditViewManual InitIVView", true);
+	
 	this->InitParasView();
-	InitConnect();
+	debug_time_long_log("MacroParaEditViewManual InitParasView", true);
 
-	if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> ---------- QSttMacroParaEditViewManual -  5 >>");	}
+	InitConnect();
 
 	m_oParas.SetData(g_oSttTestResourceMngr.m_pTestResouce, m_pManualParas, 0);
 	UpdateHarmCheckComboxUI(TRUE);
+	debug_time_long_log("MacroParaEditViewManual UpdateHarmCheckComboxUI", true);
 
 	if (m_oIV.m_pUIParaWidget)
 	{
@@ -96,6 +100,8 @@ QSttMacroParaEditViewManual::QSttMacroParaEditViewManual(QWidget *parent) :
 		m_oIV.m_pUIParaWidget->setMaxMinAndEDVal();
 		connect(m_oIV.m_pUIParaWidget,SIGNAL(sig_updataParas()),this,SLOT(slot_updateParas()), Qt::UniqueConnection);
 	}
+
+	debug_time_long_log("MacroParaEditViewManual m_pUIParaWidget", true);
 
 	if (m_oIV.m_pHarmUIParaWidget)
 	{
@@ -106,17 +112,11 @@ QSttMacroParaEditViewManual::QSttMacroParaEditViewManual(QWidget *parent) :
 		connect(m_oIV.m_pHarmUIParaWidget,SIGNAL(sig_updataParas()),this,SLOT(slot_updateParas()), Qt::UniqueConnection);
 	}
 
-    g_pManualTest = this;
+	debug_time_long_log("MacroParaEditViewManual m_pHarmUIParaWidget", true);
 
-	if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> ---------- QSttMacroParaEditViewManual -  6 >>");	}
 
 	SetDatas(NULL);
-
-	if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> ---------- QSttMacroParaEditViewManual -  7 >>");	}
-
-	//QSttTestCntrFrameLinux::UpdateButtonsStateByID()刷新,重复调用
-	//g_theTestCntrFrame->UpdateButtonStateByID(STT_CNTR_CMD_ManuTriger,false,false);
-	if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> end QSttMacroParaEditViewManual -  >>");	}
+	debug_time_long_log("MacroParaEditViewManual SetDatas", true);
 
 	if ((m_pManualParas->m_nFuncType > TMT_MANU_FUNC_TYPE_Common)&&(m_pManualParas->m_nFuncType < TMT_MANU_FUNC_TYPE_MUTimingAccur))
 	{
@@ -126,7 +126,8 @@ QSttMacroParaEditViewManual::QSttMacroParaEditViewManual(QWidget *parent) :
 	{
 		m_pManualTest_UI->m_tabWidget->setCurrentIndex(1);
 	}
-	
+
+	debug_time_long_log("MacroParaEditViewManual m_tabWidget->setCurrentIndex", true);
 }
 
 void QSttMacroParaEditViewManual::InitLanuage()
@@ -331,7 +332,7 @@ void QSttMacroParaEditViewManual::slot_cmbHarm_SelChanged(int nCurrIndex)
 	if (m_oIV.m_pHarmUIParaWidget != NULL)
 	{
 		m_pManualParas->m_nHarmIndex = nCurrIndex+2;
-		m_oIV.m_pHarmUIParaWidget->initData();
+		m_oIV.m_pHarmUIParaWidget->initData(true);
 		emit sig_updataParas();
 	}
 }
@@ -596,12 +597,26 @@ void QSttMacroParaEditViewManual::VisibleCtrlsByFuncType()
 	CString strModel,strL336DName;
 	strModel = g_oSttSystemConfig.GetDevModel();
 	strL336DName = strModel.Left(5);
-
 	CSttAdjDevice *pCurDevice = &g_oSttTestResourceMngr.m_oCurrDevice;
-
-	if (strL336DName == STT_MODULE_L336D  || pCurDevice->m_strModel.Find(_T("PTU200L")) >= 0)
+	if (!pCurDevice->m_strModel.IsEmpty())
 	{
-		g_theTestCntrFrame->UpDateUdcVal();
+		strModel = pCurDevice->m_strModel;
+	}
+	//dingxy 20241128 高功率输出时，通用试验直流灰化
+	if ((strModel == _T("PNS330-6")) || (strModel == _T("PNS330-6A")) || (strModel == _T("PNS330-6M")))
+	{
+		long nIPowerMode = g_oSystemParas.m_oGearSetCurModules.m_oCurModuleGear[0].m_nIPowerMode;
+		if (nIPowerMode == STT_CurrentMODULE_POWER_PNS330_6x10A_3x20A)
+			UpdateDCCheckBoxUI(TRUE);
+		else
+			UpdateDCCheckBoxUI(FALSE);
+	}
+	else
+		UpdateDCCheckBoxUI(FALSE);
+
+	if (strL336DName == STT_MODULE_L336D  || pCurDevice->m_strModel.Find(_T("PTU200L")) >= 0  || pCurDevice->m_strModel.Find(_T("PTU100A")) >= 0)
+	{
+		g_theTestCntrFrame->UpDateUdcVal(); //chenling oCurrEventResult.m_nUdc初始化为0,，还未实时刷,注释
 	}
 	else
 	{
@@ -649,6 +664,32 @@ void QSttMacroParaEditViewManual::InitOtherParasUI()
 	VisibleCtrlsByFuncType();
 }
 
+BOOL QSttMacroParaEditViewManual::IsUseSecondParaSet()
+{
+	//合并单元模块不使用一次值
+	if (m_pManualParas->m_nFuncType > TMT_MANU_FUNC_TYPE_Common)
+	{
+		return TRUE;
+	}
+
+	return g_oSystemParas.m_nParaMode;
+}
+
+void QSttMacroParaEditViewManual::UpdatePrimParaSetUI()
+{
+	//合并单元模块不使用一次值
+	if (m_pManualParas->m_nFuncType > TMT_MANU_FUNC_TYPE_Common)
+	{
+		return ;
+	}
+
+	CSttMacroParaEditViewOriginal::UpdatePrimParaSetUI();
+
+	m_oParas.SetParaSetSecondValue(IsUseSecondParaSet());
+
+	m_oIV.SetParaSetSecondValue(IsUseSecondParaSet());
+	
+}
 
 void QSttMacroParaEditViewManual::UpdateTestResource(BOOL bCreateChMaps)
 {
@@ -668,6 +709,26 @@ void QSttMacroParaEditViewManual::UpdateTestResource(BOOL bCreateChMaps)
 	UpdateFT3Tab();
 	UpdateBinBoutExTab();
 
+	CString strModel;
+	strModel = g_oSttSystemConfig.GetDevModel();
+	CSttAdjDevice *pCurDevice = &g_oSttTestResourceMngr.m_oCurrDevice;
+	if (!pCurDevice->m_strModel.IsEmpty())
+	{
+		strModel = pCurDevice->m_strModel;
+	}
+
+	//dingxy 20241128 高功率输出时，通用试验直流灰化
+	if ((strModel == _T("PNS330-6")) || (strModel == _T("PNS330-6A")) || (strModel == _T("PNS330-6M")))
+	{
+		long nIPowerMode = g_oSystemParas.m_oGearSetCurModules.m_oCurModuleGear[0].m_nIPowerMode;
+		if (nIPowerMode == STT_CurrentMODULE_POWER_PNS330_6x10A_3x20A)
+			UpdateDCCheckBoxUI(TRUE);
+		else
+			UpdateDCCheckBoxUI(FALSE);
+	}
+	else
+		UpdateDCCheckBoxUI(FALSE);
+
 // 	if (m_pSttMUParasWidget != NULL)
 // 	{
 // 		m_pSttMUParasWidget->UpdateUI();
@@ -679,13 +740,18 @@ void QSttMacroParaEditViewManual::UpdateTestResource(BOOL bCreateChMaps)
 	}
 
 	m_oIV.m_pUIParaWidget->initUI(g_theTestCntrFrame->GetSttTestResource());
-	m_oIV.m_pUIParaWidget->initData();
+	m_oIV.m_pUIParaWidget->initData(true);
 	m_oIV.m_pUIParaWidget->setMaxMinAndEDVal();
+	if(m_pManualTest_UI->m_cbDC->isChecked())
+	{
+		//20250318 suyang 需要根据当前勾选直流来更新界面显示的数据,数据是全的  
+		m_oIV.slot_cb_DCClicked(m_pManualTest_UI->m_cbDC->isChecked());
+	}
 
 	if (m_oIV.m_pHarmUIParaWidget != NULL)
 	{
 		m_oIV.m_pHarmUIParaWidget->initUI(g_theTestCntrFrame->GetSttTestResource());
-		m_oIV.m_pHarmUIParaWidget->initData();
+		m_oIV.m_pHarmUIParaWidget->initData(true);
 		m_oIV.m_pHarmUIParaWidget->setMaxMinAndEDVal();
 	}
 
@@ -867,18 +933,90 @@ void QSttMacroParaEditViewManual::slot_GooseDataChanged()
 	SetParaChanged();
 }
 
+void QSttMacroParaEditViewManual::slot_BinBoutStateChanged()
+{
+	if(g_theTestCntrFrame->IsTestStarted())
+	{
+		g_theTestCntrFrame->UpdateToolButtons();
+	}
+}
+
+bool QSttMacroParaEditViewManual::ExistExBinParaWidget()
+{
+	int nIndex = m_pManualTest_UI->m_tabWidget->indexOf(m_pExBinParaWidget);
+	return (nIndex>=0);
+}
+
+bool QSttMacroParaEditViewManual::ExistExBoutParaWidget()
+{
+	int nIndex = m_pManualTest_UI->m_tabWidget->indexOf(m_pExBoutParaWidget);
+	return (nIndex>=0);
+}
+
+void QSttMacroParaEditViewManual::EnableBinParaWidget(bool b)
+{
+	if (ExistExBinParaWidget())
+	{
+		m_pManualTest_UI->m_tabWidget->setTabEnabled(m_pManualTest_UI->m_tabWidget->indexOf(m_pExBinParaWidget),b);
+	}
+}
+
+void QSttMacroParaEditViewManual::EnableBoutParaWidget(bool b)
+{
+	if (ExistExBoutParaWidget())
+	{
+		m_pManualTest_UI->m_tabWidget->setTabEnabled(m_pManualTest_UI->m_tabWidget->indexOf(m_pExBoutParaWidget),b);
+	}
+}
+
 void QSttMacroParaEditViewManual::UpdateBinBoutExTab()
 {
-	//当前页面无拓展开入开出
+	if ((m_pExBinParaWidget == NULL)&&(g_oLocalSysPara.m_nCHBinInExNum>0))
+	{
+		AddExBinParaWidget();
+		m_pExBinParaWidget->setData(m_pManualParas->m_binInEx,NULL);
+		connect(m_pExBinParaWidget, SIGNAL(sig_ExSwitchChanged()), this, SLOT(slot_BinBoutStateChanged()),Qt::UniqueConnection);
+	}
+	else if ((m_pExBinParaWidget != NULL)&&(g_oLocalSysPara.m_nCHBinInExNum == 0))
+	{
+		disconnect(m_pExBinParaWidget, SIGNAL(sig_ExSwitchChanged()), this, SLOT(slot_BinBoutStateChanged()));
+		RemoveExBinParaWidget();
+	}
+	else if ((m_pExBinParaWidget != NULL)&&(g_oLocalSysPara.m_nCHBinInExNum>0))
+	{
+		disconnect(m_pExBinParaWidget, SIGNAL(sig_ExSwitchChanged()), this, SLOT(slot_BinBoutStateChanged()));
+		m_pExBinParaWidget->setData(m_pManualParas->m_binInEx,NULL);
+		connect(m_pExBinParaWidget, SIGNAL(sig_ExSwitchChanged()), this, SLOT(slot_BinBoutStateChanged()),Qt::UniqueConnection);
+		EnableBinParaWidget(true);
+	}
+
+	if ((m_pExBoutParaWidget == NULL)&&(g_oLocalSysPara.m_nCHBinOutExNum>0))
+	{
+		AddExBoutParaWidget();
+		m_pExBoutParaWidget->setData(NULL,m_pManualParas->m_binOutEx);
+		connect(m_pExBoutParaWidget, SIGNAL(sig_ExSwitchChanged()), this, SLOT(slot_BinBoutStateChanged()),Qt::UniqueConnection);
+	}
+	else if ((m_pExBoutParaWidget != NULL)&&(g_oLocalSysPara.m_nCHBinOutExNum == 0))
+	{
+		disconnect(m_pExBoutParaWidget, SIGNAL(sig_ExSwitchChanged()), this, SLOT(slot_BinBoutStateChanged()));
+		RemoveExBoutParaWidget();
+	}
+	else if ((m_pExBoutParaWidget != NULL)&&(g_oLocalSysPara.m_nCHBinOutExNum>0))
+	{
+		disconnect(m_pExBoutParaWidget, SIGNAL(sig_ExSwitchChanged()), this, SLOT(slot_BinBoutStateChanged()));
+		m_pExBoutParaWidget->setData(NULL,m_pManualParas->m_binOutEx);
+		connect(m_pExBoutParaWidget, SIGNAL(sig_ExSwitchChanged()), this, SLOT(slot_BinBoutStateChanged()),Qt::UniqueConnection);
+		EnableBoutParaWidget(true);
+	}
 }
 
 void QSttMacroParaEditViewManual::UpdateManualParas(bool bUpdateParasData)
 {
-	m_oIV.m_pUIParaWidget->initData();
+	m_oIV.m_pUIParaWidget->initData(true);
 
 	if (m_oIV.m_pHarmUIParaWidget != NULL)
 	{
-		m_oIV.m_pHarmUIParaWidget->initData();
+		m_oIV.m_pHarmUIParaWidget->initData(true);
 	}
 
 	if (m_pManualParas->m_bDC)
@@ -1108,7 +1246,7 @@ void QSttMacroParaEditViewManual::InitMuUI()
 
 	QGridLayout *m_pTestReport_GridLayout = new QGridLayout();
 
-	m_pSetMUTestRpt_CheckBox = new QSttCheckBox(g_sLangTxt_Manual_TestReport);
+	m_pSetMUTestRpt_CheckBox = new QSttCheckBox(/*g_sLangTxt_Manual_TestReport*/g_sLangTxt_TestReport);
 
 	m_pMUAccuracyTestNum_Edit = new QSttLineEdit();
 	m_pMUTestNumUnit_Label = new QLabel(g_sLangTxt_Harm_Times);
@@ -1122,7 +1260,7 @@ void QSttMacroParaEditViewManual::InitMuUI()
 	m_pTestReport_GridLayout->addWidget(m_pMUTestTime_Edit,1,2);
 	m_pTestReport_GridLayout->addWidget(m_pMUTestTimeUnit_Label,1,3);
 
-	m_pTestGroupBox = new QSttGroupBox(g_sLangTxt_Manual_TestReport);
+	m_pTestGroupBox = new QSttGroupBox(/*g_sLangTxt_Manual_TestReport*/g_sLangTxt_TestReport);
 	m_pTestGroupBox->setLayout(m_pTestReport_GridLayout);
 
 
@@ -1453,6 +1591,18 @@ void QSttMacroParaEditViewManual::OnViewTestStart()
 		m_pSttMUTimeTestWidget->TestStartInit();
 	}
 
+	if(m_pExBinParaWidget != NULL)
+	{
+		m_pExBinParaWidget->m_pTable->setDisabled(true);
+		m_pExBinParaWidget->ck_SelectAll->setDisabled(true);
+	}
+	if(m_pExBoutParaWidget != NULL)
+	{
+		m_pExBoutParaWidget->m_pTable->setDisabled(true);
+		m_pExBoutParaWidget->ck_SelectAll->setDisabled(true);
+	}
+
+
 // 	if (m_pSttMUParasWidget != NULL)
 // 	{
 // 		m_pSttMUParasWidget->setEnabled(false);
@@ -1584,6 +1734,19 @@ void QSttMacroParaEditViewManual::OnViewTestStop()
 	m_pManualTest_UI->m_btnInBinaryOutSet->setEnabled(true);
 	m_pManualTest_UI->m_btnEstimate->setEnabled(true);
 
+
+	if(m_pExBinParaWidget != NULL)
+	{
+		m_pExBinParaWidget->m_pTable->setDisabled(false);
+		m_pExBinParaWidget->ck_SelectAll->setDisabled(false);
+	}
+
+	if(m_pExBoutParaWidget != NULL)
+	{
+		m_pExBoutParaWidget->m_pTable->setDisabled(false);
+		m_pExBoutParaWidget->ck_SelectAll->setDisabled(false);
+	}
+
 }
 
 void QSttMacroParaEditViewManual::on_m_btnLock_clicked()
@@ -1669,6 +1832,16 @@ void QSttMacroParaEditViewManual::on_m_editStep_editingFinished()
 void QSttMacroParaEditViewManual::slot_ChannelTableItemValue(QString str,float fstep,int valueFlag,int AddOrMinus,bool bDC)
 {
 	m_bIsChanging = TRUE;
+
+	//20240919 suyang 幅值  电压时，步长需要进行转换 一次值
+	if (!IsUseSecondParaSet() &&  (valueFlag == amplitude_type))
+	{
+		if (str.contains("U"))
+		{
+			fstep = fstep/1000;
+		}
+	}
+	
 	m_oIV.m_pUIParaWidget->setChannelTableItemValue(str, fstep, valueFlag, AddOrMinus, bDC);
 	m_bIsChanging = FALSE;
 }
@@ -1687,9 +1860,52 @@ void QSttMacroParaEditViewManual::slot_updateParas()
 
 	g_theTestCntrFrame->UpdateVectorData();
 	g_theTestCntrFrame->UpdatePowerData();
+
+	SetPlotAcDcMaxMinValue();
+
 	SetParaChanged();
 }
+void QSttMacroParaEditViewManual::SetPlotAcDcMaxMinValue()
+{
+    bool bStart = false;
+	if (g_theTestCntrFrame->IsTestStarted())
+	{
+		bStart = true;
+	}
+	if ((m_oIV.m_pUIParaWidget)/*&&(!g_theTestCntrFrame->IsTestStarted())*/)//chenling 20250117 运行过程需要更新状态图的纵坐标
+	{
+		if (g_oSystemParas.m_nHasAnalog || g_oSystemParas.m_nHasDigital)
+		{
+			double dUMin = 0;
+			double dUMax = 0;
+			double dIMin = 0;
+			double dIMax = 0;
+			m_oIV.m_pUIParaWidget->GetUIMaxMinValue(dUMin,dUMax,dIMin,dIMax,bStart);
+			if (dUMin>=0)
+			{
+				dUMin = 0;
+			}
+			else
+			{
+				dUMin -= 20;
+			}
 
+			if (dIMin>=0)
+			{
+				dIMin = 0;
+			}
+			else
+			{
+				dIMin -= 10;
+			}
+
+			g_theTestCntrFrame->SetPlotAcDcMaxMinValue(m_pManualParas->m_bDC,dUMin,dUMax,dIMin,dIMax);
+
+		}
+
+	}
+
+}
 void QSttMacroParaEditViewManual::on_m_cbOld_clicked()
 {
 	m_oParas.slot_cb_OldClicked();
@@ -2017,6 +2233,76 @@ void QSttMacroParaEditViewManual::slot_edit_changed(QSttLineEdit* pEditLine, boo
 // 	pEditLine->SetEditFinished();
 }
 
+void QSttMacroParaEditViewManual::AddExBinParaWidget()
+{
+	if (m_pExBinParaWidget)
+	{
+		return;
+	}
+
+	m_pExBinParaWidget = new ExSwitchSet(ExInput);
+
+	int nInsertPos = 2;
+
+	if ((m_pManualParas->m_nFuncType > TMT_MANU_FUNC_TYPE_Common)&&(m_pManualParas->m_nFuncType < TMT_MANU_FUNC_TYPE_MUTimingAccur))
+	{
+		nInsertPos++;
+	}
+
+	CString strTitle;
+	xlang_GetLangStrByFile(strTitle,"Native_ExBinSet");
+	m_pManualTest_UI->m_tabWidget->insertTab(nInsertPos,m_pExBinParaWidget,strTitle);
+}
+
+void QSttMacroParaEditViewManual::RemoveExBinParaWidget()
+{
+	if(m_pExBinParaWidget == NULL)
+	{
+		return;
+	}
+
+	int nIndex = m_pManualTest_UI->m_tabWidget->indexOf(m_pExBinParaWidget);
+	m_pManualTest_UI->m_tabWidget->removeTab(nIndex);
+
+	delete m_pExBinParaWidget;
+	m_pExBinParaWidget = NULL;
+}
+
+void QSttMacroParaEditViewManual::AddExBoutParaWidget()
+{
+	if (m_pExBoutParaWidget)
+	{
+		return;
+	}
+
+	m_pExBoutParaWidget = new ExSwitchSet(ExOutPut);
+
+	int nInsertPos = 2;
+
+	if ((m_pManualParas->m_nFuncType > TMT_MANU_FUNC_TYPE_Common)&&(m_pManualParas->m_nFuncType < TMT_MANU_FUNC_TYPE_MUTimingAccur))
+	{
+		nInsertPos++;
+	}
+
+	CString strTitle;
+	xlang_GetLangStrByFile(strTitle,"Native_ExBoutSet");
+	m_pManualTest_UI->m_tabWidget->insertTab(nInsertPos,m_pExBoutParaWidget,strTitle);
+}
+
+void QSttMacroParaEditViewManual::RemoveExBoutParaWidget()
+{
+	if(m_pExBoutParaWidget == NULL)
+	{
+		return;
+	}
+
+	int nIndex = m_pManualTest_UI->m_tabWidget->indexOf(m_pExBoutParaWidget);
+	m_pManualTest_UI->m_tabWidget->removeTab(nIndex);
+
+	delete m_pExBoutParaWidget;
+	m_pExBoutParaWidget = NULL;
+}
+
 void QSttMacroParaEditViewManual::AddGooseParaWidget(CIecCfgGoutDatas* pCfgGoutDatas)
 {
 	if (m_pGooseParaWidget)
@@ -2201,26 +2487,27 @@ void QSttMacroParaEditViewManual::SetDatas(CDataGroup *pDataset)
 	{
 		CSttDataGroupSerializeRead oRead(pDataset);
 		stt_xml_serialize(m_pManualParas, &oRead);
-
+		debug_time_long_log("SetDatas stt_xml_serialize", true);
 	}
 
-    if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> begin QSttMacroParaEditViewManual::SetDatas -  >>");	}
-
 	g_theTestCntrFrame->InitVectorWidget(m_pManualParas->m_uiVOL,m_pManualParas->m_uiCUR);
- 
-	if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> begin QSttMacroParaEditViewManual::SetDatas -  >>");	}
-	g_theTestCntrFrame->InitPowerWidget(m_pManualParas->m_uiVOL,m_pManualParas->m_uiCUR);
+	debug_time_long_log("SetDatas InitVectorWidget", true);
 
-    if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> begin QSttMacroParaEditViewManual::SetDatas 1-  >>");	}
+	g_theTestCntrFrame->InitPowerWidget(m_pManualParas->m_uiVOL,m_pManualParas->m_uiCUR);
+	debug_time_long_log("SetDatas InitPowerWidget", true);
+
 
     g_theTestCntrFrame->InitStateMonitor();
+	debug_time_long_log("SetDatas InitStateMonitor", true);
 
-    if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> begin QSttMacroParaEditViewManual::SetDatas 2-  >>");	}
     g_theTestCntrFrame->ClearInfoWidget();
+	debug_time_long_log("SetDatas ClearInfoWidget", true);
 
-    if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> begin QSttMacroParaEditViewManual::SetDatas 3-  >>");	}
     UpdateManualParas(FALSE);//dingxy 20240603 构造函数中setdata调用m_oParas.UpdateData();重复调用注释
-    if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> end QSttMacroParaEditViewManual::SetDatas -  >>");	}
+	debug_time_long_log("SetDatas UpdateManualParas", true);
+
+	SetPlotAcDcMaxMinValue();//20241101 suyang 初始化时也需要通过当前电压电流通道值更新状态图坐标轴
+
 }
 
 BOOL QSttMacroParaEditViewManual::SetValues_dsRcdStep6U6I(CDvmDataset *pDsRcdStep6U6I)
@@ -2383,6 +2670,7 @@ void QSttMacroParaEditViewManual::on_m_btnShortCalcu_clicked()
 	ShortCalcuDig dlg(g_oSttTestResourceMngr.m_pTestResouce
 		,m_pManualParas->m_uiVOL, m_pManualParas->m_uiCUR
 		,m_ShortCalcuPara,this);
+	dlg.SetParaSetSecondValue(IsUseSecondParaSet());
 	dlg.setFont(*g_pSttGlobalFont);
 	dlg.setWindowModality(Qt::WindowModal);
 #ifdef _USE_SoftKeyBoard_
@@ -2487,6 +2775,8 @@ void QSttMacroParaEditViewManual::on_m_btnDiffCalc_clicked()
 void QSttMacroParaEditViewManual::slot_Estimate()
 {
 	ManualEstimateDlg dlg(m_pManualParas, this);
+	dlg.m_nParaSetSecondValue = IsUseSecondParaSet();
+	dlg.InitUI();
 	dlg.setWindowModality(Qt::WindowModal);
 #ifdef _USE_SoftKeyBoard_
 	QSoftKeyBoard::AttachObj(&dlg);
@@ -2669,6 +2959,75 @@ void QSttMacroParaEditViewManual::slot_OnOutCheckChanged()
 			emit sig_updataParas();
 			break;
 		}
+	}
+}
+
+void QSttMacroParaEditViewManual::UpdateDCParasByCurrModulePower(BOOL bCurrModulePowerHigh)
+{
+	UpdateDCCheckBoxUI(bCurrModulePowerHigh);
+	m_oParas.SetData(g_theTestCntrFrame->GetSttTestResource(), m_pManualParas, 0);
+	on_m_cbDC_clicked();
+}
+
+CString QSttMacroParaEditViewManual::GetMacroTestResultUnit()
+{
+	long nChType = m_oParas.GetChanneType();
+	long nUnitType = m_oParas.GetCbbSelect();
+
+	CString strUnit;
+
+	switch (nUnitType)
+	{
+	case amplitude_type:
+		switch (nChType)
+		{
+		case 0:
+			if (!IsUseSecondParaSet())
+			{
+				strUnit = _T("kV");
+
+			}
+			else
+			{
+			strUnit = _T("V");
+
+			}
+			break;
+		case 1:
+			strUnit = _T("A");
+			break;
+		default:
+			break;
+		}
+		break;
+	case phasor_type:
+		strUnit = _T("°");
+		break;
+	case fre_type:
+		strUnit = _T("Hz");
+		break;
+	default:
+		strUnit = _T("");
+		break;
+	}
+	return strUnit;
+}
+
+void QSttMacroParaEditViewManual::UpdateDCCheckBoxUI(BOOL bCurrModulePowerHigh)
+{
+	if (m_pManualParas->m_nFuncType == TMT_MANU_FUNC_TYPE_Common)
+	{
+		//dingxy 20241128 高功率输出时，通用试验直流灰
+		if (bCurrModulePowerHigh)
+		{
+			if (m_pManualParas->m_bDC)
+			{
+				m_pManualParas->m_bDC = FALSE;
+			}
+			m_pManualTest_UI->m_cbDC->setDisabled(true);
+		}
+		else
+			m_pManualTest_UI->m_cbDC->setDisabled(false);
 	}
 }
 

@@ -1,8 +1,8 @@
 #include "SttFileMngrTool.h"
-#include "../../Module/DataMngr/DvmData.h"
-#include "../../Module/API/GlobalConfigApi.h"
-#include "../../Module/API/FileApi.h"
-#include "../../Module/DataMngr/DataMngrGlobal.h"
+#include "../../../Module/DataMngr/DvmData.h"
+#include "../../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/FileApi.h"
+#include "../../../Module/DataMngr/DataMngrGlobal.h"
 
 
 CSttFileMngrTool g_oFileMngrTool;

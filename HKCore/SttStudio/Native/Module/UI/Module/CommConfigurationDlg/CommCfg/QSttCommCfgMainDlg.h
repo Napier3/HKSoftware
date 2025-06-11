@@ -21,6 +21,7 @@
 #define CFMDLG_COMBO_TYPE_PPXMLFILE 1
 #define CFMDLG_COMBO_TYPE_DVMFILE 2
 
+
 class QSttCommCfgMainDlg: public QDialog ,public CPpSttIotEngineClientInterface
 {
 	Q_OBJECT
@@ -41,8 +42,9 @@ public:
 	void SaveTcpclientDataToCfgXml();                     //保存规约文件网口的TcpClient数据
 	// 点击确定/连接 将所有内容保存 2014-01-31 yuanting
 	bool SaveAll();
+	void AddTab();
 
-	CDvmData *m_pPpxmlFileData;                      //xml配置文件
+	CExBaseList* m_pPpxmlFileData;                      //xml配置文件
 	CString m_strProproTemplatePath;                 //规约文件全路径
 	QLabel *m_pLabelProtolType;                      //规约Label
 	QLabel *m_pLabelPointXmlType;                    //点表Label
@@ -52,7 +54,17 @@ public:
 	QPushButton *m_pOK_PushButton;                   //确定按钮
 	QPushButton *m_pCancel_PushButton;               //取消按钮
 
-	SttCCommCfgDeviceAttrsGrid *m_pCommCfgDevcieAttrsGrid;   //装置配置对话框表格
+	SttCCommCfgDeviceAttrsGrid *m_pTcpClientDevcieGrid;   //tcpClient
+	SttCCommCfgDeviceAttrsGrid *m_pUdpClientDevcieGrid;   //UdpClient
+	SttCCommCfgDeviceAttrsGrid *m_pTcpServerDevcieGrid;   //tcpServer
+	SttCCommCfgDeviceAttrsGrid *m_pUdpServerDevcieGrid;   //UdpServer
+	SttCCommCfgDeviceAttrsGrid *m_pSerialDevcieGrid;   //Serial
+	QTabWidget* m_pTabWidget;
+	QWidget* m_pTcpClientWidget;
+	QWidget* m_pUdpClientWidget;
+	QWidget* m_pTcpServerWidget;
+	QWidget* m_pUdppServerWidget;
+	QWidget* m_pSerialWidget;
 
 	CDvmDevice *m_pDevAddrDvmDevice;            //装置地址解析文件
 	CString m_strDevAddrPintPath;               //首地址对应的点表路径
@@ -62,7 +74,6 @@ public:
 //	long m_nConnectStateIndex;//该标记用于联机使用,在创建设备连接时,返回的结果里有连接状态,第一次连接状态标记设备创建成功,实际连接状态需要几s后返回
 	//2014-01-31 yuanting  判断是否需要保存 连接的时候
 	bool m_bIsSaveFlag;
-
 
 	virtual void OnCommCommandMsg(WPARAM wParam,LPARAM lParam);   //通讯回调Command函数
 	virtual void OnEngineSystemMessage(WPARAM wParam, LPARAM lParam); //通讯回调Engine函数
@@ -80,6 +91,11 @@ public slots:
 CString  Global_GetProtolTemplPath();       //获取规约模板文件全路径
 CString Global_GetPointTbFilePath();	    //获取点表文件全路径
 void Global_SetLinuxDevIP(CString strIP, CString strMask);  //设置linux IP
-CDvmData* Global_OpenPpxmlFile(CString srFilePath);         //解析规约文件xml
+CExBaseList *Global_OpenPpxmlFile(CString srFilePath);         //解析规约文件xml
+extern bool g_bHasTcpClient;
+extern bool g_hHsTcpServer;
+extern bool g_hHsUdpClient;
+extern bool g_hHsUdpServer;
+extern bool g_hHsSerial;
 
 #endif // QSttCommCfgMainDlg_H

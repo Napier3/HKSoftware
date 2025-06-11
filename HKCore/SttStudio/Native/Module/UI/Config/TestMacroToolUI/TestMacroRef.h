@@ -18,6 +18,7 @@ public:
 
 
 	CString  m_strPic;
+	bool m_isChecked; //是否勾选
 //重载函数
 public:
 	virtual UINT GetClassID() {    return MNGRCLASSID_CTESTMACROREF;   }

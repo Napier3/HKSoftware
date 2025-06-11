@@ -6,8 +6,8 @@
 #include "../../../Module/DataMngr/DvmData.h"
 #include "../../../Module/API/GlobalConfigApi.h"
 #include "SttPointTblEdtTabTeleMeasureGrid.h"
-#include "../Module/UI/Module/PopupDialog/SttPopupOpenDialog.h"
-#include "../Module/UI/Module/PopupDialog/SttPopupSaveAsDialog.h"
+#include "../../../Module/PopupDialog/SttPopupOpenDialog.h"
+#include "../../../Module/PopupDialog/SttPopupSaveAsDialog.h"
 //#include "../../../../UI/SoftKeyboard/Keyboard/Keyboard.h"
 #ifdef _USE_SoftKeyBoard_
 #include "../../../../UI/SoftKeyboard/SoftKeyBoard.h"
@@ -619,7 +619,7 @@ void QSttCommCfgPointTblFileEditorDlg::Append_IntervalSetTab()
 	GeneralTab  *pGeneralTab = new GeneralTab(this);
 	m_pTabWidget->addTab(pGeneralTab, pDvmLogDev->m_strName);
 	//////////////////////////////////
-    CExBaseList *pDataSet = NULL;
+    CExBaseList *pDataSet=NULL;
 	POS posLgDev = pDvmLogDev->GetHeadPosition();
 	while(posLgDev != NULL)
 	{
@@ -1823,7 +1823,7 @@ void QSttCommCfgPointTblFileEditorDlg::UpdateIntervalGrid(int nIndex)
  		{
  			continue;
  		}
-        if (pLogicDevice->m_strName == CString(m_pTabWidget->tabText(nIndex)))
+		if (pLogicDevice->m_strName == m_pTabWidget->tabText(nIndex))
 		{
 			POS posLgDev = pLogicDev->GetHeadPosition();
 			while(posLgDev != NULL)

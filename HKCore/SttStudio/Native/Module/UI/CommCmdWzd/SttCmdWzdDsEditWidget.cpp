@@ -279,8 +279,12 @@ void QSttCmdWzdDsEditWidget::OnAtsQueryItem(CExBaseObject *pItemPara)
 			pSttCmdData->m_strDatasetPath = pLd->m_strID + _T("$") + pDataset->m_strID;
 		}	
 	}
+	//Xuzt 需保留原对象名字
+	//CString strCurrCmdItemName = m_pCurrCmdItem->m_strName;
+	m_oSttCommCmd.m_strName = m_pCurrCmdItem->m_strName;
 	//2022-11-8  lijunqing
 	m_oSttCommCmd.UpdateEx(m_pCurrCmdItem);
+	//m_pCurrCmdItem->m_strName = strCurrCmdItemName;
 
 	emit sig_Show_CommCmd();
 }
@@ -1173,7 +1177,13 @@ void QSttCmdWzdDsEditWidget::on_m_btnSave_clicked()
 
 	g_pTheSttTestApp->m_pTestCtrlCntr->Ats_UpdateItem(strPath, strItemParas, _T("commcmd"));
 	//g_theGbSmartGenWzd->SaveSmartGenWzdFile();
+
+	//Xuzt 需保留原对象名字
+	//CString strCurrCmdItemName = m_pCurrCmdItem->m_strName;
+	//2022-11-8  lijunqing
+	m_oSttCommCmd.m_strName = m_pCurrCmdItem->m_strName;
 	m_oSttCommCmd.UpdateEx(m_pCurrCmdItem);
+	//m_pCurrCmdItem->m_strName = strCurrCmdItemName;
 
 	stt_cmd_wzd_UpdateTestMacroUiParas(m_pCurrCmdItem);
 	m_bIsCommcmdChanged = FALSE;

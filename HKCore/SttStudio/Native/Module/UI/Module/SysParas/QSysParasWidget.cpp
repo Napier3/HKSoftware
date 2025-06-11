@@ -9,6 +9,8 @@
 #include "../../SoftKeyboard/SoftKeyBoard.h"
 #endif
 
+extern QFont *g_pSttGlobalFont;
+
 QSysParasWidget::QSysParasWidget(QWidget *parent)
 	: QWidget(parent)
 {
@@ -38,21 +40,21 @@ void QSysParasWidget::initUI(STT_SystemParas *pSysParas)
 	m_pOutputSel_GroupBox->setTitle(strTemp);
 	m_pOutputSel_HBoxLayout = new QHBoxLayout(m_pOutputSel_GroupBox);//在Group内部增加表格布局，表格布局中包含第一行全部控件
 
-	m_pAnalogSel_CheckBox = new QCheckBox(m_pOutputSel_GroupBox);
+	m_pAnalogSel_CheckBox = new QSttCheckBox(m_pOutputSel_GroupBox);
 	xlang_GetLangStrByFile(strTemp,"ChMaps_Analog");//模拟
 	m_pAnalogSel_CheckBox->setText(strTemp);
 	m_pOutputSel_HBoxLayout->addWidget(m_pAnalogSel_CheckBox);
 
 	m_pOutputSel_HBoxLayout->addSpacing(20);
 
-	m_pDigitalSel_CheckBox = new QCheckBox(m_pOutputSel_GroupBox);
+	m_pDigitalSel_CheckBox = new QSttCheckBox(m_pOutputSel_GroupBox);
 	xlang_GetLangStrByFile(strTemp,"ChMaps_Digital");//数字
 	m_pDigitalSel_CheckBox->setText(strTemp);
 	m_pOutputSel_HBoxLayout->addWidget(m_pDigitalSel_CheckBox);
 
 	m_pOutputSel_HBoxLayout->addSpacing(20);
 
-	m_pWeakSel_CheckBox = new QCheckBox(m_pOutputSel_GroupBox);
+	m_pWeakSel_CheckBox = new QSttCheckBox(m_pOutputSel_GroupBox);
 	xlang_GetLangStrByFile(strTemp,"ChMaps_Week");//弱信号
 	m_pWeakSel_CheckBox->setText(strTemp);
 	m_pOutputSel_HBoxLayout->addWidget(m_pWeakSel_CheckBox);
@@ -60,7 +62,7 @@ void QSysParasWidget::initUI(STT_SystemParas *pSysParas)
 	m_pOutputSel_HBoxLayout->addStretch();
 
 	m_pDigitalType_Label = new QLabel(m_pOutputSel_GroupBox);
-	xlang_GetLangStrByFile(strTemp,"sSystemPara");//数字报文类型
+	xlang_GetLangStrByFile(strTemp,"ChMaps_DigitalType");//数字报文类型
 	m_pDigitalType_Label->setText(strTemp + _T(":"));
 	m_pOutputSel_HBoxLayout->addWidget(m_pDigitalType_Label);
 
@@ -68,10 +70,17 @@ void QSysParasWidget::initUI(STT_SystemParas *pSysParas)
 	//	m_pDigitalType_Combobox->setObjectName(QString::fromUtf8("comboBoxIset"));
 // 	sizePolicy.setHeightForWidth(m_pDigitalType_Combobox->sizePolicy().hasHeightForWidth());
 	// 	m_pDigitalType_Combobox->setSizePolicy(sizePolicy);
-	m_pDigitalType_Combobox->insertItem(0,_T("IEC61850-9-2"));
+	if(g_oLocalSysPara.m_nTotalLC_Num != 0)
+	{
+		m_pDigitalType_Combobox->insertItem(0,_T("IEC61850-9-2"));
+	}
 	m_pDigitalType_Combobox->insertItem(1,_T("IEC60044-8(FT3)"));
-	xlang_GetLangStrByFile(strTemp,"State_FThreeStraight");//柔直(FT3)
-	m_pDigitalType_Combobox->insertItem(2,strTemp);
+	if(g_oLocalSysPara.m_nTotalSTSend_Num != 0)
+	{
+		xlang_GetLangStrByFile(strTemp,"State_FThreeStraight");//柔直(FT3)
+		m_pDigitalType_Combobox->insertItem(2,strTemp);
+	}
+
 	// 	m_pDigitalType_Combobox->insertItem(3,tr("采集器输出(国网)"));
 	// 	m_pDigitalType_Combobox->insertItem(4,tr("采集器输出(许继)"));
 	m_pOutputSel_HBoxLayout->addWidget(m_pDigitalType_Combobox);
@@ -85,21 +94,25 @@ void QSysParasWidget::initUI(STT_SystemParas *pSysParas)
 	m_pMeasSel_GroupBox->setTitle(/*tr("采集类型选择")*/g_sLangTxt_ChMaps_MeasSel);
 	m_pMeasSel_HBoxLayout = new QHBoxLayout(m_pMeasSel_GroupBox);//在Group内部增加表格布局，表格布局中包含第一行全部控件
 
-	m_pAnalogMeasSel_CheckBox = new QCheckBox(m_pMeasSel_GroupBox);
+	m_pAnalogMeasSel_CheckBox = new QSttCheckBox(m_pMeasSel_GroupBox);
 	m_pAnalogMeasSel_CheckBox->setText(/*tr("模拟")*/g_sLangTxt_ChMaps_Analog);
 	m_pMeasSel_HBoxLayout->addWidget(m_pAnalogMeasSel_CheckBox);
 
 	m_pMeasSel_HBoxLayout->addSpacing(20);
 
-	m_pDigitalMeasSel_CheckBox = new QCheckBox(m_pMeasSel_GroupBox);
+	m_pDigitalMeasSel_CheckBox = new QSttCheckBox(m_pMeasSel_GroupBox);
 	m_pDigitalMeasSel_CheckBox->setText(/*tr("数字")*/g_sLangTxt_ChMaps_Digital);
 	m_pMeasSel_HBoxLayout->addWidget(m_pDigitalMeasSel_CheckBox);
 
 	m_pMeasSel_HBoxLayout->addSpacing(20);
 
-// 	m_pWeakMeasSel_CheckBox = new QCheckBox(m_pMeasSel_GroupBox);
-// 	m_pWeakMeasSel_CheckBox->setText(/*tr("弱信号")*/g_sLangTxt_ChMaps_Week);
-// 	m_pMeasSel_HBoxLayout->addWidget(m_pWeakMeasSel_CheckBox);
+	if(IsDevModel())
+	{
+		m_pWeakMeasSel_CheckBox = new QSttCheckBox(m_pMeasSel_GroupBox);
+		m_pWeakMeasSel_CheckBox->setText(/*tr("弱信号")*/g_sLangTxt_ChMaps_Week);
+		m_pMeasSel_HBoxLayout->addWidget(m_pWeakMeasSel_CheckBox);
+	}
+
 
 	m_pMeasSel_HBoxLayout->addStretch();
 
@@ -111,9 +124,11 @@ void QSysParasWidget::initUI(STT_SystemParas *pSysParas)
 
 	m_pDigitalMeasType_Combobox->insertItem(0,tr("IEC61850-9-2"));
 	m_pDigitalMeasType_Combobox->insertItem(1,tr("IEC60044-8(FT3)"));
-	m_pDigitalMeasType_Combobox->insertItem(2,/*tr("柔直(FT3)")*/g_sLangTxt_State_FThreeStraight);
+	if(g_oLocalSysPara.m_nTotalSTRecv_Num != 0)
+	{
+		m_pDigitalMeasType_Combobox->insertItem(2,/*tr("柔直(FT3)")*/g_sLangTxt_State_FThreeStraight);
+	}
 	m_pMeasSel_HBoxLayout->addWidget(m_pDigitalMeasType_Combobox);
-
 	m_pAnalogMeasSel_CheckBox->setEnabled(false);
 	m_pTotal_VBoxLayout->addWidget(m_pMeasSel_GroupBox);
 
@@ -146,7 +161,7 @@ void QSysParasWidget::initUI(STT_SystemParas *pSysParas)
 	int nRow = 1;
 
 	//chenling 2024.4.29
-	if(g_oSttSystemConfig.GetDevModel().Find(_T("PDU100")) >= 0)
+	if(IsDevModel())
 	{
 		m_pZeroStdVol_Label = new QLabel(m_pStdValues_GroupBox);
 		strTemp = _T("额定零序电压(V):");
@@ -253,6 +268,7 @@ void QSysParasWidget::initUI(STT_SystemParas *pSysParas)
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#ifndef _PSX_QT_LINUX_
 	m_pSetErrorValues_GroupBox = new QGroupBox(this);
 	m_pTotal_VBoxLayout->addWidget(m_pSetErrorValues_GroupBox);
 	xlang_GetLangStrByFile(strTemp,"sSystemPara");//误差值设置
@@ -434,20 +450,121 @@ void QSysParasWidget::initUI(STT_SystemParas *pSysParas)
 	m_pDiffHarmCoefRelError_LineEdit = new QFloatLineEdit(m_pSetErrorValues_GroupBox);
 	m_pDiffHarmCoefRelError_LineEdit->InitCoverage(0,100);
 	m_pSetErrorValues_GridLayout->addWidget(m_pDiffHarmCoefRelError_LineEdit, 7, 3, 1, 1);
+#endif
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+	SetSysParasFont();
 	InitDatas();
 	InitConnect();
 
 
 	m_pStdValues_GroupBox->raise();
+#ifndef _PSX_QT_LINUX_
 	m_pSetErrorValues_GroupBox->raise();
+#endif
 	m_pTotal_VBoxLayout->addStretch();
 // 	m_pModuleSet_GridLayout->setRowStretch(0,1);//设置第一行的占比
 // 	m_pModuleSet_GridLayout->setRowStretch(1,2);//设置第二行的占比
 }
 
+
+void QSysParasWidget::SetSysParasFont()
+{
+	CSttDevConfig* pSttDevConfig = g_oSttSystemConfig.GetSttDevConfig();
+
+	m_pAnalogSel_CheckBox->setFont(*g_pSttGlobalFont);
+	m_pDigitalSel_CheckBox->setFont(*g_pSttGlobalFont);
+	m_pWeakSel_CheckBox->setFont(*g_pSttGlobalFont);
+	m_pDigitalType_Label->setFont(*g_pSttGlobalFont);
+	m_pDigitalType_Combobox->setFont(*g_pSttGlobalFont);
+
+	m_pAnalogMeasSel_CheckBox->setFont(*g_pSttGlobalFont);
+	m_pDigitalMeasSel_CheckBox->setFont(*g_pSttGlobalFont);
+	if(IsDevModel())
+	{
+	m_pWeakMeasSel_CheckBox->setFont(*g_pSttGlobalFont);
+	}
+	m_pDigitalMeasType_Label->setFont(*g_pSttGlobalFont);
+	m_pDigitalMeasType_Combobox->setFont(*g_pSttGlobalFont);
+
+	m_pStdVol_Label->setFont(*g_pSttGlobalFont);
+	m_pStdVol_LineEdit->setFont(*g_pSttGlobalFont);
+
+	m_pStdCur_Label->setFont(*g_pSttGlobalFont);
+	m_pStdCur_LineEdit->setFont(*g_pSttGlobalFont);
+
+	m_pStdFre_Label->setFont(*g_pSttGlobalFont);
+	m_pStdFre_LineEdit->setFont(*g_pSttGlobalFont);
+
+	m_pAntiShakeTime_Label->setFont(*g_pSttGlobalFont);
+	m_pAntiShakeTime_LineEdit->setFont(*g_pSttGlobalFont);
+
+	if (pSttDevConfig->m_nOverloadDelay)
+	{
+		m_pOverLoadDelay_Label->setFont(*g_pSttGlobalFont);
+		m_pOverLoadDelay_LineEdit->setFont(*g_pSttGlobalFont);
+	}
+
+	if(IsDevModel())
+	{
+		m_pZeroStdVol_Label->setFont(*g_pSttGlobalFont); 
+		m_pZeroStdVol_LineEdit->setFont(*g_pSttGlobalFont);
+
+		m_pZeroStdCur_Label->setFont(*g_pSttGlobalFont);
+		m_pZeroStdCur_LineEdit->setFont(*g_pSttGlobalFont);
+	}
+
+	m_pSecondSynSet_Label->setFont(*g_pSttGlobalFont);
+	m_pSecondSynSet_ComboBox->setFont(*g_pSttGlobalFont);
+	m_pBCodeLogic_Label->setFont(*g_pSttGlobalFont);
+	m_pBCodePositiveLogic_RadioBtn->setFont(*g_pSttGlobalFont);
+	m_pBCodeNegtiveLogic_RadioBtn->setFont(*g_pSttGlobalFont);
+	m_p1588Syn_Label->setFont(*g_pSttGlobalFont);
+	m_p1588PeerDelay_RadioBtn->setFont(*g_pSttGlobalFont);
+	m_p1588ReqResp_RadioBtn->setFont(*g_pSttGlobalFont);
+
+#ifndef _PSX_QT_LINUX_
+	m_pCurAbsError_Label->setFont(*g_pSttGlobalFont);
+	m_pCurAbsError_LineEdit->setFont(*g_pSttGlobalFont);
+	m_pCurRelError_Label->setFont(*g_pSttGlobalFont);
+	m_pCurRelError_LineEdit->setFont(*g_pSttGlobalFont);
+
+	m_pVolAbsError_Label->setFont(*g_pSttGlobalFont);
+	m_pVolAbsError_LineEdit->setFont(*g_pSttGlobalFont);
+	m_pVolRelError_Label->setFont(*g_pSttGlobalFont);
+	m_pVolRelError_LineEdit->setFont(*g_pSttGlobalFont);
+
+	m_pImpAbsError_Label->setFont(*g_pSttGlobalFont);
+	m_pImpAbsError_LineEdit->setFont(*g_pSttGlobalFont);
+	m_pImpRelError_Label->setFont(*g_pSttGlobalFont);
+	m_pImpRelError_LineEdit->setFont(*g_pSttGlobalFont);
+
+	m_pTimeAbsError_Label->setFont(*g_pSttGlobalFont);
+	m_pTimeAbsError_LineEdit->setFont(*g_pSttGlobalFont);
+	m_pTimeRelError_Label->setFont(*g_pSttGlobalFont);
+	m_pTimeRelError_LineEdit->setFont(*g_pSttGlobalFont);
+
+	m_pAngError_Label->setFont(*g_pSttGlobalFont);
+	m_pAngError_LineEdit->setFont(*g_pSttGlobalFont);
+	m_pFreqError_Label->setFont(*g_pSttGlobalFont);
+	m_pFreqError_LineEdit->setFont(*g_pSttGlobalFont);
+
+	m_pDvDtError_Label->setFont(*g_pSttGlobalFont);
+	m_pDvDtError_LineEdit->setFont(*g_pSttGlobalFont);
+	m_pDfDtError_Label->setFont(*g_pSttGlobalFont);
+	m_pDfDtError_LineEdit->setFont(*g_pSttGlobalFont);
+
+	m_pDiffHarmCoefRelError_Label->setFont(*g_pSttGlobalFont);
+	m_pDiffHarmCoefRelError_LineEdit->setFont(*g_pSttGlobalFont);
+	m_pDiffHarmCoefAbsError_Label->setFont(*g_pSttGlobalFont);
+	m_pDiffHarmCoefAbsError_LineEdit->setFont(*g_pSttGlobalFont);
+
+	m_pDiffRateCoefAbsError_Label->setFont(*g_pSttGlobalFont);
+	m_pDiffRateCoefAbsError_LineEdit->setFont(*g_pSttGlobalFont);
+	m_pDiffRateCoefRelError_Label->setFont(*g_pSttGlobalFont);
+	m_pDiffRateCoefRelError_LineEdit->setFont(*g_pSttGlobalFont);
+#endif
+}
 void QSysParasWidget::InitConnect()
 {
 
@@ -465,10 +582,12 @@ void QSysParasWidget::InitConnect()
 	connect(m_pDigitalSel_CheckBox, SIGNAL(stateChanged (int)), this, SLOT(slot_DigitalCheck_stateChanged(int)));
 	connect(m_pDigitalMeasSel_CheckBox, SIGNAL(stateChanged (int)), this, SLOT(slot_DigitalCheck_stateChanged(int)));
 
-	if(g_oSttSystemConfig.GetDevModel().Find(_T("PDU100")) >= 0)
+	if(IsDevModel())
 	{
 		connect(m_pWeakSel_CheckBox, SIGNAL(stateChanged (int)), this, SLOT(slot_WeakSelCheck_stateChanged(int)));
+		connect(m_pAnalogSel_CheckBox, SIGNAL(stateChanged (int)), this, SLOT(slot_AnalogSelCheck_stateChanged(int)));
 	}
+	
 
 	//2023/7/24 -wjs
 #ifdef _USE_SoftKeyBoard_
@@ -478,8 +597,12 @@ void QSysParasWidget::InitConnect()
 	connect(m_pStdCur_LineEdit,SIGNAL(clicked()),this,SLOT(slot_OnLineEditClicked()));
 	connect(m_pStdFre_LineEdit,SIGNAL(clicked()),this,SLOT(slot_OnLineEditClicked()));
 	connect(m_pAntiShakeTime_LineEdit,SIGNAL(clicked()),this,SLOT(slot_OnLineEditClicked()));
-	connect(m_pOverLoadDelay_LineEdit,SIGNAL(clicked()),this,SLOT(slot_OnLineEditClicked()));
-	connect(m_pCurAbsError_LineEdit,SIGNAL(clicked()),this,SLOT(slot_OnLineEditClicked()));
+	if (m_pOverLoadDelay_LineEdit != NULL)
+	{
+		connect(m_pOverLoadDelay_LineEdit,SIGNAL(clicked()),this,SLOT(slot_OnLineEditClicked()));
+	}
+#ifndef _PSX_QT_LINUX_
+    connect(m_pCurAbsError_LineEdit,SIGNAL(clicked()),this,SLOT(slot_OnLineEditClicked()));
 	connect(m_pCurRelError_LineEdit,SIGNAL(clicked()),this,SLOT(slot_OnLineEditClicked()));
 	connect(m_pVolAbsError_LineEdit,SIGNAL(clicked()),this,SLOT(slot_OnLineEditClicked()));
 	connect(m_pVolRelError_LineEdit,SIGNAL(clicked()),this,SLOT(slot_OnLineEditClicked()));
@@ -496,6 +619,18 @@ void QSysParasWidget::InitConnect()
 	connect(m_pDiffHarmCoefAbsError_LineEdit,SIGNAL(clicked()),this,SLOT(slot_OnLineEditClicked()));
 	connect(m_pDiffHarmCoefRelError_LineEdit,SIGNAL(clicked()),this,SLOT(slot_OnLineEditClicked()));
 #endif
+#endif
+}
+
+BOOL QSysParasWidget::IsDevModel()
+{
+	CString strModel;
+	strModel = g_oSttTestResourceMngr.GetCurrModel();
+	if (strModel.Find(_T("PDU100")) >= 0 || strModel.Find(_T("PTU200L")) >= 0 || strModel.Find(_T("PNS331")) >= 0)//dingxy 20241115 按测试需要，331也加上
+	{
+		return TRUE;  
+	}
+	return FALSE; 
 }
 
 void QSysParasWidget::DisEnableDigitalUI()
@@ -521,16 +656,16 @@ void QSysParasWidget::slot_changeDigitalType(int nIndex)
 {
 	m_pSysParas->m_nIecFormat = nIndex;
 
-	if (nIndex == STT_IEC_FORMAT_60044_8)
-	{
-	}
-	else if (nIndex == STT_IEC_FORMAT_60044_8DC)
-	{
-	}
-	else
-	{
-
-	}
+// 	if (nIndex == STT_IEC_FORMAT_60044_8)
+// 	{
+// 	}
+// 	else if (nIndex == STT_IEC_FORMAT_60044_8DC)
+// 	{
+// 	}
+// 	else
+// 	{
+// 
+// 	}
 }
 
 void QSysParasWidget::slot_changeDigitalMeasType(int nIndex)
@@ -662,7 +797,9 @@ void QSysParasWidget::InitDatas()
 		m_pWeakSel_CheckBox->setDisabled(true);
 	}
 
-	m_pDigitalType_Combobox->setCurrentIndex(m_pSysParas->m_nIecFormat);
+
+	int index = m_pDigitalType_Combobox->findText(getDigitalTypeString(m_pSysParas->m_nIecFormat));
+	m_pDigitalType_Combobox->setCurrentIndex(index);
 
 	if (m_pSysParas->m_nUseAnalogMeas)
 	{
@@ -684,14 +821,31 @@ void QSysParasWidget::InitDatas()
 		m_pDigitalMeasType_Combobox->setDisabled(TRUE);
 	}
 
-// 	if (m_pSysParas->m_nUseWeekMeas)
-// 	{
-// 		m_pWeakMeasSel_CheckBox->setCheckState(Qt::Checked);
-// 	} 
-// 	else
-// 	{
-// 		m_pWeakMeasSel_CheckBox->setCheckState(Qt::Unchecked);
-// 	}
+	if(IsDevModel())
+	{
+		if (m_pSysParas->m_nUseWeekMeas)
+		{
+			m_pWeakMeasSel_CheckBox->setCheckState(Qt::Checked);
+		} 
+		else
+		{
+			m_pWeakMeasSel_CheckBox->setCheckState(Qt::Unchecked);
+		}
+
+		if(m_pSysParas->m_nHasWeek || m_pSysParas->m_nHasAnalog)
+		{
+			m_pZeroStdVol_LineEdit->setDisabled(FALSE);
+			m_pZeroStdCur_LineEdit->setDisabled(FALSE);
+		}
+		else
+		{
+			m_pZeroStdVol_LineEdit->setDisabled(TRUE);
+			m_pZeroStdCur_LineEdit->setDisabled(TRUE);
+		}
+			m_pZeroStdVol_LineEdit->SetValue(m_pSysParas->m_fU0_Std);
+			m_pZeroStdCur_LineEdit->SetValue(m_pSysParas->m_fI0_Std);
+	}
+	
 
 	m_pDigitalMeasType_Combobox->setCurrentIndex(m_pSysParas->m_nIecFormatMeas);
 
@@ -699,13 +853,6 @@ void QSysParasWidget::InitDatas()
 	m_pStdVol_LineEdit->SetValue(m_pSysParas->m_fVNom);
 	m_pStdCur_LineEdit->SetValue(m_pSysParas->m_fINom);
 	m_pStdFre_LineEdit->SetValue(m_pSysParas->m_fFNom);
-	
-
-	if(g_oSttSystemConfig.GetDevModel().Find(_T("PDU100")) >= 0)
-	{
-		m_pZeroStdVol_LineEdit->SetValue(m_pSysParas->m_fU0_Std);
-		m_pZeroStdCur_LineEdit->SetValue(m_pSysParas->m_fI0_Std);
-	}
 
 	m_pAntiShakeTime_LineEdit->SetValue(m_pSysParas->m_fStabTime*1000);
 
@@ -714,6 +861,7 @@ void QSysParasWidget::InitDatas()
 		m_pOverLoadDelay_LineEdit->SetValue(m_pSysParas->m_fOverLoadDelay);
 	}
 
+#ifndef _PSX_QT_LINUX_
 	m_pCurAbsError_LineEdit->SetValue(m_pSysParas->m_fCurValue_AbsError);
 	m_pCurRelError_LineEdit->SetValue(m_pSysParas->m_fCurValue_RelError*100);
 
@@ -736,6 +884,7 @@ void QSysParasWidget::InitDatas()
 	m_pDiffHarmCoefRelError_LineEdit->SetValue(m_pSysParas->m_fDiffHarmCoef_RelError*100);
 	m_pDiffRateCoefAbsError_LineEdit->SetValue(m_pSysParas->m_fDiffRateCoef_AbsError);
 	m_pDiffRateCoefRelError_LineEdit->SetValue(m_pSysParas->m_fDiffRateCoef_RelError*100);
+#endif
 
 	m_pSecondSynSet_ComboBox->setCurrentIndex(m_pSysParas->m_bSyncSecond);
 
@@ -791,7 +940,8 @@ void QSysParasWidget::SaveDatas()
 		m_pSysParas->m_nHasWeek = 0;
 	}
 
-	m_pSysParas->m_nIecFormat = m_pDigitalType_Combobox->currentIndex();
+	//m_pSysParas->m_nIecFormat = m_pDigitalType_Combobox->currentIndex();
+	m_pSysParas->m_nIecFormat = getDigitalTypeIndex(m_pDigitalType_Combobox->currentText());
 
 	if (m_pAnalogMeasSel_CheckBox->checkState() == Qt::Checked)
 	{
@@ -811,16 +961,26 @@ void QSysParasWidget::SaveDatas()
 		m_pSysParas->m_nUseDigitalMeas = 0;
 	}
 
-// 	if (m_pWeakMeasSel_CheckBox->checkState() == Qt::Checked)
-// 	{
-// 		m_pSysParas->m_nUseWeekMeas = 1;
-// 	}
-// 	else
-// 	{
-// 		m_pSysParas->m_nUseWeekMeas = 0;
-// 	}
+	if(IsDevModel())
+	{
+		if (m_pWeakMeasSel_CheckBox->checkState() == Qt::Checked)
+		{
+			m_pSysParas->m_nUseWeekMeas = 1;
+		}
+		else
+		{
+			m_pSysParas->m_nUseWeekMeas = 0;
+		}
+		m_pSysParas->m_fU0_Std = m_pZeroStdVol_LineEdit->GetValue();
+		m_pSysParas->m_fI0_Std = m_pZeroStdCur_LineEdit->GetValue();
+		
+		m_pSysParas->m_fU0_Std = m_pZeroStdVol_LineEdit->GetValue();
+		m_pSysParas->m_fI0_Std = m_pZeroStdCur_LineEdit->GetValue();
+	}
+	
 
-	m_pSysParas->m_nIecFormatMeas = m_pDigitalType_Combobox->currentIndex();
+	m_pSysParas->m_nIecFormatMeas = getDigitalTypeIndex(m_pDigitalMeasType_Combobox->currentText());
+	//m_pSysParas->m_nIecFormatMeas = m_pDigitalType_Combobox->currentIndex();
 
 
 	m_pSysParas->m_fVNom = m_pStdVol_LineEdit->GetValue();
@@ -828,11 +988,6 @@ void QSysParasWidget::SaveDatas()
 	m_pSysParas->m_fFNom = m_pStdFre_LineEdit->GetValue();
 
 
-	if(g_oSttSystemConfig.GetDevModel().Find(_T("PDU100")) >= 0)
-	{
-		m_pSysParas->m_fU0_Std = m_pZeroStdVol_LineEdit->GetValue();
-		m_pSysParas->m_fI0_Std = m_pZeroStdCur_LineEdit->GetValue();
-	}
 
 	m_pSysParas->m_fStabTime = m_pAntiShakeTime_LineEdit->GetValue()/1000;
 
@@ -841,6 +996,7 @@ void QSysParasWidget::SaveDatas()
 		m_pSysParas->m_fOverLoadDelay = m_pOverLoadDelay_LineEdit->GetValue();
 	}
 
+#ifndef _PSX_QT_LINUX_
 	m_pSysParas->m_fCurValue_AbsError = m_pCurAbsError_LineEdit->GetValue();
 	m_pSysParas->m_fCurValue_RelError = m_pCurRelError_LineEdit->GetValue()/100;
 
@@ -863,6 +1019,7 @@ void QSysParasWidget::SaveDatas()
 	m_pSysParas->m_fDiffRateCoef_AbsError = m_pDiffRateCoefAbsError_LineEdit->GetValue();
 	m_pSysParas->m_fDiffHarmCoef_RelError = m_pDiffHarmCoefRelError_LineEdit->GetValue()/100;
 	m_pSysParas->m_fDiffHarmCoef_AbsError = m_pDiffHarmCoefAbsError_LineEdit->GetValue();
+#endif
 }
 
 
@@ -884,7 +1041,7 @@ void QSysParasWidget::slot_OnLineEditClicked()
 
 void QSysParasWidget::slot_WeakSelCheck_stateChanged( int nState )
 {
-	if (nState == Qt::Checked)
+	if ((nState == Qt::Checked)  || (m_pAnalogSel_CheckBox->checkState() == Qt::Checked))
 	{
 		m_pZeroStdVol_LineEdit->setDisabled(FALSE);
 		m_pZeroStdCur_LineEdit->setDisabled(FALSE);
@@ -896,4 +1053,52 @@ void QSysParasWidget::slot_WeakSelCheck_stateChanged( int nState )
 	}
 }
 
+void QSysParasWidget::slot_AnalogSelCheck_stateChanged( int nState )
+{
+	if ((nState == Qt::Checked)  || (m_pWeakSel_CheckBox->checkState() == Qt::Checked))
+	{
+		m_pZeroStdVol_LineEdit->setDisabled(FALSE);
+		m_pZeroStdCur_LineEdit->setDisabled(FALSE);
+	}
+	else
+	{
+		m_pZeroStdVol_LineEdit->setDisabled(TRUE);
+		m_pZeroStdCur_LineEdit->setDisabled(TRUE);
+	}
+}
 
+int QSysParasWidget::getDigitalTypeIndex( CString TypeName )
+{
+// 	if (TypeName == _T("IEC61850-9-2"))
+// 	{
+// 		return 0;
+// 	}
+	 if (TypeName == _T("IEC60044-8(FT3)"))
+	{
+		return 1;
+	}
+	else if (TypeName == g_sLangTxt_State_FThreeStraight)
+	{
+		return 2;
+	}
+    else
+	{
+		return 0;//IEC61850-9-2
+	}
+}
+
+CString QSysParasWidget::getDigitalTypeString( int TypeIndex )
+{
+	 if (TypeIndex == 1)
+	{
+		return _T("IEC60044-8(FT3)");
+	}
+	else if (TypeIndex == 2)
+	{
+		return g_sLangTxt_State_FThreeStraight;
+	}
+	 else
+	{
+		return _T("IEC61850-9-2");
+	}
+}

@@ -1,7 +1,7 @@
 #include "SttModuleAttrsGrid.h"
 #include "../Module/XLangResource_Native.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../../SttTest/Common/tmt_adjust_sys_para_module_def.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+// #include "../../../SttTest/Common/tmt_adjust_sys_para_module_def.h"
 
 
 CSttModuleAttrsGrid::CSttModuleAttrsGrid(QWidget* pparent):QExBaseListGridBase(pparent)

@@ -13,6 +13,7 @@
 #include <QTimerEvent>
 #include <QLineEdit>
 #include "QChMapsWidget.h"
+#include "BinBoutMapsGrid.h"
 
 
 class QChMapsDlg : public QDialog
@@ -35,7 +36,11 @@ protected:
 	QVBoxLayout *m_pAllVLayout;//整个界面的垂直布局
 	QHBoxLayout *m_pBottom_HBoxLayout;
 
+	//20240905 huangliang 
+	QTabWidget *m_pTabWidget;
 	QChMapsWidget *m_pChMapsWidget;
+	CBinBoutMapsGrid *m_pBinMapsGrid;
+	CBinBoutMapsGrid *m_pBoutMapsGrid;
 
 	QPushButton *m_pDefautMaps_PButton;//生成缺省通道映射
 	QPushButton *m_pImportChMaps_PButton;//导入通道映射文件
@@ -46,8 +51,15 @@ protected:
 
 	QCheckBox *m_pLockMaps_CheckBox;//锁定映射
 
-	CSttChMaps m_oSttChMaps;
+	CSttChMaps m_oSttChMaps;	
 	STT_SystemParas m_oSysParas;
+
+	CExBaseList m_olistBin;	//20240921 huangliang 界面编辑链表
+	CExBaseList m_olistBout;
+	void SetGridShowDatas();		//20240905 huangliang  设置3个表格数据
+
+	CString m_strChMapsRelPath;	//保存导出通道映射文件夹文件夹相对路径(相对于跟目录) 20241113 luozibing
+	CString m_strChMapsFileName;	//保存导出通道映射文件名 20241113 luozibing
 
 public:
 signals:

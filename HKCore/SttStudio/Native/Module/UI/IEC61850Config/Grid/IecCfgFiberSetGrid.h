@@ -4,8 +4,8 @@
 #include "../../Module/QExBaseListGridBase/QExBaseListGridBase.h"
 #include "../../Module/QExBaseListGridBase/QExBaseListComBoxDelegBase.h"
 #include "../../Module/CommonCtrl_QT/QIecWidgetDelegate.h"
-#include "ExBaseList.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgFiberPara.h"
+#include "../../../Module/BaseClass/ExBaseList.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgFiberPara.h"
 
 #define IECCFG_FIBERSET_GRID_COLS		2
 

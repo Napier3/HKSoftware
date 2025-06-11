@@ -6,8 +6,8 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QDialog>
-#include "../../Module/DataMngr/DataGroup.h"
-#include "ExBaseList.h"
+#include "../../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/BaseClass/ExBaseList.h"
 
 class QLuminousPowerDlg : public QDialog
 {

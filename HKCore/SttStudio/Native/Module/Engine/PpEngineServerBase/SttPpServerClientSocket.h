@@ -2,7 +2,7 @@
 #define _CSttPpServerClientSocket_H
 
 #include "../../SttSocket/TestServer/VC/SttServerClientSocket.h"
-#include "../../../../IotAtsMngr/Module/PxEngineServer/IotPxEngineInterface.h"
+#include "../../IotAtsMngr/Module/PxEngineServer/IotPxEngineInterface.h"
 
 class CSttPpServerClientSocket : public CSttServerClientSocket, public CIotPxCommChannelInterface
 {

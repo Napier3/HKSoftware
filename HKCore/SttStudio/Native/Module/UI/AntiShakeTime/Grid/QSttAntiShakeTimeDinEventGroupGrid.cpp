@@ -1,9 +1,9 @@
 #include "QSttAntiShakeTimeDinEventGroupGrid.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../../UI/SttTestCntrFrameBase.h"
 #include "../Module/SttGlobalDef.h"
-#include"../Module/XLangResource_Native.h"
-#include "../../Module/XLanguage/XLanguageResource.h"
+#include"../../../../Module/XLangResource_Native.h"
+#include "../../../Module/XLanguage/XLanguageResource.h"
 #include "../QSttMacroParaEditViewAntiShakeTime.h"
 
 QSttAntiShakeTimeDinEventGroupGrid::QSttAntiShakeTimeDinEventGroupGrid(QWidget *parent)
@@ -166,12 +166,12 @@ void QSttAntiShakeTimeDinEventGroupGrid::AddShowReports( CDvmDataset *pSoeRptDat
 		item->setFlags(item->flags() & ~Qt::ItemIsEditable);
 		item->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
 		strTmpString = GetAttrValue(pCurrData,"$t");
-#ifdef _PSX_QT_LINUX_
-			QDateTime dateTime = QDateTime::fromString(strTmpString, "yyyy-MM-dd HH:mm:ss.zzz");
-			dateTime.setTimeSpec(Qt::UTC);
-			dateTime = dateTime.addSecs(g_oSystemParas.m_nTimeZone * 3600); 
-			strTmpString = dateTime.toString("yyyy-MM-dd hh:mm:ss.zzz");
-#endif
+// #ifdef _PSX_QT_LINUX_
+// 			QDateTime dateTime = QDateTime::fromString(strTmpString, "yyyy-MM-dd HH:mm:ss.zzz");
+// 			dateTime.setTimeSpec(Qt::UTC);
+// 			dateTime = dateTime.addSecs(g_oSystemParas.m_nTimeZone * 3600); 
+// 			strTmpString = dateTime.toString("yyyy-MM-dd hh:mm:ss.zzz");
+// #endif
 		item->setText(strTmpString);
 		setItem(nCurrRowIndex,4,item);
 

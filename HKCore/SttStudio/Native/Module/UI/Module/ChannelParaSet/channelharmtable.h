@@ -48,7 +48,10 @@ public:
 	void UpdateHarmCell(int row,bool bEnable);
 	bool IsHarmBaseAddValid(int row,int col,int nHarmCount,float fv);
 
-	virtual void setTableData(tmt_channel *pArrUI);
+	virtual void setTableData(tmt_channel *pArrUI, bool bCanUpdateTable);
+
+	int m_nParaSetSecondValue;
+	void setHeaderOfTable(QStringList strheader);
 
 	Qt::ItemFlags m_Originalflags;
 	CComboBoxHarmDelegate* m_pComboBoxHarmDelegate; 

@@ -1,9 +1,9 @@
 #include "SttIecFT3Grid_RT.h"
-#include "../../../../../Module/SmartCap/XSmartCapMngr.h"
-#include "../../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../../XLangResource_Native.h"
 #include "../../../UI/Module/CommonMethod/commonMethod.h"
-#include "../../../../../Module/SmartCap/61850Cap/CapDevice/CapDevice6044.h"
+#include "../../../Module/SmartCap/61850Cap/CapDevice/CapDevice6044.h"
 
 CSttIecFT3Grid_RT::CSttIecFT3Grid_RT(QWidget* pparent):CSttIecChsGridBase(pparent)
 {

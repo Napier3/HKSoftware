@@ -21,7 +21,7 @@ public:
 	double m_fTime; //开入量变位的真实时间
 	CString m_strTimeStr;//底层上送的时间字符串
 
-	//long m_nUdc;			//辅助直流输出
+    long m_nUdc;			//辅助直流输出
 	long m_nOverHeat;	//过热
 	long m_nIOverLoad;	//电流过载
 	long m_nUOverLoad;	//电压过载

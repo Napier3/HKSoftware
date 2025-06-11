@@ -7,9 +7,9 @@
 
 #include "stdafx.h"
 #include "CapDeviceSmvCh.h"
-#include "../../../../61850/Module/CfgDataMngr/IecCfg92ChIn.h"
-#include "../../../../61850/Module/CfgDataMngr/IecCfg6044CommonChIn.h"
-#include "../../../../61850/Module/CfgDataMngr/IecCfgDatasMngr.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfg92ChIn.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfg6044CommonChIn.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgDatasMngr.h"
 #include "CapAnalysisConfig.h"
 #include "../CapDevice/CapDevice6044.h"
 //#include "../CapGlobalDef.h"

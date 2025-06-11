@@ -1,11 +1,12 @@
 #include "QModuleSetWidget.h"
 #include "../Module/XLangResource_Native.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../../SttSystemConfig/SttSystemConfig.h"
+#include "../../../SttTestResourceMngr/SttTestResourceMngr.h"
 
 extern QFont *g_pSttGlobalFont;  
 #define  STT_MODULE_L336D          "L336D"
-#define  STT_MODULE_PNS330          "PNS330"
+#define  STT_MODULE_PNS330          "PNS330-6"
 
 QModuleSetWidget::QModuleSetWidget(QWidget *parent)
 	: QWidget(parent)
@@ -20,10 +21,15 @@ QModuleSetWidget::~QModuleSetWidget()
 	ReleaseUI();
 }
 
-void QModuleSetWidget::initUI(STT_SystemParas *pSysParas)
+void QModuleSetWidget::SetSysParas(STT_SystemParas *pSysParas)
+{
+	m_pSysParas = pSysParas;
+}
+
+void QModuleSetWidget::initUI(/*STT_SystemParas *pSysParas*/)
 {
 	ReleaseUI();
-	m_pSysParas = pSysParas;
+	//m_pSysParas = pSysParas;
 	m_pModuleSet_VBoxLayout = new QVBoxLayout(this);//整个通道映射的布局控件
 	
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -83,7 +89,7 @@ void QModuleSetWidget::initUI(STT_SystemParas *pSysParas)
 
 	//strText = _T("电流档位设置:");
 	m_pCurGear_Label = new QLabel(m_pCurModule_GroupBox);
-	m_pCurModuleSel_Label->setText(g_sLangTxt_CurrModuleSelect); //lcq
+// 	m_pCurModuleSel_Label->setText(g_sLangTxt_CurrModuleSelect); //lcq
 	m_pCurGear_Label->setText(g_sLangTxt_Gradient_CurGSetting); 
 	m_pCurModule_GridLayout->addWidget(m_pCurGear_Label, 1, 0, 1, 1);
 
@@ -92,7 +98,7 @@ void QModuleSetWidget::initUI(STT_SystemParas *pSysParas)
 
 	//strText = _T("最大端口电压(Vrms):");
 	m_pCurMaxPortVol_Label = new QLabel(m_pCurModule_GroupBox);
-	m_pCurModuleSel_Label->setText(g_sLangTxt_CurrModuleSelect); //lcq
+// 	m_pCurModuleSel_Label->setText(g_sLangTxt_CurrModuleSelect); //lcq
 	m_pCurMaxPortVol_Label->setText(g_sLangTxt_Maximumport); 
 	m_pCurModule_GridLayout->addWidget(m_pCurMaxPortVol_Label, 2, 0, 1, 1);
 
@@ -102,13 +108,13 @@ void QModuleSetWidget::initUI(STT_SystemParas *pSysParas)
 
 	//strText = _T("合并电流端子输出(6I合并为3I或采用大电流端子输出)");
 	m_pLargeCurTerminal_CheckBox = new QSttCheckBox(m_pCurModule_GroupBox);
-	m_pCurModuleSel_Label->setText(g_sLangTxt_CurrModuleSelect); //lcq
+// 	m_pCurModuleSel_Label->setText(g_sLangTxt_CurrModuleSelect); //lcq
 	m_pLargeCurTerminal_CheckBox->setText(g_sLangTxt_Combinedcurrent); 
 	m_pCurModule_GridLayout->addWidget(m_pLargeCurTerminal_CheckBox, 3, 0, 1, 2);
 
 	//strText = _T("大电流输出端口:");
 	m_pLargeCurOutTerm_Label = new QLabel(m_pCurModule_GroupBox);
-	m_pCurModuleSel_Label->setText(g_sLangTxt_CurrModuleSelect); //lcq
+// 	m_pCurModuleSel_Label->setText(g_sLangTxt_CurrModuleSelect); //lcq
 	m_pLargeCurOutTerm_Label->setText(g_sLangTxt_Gradient_HighCurPort); 
 	m_pCurModule_GridLayout->addWidget(m_pLargeCurOutTerm_Label, 4, 0, 1, 1);
 
@@ -119,20 +125,16 @@ void QModuleSetWidget::initUI(STT_SystemParas *pSysParas)
 // 	m_p6ITo3I_CheckBox->setText(tr("电流6I合并3I输出"));
 // 	m_pCurModule_GridLayout->addWidget(m_p6ITo3I_CheckBox, 4, 0, 1, 1);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	InitDatas();
+	//InitDatas();
 
 //	m_pStdValues_GroupBox->raise();
 	m_pCurModule_GroupBox->raise();
 	m_pModuleSet_VBoxLayout->addStretch();
 // 	m_pModuleSet_GridLayout->setRowStretch(0,1);//设置第一行的占比
 // 	m_pModuleSet_GridLayout->setRowStretch(1,2);//设置第二行的占比
-	UpdateCurSelModuleUI();
+	//UpdateCurSelModuleUI();
 	SetModuleFont();
-
-	connect(m_pCurModuleSel_ComboBox,SIGNAL(currentIndexChanged(int)),this,SLOT(slot_changeCurModuleSel(int)));
-	connect(m_pCurGear_ComboBox,SIGNAL(currentIndexChanged(int)),this,SLOT(slot_changeCurGear(int)));
-	connect(m_pLargeCurOutTerm_ComboBox,SIGNAL(currentIndexChanged(int)),this,SLOT(slot_changeLargeCurOutTerm(int)));
-	connect(m_pLargeCurTerminal_CheckBox,SIGNAL(stateChanged(int)),this,SLOT(slot_stateChangedLargeCurTerminal(int)));
+	InitConnection();
 }
 
 void QModuleSetWidget::SetModuleFont()
@@ -142,6 +144,9 @@ void QModuleSetWidget::SetModuleFont()
 	m_pCurMaxPortVol_Label->setFont(*g_pSttGlobalFont);
 	m_pCurMaxPortVol_LineEdit->setFont(*g_pSttGlobalFont);
 	m_pLargeCurOutTerm_Label->setFont(*g_pSttGlobalFont);
+	m_pCurModuleSel_ComboBox->setFont(*g_pSttGlobalFont);//dingxy 20240911 下拉框字体也应保持一致
+	m_pCurGear_ComboBox->setFont(*g_pSttGlobalFont);
+	m_pLargeCurOutTerm_ComboBox->setFont(*g_pSttGlobalFont);
 	
 
 }
@@ -282,6 +287,22 @@ void QModuleSetWidget::ReleaseUI()
 
 }
 
+void QModuleSetWidget::InitConnection()
+{
+	connect(m_pCurModuleSel_ComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(slot_changeCurModuleSel(int)));
+	connect(m_pCurGear_ComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(slot_changeCurGear(int)));
+	connect(m_pLargeCurOutTerm_ComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(slot_changeLargeCurOutTerm(int)));
+	connect(m_pLargeCurTerminal_CheckBox, SIGNAL(stateChanged(int)), this, SLOT(slot_stateChangedLargeCurTerminal(int)));
+}
+
+void QModuleSetWidget::DisConnection()
+{
+	disconnect(m_pCurModuleSel_ComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(slot_changeCurModuleSel(int)));
+	disconnect(m_pCurGear_ComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(slot_changeCurGear(int)));
+	disconnect(m_pLargeCurOutTerm_ComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(slot_changeLargeCurOutTerm(int)));
+	disconnect(m_pLargeCurTerminal_CheckBox, SIGNAL(stateChanged(int)), this, SLOT(slot_stateChangedLargeCurTerminal(int)));
+}
+
 void QModuleSetWidget::InitDatas()
 {
 //	m_pStdVol_LineEdit->SetValue(m_pSysParas->m_fVNom);
@@ -289,6 +310,7 @@ void QModuleSetWidget::InitDatas()
 //	m_pStdFre_LineEdit->SetValue(m_pSysParas->m_fFNom);
 //	m_pAntiShakeTime_LineEdit->SetValue(m_pSysParas->m_fStabTime);
 
+	DisConnection();
 	CString strTmp;
 	m_pCurModuleSel_ComboBox->clear();
     xlang_GetLangStrByFile(strTmp,"Currentmodule"); //电流模块
@@ -308,10 +330,15 @@ void QModuleSetWidget::InitDatas()
 
 	//20240520 suyang L336D 三档修改为0.3Ω/10A，0.7Ω/10A，1.5Ω/10A
 #ifdef _PSX_QT_LINUX_
-	CString strModel,strL336DName,str330ModelName;
+	CString strModel,strL336DName/*,str330ModelName*/;
 	strModel = g_oSttSystemConfig.GetDevModel();
+	if (!g_oSttTestResourceMngr.m_oCurrDevice.m_strModel.IsEmpty())
+	{
+		strModel = g_oSttTestResourceMngr.m_oCurrDevice.m_strModel;
+	}
+
 	strL336DName = strModel.Left(5);
-	str330ModelName = strModel.Left(6);
+	//str330ModelName = strModel.Left(6);
 	if (strL336DName == STT_MODULE_L336D)
 	{
 		m_pCurGear_ComboBox->insertItem(0,g_sLangTxt_Currentlevel1.GetString());
@@ -331,7 +358,7 @@ void QModuleSetWidget::InitDatas()
 	m_pCurGear_ComboBox->insertItem(2,strTmp);
 	}
 
-	if (str330ModelName == STT_MODULE_PNS330)
+	if (/*str330ModelName*/strModel.Find(STT_MODULE_PNS330) >= 0)
 	{
 		m_pCurGear_ComboBox->insertItem(4,/*"高功率电流"*/g_sLangTxt_CurrentHigh330.GetString());
 	}
@@ -353,20 +380,20 @@ void QModuleSetWidget::InitDatas()
 	//strTmp = _T("其他");
 	xlang_GetLangStrByFile(strTmp,"else");// 其他 lcq
 	m_pCurGear_ComboBox->insertItem(3,strTmp);
-
-	
-	
-	m_pCurGear_ComboBox->setCurrentIndex(m_pSysParas->m_oGearSetCurModules.m_oCurModuleGear[0].m_nIPowerMode);
-	m_pCurMaxPortVol_LineEdit->SetValue(m_pSysParas->m_oGearSetCurModules.m_oCurModuleGear[0].m_fVoltSet);
 	m_pLargeCurOutTerm_ComboBox->clear();
-
 	for (int nIndex = 0;nIndex<3;nIndex++)
 	{
 		strTmp = QString(tr("I%1")).arg(nIndex+1);
 		m_pLargeCurOutTerm_ComboBox->insertItem(nIndex,strTmp);
 	}
+	
+	InitConnection();
+	m_pCurGear_ComboBox->setCurrentIndex(m_pSysParas->m_oGearSetCurModules.m_oCurModuleGear[0].m_nIPowerMode);
+	m_pCurMaxPortVol_LineEdit->SetValue(m_pSysParas->m_oGearSetCurModules.m_oCurModuleGear[0].m_fVoltSet);
+	
 }
 
+#include "../../../Module/OSInterface/QT/XMessageBox.h"
 void QModuleSetWidget::SaveDatas()
 {
 //	m_pSysParas->m_fVNom = m_pStdVol_LineEdit->GetValue();
@@ -374,6 +401,21 @@ void QModuleSetWidget::SaveDatas()
 //	m_pSysParas->m_fFNom = m_pStdFre_LineEdit->GetValue();
 //	m_pSysParas->m_fStabTime = m_pAntiShakeTime_LineEdit->GetValue();
 
+#ifdef _PSX_QT_LINUX_
+	if (m_pLargeCurTerminal_CheckBox->isChecked())
+	{
+		CString strModel,strL336DName,strMsgText;
+		
+        strMsgText =_T("已合并电流输出,请手动并联电流端子.");
+
+		strModel = g_oSttSystemConfig.GetDevModel();
+		strL336DName = strModel.Left(5);
+		if (strL336DName == STT_MODULE_L336D)
+		{
+			CXMessageBox::information(this,/* tr("提示")*/g_sLangTxt_Message,strMsgText);
+		}
+	}
+#endif
 	int nCurrIndex = m_pCurModuleSel_ComboBox->currentIndex();
 
 	if ((nCurrIndex<0)&&(nCurrIndex >= m_pSysParas->m_oGearSetCurModules.m_nCurModuleNum))

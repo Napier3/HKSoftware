@@ -46,6 +46,7 @@ private:
 	void initData(CSttModuleComtradeBind *pChMapConfig);
 	void initSignalSlots();
 	void uninitSignalSlots();
+	virtual void resizeEvent(QResizeEvent* event); 
 
 
 private:

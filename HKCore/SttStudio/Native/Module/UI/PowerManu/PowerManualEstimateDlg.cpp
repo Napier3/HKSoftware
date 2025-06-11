@@ -5,14 +5,35 @@
 #include <QLabel>
 #include <QCheckBox>
 #include <QHeaderView>
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../XLangResource_Native.h"
 #include "SttMacroParaEditViewPowerManu.h"
-#include "../../XLangResource_Native.h"
+// #include "../../XLangResource_Native.h"
+#include <QApplication>
+#include "../SttTestCntrFrameBase.h"
+#include "../../UI/Controls/SettingCtrls/QSettingItem.h"
+#ifdef _PSX_QT_WINDOWS_
+//#include <QApplication>
+#include <QDesktopWidget>
+#include <QRect>
+//#include "../SttTestCntrFrameBase.h"
+#endif
 
-PowerEstimateGrid::PowerEstimateGrid(int rows, int columns, QWidget* parent) : QTableWidget(rows, columns, parent)
+#define  POWERESTIMATE_COL_NAME			0		//名称
+#define  POWERESTIMATE_COL_SETVALUE		1		//整定值
+#define  POWERESTIMATE_COL_ERRORTYPE		2		//误差类型
+#define  POWERESTIMATE_COL_RELERROR		3		//相对误差
+#define  POWERESTIMATE_COL_ABSERRORPOS		4		//绝对误差
+#define  POWERESTIMATE_COL_ABSERRORNEG		5		//绝对误差-
+
+PowerEstimateGrid::PowerEstimateGrid(int rows, int columns, QWidget* parent) : QScrollTableWidget(parent)	//QTableWidget(rows, columns, parent)//20240808 gongyiping
 {
+	//20240808 gongyiping
+	setRowCount(rows);
+	setColumnCount(columns);
 
+	m_bRunning = FALSE;
+	installEventFilter(this);
 }
 
 PowerEstimateGrid::~PowerEstimateGrid()
@@ -28,190 +49,351 @@ void PowerEstimateGrid::InitGrid()
 	strRelError = g_sLangTxt_StateEstimate_RelError;//相对误差(%)
 	strRelError += "(%)";
 	xlang_GetLangStrByFile(strAbsError, "StateEstimate_AbsError");//绝对误差
-	xlang_GetLangStrByFile(strSettingValue, "State_SettingValue");//整定值
+	xlang_GetLangStrByFile(strSettingValue, "sSetValue");//整定值
 
-	setHorizontalHeaderLabels(QStringList() << strName << strErrorType << strRelError << strAbsError << strSettingValue);
-	setColumnWidth(0, 120);
-	setColumnWidth(1, 150);
-	setColumnWidth(4, 80);
+	setHorizontalHeaderLabels(QStringList() << strName << strSettingValue << strErrorType << strRelError << strAbsError << strAbsError + "(-)");
+    //setColumnWidth(0, 120);
+    //setColumnWidth(1, 150);
+    //setColumnWidth(4, 80);
+    //this->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
+    this->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+#else
+	this->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+#endif
+
 	this->horizontalHeader()->setStyleSheet("QHeaderView::section{background:skyblue;}"); 
 	this->setStyleSheet("selection-background-color: grey;selection-color: black");
 }
+void PowerEstimateGrid::SetItemEnable(int nRow, int nCol, BOOL bEnable)
+{
+	QTableWidgetItem *pItem = item(nRow, nCol);
+	if (!pItem)
+	{
+		return;
+	}
 
+	bool bCbbState = true;
+	if (nCol == POWERESTIMATE_COL_RELERROR || nCol == POWERESTIMATE_COL_ABSERRORPOS || nCol == POWERESTIMATE_COL_ABSERRORNEG)
+	{
+		QComboBox* pCbb = (QComboBox*)cellWidget(nRow, POWERESTIMATE_COL_ERRORTYPE);
+		if (pCbb)
+		{
+			bCbbState = pCbb->isEnabled();
+		}
+		if (bCbbState == FALSE)
+		{
+			bEnable = bCbbState;
+		}
+	}
+
+	pItem->setFlags(bEnable ? pItem->flags() | Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable
+		: pItem->flags() & ~Qt::ItemIsEditable &~Qt::ItemIsEnabled &~Qt::ItemIsSelectable);
+
+	if (bCbbState && bEnable)
+	{
+		pItem->setForeground(Qt::black);  // 黑色背景
+	}
+	else
+	{
+		pItem->setForeground(Qt::gray);  // 灰色背景 
+	}
+}
 QComboBox* PowerEstimateGrid::NewErrorType()
 {
 	CString strText;
 
 	QComboBox *pCbbError = new QComboBox(this);
-	pCbbError->addItem(g_sLangTxt_StateEstimate_AbsError);
-	pCbbError->addItem(g_sLangTxt_StateEstimate_RelError);
+	
+	pCbbError->addItem(/*"绝对误差"*/g_sLangTxt_StateEstimate_AbsError);
+	pCbbError->addItem(/*"相对误差"*/g_sLangTxt_StateEstimate_RelError);
 
 	strText = g_sLangTxt_StateEstimate_AbsError +"or"+g_sLangTxt_StateEstimate_RelError;
-	pCbbError->addItem(strText);
+	pCbbError->addItem(/*"相对误差or绝对误差"*/strText);
 
 	strText = g_sLangTxt_StateEstimate_AbsError +"&"+g_sLangTxt_StateEstimate_RelError;
-	pCbbError->addItem(strText);
+	pCbbError->addItem(/*"相对误差&绝对误差"*/strText);
 
-	pCbbError->addItem(g_sLangTxt_StateEstimate_CombinationError);
-
+//#ifdef _Use_Combination_Error //del wangtao 20241106 暂时注释，没有用这个宏
+	//pCbbError->addItem(g_sLangTxt_StateEstimate_CombinationError);
+//#endif
+	pCbbError->addItem(/*"不评估"*/g_sLangTxt_Distance_ErrorNot);
 	return pCbbError;
 }
 
-QComboBox* PowerEstimateGrid::AbsErrorType()
+QComboBox* PowerEstimateGrid::AmpErrorType()
 {
+	CString strText;
+
 	QComboBox *pCbbError = new QComboBox(this);
-	pCbbError->addItem(g_sLangTxt_StateEstimate_AbsError);
+
+	pCbbError->addItem(/*"绝对误差"*/g_sLangTxt_StateEstimate_AbsError);
+	pCbbError->addItem(/*"相对误差"*/g_sLangTxt_StateEstimate_RelError);
+
+	strText = g_sLangTxt_StateEstimate_AbsError + "or" + g_sLangTxt_StateEstimate_RelError;
+	pCbbError->addItem(/*"相对误差or绝对误差"*/strText);
+
+	strText = g_sLangTxt_StateEstimate_AbsError + "&" + g_sLangTxt_StateEstimate_RelError;
+	pCbbError->addItem(/*"相对误差&绝对误差"*/strText);
+
+	pCbbError->addItem(/*"不评估"*/g_sLangTxt_Distance_ErrorNot);
 	return pCbbError;
 }
 
 void PowerEstimateGrid::EnableRow(long nIndex, BOOL bEnabled)
 {
-	if(nIndex >= rowCount())
+	if (nIndex >= rowCount())
 	{
 		return;
 	}
 
-	QComboBox* pCbb = (QComboBox*)cellWidget(nIndex, 1);
+	QComboBox* pCbb = (QComboBox*)cellWidget(nIndex, POWERESTIMATE_COL_ERRORTYPE);
 	pCbb->setEnabled(bEnabled);
-	if(bEnabled)
+	if (bEnabled)
 	{
-		QTableWidgetItem* pItem = pItem = item(nIndex, 2);
-		pItem->setFlags(pItem->flags() | Qt::ItemIsEnabled);
-		pItem = item(nIndex, 3);
-		pItem->setFlags(pItem->flags() | Qt::ItemIsEnabled);
+		SetItemEnable(nIndex, POWERESTIMATE_COL_RELERROR, TRUE);
+		SetItemEnable(nIndex, POWERESTIMATE_COL_ABSERRORPOS, TRUE);
+		SetItemEnable(nIndex, POWERESTIMATE_COL_ABSERRORNEG, TRUE);
 	}
 	else
 	{
-		QTableWidgetItem* pItem = pItem = item(nIndex, 2);
-		pItem->setFlags(pItem->flags() & ~Qt::ItemIsEnabled);
-		pItem = item(nIndex, 3);
-		pItem->setFlags(pItem->flags() & ~Qt::ItemIsEnabled);
+		SetItemEnable(nIndex, POWERESTIMATE_COL_RELERROR, FALSE);
+		SetItemEnable(nIndex, POWERESTIMATE_COL_ABSERRORPOS, FALSE);
+		SetItemEnable(nIndex, POWERESTIMATE_COL_ABSERRORNEG, FALSE);
 	}
 }
 
 void PowerEstimateGrid::InitData(tmt_PowerManuParas* pParas)
 {
+	//20240805 gongyiping 通用功率只需要动作时间和功率动作值
 	m_pParas=pParas;
 	CString strText; 
 	strText = /*"动作时间(s)"*/g_sLangTxt_Native_ActionTime;
-	setItem(0, 0, new QTableWidgetItem(strText));
-	strText = /*"电压动作值(V)"*/g_sLangTxt_Gradient_VActionValue;
-	setItem(1, 0, new QTableWidgetItem(strText));
-	strText = _T("功率动作值(W)");
-	setItem(2, 0, new QTableWidgetItem(strText));
-	strText = /*"返回系数"*/g_sLangTxt_Gradient_ReCoefficient;
-	setItem(3, 0, new QTableWidgetItem(strText));
+	setItem(0, POWERESTIMATE_COL_NAME, new QTableWidgetItem(strText));
+	strText = /*"功率动作值"*/g_sLangTxt_PowerManu_PowerAct;
+	setItem(1, POWERESTIMATE_COL_NAME, new QTableWidgetItem(strText));
+	//strText = "P(W)";
+	//setItem(2, POWERESTIMATE_COL_NAME, new QTableWidgetItem(strText));
+	//strText = "Q(Var)";
+	//setItem(3, POWERESTIMATE_COL_NAME, new QTableWidgetItem(strText));
+
+	if (xlang_IsCurrXLanguageChinese())
+	{
+	strText = "——";
+	}
+	else
+	{
+		strText = "--";
+	}
+	setItem(1, POWERESTIMATE_COL_ABSERRORNEG, new QTableWidgetItem(strText));
+	//setItem(2, POWERESTIMATE_COL_ABSERRORNEG, new QTableWidgetItem(strText));
+	//setItem(3, POWERESTIMATE_COL_ABSERRORNEG, new QTableWidgetItem(strText));
 
 	QComboBox *pCbbError1 = NewErrorType();
 	pCbbError1->setCurrentIndex(pParas->m_nTimeValue_ErrorLogic);
-	QComboBox *pCbbError2 = NewErrorType();
-	pCbbError2->setCurrentIndex(pParas->m_nUActVal_ErrorLogic);
-	QComboBox *pCbbError3 = NewErrorType();
-	pCbbError3->setCurrentIndex(pParas->m_nPActVal_ErrorLogic);
-	QComboBox *pCbbError4 = AbsErrorType();
-	pCbbError4->setCurrentIndex(pParas->m_nRetCoef_ErrorLogic);
+	QComboBox *pCbbError2 = AmpErrorType();
+	if (pParas->m_nSpowerValue_ErrorLogic == 5)//不评估
+	{
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
+		pCbbError2->setCurrentText(g_sLangTxt_Distance_ErrorNot);
+#else
+		//Stt_Global_SetComboBoxIndexByText(pCbbError2,g_sLangTxt_Distance_ErrorNot);
+#endif
+	}
+	else
+	{
+	pCbbError2->setCurrentIndex(pParas->m_nSpowerValue_ErrorLogic);
+	}
+	//QComboBox *pCbbError3 = AmpErrorType();
+	//pCbbError3->setCurrentIndex(pParas->m_nPpowerValue_ErrorLogic);
+	//QComboBox *pCbbError4 = AmpErrorType();
+	//pCbbError4->setCurrentIndex(pParas->m_nQpowerValue_ErrorLogic);
 
-	setCellWidget(0, 1, pCbbError1);
-	setCellWidget(1, 1, pCbbError2);
-	setCellWidget(2, 1, pCbbError3);
-	setCellWidget(3, 1, pCbbError4);
+	pCbbError1->setObjectName("0");
+	pCbbError2->setObjectName("1");
+
+	setCellWidget(0, POWERESTIMATE_COL_ERRORTYPE, pCbbError1);
+	setCellWidget(1, POWERESTIMATE_COL_ERRORTYPE, pCbbError2);
+	//setCellWidget(2, POWERESTIMATE_COL_ERRORTYPE, pCbbError3);
+	//setCellWidget(3, POWERESTIMATE_COL_ERRORTYPE, pCbbError4);
 
 	ComboxModelStyle(pCbbError1);
 	ComboxModelStyle(pCbbError2);
-	ComboxModelStyle(pCbbError3);
-	ComboxModelStyle(pCbbError4);
+	//ComboxModelStyle(pCbbError3);
+	//ComboxModelStyle(pCbbError4);
 
-	setItem(0, 2, new QTableWidgetItem(QString::number(pParas->m_fTimeValue_RelErr)));
-	setItem(1, 2, new QTableWidgetItem(QString::number(pParas->m_fUActVal_RelErr)));
-	setItem(2, 2, new QTableWidgetItem(QString::number(pParas->m_fPActVal_RelErr)));
-	setItem(3, 2, new QTableWidgetItem(QString::number(pParas->m_fRetCoef_RelErr)));
+	//setItem(0, 2, new QTableWidgetItem(QString::number(pParas->m_fTimeValue_RelErr)));
+	//setItem(1, 2, new QTableWidgetItem(QString::number(pParas->m_fUActVal_RelErr)));
+	//setItem(2, 2, new QTableWidgetItem(QString::number(pParas->m_fPActVal_RelErr)));
+	//setItem(3, 2, new QTableWidgetItem(QString::number(pParas->m_fRetCoef_RelErr)));
 
-	setItem(0, 3, new QTableWidgetItem(QString::number(pParas->m_fTimeValue_AbsErr)));
-	setItem(1, 3, new QTableWidgetItem(QString::number(pParas->m_fUActVal_AbsErr)));
-	setItem(2, 3, new QTableWidgetItem(QString::number(pParas->m_fPActVal_AbsErr)));
-	setItem(3, 3, new QTableWidgetItem(QString::number(pParas->m_fRetCoef_AbsErr)));
+	//setItem(0, 3, new QTableWidgetItem(QString::number(pParas->m_fTimeValue_AbsErr)));
+	//setItem(1, 3, new QTableWidgetItem(QString::number(pParas->m_fUActVal_AbsErr)));
+	//setItem(2, 3, new QTableWidgetItem(QString::number(pParas->m_fPActVal_AbsErr)));
+	//setItem(3, 3, new QTableWidgetItem(QString::number(pParas->m_fRetCoef_AbsErr)));
 
-	setItem(0, 4, new QTableWidgetItem(QString::number(pParas->m_fTimeSet)));
-	setItem(1, 4, new QTableWidgetItem(QString::number(pParas->m_fUSet)));
-	setItem(2, 4, new QTableWidgetItem(QString::number(pParas->m_fPSet)));
-	setItem(3, 4, new QTableWidgetItem(QString::number(pParas->m_fRetCoefSet)));
+	//setItem(0, 4, new QTableWidgetItem(QString::number(pParas->m_fTimeSet)));
+	//setItem(1, 4, new QTableWidgetItem(QString::number(pParas->m_fUSet)));
+	//setItem(2, 4, new QTableWidgetItem(QString::number(pParas->m_fPSet)));
+	//setItem(3, 4, new QTableWidgetItem(QString::number(pParas->m_fRetCoefSet)));
 
-	for (int i = 0 ;i < 5 ;i++)
+	//20240805 gongyiping
+	//创建定值关联控件
+	setItem(0, POWERESTIMATE_COL_RELERROR, new QSettingItem(this));
+	setItem(1, POWERESTIMATE_COL_RELERROR, new QSettingItem(this));
+	//setItem(2, POWERESTIMATE_COL_RELERROR, new QSettingItem(this));
+	//setItem(3, POWERESTIMATE_COL_RELERROR, new QSettingItem(this));
+
+	((QSettingItem*)item(0, POWERESTIMATE_COL_RELERROR))->setText(QString::number(pParas->m_fTimeValue_RelErr));//UpdateStructText(CVariantDataAddress(&pParas->m_fTimeValue_RelErr));
+	((QSettingItem*)item(1, POWERESTIMATE_COL_RELERROR))->setText(QString::number(pParas->m_fSpowerValue_RelErr));//UpdateStructText(CVariantDataAddress(&pParas->m_fSpowerValue_RelErr));
+	//((QSettingItem*)item(2, POWERESTIMATE_COL_RELERROR))->UpdateStructText(CVariantDataAddress(&pParas->m_fPpowerValue_RelErr));
+	//((QSettingItem*)item(3, POWERESTIMATE_COL_RELERROR))->UpdateStructText(CVariantDataAddress(&pParas->m_fQpowerValue_RelErr));
+
+	setItem(0, POWERESTIMATE_COL_ABSERRORPOS, new QSettingItem(this));
+	setItem(1, POWERESTIMATE_COL_ABSERRORPOS, new QSettingItem(this));
+	//setItem(2, POWERESTIMATE_COL_ABSERRORPOS, new QSettingItem(this));
+	//setItem(3, POWERESTIMATE_COL_ABSERRORPOS, new QSettingItem(this));
+
+	((QSettingItem*)item(0, POWERESTIMATE_COL_ABSERRORPOS))->setText(QString::number(pParas->m_fTimeValue_AbsErrPos));//UpdateStructText(CVariantDataAddress(&pParas->m_fTimeValue_AbsErrPos));
+	((QSettingItem*)item(1, POWERESTIMATE_COL_ABSERRORPOS))->setText(QString::number(pParas->m_fSpowerValue_AbsErr));//UpdateStructText(CVariantDataAddress(&pParas->m_fSpowerValue_AbsErr));
+	//((QSettingItem*)item(2, POWERESTIMATE_COL_ABSERRORPOS))->UpdateStructText(CVariantDataAddress(&pParas->m_fPpowerValue_AbsErr));
+	//((QSettingItem*)item(3, POWERESTIMATE_COL_ABSERRORPOS))->UpdateStructText(CVariantDataAddress(&pParas->m_fQpowerValue_AbsErr));
+
+	setItem(0, POWERESTIMATE_COL_ABSERRORNEG, new QSettingItem(this));
+	((QSettingItem*)item(0, POWERESTIMATE_COL_ABSERRORNEG))->setText(QString::number(pParas->m_fTimeValue_AbsErrNeg));//UpdateStructText(CVariantDataAddress(&pParas->m_fTimeValue_AbsErrNeg));
+
+	setItem(0, POWERESTIMATE_COL_SETVALUE, new QSettingItem(this));
+	setItem(1, POWERESTIMATE_COL_SETVALUE, new QSettingItem(this));
+	//setItem(2, POWERESTIMATE_COL_SETVALUE, new QSettingItem(this));
+	//setItem(3, POWERESTIMATE_COL_SETVALUE, new QSettingItem(this));
+
+	((QSettingItem*)item(0, POWERESTIMATE_COL_SETVALUE))->setText(QString::number(pParas->m_fTimeSet));//UpdateStructText(CVariantDataAddress(&pParas->m_fTimeSet));
+	((QSettingItem*)item(1, POWERESTIMATE_COL_SETVALUE))->setText(QString::number(pParas->m_fSpowerSet));//UpdateStructText(CVariantDataAddress(&pParas->m_fSpowerSet));
+	//((QSettingItem*)item(2, POWERESTIMATE_COL_SETVALUE))->UpdateStructText(CVariantDataAddress(&pParas->m_fPpowerSet));
+	//((QSettingItem*)item(3, POWERESTIMATE_COL_SETVALUE))->UpdateStructText(CVariantDataAddress(&pParas->m_fQpowerSet));
+
+	for (int nRow = 0; nRow < rowCount(); nRow++)
 	{
-		if (i != 1)
+		for (int i = 0; i < columnCount(); i++)
 		{
-			item(0,i)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
-			item(1,i)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
-			item(2,i)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
-			item(3,i)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+			if (i == POWERESTIMATE_COL_NAME)
+		{
+				item(nRow, i)->setTextAlignment(Qt::AlignVCenter | Qt::AlignLeft);
+			}
+			else if (i != POWERESTIMATE_COL_ERRORTYPE)
+			{
+				item(nRow, i)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+			}
 		}
-
 	}
 
-	for (int i = 0;i < 4; i++)
+	for (int i = 0;i < 2; i++)
 	{
-		item(i, 0)->setFlags(item(i, 0)->flags() & ~Qt::ItemIsEditable);
+		item(i, POWERESTIMATE_COL_NAME)->setFlags(item(i, POWERESTIMATE_COL_NAME)->flags() & ~Qt::ItemIsEditable);
 		EnableRow(i, FALSE);
 
 		//item(i, 2)->setFlags(item(i, 2)->flags() & ~Qt::ItemIsEditable);
 		//item(i, 3)->setFlags(item(i, 3)->flags() &  Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable);
 	}
 
-	if (pParas->m_bAuto)//自动递变方式时，开放动作值、返回系数、相位动作值
+	if (pParas->m_bAuto)//自动递变方式时，开放视在功率、有功功率、无功功率
 	{
-		//if(pParas->m_nGradientTpSelect==0)//幅值
-		//{
 			if (g_pPowerManuTest->m_pPowerManualWidget->m_nChanneType== 0)		
 			{
-				EnableRow(1);//电压
+			EnableRow(1);//视在功率
 			}
-			else if (g_pPowerManuTest->m_pPowerManualWidget->m_nChanneType== 1)
-			{
-				EnableRow(2);//电流
-			}
-		//}
-
-		//else if (pParas->m_nGradientTpSelect==1)//相位
+		//else if (g_pPowerManuTest->m_pPowerManualWidget->m_nChanneType== 1)
 		//{
-		//	EnableRow(3);
+		//	EnableRow(2);//有功功率
 		//}
-	
-		//if (pParas->m_oPowerGradient.nMode==1)
+		//else
 		//{
-		//	EnableRow(4);
+		//	EnableRow(3);//无功功率
 		//}
 	}
 	EnableRow(0);
 
 	CbbErrorType(0,pCbbError1->currentText());
 	CbbErrorType(1,pCbbError2->currentText());
-	CbbErrorType(2,pCbbError3->currentText());
-	CbbErrorType(3,pCbbError4->currentText());
+	//CbbErrorType(2,pCbbError3->currentText());
+	//CbbErrorType(3,pCbbError4->currentText());
+
 
 
 	connect(this,SIGNAL(cellChanged (int,int)),this,SLOT(slot_OnCellChanged(int ,int)),Qt::UniqueConnection);
 	connect(pCbbError1, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(slot_cmbErrorChanged(const QString &)));
 	connect(pCbbError2, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(slot_cmbErrorChanged(const QString &)));
-	connect(pCbbError3, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(slot_cmbErrorChanged(const QString &)));
-	connect(pCbbError4, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(slot_cmbErrorChanged(const QString &)));
+	/*connect(pCbbError3, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(slot_cmbErrorChanged(const QString &)));
+	connect(pCbbError4, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(slot_cmbErrorChanged(const QString &)));*/
 }
 
 void PowerEstimateGrid::CbbErrorType(int nIndex, CString strText)
 {
-	if (strText==g_sLangTxt_StateEstimate_AbsError)//绝对误差
+	if (strText == g_sLangTxt_Distance_ErrorNot)//不评估
 	{
-		item(nIndex, 2)->setFlags(item(nIndex, 2)->flags() & ~Qt::ItemIsEditable);
-		item(nIndex, 3)->setFlags(item(nIndex, 3)->flags() &  Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable);
+		//item(nIndex, POWERESTIMATE_COL_RELERROR)->setFlags(item(nIndex, POWERESTIMATE_COL_RELERROR)->flags() & ~Qt::ItemIsEditable);
+		//item(nIndex, POWERESTIMATE_COL_ABSERRORPOS)->setFlags(item(nIndex, POWERESTIMATE_COL_ABSERRORPOS)->flags() & ~Qt::ItemIsEditable);
+		//if (nIndex == 0)
+		//{
+		//	item(nIndex, POWERESTIMATE_COL_ABSERRORNEG)->setFlags(item(nIndex, POWERESTIMATE_COL_ABSERRORNEG)->flags() & ~Qt::ItemIsEditable);
+		//}
+		SetItemEnable(nIndex, POWERESTIMATE_COL_RELERROR, FALSE);
+		SetItemEnable(nIndex, POWERESTIMATE_COL_ABSERRORPOS, FALSE);
+		if (nIndex == 0)
+		{
+			SetItemEnable(nIndex, POWERESTIMATE_COL_ABSERRORNEG, FALSE);
+		}
+	}
+	else if (strText==g_sLangTxt_StateEstimate_AbsError)//绝对误差
+	{
+
+		//item(nIndex, POWERESTIMATE_COL_RELERROR)->setFlags(item(nIndex, POWERESTIMATE_COL_RELERROR)->flags() & ~Qt::ItemIsEditable);
+		//item(nIndex, POWERESTIMATE_COL_ABSERRORPOS)->setFlags(item(nIndex, POWERESTIMATE_COL_ABSERRORPOS)->flags() &  Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable);
+		//if (nIndex == 0)
+		//{
+		//	item(nIndex, POWERESTIMATE_COL_ABSERRORNEG)->setFlags(item(nIndex, POWERESTIMATE_COL_ABSERRORNEG)->flags() &  Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable);
+		//}
+		SetItemEnable(nIndex, POWERESTIMATE_COL_RELERROR, FALSE);
+		SetItemEnable(nIndex, POWERESTIMATE_COL_ABSERRORPOS, TRUE);
+		if (nIndex == 0)
+		{
+			SetItemEnable(nIndex, POWERESTIMATE_COL_ABSERRORNEG, TRUE);
+		}
 	}
 	else if (strText==g_sLangTxt_StateEstimate_RelError)//相对误差
 	{
-		item(nIndex, 2)->setFlags(item(nIndex, 2)->flags() & Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable);
-		item(nIndex, 3)->setFlags(item(nIndex, 3)->flags() & ~Qt::ItemIsEditable);
+		//item(nIndex, POWERESTIMATE_COL_RELERROR)->setFlags(item(nIndex, POWERESTIMATE_COL_RELERROR)->flags() & Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable);
+		//item(nIndex, POWERESTIMATE_COL_ABSERRORPOS)->setFlags(item(nIndex, POWERESTIMATE_COL_ABSERRORPOS)->flags() & ~Qt::ItemIsEditable);
+		//if (nIndex == 0)
+		//{
+		//	item(nIndex, POWERESTIMATE_COL_ABSERRORNEG)->setFlags(item(nIndex, POWERESTIMATE_COL_ABSERRORNEG)->flags() & ~Qt::ItemIsEditable);
+		//}
+
+		SetItemEnable(nIndex, POWERESTIMATE_COL_RELERROR, TRUE);
+		SetItemEnable(nIndex, POWERESTIMATE_COL_ABSERRORPOS, FALSE);
+		if (nIndex == 0)
+		{
+			SetItemEnable(nIndex, POWERESTIMATE_COL_ABSERRORNEG, FALSE);
+		}
 	}
 	else
 	{
-		item(nIndex, 2)->setFlags(item(nIndex, 2)->flags() & Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable);
-		item(nIndex, 3)->setFlags(item(nIndex, 3)->flags() & Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable);
+		/*item(nIndex, POWERESTIMATE_COL_RELERROR)->setFlags(item(nIndex, POWERESTIMATE_COL_RELERROR)->flags() & Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable);
+		item(nIndex, POWERESTIMATE_COL_ABSERRORPOS)->setFlags(item(nIndex, POWERESTIMATE_COL_ABSERRORPOS)->flags() & Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable);
+		if (nIndex == 0)
+		{
+			item(nIndex, POWERESTIMATE_COL_ABSERRORNEG)->setFlags(item(nIndex, POWERESTIMATE_COL_ABSERRORNEG)->flags() &  Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable);
+		}*/
+		SetItemEnable(nIndex, POWERESTIMATE_COL_RELERROR, TRUE);
+		SetItemEnable(nIndex, POWERESTIMATE_COL_ABSERRORPOS, TRUE);
+		if (nIndex == 0)
+		{
+			SetItemEnable(nIndex, POWERESTIMATE_COL_ABSERRORNEG, TRUE);
+		}
+	}
+	if (nIndex != 0)
+	{
+		SetItemEnable(nIndex, POWERESTIMATE_COL_ABSERRORNEG, FALSE);
 	}
 }
 
@@ -227,9 +409,13 @@ void PowerEstimateGrid::ComboxModelStyle(QComboBox *pCombox)
 
 void PowerEstimateGrid::slot_cmbErrorChanged(const QString& strText)
 {
-	int nRow = currentRow();
-
-	CbbErrorType(nRow,strText);
+	QObject *senderObj = sender();
+	CString strName;
+	if (senderObj) 
+	{
+		strName = senderObj->objectName();
+	}
+	CbbErrorType(strName.toInt(), strText);
 }
 
 void PowerEstimateGrid::slot_OnCellChanged(int row,int col)
@@ -251,19 +437,19 @@ void PowerEstimateGrid::slot_OnCellChanged(int row,int col)
 	QString str = pItem->text();
 	float fv =str.toFloat();
 
-	if(col==2)//相对误差
+	if (col == POWERESTIMATE_COL_RELERROR)//相对误差
 	{
 		fv=setLimit(0,100,fv);
 		pItem->setText(QString::number(fv));
 	}
 
-	if(col==3)//绝对误差
+	if (col == POWERESTIMATE_COL_ABSERRORPOS)//绝对误差
 	{
 		fv=setLimit(0,200,fv);
 		pItem->setText(QString::number(fv));	
 	}
 
-	if(col==4)//整定值
+	if (col == POWERESTIMATE_COL_SETVALUE)//整定值
 	{
 		if (row==0)
 		{
@@ -272,18 +458,18 @@ void PowerEstimateGrid::slot_OnCellChanged(int row,int col)
 		}
 		if (row==1)
 		{
-			fv=setLimit(0,120,fv);
+			fv=setLimit(0,999,fv);
 			pItem->setText(QString::number(fv));
 		}
 		if (row==2)
 		{
-			fv=setLimit(0,10,fv);
+			fv=setLimit(0,999,fv);
 			pItem->setText(QString::number(fv));
 		}
 		
-		if (row==3)
+		if (row == 3)
 		{
-			fv=setLimit(0,360,fv);
+			fv=setLimit(0,999,fv);
 			pItem->setText(QString::number(fv));
 
 		}
@@ -297,8 +483,37 @@ void PowerEstimateGrid::slot_OnCellChanged(int row,int col)
 	connect(this,SIGNAL(cellChanged (int,int)),this,SLOT(slot_OnCellChanged(int ,int)),Qt::UniqueConnection);
 }
 
+bool PowerEstimateGrid::eventFilter(QObject *obj, QEvent *event)
+{
+	if (event->type() == QEvent::MouseButtonDblClick)
+	{
+		QMouseEvent *pMouseEvent = (QMouseEvent *)event;
+		m_bRunning = TRUE;
+		mouseDoubleClickEvent((QMouseEvent *)pMouseEvent);
+		m_bRunning = FALSE;
+		return true;
+	}
+
+	return QTableWidget::eventFilter(obj, event);
+}
+
+void PowerEstimateGrid::mousePressEvent(QMouseEvent * event)
+{
+	if (m_bRunning)
+	{
+		QTableWidget::mousePressEvent(event);
+		return;
+	}
+
+	QMouseEvent *pEvent = new QMouseEvent(QEvent::MouseButtonDblClick, event->pos(), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+	QApplication::postEvent(this, pEvent);
+	QTableWidget::mousePressEvent(event);
+}
+
+//extern void  Stt_Global_SettingParent(QWidget *parent);		//20240808 
 PowerManualEstimateDlg::PowerManualEstimateDlg(tmt_PowerManuParas* pParas, QWidget* parent) : QDialog(parent)
 {
+	//Stt_Global_SettingParent(this);	//20240808 gongyipng
 	m_pGrid = NULL;
 	m_pParas = pParas;
 	InitUI();
@@ -306,7 +521,7 @@ PowerManualEstimateDlg::PowerManualEstimateDlg(tmt_PowerManuParas* pParas, QWidg
 
 PowerManualEstimateDlg::~PowerManualEstimateDlg()
 {
-
+	//Stt_Global_SettingParent(NULL);	//20241018 huangliang
 }
 
 void PowerManualEstimateDlg::InitUI()
@@ -319,7 +534,7 @@ void PowerManualEstimateDlg::InitUI()
 	setLayout(pVLayout);
 
 	QHBoxLayout* pHLayout = new QHBoxLayout(this);
-	m_pGrid = new PowerEstimateGrid(4, 5, this);
+	m_pGrid = new PowerEstimateGrid(2, 6, this);
 	m_pGrid->InitGrid();
 	m_pGrid->InitData(m_pParas);
 	pHLayout->addWidget(m_pGrid);
@@ -341,31 +556,88 @@ void PowerManualEstimateDlg::InitUI()
 	pHLayout->addStretch();
 	pVLayout->addLayout(pHLayout);
 
-	resize(600, 400);
+#ifdef _PSX_QT_WINDOWS_
+	QDesktopWidget* desktopWidget = QApplication::desktop();
+	QRect rect = desktopWidget->screenGeometry();
+	float fWidth = rect.width() * /*GetUIShowCoef()*/g_dUIShowCoef;
+
+	if (fWidth >= 2880)
+	{
+		resize(1000, 750);
+	}
+	else if (fWidth >= 2280)
+	{
+		resize(850, 450);
+	}
+	else
+	{
+	resize(850, 200);
+	}
+#else
+	resize(850, 200);
+#endif
 }
 
 void PowerManualEstimateDlg::slot_btnOK_Clicked()
 {
-	m_pParas->m_fTimeValue_RelErr = m_pGrid->item(0, 2)->text().toFloat();
-	m_pParas->m_fUActVal_RelErr = m_pGrid->item(1, 2)->text().toFloat();
-	m_pParas->m_fPActVal_RelErr = m_pGrid->item(2, 2)->text().toFloat();
-	m_pParas->m_fRetCoef_RelErr = m_pGrid->item(3, 2)->text().toFloat();
+//20240808 gongyiping 结构体数据在序列化保存时保存了定值关联，待测试
+	if (!((QSettingItem*)m_pGrid->item(0, POWERESTIMATE_COL_RELERROR))->IsSetting())
+		m_pParas->m_fTimeValue_RelErr = m_pGrid->item(0, POWERESTIMATE_COL_RELERROR)->text().toFloat();
+		
+	if (!((QSettingItem*)m_pGrid->item(1, POWERESTIMATE_COL_RELERROR))->IsSetting())
+		m_pParas->m_fSpowerValue_RelErr = m_pGrid->item(1, POWERESTIMATE_COL_RELERROR)->text().toFloat();
+		
+	/*if (!((QSettingItem*)m_pGrid->item(2, POWERESTIMATE_COL_RELERROR))->IsSetting())
+		m_pParas->m_fSpowerValue_RelErr = m_pGrid->item(1, POWERESTIMATE_COL_RELERROR)->text().toFloat();
+		
+	if (!((QSettingItem*)m_pGrid->item(3, POWERESTIMATE_COL_RELERROR))->IsSetting())
+		m_pParas->m_fSpowerValue_RelErr = m_pGrid->item(1, POWERESTIMATE_COL_RELERROR)->text().toFloat();*/
+	
+	if (!((QSettingItem*)m_pGrid->item(0, POWERESTIMATE_COL_ABSERRORPOS))->IsSetting())
+		m_pParas->m_fTimeValue_AbsErrPos = m_pGrid->item(0, POWERESTIMATE_COL_ABSERRORPOS)->text().toFloat();
+	
+	if (!((QSettingItem*)m_pGrid->item(1, POWERESTIMATE_COL_ABSERRORPOS))->IsSetting())
+		m_pParas->m_fSpowerValue_AbsErr = m_pGrid->item(1, POWERESTIMATE_COL_ABSERRORPOS)->text().toFloat();
 
-	m_pParas->m_fTimeValue_AbsErr = m_pGrid->item(0, 3)->text().toFloat();
-	m_pParas->m_fUActVal_AbsErr = m_pGrid->item(1, 3)->text().toFloat();
-	m_pParas->m_fPActVal_AbsErr = m_pGrid->item(2, 3)->text().toFloat();
-	m_pParas->m_fRetCoef_AbsErr = m_pGrid->item(3, 3)->text().toFloat();
+	/*if (!((QSettingItem*)m_pGrid->item(2, POWERESTIMATE_COL_ABSERRORPOS))->IsSetting())
+		m_pParas->m_fPpowerValue_AbsErr = m_pGrid->item(2, POWERESTIMATE_COL_ABSERRORPOS)->text().toFloat();
 
+	if (!((QSettingItem*)m_pGrid->item(3, POWERESTIMATE_COL_ABSERRORPOS))->IsSetting())
+		m_pParas->m_fQpowerValue_AbsErr = m_pGrid->item(3, POWERESTIMATE_COL_ABSERRORPOS)->text().toFloat();
+*/
+	if (!((QSettingItem*)m_pGrid->item(0, POWERESTIMATE_COL_ABSERRORNEG))->IsSetting())
+		m_pParas->m_fTimeValue_AbsErrNeg = m_pGrid->item(0, POWERESTIMATE_COL_ABSERRORNEG)->text().toFloat();
 
-	m_pParas->m_nTimeValue_ErrorLogic = ((QComboBox*)m_pGrid->cellWidget(0, 1))->currentIndex();
-	m_pParas->m_nUActVal_ErrorLogic = ((QComboBox*)m_pGrid->cellWidget(1, 1))->currentIndex();
-	m_pParas->m_nPActVal_ErrorLogic = ((QComboBox*)m_pGrid->cellWidget(2, 1))->currentIndex();
-	m_pParas->m_nRetCoef_ErrorLogic = ((QComboBox*)m_pGrid->cellWidget(3, 1))->currentIndex();
+// 	m_pParas->m_nTimeValue_ErrorLogic = ((QComboBox*)m_pGrid->cellWidget(0, POWERESTIMATE_COL_ERRORTYPE))->currentIndex();
+	QString strText = ((QComboBox*)m_pGrid->cellWidget(0, POWERESTIMATE_COL_ERRORTYPE))->currentText();
+	if (strText == g_sLangTxt_Distance_ErrorNot)
+	{
+		m_pParas->m_nTimeValue_ErrorLogic = 5;
+	}
+	else
+	{
+	m_pParas->m_nTimeValue_ErrorLogic = ((QComboBox*)m_pGrid->cellWidget(0, POWERESTIMATE_COL_ERRORTYPE))->currentIndex();
+	}
 
-	m_pParas->m_fTimeSet = m_pGrid->item(0, 4)->text().toFloat();
-	m_pParas->m_fUSet = m_pGrid->item(1, 4)->text().toFloat();
-	m_pParas->m_fPSet = m_pGrid->item(2, 4)->text().toFloat();
-	m_pParas->m_fRetCoefSet = m_pGrid->item(3, 4)->text().toFloat();
+	if (((QComboBox*)m_pGrid->cellWidget(1, POWERESTIMATE_COL_ERRORTYPE))->currentIndex() == 4)//选中的是不评估，发送的值为5
+	{
+		m_pParas->m_nSpowerValue_ErrorLogic = 5;
+	}
+	else
+	{
+	m_pParas->m_nSpowerValue_ErrorLogic = ((QComboBox*)m_pGrid->cellWidget(1, POWERESTIMATE_COL_ERRORTYPE))->currentIndex();
+	}
+	/*m_pParas->m_nPpowerValue_ErrorLogic = ((QComboBox*)m_pGrid->cellWidget(2, POWERESTIMATE_COL_ERRORTYPE))->currentIndex();
+	m_pParas->m_nQpowerValue_ErrorLogic = ((QComboBox*)m_pGrid->cellWidget(3, POWERESTIMATE_COL_ERRORTYPE))->currentIndex();*/
+
+	if (!((QSettingItem*)m_pGrid->item(0, POWERESTIMATE_COL_SETVALUE))->IsSetting())
+		m_pParas->m_fTimeSet = m_pGrid->item(0, POWERESTIMATE_COL_SETVALUE)->text().toFloat();
+	if (!((QSettingItem*)m_pGrid->item(1, POWERESTIMATE_COL_SETVALUE))->IsSetting())
+		m_pParas->m_fSpowerSet = m_pGrid->item(1, POWERESTIMATE_COL_SETVALUE)->text().toFloat();
+	/*if (!((QSettingItem*)m_pGrid->item(2, POWERESTIMATE_COL_SETVALUE))->IsSetting())
+		m_pParas->m_fPpowerSet = m_pGrid->item(2, POWERESTIMATE_COL_SETVALUE)->text().toFloat();
+	if (!((QSettingItem*)m_pGrid->item(3, POWERESTIMATE_COL_SETVALUE))->IsSetting())
+		m_pParas->m_fQpowerSet = m_pGrid->item(3, POWERESTIMATE_COL_SETVALUE)->text().toFloat();*/
 
 	accept();
 }

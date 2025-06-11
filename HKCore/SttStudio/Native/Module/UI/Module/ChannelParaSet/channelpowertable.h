@@ -10,7 +10,7 @@
 #include "../Module/SttTest/Common/tmt_common_def.h"
 #include "../Module/SttTestResourceMngr/TestResource/SttTestResourceBase.h"
 
-#include "../../Module/BaseClass/ExBaseList.h"
+#include "../../../Module/BaseClass/ExBaseList.h"
 #include "../ScrollCtrl/ScrollTableWidget.h"
 #include "../CommonCtrl_QT/CommonCtrlInterface.h"
 #include "../../../SttTest/Common/Power/tmt_power_manu_test.h"
@@ -20,7 +20,7 @@
 #define MACROTYPE_ManualSequence    3//通用序分量使用,只显示幅值、相位
 #define MACROTYPE_ManualLineVol    4//通用线电压使用,只显示幅值、相位
 #define MACROTYPE_RemoteMeas        5
-
+#define MACROTYPE_ManualPower        6//通用实验-功率,只显示幅值、相位  国际版移植
 class QChannelPowerTable : public QScrollTableWidget, public CCommonCtrlInterface
 {
 	Q_OBJECT
@@ -39,7 +39,8 @@ public:
 	void setHarmIndex(int *pnHarmIndex);//20220819 zhouhj 增加用于手动谐波界面
 	
 	float getItemValue(int row,int col);
-	void setAmpMaxMinValue(float fmax,float fmin);
+	void setVolAmpValue(float fVolAmp[]);
+	void setAmpMaxMinValue(float fmax,float fmin, bool bCanUpdateTable);
 	void setAmpEDValue(float fEDValue);
 	
 	void setColumnWidthByNum(int col,int width);
@@ -142,6 +143,7 @@ public:
 
 	float m_fAmpMax;
 	float m_fAmpMin;
+	float m_fMultVolAmp[MAX_VOLTAGE_COUNT];//add wangtao 20240828  每个通道的当前电压   国际版移植
 	float m_fEDVal;
 
 	int m_nRowHeight;

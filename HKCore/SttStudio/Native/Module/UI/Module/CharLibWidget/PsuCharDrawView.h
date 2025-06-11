@@ -1,5 +1,8 @@
 #pragma once
-#include "../../AutoTest/Module/Characteristic/CharacterDrawView.h"
+#include "../../../AutoTest/Module/Characteristic/CharacterDrawView.h"
+
+
+
 
 class CPsuCharDrawView :public CCharacterDrawView
 {
@@ -34,6 +37,7 @@ public:
 	void SetXYUnitShow(CString strUnitMag,CString strUnitAng);
 	void SetIsShowText(bool bIsShowText);
 	void SetIsShowAng(bool bIsShowAng);
+	void SetIsShowTestPoint(bool bIsShowTestPoint);
 	void UpdateAxisType(const CString& strAxis,BOOL bLockXY);
 	CXDrawLine* GetLeftButtonLine();
 
@@ -68,6 +72,7 @@ private:
 	CString m_strUnitAng;
 	bool m_bIsShowText;//测试点是否显示标志 20211027 sf
 	bool m_bIsShowAng;//是否要将笛卡尔坐标换算成幅值、相位来显示
+	bool m_bIsShowTestPoint;//dingxy 20250314 是否设置交点标识
 // 	CString m_strInstruct1Text;
 // 	CString m_strInstruct2Text;
 	CString m_strInstructInit_Text;

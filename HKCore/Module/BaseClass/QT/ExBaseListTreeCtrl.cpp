@@ -69,7 +69,7 @@ CExBaseListTreeCtrl::CExBaseListTreeCtrl(QWidget *parent)
 	setHeaderHidden(true);
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-// 	header()->setResizeMode(QHeaderView::ResizeToContents );
+// 	header()->setSectionResizeMode(QHeaderView::ResizeToContents );
 // 	header()->setStretchLastSection( true);
 
 	m_pOptrInterface = NULL;

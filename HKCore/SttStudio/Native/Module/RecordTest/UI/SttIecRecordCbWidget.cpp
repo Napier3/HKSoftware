@@ -2,9 +2,9 @@
 #include "ui_SttIecRecordCbWidget.h"
 #include "../../SttTestCtrl/SttTestAppBase.h"
 #include "../../SttTestCtrl/SttTestCtrlCntrNative.h"
-#include "../../../../Module/SmartCap/XSmartCapMngr.h"
-#include "../../../../Module/BaseClass/QT/ExBaseListComboBox.h"
-#include "../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../Module/BaseClass/QT/ExBaseListComboBox.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../UI/SttTestCntrFrameBase.h"
 #include "../../XLangResource_Native.h"
 
@@ -52,8 +52,8 @@ QSttIecRecordCbWidget::QSttIecRecordCbWidget(QFont font, QWidget *parent) :
 	xlang_SetLangStrToWidget(ui->m_btnPrevPage, "Smv_PrevPage", XLang_Ctrls_QPushButton);
 	xlang_SetLangStrToWidget(ui->m_btnNextPage, "Smv_NextPage", XLang_Ctrls_QPushButton);
 	xlang_SetLangStrToWidget(ui->m_btnSysSet, "Smv_SysSet", XLang_Ctrls_QPushButton);
-	ui->m_btnAddToSub->setText(g_sLangTxt_Native_ToSubscriptions);
-	ui->m_btnAddToPub->setText(g_sLangTxt_Native_ToPublish);
+    ui->m_btnAddToSub->setText("g_sLangTxt_Native_ToSubscriptions");
+    ui->m_btnAddToPub->setText("g_sLangTxt_Native_ToPublish");
 	
 
 // #ifdef _PSX_QT_LINUX_ 

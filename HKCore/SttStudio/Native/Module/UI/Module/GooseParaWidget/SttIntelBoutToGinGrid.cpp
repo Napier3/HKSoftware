@@ -1,7 +1,7 @@
 #include "SttIntelBoutToGinGrid.h"
 #include <QHeaderView>
 #include "../SttUIDefine.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../CommonMethod/commonMethod.h"
 #define STTINTELBOUTTOGIN_GRID_COL_INDEX_DESC                    1
 #define STTINTELBOUTTOGIN_GRID_COL_INDEX_DATATYPE                2

@@ -11,7 +11,7 @@
 #include <QFormLayout>
 #include <QPushButton>
 #include <QLabel>
-#include "../../61850/Module/CfgDataMngr/IecCfgSmvRates.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgSmvRates.h"
 #include "Grid/IecCfgSMVFT3DCOtherSetGrid.h"
 
 

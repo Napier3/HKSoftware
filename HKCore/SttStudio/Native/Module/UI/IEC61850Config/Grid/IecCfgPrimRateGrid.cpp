@@ -1,10 +1,10 @@
 #include "IecCfgPrimRateGrid.h"
 #include "../../Module/CommonMethod/commonMethod.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgPrimRate.h"
-#include "../../Module/API/MathApi.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgPrimRate.h"
+#include "../../../Module/API/MathApi.h"
 #include "../../SttStyleSheetGlobalDefine.h"
 #include "../Module/XLangResource_Native.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 
 CIecCfgPrimRateGrid::CIecCfgPrimRateGrid(long nGridType,QWidget *parent)
 	: QExBaseListGridBase(parent)
@@ -72,7 +72,14 @@ void CIecCfgPrimRateGrid::ShowData(CExBaseObject *pData, int& nRow, BOOL bInsert
 
 	if (m_nGridType == IECCFG_PRIMRATE_GRIDTYPE_PT)
 	{
-		strType.Format(_T("Uabc%ld"),nRow+1);
+		if (xlang_IsCurrXLanguageChinese())
+		{
+			strType.Format(_T("Uabc%ld"),nRow+1);//dingxy 20250121 英文环境下修改通道映射名称
+		}
+		else
+		{
+			strType.Format(_T("Vabc%ld"),nRow+1);
+		}
 	} 
 	else
 	{

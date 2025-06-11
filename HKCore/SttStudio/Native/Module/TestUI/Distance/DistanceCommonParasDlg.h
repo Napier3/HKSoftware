@@ -5,7 +5,7 @@
 //#include "../SttTestCntrFrameBase.h"
 
 #include "SttMultiMacroDistanceParasDefine.h"
-#include "../../../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/DataMngr/DataGroup.h"
 
 namespace Ui {
 class QDistanceCommonParasDlg;

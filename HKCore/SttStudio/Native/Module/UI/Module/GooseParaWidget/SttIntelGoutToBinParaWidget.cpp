@@ -1,7 +1,7 @@
 #include "SttIntelGoutToBinParaWidget.h"
 #include <QGridLayout>
 #include "goosepubwidget.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 extern long g_nLogDebugInfor;
 
 QSttIntelGoutToBinParaWidget::QSttIntelGoutToBinParaWidget(CIecCfgGoutDatas* pCfgGoutDatas ,bool bInitEditable)

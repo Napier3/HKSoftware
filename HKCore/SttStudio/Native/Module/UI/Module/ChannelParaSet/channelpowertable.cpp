@@ -2,10 +2,10 @@
 #include <QFontMetrics>
 #include <QScrollBar>
 #include <cmath>
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/XLanguage/XLanguageMngr.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/XLanguageMngr.h"
 #include "../../../SttTestSysGlobalPara.h"
-#include "../../Module/API/MathApi.h"
+#include "../../../Module/API/MathApi.h"
 #include "../../../SttSystemConfig/SttSystemConfig.h"
 #ifdef _USE_SoftKeyBoard_	
 #include "../../SoftKeyboard/SoftKeyBoard.h"
@@ -126,11 +126,15 @@ float QChannelPowerTable::getItemValue(int row,int col)
 	return fv;
 }
 
-void QChannelPowerTable::setAmpMaxMinValue(float fmax,float fmin)
+void QChannelPowerTable::setAmpMaxMinValue(float fmax,float fmin, bool bCanUpdateTable)
 {
 	m_fAmpMax = fmax;
 	m_fAmpMin = fmin;
+
+	if (bCanUpdateTable)
+	{
 	UpdateTable();//20240204 suyang 更新最大最小值后 更新通道数据范围大小 
+	}
 }
 
 void QChannelPowerTable::setAmpEDValue(float fEDValue)
@@ -247,7 +251,7 @@ void QChannelPowerTable::initTable()
 
 		this->setColumnWidth(3,nLabelWidth4);
 		//headers << strChannel << strAmplitude << strPhase << strFreq;
-        headers << strChannel << "有功(W)" << "无功(Var)" << "功率因数";
+       headers << strChannel << "有功(W)" << "无功(Var)" << "功率因数";
 	
 	setHorizontalHeaderLabels(headers);
 	setIconSize(QSize(20,20));
@@ -1664,4 +1668,12 @@ int QChannelPowerTable::getChIndexByChName( const CString & strChName )
 	}
 
 	return -1;
+}
+
+void QChannelPowerTable::setVolAmpValue(float fVolAmp[])
+{
+	for (int i = 0; i < MAX_VOLTAGE_COUNT; i++)
+	{
+		m_fMultVolAmp[i] = fVolAmp[i];
+	}
 }

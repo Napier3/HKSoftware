@@ -31,12 +31,17 @@ public:
 	void SetSingle(bool bSingle);
 
 	void ChangeListType(int type,double fUMin,double fUMax,double fIMin,double fIMax);//修改电压电流多通道显示类型
-
+	void UpdatePlotMaxMinValue(int nType);
+	void SetChangedType(int nType);
+	void SetParaSetSecondValue(int nParaSetSecondValue);
+	void UpdateAxisScale();	//dingxy 20250208 更新状态图坐标轴文字
+	int m_nParaSetSecondValue;
 private:
 	QTabWidget m_tabWidget;
 	QGridLayout m_oLayout; //电压电流通道和开入开出
 	long m_nTimerID;
 	bool m_bModeIsSingle; //true-单通道,false-多通道
+	int m_nChannel;
 
 	CExBaseList m_oUChls;
 	CExBaseList m_oIChls;
@@ -47,7 +52,7 @@ private:
 	QStateMonitorVoltCur* m_pSingle;
 	QList<QStateMonitorVoltCur*> m_oVoltCurList;
 	QStateMonitorBinBout* m_pBinBout;
-
+	double m_dUMin,m_dUMax,m_dIMin,m_dIMax;
 private:
 	virtual void InitUI();
 	virtual void InitCurve(CSttMacroChannels *pChls,double fUMin,double fUMax
@@ -56,6 +61,10 @@ private:
 
 private slots:
 	void slot_YRangeChanged(changed_type tagType, QString strText, float fDown, float fUp);
+protected:
+	bool m_bHasInitFinished;
+	virtual void showEvent(QShowEvent *event);
+	int m_nChangedType;
 };
 
 extern QStateMonitorWidget* g_pStateMonitorWidget; 

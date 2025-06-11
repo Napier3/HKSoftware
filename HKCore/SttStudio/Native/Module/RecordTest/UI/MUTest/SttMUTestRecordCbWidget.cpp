@@ -1,9 +1,9 @@
 #include "SttMUTestRecordCbWidget.h"
 #include "../../../SttTestCtrl/SttTestAppBase.h"
 #include "../../../SttTestCtrl/SttTestCtrlCntrNative.h"
-#include "../../../../../Module/SmartCap/XSmartCapMngr.h"
-#include "../../../../../Module/BaseClass/QT/ExBaseListComboBox.h"
-#include "../../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../Module/BaseClass/QT/ExBaseListComboBox.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../../UI/SttTestCntrFrameBase.h"
 
 #include "../SttIecRecordMainWidget.h"

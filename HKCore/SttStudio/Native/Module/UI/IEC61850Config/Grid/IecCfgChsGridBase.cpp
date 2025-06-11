@@ -1,5 +1,5 @@
 #include "IecCfgChsGridBase.h"
-#include "../../61850/Module/CfgDataMngr/IecCfg92Ch.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfg92Ch.h"
 #include "../../Module/CommonMethod/commonMethod.h"
 #include "../../Module/ScrollCtrl/ScrollComboBox.h"
 

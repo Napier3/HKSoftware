@@ -1,6 +1,6 @@
 #include "HarmWidget.h"
 #include "../Module/CommonMethod/commonMethod.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../XLangResource_Native.h"
 #include "SttMacroParaEditViewHarm.h"
 #include "../SttTestCntrFrameBase.h"
@@ -20,6 +20,7 @@ QHarmWidget::QHarmWidget(QWidget *parent) : QParaSetBase(parent)
 	m_pFT3OutParaWidget = NULL;
 	m_bIsChanging = false;
 	m_pInterharmonicsWidget = NULL;
+	m_nParaSetSecondValue = 1;
 	InitUI();
 	SetHarmFont();
 
@@ -76,7 +77,7 @@ void QHarmWidget::InitUI()
 	xlang_SetLangStrToWidget(m_Label_UChannel, "Harm_UChannel", XLang_Ctrls_QLabel);
 	m_pGridLayout_Bottom->addWidget(m_Label_UChannel,0,0);
 	m_pUChannel = new QScrollComboBox();
-	m_pUChannel->setFixedWidth(150);
+	m_pUChannel->setMaximumWidth(150);
 	m_pGridLayout_Bottom->addWidget(m_pUChannel,0,1);
 
 	m_Label_IChannel = new QLabel(tr("电流通道"),this);
@@ -84,7 +85,7 @@ void QHarmWidget::InitUI()
 	m_pGridLayout_Bottom->addWidget(m_Label_IChannel,0,2);
 
 	m_pIChannel = new QScrollComboBox(this);
-	m_pIChannel->setFixedWidth(150);
+	m_pIChannel->setMaximumWidth(150);
 	m_pGridLayout_Bottom->addWidget(m_pIChannel,0,3);
 	
 	m_pbn_SetZero = new QPushButton(tr("谐波清零"),this);
@@ -97,12 +98,12 @@ void QHarmWidget::InitUI()
 
 	strText = "电压全选";
 	m_pVolSelBtn = new QPushButton(strText,this);//电压全选/清空 
-	xlang_SetLangStrToWidget(m_pVolSelBtn, "Harm_UAllSelect", XLang_Ctrls_QPushButton);
+	xlang_SetLangStrToWidget(m_pVolSelBtn, /*"Harm_UAllSelect"*/"Harm_UClear", XLang_Ctrls_QPushButton);
 	m_pGridLayout_Bottom->addWidget(m_pVolSelBtn,1,5);
 
 	strText = "电流全选";
 	m_pCurrSelBtn = new QPushButton(strText,this);//电流全选/清空 
-	xlang_SetLangStrToWidget(m_pCurrSelBtn, "Harm_IAllSelect", XLang_Ctrls_QPushButton);
+	xlang_SetLangStrToWidget(m_pCurrSelBtn, /*"Harm_IAllSelect"*/"Harm_IClear", XLang_Ctrls_QPushButton);
 	m_pGridLayout_Bottom->addWidget(m_pCurrSelBtn,1,6);
 
 // 	m_pVolSelBtn->setVisible(false);
@@ -116,21 +117,21 @@ void QHarmWidget::InitUI()
 	m_pGridLayout_Bottom->addWidget(m_Label_BasicHarmHz,1,0);
 
 	m_lne_BasicHarmHz = new QSttLineEdit(this);
-	m_lne_BasicHarmHz->setFixedWidth(150);
+	m_lne_BasicHarmHz->setMaximumWidth(150);
 	m_pGridLayout_Bottom->addWidget(m_lne_BasicHarmHz,1,1);
 
 	m_pbn_Add = new QPushButton(tr("+"),this);
 	m_pGridLayout_Bottom->addWidget(m_pbn_Add,0,5);
-	m_pbn_Add->setFixedWidth(100);
+	m_pbn_Add->setMaximumWidth(100);
 
 	m_pbn_Del = new QPushButton(tr("-"),this);
 	m_pGridLayout_Bottom->addWidget(m_pbn_Del,0,6);
-	m_pbn_Del->setFixedWidth(100);
+	m_pbn_Del->setMaximumWidth(100);
 
 	//增加一个空白的QLabel，使gridLayout的第四列变宽
 // 	QLabel *pLable_Ex = new QLabel(tr("      "),this);
 // 	m_pGridLayout_Bottom->addWidget(pLable_Ex,1,7);
-// 	pLable_Ex->setFixedWidth(100);
+// 	pLable_Ex->setMaximumWidth(100);
 
 	m_pbn_Lock = new QPushButton(tr("锁"),this);
 
@@ -150,7 +151,7 @@ void QHarmWidget::InitUI()
 #endif
 	m_pbn_Lock->setIcon(m_imgUnlock);
 	m_pbn_Lock->setIconSize(QSize(m_pbn_Add->height(), m_pbn_Add->height()));
-	m_pbn_Lock->setFixedWidth(m_pbn_Add->width());
+	m_pbn_Lock->setMaximumWidth(m_pbn_Add->width());
 	m_pbn_Lock->setText("");
 
 //	m_pGridLayout_Bottom->setRowStretch(1,1);
@@ -183,6 +184,29 @@ void QHarmWidget::InitUI()
 
 }
 
+void QHarmWidget::SetParaSetSecondValue(int nParaSetSecondValue)
+{
+	m_nParaSetSecondValue = nParaSetSecondValue;
+
+	if (m_pParaTable != NULL)
+	{
+		m_pParaTable->SetParaSetSecondValue(m_nParaSetSecondValue);
+	}
+	
+	if (m_pParaWidget != NULL)
+	{
+		m_pParaWidget->SetParaSetSecondValue(m_nParaSetSecondValue);
+	}
+	if (m_pOscillogramGroupWidget != NULL)
+	{
+		m_pOscillogramGroupWidget->SetParaSetSecondValue(m_nParaSetSecondValue);
+	}
+	if (m_pInterharmonicsWidget != NULL)
+	{
+		m_pInterharmonicsWidget->SetParaSetSecondValue(m_nParaSetSecondValue);
+	}
+}
+
 void QHarmWidget::SetHarmFont()
 {
 	m_pbn_Lock->setFont(*g_pSttGlobalFont);
@@ -205,7 +229,7 @@ void QHarmWidget::SetDatas( tmt_HarmTest *pHarmTest,CSttTestResourceBase *pSttTe
 {
 	DisConnectAll();
 	m_pHarmTest = pHarmTest;
-#ifndef _PSX_QT_LINUX_// zhouhj  20230628 在linux下暂时不显示间谐波
+// #ifndef _PSX_QT_LINUX_// zhouhj  20230628 在linux下暂时不显示间谐波
 	if (!m_pInterharmonicsWidget)
 	{
 		m_pInterharmonicsWidget = new QInterharmonicsWidget(&m_pHarmTest->m_oHarmParas, this);
@@ -214,14 +238,33 @@ void QHarmWidget::SetDatas( tmt_HarmTest *pHarmTest,CSttTestResourceBase *pSttTe
 	else
 	{
 		m_pInterharmonicsWidget->m_pParas = &m_pHarmTest->m_oHarmParas;
+		//m_pInterharmonicsWidget->UpdataTableData();//chenling 20250110 移到UpdateTestResource实现
+
 	}
-#endif
+
+	if (m_pInterharmonicsWidget)
+	{	
+		//20250120 suyang 增加更新测试过程中修改参数不更新参数下发
+		connect(m_pInterharmonicsWidget,SIGNAL(sig_updataParas()), this, SLOT(slot_updateHarmParas()),Qt::UniqueConnection);
+	}
+
+
+// #endif
+	debug_time_long_log("HarmWidget::SetDatas InterharmonicsWidget", true);
 
  	m_pSttTestResource = pSttTestResource;
  	m_pOscillogramGroupWidget->setArrUIVOL(m_pHarmTest->m_oHarmParas.m_uiVOL);
  	m_pOscillogramGroupWidget->setArrUICUR(m_pHarmTest->m_oHarmParas.m_uiCUR);
- 	m_pOscillogramGroupWidget->Clear();
  	m_pOscillogramGroupWidget->initUI(m_pSttTestResource);//20230215 zhouyy 设置参数到波形图
+	
+	//chenling 20250211 优化后是通过showevent来，系统参数输出类型有变化重新刷一遍m_pOscillogramGroupWidget
+	if (g_theTestCntrFrame->m_bOutputTypeHasChanged || m_pTabWidget->currentWidget() == m_pOscillogramGroupWidget)
+	{
+		m_pOscillogramGroupWidget->Clear();
+		m_pOscillogramGroupWidget->InitGroupWidget();
+	}
+	
+	debug_time_long_log("HarmWidget::SetDatas OscillogramGroupWidget", true);
 
 	int nVolChIndex = m_pHarmTest->m_oHarmParas.m_nVolChSelect; // m_pUChannel->currentIndex();//20240327 suyang 初始化时获取到结构体中值，不应该获取到当前选中数据 
 	int nCurrChIndex =  m_pHarmTest->m_oHarmParas.m_nCurChSelect; // m_pIChannel->currentIndex();
@@ -279,10 +322,16 @@ void QHarmWidget::SetDatas( tmt_HarmTest *pHarmTest,CSttTestResourceBase *pSttTe
 
 	m_pUChannel->setCurrentIndex(nVolChIndex);
 	m_pIChannel->setCurrentIndex(nCurrChIndex);
+	debug_time_long_log("HarmWidget::SetDatas InitChannels", true);
+
 	slot_UChannelChanged(nVolChIndex);
+	debug_time_long_log("HarmWidget::SetDatas slot_UChannelChanged", true);
+
 	slot_IChannelChanged(nCurrChIndex);
+	debug_time_long_log("HarmWidget::SetDatas slot_IChannelChanged", true);
 
 	m_pParaWidget->SetData(m_pParaSetSttTestResource,&m_pHarmTest->m_oHarmParas);
+	debug_time_long_log("HarmWidget::SetDatas ParaWidget", true);
 
 	bool bAuto = pHarmTest->m_oHarmParas.m_bAuto;
 	m_pbn_Add->setDisabled(bAuto);
@@ -309,8 +358,8 @@ void QHarmWidget::ConnectAll()
 	connect(m_pVolSelBtn, SIGNAL(clicked ()), this, SLOT(slot_VolSelBtnClicked()),Qt::UniqueConnection);
 	connect(m_pCurrSelBtn, SIGNAL(clicked ()), this, SLOT(slot_CurrSelBtnClicked()),Qt::UniqueConnection);
 
-	connect(m_pParaTable->m_pUChannel,SIGNAL(sig_updataParas()), this, SIGNAL(sig_updataParas()),Qt::UniqueConnection);
-	connect(m_pParaTable->m_pIChannel,SIGNAL(sig_updataParas()), this, SIGNAL(sig_updataParas()),Qt::UniqueConnection);
+	connect(m_pParaTable->m_pUChannel,SIGNAL(sig_updataParas()), this, SLOT(slot_updateHarmParas()),Qt::UniqueConnection);
+	connect(m_pParaTable->m_pIChannel,SIGNAL(sig_updataParas()), this, SLOT(slot_updateHarmParas()),Qt::UniqueConnection);
 
 	connect(m_pParaTable->m_pUChannel,  SIGNAL(sig_ChanelValueChanged()),   this,  SLOT(slot_ChanelValueUChanged()),Qt::UniqueConnection);
 	connect(m_pParaTable->m_pUChannel,  SIGNAL(sig_WaveValueChanged()),   this,  SLOT(slot_WaveValueUChanged()),Qt::UniqueConnection);
@@ -323,7 +372,11 @@ void QHarmWidget::ConnectAll()
 
 // 	connect(m_pParaTable->m_pUChannel,  SIGNAL(sig_CheckStateChanged()),   this,  SLOT(slot_CheckStateChanged()),Qt::UniqueConnection);
 // 	connect(m_pParaTable->m_pIChannel,  SIGNAL(sig_CheckStateChanged()),   this,  SLOT(slot_CheckStateChanged()),Qt::UniqueConnection);
-
+	
+	if (m_pInterharmonicsWidget)
+	{
+		connect(m_pInterharmonicsWidget,SIGNAL(sig_updataParas()), this, SLOT(slot_updateHarmParas()),Qt::UniqueConnection);
+	}
 
 	connect(this, SIGNAL(sig_WaveValueChanged(int,int)), m_pOscillogramGroupWidget, SLOT(slot_ValueChanged(int,int)),Qt::UniqueConnection);
 	connect(this, SIGNAL(sig_ChIndexChanged(int)),m_pOscillogramGroupWidget,SLOT(slot_ChnIndexChanged(int)),Qt::UniqueConnection);
@@ -349,8 +402,8 @@ void QHarmWidget::DisConnectAll()
 	disconnect(m_pVolSelBtn, SIGNAL(clicked ()), this, SLOT(slot_VolSelBtnClicked()));
 	disconnect(m_pCurrSelBtn, SIGNAL(clicked ()), this, SLOT(slot_CurrSelBtnClicked()));
 
-	disconnect(m_pParaTable->m_pUChannel,SIGNAL(sig_updataParas()), this, SIGNAL(sig_updataParas()));
-	disconnect(m_pParaTable->m_pIChannel,SIGNAL(sig_updataParas()), this, SIGNAL(sig_updataParas()));
+	disconnect(m_pParaTable->m_pUChannel,SIGNAL(sig_updataParas()), this, SLOT(slot_updateHarmParas()));
+	disconnect(m_pParaTable->m_pIChannel,SIGNAL(sig_updataParas()), this, SLOT(slot_updateHarmParas()));
 
 	disconnect(m_pParaTable->m_pUChannel,  SIGNAL(sig_ChanelValueChanged()),   this,  SLOT(slot_ChanelValueUChanged()));
 	disconnect(m_pParaTable->m_pUChannel,  SIGNAL(sig_WaveValueChanged()),   this,  SLOT(slot_WaveValueUChanged()));
@@ -371,8 +424,17 @@ void QHarmWidget::DisConnectAll()
 #ifdef _PSX_QT_LINUX_
 	disconnect(m_lne_BasicHarmHz, SIGNAL(clicked()), this, SLOT(slot_lne_BasicHarmHzClicked()));
 #endif
+
+	if (m_pInterharmonicsWidget)
+	{
+		disconnect(m_pInterharmonicsWidget,SIGNAL(sig_updataParas()), this, SLOT(slot_updateHarmParas()));
+	}
 }
 
+void QHarmWidget::slot_updateHarmParas()
+{
+	emit sig_updataParas();
+}
 
 void QHarmWidget::slot_UChannelChanged( int nIndex )
 {
@@ -531,6 +593,8 @@ void QHarmWidget::slot_pbn_LockClicked()
 void QHarmWidget::slot_pbn_Estimate()
 {
 	HarmEstimateDlg dlg(&m_pHarmTest->m_oHarmParas, this);
+	dlg.m_nParaSetSecondValue = m_nParaSetSecondValue;
+	dlg.InitUI();
 	dlg.setWindowModality(Qt::WindowModal);
 #ifdef _USE_SoftKeyBoard_
 	QSoftKeyBoard::AttachObj(&dlg);
@@ -570,9 +634,14 @@ void QHarmWidget::slot_VolSelBtnClicked()
 		}
 	else
 	{
+			if ((i != 0) && (i != 1))
+			{
 			m_pParaTable->m_pUChannel->item(i,0)->setCheckState(Qt::Unchecked);
+			}
 			m_pHarmTest->m_oHarmParas.m_uiVOL[nChIndex].Harm[i].m_bSelect = 0;
 		}
+		m_pHarmTest->m_oHarmParas.m_uiVOL[nChIndex].Harm[0].m_bSelect = 1;
+		m_pHarmTest->m_oHarmParas.m_uiVOL[nChIndex].Harm[1].m_bSelect = 1;
 	}
 	m_pVolSelBtn->setText(strText);
 }
@@ -606,9 +675,14 @@ void QHarmWidget::slot_CurrSelBtnClicked()
 		}
 	else
 	{
+			if ((i != 0) && (i != 1))
+			{
 			m_pParaTable->m_pIChannel->item(i,0)->setCheckState(Qt::Unchecked);
+			}
 			m_pHarmTest->m_oHarmParas.m_uiCUR[nChIndex].Harm[i].m_bSelect = 0;
 		}
+		m_pHarmTest->m_oHarmParas.m_uiCUR[nChIndex].Harm[0].m_bSelect = 1;
+		m_pHarmTest->m_oHarmParas.m_uiCUR[nChIndex].Harm[1].m_bSelect = 1;
 	}
 	m_pCurrSelBtn->setText(strText);
 }
@@ -621,6 +695,14 @@ void QHarmWidget::IncreaseOneStepGradient()
 	CString str = m_pParaWidget->m_pCmb_Chanel->currentText();
 
 	QStringList listName = str.split(",");
+
+	if (str.contains(tr("U")))
+	{
+		if (m_nParaSetSecondValue == 0)//一次值时需要进行转换
+		{
+			fStep = fStep/1000;
+		}
+	}
 
 	BOOL bGradientVol = FALSE;
 	int  nItem = 0;
@@ -729,6 +811,14 @@ void QHarmWidget::DecreaseOneStepGradient()
 	int nHarmIndex  = m_pParaWidget->m_pCmb_HarmNum->currentIndex();
 	int nChIndex  =  m_pParaWidget->m_pCmb_Chanel->currentIndex();
 	CString str = m_pParaWidget->m_pCmb_Chanel->currentText();
+
+	if (str.contains(tr("U")))
+	{
+		if (m_nParaSetSecondValue == 0)//一次值时需要进行转换
+		{
+			fStep = fStep/1000;
+		}
+	}
 
 	QStringList listName = str.split(",");
 	BOOL bGradientVol = FALSE;
@@ -841,7 +931,7 @@ void QHarmWidget::StartInit()
 	//m_pUChannel->setDisabled(true);
 	//m_pIChannel->setDisabled(true);
 
-	m_lne_BasicHarmHz->setDisabled(bAuto);
+	m_lne_BasicHarmHz->/*setDisabled(bAuto);*/setEnabled(false);//20241219 suyang 运行过程中,暂不支持
 	m_pbn_SetZero->setDisabled(bAuto);
 	m_pbnEstimate->setDisabled(bAuto);
 
@@ -903,6 +993,12 @@ void QHarmWidget::UpdateTestResource()
 	}
 
 	SetDatas(m_pHarmTest,g_theTestCntrFrame->GetSttTestResource());
+
+	if (m_pInterharmonicsWidget)
+	{
+		m_pInterharmonicsWidget->UpdataTableData();
+	}
+
 
 // 	long nI = m_pIChannel->currentIndex();
 // 	long nU = m_pUChannel->currentIndex();

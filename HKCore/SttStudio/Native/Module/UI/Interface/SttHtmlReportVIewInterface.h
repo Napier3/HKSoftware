@@ -1,14 +1,14 @@
 #pragma once
 
 #include "SttHtmlViewApi.h"
-#include "../../Module/DataMngr/DvmValues.h"
+#include "../../../Module/DataMngr/DvmValues.h"
 
 #ifdef STT_CMD_PARAS_HAS_GUIDEBOOK
 #include "../../SttCmd/GuideBook/SttGuideBook.h"
 #endif
 
 #ifdef STT_MACRO_TEST_UI_USE_GUIDEBOOK
-#include "../../../../AutoTest/Module/GuideBook/Reports.h"
+#include "../../../AutoTest/Module/GuideBook/Reports.h"
 #endif
 
 #define SttHtmlRptCmd_Insert    "insert"

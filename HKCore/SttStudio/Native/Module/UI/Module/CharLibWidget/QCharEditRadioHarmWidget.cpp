@@ -1,7 +1,7 @@
 #include "QCharEditRadioHarmWidget.h"
 //#include "ui_QCharEditRadioHarmWidget.h"
 #include "../../../XLangResource_Native.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 
 QCharEditRadioHarmWidget::QCharEditRadioHarmWidget( QWidget *parent /*= 0*/,CDiffCharCal *pDiffCharCal )
 {

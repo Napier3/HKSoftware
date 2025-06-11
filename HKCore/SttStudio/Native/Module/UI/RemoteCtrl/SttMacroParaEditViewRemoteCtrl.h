@@ -37,6 +37,9 @@ public:
 
 	void UpdateEventGrid();
 	void UpdateDeviceModelRef();
+	void SatrtRemoteCtrlTimer();
+	void StopRemoteCtrlTimer();
+
 
 signals:
 	void sig_updataParas();
@@ -52,6 +55,12 @@ protected slots:
 
 	void slot_updateParas();
 	void slot_RemoteCtrlTimer();
+
+//2024-9-10 lijunqing 优化系统程序启动的效率
+protected:
+	bool m_bHasInitFinished;  //是否已经初始化完成，没有初始化，不能进行操作
+	virtual void showEvent(QShowEvent *event);
+	void InitMacroParaEditViewRemoteCtr();
 };
 
 extern QSttMacroParaEditViewRemoteCtrl* g_pRemoteCtrl;

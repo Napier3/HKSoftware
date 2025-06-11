@@ -3,7 +3,6 @@
 #include "../../../../XLangResource_Native.h"
 #include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../../Module/API/StringConvertApi.h"
-
 extern void Global_SetComCfgTableHeight(QTableWidget *pGrid);
 extern QFont *g_pSttGlobalFont;
 
@@ -90,10 +89,18 @@ void SttCDevCommParaCommGrid::EndEditCell_CmdDataValue(int nRow, int nCol,QGV_IT
 
 	if (*pVCellData->pString != pCell->text())
 	{
+		if (pCell->text() == _T("0") || pCell->text() == _T("1") || pCell->text() == _T("2"))
+		{
 		*pVCellData->pString = pCell->text();
 		CDvmData *pData = (CDvmData*)pVCellData->pObj;
 		pData->m_nChange = 1;
 		pGrid->SetItemFgColour(nRow, 2, 255, 0, 0);
+	}
+		else
+		{
+			//CLogPrint::LogFormatString(XLOGLEVEL_ERROR,_T("输入值含有非法字符."));
+			pCell->setText("");  
+		} 
 	}
 }
 

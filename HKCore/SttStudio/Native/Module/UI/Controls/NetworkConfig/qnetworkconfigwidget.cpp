@@ -2,11 +2,11 @@
 #include "ui_qnetworkconfigwidget.h"
 #include "../../../SttGlobalDef.h"
 #include "QModifyIPAddrDlg.h"
-#include "../../Module/API/GlobalConfigApi.h"
-#include "../../Module/OSInterface/QT/XMessageBox.h"
+#include "../../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/OSInterface/QT/XMessageBox.h"
 #include "../Module/XLangResource_Native.h"
-#include "../../61850/Module/XLanguageResourcePp_Mms.h"
-#include "../../Module/XLanguage/XLanguageResource.h"
+#include "../../../61850/Module/XLanguageResourcePp_Mms.h"
+#include "../../../Module/XLanguage/XLanguageResource.h"
 
 
 #ifdef _USE_SoftKeyBoard_

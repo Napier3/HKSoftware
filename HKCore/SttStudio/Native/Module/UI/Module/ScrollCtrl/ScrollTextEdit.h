@@ -4,7 +4,6 @@
 #include "ScrollDef.h"
 #include <QTextEdit>
 #include <QMenu>
-#include <QAction>
 
 class QScrollTextEdit : public QTextEdit
 {

@@ -1,7 +1,7 @@
 #include "StateParaWidget.h"
 #include "../Module/UI/Module/CommonMethod/commonMethod.h"
 #include "SttMacroParaEditViewState.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../SttTestCntrFrameBase.h"
 #include "../Controls/SttCheckBox.h"
 

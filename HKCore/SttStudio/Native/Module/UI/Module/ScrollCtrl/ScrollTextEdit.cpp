@@ -2,7 +2,7 @@
 #ifndef _PSX_QT_LINUX_
 #include <QApplication>
 #include <QClipboard>
-#include "../../Module\XLanguage\XLanguageResource.h"
+#include "../../../../../Module\XLanguage\XLanguageResource.h"
 
 #endif
 

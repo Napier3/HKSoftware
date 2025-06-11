@@ -2,7 +2,7 @@
 #include "tmt_linevolt_gradient_test.h"
 #include"../../../SttCmd/SttTestCmd.h"
 #include"../tmt_gradient_test.h"
-#include"../../../../../Module/API/GlobalConfigApi.h"
+#include"../../../Module/API/GlobalConfigApi.h"
 
 #ifndef _STT_NOT_IN_TEST_SERVER_
 #include "../SttSystemConfig.h"

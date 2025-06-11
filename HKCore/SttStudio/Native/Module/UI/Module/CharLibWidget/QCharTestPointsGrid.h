@@ -2,8 +2,8 @@
 #define QCHARTESTPOINTSGRID_H
 
 #include <QObject>
-#include "../../AutoTest/Module/Characteristic/Characteristics.h"
-#include "../../AutoTest/Module/Characteristic/Characteristic.h"
+#include "../../../AutoTest/Module/Characteristic/Characteristics.h"
+#include "../../../AutoTest/Module/Characteristic/Characteristic.h"
 #include "../QExBaseListGridBase/QExBaseListGridBase.h"
 
 #define CHARTESTPOINTS_GRID_COLS	  	6

@@ -1,9 +1,9 @@
 #include "RemoteMeasRatWidget.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/XLanguage/XLanguageMngr.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/XLanguageMngr.h"
 #include "../Module/XLangResource_Native.h"
 #include "../Module/CommonMethod/commonMethod.h"
-#include "../../Module/DataMngr/DvmDevice.h"
+#include "../../../Module/DataMngr/DvmDevice.h"
 #include "../../SttTestCtrl/SttTestAppBase.h"
 #include "SttMacroParaEditViewRemoteMeas.h"
 #include "../SttTestCntrFrameBase.h"
@@ -220,7 +220,7 @@ void QRemoteMeasRatWidget::initInterSelectData()
 			continue;
 		}
 
-		if (pCurObj->m_strID == _T("report"))
+		if (pCurObj->m_strID == _T("report")|| pCurObj->m_strID == _T("CommMessage"))
 		{
 			continue;
 		}

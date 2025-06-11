@@ -60,6 +60,7 @@ void QSttSelSclFileDlg::InitUI()
 	//strTemp = _T("确定");
 //	xlang_GetLangStrByFile(g_sLangTxt_Native_OK,"Native_OK");
 	m_pOK_PushButton->setText(g_sLangTxt_OK);
+	m_pOK_PushButton->setFont(*g_pSttGlobalFont);
 
 // 	m_pCancel_PushButton = new QPushButton(this);
 // 	strTemp = _T("取消");

@@ -331,7 +331,7 @@ void stt_xml_serialize(tmt_SoeResult *pResults, CSttXmlSerializeBase *pXmlSieria
 }
 
 #include"../../SttCmd/SttTestCmd.h"
-#include"../../../../Module/API/GlobalConfigApi.h"
+#include"../../../Module/API/GlobalConfigApi.h"
 void stt_xml_serialize_write_SoeTest()
 {
 	tmt_SoeTest oSoeTest;

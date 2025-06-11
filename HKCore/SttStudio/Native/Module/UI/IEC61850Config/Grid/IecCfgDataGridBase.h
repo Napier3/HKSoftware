@@ -4,8 +4,8 @@
 #include "../../Module/QExBaseListGridBase/QExBaseListGridBase.h"
 #include "../../Module/QExBaseListGridBase/QExBaseListComBoxDelegBase.h"
 #include "../../Module/CommonCtrl_QT/QIecWidgetDelegate.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgDataMngrGlobal.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgDataBase.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgDataMngrGlobal.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgDataBase.h"
 
 class QFiberSelectedComBoxDelegBase : public QExBaseListComBoxDelegBase
 {	

@@ -1,5 +1,5 @@
 #include "SttMacroParaEditViewLineVolGradient.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../Gradient/GradientSettingDlg.h"
 #include "../SttTestCntrFrameBase.h"
 #include "../../SttTestResourceMngr/TestResource/SttTestResource_6U6I.h"
@@ -632,7 +632,7 @@ void QSttMacroParaEditViewLineVolGradient::InitLanuage()
 	ui->m_rbAnd->setText(strText);
 	xlang_GetLangStrByFile(strText, "Native_LogicOr");
 	ui->m_rbOr->setText(strText);
-	xlang_SetLangStrToWidget(ui->m_gpBin, "Native_Bin", XLang_Ctrls_QGroupBox);
+	xlang_SetLangStrToWidget(ui->m_gpBin, "sInputValue", XLang_Ctrls_QGroupBox);
 	xlang_SetLangStrToWidget(ui->m_gpBoutNormal, "Gradient_Normal", XLang_Ctrls_QGroupBox);
 	xlang_SetLangStrToWidget(ui->m_gpBoutError, "Gradient_Failure", XLang_Ctrls_QGroupBox);
 
@@ -657,7 +657,7 @@ void QSttMacroParaEditViewLineVolGradient::InitLanuage()
 	ui->m_cbBOut2_E->setText(/*strText +*/ "2");
 	ui->m_cbBOut3_E->setText(/*strText +*/ "3");
 	ui->m_cbBOut4_E->setText(/*strText +*/ "4");
-	xlang_GetLangStrByFile(strText,"Native_Bout");
+	xlang_GetLangStrByFile(strText,"sOutputValue");
 
 	CString str;
 	xlang_GetLangStrByFile(str,"Gradient_Normal");
@@ -1550,6 +1550,11 @@ void QSttMacroParaEditViewLineVolGradient::InitUI()
 	xlang_GetLangStrByFile(strText, "Gradient_Clockwise");
 	ui->m_cbbDirection->addItem(strText);
 	ui->m_cbbDirection->setEnabled(false);
+	xlang_SetLangStrToWidget(ui->m_btnEstimate, "State_Estimate", XLang_Ctrls_QPushButton);
+	xlang_GetLangStrByFile(strText, "Gradient_ChangingSet"); //递变参数设置
+	ui->m_gpChangeSet->setTitle(strText);
+	xlang_GetLangStrByFile(strText, "sGeneralParameter");//通用参数
+	ui->m_gpMannual->setTitle(strText);
 
 	initMaxPositiveEdit(ui->m_editInit);
 	initMaxPositiveEdit(ui->m_editFinish);
@@ -1958,14 +1963,15 @@ void QSttMacroParaEditViewLineVolGradient::UpdateLineVolGradientChs()
 		pCurTypeValue = (CDataTypeValue *)m_oLineVolGradientChs.GetNext(pos);
 		CString strAllFreq;
 		xlang_GetLangStrByFile(strAllFreq, "Gradient_AllFreq");
-		if (pCurTypeValue->m_strName == strAllFreq)
-		{
-			ui->m_cbbVar->addItem(pCurTypeValue->m_strID);
-		}
-		else
-		{
-			ui->m_cbbVar->addItem(pCurTypeValue->m_strID.GetString());
-		}
+// 		if (pCurTypeValue->m_strName == strAllFreq)
+// 		{
+// 			ui->m_cbbVar->addItem(pCurTypeValue->m_strID);
+// 		}
+// 		else
+// 		{
+// 			ui->m_cbbVar->addItem(pCurTypeValue->m_strID.GetString());
+// 		}
+		ui->m_cbbVar->addItem(pCurTypeValue->m_strName);//dingxy 20250123 根据通道映射修改通道名称
 	}
 
 	connect(ui->m_cbbVar, SIGNAL(currentIndexChanged(int)), this, SLOT(on_m_cbbVar_currentIndexChanged( int)));

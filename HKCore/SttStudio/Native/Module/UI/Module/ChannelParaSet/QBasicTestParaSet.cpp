@@ -15,6 +15,9 @@ QBasicTestParaSet::QBasicTestParaSet(QWidget *parent)
 	m_fIEDVal = -1;
 	m_fIEDVal = -1;
 	m_ndc_type = -1;
+	m_nParaSetSecondValue = 1;
+	m_fHistoryUMax = 0;
+	m_fHistoryIMax = 0;
 }
 
 QBasicTestParaSet::~QBasicTestParaSet()
@@ -33,6 +36,15 @@ void QBasicTestParaSet::DCStateChanged(int type,bool bdc)
 	}
 }
 
+void QBasicTestParaSet::SetParaSetSecondValue(int nParaSetSecondValue)
+{
+	m_nParaSetSecondValue = nParaSetSecondValue;
+	if (m_pParaSetImp != NULL)
+	{
+		m_pParaSetImp->SetParaSetSecondValue(m_nParaSetSecondValue);
+	}
+}
+
 void QBasicTestParaSet::DCStateChanged()
 {
 	if (m_ndc_type == -1)
@@ -43,19 +55,19 @@ void QBasicTestParaSet::DCStateChanged()
 	m_pParaSetImp->DCStateChanged(m_ndc_type, m_bDC);
 }
 
-void QBasicTestParaSet::setUAmpMaxMinValue()
+void QBasicTestParaSet::setUAmpMaxMinValue(bool bCanUpdateTable)
 {
 	if (m_pParaSetImp != NULL)
 	{
-		m_pParaSetImp->setUAmpMaxMinValue();
+		m_pParaSetImp->setUAmpMaxMinValue(bCanUpdateTable);
 	}
 }
 
-void QBasicTestParaSet::setIAmpMaxMinValue()
+void QBasicTestParaSet::setIAmpMaxMinValue(bool bCanUpdateTable)
 {
 	if (m_pParaSetImp != NULL)
 	{
-		m_pParaSetImp->setIAmpMaxMinValue();
+		m_pParaSetImp->setIAmpMaxMinValue(bCanUpdateTable);
 	}
 }
 
@@ -171,11 +183,11 @@ void QBasicTestParaSet::initUI()
 	}
 }
 
-void QBasicTestParaSet::initData()
+void QBasicTestParaSet::initData(bool bCanUpdateTable)
 {
 	if (m_pParaSetImp != NULL)
 	{
-		m_pParaSetImp->initData();
+		m_pParaSetImp->initData(bCanUpdateTable);
 	}
 }
 
@@ -276,11 +288,11 @@ void QBasicTestParaSet::SetBasicTestParaSetImp(QBasicTestParaSetImp* pParaSetImp
 	m_pParaSetImp = pParaSetImp;
 }
 
-void QBasicTestParaSet::setMaxMinAndEDVal()
+void QBasicTestParaSet::setMaxMinAndEDVal(bool bCanUpdateTable)
 {
 	if (m_pParaSetImp != NULL)
 	{
-		m_pParaSetImp->setMaxMinAndEDVal();
+		m_pParaSetImp->setMaxMinAndEDVal(bCanUpdateTable);
 	}
 }
 
@@ -317,16 +329,92 @@ void QBasicTestParaSet::showEvent(QShowEvent *)
 
 	InitSttInfWidget(m_pParaSetImp);
 
-	initUI();
+	//initUI();  	//2024-9-15 lijunqing 优化程序启动速度  在setPropertyOfParaSet中会调用，因此注释掉此行，避免重复多次调用
 
 	setPropertyOfParaSet();//20230313 zhouhj 改为先初始化界面,再设置最大最小值
-	setMaxMinAndEDVal();
+	setMaxMinAndEDVal(false);
 
-	initData();
+	m_pParaSetImp->SetParaSetSecondValue(m_nParaSetSecondValue);
+	initData(true);
 	DCStateChanged();
 }
 
 void QBasicTestParaSet::Send_UpdataParas()
 {
 	emit sig_updataParas();
+}
+
+void QBasicTestParaSet::GetUIMaxMinValue(double& dUMin,double& dUMax,double& dIMin,double& dIMax,bool bStart)
+{
+	int i=0;
+	float fValue = 0.0f;
+	float fUMin = dUMin;
+	float fUMax = dUMax;
+	float fIMin = dIMin;
+	float fIMax = dIMax;
+
+	for (i=0;i<MAX_VOLTAGE_COUNT;i++)
+	{
+		if (!m_pArrUIVOL)
+		{
+			break;
+		}
+
+		fValue = m_pArrUIVOL[i].Harm[1].fAmp;
+		if (fValue > fUMax)
+		{
+			fUMax = fValue;
+			if (bStart)
+			{
+				if (fUMax > m_fHistoryUMax)
+				{
+					m_fHistoryUMax = fUMax;
+				}
+				else
+				{
+					fUMax = m_fHistoryUMax;
+				}
+			}
+		}
+
+		if(fValue < fUMin)
+		{
+			fUMin = fValue;
+		}
+	}
+
+	for (i=0;i<MAX_CURRENT_COUNT;i++)
+	{
+		if (!m_pArrUICUR)
+		{
+			break;
+		}
+
+		fValue = m_pArrUICUR[i].Harm[1].fAmp;
+		if (fValue > fIMax)
+		{
+			fIMax = fValue;
+		}
+		if (bStart)
+		{
+			if (fIMax > m_fHistoryUMax)
+			{
+				m_fHistoryIMax = fIMax;
+			}
+			else
+			{
+				fIMax = m_fHistoryIMax;
+			}
+		}
+
+		if(fValue < fIMin)
+		{
+			fIMin = fValue;
+		}
+	}
+
+	dUMin = (double)fUMin;
+	dUMax = (double)fUMax;
+	dIMin = (double)fIMin;
+	dIMax = (double)fIMax;
 }

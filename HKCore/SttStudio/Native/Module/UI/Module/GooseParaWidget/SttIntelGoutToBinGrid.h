@@ -3,8 +3,8 @@
 
 #include "../QExBaseListGridBase/QExBaseListGridBase.h"
 #include "../QExBaseListGridBase/QExBaseListComBoxDelegBase.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgDataMngrGlobal.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgGoutCh.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgDataMngrGlobal.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgGoutCh.h"
 #include "IecCfgGoutChsGrid.h"
 #define STTINTELGOUTTOBINGRID_GRID_COLS		6
 class CSttIntelGoutToBinGrid : public QExBaseListGridBase

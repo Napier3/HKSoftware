@@ -3,14 +3,14 @@
 
 #include <QDialog>
 #include <QFont>
-#include "../../../../Module/API/StringApi.h"
+#include "../../../Module/API/StringApi.h"
 
 #include "../PpSttIotEngineClientApp.h"
 #include "SttPxEngineDvmTreeCtrl.h"
 #include "SttPxEngineDsEditGrid.h"
 
 #include "PpSttIotEngineClientAppWnd.h"
-#include "../../../../Module/BaseClass/ExBaseCycleArray.h"
+#include "ExBaseCycleArray.h"
 
 //////////////////////////////////////////////////////////////////////////
 //QPpSttIotEngineClientWidget

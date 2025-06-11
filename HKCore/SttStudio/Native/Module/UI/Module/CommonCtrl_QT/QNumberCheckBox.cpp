@@ -1,5 +1,5 @@
 #include "QNumberCheckBox.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 
 QNumberCheckBox::QNumberCheckBox(QWidget *parent)
 	: QCheckBox(parent)

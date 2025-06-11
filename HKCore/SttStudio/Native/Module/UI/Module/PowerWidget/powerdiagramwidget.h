@@ -70,6 +70,9 @@ public:
 	void SetEnabled_Alignment();
 	void InitLanuage();
 
+	//void SetParaSetSecondValue(int nParaSetSecondValue);
+	int m_nParaSetSecondValue;	 //一次值、二次值
+
 public:
 
 	QVBoxLayout *m_pMainVLayout;
@@ -173,9 +176,9 @@ protected:
 	void GetPhaseVolValue(tmt_channel* pVOL,QLineEdit *pAmpVol_Edit,QLineEdit *pAngleVol_Edit,QLineEdit *pFreqVol_Edit);
 	void GetPhaseCurValue(tmt_Channel* pCUR,QLineEdit *pAmpCur_Edit,QLineEdit *pAngleCur_Edit,QLineEdit *pFreqCur_Edit);
 	void GetLineVolValue(tmt_Channel*pA, tmt_Channel*pB,QLineEdit *pAmpVol_Edit,QLineEdit *pAngleVol_Edit);
-	void GetPositiveSeqValue(tmt_Channel*pA, tmt_Channel*pB, tmt_Channel*pC,QLineEdit *pAmp_Edit,QLineEdit *pAngle_Edit);
-	void GetNegativeSeqValue(tmt_Channel*pA, tmt_Channel*pB, tmt_Channel*pC,QLineEdit *pAmp_Edit,QLineEdit *pAngle_Edit);
-	void GetZeroSeqValue(tmt_Channel*pA, tmt_Channel*pB, tmt_Channel*pC,QLineEdit *pAmp_Edit,QLineEdit *pAnglel_Edit);
+	void GetPositiveSeqValue(tmt_Channel*pA, tmt_Channel*pB, tmt_Channel*pC,QLineEdit *pAmp_Edit,QLineEdit *pAngle_Edit,int nCurorVol);//20250218 suyang 增加变量判断是电压还是电流序分量
+	void GetNegativeSeqValue(tmt_Channel*pA, tmt_Channel*pB, tmt_Channel*pC,QLineEdit *pAmp_Edit,QLineEdit *pAngle_Edit,int nCurorVol);
+	void GetZeroSeqValue(tmt_Channel*pA, tmt_Channel*pB, tmt_Channel*pC,QLineEdit *pAmp_Edit,QLineEdit *pAnglel_Edit,int nCurorVol);
 	
   
 	void UpdatePowerValueTest(CSttMacroChannel *pSttVolCh,CSttMacroChannel *pSttCurCh,float *pfAttribute,double *pPowerValue,
@@ -197,13 +200,13 @@ protected:
 
 	void UpdateCurPositiveSeqValueTest(CSttMacroChannel *pSttCurChA,CSttMacroChannel *pSttCurChB,CSttMacroChannel *pSttCurChC
 		                              ,float *pfAttributeA,float *pfAttributeB,float *pfAttributeC
-		                              ,QLineEdit *pCurAmp_Edit,QLineEdit *pCurAngle_Edit);
+		                              ,QLineEdit *pCurAmp_Edit,QLineEdit *pCurAngle_Edit,int nCurorVol);
 	void UpdateCurNegativeSeqValueTest(CSttMacroChannel *pSttCurChA,CSttMacroChannel *pSttCurChB,CSttMacroChannel *pSttCurChC
 		                              ,float *pfAttributeA,float *pfAttributeB,float *pfAttributeC
-		                              ,QLineEdit *pCurAmp_Edit,QLineEdit *pCurAngle_Edit);
+		                              ,QLineEdit *pCurAmp_Edit,QLineEdit *pCurAngle_Edit,int nCurorVol);
 	void UpdateCurZeroSeqValueTest(CSttMacroChannel *pSttCurChA,CSttMacroChannel *pSttCurChB,CSttMacroChannel *pSttCurChC
 		                          ,float *pfAttributeA,float *pfAttributeB,float *pfAttributeC
-		                          ,QLineEdit *pCurAmp_Edit,QLineEdit *pCurAngle_Edit);
+		                          ,QLineEdit *pCurAmp_Edit,QLineEdit *pCurAngle_Edit,int nCurorVol);
 
 
 	

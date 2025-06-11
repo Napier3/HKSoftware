@@ -13,7 +13,7 @@
 #include "../Module/CommonCtrl_QT/QIecLineEdit.h"
 #include "../Module/CommonCtrl_QT/QLongLineEdit.h"
 #include "../Module/CommonCtrl_QT/QNumberCheckBox.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgGoutDatas.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgGoutDatas.h"
 #include "Grid/IecCfgGoutDataGrid.h"
 
 

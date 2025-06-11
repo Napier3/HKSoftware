@@ -1,7 +1,7 @@
 #include "SttMacroParaEditViewPowerManu.h"
 #include "ui_SttMacroParaEditViewManual.h"
 #include "../../SmartCap/XSmartCapMngr.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../SttTest/Common/tmt_manu_test.h"
 #include "../SttTestCntrFrameBase.h"
 #include "../../SttTestResourceMngr/TestResource/SttTestResource_Sync.h"
@@ -52,19 +52,20 @@ QSttMacroParaEditViewPowerManu::QSttMacroParaEditViewPowerManu(QWidget *parent)
 
 	InitPVView();
 	InitParasView();
-	InitConnect();
+	
 
 	m_pPowerManualWidget->SetData(g_oSttTestResourceMngr.m_pTestResouce, m_pManualParas, 0);
 
 	if (m_oPV.m_pPUParaWidget)
 	{
-		m_oPV.m_pPUParaWidget->setMacroType(MACROTYPE_ManualHarm);
+		m_oPV.m_pPUParaWidget->setMacroType(MACROTYPE_ManualPower);
 		m_oPV.m_pPUParaWidget->setHarmIndex(&m_nManuHarmIndex);
 		m_oPV.m_pPUParaWidget->setPropertyOfParaSet(P_Common,g_oSttTestResourceMngr.m_pTestResouce,m_pManualParas->m_uiVOL,m_pManualParas->m_uiPOW,FALSE);
 		m_oPV.m_pPUParaWidget->setMaxMinAndEDVal();
 		connect(m_oPV.m_pPUParaWidget,SIGNAL(sig_updataParas()),this,SLOT(slot_updateParas()), Qt::UniqueConnection);
 	}
 
+	InitConnect();
     g_pPowerManuTest = this;
  
 	SetDatas(NULL);
@@ -199,19 +200,19 @@ void QSttMacroParaEditViewPowerManu::SerializeTestParas(CSttXmlSerializeBase *pM
 
 	stt_xml_serialize(&pTmtManualTest->m_oPowerManuParas, pMacroParas,nVolRsNum/3,nCurRsNum/3);
 
-	//if (bHasGoosePub)
-	//{
-	//	CIecCfgGoutDatas *pGoutDatas = g_oSttTestResourceMngr.m_oIecDatasMngr.GetGoutMngr()/*m_listGoosePub.at(0)*/;
-	//	ASSERT(pGoutDatas);
-	//	SerializeGoosePubs(pMacroParas,pGoutDatas);
-	//}
+	if (bHasGoosePub)
+	{
+		CIecCfgGoutDatas *pGoutDatas = g_oSttTestResourceMngr.m_oIecDatasMngr.GetGoutMngr()/*m_listGoosePub.at(0)*/;
+		ASSERT(pGoutDatas);
+		SerializeGoosePubs(pMacroParas,pGoutDatas);
+	}
 
-	//if (bHasGoosePub)
-	//{
-	//	CIecCfgDatasSMV *pIecCfgDatasSMV = g_oSttTestResourceMngr.m_oIecDatasMngr.GetSmvMngr();
-	//	ASSERT(pIecCfgDatasSMV);
-	//	SerializeFT3Pubs(pMacroParas,pIecCfgDatasSMV);
-	//}
+	if (bHasGoosePub)
+	{
+		CIecCfgDatasSMV *pIecCfgDatasSMV = g_oSttTestResourceMngr.m_oIecDatasMngr.GetSmvMngr();
+		ASSERT(pIecCfgDatasSMV);
+		SerializeFT3Pubs(pMacroParas,pIecCfgDatasSMV);
+	}
 }
 
 void QSttMacroParaEditViewPowerManu::OnTestResults(CDataGroup *pResults)
@@ -644,7 +645,7 @@ void QSttMacroParaEditViewPowerManu::slot_updateParas()
 	{
 		SendUpdateParameter();
 	}
-
+        m_oPV.m_pPUParaWidget->setMaxMinAndEDVal();//add wangtao 更新电压和功率的最大最小值
 	//g_theTestCntrFrame->UpdateVectorData();
 	//g_theTestCntrFrame->UpdatePowerData();
     CalPhaseValues();
@@ -655,21 +656,16 @@ void QSttMacroParaEditViewPowerManu::CalPhaseValues() //2023-2-28 chenling
 {
 	float dA_mag,dA_ang,dB_mag,dB_ang,dC_mag,dC_ang;
 	
-	for (int j = 0;j < m_pPowerManualWidget->m_pTestResource->GetVCurRsNum();j++ )
+	for (int j = 0;j < 3;j++ )
 	{
-		CalABCValues_ByPowerValues_Float(dA_mag,dA_ang,dB_mag,dB_ang,dC_mag,dC_ang,
-			m_pManualParas->m_uiPOW[j].m_fPpower, m_pManualParas->m_uiPOW[j].m_fQpower,m_pManualParas->m_uiVOL[j].Harm[1].fAmp,m_pManualParas->m_uiVOL[j].Harm[1].fAngle,
-			m_pManualParas->m_uiPOW[j+1].m_fPpower, m_pManualParas->m_uiPOW[j+1].m_fQpower,m_pManualParas->m_uiVOL[j+1].Harm[1].fAmp,m_pManualParas->m_uiVOL[j+1].Harm[1].fAngle,
-			m_pManualParas->m_uiPOW[j+2].m_fPpower, m_pManualParas->m_uiPOW[j+2].m_fQpower,m_pManualParas->m_uiVOL[j+2].Harm[1].fAmp,m_pManualParas->m_uiVOL[j+2].Harm[1].fAngle);
-   
+		CalABCValues_ByPowerValues_Float(dA_mag,dA_ang,
+			m_pManualParas->m_uiPOW[j].m_fPpower, m_pManualParas->m_uiPOW[j].m_fQpower,m_pManualParas->m_uiVOL[j].Harm[1].fAmp,
+			m_pManualParas->m_uiVOL[j].Harm[1].fAngle);
+
 		 m_uiCUR[j].Harm[1].fAmp = dA_mag;
 		 m_uiCUR[j].Harm[1].fAngle = dA_ang;
-		 m_uiCUR[j+1].Harm[1].fAmp = dB_mag;
-		 m_uiCUR[j+1].Harm[1].fAngle = dB_ang;
-		 m_uiCUR[j+2].Harm[1].fAmp = dC_mag;
-		 m_uiCUR[j+2].Harm[1].fAngle = dC_ang;
 
-		j=j+2;//GetVCurRsNum只有一组，+2没有意义
+		//j=j+2;//GetVCurRsNum只有一组，+2没有意义
 	}
 
 	g_theTestCntrFrame->UpdatePowerData();
@@ -702,14 +698,21 @@ void QSttMacroParaEditViewPowerManu::slot_ChSelectComboBox_currentIndexChanged(i
 
 	int	nGradientChSelect = m_pManualParas->m_nGradientChSelect;
 
-	if(SEQUENCE_CHANNAL_TYPE_I(nGradientChSelect))
+	m_pManualParas->m_nVarIndexType = 0;
+
+	//区分视在功率、有功功率、无功功率
+	/*if (POWER_CHANNAL_TYPE_S(nGradientChSelect))
 	{
 		m_pManualParas->m_nVarIndexType = 0;
 	}
-	else if(SEQUENCE_CHANNAL_TYPE_U(nGradientChSelect))
+	else if (POWER_CHANNAL_TYPE_P(nGradientChSelect))
 	{
 		m_pManualParas->m_nVarIndexType = 1;
 	}
+	else if (POWER_CHANNAL_TYPE_Q(nGradientChSelect))
+	{
+		m_pManualParas->m_nVarIndexType = 2;
+	}*/
 }
 
 void QSttMacroParaEditViewPowerManu::slot_ChangedTypeComboBox_currentIndexChanged(int index)
@@ -811,6 +814,15 @@ void QSttMacroParaEditViewPowerManu::GetDatas(CDataGroup *pParas)
 //判断使用的keyboard类型
 void QSttMacroParaEditViewPowerManu::slot_edit_changed(QSttLineEdit* pEditLine, bool bIsNor)
 {
+	//20240801 gongyiping 
+	if (pEditLine->inherits(STT_SETTING_LINEEDIT_ClassID/*"QSettingEdit"*/))
+	{
+		if (((QSettingLineEdit*)pEditLine)->IsSetting())
+		{
+			return;
+		}
+	}
+
 	if (pEditLine->text().isEmpty())
 	{
 		pEditLine->setText("0.0");
@@ -930,6 +942,7 @@ void QSttMacroParaEditViewPowerManu::SetDatas(CDataGroup *pDataset)
 	{
 		CSttDataGroupSerializeRead oRead(pDataset);
 		stt_xml_serialize(m_pManualParas, &oRead);
+		ReadModeDataSaveMaps(&oRead);	//20240913 huangliang 保存模板中定值关联关系
 	}
 	g_theTestCntrFrame->InitVectorWidget(m_pManualParas->m_uiVOL,m_uiCUR);
     g_theTestCntrFrame->InitStateMonitor();
@@ -939,6 +952,33 @@ void QSttMacroParaEditViewPowerManu::SetDatas(CDataGroup *pDataset)
 	CalPhaseValues();
 
     UpdateManualParas();
+}
+
+CString QSttMacroParaEditViewPowerManu::GetMacroTestResultUnit()
+{
+	if (m_pPowerManualWidget == NULL)
+	{
+		return _T("");
+	}
+	CString strText;
+	switch (m_pPowerManualWidget->m_nChanneType)
+	{
+	case 0:
+		strText = "VA";
+		break;
+	case 1:
+		strText = "W";
+		break;
+	case 2:
+		strText = "Var";
+		break;
+	default:
+		strText = "";
+		break;
+	}
+
+	return strText;
+
 }
 
 void QSttMacroParaEditViewPowerManu::slot_StepTime_LineEdit_Changed()
@@ -980,6 +1020,9 @@ void QSttMacroParaEditViewPowerManu::slot_BinarySetPushButton_clicked()
 	if (oManualBinBoutDlg.exec() == QDialog::Accepted)
 	{
 		emit sig_updataParas();
+		//2024-8-1 wuxinyi 新增更新开入量状态灯
+		CopyBinaryConfig();
+                //stt_Frame_UpdateToolButtons();
 	}
 #ifdef _USE_SoftKeyBoard_ 
 	QSoftKeyBoard::ReAttachObj();

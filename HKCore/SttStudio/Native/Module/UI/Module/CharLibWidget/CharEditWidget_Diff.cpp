@@ -2,12 +2,12 @@
 
 #include "../../SttTestCntrFrameBase.h"
 #include "../../Module/CommonMethod/commonMethod.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/DataMngr/DvmValues.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/DataMngr/DvmValues.h"
 #include "../../../XLangResource_Native.h"
 #include "QCharEditRadioHarmWidget.h"
 #include "QCharEditRadioNormalWidget.h"
-#include "../../Module/XLanguage/XLanguageResource.h"
+#include "../../../Module/XLanguage/XLanguageResource.h"
 
 //////////////////////////////////////////////////////////////////////////
 //QCharEditGrid_Character

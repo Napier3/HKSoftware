@@ -2,12 +2,12 @@
 #include "ui_SttIecRecordMainWidget.h"
 #include "../../SttTestCtrl/SttTestAppBase.h"
 #include "../../SttTestCtrl/SttTestCtrlCntrNative.h"
-#include "../../../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../Module/SmartCap/XSmartCapMngr.h"
 
 #include "SttIecRecordDetectWidget.h"
 #include "SttIecRecordCbWidget.h"
 #include "MUTest/SttMUTestRecordCbWidget.h"
-#include "../../../../Module/SmartCap/61850Cap/CapDevice/CapAnalysisConfig.h"
+#include "../../../Module/SmartCap/61850Cap/CapDevice/CapAnalysisConfig.h"
 #include "../../UI/SttTestCntrFrameBase.h"
 #include "../../UI/SttTestCntrCmdDefine.h"
 

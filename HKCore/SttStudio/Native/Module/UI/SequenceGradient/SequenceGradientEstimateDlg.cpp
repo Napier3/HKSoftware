@@ -1,5 +1,5 @@
 #include "SequenceGradientEstimateDlg.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include <QBoxLayout>
 #include <QGridLayout>
 #include <QPushButton>
@@ -26,7 +26,7 @@ void SequenceGradientEstimateGrid::InitGrid()
 	strRelError = g_sLangTxt_StateEstimate_RelError;//strRelError = "相对误差(%)"
 	strRelError += "(%)";
 	xlang_GetLangStrByFile(strAbsError, "StateEstimate_AbsError");//strAbsError = "绝对误差"
-	xlang_GetLangStrByFile(strSettingValue, "State_SettingValue");//strSettingValue = "整定值"
+	xlang_GetLangStrByFile(strSettingValue, "sSetValue");//strSettingValue = "整定值"
 
 	setHorizontalHeaderLabels(QStringList() << strName << strErrorType << strRelError << strAbsError << strSettingValue);
 	setColumnWidth(0, 120);

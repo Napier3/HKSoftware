@@ -1,6 +1,6 @@
 #include "GradientSetDlg.h"
 #include "../Module/SttTestResourceMngr/SttTestResourceMngr.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../Module/UI/Controls/SttLineEdit.h"
 #include "../../SttTestCntrFrameBase.h"
 
@@ -21,6 +21,7 @@ GradientSetDlg::GradientSetDlg(QWidget *pParent)
 	m_pMainLayout = NULL;
 	m_pStatePara = NULL;
 	m_nIsOK = 0;
+	m_nParaSetSecondValue = 1;
 	
 // 	QDesktopWidget *pDeskTop = QApplication::desktop();
 // 	QRect rcScreen = pDeskTop->screenGeometry();
@@ -104,6 +105,17 @@ void GradientSetDlg::initUI()
 // 	setWindowFlags(flags&~Qt::WindowContextHelpButtonHint);
 }
 
+void GradientSetDlg::SetParaSetSecondValue(int nParaSetSecondValue)
+{
+	if (m_nParaSetSecondValue == nParaSetSecondValue)
+	{
+		return;
+	}
+
+	m_nParaSetSecondValue = nParaSetSecondValue;
+
+}
+
 void GradientSetDlg::AddPushButton(QPushButton** ppBtn,QString strName,int nFontSize)
 {
 	(*ppBtn) = new QPushButton(strName);
@@ -152,6 +164,7 @@ void GradientSetDlg::setData(CSttTestResourceBase *pSttTestResource,tmt_StatePar
 
 	copyTmpStatePara();
 
+	m_pParaTab->m_nParaSetSecondValue = m_nParaSetSecondValue;
 	m_pParaTab->setData(pSttTestResource,&m_tmpStatePara);
 	
 	if(m_pStatePara->m_nRampTimeGrad>1) 
@@ -304,3 +317,4 @@ void GradientSetDlg::closeEvent(QCloseEvent *event)
 {
 	m_nIsOK = 2;
 }
+

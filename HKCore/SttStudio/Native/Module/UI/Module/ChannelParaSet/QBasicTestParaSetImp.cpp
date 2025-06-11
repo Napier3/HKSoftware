@@ -26,6 +26,75 @@ QBasicTestParaSetImp::~QBasicTestParaSetImp()
 	delete m_pMainGridLayout;
 }
 
+void QBasicTestParaSetImp::SetParaSetSecondValue(int nParaSetSecondValue)
+{
+	m_nParaSetSecondValue = nParaSetSecondValue;
+
+	QStringList strheader;
+	int num;
+	strheader.clear();
+    CString strAmp = "";
+	if (m_nParaSetSecondValue == V_Primary)//一次值
+	{
+		strAmp += "(kV)";
+        strheader<<tr("通道")<<strAmp<<tr("相位(°)")<<tr("频率(Hz)");
+		num = m_UCHannelTableList.size();
+		for (int i =0; i<num; i++)
+		{
+			m_UCHannelTableList[i]->setHeaderOfTable(strheader);
+		}
+	}
+	else
+	{
+		strAmp+= "(V)";
+        strheader<<tr("通道")<<strAmp<<tr("相位(°)")<<tr("频率(Hz)");
+		num = m_UCHannelTableList.size();
+		for (int i =0; i<num; i++)
+		{
+			m_UCHannelTableList[i]->setHeaderOfTable(strheader);
+		}
+	}
+
+	//20240829 suyang 增加谐波设置 表头设置
+
+	if(isHarm())
+	{
+		strheader.clear();
+		strAmp.clear();
+        strAmp = "g_sLangTxt_Native_Amplitude.GetString()";
+		if (m_nParaSetSecondValue == V_Primary)//一次值
+		{
+			strAmp += "(kV)";
+
+            strheader<<tr("通道")<<strAmp<<tr("相位(°)")<<tr("谐波设置");
+
+		}
+		else
+		{
+			strAmp+= "(V)";
+            strheader<<tr("通道")<< strAmp<<tr("相位(°)")<<tr("谐波设置");
+		}
+
+		num = m_UCHannelTableList.size();
+		for (int i =0; i<num; i++)
+		{
+			((QChannelHarmTable*)m_UCHannelTableList[i])->setHeaderOfTable(strheader);
+		}
+
+	}
+
+	strheader.clear();
+	strAmp.clear();
+    strAmp = "g_sLangTxt_Native_Amplitude.GetString()";
+	strAmp+= "(A)";
+    strheader<<tr("通道")<<strAmp<<tr("相位(°)")<<tr("频率(Hz)");
+	num = m_ICHannelTableList.size();
+	for (int i =0; i<num; i++)
+	{
+		m_ICHannelTableList[i]->setHeaderOfTable(strheader);
+	}
+}
+
 void QBasicTestParaSetImp::DCStateChanged(int type,bool bdc)
 {
 	if (type == m_type)
@@ -43,7 +112,7 @@ void QBasicTestParaSetImp::DCStateChanged(int type,bool bdc)
 	}
 }
 
-void QBasicTestParaSetImp::setUAmpMaxMinValue()
+void QBasicTestParaSetImp::setUAmpMaxMinValue(bool bCanUpdateTable)
 {
 	int num = 0;
 	num = m_UCHannelTableList.size();
@@ -54,17 +123,17 @@ void QBasicTestParaSetImp::setUAmpMaxMinValue()
 			if((m_pArrUIVOL[0].Harm[1].bDC)&&
 				((m_MacroType != MACROTYPE_ManualHarm)&&(m_MacroType != MACROTYPE_ManualSequence)&&(m_MacroType != MACROTYPE_ManualLineVol)))
 			{
-				m_UCHannelTableList[i]->setAmpMaxMinValue(g_oLocalSysPara.m_fDC_VolMax,g_oLocalSysPara.m_fDC_VolMax*(-1));
+				m_UCHannelTableList[i]->setAmpMaxMinValue(g_oLocalSysPara.m_fDC_VolMax,g_oLocalSysPara.m_fDC_VolMax*(-1), bCanUpdateTable);
 			}
 			else
 			{
-				m_UCHannelTableList[i]->setAmpMaxMinValue(g_oLocalSysPara.m_fAC_VolMax,0);
+				m_UCHannelTableList[i]->setAmpMaxMinValue(g_oLocalSysPara.m_fAC_VolMax,0, bCanUpdateTable);
 			}
 		}
 	}
 }
 
-void QBasicTestParaSetImp::setIAmpMaxMinValue()
+void QBasicTestParaSetImp::setIAmpMaxMinValue(bool bCanUpdateTable)
 {
 	int num = 0;
 	num = m_ICHannelTableList.size();
@@ -75,11 +144,11 @@ void QBasicTestParaSetImp::setIAmpMaxMinValue()
 			if ((m_pArrUIVOL[0].Harm[1].bDC)&&
 				((m_MacroType != MACROTYPE_ManualHarm)&&(m_MacroType !=MACROTYPE_ManualSequence)&&(m_MacroType !=MACROTYPE_ManualLineVol)))
 			{
-				m_ICHannelTableList[i]->setAmpMaxMinValue(g_oLocalSysPara.m_fDC_CurMax,g_oLocalSysPara.m_fDC_CurMax*(-1));
+				m_ICHannelTableList[i]->setAmpMaxMinValue(g_oLocalSysPara.m_fDC_CurMax,g_oLocalSysPara.m_fDC_CurMax*(-1), bCanUpdateTable);
 			}
 			else
 			{
-				m_ICHannelTableList[i]->setAmpMaxMinValue(g_oLocalSysPara.m_fAC_CurMax,0);
+				m_ICHannelTableList[i]->setAmpMaxMinValue(g_oLocalSysPara.m_fAC_CurMax,0, bCanUpdateTable);
 			}
 		}
 	}
@@ -115,7 +184,7 @@ void QBasicTestParaSetImp::setChannelTableItemValue_Sequence(QString str,float f
 	bool bU = false;
 	ASSERT(m_pParaSetSttTestResource != NULL);
 
-	if (str.contains(_T("U")))
+	if (str.contains(_T("U")) || str.contains(_T("V")))//dingxy 20250122
 	{
 		bU = true;
 		if(m_MacroType ==MACROTYPE_ManualLineVol)
@@ -236,12 +305,14 @@ void QBasicTestParaSetImp::setChannelTableItemValue(QString str,float fstep,int 
 	if (str.contains(_T("U")))
 	{
 		bU = true;
-		nChIndex = m_pParaSetSttTestResource->m_oVolChRsListRef.FindIndexByName(str);
+		//nChIndex = m_pParaSetSttTestResource->m_oVolChRsListRef.FindIndexByName(str);//dingxy 20250122 改为通过id去查找
+		nChIndex = m_pParaSetSttTestResource->m_oVolChRsListRef.FindIndexByID(str);
 	}
 	else if (str.contains(_T("I")))
 	{
 		bU = false;
-		nChIndex = m_pParaSetSttTestResource->m_oCurChRsListRef.FindIndexByName(str);
+		//nChIndex = m_pParaSetSttTestResource->m_oCurChRsListRef.FindIndexByName(str);
+		nChIndex = m_pParaSetSttTestResource->m_oCurChRsListRef.FindIndexByID(str);
 	}
 	else
 	{
@@ -471,7 +542,7 @@ void QBasicTestParaSetImp::initUI(CSttTestResourceBase *pSttTestResource)
 	m_pMainGridLayout->addWidget(m_pIScrollArea,0,1);
 }
 
-void QBasicTestParaSetImp::initData()
+void QBasicTestParaSetImp::initData(bool bCanUpdateTable)
 {
 	if ((m_pParaSetSttTestResource == NULL)||(m_pArrUIVOL == NULL)||(m_pArrUICUR == NULL))
 	{
@@ -480,12 +551,12 @@ void QBasicTestParaSetImp::initData()
 
 	if (m_UCHannelTableList.size()>=1)
 	{
-		m_UCHannelTableList[0]->setTableData(m_pArrUIVOL);
+		m_UCHannelTableList[0]->setTableData(m_pArrUIVOL, bCanUpdateTable);
 	}
 
 	if (m_ICHannelTableList.size()>=1)
 	{
-		m_ICHannelTableList[0]->setTableData(m_pArrUICUR);
+		m_ICHannelTableList[0]->setTableData(m_pArrUICUR, bCanUpdateTable);
 	}
 }
 

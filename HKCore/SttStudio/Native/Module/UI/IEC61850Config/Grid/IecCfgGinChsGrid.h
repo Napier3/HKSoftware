@@ -2,8 +2,8 @@
 #define IECCFGGINCHSGRID_H
 
 #include "IecCfgChsGridBase.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgGinCh.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgGinDatas.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgGinCh.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgGinDatas.h"
 
 
 #define IECCFGGINCHS_GRID_COLS		3

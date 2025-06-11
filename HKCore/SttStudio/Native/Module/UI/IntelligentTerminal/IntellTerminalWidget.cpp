@@ -2,7 +2,7 @@
 #include "IntellTerminalWidget.h"
 
 #include "../Module/CommonMethod/commonMethod.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "SttMacroParaEditViewIntelligentTerminal.h"
 #include "../SttTestCntrFrameBase.h"
 #include "../Module/XLangResource_Native.h"

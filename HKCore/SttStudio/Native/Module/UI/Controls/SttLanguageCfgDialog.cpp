@@ -1,6 +1,6 @@
 #include "SttLanguageCfgDialog.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/XLanguage/XLanguageMngr.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/XLanguageMngr.h"
 #include <QMessageBox>
 #include "../Module/ScrollCtrl/ScrollComboBox.h"
 //#include "../SttTestCntrFrameBase.h"

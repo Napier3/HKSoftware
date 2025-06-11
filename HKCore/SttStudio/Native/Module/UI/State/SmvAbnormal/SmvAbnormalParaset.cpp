@@ -3,7 +3,7 @@
 #include "SmvAbnormalChannelSelect.h"
 #include "SmvAbnormalMessageset.h"
 #include "SmvAbnormalQualityset.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../../XLangResource_Native.h"
 #include "../Module/UI/State/SttMacroParaEditViewState.h"
 //#include "../../SttTestCntrFrameBase.h"
@@ -21,6 +21,7 @@ QSmvAbnormalParaset::QSmvAbnormalParaset(QWidget *parent):
 	setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowTitleHint);
 	m_nCurIndex = 0;
 	m_pAbnormalSMV = NULL;
+	m_nParaSetSecondValue = 1;
 	
 	m_sendtype.clear();
 	m_sendtype << g_sLangTxt_Native_SendByWave << g_sLangTxt_Native_SendBySec;
@@ -1006,6 +1007,19 @@ void QSmvAbnormalParaset::slot_radio_flypointClicked()
 	if (ui->radio_flypoint->isChecked())
 	{
 		m_pAbnormalSMV->m_nAbnormalType = 3;
+
+		if (m_nParaSetSecondValue == 0 )
+		{
+			ui->label_17->setText(_T("kV"));
+		}
+		else
+		{
+			ui->label_17->setText(_T("V"));
+		}
+	}
+	else
+	{
+		ui->label_17->setText(_T("V"));
 	}
 
 	Global_SetSvAbnormalTmtValues_ByIecConfig(m_pAbnormalSMV,true);
@@ -1300,4 +1314,27 @@ void QSmvAbnormalParaset::slot_radio_noClicked()
 	{
 		ui->left_group->setEnabled(true);
 	}
+}
+
+void QSmvAbnormalParaset::SetParaSetSecondValue(int nParaSetSecondValue)
+{
+	m_nParaSetSecondValue = nParaSetSecondValue;
+
+	if (ui->radio_flypoint->isChecked())
+	{
+		if (m_nParaSetSecondValue == 0 )
+		{
+			ui->label_17->setText(_T("kV"));
+		}
+		else
+		{
+			ui->label_17->setText(_T("V"));
+		}
+	}
+	else
+	{
+		ui->label_17->setText(_T("V"));
+	}
+
+
 }

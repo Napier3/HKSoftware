@@ -30,7 +30,7 @@ class CommonValueDialogState : public QDialog
 public:
 	Ui::CommonValueDialogState *ui;
 
-	CommonValueDialogState(tmt_StateParas* pSateParas,QWidget *parent = 0);
+	CommonValueDialogState(tmt_StateParas* pSateParas,QWidget *parent = 0, bool bFrimFreqModel = false);
 	~CommonValueDialogState();
 	
 	void closeEvent(QCloseEvent *event);
@@ -50,9 +50,9 @@ private slots:
 	void slot_cmb_DCOFFSETChanged(int index);
 	
 private:
-	void initUI();
+	void initUI(bool bFrimFreqModel = false);
 	void initConnections();
-	void initBaseData();
+	void initBaseData( );
 	void initPara();
 	void SetCommonValueDialogStateFont();
 

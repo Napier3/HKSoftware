@@ -40,7 +40,7 @@ typedef struct tmt_cb_operate_paras :public tmt_ImpedanceParas
 
 	void CalRX_CB_Angle()//ี๛ื้
 	{
-		float fAngle = m_fImpAngle[0] * pi / 180;
+        float fAngle = m_fImpAngle[0] * math_pi / 180;
 		m_fR = m_fImpedance[0] * cos(fAngle);
 		m_fX = m_fImpedance[0] * sin(fAngle);
 	}

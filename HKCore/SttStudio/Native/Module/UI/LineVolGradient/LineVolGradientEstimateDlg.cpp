@@ -1,5 +1,5 @@
 #include "LineVolGradientEstimateDlg.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include <QBoxLayout>
 #include <QGridLayout>
 #include <QPushButton>
@@ -31,7 +31,7 @@ void LineVolGradientEstimateGrid::InitGrid()
 	//strAbsError = "绝对误差";
 	//strSettingValue = "整定值";
 	xlang_GetLangStrByFile(strAbsError, "StateEstimate_AbsError");
-	xlang_GetLangStrByFile(strSettingValue, "State_SettingValue");
+	xlang_GetLangStrByFile(strSettingValue, "sSetValue");
 
 	setHorizontalHeaderLabels(QStringList() << strName << strErrorType << strRelError << strAbsError << strSettingValue);
 	setColumnWidth(0, 120);
@@ -92,10 +92,17 @@ QComboBox* LineVolGradientEstimateGrid::AbsErrorType()
 
 void LineVolGradientEstimateGrid::ComboxModelStyle(QComboBox *pCombox)
 {
-	QLineEdit *pLineEdit = new QLineEdit();
-	pLineEdit->setReadOnly(true); 
-	pLineEdit->setAlignment(Qt::AlignCenter);
-	pCombox->setLineEdit(pLineEdit);
+// 	QLineEdit *pLineEdit = new QLineEdit();
+// 	pLineEdit->setReadOnly(true); 
+// 	pLineEdit->setAlignment(Qt::AlignCenter);
+// 	pCombox->setLineEdit(pLineEdit);
+	pCombox->setEditable(true);
+	pCombox->lineEdit()->setAlignment(Qt::AlignCenter);
+	pCombox->lineEdit()->setReadOnly(true);
+	pCombox->lineEdit()->setMouseTracking(true);
+	pCombox->lineEdit()->setStyleSheet("background:transparent;border-width:0;border-style:outset");
+	pCombox->lineEdit()->setAttribute(Qt::WA_TransparentForMouseEvents);
+
 }
 
 void LineVolGradientEstimateGrid::CbbErrorType(int nIndex, CString strText)
@@ -194,6 +201,9 @@ void LineVolGradientEstimateGrid::InitData(tmt_LineVolGradientParasEx* pParas)
 
 	setCellWidget(0, 1, pCbbError1);
 	setCellWidget(1, 1, pCbbError2);
+	
+	ComboxModelStyle(pCbbError1);
+	ComboxModelStyle(pCbbError2);
 
 	setItem(0, 2, new QTableWidgetItem(QString::number(pParas->m_fUActVal_RelErr)));
 	setItem(1, 2, new QTableWidgetItem(QString::number(pParas->m_fIActVal_RelErr)));

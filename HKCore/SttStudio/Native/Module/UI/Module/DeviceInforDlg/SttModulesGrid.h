@@ -2,7 +2,7 @@
 #define CSttModulesGrid_H
 
 #include "../QExBaseListGridBase/QExBaseListGridBase.h"
-#include "../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/DataMngr/DataGroup.h"
 
 #define CDEVICE_MODULES_GRID_COLS		7
 

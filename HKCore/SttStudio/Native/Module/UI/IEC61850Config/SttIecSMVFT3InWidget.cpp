@@ -6,9 +6,9 @@
 #include <QKeyEvent>
 #include "SttIecSMVFT3OtherSetDialog.h"
 #include "SttIecSMVFT3DCOtherSetDialog.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../XLangResource_Native.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../Module/CommonMethod/commonMethod.h"
 #include "../Module/ScrollCtrl/ScrollComboBox.h"
 //#include "../SttTestCntrFrameBase.h"
@@ -116,7 +116,8 @@ void QSttIecSMVFT3InWidget::CreateToolbar()
 	m_pSMVFT3InFirstHLayout->addWidget(m_pPkgTypeSel_Label);
 	m_pSMVFT3InFirstHLayout->addWidget(m_pPkgTypeSelCombox);
 
-	m_pCRC_Label =new QLabel("CRC类型选择",this);
+	xlang_GetLangStrByFile(strTemp,"Gradient_CRCCheck");//CRC类型选择
+	m_pCRC_Label =new QLabel(strTemp,this);
 	m_pCRC_ComboBox = new QComboBox(this);
 	m_pSMVFT3InFirstHLayout->addWidget(m_pCRC_Label);
 	m_pSMVFT3InFirstHLayout->addWidget(m_pCRC_ComboBox);
@@ -189,8 +190,8 @@ void QSttIecSMVFT3InWidget::InitData(CIecCfgDatasBase* pIecCfgDatasBase)
 		m_pCRC_ComboBox->show();
 		m_pCRC_Label->show();
 		m_pCRC_ComboBox->clear();
-		m_pCRC_ComboBox->insertItem(STT_IEC_SMVFT3_CRC_16BYTE_VERIFICATION,"标准16字节校验");
-		m_pCRC_ComboBox->insertItem(STT_IEC_SMVFT3_CRC_END_VERIFICATION,"报文末尾校验");
+        m_pCRC_ComboBox->insertItem(STT_IEC_SMVFT3_CRC_16BYTE_VERIFICATION,"标准16字节校验");
+        m_pCRC_ComboBox->insertItem(STT_IEC_SMVFT3_CRC_END_VERIFICATION,"报文末尾校验");
 		//m_pCRC_ComboBox->setCurrentIndex(STT_IEC_SMVFT3_CRC_16BYTE_VERIFICATION);
 		int nCrcIndex = pIecCfgDatasSMV->m_nFT3CRCType;
 
@@ -206,9 +207,28 @@ void QSttIecSMVFT3InWidget::InitData(CIecCfgDatasBase* pIecCfgDatasBase)
 	}
 	else /*if(g_oSystemParas.m_nIecFormat == STT_IEC_FORMAT_60044_8)*/
 	{
-	CString strPath;
+		disconnect(m_pPkgTypeSelCombox,SIGNAL(currentIndexChanged(int)),this,SLOT(slot_CurrentPkgTypeSelChanged(int)));
+// 		CString strPath;
+// 		strPath = _P_GetConfigPath();
+// 		strPath += _T("FT3Cfg/Sub/FT3_PkgTemplates.xml");
+	
+		CString strPath,strCurrLanguageID;
+		strCurrLanguageID = xlang_GetCurrLanguageID();
 	strPath = _P_GetConfigPath();
+
+		if (strCurrLanguageID == _T("English"))
+		{
+			strPath += _T("FT3Cfg-English/Sub/FT3_PkgTemplates.xml");
+		}
+		else if (strCurrLanguageID == _T("Russian"))
+		{
+			strPath += _T("FT3Cfg-Russian/Sub/FT3_PkgTemplates.xml");
+		}
+		else
+		{
 	strPath += _T("FT3Cfg/Sub/FT3_PkgTemplates.xml");
+
+		}
 
 	if (IsFileExist(strPath))
 	{
@@ -435,14 +455,19 @@ void QSttIecSMVFT3InWidget::slot_CurrentPkgTypeSelChanged(int nIndex)
 		return;
 	}
 
+	//报文类型切换需要把拷贝内容null,同一个报文类型下才能拷贝
+	//报文类型为空，只有添加按钮开放
+	m_pCopy_IecCfgDataRef = NULL;
+	
 	m_pIecCfgDatasSMVInCopy->RemoveAll();
-	m_pIecCfgDatasBase->Copy(m_pIecCfgDatasSMVInCopy);
-	UpdateDates(m_pIecCfgDatasSMVInCopy);
-	m_pIecCfgDatasSMVInCopy->Copy(m_pIecCfgDatasBase);
+	//m_pIecCfgDatasBase->Copy(m_pIecCfgDatasSMVInCopy);
+	UpdateDates((CIecCfgDatasSmvIn*)m_pIecCfgDatasBase);
+	//m_pIecCfgDatasSMVInCopy->Copy(m_pIecCfgDatasBase);
 
 	emit sig_UpdateCB_ChDatas(NULL);//更新控制块通道数据,切换标准，有的标准是没有通道的，所以先将通道置为空
 	m_pIecCfgDataGridBase->ShowDatas(m_pIecCfgDatasBase);
 
+	UpDateEnableButtons();
 	update();
 }
 
@@ -497,7 +522,7 @@ CIecCfgDataBase* QSttIecSMVFT3InWidget::AddNewIecCfgData()
 
 			if (nGirdRowCount >= nFiberCount && nFiberCount >= 0)
 			{
-				QMessageBox::information(this, tr("提示"),tr("光口已全部占用，当前无可选择的光口！"));
+                QMessageBox::information(this, tr("提示"),tr("光口已全部占用，当前无可选择的光口！"));
 				return NULL;
 			}
 		}
@@ -510,17 +535,41 @@ CIecCfgDataBase* QSttIecSMVFT3InWidget::AddNewIecCfgData()
 		return m_pIecCfgDatasBase->AddNewIecCfgData();
 	}
 
-	CString strPath;
+	CString strPath,strCurrLanguageID;
+	strCurrLanguageID = xlang_GetCurrLanguageID();
+	strPath = _P_GetConfigPath();
 
 	if (g_oSystemParas.m_nIecFormat == STT_IEC_FORMAT_60044_8DC)
 	{
-		strPath = _P_GetConfigPath();
+		if (strCurrLanguageID == _T("English"))
+		{
+			strPath += _T("FT3Cfg-English/Sub-DC/");
+		}
+		else if (strCurrLanguageID == _T("Russian"))
+		{
+			strPath += _T("FT3Cfg-Russian/Sub-DC/");
+		}
+		else
+		{
 		strPath += _T("FT3Cfg/Sub-DC/");
+
+		}
+
 	}
 	else if(g_oSystemParas.m_nIecFormat == STT_IEC_FORMAT_60044_8)
 	{
-	strPath = _P_GetConfigPath();
+		if (strCurrLanguageID == _T("English"))
+		{
+			strPath += _T("FT3Cfg-English/Sub/");
+		}
+		else if (strCurrLanguageID == _T("Russian"))
+		{
+			strPath += _T("FT3Cfg-Russian/Sub/");
+		}
+		else
+		{
 	strPath += _T("FT3Cfg/Sub/");
+	}
 	}
 	strPath += pDvmData->m_strValue;
 

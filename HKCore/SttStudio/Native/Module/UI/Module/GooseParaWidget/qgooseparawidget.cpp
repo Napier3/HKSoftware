@@ -1,7 +1,7 @@
 #include "qgooseparawidget.h"
 #include <QGridLayout>
 #include "goosepubwidget.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 //#include "../../SttTestCntrFrameBase.h"
 
 extern long g_nLogDebugInfor;

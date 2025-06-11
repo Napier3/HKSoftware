@@ -1,7 +1,7 @@
 #include "IecCfgSMVFT3DCOtherSetGrid.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgSmvRate.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgSmvRate.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../../Module/CommonMethod/commonMethod.h"
 #include "../../SttTestCntrFrameBase.h"
 #include "../../../XLangResource_Native.h"
@@ -41,20 +41,20 @@ void CIecCfgSMVFT3DCOtherSetGrid::InitGridTitle()
 	if(m_nCodeValueGridType == IECCFGSMV_DCFT3_DCVOL_GRID || m_nCodeValueGridType == IECCFGSMV_DCFT3_ACVOL_GRID
 		|| m_nCodeValueGridType == IECCFGSMV_FT3_VOL_GRID)
 	{ 
-		if (g_oSttSystemConfig.IsFt3PrimCodeValue()) //chenling20240416 ADMU FT3码值
+		if (!g_oSttSystemConfig.IsFt3PrimCodeValue()) //chenling20240416 ADMU FT3码值
 		{
-			xlang_GetLangStrByFile(strIECPrimtRatedType,"IEC_PrimtRatedVol"); 
+            strIECPrimtRatedType = _T("二次额定电压(V)");
 		}
 		else
 		{
-			strIECPrimtRatedType = _T("二次额定电压(V)");
+		xlang_GetLangStrByFile(strIECPrimtRatedType,"IEC_PrimtRatedVol"); 
 		}
 	}
 	else
 	{
 		if (!g_oSttSystemConfig.IsFt3PrimCodeValue()) 
 		{
-			strIECPrimtRatedType = _T("二次额定电流(A)");
+            strIECPrimtRatedType = _T("二次额定电流(A)");
 		}
 	else
 	{
@@ -130,6 +130,13 @@ void CIecCfgSMVFT3DCOtherSetGrid::ShowData(CExBaseObject *pData, int& nRow, BOOL
 		}
 	}
 
+	if (!xlang_IsCurrXLanguageChinese())//dingxy 20250121 英文环境下修改通道映射名称
+	{
+		if (strTempValue.Find(_T("U")) >= 0)
+		{
+			strTempValue.Replace(_T("U"), _T("V"));
+		}
+	}
 	Show_StaticString(pData,nRow,0,strTempValue);
 	Show_Long(pData,nRow,1,&pIecCfgSmvRate->m_nCodeValue, TRUE,_T(""),EndEditCell_CodeValue);
 	
@@ -279,13 +286,13 @@ void CIecCfgProtMaesCurrCodeSetGrid::InitGridTitle()
 {
 	CString strName,strProtCodeValue,strMeasCodeValue,strIECPrimtRatedType;
 	xlang_GetLangStrByFile(strName,"sName");
-	strProtCodeValue = "保护码值";
-	strMeasCodeValue = "测量码值";
+    strProtCodeValue = "保护码值";
+    strMeasCodeValue = "测量码值";
 
 	//20240416chenling FT3订阅码值设置 ADMU
 	if (!g_oSttSystemConfig.IsFt3PrimCodeValue())
 	{	
-		strIECPrimtRatedType = _T("二次额定电流(A)");
+        strIECPrimtRatedType = _T("二次额定电流(A)");
 	}
 	else
 	{

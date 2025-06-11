@@ -2,8 +2,8 @@
 
 #include "SttIecRecordSysSetDlg.h"
 #include "MUTest/SttMUTestChsSetDlg.h"
-#include "../../../../Module/SmartCap/XSmartCapMngr.h"
-#include "../../../../Module/SmartCap/61850Cap/CapDevice/CapDeviceGoose.h"
+#include "../../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../Module/SmartCap/61850Cap/CapDevice/CapDeviceGoose.h"
 #include "../../UI/SttTestCntrFrameBase.h"
 #include "SttIecRecordCbWidget.h"
 #include "MUTest/SttMUTestIecCbSelWidget.h"

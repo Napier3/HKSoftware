@@ -4,16 +4,17 @@
 #include <QDialogButtonBox>
 
 #include "SttIecChsEditDialog.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgDataBase.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/API/GlobalConfigApi.h"
-#include "../../Module/OSInterface/QT/XMessageBox.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgDataBase.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/OSInterface/QT/XMessageBox.h"
 #include "../../SttTestSysGlobalPara.h"
 //#include "../SttTestCntrFrameBase.h"
 #ifdef _USE_SoftKeyBoard_
 #include "../SoftKeyboard/SoftKeyBoard.h"
 #endif
 #include "../Module/XLangResource_Native.h"
+#include "../../SttTestResourceMngr/SttTestResourceMngr.h"
 //#pragma execution_character_set("utf-8")
 
 QSttIecConfigWidgetBase::QSttIecConfigWidgetBase(QWidget *parent)
@@ -55,6 +56,31 @@ void QSttIecConfigWidgetBase::SetIecConfigWidgetFont()
 	m_pCopy_PushButton->setFont(*g_pSttGlobalFont);
 	m_pPaste_PushButton->setFont(*g_pSttGlobalFont);
 	m_pChannelEdit_PushButton->setFont(*g_pSttGlobalFont);
+}
+
+void QSttIecConfigWidgetBase::UpDateEnableButtons()
+{
+	bool b = false;
+	
+	if (m_pIecCfgDataGridBase->rowCount() > 0)
+	{
+		b = true;
+	}
+	m_pDel_PushButton->setEnabled(b);
+	m_pDeleteN_1_PushButton->setEnabled(b);
+	m_pSelAll_PushButton->setEnabled(b);
+	m_pUnSelectedAll_PushButton->setEnabled(b);
+	m_pCopy_PushButton->setEnabled(b);
+
+	if (m_pCopy_IecCfgDataRef == NULL)
+	{
+		b = false;
+	}
+	else
+	{
+		b = true;
+	}
+	m_pPaste_PushButton->setEnabled(b);
 }
 
 //控制块工具栏
@@ -235,15 +261,31 @@ void QSttIecConfigWidgetBase::slot_AddClicked()
 	UpdateAppMaps();
 	m_pIecCfgDataGridBase->InsertData(pCfgData);
 
-#ifndef _PSX_QT_LINUX_
-	//20240821 suyang  LINUX下不点击通道映射的话 通道数据不会更新
-	emit sig_UpdateCB_ChDatas(pCfgData);
-#endif
+// #ifndef _PSX_QT_LINUX_
+// 	//20240821 suyang  LINUX下不点击通道映射的话 通道数据不会更新
+// 	emit sig_UpdateCB_ChDatas(pCfgData);
+// #endif
 
-//	emit sig_UpdateCB_ChDatas(pCfgData);
-//	m_pIecCfgDataGridBase->ShowDatas(m_pIecCfgDatasBase);	
+	emit sig_UpdateCB_ChDatas(pCfgData);
+//	m_pIecCfgDataGridBase->ShowDatas(m_pIecCfgDatasBase);
+
 	EnableAllButtons();
 	m_pIecCfgDataGridBase->SelectRow(pCfgData);
+	//dingxy 20240904 linux下槽函数不响应，直接根据当前选择的控制块初始化通道数据
+#ifdef _PSX_QT_LINUX_
+	CIecCfgDataBase *pIecCfgData = (CIecCfgDataBase*)m_pIecCfgDataGridBase->GetCurrSelData();
+	if (pIecCfgData == NULL)
+	{
+		return;
+	}
+	if ((pIecCfgData->GetClassID() == CFGCLASSID_CIECCFG6044COMMONINDATA)
+		|| (pIecCfgData->GetClassID() == CFGCLASSID_CIECCFG6044COMMONDATA))
+	{
+		g_oSttTestResourceMngr.m_oIecDatasMngr.UpdateFT3ChsTypeChanged(pIecCfgData->m_pCfgChs, g_oSystemParas.m_nIecFormat);
+	}
+#endif
+
+	UpDateEnableButtons();
 }
 
 void QSttIecConfigWidgetBase::slot_DelClicked()
@@ -309,6 +351,9 @@ void QSttIecConfigWidgetBase::slot_DelClicked()
 	}
 
 	oList.RemoveAll();
+
+
+	UpDateEnableButtons();
 }
 
 void QSttIecConfigWidgetBase::slot_CopyClicked()
@@ -525,6 +570,8 @@ void QSttIecConfigWidgetBase::OnDeleteN_1Clicked()
 	{
 		emit sig_UpdateCB_ChDatas(NULL);
 	}
+
+	UpDateEnableButtons();
 }
 
 void QSttIecConfigWidgetBase::EnableAllButtons()

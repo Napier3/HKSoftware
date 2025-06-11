@@ -1,6 +1,6 @@
 #include "StateTrigerWidget.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/XLanguage/XLanguageMngr.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/XLanguageMngr.h"
 //#include "../SttTestCntrFrameBase.h"
 #include "../Controls/SttCheckBox.h"
 #include "SttMacroParaEditViewState.h"
@@ -116,7 +116,7 @@ void QStateTrigerWidget::InitUI()
 
 	//strText = _T("开出量");
 	
-	m_pBoutBox = new QGroupBox(g_sLangTxt_Native_Bin);
+	m_pBoutBox = new QGroupBox(/*g_sLangTxt_Native_Bin*/g_sLangTxt_InputValue);
     strText = _T("1");
 	m_pBout_1= new QSttCheckBox(strText);
     strText = _T("2");
@@ -128,7 +128,7 @@ void QStateTrigerWidget::InitUI()
 
 	//strText = _T("开入量");
 	
-	m_pBinLab = new QLabel(g_sLangTxt_Native_Bout);
+	m_pBinLab = new QLabel(/*g_sLangTxt_Native_Bout*/g_sLangTxt_OutputValue);
 	strText = _T("A");
 	m_pBin_A = new QSttCheckBox(strText);
 	strText = _T("B");
@@ -137,8 +137,8 @@ void QStateTrigerWidget::InitUI()
 	m_pBin_C = new QSttCheckBox(strText);
 	strText = _T("D");
 	m_pBin_D = new QSttCheckBox(strText);
-    xlang_SetLangStrToWidget_Txt(m_pBoutBox, g_sLangTxt_Native_Bout , XLang_Ctrls_QGroupBox);//开入量-LCQ
-    xlang_SetLangStrToWidget_Txt(m_pBinLab, g_sLangTxt_Native_Bin , XLang_Ctrls_QLabel);//开出量-LCQ
+    xlang_SetLangStrToWidget_Txt(m_pBoutBox, /*g_sLangTxt_Native_Bout*/g_sLangTxt_OutputValue , XLang_Ctrls_QGroupBox);//开入量-LCQ
+    xlang_SetLangStrToWidget_Txt(m_pBinLab, /*g_sLangTxt_Native_Bin*/g_sLangTxt_InputValue , XLang_Ctrls_QLabel);//开出量-LCQ
 
 	xlang_SetLangStrToWidget(m_pTrigerCondition, "State_TrigerCondition", XLang_Ctrls_QLabel);
 	xlang_SetLangStrToWidget(m_pTrigerHoldTime, "State_TrigerHoldTime", XLang_Ctrls_QLabel);
@@ -908,13 +908,20 @@ void QStateTrigerWidget::slot_lne_TrigerHoldTimeChangedKeyBoard()
 
 void QStateTrigerWidget::UpdateAuxDcEnabled()
 {
+	float nAuxDCVul = g_oSystemParas.m_fAuxDC_Vol;
+
 	if (m_pTrigerWidgetStatePara == NULL)
 	{
 		return;
 	}
 
-	if (g_oSystemParas.m_fAuxDC_Vol == 0)
+	if (nAuxDCVul == 0)
 	{
+		if (m_pTrigerWidgetStatePara->m_fVolAux != 0)
+	{
+			nAuxDCVul = m_pTrigerWidgetStatePara->m_fVolAux;
+		}
+
 		m_pEditUdc->setDisabled(false);
 	}
 	else
@@ -922,7 +929,7 @@ void QStateTrigerWidget::UpdateAuxDcEnabled()
 		m_pEditUdc->setDisabled(true);
 	}
 
-	m_pEditUdc->setText(QString::number(g_oSystemParas.m_fAuxDC_Vol,'f',3));
+	m_pEditUdc->setText(QString::number(nAuxDCVul,'f',3));
 
 }
 

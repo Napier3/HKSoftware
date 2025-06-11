@@ -1,6 +1,6 @@
 #include "SttIecGooseTurnSpyWidget.h"
-#include "../../../../Module/SmartCap/XSmartCapMngr.h"
-#include "../../../../Module/SmartCap/61850Cap/CapDevice/CapDeviceGoose.h"
+#include "../../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../Module/SmartCap/61850Cap/CapDevice/CapDeviceGoose.h"
 
 //////////////////////////////////////////////////////////////////////////
 QSttIecGooseTurnSpyWidget::QSttIecGooseTurnSpyWidget(QWidget* parent)

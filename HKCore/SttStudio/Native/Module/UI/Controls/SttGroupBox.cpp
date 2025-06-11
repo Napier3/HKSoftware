@@ -1,5 +1,5 @@
 #include "SttGroupBox.h"
-#include "../../Module/OSInterface/OSInterface.h"
+#include "../../../Module/OSInterface/OSInterface.h"
 
 
 QSttGroupBox::QSttGroupBox(QWidget *parent)

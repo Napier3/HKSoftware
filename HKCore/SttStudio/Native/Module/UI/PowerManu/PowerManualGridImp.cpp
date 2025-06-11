@@ -1,4 +1,6 @@
 #include "PowerManualGridImp.h"
+#include <QDesktopWidget>
+#include <QApplication>
 
 
 QPowerManualGridImp::QPowerManualGridImp(QWidget *parent)
@@ -28,6 +30,16 @@ QPowerManualGridImp::QPowerManualGridImp(QWidget *parent)
 	m_pParaSetSttTestResource = NULL;
 	m_MacroType = 0;
 	m_type = P_Common;
+	for (int i = 0; i < 3; ++i) 
+	{
+		m_fpower[i] = 0.0f;
+	}
+
+	for (int i = 0; i < MAX_VOLTAGE_COUNT; i++)
+	{
+		m_fMultAmpMax[i] = g_oLocalSysPara.m_fAC_VolMax;
+		m_fMultAmpMin[i] = g_oLocalSysPara.m_fAC_VolMin;
+	}
 }
 
 QPowerManualGridImp::~QPowerManualGridImp()
@@ -56,48 +68,59 @@ void QPowerManualGridImp::DCStateChanged(int type,bool bdc)
 	}
 }
 
-void QPowerManualGridImp::setUAmpMaxMinValue()
+void QPowerManualGridImp::setUAmpMaxMinValue(bool bCanUpdateTable)
 {
-	int num = 0;
-	num = m_UCHannelTableList.size();
-	for (int i=0; i<num; i++)
-	{
-		if ( isCommon() || isHarm())
+// 	int num = 0;
+// 	num = m_UCHannelTableList.size();
+// 	for (int i=0; i<num; i++)
+// 	{
+// 		if ( isCommon() || isHarm())
+// 		{
+// 			if((m_pArrUIVOL[0].Harm[1].bDC)&&
+// 				((m_MacroType != MACROTYPE_ManualHarm)&&(m_MacroType != MACROTYPE_ManualSequence)&&(m_MacroType != MACROTYPE_ManualLineVol)))
+// 			{
+// 				m_UCHannelTableList[i]->setAmpMaxMinValue(g_oLocalSysPara.m_fDC_VolMax,g_oLocalSysPara.m_fDC_VolMax*(-1), bCanUpdateTable);
+// 			}
+// 			else
+// 			{
+// 				m_UCHannelTableList[i]->setAmpMaxMinValue(g_oLocalSysPara.m_fAC_VolMax,0, bCanUpdateTable);
+// 			}
+// 		}
+// 	}
+	for (int i = 0; i < 3; ++i)//目前只有一组电压和功率
 		{
-			if((m_pArrUIVOL[0].Harm[1].bDC)&&
-				((m_MacroType != MACROTYPE_ManualHarm)&&(m_MacroType != MACROTYPE_ManualSequence)&&(m_MacroType != MACROTYPE_ManualLineVol)))
-			{
-				m_UCHannelTableList[i]->setAmpMaxMinValue(g_oLocalSysPara.m_fDC_VolMax,g_oLocalSysPara.m_fDC_VolMax*(-1));
-			}
-			else
-			{
-				m_UCHannelTableList[i]->setAmpMaxMinValue(g_oLocalSysPara.m_fAC_VolMax,0);
-			}
-		}
+		m_fpower[i] = sqrtf((m_pArrPOW[i].m_fPpower*m_pArrPOW[i].m_fPpower) + (m_pArrPOW[i].m_fQpower*m_pArrPOW[i].m_fQpower));
+
+		m_fMultAmpMax[i] = g_oLocalSysPara.m_fAC_VolMax;
+		m_fMultAmpMin[i] = m_fpower[i] / g_oLocalSysPara.m_fAC_CurMax;
 	}
+
+	m_UCHannelTableList[0]->setMultAmpMaxMinValue(m_fMultAmpMax, m_fMultAmpMin);
 }
 
-void QPowerManualGridImp::setIAmpMaxMinValue()
+void QPowerManualGridImp::setIAmpMaxMinValue(bool bCanUpdateTable)
 {
-	//int num = 0;
-	//num = m_ICHannelTableList.size();
-	//for (int i =0; i<num; i++)
+	//wangtao 20240612 功率最大值最小值设置 传入当前单个通道的电压值和最大电流值
+	//m_ICHannelTableList[0]->setMultAmpMaxMinValue(m_fMultAmpMax, g_oLocalSysPara.m_fAC_VolMax*g_oLocalSysPara.m_fAC_CurMax*(-1));
+	//float fMinArrUIVOL = -1.0f;
+	//for (int i = 0; i < 3; ++i)
 	//{
-	//	if (isCommon()|| isHarm())
+	//	if (((m_pArrUIVOL[i].Harm[1].fAmp > 0.00001) && (m_pArrUIVOL[i].Harm[1].fAmp < fMinArrUIVOL)) || fMinArrUIVOL < 0)
 	//	{
-	//		if ((m_pArrUIVOL[0].Harm[1].bDC)&&
-	//			((m_MacroType != MACROTYPE_ManualHarm)&&(m_MacroType !=MACROTYPE_ManualSequence)&&(m_MacroType !=MACROTYPE_ManualLineVol)))
-	//		{
-	//			m_ICHannelTableList[i]->setAmpMaxMinValue(g_oLocalSysPara.m_fDC_CurMax,g_oLocalSysPara.m_fDC_CurMax*(-1));
-	//		}
-	//		else
-	//		{
-	//			m_ICHannelTableList[i]->setAmpMaxMinValue(g_oLocalSysPara.m_fAC_CurMax,0);
-	//		}
+	//		fMinArrUIVOL = m_pArrUIVOL[i].Harm[1].fAmp;
 	//	}
 	//}
-	//wangtao 20240612 功率最大值最小值设置
-	m_ICHannelTableList[0]->setAmpMaxMinValue(g_oLocalSysPara.m_fDC_VolMax*g_oLocalSysPara.m_fAC_CurMax,g_oLocalSysPara.m_fDC_VolMax*g_oLocalSysPara.m_fAC_CurMax*(-1));
+	//if (fMinArrUIVOL > 0)
+	//{
+		//m_ICHannelTableList[0]->setAmpMaxMinValue(fMinArrUIVOL * g_oLocalSysPara.m_fAC_CurMax, fMinArrUIVOL * g_oLocalSysPara.m_fAC_CurMax*(-1));
+	//}
+	for (int i = 0; i < 3; ++i)//目前只有一组电压和功率
+	{
+		m_fMultAmpMax[i] = m_pArrUIVOL[i].Harm[1].fAmp;
+	}
+
+
+	m_ICHannelTableList[0]->setVolAmpValue(m_fMultAmpMax);
 }
 
 void QPowerManualGridImp::setUAmpEDValue(float fUEDVal)
@@ -433,7 +456,7 @@ void QPowerManualGridImp::initUI(CSttTestResourceBase *pSttTestResource)
 	m_pMainGridLayout->addWidget(m_pIScrollArea,0,1);
 }
 
-void QPowerManualGridImp::initData()
+void QPowerManualGridImp::initData(bool bCanUpdateTable)
 {
 	if ((m_pParaSetSttTestResource == NULL)||(m_pArrUIVOL == NULL)||(m_pArrPOW == NULL))
 	{
@@ -442,7 +465,7 @@ void QPowerManualGridImp::initData()
 
 	if (m_UCHannelTableList.size()>=1)
 	{
-		m_UCHannelTableList[0]->setTableData(m_pArrUIVOL);
+		m_UCHannelTableList[0]->setTableData(m_pArrUIVOL, bCanUpdateTable);
 	}
 
 	if (m_ICHannelTableList.size()>=1)
@@ -539,5 +562,5 @@ void QPowerManualGridImp::setPropertyOfParaSet(plugin_type type,CSttTestResource
 	m_bDC = bDC;
 
 	initUI(pSttTestResource);
-	initData();
+	initData(false);
 }

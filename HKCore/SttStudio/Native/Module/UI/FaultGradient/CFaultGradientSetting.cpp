@@ -1,7 +1,7 @@
 #include "CFaultGradientSetting.h"
 #include "../Controls/SttLineEdit.h"
 #include "../Interface/SttMacroParaEditViewOriginal.h"
-
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 CFaultGradientSetting::CFaultGradientSetting(tmt_fault_gradient_test *pFGParas,QWidget *parent)
 	: QDialog(parent),ui(new Ui::CFaultGradientSetting)
 {
@@ -32,6 +32,12 @@ CFaultGradientSetting::~CFaultGradientSetting()
 void CFaultGradientSetting::InitLanguage()
 {
 
+    ui->tabWidget->setTabText(0, "g_sLangTxt_Native_Bin");
+    ui->tabWidget->setTabText(1, "g_sLangTxt_Native_Bout");
+	xlang_SetLangStrToWidget(ui->m_gbNormal, "Gradient_Normal", XLang_Ctrls_QGroupBox);
+	xlang_SetLangStrToWidget(ui->m_gbError, "Gradient_Failure", XLang_Ctrls_QGroupBox);
+	xlang_SetLangStrToWidget(ui->m_btnOK, "sOK", XLang_Ctrls_QPushButton);
+	xlang_SetLangStrToWidget(ui->m_btnCancel, "sCancel", XLang_Ctrls_QPushButton);
 }
 
 void CFaultGradientSetting::SetUIFont(QWidget* pWidget)

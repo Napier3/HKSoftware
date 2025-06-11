@@ -1,6 +1,6 @@
 #include "ShortCalcuDig.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/XLanguage/XLanguageMngr.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/XLanguageMngr.h"
 #include "../SttTestCntrFrameBase.h"
 #include "../../XLangResource_Native.h"
 #include "../Controls/SttGroupBox.h"
@@ -1237,3 +1237,15 @@ void ShortCalcuDig::OnRXValue()
 	m_pXEdit->setText(QString::number(m_fX,'f',3));
 }
 
+void ShortCalcuDig::SetParaSetSecondValue(int nParaSetSecondValue)
+{
+	if (nParaSetSecondValue == 0)
+	{
+		xlang_SetLangStrToWidget(m_pDLVLabel, "State_ShortU_kV", XLang_Ctrls_QLabel);
+	}
+	else
+	{
+		xlang_SetLangStrToWidget(m_pDLVLabel, "State_ShortU", XLang_Ctrls_QLabel);
+	}
+
+}

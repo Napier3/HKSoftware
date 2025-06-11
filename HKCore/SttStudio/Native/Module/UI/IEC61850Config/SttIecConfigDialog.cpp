@@ -5,13 +5,13 @@
 #include <QFileDialog>
 #include <QFile>
 #include "../SttTestCntrFrameBase.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "SttSclFileParseDialog.h"
-#include "../../61850/Module/SCL_Qt/QScdFileRWDlg.h"
+#include "../../../61850/Module/SCL_Qt/QScdFileRWDlg.h"
 #include "../Module/PopupDialog/SttPopupOpenDialog.h"
 #include "../Controls/SttFileSaveAsDlg.h"
-#include "../../Module/OSInterface/QT/XMessageBox.h"
+#include "../../../Module/OSInterface/QT/XMessageBox.h"
 #include "../Controls/SttTabWidget.h"
 #include "../SCL/QSttSelSclFileDlg.h"
 #include "../../../61850/Module/SCL/SclFileMngr/XSclFileMngr.h"
@@ -21,7 +21,7 @@
 #endif
 #include "../Module/PopupDialog/SttFileMngrTool.h"
 #include "../Module/XLangResource_Native.h"
-#include "../../AutoTest/Module/XLanguageResourceAts.h"
+#include "../../../AutoTest/Module/XLanguageResourceAts.h"
 #include "../../XLangResource_Native.h"
 #ifdef _PSX_QT_LINUX_
 #include <sys/sysinfo.h>
@@ -166,6 +166,12 @@ void QSttIecConfigDialog::CreateNavigationTree(long nTotalFiberNum_LC , long nTo
 	m_IecConfigNavigationTree->header()->setVisible(false);
 	//m_IecConfigNavigationTree->setFont(m_oIecFont);
 	
+	bool bIsEnabled = FALSE;
+	if (g_oSystemParas.m_nIecFormat == 0)
+	{
+		bIsEnabled = TRUE;
+	}
+
 	//2022-11-22  sy checkbox换成图片
 	CString strStyleSheet;
 //#ifndef _PSX_QT_WINDOWS_
@@ -209,7 +215,18 @@ void QSttIecConfigDialog::CreateNavigationTree(long nTotalFiberNum_LC , long nTo
 	astrItemDesc<<strTemp;
 	QTreeWidgetItem *pChildItem = new QTreeWidgetItem(astrItemDesc,STT_IECCONFIG_TREE_LEVEL_SECOND);
 // 	pChildItem->setCheckState(0, Qt::Checked);
-	pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable);//2023-12-28 suyang 取消树形控件勾选框
+	//pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable);//2023-12-28 suyang 取消树形控件勾选框
+	
+	if(bIsEnabled)
+	{
+		pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable| Qt::ItemIsEnabled);//2023-12-28 suyang 取消树形控件勾选框
+	}
+	else
+	{
+		pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable & ~Qt::ItemIsEnabled);
+	}
+
+
 	if (nTotalFiberNum_LC > 0)
 	{
 		pQTreeTopItem->addChild(pChildItem);
@@ -218,7 +235,10 @@ void QSttIecConfigDialog::CreateNavigationTree(long nTotalFiberNum_LC , long nTo
 	m_pIecSMV92OutWidget = new QSttIecSMV92Widget(m_oIecFont,m_pIecConfigRightStackedWidget);
 //	m_pIecSMV92OutWidget->setFont(m_oIecFont);
 	m_pIecConfigRightStackedWidget->addWidget(m_pIecSMV92OutWidget);
+	if (bIsEnabled)
+	{
 	m_oTreeStackedWidgetHash.insert(pChildItem ,(m_pIecConfigRightStackedWidget->count()-1));
+	}
 	m_oRightStackedWidgetList.append(m_pIecSMV92OutWidget);
 	
 	//FT3报文
@@ -227,7 +247,16 @@ void QSttIecConfigDialog::CreateNavigationTree(long nTotalFiberNum_LC , long nTo
 	astrItemDesc<<strTemp;
 	pChildItem = new QTreeWidgetItem(astrItemDesc,STT_IECCONFIG_TREE_LEVEL_SECOND);
 // 	pChildItem->setCheckState(0, Qt::Checked);
-	pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable);//2023-12-28 suyang 取消树形控件勾选框
+	//pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable);//2023-12-28 suyang 取消树形控件勾选框
+
+	if(bIsEnabled)
+	{
+		pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable & ~Qt::ItemIsEnabled);//2023-12-28 suyang 取消树形控件勾选框
+	}
+	else
+	{
+		pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
+	}
 
 	if (nTotalFiberNum_STSend > 0)
 	{
@@ -235,7 +264,10 @@ void QSttIecConfigDialog::CreateNavigationTree(long nTotalFiberNum_LC , long nTo
 	}
 	m_pIecSMVFT3OutWidget = new QSttIecSMVFT3OutWidget(m_oIecFont,m_pIecConfigRightStackedWidget);
 	m_pIecConfigRightStackedWidget->addWidget(m_pIecSMVFT3OutWidget);
+	if (!bIsEnabled)
+	{
 	m_oTreeStackedWidgetHash.insert(pChildItem ,(m_pIecConfigRightStackedWidget->count()-1));
+	}
 	m_oRightStackedWidgetList.append(m_pIecSMVFT3OutWidget);
 
 	//SMV订阅
@@ -254,7 +286,15 @@ void QSttIecConfigDialog::CreateNavigationTree(long nTotalFiberNum_LC , long nTo
 	astrItemDesc<<strTemp;
 	pChildItem = new QTreeWidgetItem(astrItemDesc,STT_IECCONFIG_TREE_LEVEL_SECOND);
 // 	pChildItem->setCheckState(0, Qt::Checked);
-	pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable);//2023-12-28 suyang 取消树形控件勾选框
+	//pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable);//2023-12-28 suyang 取消树形控件勾选框
+	if(bIsEnabled)
+	{
+		pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable| Qt::ItemIsEnabled);//2023-12-28 suyang 取消树形控件勾选框
+	}
+	else
+	{
+		pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable & ~Qt::ItemIsEnabled);
+	}
 
 	if (nTotalFiberNum_LC > 0)
 	{
@@ -263,7 +303,10 @@ void QSttIecConfigDialog::CreateNavigationTree(long nTotalFiberNum_LC , long nTo
 	m_pIecSMV92InWidget = new QSttIecSMV92InWidget(m_oIecFont,m_pIecConfigRightStackedWidget);
 //	m_pIecSMV92InWidget->setFont(m_oIecFont);
 	m_pIecConfigRightStackedWidget->addWidget(m_pIecSMV92InWidget);
+	if (bIsEnabled)
+	{
 	m_oTreeStackedWidgetHash.insert(pChildItem ,(m_pIecConfigRightStackedWidget->count()-1));
+	}
 	m_oRightStackedWidgetList.append(m_pIecSMV92InWidget);  
 
 	//FT3报文
@@ -272,7 +315,17 @@ void QSttIecConfigDialog::CreateNavigationTree(long nTotalFiberNum_LC , long nTo
 	astrItemDesc<<strTemp;
 	pChildItem = new QTreeWidgetItem(astrItemDesc,STT_IECCONFIG_TREE_LEVEL_SECOND);
 // 	pChildItem->setCheckState(0, Qt::Checked);
-	pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable);//2023-12-28 suyang 取消树形控件勾选框
+	//pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable);//2023-12-28 suyang 取消树形控件勾选框
+
+	if(bIsEnabled)
+	{
+		pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable & ~Qt::ItemIsEnabled);//2023-12-28 suyang 取消树形控件勾选框
+
+	}
+	else
+	{
+		pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
+	}
 
 	if (nTotalFiberNum_STSend > 0)
 	{
@@ -281,7 +334,10 @@ void QSttIecConfigDialog::CreateNavigationTree(long nTotalFiberNum_LC , long nTo
 	}
 	m_pIecSMVFT3InWidget = new QSttIecSMVFT3InWidget(m_oIecFont,m_pIecConfigRightStackedWidget);
 	m_pIecConfigRightStackedWidget->addWidget(m_pIecSMVFT3InWidget);
+	if (!bIsEnabled)
+	{
 	m_oTreeStackedWidgetHash.insert(pChildItem ,(m_pIecConfigRightStackedWidget->count()-1));
+	}
 	m_oRightStackedWidgetList.append(m_pIecSMVFT3InWidget);
 
 // 	pQTreeTopItem->setDisabled(true);
@@ -294,6 +350,15 @@ void QSttIecConfigDialog::CreateNavigationTree(long nTotalFiberNum_LC , long nTo
 	astrItemDesc<<strTemp;
 	pQTreeTopItem = new QTreeWidgetItem(astrItemDesc,STT_IECCONFIG_TREE_LEVEL_TOP);
 	pQTreeTopItem->setIcon(0,m_oIconTree);
+// 	if(g_oSystemParas.m_nIecFormat == 0)
+// 	{
+// 		pQTreeTopItem->setFlags(pQTreeTopItem->flags() | Qt::ItemIsEnabled);
+// 	}
+// 	else
+// 	{
+// 		pQTreeTopItem->setFlags(pQTreeTopItem->flags() & ~Qt::ItemIsEnabled);
+// 	}
+
 	if (nTotalFiberNum_LC > 0)
 	{
 		m_IecConfigNavigationTree->addTopLevelItem(pQTreeTopItem);
@@ -302,7 +367,10 @@ void QSttIecConfigDialog::CreateNavigationTree(long nTotalFiberNum_LC , long nTo
 	m_pIecGoutWidget = new QSttIecGoutWidget(m_oIecFont,m_pIecConfigRightStackedWidget);
 // 	m_pIecGoutWidget->setFont(m_oIecFont);
 	m_pIecConfigRightStackedWidget->addWidget(m_pIecGoutWidget);
-	m_oTreeStackedWidgetHash.insert(pQTreeTopItem ,(m_pIecConfigRightStackedWidget->count()-1));
+// 	if (bIsEnabled)
+// 	{
+// 		m_oTreeStackedWidgetHash.insert(pQTreeTopItem ,(m_pIecConfigRightStackedWidget->count()-1));
+// 	}
 	m_oRightStackedWidgetList.append(m_pIecGoutWidget);
 
  	//GOOSE 订阅
@@ -311,6 +379,14 @@ void QSttIecConfigDialog::CreateNavigationTree(long nTotalFiberNum_LC , long nTo
  	astrItemDesc<<strTemp;
  	pQTreeTopItem = new QTreeWidgetItem(astrItemDesc,STT_IECCONFIG_TREE_LEVEL_TOP);
 	pQTreeTopItem->setIcon(0,m_oIconTree);
+// 	if(bIsEnabled)
+// 	{
+// 		pQTreeTopItem->setFlags(pQTreeTopItem->flags() | Qt::ItemIsEnabled);
+// 	}
+// 	else
+// 	{
+// 		pQTreeTopItem->setFlags(pQTreeTopItem->flags() & ~Qt::ItemIsEnabled);
+// 	}
 	if (nTotalFiberNum_LC > 0)
 	{
  	    m_IecConfigNavigationTree->addTopLevelItem(pQTreeTopItem);
@@ -319,7 +395,10 @@ void QSttIecConfigDialog::CreateNavigationTree(long nTotalFiberNum_LC , long nTo
  	m_pIecGinWidget = new QSttIecGinWidget(m_oIecFont,m_pIecConfigRightStackedWidget);
 // 	m_pIecGinWidget->setFont(m_oIecFont);
  	m_pIecConfigRightStackedWidget->addWidget(m_pIecGinWidget);
- 	m_oTreeStackedWidgetHash.insert(pQTreeTopItem ,(m_pIecConfigRightStackedWidget->count()-1));
+// 	if (bIsEnabled)
+// 	{
+// 		m_oTreeStackedWidgetHash.insert(pQTreeTopItem ,(m_pIecConfigRightStackedWidget->count()-1));
+// 	}
  	m_oRightStackedWidgetList.append(m_pIecGinWidget);
 
 	m_IecConfigNavigationTree->expandAll();
@@ -457,6 +536,11 @@ void QSttIecConfigDialog::slot_TreeItemClicked(QTreeWidgetItem * pItem, int nCol
 {
 	if(pItem == NULL) 
 		return;
+
+	if ((pItem->flags() & Qt::ItemIsEnabled) == 0)
+	{
+		return;
+	}
 
 	QTreeWidgetItem *pCurSelItem = pItem;
 
@@ -868,9 +952,9 @@ void QSttIecConfigDialog::slot_SaveBtnClicked()
 	if (!m_pIecCfgDatasMngr_Inter->HasContrlBlock_Selected(m_bTotalFiberNum_LC,m_bTotalFiberNum_STSend))//zhouhj 20220404 数字量输出,并且当前IEC配置为空的情况下，不能开始测试
 	{
 		CString strTitle, strText;
-		//strTitle = _T("警告");
-		//strText = _T("当前IEC配置为空.");
-		CXMessageBox::information(this,g_sLangTxt_warning ,g_sLangTxt_NullIEC);
+        strTitle = _T("警告");
+        strText = _T("当前IEC配置为空.");
+        CXMessageBox::information(this,strTitle ,strText);
 		m_pSaveToolBtn->setDisabled(false);
 		return;
 	}

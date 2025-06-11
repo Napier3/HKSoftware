@@ -1,6 +1,6 @@
 #include "QSttProgDlg.h"
-#include "../../Module/OSInterface/OSInterface.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/OSInterface/OSInterface.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../Module/XLangResource_Native.h"
 
 QSttProgDlg::QSttProgDlg(QWidget *parent)

@@ -8,7 +8,7 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QGroupBox>
-#include "../../Module/OSInterface/QT/CString_QT.h"
+#include "../../../Module/OSInterface/QT/CString_QT.h"
 
 class QAdmuAccurAutoTestParasSetDialog : public QDialog
 {

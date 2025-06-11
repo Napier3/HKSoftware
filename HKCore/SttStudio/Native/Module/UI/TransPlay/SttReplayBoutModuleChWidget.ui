@@ -120,7 +120,7 @@
   <customwidget>
    <class>QSttCheckBox</class>
    <extends>QCheckBox</extends>
-   <header>../Module/UI/Controls/SttCheckBox.h</header>
+   <header>../Module/UI//Controls/SttCheckBox.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

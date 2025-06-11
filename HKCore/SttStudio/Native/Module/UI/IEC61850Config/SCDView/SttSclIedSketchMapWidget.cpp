@@ -1,9 +1,9 @@
 #include "SttSclIedSketchMapWidget.h"
-#include "../../Module/OSInterface/QT/CString_QT.h"
+#include "../../../Module/OSInterface/QT/CString_QT.h"
 #include <QVBoxLayout>
 #include <QResizeEvent>
 #include <QEvent>
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../../XLangResource_Native.h"
 
 QSttSclIedSkectMapWidget::QSttSclIedSkectMapWidget(QWidget *parent):QWidget(parent)

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../Module/OSInterface/OSInterface.h"
+//#include "../../../Module/OSInterface/OSInterface.h"
 #ifdef _PSX_QT_LINUX_
     #include "tmt_adjust_sys_parameter.h"
 #endif

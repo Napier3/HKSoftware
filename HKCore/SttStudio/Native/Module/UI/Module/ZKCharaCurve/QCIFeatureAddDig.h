@@ -4,11 +4,11 @@
 #include <QDialog>
 #include <QStyleFactory>
 #include "ui_QCIFeatureAddDig.h"
-#include "../../Module/OSInterface/OSInterface.h"
-#include "../../Module/BaseClass/ExBaseList.h"
-#include "../../Module/API/GlobalConfigApi.h"
-#include "../../AutoTest/Module/Characteristic/Characteristic.h"
-#include "../../AutoTest/Module/Characteristic/CharacteristicLib.h"
+#include "../../../Module/OSInterface/OSInterface.h"
+#include "../../../Module/BaseClass/ExBaseList.h"
+#include "../../../Module/API/GlobalConfigApi.h"
+#include "../../../AutoTest/Module/Characteristic/Characteristic.h"
+#include "../../../AutoTest/Module/Characteristic/CharacteristicLib.h"
 
 class QCIFeatureAddDig : public QDialog
 {

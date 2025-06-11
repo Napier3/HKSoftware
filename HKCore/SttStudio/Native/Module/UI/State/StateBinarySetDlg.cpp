@@ -1,7 +1,7 @@
 #include "StateBinarySetDlg.h"
 #include "../Module/UI/Module/CommonMethod/commonMethod.h"
 #include "SttMacroParaEditViewState.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 //#include "../SttTestCntrFrameBase.h"
 #include "../Controls/SttCheckBox.h"
 #include "../Module/XLangResource_Native.h"
@@ -144,8 +144,8 @@ void QStateBinarySetDlg::initUI()
 	strText = _T("");
 	m_pChk_HoldTime = new QSttCheckBox(strText);
 
-	xlang_SetLangStrToWidget(m_pBinBox, "Native_Bin", XLang_Ctrls_QGroupBox);
-	xlang_SetLangStrToWidget(m_pBoutBox, "Native_Bout", XLang_Ctrls_QGroupBox);
+	xlang_SetLangStrToWidget(m_pBinBox, "sInputValue", XLang_Ctrls_QGroupBox);
+	xlang_SetLangStrToWidget(m_pBoutBox, "sOutputValue", XLang_Ctrls_QGroupBox);
 	//xlang_SetLangStrToWidget(m_pTrigerHoldTime, "State_TrigerHoldTime", XLang_Ctrls_QLabel);
 	xlang_SetLangStrToWidget(m_pOutputHoldTime, "State_HoldTime", XLang_Ctrls_QLabel);
 	xlang_SetLangStrToWidget(m_pLogicOr, "Native_LogicOr", XLang_Ctrls_QRadioButton);

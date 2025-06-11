@@ -1,12 +1,12 @@
 #include "SttIecChsEditWidget.h"
 #include "SttIecSMVFT3InitValueSetDialog.h"
 #include "SttIecSMVFT3InMapSetDialog.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgSmvRates.h"
-#include "../../61850/Module/CfgDataMngr/IecCfg92Data.h"
-#include "../../61850/Module/CfgDataMngr/IecCfg6044CommonCh.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgSmvRates.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfg92Data.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfg6044CommonCh.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../XLangResource_Native.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../Module/ScrollCtrl/ScrollComboBox.h"
 #include "../SttTestCntrFrameBase.h"
 #include "../Module/XLangResource_Native.h"
@@ -298,12 +298,25 @@ void QSttIecChsEditWidget::InitUI_SMV92Map()
 	m_pCurrentMapComboBox->addItem(SMV_RATEID_STR_IABC6);
 
 	m_pVoltageMapComboBox->addItem(_T("----"));
+	if (xlang_IsCurrXLanguageChinese())
+	{
 	m_pVoltageMapComboBox->addItem(SMV_RATEID_STR_UABCZ);
 	m_pVoltageMapComboBox->addItem(SMV_RATEID_STR_UABCZ2);
 	m_pVoltageMapComboBox->addItem(SMV_RATEID_STR_UABCZ3);
 	m_pVoltageMapComboBox->addItem(SMV_RATEID_STR_UABCZ4);
 	m_pVoltageMapComboBox->addItem(SMV_RATEID_STR_UABCZ5);
 	m_pVoltageMapComboBox->addItem(SMV_RATEID_STR_UABCZ6);
+	}
+	else
+	{
+		m_pVoltageMapComboBox->addItem(SMV_RATENAME_STR_UABCZ);
+		m_pVoltageMapComboBox->addItem(SMV_RATENAME_STR_UABCZ2);
+		m_pVoltageMapComboBox->addItem(SMV_RATENAME_STR_UABCZ3);
+		m_pVoltageMapComboBox->addItem(SMV_RATENAME_STR_UABCZ4);
+		m_pVoltageMapComboBox->addItem(SMV_RATENAME_STR_UABCZ5);
+		m_pVoltageMapComboBox->addItem(SMV_RATENAME_STR_UABCZ6);
+	}
+	
 
 	CString strTemp;
 	xlang_GetLangStrByFile(strTemp,"IEC_IMap");
@@ -360,8 +373,17 @@ void QSttIecChsEditWidget::InitUI_SMVFT3Map()/////////
 		m_pDcCurrentMapComboBox->addItem(SMV_RATEID_STR_I4_123);
 
 		m_pAcVoltageMapComboBox->addItem(_T("----"));
+		if (xlang_IsCurrXLanguageChinese())//dingxy 20250122 增加用于英文系统下
+		{
 		m_pAcVoltageMapComboBox->addItem(SMV_RATEID_STR_UABCZ);
 		m_pAcVoltageMapComboBox->addItem(SMV_RATEID_STR_UABCZ2);
+		}
+		else
+		{
+			m_pAcVoltageMapComboBox->addItem(SMV_RATENAME_STR_UABCZ);
+			m_pAcVoltageMapComboBox->addItem(SMV_RATENAME_STR_UABCZ2);
+		}
+		
 	
 		m_pAcCurrentMapComboBox->addItem(_T("----"));
 		m_pAcCurrentMapComboBox->addItem(SMV_RATEID_STR_IABC);
@@ -406,10 +428,21 @@ void QSttIecChsEditWidget::InitUI_SMVFT3Map()/////////
 // 		m_pCurrentMapComboBox->addItem(SMV_RATEID_STR_IABC6);
 
 		m_pVoltageMapComboBox->addItem(_T("----"));
+		if (xlang_IsCurrXLanguageChinese())
+		{
 		m_pVoltageMapComboBox->addItem(SMV_RATEID_STR_UABCZ);
 		m_pVoltageMapComboBox->addItem(SMV_RATEID_STR_UABCZ2);
 		m_pVoltageMapComboBox->addItem(SMV_RATEID_STR_UABCZ3);
 		m_pVoltageMapComboBox->addItem(SMV_RATEID_STR_UABCZ4);
+		}
+		else
+		{
+			m_pVoltageMapComboBox->addItem(SMV_RATENAME_STR_UABCZ);
+			m_pVoltageMapComboBox->addItem(SMV_RATENAME_STR_UABCZ2);
+			m_pVoltageMapComboBox->addItem(SMV_RATENAME_STR_UABCZ3);
+			m_pVoltageMapComboBox->addItem(SMV_RATENAME_STR_UABCZ4);
+		}
+		
 // 		m_pVoltageMapComboBox->addItem(SMV_RATEID_STR_UABCZ5);
 // 		m_pVoltageMapComboBox->addItem(SMV_RATEID_STR_UABCZ6);
 

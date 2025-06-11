@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QItemDelegate>
 #include "CharEditWidgetBase.h"
-#include "../../AutoTest/Module/Characteristic/Characteristic.h"
+#include "../../../AutoTest/Module/Characteristic/Characteristic.h"
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -19,6 +19,7 @@
 
 class QCharEditGrid_Character : public QCharEditGridBase
 {
+	Q_OBJECT
 public:
 	QCharEditGrid_Character(QWidget* pParent);
 	virtual ~QCharEditGrid_Character();
@@ -32,6 +33,9 @@ public:
 	virtual void InitDataTypes();
 	virtual void ShowData(CExBaseObject *pData, int& nRow, BOOL bInsertRow=TRUE);
 	virtual void slot_CurrentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+
+signals:
+	void sig_UpdateCurrData();
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -173,6 +177,8 @@ private slots:
 	void slot_ZkPbnInsertClicked();//插入元素
 	void slot_ZkPbnRemoveClicked();//删除元素
 	void slot_ZkPbnEditClicked();//修改元素
+
+	void slot_UpdateCharacters();//切换选项，更新下表格
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -200,6 +206,7 @@ public:
 	void UpdateZKFeature(BOOL bSetting);
 	void SetDistanceFont();
 	void UpdateBtnEnable();
+	void UpdateInsertButtonState(CCharacterArea* pCharacterArea);
 	virtual void UpdateCharacters(BOOL bCharChaged);
 	virtual void OnDataSelChanged(QTableWidget *pGridCtrl, int nRow, int nCol);
 

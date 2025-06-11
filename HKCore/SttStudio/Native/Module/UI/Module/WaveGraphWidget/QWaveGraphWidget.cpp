@@ -1,9 +1,9 @@
 #include "QWaveGraphWidget.h"
 #include <QResizeEvent>
 #include "../Module/XLangResource_Native.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../Module/ReplayTest/BigComtradeTransPlay.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include <QCoreApplication>
 #include <qwt_symbol.h>
 #include <QDir>
@@ -77,14 +77,32 @@ void QWaveGraphWidget::UpdateWaveDraws()
 // 	updateGeometry();//zhouhj 20211104 增加用于解决移动垂直线重影的问题
 //	CLogPrint::LogFormatString(XLOGLEVEL_INFOR,_T("QWaveGraphWidget::UpdateWaveDraws()"));
 }
+void QWaveGraphWidget::UpdateButtonEnable(BOOL bState)
+{
+#ifdef _PSX_QT_WINDOWS_
+// 	m_pBtnReset->setEnabled(bState);
+// 	m_pBtnZoomOutTime->setEnabled(bState);
+// 	m_pBtnZoomInTime->setEnabled(bState);
+// 	m_pBtnZoomOutChan->setEnabled(bState);
+// 	m_pBtnZoomInChan->setEnabled(bState);
+// 	m_pBtnMoveLeft->setEnabled(bState);
+// 	m_pBtnMoveRight->setEnabled(bState);
+// 	m_pBtn_PrevPage->setEnabled(bState);
+// 	m_pBtn_NextPage->setEnabled(bState);
+#else
+	m_pBtn_PrevPage->setEnabled(bState);
+	m_pBtn_NextPage->setEnabled(bState);
+#endif // _PSX_QT_WINDOWS_
+
+}
 
 void QWaveGraphWidget::paintEvent(QPaintEvent *event)
 {
 	CDC oDC(this);
 	oDC.begin(this);
 	CViewAnalyse::OnDraw(&oDC);
-
-	if (!g_theBigComtradeTransPlay->HasComtradeDataNeedDraw())
+	//新增判断，避免波形复归时也有"请打开COMTRADE波形文件"提示
+	if (!g_theBigComtradeTransPlay->HasComtradeDataNeedDraw() && (g_theBigComtradeTransPlay->m_oBigComtradeFileRead.m_oSrcComtradeFile.m_strComtradeFile.IsEmpty()))
 	{
 		long y = height() / 2;
 		long x = width() / 2;
@@ -97,6 +115,13 @@ void QWaveGraphWidget::paintEvent(QPaintEvent *event)
 		oDC.SetTextColor(RGB(255, 255, 255));
 		//oDC.DrawText("请打开COMTRADE波形文件", rc, DT_VCENTER|DT_LEFT);
 		oDC.DrawText(g_sLangTxt_State_POpenCFile.GetString(), rc, DT_VCENTER|DT_LEFT);  //请打开COMTRADE波形文件 lcq 3.15
+
+		UpdateButtonEnable(FALSE);
+		SendUpdateTwoCursorTimeValues(TRUE);
+	}
+	else
+	{
+		UpdateButtonEnable(TRUE);
 	}
 
 	if(m_bInsertWaveformBackColor)
@@ -590,7 +615,17 @@ void QWaveGraphWidget::CreateBySttModulesComtradeBind(CSttModuleChComtradeBind *
 	pVariable->m_pChannelBuffer = NULL; //不能使用InitBufferMngr函数因为没有BufferID
 	pVariable->Set_ChIndex( m_nAnalogChanAmount );
 	pVariable->m_strID		= pCh->m_strName;
-	pVariable->m_strName    = pCh->m_strName;
+	CString strChName = pCh->m_strName;
+	if (!xlang_IsCurrXLanguageChinese())//dingxy 20250121 英文环境下修改通道映射名称
+	{
+		if (strChName.Find(_T("U")) >= 0)
+		{
+			strChName.Replace(_T("U"), _T("V"));
+		}
+	}
+	
+	pVariable->m_strName = strChName;
+	//pVariable->m_strName    = pCh->m_strName;
 	pVariable->m_strPhaseID = pCh->GetModuleChPhase();
 	pVariable->m_strUnit = pCh->GetUnit();
 	pVariable->m_strDCAC    = g_pszKeyVariableACDC;

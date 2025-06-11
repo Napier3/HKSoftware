@@ -54,6 +54,14 @@ void QRemoteCtrlDlg::InitUI()
 	connect(m_pCancel_PushButton, SIGNAL(clicked()), this, SLOT(slot_CancelClicked()));
 	SetDialogFont();
 	setLayout(m_pMainLayout);
+
+	if (m_pSttMacroParaEditViewRemoteCtrl)
+	{
+		if (!(m_pSttMacroParaEditViewRemoteCtrl->m_oRemoteCtrlTimer.isActive()))
+		{
+			m_pSttMacroParaEditViewRemoteCtrl->SatrtRemoteCtrlTimer();
+		}
+	}
 }
 
 void QRemoteCtrlDlg::SetDialogFont()
@@ -69,18 +77,25 @@ void QRemoteCtrlDlg::SetDialogFont()
 
 void QRemoteCtrlDlg::slot_OKClicked()
 {
-	m_pMainLayout->removeWidget(m_pSttMacroParaEditViewRemoteCtrl);
-	m_pSttMacroParaEditViewRemoteCtrl->hide();
-	m_pSttMacroParaEditViewRemoteCtrl->setParent(g_theTestCntrFrame);
-	close();
+	CloseDialog();
 }
 
 void QRemoteCtrlDlg::slot_CancelClicked()
 {
+	CloseDialog();
+}
+
+void QRemoteCtrlDlg::CloseDialog()
+{
+	if (m_pSttMacroParaEditViewRemoteCtrl)
+	{
 	m_pMainLayout->removeWidget(m_pSttMacroParaEditViewRemoteCtrl);
 	m_pSttMacroParaEditViewRemoteCtrl->hide();
 	m_pSttMacroParaEditViewRemoteCtrl->setParent(g_theTestCntrFrame);
+		m_pSttMacroParaEditViewRemoteCtrl->StopRemoteCtrlTimer();
+		m_pSttMacroParaEditViewRemoteCtrl->m_pBtnWidget->slot_btn_ClearOperationRecordsClicked();
+		m_pSttMacroParaEditViewRemoteCtrl->m_pBtnWidget->slot_btn_ClearClearEventRecordsClicked();
+	}
 	close();
 }
-
 

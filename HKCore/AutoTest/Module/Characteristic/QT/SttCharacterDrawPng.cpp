@@ -1,6 +1,6 @@
 #include "SttCharacterDrawPng.h"
 
-#include "../../../../Module/API/Base64.h"
+#include "../../../Module/API/Base64.h"
 #include <qbuffer.h>
 #include <qpainter.h>
 

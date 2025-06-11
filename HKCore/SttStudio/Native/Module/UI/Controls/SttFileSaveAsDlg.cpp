@@ -3,8 +3,8 @@
 #include "../../SttTestCtrl/SttTestAppBase.h"
 #include "../Module/CommonMethod/commonMethod.h"
 #include <QMessageBox>
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-//#include "../../Module/UI/SttTestCntrFrameBase.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+//#include "../Module/UI/SttTestCntrFrameBase.h"
 
 
 QSttFileSaveAsDlg::QSttFileSaveAsDlg(const CString &strPrev, const CString &strFile, QWidget *parent) :

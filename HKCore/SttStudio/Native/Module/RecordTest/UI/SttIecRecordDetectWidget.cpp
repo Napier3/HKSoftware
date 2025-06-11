@@ -2,17 +2,17 @@
 #include "ui_SttIecRecordDetectWidget.h"
 #include "../../SttTestCtrl/SttTestAppBase.h"
 #include "../../SttTestCtrl/SttTestCtrlCntrNative.h"
-#include "../../../../Module/SmartCap/XSmartCapMngr.h"
-#include "../../../../Module/SmartCap/61850Cap/CapDevice/CapDevice6044.h"
-#include "../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../Module/SmartCap/61850Cap/CapDevice/CapDevice6044.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../UI/SttTestCntrFrameBase.h"
-#include "../../../../61850/Module/IecCfgSclTool/SclToIecCfgTool.h"
-#include "../../../../Module/OSInterface/QT/XMessageBox.h"
+#include "../../../61850/Module/IecCfgSclTool/SclToIecCfgTool.h"
+#include "../../../Module/OSInterface/QT/XMessageBox.h"
 #include "MUTest/SttMUTestIecCbSelWidget.h"
 #include "../../XLangResource_Native.h"
 #include "SttIecRecordMainWidget.h"
 #include "SttIecRecordCbWidget.h"
-#include "../../../../Module/SmartCap/XSmartCapFileWrite.h"
+#include "../../../Module/SmartCap/XSmartCapFileWrite.h"
 
 //2022-12-02 修改功能ID，导致所有的都要编译，效率低下，所以从头文件中去掉，在任何需要包含的地方进行包含
 #include "../../UI/SttTestCntrCmdDefine.h" 
@@ -159,7 +159,7 @@ void QSttIecRecordDetectWidget::slot_ck_WaveRecordStateChanged(int	nIndex)
 	//2023-1-3 suyang 只做显示提示信息操作
 	if (m_chkWaveRecord->checkState() == Qt::Checked)
 	{
-		QMessageBox::information(this, g_sLangTxt_Message,g_sLangTxt_Iec_StartRcd);
+        QMessageBox::information(this, g_sLangTxt_Message,"g_sLangTxt_Iec_StartRcd");
 	}
 
 

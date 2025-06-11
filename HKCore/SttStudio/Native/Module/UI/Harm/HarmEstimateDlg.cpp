@@ -5,7 +5,7 @@
 #include <QLabel>
 #include <QCheckBox>
 #include <QHeaderView>
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../XLangResource_Native.h"
 #include "SttMacroParaEditViewHarm.h"
 #include "../../XLangResource_Native.h"
@@ -13,6 +13,7 @@ HarmEstimateGrid::HarmEstimateGrid(int rows, int columns, QWidget* parent) : QTa
 {
 	m_bRunning = FALSE;
 	installEventFilter(this);
+	m_nParaSetSecondValue = 1;
 }
 
 HarmEstimateGrid::~HarmEstimateGrid()
@@ -28,7 +29,7 @@ void HarmEstimateGrid::InitGrid()
 	strRelError = g_sLangTxt_StateEstimate_RelError;//相对误差(%)
 	strRelError += "(%)";
 	xlang_GetLangStrByFile(strAbsError, "StateEstimate_AbsError");//绝对误差
-	xlang_GetLangStrByFile(strSettingValue, "State_SettingValue");//整定值
+	xlang_GetLangStrByFile(strSettingValue, "sSetValue");//整定值
 
 	setHorizontalHeaderLabels(QStringList() << strName << strErrorType << strRelError << strAbsError << strSettingValue);
 	setColumnWidth(0, 120);
@@ -91,7 +92,14 @@ void HarmEstimateGrid::InitData(tmt_HarmParas* pParas)
 
 	if (nType==0)
 	{	
+		if (m_nParaSetSecondValue == 1)
+		{ 
 		strText = /* "电压动作值?(V)" */g_sLangTxt_Gradient_VActionValue;
+		}
+		else
+		{
+            strText =  "电压动作值(kV)" ;
+		}
 		setItem(0, 0, new QTableWidgetItem(strText));
 		strText = /* "电流动作值(A)" */g_sLangTxt_Gradient_CActionValue;
 		setItem(1, 0, new QTableWidgetItem(strText));
@@ -301,7 +309,8 @@ HarmEstimateDlg::HarmEstimateDlg(tmt_HarmParas* pParas, QWidget* parent) : QDial
 {
 	m_pGrid = NULL;
 	m_pParas = pParas;
-	InitUI();
+	m_nParaSetSecondValue = 1;
+	//InitUI();
 }
 
 HarmEstimateDlg::~HarmEstimateDlg()
@@ -321,6 +330,7 @@ void HarmEstimateDlg::InitUI()
 	QHBoxLayout* pHLayout = new QHBoxLayout(this);
 	m_pGrid = new HarmEstimateGrid(3, 5, this);
 	m_pGrid->InitGrid();
+	m_pGrid->m_nParaSetSecondValue = m_nParaSetSecondValue;
 	m_pGrid->InitData(m_pParas);
 	pHLayout->addWidget(m_pGrid);
 	pVLayout->addLayout(pHLayout);

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "tmt_pt_test.h"
-#include "../../../../Module/API/StringApi.h"
+#include "../../../Module/API/StringApi.h"
 
 #ifdef NOT_USE_XLANGUAGE
 #else

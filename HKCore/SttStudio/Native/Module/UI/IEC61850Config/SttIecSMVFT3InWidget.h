@@ -12,11 +12,11 @@
 #include <QCheckBox>
 #include "../Module/CommonCtrl_QT/QFloatLineEdit.h"
 #include "../Module/CommonCtrl_QT/QNumberCheckBox.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgSMVDatas.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgSMVDatas.h"
 #include "Grid/IecCfgSmvDataFT3Grid.h"
 #include "Grid/IecCfgSmvDataFT3InGrid.h"
-#include "../../Module/BaseClass/QT/ExBaseListComboBox.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgSmvInDatas.h"
+#include "../../../Module/BaseClass/QT/ExBaseListComboBox.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgSmvInDatas.h"
 
 #define STT_IEC_SMVFT3_BAUD_MAX_NUM                    4
 #define STT_IEC_SMVFT3_RATE_MAX_NUM                    7

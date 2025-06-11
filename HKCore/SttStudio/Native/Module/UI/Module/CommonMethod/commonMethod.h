@@ -17,7 +17,7 @@
 #if QT_VERSION >= QT_VERSION_CHECK(5,0,0)
 #include<QtWidgets>
 #endif
-#include "CString_QT.h"
+#include "../../../Module/OSInterface/QT/CString_QT.h"
 
 #define STT_DefaultKeyboardType_Number                 0
 #define STT_DefaultKeyboardType_English                1

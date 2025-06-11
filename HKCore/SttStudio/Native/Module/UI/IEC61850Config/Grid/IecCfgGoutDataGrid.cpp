@@ -1,7 +1,7 @@
 #include "IecCfgGoutDataGrid.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgGoutData.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgGoutData.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../../Module/CommonMethod/commonMethod.h"
 
 

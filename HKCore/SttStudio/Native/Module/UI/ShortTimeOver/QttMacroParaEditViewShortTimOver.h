@@ -68,6 +68,9 @@ public:
 	virtual void OnViewTestLink(BOOL b=FALSE);
 	virtual void OnViewTestStart();
 	virtual void OnViewTestStop();
+	virtual void UpdatePrimParaSetUI(){}//20240923 suyang 更新界面一次值/二次值显示
+	virtual BOOL IsUseSecondParaSet(){ return TRUE; }//20240923 suyang 是否显示二次值	
+
 
 public:
 	int m_nVChNums,m_nIChNums;

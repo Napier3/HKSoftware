@@ -11,7 +11,7 @@
 #include <QSplitter>
 
 #include "Grid/SclCtrlsGridBase.h"
-#include "../../61850/Module/SCL/SclIecCfgDatas.h"
+#include "../../../61850/Module/SCL/SclIecCfgDatas.h"
 
 #include "Grid/SclCtrlChsGridBase.h"
 

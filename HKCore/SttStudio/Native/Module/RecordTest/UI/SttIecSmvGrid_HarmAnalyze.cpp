@@ -1,8 +1,8 @@
 #include "SttIecSmvGrid_HarmAnalyze.h"
-#include "../../../../Module/SmartCap/XSmartCapMngr.h"
-#include "../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../SttTestSysGlobalPara.h"
-#include "../../../../Module/API/MathApi.h"
+#include "../../../Module/API/MathApi.h"
 
 #define SmvGrid_HarmAnalyze_MAX_ROW_NUM      29
 

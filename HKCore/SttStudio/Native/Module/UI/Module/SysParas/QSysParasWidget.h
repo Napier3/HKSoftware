@@ -12,6 +12,7 @@
 #include "../CommonCtrl_QT/QFloatLineEdit.h"
 #include <QTableWidgetItem>
 
+#include "../../Controls/SttCheckBox.h"
 #include "../CommonMethod/commonMethod.h"
 
 #include "../../../../Module/SttTest/Common/tmt_system_config.h"
@@ -32,23 +33,27 @@ public:
 	void SaveDatas();//将界面参数保存到系统参数中
 
 	void InitConnect();
+	BOOL IsDevModel();
+	void SetSysParasFont();
+	int getDigitalTypeIndex(CString TypeName);
+	CString getDigitalTypeString( int TypeIndex );
 
 protected:
 	QGroupBox *m_pOutputSel_GroupBox;//输出类型选择Group
 	QHBoxLayout *m_pOutputSel_HBoxLayout;//输出类型选择布局
 
-	QCheckBox *m_pAnalogSel_CheckBox;//模拟量选择
-	QCheckBox *m_pDigitalSel_CheckBox;//数字量选择
-	QCheckBox *m_pWeakSel_CheckBox;//弱信号选择
+	QSttCheckBox *m_pAnalogSel_CheckBox;//模拟量选择
+	QSttCheckBox *m_pDigitalSel_CheckBox;//数字量选择
+	QSttCheckBox *m_pWeakSel_CheckBox;//弱信号选择
 	QLabel *m_pDigitalType_Label;//数字报文类型
 	QComboBox *m_pDigitalType_Combobox;//数字报文类型选择
 
 	QGroupBox *m_pMeasSel_GroupBox;//采集类型选择Group
 	QHBoxLayout *m_pMeasSel_HBoxLayout;//采集类型选择布局
 
-	QCheckBox *m_pAnalogMeasSel_CheckBox;//采集模拟量选择
-	QCheckBox *m_pDigitalMeasSel_CheckBox;//采集数字量选择
-// 	QCheckBox *m_pWeakMeasSel_CheckBox;//采集弱信号选择
+	QSttCheckBox *m_pAnalogMeasSel_CheckBox;//采集模拟量选择
+	QSttCheckBox *m_pDigitalMeasSel_CheckBox;//采集数字量选择
+ 	QSttCheckBox *m_pWeakMeasSel_CheckBox;//采集弱信号选择
 	QLabel *m_pDigitalMeasType_Label;//采集数字报文类型
 	QComboBox *m_pDigitalMeasType_Combobox;//采集数字报文类型选择
 
@@ -147,6 +152,8 @@ public slots:
 
 	void slot_DigitalCheck_stateChanged(int nState);
 	void slot_WeakSelCheck_stateChanged(int nState);
+	void slot_AnalogSelCheck_stateChanged(int nState);
+
 
 	//2023/7/24 wjs
 	//void slot_OnLineEditClicked(QString strValue, QFloatLineEdit currentLineEdit);

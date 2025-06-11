@@ -12,7 +12,7 @@
 #include <QCheckBox>
 #include "../Module/CommonCtrl_QT/QFloatLineEdit.h"
 #include "../Module/CommonCtrl_QT/QNumberCheckBox.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgSMVDatas.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgSMVDatas.h"
 #include "Grid/IecCfgSmvData92Grid.h"
 
 #define STT_IEC_SMV92_ASDU_MAX_NUM                    9

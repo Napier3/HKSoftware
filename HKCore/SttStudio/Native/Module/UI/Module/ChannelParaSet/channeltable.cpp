@@ -2,14 +2,16 @@
 #include <QFontMetrics>
 #include <QScrollBar>
 #include <cmath>
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/XLanguage/XLanguageMngr.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/XLanguageMngr.h"
 #include "../../../SttTestSysGlobalPara.h"
-#include "../../Module/API/MathApi.h"
+#include "../../../Module/API/MathApi.h"
 #include "../../../SttSystemConfig/SttSystemConfig.h"
 #ifdef _USE_SoftKeyBoard_	
 #include "../../SoftKeyboard/SoftKeyBoard.h"
 #endif
+#include "../../../SttTestResourceMngr/SttTestResourceMngr.h"
+#include "../../../SttTestBase/SttComplexp.h"
 
 //#define GenHao3	1.7320508 //根号三
 
@@ -29,6 +31,7 @@ QChannelTable::QChannelTable(MOUDLEType moudleType,CExBaseList *pChList,tmt_chan
 	m_fAmpMin = 0;
 	m_fEDVal = 0;
 	m_pCurrKeyboardItem = NULL;
+	m_nParaSetSecondValue = 1;
 
 	m_bRunning = FALSE;
 	installEventFilter(this);
@@ -53,13 +56,17 @@ QChannelTable::~QChannelTable()
 
 }
 
-void QChannelTable::setTableData(tmt_channel *pArrUI)
+void QChannelTable::setTableData(tmt_channel *pArrUI, bool bCanUpdateTable)
 {
 	disconnect(this,SIGNAL(cellChanged (int,int)),this,SLOT(slot_OnCellChanged(int ,int)));
 	disconnect(this,SIGNAL(itemDoubleClicked(QTableWidgetItem *)),this,SLOT(slot_OnItemDoubleClicked(QTableWidgetItem *)));
 
 	m_pArrUI = pArrUI;
+
+	if (bCanUpdateTable)
+	{
 	UpdateTable();
+	}
 
 	connect(this,SIGNAL(cellChanged (int,int)),this,SLOT(slot_OnCellChanged(int ,int)),Qt::UniqueConnection);
 	connect(this,SIGNAL(itemDoubleClicked(QTableWidgetItem *)),this,SLOT(slot_OnItemDoubleClicked(QTableWidgetItem *)),Qt::UniqueConnection);
@@ -177,11 +184,15 @@ float QChannelTable::getItemValue(int row,int col)
 	return fv;
 }
 
-void QChannelTable::setAmpMaxMinValue(float fmax,float fmin)
+void QChannelTable::setAmpMaxMinValue(float fmax,float fmin, bool bCanUpdateTable)
 {
 	m_fAmpMax = fmax;
 	m_fAmpMin = fmin;
+
+	if (bCanUpdateTable)
+	{//2024-9-16 lijunqing 优化系统程序启动的效率
 	UpdateTable();//20240204 suyang 更新最大最小值后 更新通道数据范围大小 
+	}
 }
 
 void QChannelTable::setAmpEDValue(float fEDValue)
@@ -255,8 +266,14 @@ void QChannelTable::init()
 	this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 }
 
+#include "../../../SttGlobalDef.h"
+
 void QChannelTable::initTable()
 {
+	//2024-9-15 lijunqing 优化程序启动速度
+	setUpdatesEnabled(false);
+	debug_enter_time_long_log();
+
 	ASSERT(m_pChDatas);
 
 	if ((m_MacroType == MACROTYPE_ManualSequence)||(m_MacroType == MACROTYPE_ManualLineVol))
@@ -280,22 +297,6 @@ void QChannelTable::initTable()
 	}
 
 	QStringList headers;
-/*
-	if (m_moudleType==Moudle_U)//U
-	{
-		headers<<tr("通道")<<tr("幅值(V)")<<tr("相位(°)")<<tr("频率(Hz)");
-	}
-	else
-	{
-		headers<<tr("通道")<<tr("幅值(A)")<<tr("相位(°)")<<tr("频率(Hz)");
-	}
-	
-	QFontMetrics fontMetrics = QFontMetrics(this->font());
-	int nLabelWidth1 = fontMetrics.width(tr("通道")) + 40;
-	int nLabelWidth2 = fontMetrics.width(tr("-57.735")) + 20;
-	int nLabelWidth3 = fontMetrics.width(tr("相位(°))")) + 10;
-	int nLabelWidth4 = fontMetrics.width(tr("频率(Hz)")) + 10 ;
-*/
 	CString strChannel, strAmplitude, strPhase, strFreq;
 	xlang_GetLangStrByFile(strChannel, "Native_Channel");
 	xlang_GetLangStrByFile(strAmplitude, "Native_Amplitude");
@@ -311,7 +312,16 @@ void QChannelTable::initTable()
 
 	if (m_moudleType==Moudle_U)//U
 	{
+		if (m_nParaSetSecondValue == 0)
+		{
+			strAmplitude += "(kV)";
+
+		}
+		else
+		{
 		strAmplitude += "(V)";
+	}
+		
 	}
 	else
 	{
@@ -352,7 +362,6 @@ void QChannelTable::initTable()
 			{
 				if((m_MacroType == MACROTYPE_State)||(m_MacroType == MACROTYPE_RemoteMeas))
 				{
-//					item->setFlags(item->flags() & ~Qt::ItemIsSelectable);
 					item->setFlags(Qt::NoItemFlags);
 				}
 				else if ((m_MacroType == MACROTYPE_Manual)||(m_MacroType == MACROTYPE_ManualHarm)||(m_MacroType == MACROTYPE_ManualSequence)||(m_MacroType == MACROTYPE_ManualLineVol))
@@ -369,9 +378,39 @@ void QChannelTable::initTable()
 	
 	int ntableHight = this->horizontalHeader()->height() + ((m_nRowHeight)*this->rowCount());
 	
-	//setFixedHeight(ntableHight);
 	creatTableMenu();
+
+	//2024-9-15 lijunqing 优化程序启动速度
+	this->setUpdatesEnabled(true);
+	debug_time_long_log("QChannelTable::InitTable", true);;
 }
+
+
+void QChannelTable::setHeaderOfTable(QStringList strheader)
+{
+	QString str = strheader.at(1);
+// 	if (str.contains(tr("A")))
+// 	{
+// 		m_ActIAmp1->setText(tr("1A"));
+// 		m_ActIAmp5->setText(tr("5A"));
+// 	}
+
+	if (str.contains(tr("V")))
+	{
+		if (str.contains(tr("kV")))
+		{
+			m_nParaSetSecondValue = V_Primary;
+		}
+		else
+		{
+			m_nParaSetSecondValue = V_Secondary;
+		}
+		setHorizontalHeaderLabels(strheader);
+	}
+
+	
+}
+
 
 void QChannelTable::changeTableColor()
 {
@@ -628,6 +667,14 @@ CString GetSequenceChName(const CString &strID,long nChIndex)
 	strSequenceChName = strID.Left(1);
 	long nGroupIndex = nChIndex/3 + 1;
 
+	if (!xlang_IsCurrXLanguageChinese())//dingxy 20250122 修改通道名
+	{
+		if (strSequenceChName == "U")
+		{
+			strSequenceChName = "V";
+		}
+	}
+
 	if (nChIndex%3 == 0)
 	{
 		strSequenceChName.AppendFormat(_T("%ld-1"),nGroupIndex);
@@ -652,6 +699,10 @@ CString Global_GetLineVolChName(const CString &strID,long nChIndex) //线电压的通
 	long nGroupVIndex = nChIndex/2 + 1;
 	if (strVoltageChName.contains("U"))
 	{
+		if (!xlang_IsCurrXLanguageChinese())
+		{
+			strVoltageChName = "V";
+		}
 		if (nChIndex%2 == 0)
 		{
 			strVoltageChName.AppendFormat(_T("ab%ld"),nGroupVIndex);
@@ -683,6 +734,10 @@ CString Global_GetLineVolChName(const CString &strID,long nChIndex) //线电压的通
 
 void QChannelTable::UpdateTable()
 {
+	//2024-9-15 lijunqing 优化程序启动速度
+	setUpdatesEnabled(false);
+	debug_enter_time_long_log();
+
 	ASSERT(m_pChDatas);
 	POS pos = m_pChDatas->GetHeadPosition();
 	//CExBaseObject *pCh = NULL;
@@ -754,7 +809,13 @@ void QChannelTable::UpdateTable()
 			}
 			else if (str != _T("U0"))
 			{
+#ifdef _PSX_OS_CENTOS_
+				fMaxValue = 10.000;
+
+#else
 				fMaxValue = 4.2;
+#endif
+				
 			}
 			else if (str != _T("I0"))
 			{
@@ -953,6 +1014,25 @@ void QChannelTable::UpdateTable()
 			nChIndex--;
 		}
 	}
+
+
+	if ((m_MacroType == MACROTYPE_Manual || m_MacroType == MACROTYPE_State)&&(nChIndex>=4)&&(m_moudleType == Moudle_I ))
+	{
+		if ((g_oSystemParas.m_nHasAnalog)&& (!g_oSystemParas.m_nHasDigital)&& (!g_oSystemParas.m_nHasWeek))
+		{
+			CString strModel;
+			strModel = g_oSttTestResourceMngr.GetCurrModel();
+			if ( strModel.Find(_T("PNS330-AH")) >= 0)
+			{
+				QTableWidgetItem *pTableWidgetItem = item(3,1);
+				m_pArrUI[3].Harm[GetHarmIndex()].fAmp = 0;
+				pTableWidgetItem->setText(QString::number(m_pArrUI[3].Harm[GetHarmIndex()].fAmp,'f',3));
+			}
+		}
+	}
+	//2024-9-15 lijunqing 优化程序启动速度
+	setUpdatesEnabled(true);
+	debug_time_long_log("QChannelTable::UpdateTable", true);
 }
 
 bool QChannelTable::HasHarmParaset()
@@ -1280,6 +1360,13 @@ void QChannelTable::slot_OnCellChanged(int row,int col)
 						fv = m_pArrUI[row].Harm[GetHarmIndex()].fAmp;
 					}
 
+#ifdef STT_PN331_ManualStateChannel
+					BOOL bRet = CompareMoudleIAmp(fv,row,0);
+					if(!bRet)
+					{
+						fv = m_pArrUI[row].Harm[GetHarmIndex()].fAmp;
+					}
+#endif
 					pItem->setText(QString::number(fv,'f',3));
 				}
 				else
@@ -1351,6 +1438,13 @@ void QChannelTable::slot_OnCellChanged(int row,int col)
 			}
 			else
 			{
+#ifdef STT_PN331_ManualStateChannel
+				BOOL bRet = CompareMoudleIAmp(fv,row,1);
+				if(!bRet)
+				{
+					fv = m_pArrUI[row].Harm[GetHarmIndex()].fAngle;
+				}
+#endif			
 				strText.setNum(fv,'f',1);
 				pItem->setText(strText);
 				pTempChData->fAngle = fv;
@@ -1423,6 +1517,59 @@ void QChannelTable::slot_OnCellChanged(int row,int col)
  	}
 }
 
+
+BOOL QChannelTable::CompareMoudleIAmp(float fValue,int nRow,int nFlag)
+{
+	if (m_MacroType == MACROTYPE_Manual || m_MacroType == MACROTYPE_State)
+	{			
+		if (m_moudleType == Moudle_I  && m_pChDatas->GetCount()== 4)
+		{	
+			Complex oComplexA, oComplexB, oComplexC,oComplexD,oComplexSum;
+
+			if (nFlag == 0)
+			{
+				oComplexA.SetParameter_ByAmpAng(fValue, m_pArrUI[nRow].Harm[1].fAngle);
+			}
+			else if(nFlag == 1)
+			{
+				oComplexA.SetParameter_ByAmpAng(m_pArrUI[nRow].Harm[1].fAmp, fValue);
+			}
+
+			int nOtherIndex = 0;
+			for (int nIndex=0;nIndex<rowCount();nIndex++)
+			{
+				if (nIndex != nRow)
+				{
+					if (nOtherIndex == 0)
+					{
+						oComplexB.SetParameter_ByAmpAng(m_pArrUI[nIndex].Harm[1].fAmp, m_pArrUI[nIndex].Harm[1].fAngle);
+					}
+					else if (nOtherIndex == 1) 
+					{
+						oComplexC.SetParameter_ByAmpAng(m_pArrUI[nIndex].Harm[1].fAmp, m_pArrUI[nIndex].Harm[1].fAngle);
+					}
+					else if (nOtherIndex == 2) 
+					{
+						oComplexD.SetParameter_ByAmpAng(m_pArrUI[nIndex].Harm[1].fAmp, m_pArrUI[nIndex].Harm[1].fAngle);
+					}
+					nOtherIndex++; 
+				}
+			}
+			oComplexSum = oComplexA + oComplexB + oComplexC + oComplexD;
+			double dSum = oComplexSum.norm();
+			double dAmpMax = static_cast<double>(g_oLocalSysPara.m_fAC_CurMax);
+
+			if ((dSum - dAmpMax) > 0.000001)
+			{
+				CLogPrint::LogFormatString(XLOGLEVEL_RESULT,"四相电流矢量和%f大于%f.",dSum,dAmpMax);
+				return FALSE;
+			}
+		}
+	}
+	return TRUE;
+}
+
+
 void QChannelTable::slot_TableShowMent(QPoint pos)
 {
 	//获得鼠标点击的x，y坐标点 
@@ -1438,7 +1585,7 @@ void QChannelTable::slot_TableShowMent(QPoint pos)
 			m_MenuAmp->move(cursor().pos()); 
 			m_MenuAmp->show(); 
 			
-			if (g_oSttSystemConfig.GetDevModel().Find(_T("PDU100")) >= 0)
+			if (IsDevModel())
 			{
 				CString strEDPhase;
 				int nRow = index.row();
@@ -1520,7 +1667,7 @@ void QChannelTable::creatTableMenu()
 
 	if (m_moudleType==Moudle_U)//电压模块
 	{
-		if (g_oSttSystemConfig.GetDevModel().Find(_T("PDU100")) >= 0)
+		if (IsDevModel())
 		{
 			m_ActUEqualAmp = new QAction(tr("等幅值"),this);
 			m_ActUAmpED = new QAction(tr("额定电压"),this);
@@ -1601,7 +1748,7 @@ void QChannelTable::creatTableMenu()
 	}
 	else//电流模块
 	{
-		if (g_oSttSystemConfig.GetDevModel().Find(_T("PDU100")) >= 0)
+		if (IsDevModel())
 		{
 			m_ActIqualAmp = new QAction(tr("等幅值"),this);
 			m_ActIAmpED = new QAction(tr("额定电流"),this);
@@ -1743,9 +1890,29 @@ void QChannelTable::Act_setUIAmpValue(QTableWidgetItem *pItem,float fVal,bool bA
 
 	if (m_pChDatas->GetCount()==4)
 	{
-		for (int i=0;i<rowCount();i++)
+		CString strModel;
+		strModel = g_oSttTestResourceMngr.GetCurrModel();
+		if (strModel.Find(_T("PNS331")) >= 0 || strModel.Find(_T("PNS330-AH")) >= 0)
+		{
+			int nRow = currentRow();
+			if (nRow == 3)
+			{
+				item(nRow,nCol)->setText(strVal);
+			}
+			else
+			{
+				for (int i=0;i<rowCount()-1;i++)
 		{
 			item(i,nCol)->setText(strVal);
+		}
+			}
+		}
+		else
+		{
+			for (int i=0;i<rowCount();i++)
+		{
+			item(i,nCol)->setText(strVal);
+		}
 		}
 	}
 	else if(m_MacroType == MACROTYPE_ManualLineVol && m_moudleType==Moudle_U)
@@ -1787,7 +1954,7 @@ void QChannelTable::slot_ActUAmpEDClicked()
 		return;
 	}
 
-	if (g_oSttSystemConfig.GetDevModel().Find(_T("PDU100")) >= 0)
+	if (IsDevModel())
 	{	
 		int nRow = currentRow();
 		if (nRow == 3)
@@ -1815,7 +1982,7 @@ void QChannelTable::slot_ActPerUAmpEDClicked()
 	}
 
 	float fEDVal;
-	if (g_oSttSystemConfig.GetDevModel().Find(_T("PDU100")) >= 0)
+	if (IsDevModel())
 	{	
 		int nRow = currentRow();
 		if (nRow == 3) //代表零序
@@ -1945,7 +2112,7 @@ void QChannelTable::slot_ActIAmpEDClicked()
 		return;
 	}
 
-	if (g_oSttSystemConfig.GetDevModel().Find(_T("PDU100")) >= 0)
+	if (IsDevModel())
 	{	
 		int nRow = currentRow();
 		if (nRow == 3)
@@ -2435,7 +2602,12 @@ QString QChannelTable::initMaxAmp_RemoteMeas( MOUDLEType moudleType,QString str 
 		}
 		else
 		{
+#ifdef _PSX_OS_CENTOS_
+			fMaxAmp_U = 10.000;
+
+#else
 			fMaxAmp_U = 4.2;
+#endif
 		}
 
 		fMaxAmp = fMaxAmp_U;
@@ -2448,7 +2620,7 @@ QString QChannelTable::initMaxAmp_RemoteMeas( MOUDLEType moudleType,QString str 
 		}
 		else
 		{
-			fMaxAmp_I = 21;
+			fMaxAmp_I = 21.275;
 		}
 		fMaxAmp = fMaxAmp_I;
 	}
@@ -2483,4 +2655,33 @@ int QChannelTable::getChIndexByChName( const CString & strChName )
 	}
 
 	return -1;
+}
+
+BOOL QChannelTable::IsDevModel()
+{
+	CString strModel;
+	strModel = g_oSttTestResourceMngr.GetCurrModel();
+	if (strModel.Find(_T("PDU100")) >= 0)
+	{
+		return TRUE;  
+	}
+	return FALSE; 
+}
+
+void QChannelTable::setMultAmpMaxMinValue(float fmax[], float fmin[])
+{
+	bool bIsMultAmpLimitChanged = false;//add wangtao 20241112 如果限值没有发生改变则不更新
+	for (int i = 0; i < MAX_VOLTAGE_COUNT; i++)
+	{
+		if (m_fMultAmpMax[i] != fmax[i] || m_fMultAmpMin[i] != fmin[i])
+		{
+			bIsMultAmpLimitChanged = true;
+		}
+		m_fMultAmpMax[i] = fmax[i];
+		m_fMultAmpMin[i] = fmin[i];
+	}
+	if (bIsMultAmpLimitChanged)
+	{
+		UpdateTable();
+	}
 }

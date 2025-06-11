@@ -2,9 +2,9 @@
 #include "ManualView_PV.h"
 
 #include <QHeaderView>
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../SttTest/Common/tmt_manu_test.h"
-#include "../Module/XLangResource_Native.h"
+#include "../../../Module/XLangResource_Native.h"
 
 QManualView_PV::QManualView_PV()
 {
@@ -30,7 +30,7 @@ void QManualView_PV::InitUI(int nFuncType)
 	m_pTabWidget->removeTab(0);//先删除空的占位widget
     CString strText;
 	xlang_GetLangStrByFile(strText, "Manual_PV");
-	m_pTabWidget->insertTab(0, m_pPUParaWidget, "电压功率");
+    m_pTabWidget->insertTab(0, m_pPUParaWidget,"电压功率");
 
 	m_pTabWidget->setCurrentIndex(0);
 

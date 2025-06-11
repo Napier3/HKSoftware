@@ -1,9 +1,10 @@
 #include "CommonValueDialogState.h"
 #include "../Module/CommonMethod/commonMethod.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../SttTestCntrFrameBase.h"
+#include "../Module/SttTest/Common/PrimFreq/tmt_prim_freq_state_test.h"
 
-CommonValueDialogState::CommonValueDialogState(tmt_StateParas* pSateParas,QWidget *parent)
+CommonValueDialogState::CommonValueDialogState(tmt_StateParas* pSateParas,QWidget *parent, bool bFrimFreqModel)
 : QDialog(parent), ui(new Ui::CommonValueDialogState)
 {
 	ui->setupUi(this);
@@ -11,9 +12,22 @@ CommonValueDialogState::CommonValueDialogState(tmt_StateParas* pSateParas,QWidge
 	m_pSateParas = pSateParas;
 	m_nIsOK = 0;
 
+	m_pCmb_DCOFFSET = NULL;
+	m_pCmb_JudgeCondition = NULL;
+	m_pDCOFFSETLabel = NULL;
+	m_pJudgeConditionLabel = NULL;
+	m_pRepeatTimeLabel = NULL;
+	m_pTouLabel = NULL;
+	m_pRepeatTimeEdit = NULL;
+	m_pTouEdit = NULL;
+	m_pVerticalSpacer = NULL;
+	m_pLine = NULL;
+	m_pbn_Ok = NULL;
+	m_pbn_Cancel = NULL;
+
 	setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::Dialog);
 
-	initUI();
+	initUI(bFrimFreqModel);
 	initBaseData();
 	initConnections();
 
@@ -27,16 +41,26 @@ CommonValueDialogState::~CommonValueDialogState()
 }
 void CommonValueDialogState::SetCommonValueDialogStateFont()
 {	
+	if(m_pCmb_JudgeCondition)
 	m_pCmb_JudgeCondition->setFont(*g_pSttGlobalFont);
+
+	if(m_pCmb_DCOFFSET)
 	m_pCmb_DCOFFSET->setFont(*g_pSttGlobalFont);
 }
 
-void CommonValueDialogState::initUI()
+void CommonValueDialogState::initUI(bool bFrimFreqModel)
 {
 	QGridLayout *gridLayout = NULL;
 	QHBoxLayout *horizontalLayout = NULL;
 
+	if(bFrimFreqModel)
+	{
+		resize(233, 140);
+	}
+	else
+	{
 	resize(233, 189);
+	}
 	QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	sizePolicy.setHorizontalStretch(0);
 	sizePolicy.setVerticalStretch(0);
@@ -60,6 +84,8 @@ void CommonValueDialogState::initUI()
 	m_pCmb_JudgeCondition = new QScrollComboBox(this);
 	gridLayout->addWidget(m_pCmb_JudgeCondition, 0, 1, 1, 1);
 
+	if(!bFrimFreqModel)
+	{
 	m_pDCOFFSETLabel = new QLabel(tr("叠加衰减直流分量:"),this);
 	xlang_SetLangStrToWidget(m_pDCOFFSETLabel, "State_DCOffSet", XLang_Ctrls_QLabel);
 	gridLayout->addWidget(m_pDCOFFSETLabel, 1, 0, 1, 1);
@@ -78,6 +104,9 @@ void CommonValueDialogState::initUI()
 
 	m_pTouEdit = new QSttLineEdit(this);
 	gridLayout->addWidget(m_pTouEdit, 2, 1, 1, 1);
+	}
+
+
 
 	m_pRepeatTimeLabel = new QLabel(tr("循环次数:"),this);
 	xlang_SetLangStrToWidget(m_pRepeatTimeLabel, "State_RepeatTimes", XLang_Ctrls_QLabel);
@@ -124,7 +153,9 @@ void CommonValueDialogState::initConnections()
 {
 	connect(m_pbn_Ok, SIGNAL(clicked()), this, SLOT(slot_OkClicked()));
 	connect(m_pbn_Cancel, SIGNAL(clicked()), this, SLOT(slot_CancelClicked()));
+	if(m_pCmb_DCOFFSET)
 	connect(m_pCmb_DCOFFSET, SIGNAL(currentIndexChanged(int)), this, SLOT(slot_cmb_DCOFFSETChanged(int)));
+	if(m_pTouEdit)
 	connect(m_pTouEdit,SIGNAL(editingFinished()),this,SLOT(slot_lne_TouKeyBoard()));
 	connect(m_pRepeatTimeEdit,SIGNAL(editingFinished()),this,SLOT(slot_lne_RepeatTimeKeyBoard()));
 	connect(this, SIGNAL(sig_DcCoffsetStateChanged()), g_pStateTest, SLOT(slot_DcCoffsetStateChanged()));
@@ -151,22 +182,31 @@ void CommonValueDialogState::initBaseData()
 	m_listDcOffSets.clear();
 //	m_listDcOffSets<<tr("否")<<tr("是");
 
+	if(m_pCmb_DCOFFSET)
+	{
 	xlang_GetLangStrByFile(strItem1, "State_No");
 	xlang_GetLangStrByFile(strItem2, "State_Yes");
 	xlang_GetLangStrByFile(strItem3, "State_StackByState");
 	m_listDcOffSets << strItem1 << strItem2 << strItem3;
 	m_pCmb_DCOFFSET->addItems(m_listDcOffSets);
 
+	}
+
+	if(m_pTouEdit)
 	initMaxPositiveEdit(m_pTouEdit);
+
 	initMaxPositiveEdit(m_pRepeatTimeEdit);
 }
 
 void CommonValueDialogState::initPara()
 {
 	m_pCmb_JudgeCondition->setCurrentIndex(m_pSateParas->m_nBinTripRef);
+	if(m_pCmb_DCOFFSET)
 	m_pCmb_DCOFFSET->setCurrentIndex(m_pSateParas->m_nPlusDC);
+
 	slot_cmb_DCOFFSETChanged(m_pSateParas->m_nPlusDC);
 
+	if(m_pTouEdit)
 	m_pTouEdit->setText(QString::number(m_pSateParas->m_fTao,'f',3));
 	m_pRepeatTimeEdit->setText(QString("%1").arg(m_pSateParas->m_nRepeatNumbers));
 }
@@ -176,12 +216,18 @@ void CommonValueDialogState::slot_OkClicked()
 	ExitHideKeyboardWidget();
 	m_pSateParas->m_nBinTripRef = m_pCmb_JudgeCondition->currentIndex();
 	//m_pSateParas->m_bPlusDC = m_pCmb_DCOFFSET->currentIndex();
+	if(m_pTouEdit)
+	{
 	m_pSateParas->m_fTao = m_pTouEdit->text().toFloat();
+	}
+	if(m_pCmb_DCOFFSET)
+	{
 	int nIndex = m_pCmb_DCOFFSET->currentIndex();
 	if (m_pSateParas->m_nPlusDC != nIndex)
 	{
 		m_pSateParas->m_nPlusDC = nIndex;
 		emit sig_DcCoffsetStateChanged();
+	}
 	}
 
 	int temp = m_pRepeatTimeEdit->text().toInt();
@@ -201,6 +247,10 @@ void CommonValueDialogState::slot_CancelClicked()
 
 void CommonValueDialogState::slot_cmb_DCOFFSETChanged(int index)
 {
+	if(m_pCmb_DCOFFSET == NULL)
+	{
+		return;
+	}
 	if(m_pCmb_DCOFFSET->IsScrolling())
 	{
 		return;
@@ -228,6 +278,10 @@ void CommonValueDialogState::slot_cmb_DCOFFSETChanged(int index)
 
 void CommonValueDialogState::slot_lne_TouChanged()
 {
+	if(m_pTouEdit == NULL)
+	{
+		return;
+	}
 	QString strValue = m_pTouEdit->text();
 	GetWidgetBoard_DigitData(4,strValue,m_pTouEdit,g_theTestCntrFrame);
 

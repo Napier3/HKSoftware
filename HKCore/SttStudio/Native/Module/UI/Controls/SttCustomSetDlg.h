@@ -1,7 +1,7 @@
 #ifndef STTCUSTOMSETDlG_H
 #define STTCUSTOMSETDlG_H
 
-//#include <QMainWindow>
+#include <QMainWindow>
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 #include "ui_SttCustomSetDlg.h"
@@ -9,16 +9,16 @@
 #include "../Module/UI/Config/Frame/SttFrameConfig.h"
 #include "../Module/UI/Config/Frame/SttFrame_Menus.h"
 #include "../Module/UI/Config/Frame/SttFrame_XBar.h"
-#include "../../Module/BaseClass/QT/ExBaseListTreeCtrl.h"
+#include "../../../Module/BaseClass/QT/ExBaseListTreeCtrl.h"
 #include "../Module/UI/SttTestCntrFrameBase.h"
-#include "../../Module/OSInterface/QT/XMessageBox.h"
+#include "../../../Module/OSInterface/QT/XMessageBox.h"
 
 
 class SttCustomSetDlg : public QDialog
 {
 	Q_OBJECT
 public:
-    SttCustomSetDlg(QWidget *parent = 0, Qt::WindowFlags flags = Qt::WindowFlags());
+    SttCustomSetDlg(QWidget *parent = 0, Qt::WindowFlags flags = 0);
 	~SttCustomSetDlg();
 
 private:

@@ -76,5 +76,20 @@ public:
 
 
 //////////////////////////////////////////////////////////////////////////
+//20240913 huangliang 添加可编辑下拉框
+class QExBaseListEditComBoxDelegBase : public QExBaseListComBoxDelegBase
+{
+public:
+	//设置Data节点，代理会自动获取当前行和列，并设置值  
+	QExBaseListEditComBoxDelegBase(QObject *parent = NULL);
+	virtual ~QExBaseListEditComBoxDelegBase();
+
+	virtual QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,
+		const QModelIndex &index) const;
+
+	virtual void setEditorData(QWidget * ditor, const QModelIndex &index) const;
+
+	virtual void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
+};
 
 #endif // CHMAPSGRID_H

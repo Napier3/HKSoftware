@@ -1,7 +1,7 @@
 #include "SttMacroParaEditViewSoeTable.h"
 #include <QHeaderView>
 #include "../../XLangResource_Native.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../SttTest/Common/tmt_test_paras_head.h"
 #include "../Module/CommonMethod/commonMethod.h"
 
@@ -45,8 +45,8 @@ void QSttMacroParaEditViewSoeTable::InitUI()
 	pLeft->setDefaultSectionSize(36);
 	pLeft->setVisible(false);
 	QHeaderView* pHeadTop =horizontalHeader();
-    pHeadTop->setSectionsClickable(false);
-    pHeadTop->setSectionsMovable(false);
+	pHeadTop->setSectionsClickable(false);
+	pHeadTop->setSectionsMovable(false);
 	QFont font1 = this->horizontalHeader()->font();
 	font1.setBold(true);
 	this->horizontalHeader()->setFont(font1);
@@ -128,6 +128,7 @@ void QSttMacroParaEditViewSoeTable::UpdateTestObjet( CExBaseList *pList )
 	{
 		oObjectNameList.push_back(strObjectList);
 		oObjectIDList.push_back(strObjectIDList);
+		oObjectIDList[i].append(""); 
 	}
 
 	m_pTestObjetcComboBox->updateItems(oObjectNameList);
@@ -296,19 +297,28 @@ void QSttMacroParaEditViewSoeTable::slot_TestObjectChanged( QWidget* editor )
 	{
 		return;
 	}
-	//int nIndex = pComboBox->currentIndex();
-	int nRow = currentRow();
-
-	CString strText = pComboBox->currentText();
-	int nIndex  = oObjectNameList[nRow].indexOf(strText);;
-
-	if (nIndex < 0  || nRow  <  0)
+	QVariant varRow = pComboBox->property("row");
+	if (!varRow.isValid())
 	{
 		return;
 	}
 
+	int nRow = varRow.toInt(); // 获取正确的行号
+	/*int nRow = currentRow();*/
+	if(nRow < 0 )
+	{
+		return;
+	}
 	QStringList strItemList = oObjectIDList[nRow];
+	CString strText = pComboBox->currentText();
+	int nIndex  = oObjectNameList[nRow].indexOf(strText);
+	if (nIndex < 0)
+	{
+		nIndex = strItemList.size() - 1;
+	}
+	
 	QString strValue = strItemList.at(nIndex);
+
 	CString_to_char(strValue,m_pSoeParas->m_binOut[nRow].m_strTestObject);
 
 
@@ -335,31 +345,47 @@ void QSttMacroParaEditViewSoeTable::slot_OnItemDoubleClicked(QTableWidgetItem *p
 }
 
 #ifdef _PSX_QT_LINUX_
-bool QSttMacroParaEditViewSoeTable::eventFilter(QObject *obj, QEvent *event)
-{
-	if (event->type() == QEvent::MouseButtonDblClick)
-	{
-		QMouseEvent *pMouseEvent = (QMouseEvent *)event;
-		m_bRunning = TRUE;
-		mouseDoubleClickEvent((QMouseEvent *)pMouseEvent);
-		m_bRunning = FALSE;
-		return  true;
-	}
+//bool QSttMacroParaEditViewSoeTable::eventFilter(QObject *obj, QEvent *event)
+//{
+// 	if (event->type() == QEvent::MouseButtonDblClick)
+// 	{
+// 		QMouseEvent *pMouseEvent = (QMouseEvent *)event;
+// 		m_bRunning = TRUE;
+//  		mouseDoubleClickEvent((QMouseEvent *)pMouseEvent);
+//  		m_bRunning = FALSE;
+// 		return true;
+// 	}
 
-	return QScrollTableWidget::eventFilter(obj,event);
-}
-
+//	return QScrollTableWidget::eventFilter(obj,event);
+//}
+ 
 void QSttMacroParaEditViewSoeTable::mousePressEvent(QMouseEvent * event)
 {
-	if (m_bRunning)
+// 	if (m_bRunning)
+// 	{
+// 		QScrollTableWidget::mousePressEvent(event);
+// 		return;
+// 	}
+// 
+//  	QMouseEvent *pEvent = new QMouseEvent(QEvent::MouseButtonDblClick,event->pos(),Qt::LeftButton,Qt::LeftButton,Qt::NoModifier);
+//  	QApplication::postEvent(this,pEvent);
+
+	QModelIndex index = indexAt(event->pos()); 
+	if (index.isValid() && (index.column() == STT_SOE_FirstTABLE_COL_State || index.column() == STT_SOE_FirstTABLE_COL_Object)) 
+	{
+		this->edit(index);
+		QWidget *editor = this->indexWidget(index);
+		QComboBox *pComboBox = qobject_cast<QComboBox *>(editor);
+
+		if (pComboBox)
+	{
+			pComboBox->showPopup();
+		}
+	}
+	else
 	{
 		QScrollTableWidget::mousePressEvent(event);
-		return;
 	}
-
-	QMouseEvent *pEvent = new QMouseEvent(QEvent::MouseButtonDblClick,event->pos(),Qt::LeftButton,Qt::LeftButton,Qt::NoModifier);
-	QApplication::postEvent(this,pEvent);
-	QScrollTableWidget::mousePressEvent(event);
 }
 #endif
 
@@ -522,12 +548,12 @@ void QSttMacroParaEditViewSoeTable::AddShowSoeReports(CDvmDataset *pSoeRptDatase
 		item->setFlags(item->flags() & ~Qt::ItemIsEditable);
 		item->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
 		strTmpString = GetSoeAttrValue(pCurrData,"$t");
-#ifdef _PSX_QT_LINUX_			
-			QDateTime dateTime = QDateTime::fromString(strTmpString, "yyyy-MM-dd HH:mm:ss.zzz");
-			dateTime.setTimeSpec(Qt::UTC);
-			dateTime = dateTime.addSecs(g_oSystemParas.m_nTimeZone * 3600); 
-			strTmpString = dateTime.toString("yyyy-MM-dd hh:mm:ss.zzz");
-#endif
+// #ifdef _PSX_QT_LINUX_			
+// 			QDateTime dateTime = QDateTime::fromString(strTmpString, "yyyy-MM-dd HH:mm:ss.zzz");
+// 			dateTime.setTimeSpec(Qt::UTC);
+// 			dateTime = dateTime.addSecs(g_oSystemParas.m_nTimeZone * 3600); 
+// 			strTmpString = dateTime.toString("yyyy-MM-dd hh:mm:ss.zzz");
+// #endif
 		item->setText(strTmpString);
 		setItem(nCurrRowIndex,STT_SOE_SecondTABLE_COL_EventTime,item);
 
@@ -684,6 +710,7 @@ void CComboBoxSoeDelegate::setEditorData(QWidget *editor, const QModelIndex &ind
 	if (!pComboBox) 
 		return;
 	pComboBox->clear();
+	pComboBox->setProperty("row", index.row());//将行号绑定到 QComboBox 上
 	int id = 0;
 	for (int i=0; i<strItemList.size(); i++)
 	{
@@ -699,7 +726,14 @@ void CComboBoxSoeDelegate::setEditorData(QWidget *editor, const QModelIndex &ind
 		}
 	}
 
+	if (index.column() == STT_SOE_FirstTABLE_COL_Object)
+	{
 	pComboBox->addItem(_T("空")); 
+		if (strItem == _T("空"))
+		{
+			id = pComboBox->count() - 1;  
+		}
+	}
 	if (id >= 0)
 	{
 	pComboBox->setCurrentIndex(id);

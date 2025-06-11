@@ -1,6 +1,6 @@
 #include "SttIecSmvGrid_AD.h"
-#include "../../../../Module/SmartCap/XSmartCapMngr.h"
-#include "../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 
 CSttIecSmvGrid_AD::CSttIecSmvGrid_AD(QWidget* pparent):CSttIecChsGridBase(pparent)
 {

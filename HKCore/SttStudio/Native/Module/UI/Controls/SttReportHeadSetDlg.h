@@ -8,7 +8,7 @@
 #include "SttLineEdit.h"
 #include "SttDvmEdit.h"
 
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 
 namespace Ui {
 class QSttReportHeadSetDlg;

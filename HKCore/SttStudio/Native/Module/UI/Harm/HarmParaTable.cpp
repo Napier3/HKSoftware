@@ -32,4 +32,12 @@ void QHarmParaTable::InitUI()
 	
 }
 
+void QHarmParaTable::SetParaSetSecondValue(int nParaSetSecondValue)
+{
+	if (m_pUChannel != NULL)
+	{
+		m_pUChannel->SetParaSetSecondValue(nParaSetSecondValue);
+	}
+}
+
 

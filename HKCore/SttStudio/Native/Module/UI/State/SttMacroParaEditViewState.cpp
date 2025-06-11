@@ -1,7 +1,7 @@
 #include "SttMacroParaEditViewState.h"
 #include "../Module/XLangResource_Native.h"
 #include "../Module/SttTestResourceMngr/TestResource/SttTestResource_Sync.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../Module/UI/State/ShortCalcuDig.h"
 #include "../Module/UI/State/CommonValueDialogState.h"
 #include "../Module/UI/State/Gradient/GradientSetDlg.h"
@@ -20,6 +20,8 @@
 #include "StateSettingValueDlg.h"
 
 QSttMacroParaEditViewState* g_pStateTest = NULL;
+
+#define  REPEATNUMBERS  1000 //Ñ­»·´ÎÊý
 
 QSttMacroParaEditViewState::QSttMacroParaEditViewState(bool bHorizontal,QWidget *parent, Qt::WindowFlags flags)
 	:CSttMacroParaEditViewOriginal(parent,flags)
@@ -60,27 +62,13 @@ QSttMacroParaEditViewState::QSttMacroParaEditViewState(bool bHorizontal,QWidget 
 	m_bTmtParaChanged = FALSE;
 	m_nRepeatNum_GenerateRpt = 0;
 
-    
-//	m_bAbnormal = bAbnormal;
-//	if (m_bAbnormal)
-//	{
-//		strcpy(m_oStateTest.m_pszMacroID, STT_ORG_MACRO_SmvAbnTest);
-//	}
-//
-//	m_strParaFileTitle = tr("×´Ì¬ÐòÁÐÄ£°åÎÄ¼þ");
-//	m_strParaFilePostfix = tr("project(*.sttxml)");
-//	m_strDefaultParaFile = _P_GetConfigPath();
-//	m_strDefaultParaFile.append("StateTest.sttxml");
-//
-//	initUI();
-//	initConnections();
-//
-//	m_pOriginalSttTestResource = g_theTestCntrFrame->GetSttTestResource();
-////	CreateTestResource();
-//	g_theTestCntrFrame->InitTestResource();
-//	g_theTestCntrFrame->UpdateButtonStateByID(STT_CNTR_CMD_ManuTriger,false,true);
-//
-//	initTestParas();
+	m_ShortCalcuPara = 0;
+	m_oDiffCurrCalParas = 0;
+	m_oStateTest = 0;
+
+	InitStateTest();
+	m_pStateParas = &m_oStateTest->m_oStateParas;
+	debug_time_long_log("ViewState initUI_Paras initTestParas InitStateTest", true);
 }
 
 QSttMacroParaEditViewState::~QSttMacroParaEditViewState()
@@ -102,13 +90,35 @@ QSttMacroParaEditViewState::~QSttMacroParaEditViewState()
 		delete m_pCopyFT3Datas;
 		m_pCopyFT3Datas = NULL;
 	}
+
+	if (m_ShortCalcuPara != 0)
+	{
+		delete m_ShortCalcuPara;
+	}
+	if (m_oDiffCurrCalParas != 0)
+	{
+		delete m_oDiffCurrCalParas;
+	}
+
+#ifdef TMT_STATECOUNT_USE_DEF
+	if (m_oStateTest != 0)
+	{
+		free(m_oStateTest);
+	}
+#else
+	if (m_oStateTest != 0)
+	{
+		delete m_oStateTest;
+	}
+#endif
+
 }
 
 void QSttMacroParaEditViewState::ResetStateSerialize()
 {
-	for (int i = 0; i < m_oStateTest.m_oStateParas.m_nStateNumbers; i++)
+	for (int i = 0; i < m_pStateParas->m_nStateNumbers; i++)
 	{
-		m_oStateTest.m_oStateParas.m_paraState[i].m_bSelected = 1;
+		m_pStateParas->m_paraState[i].m_bSelected = 1;
 	}
 
 	SaveTestMngrFile("");
@@ -154,7 +164,7 @@ void QSttMacroParaEditViewState::initUI_Paras(bool bSmvAbnormal)
 	m_bSmvAbnormal = bSmvAbnormal;
 	if (m_bSmvAbnormal)
 	{
-		strcpy(m_oStateTest.m_pszMacroID, STT_ORG_MACRO_SmvAbnTest);
+		strcpy(m_oStateTest->m_pszMacroID, STT_ORG_MACRO_SmvAbnTest);
 	}
 
 	//m_strParaFileTitle = tr("×´Ì¬ÐòÁÐÄ£°åÎÄ¼þ");
@@ -162,17 +172,21 @@ void QSttMacroParaEditViewState::initUI_Paras(bool bSmvAbnormal)
 	m_strParaFilePostfix = tr("project(*.sttxml)");
 	m_strDefaultParaFile = _P_GetConfigPath();
 	m_strDefaultParaFile.append("StateTest.sttxml");
+	debug_time_long_log("ViewState initUI_Paras 1", true);
 
 	initUI();
 	initConnections();
+	debug_time_long_log("ViewState initUI_Paras initUI", true);
 
 	m_pOriginalSttTestResource = g_theTestCntrFrame->GetSttTestResource();
 
 	//	CreateTestResource();
 	g_theTestCntrFrame->InitTestResource();
 	g_theTestCntrFrame->UpdateButtonStateByID(STT_CNTR_CMD_ManuTriger,false,true);
+	debug_time_long_log("ViewState initUI_Paras InitTestResource", true);
 
 	initTestParas();
+	debug_time_long_log("ViewState initUI_Paras initTestParas", true);
 
 	if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> end initUI_Paras -  >>");	}
 
@@ -203,7 +217,7 @@ void QSttMacroParaEditViewState::SetDatas(CDataGroup *pDataset)
 	{
 		if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> benin State::SetDatas-1");	}
 		CSttDataGroupSerializeRead oRead(pDataset);
-		stt_xml_serialize(&m_oStateTest.m_oStateParas, &oRead);
+		stt_xml_serialize(&m_oStateTest->m_oStateParas, &oRead);
 		if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> end State::SetDatas-1");	}
 	}
 
@@ -212,7 +226,7 @@ void QSttMacroParaEditViewState::SetDatas(CDataGroup *pDataset)
 	{
 		if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> benin State::SetDatas-2");	}
 		m_pBtnWidget->m_pnCurStateIndex = &m_nCurStateIndex; //×´Ì¬Ö¸Õë¹ØÁª
-		m_pBtnWidget->setData(&m_oStateTest);
+		m_pBtnWidget->setData(&m_oStateTest->m_oStateParas);
 		if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> end State::SetDatas-2");	}
 	}
 
@@ -223,7 +237,7 @@ void QSttMacroParaEditViewState::SetDatas(CDataGroup *pDataset)
 		if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> end State::SetDatas-3");	}
 	}
 
-	m_pStatePara = &(m_oStateTest.m_oStateParas.m_paraState[0]);
+	m_pStatePara = &(m_pStateParas->m_paraState[0]);
 
 	if (m_pParaTab->m_pUIParaWidget)
 	{
@@ -290,6 +304,7 @@ void QSttMacroParaEditViewState::slot_UpdateVecterViews()
 {
 	g_theTestCntrFrame->UpdateVectorData();
 	g_theTestCntrFrame->UpdatePowerData();
+	SetPlotAcDcMaxMinValue();//20241031 suyang Ôö¼Ó¸üÐÂ×´Ì¬Í¼×ø±êÖµ
 }
 
 void QSttMacroParaEditViewState::slot_updateParas()
@@ -303,11 +318,52 @@ void QSttMacroParaEditViewState::slot_updateParas()
 	{
 		((QBasicTestParaSet*)m_pParaTab->m_pHarmParaWidget)->UpdateTables();
 	}
-
+	
 	slot_UpdateVecterViews();
 	m_bTmtParaChanged = TRUE;
 }
 
+void QSttMacroParaEditViewState::SetPlotAcDcMaxMinValue()
+{
+	bool bStart = false;
+	if (g_theTestCntrFrame->IsTestStarted())
+	{
+		bStart = true;
+	}
+	if (m_pParaTab->m_pUIParaWidget)
+	{
+		if (g_oSystemParas.m_nHasAnalog || g_oSystemParas.m_nHasDigital)
+		{
+			double dUMin = 0;
+			double dUMax = 0;
+			double dIMin = 0;
+			double dIMax = 0;
+			m_pParaTab->m_pUIParaWidget->GetUIMaxMinValue(dUMin,dUMax,dIMin,dIMax,bStart);
+			if (dUMin>=0)
+			{
+				dUMin = 0;
+			}
+			else
+			{
+				dUMin -= 20;
+			}
+
+			if (dIMin>=0)
+			{
+				dIMin = 0;
+			}
+			else
+			{
+				dIMin -= 10;
+			}
+
+			g_theTestCntrFrame->SetPlotAcDcMaxMinValue(m_pStatePara->m_bDC,dUMin,dUMax,dIMin,dIMax);
+	
+		}
+	
+
+	}
+}
 void QSttMacroParaEditViewState::AddPushButton(QPushButton** ppBtn,QString strName,int nFontSize)
 {
 	(*ppBtn) = new QPushButton(strName);
@@ -358,7 +414,7 @@ void QSttMacroParaEditViewState::initUI_TabBase()
 	
 
 	//strText = _T("Õû¶¨Öµ");
-	AddPushButton(&m_pSettingValue,g_sLangTxt_State_SettingValue,18);
+	AddPushButton(&m_pSettingValue,/*g_sLangTxt_State_SettingValue*/g_sLangTxt_SetValue,18);
 	//strText = _T("Õû¶¨¼°½á¹ûÆÀ¹À");
 	AddPushButton(&m_pEstimate,g_sLangTxt_State_Estimate,18);
 
@@ -595,7 +651,7 @@ void QSttMacroParaEditViewState::InitGoosePubDataGroups()
 	CIecCfgGoutDatas *pSourceGoutDatas = g_oSttTestResourceMngr.m_oIecDatasMngr.GetGoutMngr();
 	CIecCfgGoutDatas *pIecCfgGoutDatas = NULL;
 
-	for (int i=0;i<m_oStateTest.m_oStateParas.m_nStateNumbers;i++)
+	for (int i=0;i<m_pStateParas->m_nStateNumbers;i++)
 	{
 		pIecCfgGoutDatas = (CIecCfgGoutDatas*)pSourceGoutDatas->Clone();
 		m_listGoosePub.append(pIecCfgGoutDatas);
@@ -608,7 +664,7 @@ void QSttMacroParaEditViewState::InitFT3PubDataGroups()
 	CIecCfgDatasSMV *pSourceDatasSMV = g_oSttTestResourceMngr.m_oIecDatasMngr.GetSmvMngr();
 	CIecCfgDatasSMV *pIecCfgDatasSMV = NULL;
 
-	for (int i=0;i<m_oStateTest.m_oStateParas.m_nStateNumbers;i++)
+	for (int i=0;i<m_pStateParas->m_nStateNumbers;i++)
 	{
 		pIecCfgDatasSMV = (CIecCfgDatasSMV*)pSourceDatasSMV->Clone();
 		m_listFT3Pub.append(pIecCfgDatasSMV);
@@ -622,20 +678,50 @@ void QSttMacroParaEditViewState::UpdateTestResource(BOOL bCreateChMaps)
 	if (m_pParaTab->m_pUIParaWidget)
 	{
 		m_pParaTab->m_pUIParaWidget->initUI(g_theTestCntrFrame->GetSttTestResource());
-		m_pParaTab->m_pUIParaWidget->initData();
+		m_pParaTab->m_pUIParaWidget->initData(true);
 		m_pParaTab->m_pUIParaWidget->setMaxMinAndEDVal();
+
+		if (m_pDC && m_pDC->isChecked())
+		{
+			//20250318 suyang ÐèÒª¸ù¾Ýµ±Ç°¹´Ñ¡Ö±Á÷À´¸üÐÂ½çÃæÏÔÊ¾µÄÊý¾Ý,Êý¾ÝÊÇÈ«µÄ  
+			m_pParaTab->m_pUIParaWidget->DCStateChanged(P_Common,m_pStatePara->m_bDC);
+		}
+		
 	}
 	
 	if (m_pParaTab->m_pHarmParaWidget)
 	{
 		m_pParaTab->m_pHarmParaWidget->initUI(g_theTestCntrFrame->GetSttTestResource());
-		m_pParaTab->m_pHarmParaWidget->initData();
+		m_pParaTab->m_pHarmParaWidget->initData(true);
 		m_pParaTab->m_pHarmParaWidget->setMaxMinAndEDVal();
+		
+		if (m_pDC && m_pDC->isChecked())
+		{
+			m_pParaTab->m_pHarmParaWidget->DCStateChanged(P_Harm,m_pStatePara->m_bDC);
+		}
 	}
 
 	UpdateBinBoutExTab();
 	UpdateGoutTab();
 	UpdateFT3Tab();
+
+	CString strModel;
+	strModel = g_oSttSystemConfig.GetDevModel();
+	CSttAdjDevice *pCurDevice = &g_oSttTestResourceMngr.m_oCurrDevice;
+	if (!pCurDevice->m_strModel.IsEmpty())
+	{
+		strModel = pCurDevice->m_strModel;
+	}
+	
+	//dingxy 20241128 ¸ß¹¦ÂÊÊä³öÊ±£¬Ö±Á÷»Ò»¯
+	if ((strModel == _T("PNS330-6")) || (strModel == _T("PNS330-6A")) || (strModel == _T("PNS330-6M")))
+	{
+		long nIPowerMode = g_oSystemParas.m_oGearSetCurModules.m_oCurModuleGear[0].m_nIPowerMode;
+		if (nIPowerMode == STT_CurrentMODULE_POWER_PNS330_6x10A_3x20A)
+			UpdateDCParasByCurrModulePower(TRUE);
+		else
+			UpdateDCParasByCurrModulePower(FALSE);
+	}
 
 	//m_pParaTab->m_pStateParaWidget->UpdateInput();
 	//m_pParaTab->m_pStateParaWidget->UpdateOutPut();
@@ -669,6 +755,12 @@ void QSttMacroParaEditViewState::UpdateTestResource(BOOL bCreateChMaps)
 // 		m_pParaTab->m_pStateParaWidget->m_pBin_I->setEnabled(true);
 // 		m_pParaTab->m_pStateParaWidget->m_pBin_J->setEnabled(true);
 // 	}
+}
+
+void QSttMacroParaEditViewState::UpdatePrimParaSetUI()
+{
+	CSttMacroParaEditViewOriginal::UpdatePrimParaSetUI();
+	m_pParaTab->SetParaSetSecondValue(IsUseSecondParaSet());
 }
 
 char* QSttMacroParaEditViewState::GetMacroID()
@@ -716,7 +808,7 @@ void QSttMacroParaEditViewState::SerializeTestParas_Base(CSttXmlSerializeBase *p
 	CString strNet1,strNet2;
 	
 
-	for (int nIndex=0;nIndex<m_oStateTest.m_oStateParas.m_nStateNumbers;nIndex++)
+	for (int nIndex=0;nIndex<m_pStateParas->m_nStateNumbers;nIndex++)
 	{
 		pIecCfgGoutDatas = GetGoutDatas(nIndex);
 
@@ -724,7 +816,7 @@ void QSttMacroParaEditViewState::SerializeTestParas_Base(CSttXmlSerializeBase *p
 		{
 			nType = 0x88b8;
 			strNet1.Format("%04X",nType);
-			nNetType = m_oStateTest.m_oStateParas.m_paraState[nIndex].m_oAbnormalGOOSE.m_nNetType;
+			nNetType = m_pStateParas->m_paraState[nIndex].m_oAbnormalGOOSE.m_nNetType;
 			
 			if( nNetType != nType)
 			{
@@ -744,7 +836,7 @@ void QSttMacroParaEditViewState::SerializeTestParas_Base(CSttXmlSerializeBase *p
 			//sv µÄÍøÂç±êÊ¶²»¿É±à¼­
 // 			nType = 0x88ba;
 // 			strNet1.Format("%04X",nType);
-// 			nNetType = m_oStateTest.m_oStateParas.m_paraState[nIndex].m_oAbnormalSMV.m_oSmvMsg.m_nNetType;
+// 			nNetType = m_pStateParas->m_paraState[nIndex].m_oAbnormalSMV.m_oSmvMsg.m_nNetType;
 // 
 // 			if( nNetType != nType)
 // 			{
@@ -785,7 +877,7 @@ void QSttMacroParaEditViewState::SerializeTestParas(CSttXmlSerializeBase *pMacro
 //		InitGoosePubDataGroups();	//´ÓSttIecGooseCfg.ixmlÎÄ¼þ»ñÈ¡³õÊ¼Öµ£¬Ã¿¸ö×´Ì¬¶ÔÓ¦Ò»¸öCDataGroup,ÐèÒª¿ËÂ¡Gouts¿ØÖÆ¿é,ÔÙ´ò¿ªÄ£°å,½«Ä£°åÖÐµÄÊý¾ÝÖµ¸³Öµµ½¿ØÖÆ¿éÖÐ
 //	}
 //
-//	for (int nIndex=0;nIndex<m_oStateTest.m_oStateParas.m_nStateNumbers;nIndex++)
+//	for (int nIndex=0;nIndex<m_pStateParas->m_nStateNumbers;nIndex++)
 //	{
 //		pIecCfgGoutDatas = GetGoutDatas(nIndex);
 //
@@ -833,29 +925,42 @@ bool QSttMacroParaEditViewState::IsValidTestParasFile( const CString& strParasFi
 	return true;
 }
 
+//2024-9-11 lijunqing ÓÅ»¯
+void QSttMacroParaEditViewState::InitStateTest()
+{
+	if (m_oStateTest == 0)
+	{
+#ifdef TMT_STATECOUNT_USE_DEF
+		m_oStateTest = (tmt_state_test*)malloc(sizeof(tmt_state_test));
+		m_oStateTest->init(0);
+#else
+		m_oStateTest = new tmt_state_test;
+#endif
+	}
+}
+
 void QSttMacroParaEditViewState::initTestParas()
 {
-	if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> begin initTestParas -  >>");	}
-
-	if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> begin OpenTestTestMngrFile -  >>");	}
 	BOOL bRet = OpenTestTestMngrFile(_T(""));
-	if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> end OpenTestTestMngrFile -  >>");	}
+	debug_time_long_log("ViewState initUI_Paras initTestParas OpenTestTestMngrFile", true);
 
 	if (!bRet)
 	{
-		m_oStateTest.m_oStateParas.init(2);
+		m_pStateParas->init(2);
 		InitGoosePubDataGroups();
 		InitFT3PubDataGroups();
+		debug_time_long_log("ViewState initUI_Paras initTestParas InitState", true);
 	}
 
 	CopyBinaryConfig();
 	g_theTestCntrFrame->UpdateToolButtons();
 	SetDatas(NULL);
+
+	debug_time_long_log("ViewState initUI_Paras initTestParas SetDatas", true);
+
 	setDcoffsetEnable();
 
 	m_pBtnWidget->EnableButtons();
-
-	if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> end initTestParas -  >>");	}
 }
 
 void QSttMacroParaEditViewState::InitUI_OpenParas()
@@ -868,14 +973,14 @@ void QSttMacroParaEditViewState::InitUI_OpenParas()
 	//³õÊ¼»¯°´Å¥À¸
 	if (m_pBtnWidget)
 	{
-		m_pBtnWidget->setData(&m_oStateTest);
+		m_pBtnWidget->setData(&m_oStateTest->m_oStateParas);
 	}
 	if (m_pTrigerWidget)
 	{
 		m_pTrigerWidget->SetData(m_pStatePara);
 	}
 
-	m_pStatePara = &(m_oStateTest.m_oStateParas.m_paraState[0]);
+	m_pStatePara = &(m_pStateParas->m_paraState[0]);
 	if (m_pParaTab->m_pUIParaWidget)
 	{
 		m_pParaTab->m_pUIParaWidget->setMacroType(MACROTYPE_State);
@@ -903,14 +1008,14 @@ void QSttMacroParaEditViewState::UpdateStateParas_Base()
 	if (m_pParaTab->m_pUIParaWidget)
 	{
 		m_pParaTab->m_pUIParaWidget->setData(m_pStatePara->m_uiVOL,m_pStatePara->m_uiCUR);
-		m_pParaTab->m_pUIParaWidget->initData();
+		m_pParaTab->m_pUIParaWidget->initData(true);
 	}
 
 	if(m_pParaTab->m_pHarmParaWidget)
 	{
 		m_pParaTab->m_pHarmParaWidget->setData(m_pStatePara->m_uiVOL,m_pStatePara->m_uiCUR);
 		((QBasicTestParaSet*)m_pParaTab->m_pHarmParaWidget)->DCStateChanged(P_Harm,m_pStatePara->m_bDC);
-		m_pParaTab->m_pHarmParaWidget->initData();
+		m_pParaTab->m_pHarmParaWidget->initData(true);
 	}
 
 // 	if(m_pParaTab->m_pStateParaWidget)
@@ -918,14 +1023,34 @@ void QSttMacroParaEditViewState::UpdateStateParas_Base()
 // 		m_pParaTab->m_pStateParaWidget->setData(m_pStatePara);
 // 	}
 
-	m_pDC->setChecked(m_pStatePara->m_bDC);
+	CString strModel;
+	strModel = g_oSttSystemConfig.GetDevModel();
+	CSttAdjDevice *pCurDevice = &g_oSttTestResourceMngr.m_oCurrDevice;
+	if (!pCurDevice->m_strModel.IsEmpty())
+	{
+		strModel = pCurDevice->m_strModel;
+	}
+
+	//dingxy 20241128 ¸ß¹¦ÂÊÊä³öÊ±£¬Í¨ÓÃÊÔÑéÖ±Á÷»Ò»¯
+	if ((strModel == _T("PNS330-6")) || (strModel == _T("PNS330-6A")) || (strModel == _T("PNS330-6M")))
+	{
+		long nIPowerMode = g_oSystemParas.m_oGearSetCurModules.m_oCurModuleGear[0].m_nIPowerMode;
+		if (nIPowerMode == STT_CurrentMODULE_POWER_PNS330_6x10A_3x20A)
+			UpdateDCCheckBoxUI(TRUE);
+		else
+			UpdateDCCheckBoxUI(FALSE);
+	}
+	else
+		UpdateDCCheckBoxUI(FALSE);
+	if(m_pDC)m_pDC->setChecked(m_pStatePara->m_bDC);
+
 	if (m_pStatePara->m_bPlusDC)
 	{
-		m_pDCPlus->setChecked(true);
+		if(m_pDCPlus)m_pDCPlus->setChecked(true);
 	}
 	else
 	{
-		m_pDCPlus->setChecked(false);
+		if(m_pDCPlus)m_pDCPlus->setChecked(false);
 	}
 	m_pTao->setText(QString::number(m_pStatePara->m_fTao,'f',3));
 
@@ -948,7 +1073,7 @@ void QSttMacroParaEditViewState::UpdateStateParas_Base()
 
 	if(m_bSmvAbnormal && m_pSVParaSet)
 	{
-		m_pSVParaSet->setData(&m_pStatePara->m_oAbnormalSMV,&m_oStateTest.m_oStateParas);
+		m_pSVParaSet->setData(&m_pStatePara->m_oAbnormalSMV,&m_oStateTest->m_oStateParas);
 	}
 }
 
@@ -962,7 +1087,7 @@ void QSttMacroParaEditViewState::UpdateStateParas()
 
 	if(m_bSmvAbnormal && m_pSVParaSet)
 	{
-		m_pSVParaSet->setData(&m_pStatePara->m_oAbnormalSMV,&m_oStateTest.m_oStateParas);
+		m_pSVParaSet->setData(&m_pStatePara->m_oAbnormalSMV,&m_oStateTest->m_oStateParas);
 	}
 
       m_pTrigerWidget->SetData(m_pStatePara);
@@ -985,7 +1110,8 @@ void QSttMacroParaEditViewState::UpdateStateParas()
 
 void QSttMacroParaEditViewState::CopyBinaryConfig(BOOL b)
 {
-	tmt_StatePara* pStatePara = &m_oStateTest.m_oStateParas.m_paraState[m_nCurStateIndex];
+	tmt_StatePara* pStatePara = &m_pStateParas->m_paraState[m_nCurStateIndex];
+	
 	if(!pStatePara)
 	{
 		return;
@@ -1080,7 +1206,7 @@ void QSttMacroParaEditViewState::UpdateBinBoutExTab()
 	if ((m_pParaTab->m_pExBinParaWidget == NULL)&&(g_oLocalSysPara.m_nCHBinInExNum>0))
 	{
 		m_pParaTab->AddExBinParaWidget();
-		m_pParaTab->m_pExBinParaWidget->setData(m_oStateTest.m_oStateParas.m_paraState[m_nCurStateIndex].m_binInEx,NULL);
+		m_pParaTab->m_pExBinParaWidget->setData(m_pStateParas->m_paraState[m_nCurStateIndex].m_binInEx,NULL);
 		connect(m_pParaTab->m_pExBinParaWidget, SIGNAL(sig_ExSwitchChanged()), this, SLOT(slot_SwitchStateChanged()),Qt::UniqueConnection);
 	}
 	else if ((m_pParaTab->m_pExBinParaWidget != NULL)&&(g_oLocalSysPara.m_nCHBinInExNum == 0))
@@ -1091,7 +1217,7 @@ void QSttMacroParaEditViewState::UpdateBinBoutExTab()
 	else if ((m_pParaTab->m_pExBinParaWidget != NULL)&&(g_oLocalSysPara.m_nCHBinInExNum>0))
 	{
 		disconnect(m_pParaTab->m_pExBinParaWidget, SIGNAL(sig_ExSwitchChanged()), this, SLOT(slot_SwitchStateChanged()));
-		m_pParaTab->m_pExBinParaWidget->setData(m_oStateTest.m_oStateParas.m_paraState[m_nCurStateIndex].m_binInEx,NULL);
+		m_pParaTab->m_pExBinParaWidget->setData(m_pStateParas->m_paraState[m_nCurStateIndex].m_binInEx,NULL);
 		connect(m_pParaTab->m_pExBinParaWidget, SIGNAL(sig_ExSwitchChanged()), this, SLOT(slot_SwitchStateChanged()),Qt::UniqueConnection);
 
 		m_pParaTab->EnableBinParaWidget(true);
@@ -1100,7 +1226,7 @@ void QSttMacroParaEditViewState::UpdateBinBoutExTab()
 	if ((m_pParaTab->m_pExBoutParaWidget == NULL)&&(g_oLocalSysPara.m_nCHBinOutExNum>0))
 	{
 		m_pParaTab->AddExBoutParaWidget();
-		m_pParaTab->m_pExBoutParaWidget->setData(NULL,m_oStateTest.m_oStateParas.m_paraState[m_nCurStateIndex].m_binOutEx);
+		m_pParaTab->m_pExBoutParaWidget->setData(NULL,m_pStateParas->m_paraState[m_nCurStateIndex].m_binOutEx);
 		connect(m_pParaTab->m_pExBoutParaWidget, SIGNAL(sig_ExSwitchChanged()), this, SLOT(slot_SwitchStateChanged()),Qt::UniqueConnection);
 	}
 	else if ((m_pParaTab->m_pExBoutParaWidget != NULL)&&(g_oLocalSysPara.m_nCHBinOutExNum == 0))
@@ -1111,7 +1237,7 @@ void QSttMacroParaEditViewState::UpdateBinBoutExTab()
 	else if ((m_pParaTab->m_pExBoutParaWidget != NULL)&&(g_oLocalSysPara.m_nCHBinOutExNum>0))
 	{
 		disconnect(m_pParaTab->m_pExBoutParaWidget, SIGNAL(sig_ExSwitchChanged()), this, SLOT(slot_SwitchStateChanged()));
-		m_pParaTab->m_pExBoutParaWidget->setData(NULL,m_oStateTest.m_oStateParas.m_paraState[m_nCurStateIndex].m_binOutEx);
+		m_pParaTab->m_pExBoutParaWidget->setData(NULL,m_pStateParas->m_paraState[m_nCurStateIndex].m_binOutEx);
 		connect(m_pParaTab->m_pExBoutParaWidget, SIGNAL(sig_ExSwitchChanged()), this, SLOT(slot_SwitchStateChanged()),Qt::UniqueConnection);
 
 		m_pParaTab->EnableBoutParaWidget(true);
@@ -1127,7 +1253,7 @@ void QSttMacroParaEditViewState::UpdateGoutTab(BOOL bUpdateList)
 		if (m_bSmvAbnormal)
 		{
 			InitSvAbnormalTmt();
-			m_pSVParaSet->setData(&m_pStatePara->m_oAbnormalSMV,&m_oStateTest.m_oStateParas);
+			m_pSVParaSet->setData(&m_pStatePara->m_oAbnormalSMV,&m_oStateTest->m_oStateParas);
 		}
 	}
 
@@ -1190,7 +1316,7 @@ void QSttMacroParaEditViewState::UpdateFT3Tab(BOOL bUpdateList)
 		if (m_bSmvAbnormal)
 		{
 			InitSvAbnormalTmt();
-			m_pSVParaSet->setData(&m_pStatePara->m_oAbnormalSMV,&m_oStateTest.m_oStateParas);
+			m_pSVParaSet->setData(&m_pStatePara->m_oAbnormalSMV,&m_oStateTest->m_oStateParas);
 		}
 	}
 
@@ -1206,9 +1332,9 @@ void QSttMacroParaEditViewState::InitSvAbnormalTmt()//ÓÃIECÖÐSv·¢²¼µÄÊý¾Ý³õÊ¼»¯×
 {
 	tmt_StatePara* pStatePara = NULL;
 
-	for(int i=0;i<m_oStateTest.m_oStateParas.m_nStateNumbers;i++)
+	for(int i=0;i<m_pStateParas->m_nStateNumbers;i++)
 	{
-		pStatePara = &m_oStateTest.m_oStateParas.m_paraState[i];
+		pStatePara = &m_pStateParas->m_paraState[i];
 		
 		CIecCfgDatasSMV *pIecCfgDatasSMV = g_oSttTestResourceMngr.m_oIecDatasMngr.GetSmvMngr();
 		CIecCfgSmvDataBase *pIecCfgSmvData = NULL;
@@ -1282,7 +1408,7 @@ void QSttMacroParaEditViewState::ClearResult(PTMT_PARAS_HEAD pHead)
 void QSttMacroParaEditViewState::EnableButtons()
 {
 
-	if(m_nCurStateIndex < 0 || m_nCurStateIndex >= m_oStateTest.m_oStateParas.m_nStateNumbers)
+	if(m_nCurStateIndex < 0 || m_nCurStateIndex >= m_pStateParas->m_nStateNumbers)
 	{
 		m_pBtnWidget->m_pDeleteState->setDisabled(true);
 	}
@@ -1294,25 +1420,25 @@ void QSttMacroParaEditViewState::EnableButtons()
 
 void QSttMacroParaEditViewState::setDcoffsetEnable()
 {
-	if ((m_oStateTest.m_oStateParas.m_nPlusDC == 2) && !g_theTestCntrFrame->IsTestStarted())
+	if ((m_pStateParas->m_nPlusDC == 2) && !g_theTestCntrFrame->IsTestStarted())
 	{
 		m_pDCPlus->setEnabled(true);
 		if (m_pStatePara->m_bPlusDC)
 		{
-			m_pLabelTao->setEnabled(true);
-			m_pTao->setEnabled(true);
+			if(m_pLabelTao)m_pLabelTao->setEnabled(true);
+			if(m_pTao)m_pTao->setEnabled(true);
 		}
 		else
 		{
-			m_pLabelTao->setEnabled(false);
-			m_pTao->setEnabled(false);
+			if(m_pLabelTao)m_pLabelTao->setEnabled(false);
+			if(m_pTao)m_pTao->setEnabled(false);
 		}
 	}
 	else
 	{
-		m_pDCPlus->setEnabled(false);
-		m_pLabelTao->setEnabled(false);
-		m_pTao->setEnabled(false);
+		if(m_pDCPlus)m_pDCPlus->setEnabled(false);
+		if(m_pLabelTao)m_pLabelTao->setEnabled(false);
+		if(m_pTao)m_pTao->setEnabled(false);
 	}
 
 }
@@ -1340,7 +1466,7 @@ void QSttMacroParaEditViewState::UpdateActValue(CEventResult *pEventInfo)
 
 void QSttMacroParaEditViewState::GetActValue( int nCurStepIndex, int nIndex)
 {
-	tmt_StatePara* pStatePara = &(m_oStateTest.m_oStateParas.m_paraState[nIndex]);
+	tmt_StatePara* pStatePara = &m_pStateParas->m_paraState[nIndex];
 	tmt_channel* pChVData = pStatePara->m_uiVOL;
 	tmt_channel* pChCData = pStatePara->m_uiCUR;
 	CExBaseList* pListChVData =&g_oSttTestResourceMngr.m_pTestResouce->m_oVolChRsListRef;
@@ -1379,7 +1505,16 @@ void QSttMacroParaEditViewState::GetActValue( int nCurStepIndex, int nIndex)
 
 					strMsgDesc = strChName;
 					strMsgDesc += /*_T("¶¯×÷Öµ")*/g_sLangTxt_State_ActionValue.GetString();
+
+					if (IsUseSecondParaSet())
+					{
 					strMsgDesc.AppendFormat(_T("(%.3f V)."),nActValue);
+					}
+					else
+					{
+						strMsgDesc.AppendFormat(_T("(%.3f kV)."),nActValue);
+					}
+					
 					m_aStrActValue.append(strMsgDesc);
 				}
 				else
@@ -1392,7 +1527,15 @@ void QSttMacroParaEditViewState::GetActValue( int nCurStepIndex, int nIndex)
 
 					strMsgDesc = strChName;
 					strMsgDesc += /*_T("¶¯×÷Öµ")*/g_sLangTxt_State_ActionValue.GetString();
+					if (IsUseSecondParaSet())
+					{
 					strMsgDesc.AppendFormat(_T("(%.3f V)."),nActValue);
+					}
+					else
+					{
+						strMsgDesc.AppendFormat(_T("(%.3f kV)."),nActValue);
+					}
+					
 					m_aStrActValue.append(strMsgDesc);
 				}
 			}
@@ -1442,7 +1585,15 @@ void QSttMacroParaEditViewState::GetActValue( int nCurStepIndex, int nIndex)
 
 					strMsgDesc = strChName;
 					strMsgDesc += /*_T("¶¯×÷Öµ")*/g_sLangTxt_State_ActionValue.GetString();
+					if (IsUseSecondParaSet())
+					{
 					strMsgDesc.AppendFormat(_T("(%.3f V)."),nActValue);
+					}
+					else
+					{
+						strMsgDesc.AppendFormat(_T("(%.3f kV)."),nActValue);
+
+					}
 					m_aStrActValue.append(strMsgDesc);
 				}
 				else
@@ -1455,7 +1606,16 @@ void QSttMacroParaEditViewState::GetActValue( int nCurStepIndex, int nIndex)
 
 					strMsgDesc = strChName;
 					strMsgDesc += /*_T("¶¯×÷Öµ")*/g_sLangTxt_State_ActionValue.GetString();
+					if (IsUseSecondParaSet())
+					{
 					strMsgDesc.AppendFormat(_T("(%.3f V)."),nActValue);
+
+					}
+					else
+					{
+						strMsgDesc.AppendFormat(_T("(%.3f kV)."),nActValue);
+
+					}
 					m_aStrActValue.append(strMsgDesc);
 				}
 			}
@@ -1635,6 +1795,8 @@ void QSttMacroParaEditViewState::UpdateVectorObject()
 	CSttMacroChannels *pMacroChs = g_oSttTestResourceMngr.m_oRtDataMngr.m_pMacroChannels;
 	g_theTestCntrFrame->UpdateVectorWidget(m_pStatePara->m_uiVOL,m_pStatePara->m_uiCUR, &pMacroChs->m_oVolChListRef, &pMacroChs->m_oCurChListRef);
 	g_theTestCntrFrame->UpdatePowerWidget(m_pStatePara->m_uiVOL,m_pStatePara->m_uiCUR, &pMacroChs->m_oVolChListRef, &pMacroChs->m_oCurChListRef);
+	
+	SetPlotAcDcMaxMinValue();//20241101 suyang ³õÊ¼»¯Ê±Ò²ÐèÒªÍ¨¹ýµ±Ç°µçÑ¹µçÁ÷Í¨µÀÖµ¸üÐÂ×´Ì¬Í¼×ø±êÖá
 }
 
 void QSttMacroParaEditViewState::slot_PreviosState()//ÇÐ»»ÉÏÒ»×´Ì¬
@@ -1681,7 +1843,7 @@ void QSttMacroParaEditViewState::slot_FT3DataChanged()
 
 /*void QSttMacroParaEditViewState::slot_PasteStateBF()
 {
-	if (m_nCurStateIndex < 0 && m_nCurStateIndex >= m_oStateTest.m_oStateParas.m_nStateNumbers)
+	if (m_nCurStateIndex < 0 && m_nCurStateIndex >= m_oStateTest->m_oStateParas.m_nStateNumbers)
 	{
 		return;
 	}
@@ -1697,7 +1859,7 @@ void QSttMacroParaEditViewState::slot_FT3DataChanged()
 		return;
 	}
 
-	stt_state_paras_insert_before(&m_oStateTest.m_oStateParas, m_pCopyStatePara, m_nCurStateIndex);
+	stt_state_paras_insert_before(&m_oStateTest->m_oStateParas, m_pCopyStatePara, m_nCurStateIndex);
 	InsertGoutDatas(m_pCopyGoutDatas,m_nCurStateIndex);
 
 	disconnect(m_pBtnWidget->m_pStatesComBox,SIGNAL(currentIndexChanged(int)),this,SLOT(slot_StatesIndexChanged(int)));
@@ -1768,9 +1930,9 @@ void QSttMacroParaEditViewState::slot_InsertStateBF()
 		return;
 	}	
 	
-// 	stt_state_paras_insert_before(&m_oStateTest.m_oStateParas, NULL, m_nCurStateIndex);
+// 	stt_state_paras_insert_before(&m_oStateTest->m_oStateParas, NULL, m_nCurStateIndex);
 // 	InsertGoutDatas(GetGoutDatas(m_nCurStateIndex),m_nCurStateIndex);
-	stt_state_paras_insert_before(&m_oStateTest.m_oStateParas, m_pCopyStatePara, m_nCurStateIndex);
+	stt_state_paras_insert_before(&m_oStateTest->m_oStateParas, m_pCopyStatePara, m_nCurStateIndex);
 	InsertGoutDatas(m_pCopyGoutDatas,m_nCurStateIndex);
 	InsertFT3Datas(m_pCopyFT3Datas,m_nCurStateIndex);
 
@@ -1862,10 +2024,10 @@ void QSttMacroParaEditViewState::slot_InsertStateAF()
 		return;
 	}	
 	
-// 	stt_state_paras_insert_after(&m_oStateTest.m_oStateParas, NULL, m_nCurStateIndex);
+// 	stt_state_paras_insert_after(&m_oStateTest->m_oStateParas, NULL, m_nCurStateIndex);
 // 	InsertGoutDatas(GetGoutDatas(m_nCurStateIndex),m_nCurStateIndex+1);
 
- 	stt_state_paras_insert_after(&m_oStateTest.m_oStateParas, m_pCopyStatePara, m_nCurStateIndex);
+ 	stt_state_paras_insert_after(&m_oStateTest->m_oStateParas, m_pCopyStatePara, m_nCurStateIndex);
  	InsertGoutDatas(m_pCopyGoutDatas,m_nCurStateIndex+1);
 	InsertFT3Datas(m_pCopyFT3Datas,m_nCurStateIndex+1);
 
@@ -1884,7 +2046,7 @@ void QSttMacroParaEditViewState::slot_InsertStateAF()
 	
 /*void QSttMacroParaEditViewState::slot_PasteStateAF()
 {
-	if (m_nCurStateIndex < 0 && m_nCurStateIndex >= m_oStateTest.m_oStateParas.m_nStateNumbers)
+	if (m_nCurStateIndex < 0 && m_nCurStateIndex >= m_oStateTest->m_oStateParas.m_nStateNumbers)
 	{
 		return;
 	}
@@ -1900,7 +2062,7 @@ void QSttMacroParaEditViewState::slot_InsertStateAF()
 		return;
 	}
 
-	stt_state_paras_insert_after(&m_oStateTest.m_oStateParas, m_pCopyStatePara, m_nCurStateIndex);
+	stt_state_paras_insert_after(&m_oStateTest->m_oStateParas, m_pCopyStatePara, m_nCurStateIndex);
 	InsertGoutDatas(m_pCopyGoutDatas,m_nCurStateIndex+1);
 
 	m_nCurStateIndex++;
@@ -1977,14 +2139,14 @@ void QSttMacroParaEditViewState::InsertFT3Datas(CIecCfgDatasSMV *pIecCfgDatasSMV
 	
 void QSttMacroParaEditViewState::slot_DeleteState()
 {
-	if(m_oStateTest.m_oStateParas.m_nStateNumbers <= 1)
+	if(m_pStateParas->m_nStateNumbers <= 1)
 	{
 		//CLogPrint::LogFormatString(XLOGLEVEL_INFOR,_T("ÖÁÉÙ±£ÁôÒ»¸ö×´Ì¬."));
 		CLogPrint::LogFormatString(XLOGLEVEL_INFOR,g_sLangTxt_Gradient_MaintainatLeastOneState.GetString()); //ÖÁÉÙ±£ÁôÒ»¸ö×´Ì¬ lcq 3.14
 		return;	//±ØÐëÖÁÉÙÒ»¸ö×´Ì¬
 	}
 
-	stt_state_paras_delete(&m_oStateTest.m_oStateParas,m_nCurStateIndex);
+	stt_state_paras_delete(&m_oStateTest->m_oStateParas,m_nCurStateIndex);
 
 	if (g_oSystemParas.m_nHasDigital)
 	{
@@ -2014,9 +2176,9 @@ void QSttMacroParaEditViewState::slot_EditState()
 {
 	CExBaseList oList;
 	
-	for (int i = 0; i < m_oStateTest.m_oStateParas.m_nStateNumbers; i++)
+	for (int i = 0; i < m_pStateParas->m_nStateNumbers; i++)
 	{
-		tmt_StatePara pPara = m_oStateTest.m_oStateParas.m_paraState[i];
+		tmt_StatePara pPara = m_pStateParas->m_paraState[i];
 		CExBaseObject* pObj = new CExBaseObject;
 		CString strText = g_sLangTxt_State, strNum;
 		strNum.Format("%d", i + 1);
@@ -2041,8 +2203,8 @@ void QSttMacroParaEditViewState::slot_EditState()
 		while (pos)
 		{
 			CExBaseObject* pObj = oList.GetNext(pos);
-			strcpy(m_oStateTest.m_oStateParas.m_paraState[nIndex].m_strName, pObj->m_strName.GetString());
-			m_oStateTest.m_oStateParas.m_paraState[nIndex].m_bSelected = pObj->m_dwItemData;
+			strcpy(m_pStateParas->m_paraState[nIndex].m_strName, pObj->m_strName.GetString());
+			m_pStateParas->m_paraState[nIndex].m_bSelected = pObj->m_dwItemData;
 			nIndex++;
 		}
 	}
@@ -2062,14 +2224,14 @@ void QSttMacroParaEditViewState::slot_StatesIndexChanged(int nIndex)
 		return;
 	}
 
-	if (nIndex < 0 || nIndex >= m_oStateTest.m_oStateParas.m_nStateNumbers)
+	if (nIndex < 0 || nIndex >= m_pStateParas->m_nStateNumbers)
 	{
 		return;
 	}
 
 	m_nCurStateIndex = nIndex;
 	//m_pBtnWidget->m_nCurStateIndex = nIndex;
-	m_pStatePara = &m_oStateTest.m_oStateParas.m_paraState[m_nCurStateIndex];
+	m_pStatePara = &m_pStateParas->m_paraState[m_nCurStateIndex];
 	m_pBtnWidget->EnableButtons();
 	
 	UpdateStateParas();
@@ -2091,7 +2253,7 @@ void QSttMacroParaEditViewState::slot_BinarySet()
 	
 void QSttMacroParaEditViewState::slot_CommonPara()
 {
-	CommonValueDialogState dlg(&m_oStateTest.m_oStateParas, this);
+	CommonValueDialogState dlg(&m_oStateTest->m_oStateParas, this);
 	dlg.setWindowModality(Qt::WindowModal);
 
 #ifdef _USE_SoftKeyBoard_
@@ -2110,8 +2272,14 @@ void QSttMacroParaEditViewState::slot_CommonPara()
 
 void QSttMacroParaEditViewState::slot_ShortClac()
 {
-	ShortCalcuDig dig(g_oSttTestResourceMngr.m_pTestResouce,m_pStatePara->m_uiVOL,m_pStatePara->m_uiCUR,m_ShortCalcuPara,this);
+	if (m_ShortCalcuPara == 0)
+	{
+		m_ShortCalcuPara  =new ShortCalcuPara;
+	}
+
+	ShortCalcuDig dig(g_oSttTestResourceMngr.m_pTestResouce,m_pStatePara->m_uiVOL,m_pStatePara->m_uiCUR,*m_ShortCalcuPara,this);
 	dig.setWindowModality(Qt::WindowModal);
+	dig.SetParaSetSecondValue(IsUseSecondParaSet());
 	connect(&dig,SIGNAL(sig_ShortCalcuOk(ShortCalcuPara &)),this,SLOT(slot_ShortCalcuOk(ShortCalcuPara &)));
 
 #ifdef _USE_SoftKeyBoard_
@@ -2125,7 +2293,7 @@ void QSttMacroParaEditViewState::slot_ShortClac()
 
 void QSttMacroParaEditViewState::slot_Estimate()
 {
-	StateEstimateDlg dlg(&m_oStateTest.m_oStateParas, this);
+	StateEstimateDlg dlg(&m_oStateTest->m_oStateParas, this);
 	dlg.setWindowModality(Qt::WindowModal);
 #ifdef _USE_SoftKeyBoard_
 	QSoftKeyBoard::AttachObj(&dlg);
@@ -2138,7 +2306,7 @@ void QSttMacroParaEditViewState::slot_Estimate()
 
 void QSttMacroParaEditViewState::slot_SettingValue()
 {
-	StateSettingValueDlg dlg(&m_oStateTest.m_oStateParas, this);
+	StateSettingValueDlg dlg(&m_oStateTest->m_oStateParas, this);
 	dlg.setWindowModality(Qt::WindowModal);
 #ifdef _USE_SoftKeyBoard_
 	QSoftKeyBoard::AttachObj(&dlg);
@@ -2151,10 +2319,15 @@ void QSttMacroParaEditViewState::slot_SettingValue()
 
 void QSttMacroParaEditViewState::slot_DiffCurrCalcBtnClicked()
 {
+	if (m_oDiffCurrCalParas == 0)
+	{
+		m_oDiffCurrCalParas = new Stt_DiffCurrCalParas;
+	}
+
 	SttDiffCurrCalDlg dig(this);
 	dig.setFont(*g_pSttGlobalFont);
 	dig.setWindowModality(Qt::WindowModal);
-	dig.InitUI(&m_oDiffCurrCalParas);
+	dig.InitUI(m_oDiffCurrCalParas);
 #ifdef _USE_SoftKeyBoard_
 	QSoftKeyBoard::AttachObj(&dig);
 #endif
@@ -2192,6 +2365,7 @@ void QSttMacroParaEditViewState::slot_GradientSet()
 
 	GradientSetDlg dlg(this);
 	dlg.setWindowModality(Qt::WindowModal);
+	dlg.SetParaSetSecondValue(IsUseSecondParaSet());
 	dlg.setData(g_oSttTestResourceMngr.m_pTestResouce,m_pStatePara);
 
 	//336D ·Ö±æÂÊ800x600 dlgÏÔÊ¾²»È«
@@ -2216,14 +2390,14 @@ void QSttMacroParaEditViewState::slot_GradientSet()
 	QSoftKeyBoard::ReAttachObj();
 #endif
 
-	m_pParaTab->m_pUIParaWidget->initData();
+	m_pParaTab->m_pUIParaWidget->initData(true);
 }
 
 void QSttMacroParaEditViewState::slot_ShortCalcuOk(ShortCalcuPara &para)
 {
-	if (!m_ShortCalcuPara.isSame(para))
+	if (!m_ShortCalcuPara->isSame(para))
 	{
-		m_ShortCalcuPara = para;
+		*m_ShortCalcuPara = para;
 		g_pStateTest->m_bTmtParaChanged = TRUE;
 	}
 	
@@ -2421,7 +2595,7 @@ void QSttMacroParaEditViewState::slot_lne_TaoChanged()
 
 void QSttMacroParaEditViewState::slot_DcCoffsetStateChanged()
 {
-	tmt_StatePara pStatePara = m_oStateTest.m_oStateParas.m_paraState[m_nCurStateIndex];
+	tmt_StatePara pStatePara = m_pStateParas->m_paraState[m_nCurStateIndex];
 	setDcoffsetEnable();
 }
 
@@ -2443,6 +2617,10 @@ void QSttMacroParaEditViewState::OnViewTestLink(BOOL b)
 
 void QSttMacroParaEditViewState::OnViewTestStart()
 {
+	//20250213 suyang ×´Ì¬Í¼Å¼·¢Ë¢ÐÂ²»¶Ô£¬·ÖÎö¿ÉÄÜÊÇÇå³ýÂý£¬½«µ×²ãÉÏËÍµÄÊý¾ÝÇå³ýÁË£¬¹ÊÒÆµ½´Ë´¦£»£¨×îºÃ·ÅÔÚbaseµã»÷¿ªÊ¼µÄ²Ûº¯Êý£¬´ýÌÖÂÛ£©
+	g_oSttTestResourceMngr.m_oRtDataMngr.m_pMacroChannels->ClearHisDatas();
+	g_theTestCntrFrame->ClearInfoWidget();
+
 //	CLogPrint::LogFormatString(XLOGLEVEL_ERROR,_T("[ÎÊÌâ²éÕÒ]OnViewTestStart_StateTest."));
 	//ÇÐ»»µ½×´Ì¬1, ²¢³õÊ¼»¯Ñ­»·¼ÆÊýÆ÷
 	m_nCircle = 0;
@@ -2471,8 +2649,7 @@ void QSttMacroParaEditViewState::OnViewTestStart()
 	m_pTrigerWidget->startInit();//2023-1-12
 
 	InitManuTrigerButton();
-	g_oSttTestResourceMngr.m_oRtDataMngr.m_pMacroChannels->ClearHisDatas();
-	g_theTestCntrFrame->ClearInfoWidget();
+
 	m_pParaTab->startInit();
 
 	if(m_pParaTab->m_pGooseParaWidget)
@@ -2484,18 +2661,23 @@ void QSttMacroParaEditViewState::OnViewTestStart()
 	{
 		m_pParaTab->m_pFT3OutParaWidget->setDisabled(true);
 	}
+	//20250227  suyang Ñ­»·´ÎÊýÓÚREPEATNUMBERS Ê±²Å¸üÐÂ×´Ì¬Í¼µÈ Æô¶¯¶¨Ê±Æ÷
+	if (m_pStateParas->m_nRepeatNumbers < REPEATNUMBERS)
+	{
 	g_theTestCntrFrame->StartStateMonitor();
 	g_theTestCntrFrame->StartVectorWidget();
 	g_theTestCntrFrame->StartPowerWidget();
+	}
+
 
 	m_mapState.clear();
 	CString strStateName;
 
-	for(int i = 0; i < m_oStateTest.m_oStateParas.m_nStateNumbers; i++)
+	for(int i = 0; i < m_pStateParas->m_nStateNumbers; i++)
 	{
-		if(m_oStateTest.m_oStateParas.m_paraState[i].m_bSelected)
+		if(m_pStateParas->m_paraState[i].m_bSelected)
 		{
-			strStateName = m_oStateTest.m_oStateParas.m_paraState[i].m_strName;
+			strStateName = m_pStateParas->m_paraState[i].m_strName;
 
 			if (strStateName.IsEmpty())
 			{
@@ -2538,15 +2720,20 @@ void QSttMacroParaEditViewState::OnViewTestStop()
 	{
 		m_pParaTab->m_pFT3OutParaWidget->setDisabled(false);
 	}
+	
+	if (m_pStateParas->m_nRepeatNumbers < REPEATNUMBERS)
+	{
 	g_theTestCntrFrame->StopStateMonitor();
 	g_theTestCntrFrame->StopVectorWidget();
 	g_theTestCntrFrame->StopPowerWidget();
+	}
+
 	setDcoffsetEnable();
 }
 
 void QSttMacroParaEditViewState::InitManuTrigerButton()
 {
-	if (m_oStateTest.m_oStateParas.m_paraState[0].m_nTriggerCondition == TMT_MDSTATE_MEARSURETRIGGER)
+	if (m_pStateParas->m_paraState[0].m_nTriggerCondition == TMT_MDSTATE_MEARSURETRIGGER)
 	{
 		g_theTestCntrFrame->UpdateButtonStateByID(STT_CNTR_CMD_ManuTriger,true);
 	}
@@ -2558,8 +2745,31 @@ void QSttMacroParaEditViewState::InitManuTrigerButton()
 
 void QSttMacroParaEditViewState::SysStateReport_OnStateChanged(CEventResult *pEventInfo)
 {	
-//	CLogPrint::LogFormatString(XLOGLEVEL_ERROR,_T("[ÎÊÌâ²éÕÒ]SysStateReport_OnStateChanged(%ld)."),pEventInfo->m_nCurrStateIndex);
 	ASSERT(pEventInfo != NULL);
+
+	//20250227  suyang Ñ­»·´ÎÊý´óÓÚ1000´ÎÊ±²»ÔÙ¸üÐÂ×´Ì¬ÇÐ»»
+	if (m_pStateParas->m_nRepeatNumbers > REPEATNUMBERS)
+	{
+		if (pEventInfo->m_nCurrStateIndex>=0)
+		{
+			tmt_StatePara* pStatePara = &(m_pStateParas->m_paraState[pEventInfo->m_nCurrStateIndex]);
+
+			if (pStatePara->m_nTriggerCondition == TMT_MDSTATE_MEARSURETRIGGER)
+			{
+				//ÊÖ¶¯´¥·¢°´Å¥±äÁÁ
+				g_theTestCntrFrame->UpdateButtonStateByID(STT_CNTR_CMD_ManuTriger,true);
+			}
+			else
+			{
+				//ÊÖ¶¯´¥·¢°´Å¥±ä°µ
+				g_theTestCntrFrame->UpdateButtonStateByID(STT_CNTR_CMD_ManuTriger,false);
+			} 
+		}
+		return;
+	}
+
+//	CLogPrint::LogFormatString(XLOGLEVEL_ERROR,_T("[ÎÊÌâ²éÕÒ]SysStateReport_OnStateChanged(%ld)."),pEventInfo->m_nCurrStateIndex);
+	
 	if (pEventInfo->m_nCurrStateIndex>=0)
 	{
 		if(pEventInfo->m_nCurrStateIndex == 0)
@@ -2582,9 +2792,27 @@ void QSttMacroParaEditViewState::SysStateReport_OnStateChanged(CEventResult *pEv
 		strStateNum.Format("%ld", pEventInfo->m_nCurrStateIndex+1);
 #endif
 		strStateMsg = strStateMsg + strLoopNum + strInState + strStateNum;
+		if (m_pStateParas->m_nRepeatNumbers > 0)
+		{
 		CLogPrint::LogString(XLOGLEVEL_RESULT,strStateMsg);
+		}
+		else
+		{
+			strStateMsg.clear();
+#ifndef _PSX_QT_LINUX_
+			//strInState = _T("½øÈë");
+			strInState = g_sLangTxt_State_Enter; //½øÈë lcq 3.14
+			strInState += m_mapState[pEventInfo->m_nCurrStateIndex];
+#else
+			strInState = /*_T("½øÈë×´Ì¬")*/g_sLangTxt_State_InState;
+			strStateNum.Format("%ld", pEventInfo->m_nCurrStateIndex+1);
+#endif
+			strStateMsg = strInState + strStateNum;
+			CLogPrint::LogString(XLOGLEVEL_RESULT,strStateMsg);
+		}
+		
 		m_pBtnWidget->m_pStatesComBox->setCurrentIndex(pEventInfo->m_nCurrStateIndex);
-		tmt_StatePara* pStatePara = &(m_oStateTest.m_oStateParas.m_paraState[pEventInfo->m_nCurrStateIndex]);
+		tmt_StatePara* pStatePara = &(m_pStateParas->m_paraState[pEventInfo->m_nCurrStateIndex]);
 
 		if (pStatePara->m_nTriggerCondition == TMT_MDSTATE_MEARSURETRIGGER)
 		{
@@ -2612,7 +2840,7 @@ void QSttMacroParaEditViewState::UpdateEventMsg( CEventResult *pCurrEventResult 
 		strResultMsg.Format(g_sLangTxt_Native_StatusLDActTime.GetString()/*_T("×´Ì¬%ld¶¯×÷Ê±¼ä%.4lfs.")*/,
 			pCurrEventResult->m_nCurrStateIndex + 1, pCurrEventResult->m_fActTime);
 		CLogPrint::LogString(XLOGLEVEL_RESULT, strResultMsg);
-		if (strcmp(m_oStateTest.m_pszMacroID, STT_ORG_MACRO_StateTest) == 0)
+		if (strcmp(m_oStateTest->m_pszMacroID, STT_ORG_MACRO_StateTest) == 0)
 		{
 			UpdateActValue(pCurrEventResult);
 		}
@@ -2683,7 +2911,7 @@ void QSttMacroParaEditViewState::GetMacroItemsXml(CSttItems &oRootItems)
 	pItems->m_nTkID = 65535;
 	pRoot->AddNewChild(pItems);
 
-	for (int i = 0; i < m_oStateTest.m_oStateParas.m_nStateNumbers; i++)
+	for (int i = 0; i < m_pStateParas->m_nStateNumbers; i++)
 	{
 		CSttItems* pStateItems = new CSttItems;
 		pStateItems->m_strID = "state" + QString::number(i);
@@ -2699,6 +2927,10 @@ void QSttMacroParaEditViewState::ProcessGbAfterGenTemplate(CSttGuideBook *pSttGu
 	CString strMacroID;
 	strMacroID = GetMacroID();
 	CSttDevice *pDevice = pSttGuideBook->GetDevice();
+	if(pDevice == NULL) //chenling 20250117 ÐÞ¸ÄÊä³öÀàÐÍÉÁÍËÎÊÌâ
+	{
+		return; 
+	}
 	CSttItems* pRootItems=( CSttItems*)pDevice->FindByID (strMacroID/*_T("StateTest")*/);
 
 	if (pRootItems ==NULL)
@@ -2708,7 +2940,7 @@ void QSttMacroParaEditViewState::ProcessGbAfterGenTemplate(CSttGuideBook *pSttGu
 
 	CSttItemBase *pMacroTestState = (CSttItemBase *)pRootItems-> FindByID(strMacroID/*_T("StateTest")*/);
 	CSttItems *pNewRootItems = NULL;
-	int nRepeatNumbers = m_oStateTest.m_oStateParas.m_nRepeatNumbers;  
+	int nRepeatNumbers = m_pStateParas->m_nRepeatNumbers;  
 #ifdef USE_STT_STATE_EX_REPORT
 	if ((nRepeatNumbers > STT_STATE_REPORT_MAX_REPEAT_COUNT)
 		&& g_theTestCntrFrame->IsTestStarted())
@@ -2716,6 +2948,14 @@ void QSttMacroParaEditViewState::ProcessGbAfterGenTemplate(CSttGuideBook *pSttGu
 		nRepeatNumbers = STT_STATE_REPORT_MAX_REPEAT_COUNT; //dingxy 20240606 Ñ­»·´ÎÊý¹ý¶àÊ±Éú³ÉÄ£°åËÙ¶ÈÂýµ¼ÖÂ½çÃæ¿¨£¬Ñ­»·´ÎÊý¶àÊ±ÔÝÊ±²»¸üÐÂ±¨¸æ
 	}
 #endif
+
+#ifdef _PSX_QT_LINUX_
+	if (nRepeatNumbers > STT_STATE_REPORT_MAX_REPEAT_COUNT)
+	{
+		nRepeatNumbers = STT_STATE_REPORT_MAX_REPEAT_COUNT;
+	}
+#endif
+
 	for (long k = 1; k <= nRepeatNumbers; k++)
 	{
 		pNewRootItems = (CSttItems*)pRootItems->CloneEx();
@@ -2761,8 +3001,8 @@ void QSttMacroParaEditViewState::UpdateReportFile()
 		return;
 	}
 
-	int nRepeatNumbers = m_oStateTest.m_oStateParas.m_nRepeatNumbers;  //Ñ­»·´ÎÊý²ÎÊý
-	int nStateCount = m_oStateTest.m_oStateParas.m_nStateNumbers;
+	int nRepeatNumbers = m_pStateParas->m_nRepeatNumbers;  //Ñ­»·´ÎÊý²ÎÊý
+	int nStateCount = m_pStateParas->m_nStateNumbers;
 
 	if (((nStateCount > STT_SINGLE_STATE_MAX_REPORT_COUNT)
 		|| (nStateCount * nRepeatNumbers > STT_STATE_REPORT_TOTAL_STATE_NUM))
@@ -2778,59 +3018,65 @@ void QSttMacroParaEditViewState::UpdateReportFile()
 #endif
 }
 
-void QSttMacroParaEditViewState::ProcessRptAfterGenTemplate()//QSttReportViewHtml *pSttReportViewHtml)
-{
-	//»ñµÃÏîÄ¿µÄ±¨¸æÊý¾ÝstrReport¡¾³õÊ¼»¯µÄÊ±ºò£¬Ã¿¸öÊý¾Ý¶¼ÊÇÒ»ÑùµÄ¡¿
-	char *strReport = NULL,*strNewReport = NULL;
-	long nLen = 0;
-	CString strMacroID = g_pTheSttTestApp->m_pTestMacroUI->m_strID;
-	nLen = GetMacroItemsXml(strMacroID, &strReport);
-	///*g_theTestCntrFrame->*/GetMacroItemsXml(&strReport, nLen);
-
-	CString strItemID;
-	int nRepeatNumbers = m_oStateTest.m_oStateParas.m_nRepeatNumbers;  //Ñ­»·´ÎÊý²ÎÊý
-	long nRepeatIndex = 0;
-
-	UpdateReportFile();
-
-#ifdef USE_STT_STATE_EX_REPORT
-	if ((nRepeatNumbers > STT_STATE_REPORT_MAX_REPEAT_COUNT)
-		&& g_theTestCntrFrame->IsTestStarted())
-	{
-		nRepeatNumbers = STT_STATE_REPORT_MAX_REPEAT_COUNT;
-	}
-#endif
-
-	for (nRepeatIndex = 0; nRepeatIndex< nRepeatNumbers;nRepeatIndex++)
-	{
-		strItemID.Format("StateTest%d", nRepeatIndex+2); 
-		//pSttReportViewHtml->OpenRptFileData(g_pTheSttTestApp->m_pTestMacroUI->m_strReportFile,"",strItemID);
-		strNewReport = new char[nLen+20];
-		memset(strNewReport,0,nLen+20);
-		memcpy(strNewReport,strReport,nLen);
-        //pSttReportViewHtml->AddInsertCmd(g_pTheSttTestApp->m_pTestMacroUI,"", strItemID, strNewReport, FALSE);
-		//pSttReportViewHtml->InsertRptHtml("", strItemID, strNewReport);
-
-		strNewReport = new char[nLen+20];
-		memset(strNewReport,0,nLen+20);
-		memcpy(strNewReport,strReport,nLen);
-		//¸ù¾Ý±¨¸æÊý¾Ý¸üÐÂÃ¿¸ö×´Ì¬ÐòÁÐµÄ×´Ì¬Êý¡¾±¨¸æÄ£°å£¬Ä¬ÈÏ×´Ì¬ÊýÊÇ20¸ö£¬ÐèÒª¸ù¾ÝÉèÖÃµÄ×´Ì¬ÊýÉ¾³ý¶àÓàµÄ×´Ì¬±¨¸æ¡¿
-        //pSttReportViewHtml->AddUpdateCmd(g_pTheSttTestApp->m_pTestMacroUI, "", strItemID, strNewReport, FALSE);
-		//pSttReportViewHtml->UpdateMacroTestReport("", strItemID,strNewReport);
-	}
-
-	for (;nRepeatIndex < m_nRepeatNum_GenerateRpt;nRepeatIndex++)
-	{
-		strItemID.Format("StateTest%d", nRepeatIndex+2); 
+//void QSttMacroParaEditViewState::ProcessRptAfterGenTemplate(QSttReportViewHtml *pSttReportViewHtml)
+//{
+//	//»ñµÃÏîÄ¿µÄ±¨¸æÊý¾ÝstrReport¡¾³õÊ¼»¯µÄÊ±ºò£¬Ã¿¸öÊý¾Ý¶¼ÊÇÒ»ÑùµÄ¡¿
+//	char *strReport = NULL,*strNewReport = NULL;
+//	long nLen = 0;
+//	CString strMacroID = g_pTheSttTestApp->m_pTestMacroUI->m_strID;
+//	nLen = GetMacroItemsXml(strMacroID, &strReport);
+//	///*g_theTestCntrFrame->*/GetMacroItemsXml(&strReport, nLen);
+//
+//	CString strItemID;
+//	int nRepeatNumbers = m_pStateParas->m_nRepeatNumbers;  //Ñ­»·´ÎÊý²ÎÊý
+//	long nRepeatIndex = 0;
+//
+//	UpdateReportFile();
+//
+//#ifdef USE_STT_STATE_EX_REPORT
+//	if ((nRepeatNumbers > STT_STATE_REPORT_MAX_REPEAT_COUNT)
+//		&& g_theTestCntrFrame->IsTestStarted())
+//	{
+//		nRepeatNumbers = STT_STATE_REPORT_MAX_REPEAT_COUNT;
+//	}
+//#endif
+//
+//#ifdef _PSX_QT_LINUX_
+//	if (nRepeatNumbers > STT_STATE_REPORT_MAX_REPEAT_COUNT)
+//	{
+//		nRepeatNumbers = STT_STATE_REPORT_MAX_REPEAT_COUNT;
+//	}
+//#endif
+//	for (nRepeatIndex = 0; nRepeatIndex< nRepeatNumbers;nRepeatIndex++)
+//	{
+//		strItemID.Format("StateTest%d", nRepeatIndex+2);
+//		//pSttReportViewHtml->OpenRptFileData(g_pTheSttTestApp->m_pTestMacroUI->m_strReportFile,"",strItemID);
+//		strNewReport = new char[nLen+20];
+//		memset(strNewReport,0,nLen+20);
+//		memcpy(strNewReport,strReport,nLen);
+//		pSttReportViewHtml->AddInsertCmd(g_pTheSttTestApp->m_pTestMacroUI,"", strItemID, strNewReport, FALSE);
+//		//pSttReportViewHtml->InsertRptHtml("", strItemID, strNewReport);
+//
+//		strNewReport = new char[nLen+20];
+//		memset(strNewReport,0,nLen+20);
+//		memcpy(strNewReport,strReport,nLen);
+//		//¸ù¾Ý±¨¸æÊý¾Ý¸üÐÂÃ¿¸ö×´Ì¬ÐòÁÐµÄ×´Ì¬Êý¡¾±¨¸æÄ£°å£¬Ä¬ÈÏ×´Ì¬ÊýÊÇ20¸ö£¬ÐèÒª¸ù¾ÝÉèÖÃµÄ×´Ì¬ÊýÉ¾³ý¶àÓàµÄ×´Ì¬±¨¸æ¡¿
+//		pSttReportViewHtml->AddUpdateCmd(g_pTheSttTestApp->m_pTestMacroUI, "", strItemID, strNewReport, FALSE);
+//		//pSttReportViewHtml->UpdateMacroTestReport("", strItemID,strNewReport);
+//	}
+//
+//	for (;nRepeatIndex < m_nRepeatNum_GenerateRpt;nRepeatIndex++)
+//	{
+//		strItemID.Format("StateTest%d", nRepeatIndex+2);
 //		pSttReportViewHtml->DeleteRptHtml("",strItemID);
-	}
-
-	m_nRepeatNum_GenerateRpt = nRepeatNumbers;
-
-	delete strReport;
-
-	//pSttReportViewHtml->ExcuteNextCmd();
-}
+//	}
+//
+//	m_nRepeatNum_GenerateRpt = nRepeatNumbers;
+//
+//	delete strReport;
+//
+//	//pSttReportViewHtml->ExcuteNextCmd();
+//}
 
 CString QSttMacroParaEditViewState::ProcessItemID(const CString & strItemID,long nLoopIndex)
 {
@@ -2854,6 +3100,31 @@ CString QSttMacroParaEditViewState::ProcessItemID(const CString & strItemID,long
 	}
 
 	return strNewID;
+}
+
+void QSttMacroParaEditViewState::UpdateDCParasByCurrModulePower(BOOL bCurrModulePowerHigh)
+{
+	UpdateDCCheckBoxUI(bCurrModulePowerHigh);
+	m_pDC->setChecked(m_pStatePara->m_bDC);
+	m_pParaTab->m_pUIParaWidget->setMaxMinAndEDVal();
+	m_pParaTab->m_pUIParaWidget->DCStateChanged(P_Common,m_pStatePara->m_bDC);
+
+	m_pParaTab->m_pHarmParaWidget->setMaxMinAndEDVal();
+	m_pParaTab->m_pHarmParaWidget->DCStateChanged(P_Harm,m_pStatePara->m_bDC);
+}
+
+void QSttMacroParaEditViewState::UpdateDCCheckBoxUI(BOOL bCurrModulePowerHigh)
+{
+	if (bCurrModulePowerHigh)
+	{
+		if (m_pStatePara->m_bDC)
+		{
+			m_pStatePara->m_bDC = FALSE;
+		}
+		m_pDC->setDisabled(true);
+	}
+	else
+		m_pDC->setDisabled(false);
 }
 
 BOOL Global_SetSvAbnormalData(CIecCfg92Data* pIecCfgSmvData,tmt_StatePara *pStatePara)
@@ -2989,7 +3260,7 @@ CIecCfg92Data* Global_GetSMVDataByIndex(int nGroupIndex)
 // 	pItems->m_nTkID = 65535;
 // 	pRoot->AddNewChild(pItems);
 // 
-// 	for (int i = 0; i < m_oStateTest.m_oStateParas.m_nStateNumbers; i++)
+// 	for (int i = 0; i < m_pStateParas->m_nStateNumbers; i++)
 // 	{
 // 		CSttItems* pChileItems = new CSttItems;
 // 		pChileItems->m_strID = "state" + QString::number(i);

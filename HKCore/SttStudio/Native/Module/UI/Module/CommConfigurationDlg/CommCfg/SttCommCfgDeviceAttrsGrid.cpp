@@ -3,13 +3,13 @@
 #include "../../../../XLangResource_Native.h"
 #include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../ScrollCtrl/ScrollComboBox.h"
-
+#include <QHBoxLayout>
 extern QFont *g_pSttGlobalFont;
 
 SttCCommCfgDeviceAttrsGrid::SttCCommCfgDeviceAttrsGrid(QWidget* pparent):QExBaseListGridBase(pparent)
 {
 	m_bRunning = FALSE;
-
+	m_pBroadCastCheck = NULL;
 	//horizontalHeader()->setFont(/*oFont*/*g_pSttGlobalFont);
 	setFont(*g_pSttGlobalFont);
 }
@@ -67,7 +67,7 @@ void SttCCommCfgDeviceAttrsGrid::ShowData(CExBaseObject *pData, int& nRow, BOOL 
 	Show_StaticString(pData,nRow,0,&strVlueID); 
 	//Show_StaticString(pData,nRow,1,&pDvmValue->m_strValue); 
 	//Show_String(pData,nRow,1,&pDvmValue->m_strValue);
-	if (nRow == 0)
+	if (nRow == 0 && pDvmValue->m_strID == _T("DeviceAddr"))
 	{
 		int nDevAdr = (int)(pDvmValue->m_strValue.toInt());
 		CString strDevAddr;
@@ -77,7 +77,22 @@ void SttCCommCfgDeviceAttrsGrid::ShowData(CExBaseObject *pData, int& nRow, BOOL 
 		//Show_StaticString(pData, nRow, 1, &strDevAddr);
 		//Show_Hex(pData,nRow,1,(DWORD*)(&nDevAdr),2,TRUE,TRUE,EndEditCell_Long);
 		Show_String(pData, nRow, 1, &strDevAddr, EndEditCellDevAddr_String);
-	}else{
+	}
+	else if (pDvmValue->m_strID == _T("use-broadcast"))
+	{
+		QWidget *pWidget = new QWidget();
+		m_pBroadCastCheck = new QSttCheckBox();
+		QHBoxLayout *layout = new QHBoxLayout(pWidget);
+		layout->addWidget(m_pBroadCastCheck);
+		layout->setAlignment(Qt::AlignCenter); 
+		layout->setContentsMargins(0, 0, 0, 0); 
+		pWidget->setLayout(layout);
+		setCellWidget(nRow, 1, pWidget); 
+		m_pBroadCastCheck->setChecked(pDvmValue->m_strValue.toInt());
+		connect(m_pBroadCastCheck, SIGNAL(toggled(bool)), this, SLOT(slot_BroadCastStateChanged(bool)));
+	}
+	else
+	{
 		Show_String(pData, nRow, 1, &pDvmValue->m_strValue, EndEditCell_String);
 		//Show_StaticString(pData, nRow, 1, &pDvmValue->m_strValue);
 	}
@@ -195,7 +210,7 @@ void SttCCommCfgDeviceAttrsGrid::EndEditCell_String(int nRow, int nCol, QGV_ITEM
 		return;
 	}
 	CString strID = pValue->m_strID;
-	if ((strID == CString("local-ip")) || (strID == CString("remote-ip")) || (strID == "SubnetMask"))
+	if ((strID == CString("local-ip")) || (strID == CString("remote-ip")) || (strID == "SubnetMask") || (strID == "multicast-ip"))
 	{
 		BOOL isValidIp = pGridCrt->CheckIPValid(pCell->text());
 		if (!isValidIp)
@@ -228,7 +243,10 @@ void SttCCommCfgDeviceAttrsGrid::EndEditCell_String(int nRow, int nCol, QGV_ITEM
 		if (pParentData != NULL)
 		{
 			CDvmValue *pVlSubnet = (CDvmValue*)pParentData->FindByID("SubnetMask");
+            if(pVlSubnet)
+            {
 			CString strSubnet = pVlSubnet->m_strValue;
+            }
 			//pGridCrt->ModifyTestDeviceIP(pCell->text(), strSubnet);
 		}
 	}
@@ -298,6 +316,14 @@ CString SttCCommCfgDeviceAttrsGrid::TranslateID(CString strID)
 	else if (strID == CString("SubnetMask"))
 	{
 		return CString("子网掩码");
+	}
+	else if (strID == CString("multicast-ip"))
+	{
+		return CString("组播地址");
+	}
+	else if (strID == CString("use-broadcast"))
+	{
+		return CString("是否广播");
 	}
 	return strID;
 }
@@ -397,8 +423,6 @@ void SttCCommCfgDeviceAttrsGrid::InitData(CDvmData* pDataTable)
 	connect(pCbByteSize, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(slot_CbByteSizeChanged(const QString &)));
 	connect(pCbStopBit, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(slot_CbStopBitChanged(const QString &)));
 	connect(pCbParity, SIGNAL(currentIndexChanged(int)), this, SLOT(slot_CbParityChanged(int)));
-
-	
 }
 
 void SttCCommCfgDeviceAttrsGrid::slot_CbPortNumChanged(const QString& strText)
@@ -457,6 +481,24 @@ void SttCCommCfgDeviceAttrsGrid::slot_CbParityChanged(int index)
 	pValue->m_strValue = resValue;
 	//EmitNetTableChange();
 	emit sig_ChangedSerialTable();
+}
+
+void SttCCommCfgDeviceAttrsGrid::slot_BroadCastStateChanged(bool checked)
+{
+	CDvmData *pData = (CDvmData*)GetDatas();
+	if (pData == NULL)
+	{
+		return;
+	}
+	CDvmValue *pValue = (CDvmValue*)pData->FindByID("use-broadcast");
+	CString resValue = _T("0");
+	if (checked)
+	{
+		resValue = _T("1");
+	}
+	pValue->m_strValue = resValue;
+
+	emit sig_ChangedNetTable();
 }
 
 bool SttCCommCfgDeviceAttrsGrid::eventFilter(QObject *obj, QEvent *event)

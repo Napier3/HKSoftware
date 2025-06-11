@@ -29,7 +29,9 @@
 #define QT_GVET_MACEDIT			0x04000000  
 #define QT_GVET_BINARYEDIT			0x08000000  //zhouhj 20201208增加用于二进制显示，如61850数据对象中的品质位
 
-
+//2024-12-05 xueyangfan 国际版移植
+#define QT_GRID_COMBOBOX_StringType_DataTypeID              0//表格下拉框控件数据类型为字符串时,使用ID赋值
+#define QT_GRID_COMBOBOX_StringType_DataTypeIndex           1//表格下拉框控件数据类型为字符串时,使用Index赋值
 
 class QGV_ITEM;
 class QExBaseListGridBase;
@@ -50,6 +52,7 @@ public:
 	 unsigned long   nDataType;   //data type
 	 unsigned long    dwValue;     //value ref
 	 int      iMaxLen;     //数据的最大长度 用于Hex 0x4000代表长度为2 即字节长度
+	 unsigned long      nReserved;  //zhouhj 2024.6.26 新增保留使用
 	GRID_CELL_EDIT_FUNC *m_pEditFunc; //edit function
 private:
 	

@@ -9,7 +9,7 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include "../../../SttTest/Common/Impedance/tmt_cb_operate_test.h"
-
+#include "../../Controls/SettingCtrls/QSettingLineEdit.h"
 class CBOperateCommonParasDlg : public QDialog
 {
 	Q_OBJECT
@@ -70,8 +70,8 @@ public:
 	QLineEdit *m_pEditAfterOpenTime;   //开关跳开后持续时间(s)
 	QLineEdit *m_pEditRecloseTime;     //重合持续时间(s)
 	QLineEdit *m_pEditAfterAccTime;    //后加速开关跳开后持续时间(s)
-	QLineEdit *m_pEditKlKr;			   //零序补偿系数RMRL
-	QLineEdit *m_pEditAngKx;           //零序补偿系数XMXL
+    QSettingLineEdit *m_pEditKlKr;			   //零序补偿系数RMRL
+    QSettingLineEdit *m_pEditAngKx;           //零序补偿系数XMXL
 	QLineEdit *m_pEditZs;              //系统阻抗(Ω)
 	QLineEdit *m_pEditZsPh;            //系统阻抗角(°)
 	QLineEdit *m_pEditBrkBreakTime;    //分闸时间（s）
@@ -124,8 +124,12 @@ public:
 	QGridLayout *m_pBinBoutLayout;
 	QGridLayout *m_pGeneralParasLayout;
 	QVBoxLayout *m_pMainLayout;
+	QVBoxLayout *m_pLayout;
 	QHBoxLayout *m_pBtnResultAssessLayout;
 	QHBoxLayout *m_pBtnCommonParasLayout;
+
+	QSpacerItem *m_pSpacerleft;
+	QSpacerItem *m_pSpacerright;
 
 	QSpacerItem *m_pSpacerLeft;
 	QSpacerItem *m_pSpacerRight;

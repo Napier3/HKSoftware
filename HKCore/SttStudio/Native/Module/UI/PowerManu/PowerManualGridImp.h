@@ -5,6 +5,8 @@
 #include "../Controls/SttTabWidget.h"
 #include "../../SttTest/Common/Power/tmt_power_manu_test.h"
 #include "../Module/ChannelParaSet/channelpowertable.h"
+#include "../../../Module/OSInterface/OSInterface.h"
+#include <QGridLayout>
 
 class QPowerManualGridImp : public QParaSetBase
 {
@@ -21,8 +23,8 @@ public:
 
 	void UpdateTables();
 
-	virtual void setUAmpMaxMinValue();
-	virtual void setIAmpMaxMinValue();
+	virtual void setUAmpMaxMinValue(bool bCanUpdateTable);
+	virtual void setIAmpMaxMinValue(bool bCanUpdateTable);
 	virtual void setUAmpEDValue(float fUEDVal);
 	virtual void setIAmpEDValue(float fIEDVal);
 
@@ -30,7 +32,7 @@ public:
 	virtual void setChannelTableItemValue_Sequence(QString str,float fstep,int valueFlag,int AddOrMinus);//序分量表格值改变  20230209
 
 	virtual void initUI(CSttTestResourceBase *pSttTestResource);
-	virtual void initData();
+	virtual void initData(bool bCanUpdateTable);
 	virtual void Release();
 
 	void UpdateValidTableDatas();
@@ -53,16 +55,19 @@ public:
 
 	plugin_type m_type;
 	tmt_channel *m_pArrUIVOL;
-	tmt_ChannelPower *m_pArrPOW;//add 20240610 wangtao
+	tmt_ChannelPower *m_pArrPOW;
 	bool m_bDC;
 	CSttTestResourceBase *m_pParaSetSttTestResource;
 	//int m_ndc_type;
 
+	float m_fpower[3];//add wangtao 20240816 新增视在功率成员变量用以限制最大最小值
+	float m_fMultAmpMax[MAX_VOLTAGE_COUNT];//add wangtao 20240828 通用实验-功率根据每个通道的功率限制对应电压大小
+	float m_fMultAmpMin[MAX_VOLTAGE_COUNT];
 private:
 	int *m_pnHarmIndex;
 
 };
 
-extern QFont *g_pSttGlobalFont; 
+extern QFont *g_pSttGlobalFont;
 
 #endif // QBasicTestParaSetImp_H

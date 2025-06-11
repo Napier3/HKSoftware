@@ -1,4 +1,5 @@
 #include "SttMacroParaEditViewMuTreeWidget.h"
+#include "../../XLangResource_Native.h"
 
 
 QSttMacroParaEditViewMuTreeWidget::QSttMacroParaEditViewMuTreeWidget()
@@ -50,13 +51,13 @@ void QSttMacroParaEditViewMuTreeWidget::InitTreeUI()
  	
 	
 	m_pAutomatedTestItem = NewMUItem(NULL,pTempData);
-	strItem = _T("合并单元自动测试");
+    strItem = _T("合并单元自动测试");
 	m_pAutomatedTestItem->setText(0,strItem);
 	m_pAutomatedTestItem->setCheckState(0,Qt::Checked);  
     m_pTreeWidget->addTopLevelItem(m_pAutomatedTestItem); 
 	
 	m_pAccuracyTestItem = NewMUItem(m_pAutomatedTestItem,pTempData);
-	strItem = _T("精度测试");
+    strItem = _T("精度测试");
 	m_pAccuracyTestItem->setText(0,strItem);
 	m_pAccuracyTestItem->setCheckState(0,Qt::Checked);  
     m_pAutomatedTestItem->addChild(m_pAccuracyTestItem);
@@ -110,25 +111,25 @@ void QSttMacroParaEditViewMuTreeWidget::InitTreeUI()
 	m_pAccuracyTestItem->addChild(m_pPercentItem_150);
 
 	m_pZeroDrifTestItem = NewMUItem(m_pAutomatedTestItem,pTempData);
-	strItem = _T("零漂测试");
+    strItem = _T("零漂测试");
 	m_pZeroDrifTestItem->setText(0,strItem);
 	m_pZeroDrifTestItem->setCheckState(0,Qt::Unchecked);  
     m_pAutomatedTestItem->addChild(m_pZeroDrifTestItem);
 
 	m_pFirWeekWaveTestItem = NewMUItem(m_pAutomatedTestItem,pTempData);
-	strItem = _T("首周波测试");
+    strItem = _T("首周波测试");
 	m_pFirWeekWaveTestItem->setText(0,strItem);
 	m_pFirWeekWaveTestItem->setCheckState(0,Qt::Unchecked);  
     m_pAutomatedTestItem->addChild(m_pFirWeekWaveTestItem);
 
 	m_pTimeTestItem = NewMUItem(m_pAutomatedTestItem,pTempData);
-	strItem = _T("时间测试");
+    strItem = _T("时间测试");
 	m_pTimeTestItem->setText(0,strItem);
 	m_pTimeTestItem->setCheckState(0,Qt::Checked);  
     m_pAutomatedTestItem->addChild(m_pTimeTestItem);
 
 	m_pTimAccuracyItem = NewMUItem(m_pTimeTestItem,pTempData);
-	strItem = _T("对时精度");
+    strItem = _T("对时精度");
 	m_pTimAccuracyItem->setText(0,strItem);
 	m_pTimAccuracyItem->setCheckState(0,Qt::Unchecked);  
 	m_pTimeTestItem->addChild(m_pTimAccuracyItem);

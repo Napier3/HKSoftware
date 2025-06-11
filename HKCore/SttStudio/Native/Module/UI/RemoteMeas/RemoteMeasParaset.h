@@ -23,9 +23,9 @@ public:
 		,tmt_channel *pArrUIVOL,tmt_channel *pArrUICUR,bool bDC = false);
 
 	void setData(tmt_channel *pArrUIVOL,tmt_channel *pArrUICUR);
-	void setMaxMinAndEDVal();
-	void setUAmpMaxMinValue();
-	void setIAmpMaxMinValue();
+	void setMaxMinAndEDVal(bool bCanUpdateTable=true);
+	void setUAmpMaxMinValue(bool bCanUpdateTable);
+	void setIAmpMaxMinValue(bool bCanUpdateTable);
 	virtual void setUAmpEDValue(float fUEDVal);
 	virtual void setIAmpEDValue(float fIEDVal);
 

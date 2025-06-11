@@ -11,8 +11,8 @@
 #include <QTimer>
 #include "../Module/CommonCtrl_QT/QFloatLineEdit.h"
 #include "../../SttTest/Common/tmt_manu_test.h"
-#include "../../Module/DataMngr/DvmDataset.h"
-#include "../../Module/DataMngr/DvmValues.h"
+#include "../../../Module/DataMngr/DvmDataset.h"
+#include "../../../Module/DataMngr/DvmValues.h"
 #include "../Controls/SttGroupBox.h"
 class QSttMUTimeTestWidget : public QWidget
 {
@@ -25,6 +25,7 @@ public:
 	void InitUI();
 	void UpdateUI();
 	void InitData(tmt_manual_test *pManualTest);
+	void InitSttMUTimeTestWidget();//dingxy 20240919 优化启动效率
 	virtual void ShowReport(CDvmValues *pValues);
 	//2023.10.17 zhouhj 删除
 //	void UpdateMUTimeAccurRlt_PPS(CDvmDataset *pTimeRltDataset);
@@ -96,7 +97,10 @@ private slots:
 	void slot_OnDelayCompEditChanged();
 	void slot_AssistTimer();
 	void slot_ResultUpdateTimer();
-	
+//dingxy 20240919 优化启动效率
+protected:
+	bool m_bHasInitFinished;
+	virtual void showEvent(QShowEvent *event);
 };
 
 extern QFont *g_pSttGlobalFont;  

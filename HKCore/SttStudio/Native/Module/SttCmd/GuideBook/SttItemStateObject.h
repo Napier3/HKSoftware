@@ -1,7 +1,7 @@
 #ifndef CSTTITEMSTATEOBJECT_H
 #define CSTTITEMSTATEOBJECT_H
 
-#include "../../../../Module/BaseClass/ExBaseObject.h"
+#include "ExBaseObject.h"
 #include "../SttParas.h"
 
 class CSttItemStateObject : public CExBaseObject

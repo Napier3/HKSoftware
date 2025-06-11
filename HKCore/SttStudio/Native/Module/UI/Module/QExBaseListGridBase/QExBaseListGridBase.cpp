@@ -1,6 +1,6 @@
 #include "QExBaseListGridBase.h"
 #include "../../../XLangResource_Native.h"
-#include "../../Module/API/MathApi.h"
+#include "../../../Module/API/MathApi.h"
 #include <QHeaderView>
 #include <QLineEdit>
 
@@ -1965,4 +1965,24 @@ void QExBaseListGridBase::EndEditCell_DataType_Val (int nRow, int nCol,QGV_ITEM 
 // 	}
 }
 
+//¹ú¼Ê°æÒÆÖ²
+QGV_ITEM * QExBaseListGridBase::NewGVItem(const CString &sText, QColor oTextColor)
+{
+	QGV_ITEM *pGV_ITEM = new QGV_ITEM(sText);
+	pGV_ITEM->setTextColor(oTextColor);
+	return pGV_ITEM;
+}
 
+void QExBaseListGridBase::SetItemText(QGV_ITEM *pItem, const QString &strText)
+{
+	if(pItem == NULL)
+		return ;
+
+	pItem->setText(strText);
+}
+
+
+void Stt_Global_SettingSelect(QObject *parent, const CString &sFormat, const CString &sName)
+{
+
+}

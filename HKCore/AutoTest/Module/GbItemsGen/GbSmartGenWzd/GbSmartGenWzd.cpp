@@ -1,7 +1,7 @@
-#include "StdAfx.h"
+#include "stdafx.h".h"
 #include "GbSmartGenWzd.h"
 #include "../../../../Module/API/GlobalConfigApi.h"
-#include "../../../../SttStudio/Module/SttGlobalDef.h"
+#include "../Module/SttGlobalDef.h"
 #include "../../../../IotProtoServer/Module/SttPxCommCmdDef.h"
 #include "GbWzdItemPaste.h"
 

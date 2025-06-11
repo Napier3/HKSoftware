@@ -2,8 +2,8 @@
 
 QStateMonitorBinBout::QStateMonitorBinBout(QWidget* parent)
 {
-	UpdateYTtile(tr(" "), TRUE);
-	UpdateYTtile(tr(" "), FALSE);
+	UpdateYTtile(tr(" "), 9, TRUE);
+	UpdateYTtile(tr(" "), 9, FALSE);
 	UpdateXScale(0,30);
 	UpdateYScale(-80,120);
 }
@@ -121,6 +121,11 @@ void QStateMonitorBinBout::InitBinBoutPoint(double fTime)
 
 void QStateMonitorBinBout::setBinBoutData(long *pBinData, long nBinNum, long *pBoutData, long nBoutNum)
 {
+	m_oPreUpdateList.clear();
+	m_oPreUpdateList.clear();
+	m_oUpdateList.clear();
+	m_oCurveList.clear();
+
 	m_pBinData = pBinData;
 	m_nBinNum = nBinNum;
 	m_pBoutData = pBoutData;
@@ -156,8 +161,8 @@ void QStateMonitorBinBout::setBinBoutData(long *pBinData, long nBinNum, long *pB
 	QwtScaleDiv scaleDiv(m_nBinNum + m_nBoutNum + 1, 0, ticks);
 	setAxisScaleDiv(QwtPlot::yLeft, scaleDiv);
 	setAxisScaleDiv(QwtPlot::yRight, scaleDiv);
-	setAxisScaleDraw(QwtPlot::yLeft,new BinBoutYScaleDraw());
-	setAxisScaleDraw(QwtPlot::yRight,new BinBoutYScaleDraw());
+	setAxisScaleDraw(QwtPlot::yLeft,new BinBoutYScaleDraw(true));
+	setAxisScaleDraw(QwtPlot::yRight,new BinBoutYScaleDraw(false));
 
 	InitCurve();
 }

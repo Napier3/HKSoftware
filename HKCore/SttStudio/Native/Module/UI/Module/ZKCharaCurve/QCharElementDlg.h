@@ -10,7 +10,7 @@
 #include <QLabel>
 #include <QRadioButton>
 // #include "../../Module/TestWinFrame/testwinbase.h"
-#include "../../AutoTest/Module/Characteristic/Characteristic.h"
+#include "../../../AutoTest/Module/Characteristic/Characteristic.h"
 
 //20230601 zhouhj
 #define STT_CHAR_ELEMENT_TYPE_LINED                               0

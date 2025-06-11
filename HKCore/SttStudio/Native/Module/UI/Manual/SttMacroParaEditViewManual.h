@@ -1,15 +1,12 @@
 #ifndef STTMACROPARAEDITVIEWMANUAL_H
 #define STTMACROPARAEDITVIEWMANUAL_H
 
-#include "../Interface/SttMacroParaEditViewOriginal.h"
 #include "../Controls/SttLineEdit.h"
 #include "../Module/GooseParaWidget/qgooseparawidget.h"
-#include "ManualView_Paras.h"
-#include "ManualView_IV.h"
 #include "QSttMUParasWidget.h"
 #include "QSttMUTimeTestWidget.h"
 
-//#include "../../Module/SttTest/Common/tmt_state_test.h"
+//#include "../Module/SttTest/Common/tmt_state_test.h"
 
 #include "QSttManualBinBoutDlg.h"
 #include "../Module/CommonCtrl_QT/SttDiffCurrCalDlg.h"
@@ -27,6 +24,7 @@
 #include "../Module/ScrollCtrl/ScrollComboBox.h"
 #include "ManualEstimateDlg.h"
 #include "../Controls/SttGroupBox.h"
+#include "SttMacroParaEditViewManualBase.h"
 
 namespace Ui {
 class QSttMacroParaEditViewManual;
@@ -35,15 +33,16 @@ class QSttMacroParaEditViewManual;
 #define FILE_MANUTEST		"ManualTest"
 #define POSTFIX_MANUTEST    "mntxml"
 
-class QSttMacroParaEditViewManual : public CSttMacroParaEditViewOriginal
+class QSttMacroParaEditViewManual : public QSttMacroParaEditViewManualBase
 {
     Q_OBJECT
 
 public:
     Ui::QSttMacroParaEditViewManual *m_pManualTest_UI;
 
-	QManualView_Paras m_oParas;
-	QManualView_IV m_oIV;
+	//部分成员变量移至QSttMacroParaEditViewManualBase
+// 	QManualView_Paras m_oParas;
+// 	QManualView_IV m_oIV;
 // 	QSttMUParasWidget *m_pSttMUParasWidget;
 	QSttMUTimeTestWidget *m_pSttMUTimeTestWidget;
 
@@ -52,15 +51,17 @@ public:
 
 	ShortCalcuPara m_ShortCalcuPara; 
 	tmt_manual_test m_oManualTest;
-	tmt_ManualParas *m_pManualParas;
+// 	tmt_ManualParas *m_pManualParas;
 	Stt_DiffCurrCalParas m_oDiffCurrCalParas;
 
-	bool m_bIsChanging;//判断+和-按钮所造成的更改是否已经完成,未完成时不允许发送下一次SetItemPara
+// 	bool m_bIsChanging;//判断+和-按钮所造成的更改是否已经完成,未完成时不允许发送下一次SetItemPara
 
 	QGooseParaWidget* m_pGooseParaWidget;
 	QFT3OutParaWidget* m_pFT3OutParaWidget;
-	CString m_strCbbChannel;//通道选择
+// 	CString m_strCbbChannel;//通道选择
 
+	ExSwitchSet* m_pExBinParaWidget;		//扩展开入设置
+	ExSwitchSet* m_pExBoutParaWidget;		//扩展开出设置
 
 public:
 
@@ -122,8 +123,8 @@ public:
 	//test funciton - need delete
 
 	virtual void InitLanuage();
-	void CopyBinaryConfig(BOOL b=TRUE);
-	void InitBinStateOnStarting();
+	virtual void CopyBinaryConfig(BOOL b=TRUE);
+	virtual void InitBinStateOnStarting();
 	virtual void InitConnect();
 	virtual CSttTestResourceBase* CreateTestResource();
 	virtual void SerializeTestParas(CSttXmlSerializeBase *pMacroParas, PTMT_PARAS_HEAD pParas,
@@ -148,8 +149,8 @@ public:
 	virtual PTMT_PARAS_HEAD GetTestParas() { return &m_oManualTest;}
 	virtual char* GetMacroID(){ return "ManualTest"; }
 
-    void InitParasView();
-    void InitIVView();
+    virtual void InitParasView();
+    virtual void InitIVView();
 	void slot_SwitchStateChanged();
 
 	virtual void OnViewTestLink(BOOL b);
@@ -165,6 +166,11 @@ public:
 	void slot_edit_changed(QSttLineEdit* pEditLine, bool bIsNor = FALSE);
 
 	virtual void UpdateAuxDCEdit();//20240613 suyang 新增用于更新L336D 状态序列 通用 辅助直流编辑框 
+	virtual BOOL IsUseSecondParaSet();
+	virtual void UpdatePrimParaSetUI();//20240918 suyang 更新界面一次/二次值单位显示
+	virtual void SetPlotAcDcMaxMinValue();	
+	virtual CString GetMacroTestResultUnit();
+	virtual void UpdateDCParasByCurrModulePower(BOOL bCurrModulePowerHigh);
 
 	void AddGooseParaWidget(CIecCfgGoutDatas* pCfgGoutDatas);
 	void RemoveGooseParaWidget();
@@ -178,6 +184,16 @@ public:
 	bool ExistFT3OutParaWidget();
 
 	void UpdateHarmCheckComboxUI(BOOL bClearItems);
+	void UpdateDCCheckBoxUI(BOOL bCurrModulePowerHigh = FALSE);
+
+	void AddExBinParaWidget();
+	void RemoveExBinParaWidget();
+	void AddExBoutParaWidget();
+	void RemoveExBoutParaWidget();
+	void EnableBinParaWidget(bool b);
+	void EnableBoutParaWidget(bool b);
+	bool ExistExBinParaWidget();
+	bool ExistExBoutParaWidget();
 	//2023.10.17 zhouhj 删除
 //	void UpdateMUTimeAccurRlt_PPS();
 //	void UpdateMUTimeAccurRlt_PPS(CDvmDataset *pTimeRltDataset);
@@ -270,6 +286,7 @@ protected slots:
 	//2023.10.17 zhouhj 删除
 //	void slot_UpdateMUTimeAccurRlt_PPS();
     void slot_FT3DataChanged(); 
+	 void slot_BinBoutStateChanged();
 };
 
 extern QSttMacroParaEditViewManual* g_pManualTest;

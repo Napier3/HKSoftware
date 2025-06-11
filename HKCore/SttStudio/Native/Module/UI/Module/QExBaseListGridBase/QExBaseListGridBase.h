@@ -4,8 +4,8 @@
 #include <QTableWidget>
 #include <QStandardItemModel>
 #include <QFont>
-#include "ExBaseList.h"
-#include "../../Module/DataMngr/DataType.h"
+#include "../../../Module/BaseClass/ExBaseList.h"
+#include "../../../Module/DataMngr/DataType.h"
 
 #include "QGridDefine.h"
 #include "../ScrollCtrl/ScrollTableWidget.h"
@@ -213,6 +213,18 @@ public:
 	static void EndEditCell_Value(int nRow, int nCol,QGV_ITEM *pCell, QExBaseListGridBase *pGrid);
 	static void EndEditCell_DataType_Val(int nRow, int nCol,QGV_ITEM *pCell, QExBaseListGridBase *pGrid);
 
+	//20240708 huangliang   国际版移植
+	virtual QGV_ITEM * NewGVItem(const CString &sText, QColor oTextColor = Qt::black);// { return new QGV_ITEM(sText); }
+	virtual void SetItemText(QGV_ITEM *pItem, const QString &strText);	//更新值	
+	virtual BOOL IsAttachSettingItem(QGV_ITEM *pCell)
+	{
+#ifdef _PSX_IDE_QT_
+		(void)pCell;
+#endif
+		return FALSE;
+	}//当前单元格是否关联了定值
+	
+
 protected:
 	BOOL m_bHasConnectAll_SigSlot;
 	long m_nAdjustBeginCol;
@@ -388,4 +400,6 @@ protected slots:
 	virtual void slot_cellDoubleClicked(int row, int column);
 };
 
+
+void  Stt_Global_SettingSelect(QObject *parent, const CString &sFormat, const CString &sName);	//20240815 huangliang 添加参数
 #endif // QCHMAPSGRIDBASE_H

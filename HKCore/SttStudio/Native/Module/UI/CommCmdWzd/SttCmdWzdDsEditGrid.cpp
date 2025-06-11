@@ -229,7 +229,11 @@ void CSttCmdWzdDsEditGrid::FillCmdValues()
 	{
 		CDvmData* pDvmData = (CDvmData*)m_pDatas->GetNext(pos);
 		CDvmValue* pDvmValue = pDvmData->GetDataValue();
-		if(pDvmValue->m_strDataType == "BOOL")
+		
+		if (pDvmValue == NULL)
+		{
+			return;
+		}		if(pDvmValue->m_strDataType == "BOOL")
 		{
 			CValue* pValue = (CValue*)m_pValues->FindByID(pDvmData->m_strID);
 			if (!pValue)

@@ -7,8 +7,9 @@
 
 #include "stdafx.h"
 #include "SttSystemConfig.h"
-#include "../../Module/API/GlobalConfigApi.h"
-#include "../../Module/API/FileApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/FileApi.h"
+#include "../../../Module/DataMngr/DvmDataset.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -281,4 +282,40 @@ long CSttSystemConfig::GetSelSysPata()
 {
 	CSttDevConfig* pSttDevConfig = GetSttDevConfig();
 	return pSttDevConfig->m_nSel_Sys_Pata;
+}
+
+BOOL CSttSystemConfig::IsAssist()
+{
+	CSttDevConfig* pSttDevConfig = GetSttDevConfig();
+	return (pSttDevConfig->m_nIsAssist == 1);
+}
+
+void CSttSystemConfig::SetAssist(const long &nAssist)
+{
+	CSttDevConfig* pSttDevConfig = GetSttDevConfig();
+	pSttDevConfig->m_nIsAssist = nAssist;
+}
+
+BOOL CSttSystemConfig::GetCurrDevSN(CString &strSN,BOOL bOpenCfg)
+{
+	if ((GetCount()<=0)||(bOpenCfg))
+	{
+		OpenSystemConfig();
+	}
+
+	CString strModel,strPath;
+	strModel = GetDevModel();
+	strPath = _P_GetDBPath();
+	strPath.AppendFormat(_T("Device/%s/"),strModel.GetString());
+	strPath.AppendFormat(_T("%s.xml"),strModel.GetString());
+
+	if (!IsFileExist(strPath))//如果记录全部SN的设备文件不存在，则返回空
+	{
+		return FALSE;
+	}
+
+	CDvmDataset oDataset;
+	oDataset.OpenXmlFile(strPath,CDataMngrXmlRWKeys::g_pXmlKeys);
+	strSN = oDataset.m_strID;
+	return TRUE;
 }

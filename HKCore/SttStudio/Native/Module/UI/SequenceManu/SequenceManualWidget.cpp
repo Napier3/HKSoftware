@@ -2,7 +2,7 @@
 #include "SequenceManualWidget.h"
 
 #include "../Module/CommonMethod/commonMethod.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "SttMacroParaEditViewSequenceManu.h"
 #include "../SttTestCntrFrameBase.h"
 #include "../Module/XLangResource_Native.h"
@@ -77,7 +77,7 @@ void QSequenceManualWidget::InitUI()
 	m_pChangedType_ComboBox = new QScrollComboBox(this);
 
 	//strText = _T("开出量");
-	m_pBoutGroupBox = new QGroupBox(g_sLangTxt_Native_Bout,this);
+	m_pBoutGroupBox = new QGroupBox(/*g_sLangTxt_Native_Bout*/g_sLangTxt_OutputValue,this);
 	//2023/10/9 - wjs 开出量宽度改小，使其他按钮内容可以显示全
 	//m_pBoutGroupBox->setFixedWidth(110);
 	//2023/10/9 - wjs 设置为可动态调整
@@ -386,7 +386,7 @@ void QSequenceManualWidget::InitGradientVarList()
 	while(pos)
 	{
 		pCurTypeValue = (CDataTypeValue *)m_oGradientChs.GetNext(pos);
-		m_pChSelect_ComboBox->addItem(pCurTypeValue->m_strID.GetString());
+		m_pChSelect_ComboBox->addItem(/*pCurTypeValue->m_strID*/pCurTypeValue->m_strName.GetString());//dingxy 20250122 下拉通道添加名称
 	}
 }
 

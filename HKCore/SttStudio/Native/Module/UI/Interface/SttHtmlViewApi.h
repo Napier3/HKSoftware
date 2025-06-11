@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../../Module/DataMngr/DataGroup.h"
-#include "../../Module/DataMngr/DvmDataset.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/DataMngr/DvmDataset.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../Config/MacroTestUI/SttMacroTestUI_TestMacroUIs.h"
 
 CString stt_ui_GetHtmlFile(const CString &strHtmlFileName);

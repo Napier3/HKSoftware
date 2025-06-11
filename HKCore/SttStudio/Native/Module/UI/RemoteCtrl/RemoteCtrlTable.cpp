@@ -1,7 +1,7 @@
 #include "RemoteCtrlTable.h"
 #include <QHeaderView>
 #include "../../XLangResource_Native.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../SttTest/Common/tmt_test_paras_head.h"
 #include "../Module/CommonMethod/commonMethod.h"
 #include "SttMacroParaEditViewRemoteCtrl.h"
@@ -50,8 +50,8 @@ void QRemoteCtrlTable::InitUI()
 	pLeft->setVisible(false);
 
 	QHeaderView* pHeadTop =horizontalHeader();
-    pHeadTop->setSectionsClickable(false);
-    pHeadTop->setSectionsMovable(false);
+	pHeadTop->setSectionsClickable(false);
+	pHeadTop->setSectionsMovable(false);
 
 	QFont font1 = this->horizontalHeader()->font();
 	font1.setBold(true);

@@ -1479,7 +1479,7 @@ void stt_xml_serialize_statenUnI_pnv(tmt_StateResults *pResults,tmt_StateParas *
 
 #include"../../SttCmd/SttTestCmd.h"
 #include"tmt_state_test.h"
-#include"../../../../Module/API/GlobalConfigApi.h"
+#include"../../../Module/API/GlobalConfigApi.h"
 
 void stt_xml_serialize_write_StateTest()
 {

@@ -106,8 +106,8 @@ void CXLangResource_Native::RegisterLanguageResource()
 	rs_AddString(g_sLangID_Native_GooseDataSet, &g_sLangTxt_Native_GooseDataSet);
 	rs_AddString(g_sLangID_Native_GooseOutSet, &g_sLangTxt_Native_GooseOutSet);
 	rs_AddString(g_sLangID_Native_GooseInSet, &g_sLangTxt_Native_GooseInSet);
-	rs_AddString(g_sLangID_Native_Bin, &g_sLangTxt_Native_Bin);
-	rs_AddString(g_sLangID_Native_Bout, &g_sLangTxt_Native_Bout);
+//	rs_AddString(g_sLangID_Native_Bin, &g_sLangTxt_Native_Bin);
+//	rs_AddString(g_sLangID_Native_Bout, &g_sLangTxt_Native_Bout);
 	rs_AddString(g_sLangID_Native_BinX, &g_sLangTxt_Native_BinX);
 	rs_AddString(g_sLangID_Native_BoutX, &g_sLangTxt_Native_BoutX);
 	rs_AddString(g_sLangID_Native_BinEx, &g_sLangTxt_Native_BinEx);
@@ -201,7 +201,7 @@ void CXLangResource_Native::RegisterLanguageResource()
 	rs_AddString(g_sLangID_Manual_TestMethod, &g_sLangTxt_Manual_TestMethod);
 	rs_AddString(g_sLangID_Manual_MeasType, &g_sLangTxt_Manual_MeasType);
 	rs_AddString(g_sLangID_Manual_BCode, &g_sLangTxt_Manual_BCode);
-	rs_AddString(g_sLangID_Manual_TestReport, &g_sLangTxt_Manual_TestReport);
+	//rs_AddString(g_sLangID_Manual_TestReport, &g_sLangTxt_Manual_TestReport);
 	rs_AddString(g_sLangID_Manual_TestTime, &g_sLangTxt_Manual_TestTime);
 	rs_AddString(g_sLangID_Manual_PositiveLogic, &g_sLangTxt_Manual_PositiveLogic);
 	rs_AddString(g_sLangID_Manual_NegativeLogic, &g_sLangTxt_Manual_NegativeLogic);
@@ -262,6 +262,7 @@ void CXLangResource_Native::RegisterLanguageResource()
 	rs_AddString(g_sLangID_State_CalcMode, &g_sLangTxt_State_CalcMode);
 	rs_AddString(g_sLangID_State_ShortI, &g_sLangTxt_State_ShortI);
 	rs_AddString(g_sLangID_State_ShortU, &g_sLangTxt_State_ShortU);
+	rs_AddString(g_sLangID_State_ShortU_kV, &g_sLangTxt_State_ShortU_kV);
 	rs_AddString(g_sLangID_State_ZeroCoeff, &g_sLangTxt_State_ZeroCoeff);
 	rs_AddString(g_sLangID_State_CalcType, &g_sLangTxt_State_CalcType);
 	rs_AddString(g_sLangID_State_Amp, &g_sLangTxt_State_Amp);
@@ -299,8 +300,6 @@ void CXLangResource_Native::RegisterLanguageResource()
 	rs_AddString(g_sLangID_State_ConWindconnection, &g_sLangTxt_State_ConWindconnection);
 	rs_AddString(g_sLangID_State_Oclock, &g_sLangTxt_State_Oclock);
 	rs_AddString(g_sLangID_State_HbdiffAngularwind, &g_sLangTxt_State_HbdiffAngularwind);
- 	rs_AddString(g_sLangID_State_No, &g_sLangTxt_State_No);   //sun
- 	rs_AddString(g_sLangID_State_Yes, &g_sLangTxt_State_Yes); //sun
 	rs_AddString(g_sLangID_State_Correctionselection, &g_sLangTxt_State_Correctionselection);
 	rs_AddString(g_sLangID_State_Bequation, &g_sLangTxt_State_Bequation);
 	rs_AddString(g_sLangID_State_CTpolarity, &g_sLangTxt_State_CTpolarity);
@@ -313,7 +312,7 @@ void CXLangResource_Native::RegisterLanguageResource()
 	rs_AddString(g_sLangID_State_NoAdjust, &g_sLangTxt_State_NoAdjust);
 	rs_AddString(g_sLangID_State_YAdjust, &g_sLangTxt_State_YAdjust);
 
-	rs_AddString(g_sLangID_State_SettingValue, &g_sLangTxt_State_SettingValue);
+	//rs_AddString(g_sLangID_State_SettingValue, &g_sLangTxt_State_SettingValue);
 	rs_AddString(g_sLangID_State_Estimate, &g_sLangTxt_State_Estimate);
 	rs_AddString(g_sLangID_State_InState, &g_sLangTxt_State_InState);
 
@@ -321,7 +320,9 @@ void CXLangResource_Native::RegisterLanguageResource()
 	rs_AddString(g_sLangID_StateEstimate_End, &g_sLangTxt_StateEstimate_End);
 	rs_AddString(g_sLangID_StateEstimate_ErrorType, &g_sLangTxt_StateEstimate_ErrorType);
 	rs_AddString(g_sLangID_StateEstimate_RelError, &g_sLangTxt_StateEstimate_RelError);
+    rs_AddString(g_sLangID_StateEstimate_RelError_Percent, &g_sLangTxt_StateEstimate_RelError_Percent);
 	rs_AddString(g_sLangID_StateEstimate_AbsError, &g_sLangTxt_StateEstimate_AbsError);
+    rs_AddString(g_sLangID_StateEstimate_AbsError_Neg, &g_sLangTxt_StateEstimate_AbsError_Neg);
 	rs_AddString(g_sLangID_StateEstimate_SettingValue, &g_sLangTxt_StateEstimate_SettingValue);
 	rs_AddString(g_sLangID_StateEstimate_BinTrigger, &g_sLangTxt_StateEstimate_BinTrigger);
 	rs_AddString(g_sLangID_StateEstimate_CombinationError, &g_sLangTxt_StateEstimate_CombinationError);
@@ -443,7 +444,7 @@ void CXLangResource_Native::RegisterLanguageResource()
 	rs_AddString(g_sLangID_State_I2TCurSet, &g_sLangTxt_State_I2TCurSet);									  // I2T曲线参数设置
 	rs_AddString(g_sLangID_State_IECCurSet, &g_sLangTxt_State_IECCurSet);									  // IEC曲线参数设置
 	rs_AddString(g_sLangID_State_VolLimitSet, &g_sLangTxt_State_VolLimitSet);								  // 电压反时限参数设置
-	rs_AddString(g_sLangID_State_NoActioned, &g_sLangTxt_State_NoActioned);									  // 未动作
+	//rs_AddString(g_sLangID_State_NoActioned, &g_sLangTxt_State_NoActioned);									  // 未动作
 	rs_AddString(g_sLangID_State_ActionValue, &g_sLangTxt_State_ActionValue);								  // 动作值
 	rs_AddString(g_sLangID_State_Error, &g_sLangTxt_State_Error);											  // 误差
 	rs_AddString(g_sLangID_State_HarContent, &g_sLangTxt_State_HarContent);									  // 谐波含量
@@ -573,6 +574,7 @@ void CXLangResource_Native::RegisterLanguageResource()
 	rs_AddString(g_sLangID_Gradient_ShotScreenSus, &g_sLangTxt_Gradient_ShotScreenSus);		  //"截屏成功." lcq
 	rs_AddString(g_sLangID_Gradient_IECConfiguration, &g_sLangTxt_Gradient_IECConfiguration); //"IEC配置" lcq
 	rs_AddString(g_sLangID_Gradient_MessageType, &g_sLangTxt_Gradient_MessageType);			  //"报文类型" lcq
+	rs_AddString(g_sLangID_Gradient_CRCCheck, &g_sLangTxt_Gradient_CRCCheck);			  //"CRC类型选择"
 	rs_AddString(g_sLangID_IEC_ChByteLen, &g_sLangTxt_IEC_ChByteLen);						  //"字节长度" lcq
 	rs_AddString(g_sLangID_Gradient_SCLPars, &g_sLangTxt_Gradient_SCLPars);					  // SCL解析界面 lcq
 	rs_AddString(g_sLangID_Gradient_VoltageSet, &g_sLangTxt_Gradient_VoltageSet);			  // 电压设置 lcq
@@ -609,6 +611,7 @@ void CXLangResource_Native::RegisterLanguageResource()
 	rs_AddString(g_sLangID_Gradient_InsertElement, &g_sLangTxt_Gradient_InsertElement);		  // 插入元素 lcq
 	rs_AddString(g_sLangID_Gradient_ModifyElement, &g_sLangTxt_Gradient_ModifyElement);		  // 修改元素 lcq
 	rs_AddString(g_sLangID_Gradient_PInitial, &g_sLangTxt_Gradient_PInitial);				  //"+:初始" lcq
+	rs_AddString(g_sLangID_Gradient_DeleteElement, &g_sLangTxt_Gradient_DeleteElement);		  // 删除元素 20241111 luozibing
 	rs_AddString(g_sLangID_Gradient_PSelected, &g_sLangTxt_Gradient_PSelected);				  //+:选中 lcq
 	rs_AddString(g_sLangID_Gradient_EndTrial, &g_sLangTxt_Gradient_EndTrial);				  //+:试验结束 lcq
 	rs_AddString(g_sLangID_Gradient_UnUpdateGraph, &g_sLangTxt_Gradient_UnUpdateGraph);		  // 特性曲线查找失败(strCharaID=%s;strIndex=%s),无法更新曲线图 lcq
@@ -635,7 +638,7 @@ void CXLangResource_Native::RegisterLanguageResource()
 	rs_AddString(g_sLangID_Gradient_OpticalPower, &g_sLangTxt_Gradient_OpticalPower);	  // 光功率 lcq
 	rs_AddString(g_sLangID_Gradient_POpticalPort, &g_sLangTxt_Gradient_POpticalPort);	  // 光口%d lcq
 	rs_AddString(g_sLangID_Gradient_FOpticalPower, &g_sLangTxt_Gradient_FOpticalPower);	  // 光功率(-dbm) lcq
-	rs_AddString(g_sLangID_Gradient_FmFileName, &g_sLangTxt_Gradient_FmFileName);		  // 文件名称： lcq
+	//rs_AddString(g_sLangID_Gradient_FmFileName, &g_sLangTxt_Gradient_FmFileName);		  // 文件名称： lcq
 	rs_AddString(g_sLangID_Gradient_DirectoryFile, &g_sLangTxt_Gradient_DirectoryFile);	  // 文件目录： lcq
 	rs_AddString(g_sLangID_Gradient_SecondaryIPSet, &g_sLangTxt_Gradient_SecondaryIPSet); // 辅助IP设置 lcq
 	rs_AddString(g_sLangID_Gradient_IPInputInvalid, &g_sLangTxt_Gradient_IPInputInvalid); // IP输入不合法 lcq
@@ -663,7 +666,7 @@ void CXLangResource_Native::RegisterLanguageResource()
 	rs_AddString(g_sLangID_Gradient_RecvChannnel, &g_sLangTxt_Gradient_RecvChannnel);	  // 接收通道 lcq
 	rs_AddString(g_sLangID_Gradient_ResTimeErr, &g_sLangTxt_Gradient_ResTimeErr);		  // 响应时间误差 lcq
 	rs_AddString(g_sLangID_Gradient_MessResTime, &g_sLangTxt_Gradient_MessResTime);		  // 报文响应时间 lcq
-	rs_AddString(g_sLangID_Gradient_ChaDelay, &g_sLangTxt_Gradient_ChaDelay);			  // 通道延时 lcq
+// 	rs_AddString(g_sLangID_Gradient_ChaDelay, &g_sLangTxt_Gradient_ChaDelay);			  // 通道延时 lcq
 	rs_AddString(g_sLangID_Gradient_MergeUint, &g_sLangTxt_Gradient_MergeUint);			  // 合并单元测试功能ID()在配置文件中未查找到. lcq
 	rs_AddString(g_sLangID_Gradient_NAbnormalRes, &g_sLangTxt_Gradient_NAbnormalRes);	  // 当前选择测试功能异常(%s),导致m_pSttIecRcdFuncInterface==NULL. lcq
 	rs_AddString(g_sLangID_Gradient_TestDuration, &g_sLangTxt_Gradient_TestDuration);	  // 测试时长(s): lcq
@@ -834,6 +837,7 @@ void CXLangResource_Native::RegisterLanguageResource()
 	rs_AddString(g_sLangID_IEC_Source, &g_sLangTxt_IEC_Source);
 	rs_AddString(g_sLangID_IEC_Intrance, &g_sLangTxt_IEC_Intrance);
 	rs_AddString(g_sLangID_IEC_Quality, &g_sLangTxt_IEC_Quality);
+	rs_AddString(g_sLangID_IEC_DescExternal, &g_sLangTxt_IEC_DescExternal);
 	rs_AddString(g_sLangID_IEC_Delay, &g_sLangTxt_IEC_Delay);
 	rs_AddString(g_sLangID_IEC_StartDelay, &g_sLangTxt_IEC_StartDelay);
 	rs_AddString(g_sLangID_IEC_Synchronously, &g_sLangTxt_IEC_Synchronously);
@@ -1068,7 +1072,7 @@ void CXLangResource_Native::RegisterLanguageResource()
 	rs_AddString(g_sLangID_angle, &g_sLangTxt_angle);
 	rs_AddString(g_sLangID_Compound, &g_sLangTxt_Compound);
 	rs_AddString(g_sLangID_statistic, &g_sLangTxt_statistic);
-	rs_AddString(g_sLangID_outputvalue, &g_sLangTxt_outputvalue);
+	rs_AddString(g_sLangID_MUoutputvalue, &g_sLangTxt_MUoutputvalue);
 	rs_AddString(g_sLangID_Outputphase, &g_sLangTxt_Outputphase);
 	rs_AddString(g_sLangID_Measureampl, &g_sLangTxt_Measureampl);
 	rs_AddString(g_sLangID_Measuredphase, &g_sLangTxt_Measuredphase);
@@ -1078,7 +1082,7 @@ void CXLangResource_Native::RegisterLanguageResource()
 	rs_AddString(g_sLangID_loopwaveform, &g_sLangTxt_loopwaveform);
 	rs_AddString(g_sLangID_faultreplay, &g_sLangTxt_faultreplay);
 	rs_AddString(g_sLangID_downloaddata, &g_sLangTxt_downloaddata);
-	rs_AddString(g_sLangID_ReplayStarttest, &g_sLangTxt_ReplayStarttest);
+	rs_AddString(g_sLangID_starttest2, &g_sLangTxt_starttest2);
 	rs_AddString(g_sLangID_playback, &g_sLangTxt_playback);
 	rs_AddString(g_sLangID_outputvoltage, &g_sLangTxt_outputvoltage);
 	rs_AddString(g_sLangID_outputcurrent, &g_sLangTxt_outputcurrent);
@@ -1097,7 +1101,7 @@ void CXLangResource_Native::RegisterLanguageResource()
 	rs_AddString(g_sLangID_emptyIEC, &g_sLangTxt_emptyIEC);
 	rs_AddString(g_sLangID_addedblock, &g_sLangTxt_addedblock);
 	rs_AddString(g_sLangID_configurationfile, &g_sLangTxt_configurationfile);
- 	rs_AddString(g_sLangID_warning, &g_sLangTxt_warning); //sun
+// 	rs_AddString(g_sLangID_warning, &g_sLangTxt_warning);
 	rs_AddString(g_sLangID_NullIEC, &g_sLangTxt_NullIEC);
 	rs_AddString(g_sLangID_IECpath, &g_sLangTxt_IECpath);
 	rs_AddString(g_sLangID_IECdocument, &g_sLangTxt_IECdocument);
@@ -2302,6 +2306,7 @@ void CXLangResource_Native::RegisterLanguageResource()
 	rs_AddString(g_sLangID_Native_TIC_B_Chn_Num, &g_sLangTxt_Native_TIC_B_Chn_Num);				  /*"测试仪通道%d_B通道序号"*/
 	rs_AddString(g_sLangID_Native_TIC_TransfRatio, &g_sLangTxt_Native_TIC_TransfRatio);			  /*"测试仪通道%d_变比"*/
 	rs_AddString(g_sLangID_Native_SampFreq, &g_sLangTxt_Native_SampFreq);						  /*"采样频率"*/
+	rs_AddString(g_sLangID_Native_OutputRate, &g_sLangTxt_Native_OutputRate);						  /*"输出速率"*/
 	rs_AddString(g_sLangID_Native_PT_TxRatio_Primary, &g_sLangTxt_Native_PT_TxRatio_Primary);	  /*"PT变比一次值"*/
 	rs_AddString(g_sLangID_Native_PT_TxRatio_Secondary, &g_sLangTxt_Native_PT_TxRatio_Secondary); /*"PT变比二次值"*/
 	rs_AddString(g_sLangID_Native_CT_TxRatio_Primary, &g_sLangTxt_Native_CT_TxRatio_Primary);	  /*"CT变比一次值"*/
@@ -2417,6 +2422,7 @@ void CXLangResource_Native::RegisterLanguageResource()
 	rs_AddString(g_sLangID_Native_ExportWords, &g_sLangTxt_Native_ExportWords);
 	rs_AddString(g_sLangID_Native_WordDoc, &g_sLangTxt_Native_WordDoc);
 	rs_AddString(g_sLangID_Native_ExportPath, &g_sLangTxt_Native_ExportPath);
+	rs_AddString(g_sLangID_Native_Pdfpdf, &g_sLangTxt_Native_Pdfpdf);
 
 	// 第九周马
 	rs_AddString(g_sLangID_Native_UnzipError, &g_sLangTxt_Native_UnzipError);						/*_T("stt_rcd_unzip_file解压缩出错.")*/
@@ -2632,7 +2638,7 @@ void CXLangResource_Native::RegisterLanguageResource()
 	rs_AddString(g_sLangID_Native_FaultCurrValue, &g_sLangTxt_Native_FaultCurrValue);	/*故障电流*/
 	rs_AddString(g_sLangID_Native_FaultTrigMethod, &g_sLangTxt_Native_FaultTrigMethod); // 故障触发方式
 	rs_AddString(g_sLangID_Native_FaultVoltDef, &g_sLangTxt_Native_FaultVoltDef);		// 故障电压定义
-	rs_AddString(g_sLangID_Native_FileName, &g_sLangTxt_Native_FileName);				// 文件名称
+	//rs_AddString(g_sLangID_Native_FileName, &g_sLangTxt_Native_FileName);				// 文件名称
 	rs_AddString(g_sLangID_Native_FlipMoment, &g_sLangTxt_Native_FlipMoment);
 	rs_AddString(g_sLangID_Native_FrameDrop, &g_sLangTxt_Native_FrameDrop);
 	rs_AddString(g_sLangID_Native_FlyDot, &g_sLangTxt_Native_FlyDot);
@@ -2800,6 +2806,7 @@ void CXLangResource_Native::RegisterLanguageResource()
 	rs_AddString(g_sLangID_Impedance_CalMode, &g_sLangTxt_Impedance_CalMode);
 	rs_AddString(g_sLangID_Impedance_Choose, &g_sLangTxt_Impedance_Choose);
 	rs_AddString(g_sLangID_Impedance_ShortCurr, &g_sLangTxt_Impedance_ShortCurr);
+	rs_AddString(g_sLangID_Impedance_ShortVol, &g_sLangTxt_Impedance_ShortVol);
 	rs_AddString(g_sLangID_Impedance_Delayed, &g_sLangTxt_Impedance_Delayed);
 	rs_AddString(g_sLangID_Impedance_VarChoose, &g_sLangTxt_Impedance_VarChoose);
 	rs_AddString(g_sLangID_Impedance_Mode, &g_sLangTxt_Impedance_Mode);
@@ -2807,18 +2814,7 @@ void CXLangResource_Native::RegisterLanguageResource()
 	rs_AddString(g_sLangID_Impedance_ChangeType, &g_sLangTxt_Impedance_ChangeType);
 	rs_AddString(g_sLangID_Impedance_Auto, &g_sLangTxt_Impedance_Auto);
 	rs_AddString(g_sLangID_Impedance_Mutation, &g_sLangTxt_Impedance_Mutation);
- 	rs_AddString(g_sLangID_ExpSucc, &g_sLangTxt_ExpSucc);											//sun				
- 	rs_AddString(g_sLangID_ExpFail, &g_sLangTxt_ExpFail);											//sun
- 	rs_AddString(g_sLangID_ImpSucc, &g_sLangTxt_ImpSucc);                                           //sun
- 	rs_AddString(g_sLangID_ImpFail, &g_sLangTxt_ImpFail);                                           //sun
- 	rs_AddString(g_sLangID_RemainingMemorySize, &g_sLangTxt_RemainingMemorySize);                   //sun
- 	rs_AddString(g_sLangID_InsufficientSystemMemory, &g_sLangTxt_InsufficientSystemMemory);         //sun
- 	rs_AddString(g_sLangID_ExistenceSCDFiles, &g_sLangTxt_ExistenceSCDFiles);	                    //sun
- 	rs_AddString(g_sLangID_NoExistenceSCLFiles, &g_sLangTxt_NoExistenceSCLFiles);                   //sun
- 	rs_AddString(g_sLangID_AnalysisSCLFiles, &g_sLangTxt_AnalysisSCLFiles);                         //sun
- 	rs_AddString(g_sLangID_LoadSCLFiles, &g_sLangTxt_LoadSCLFiles);	                                //sun
- 	rs_AddString(g_sLangID_LoadSCLFilesProgressBar, &g_sLangTxt_LoadSCLFilesProgressBar);           //sun
- 	rs_AddString(g_sLangID_SaveSCLFiles, &g_sLangTxt_SaveSCLFiles);                                 //sun
+
 
 	rs_AddString(g_sLangID_IEC_DescExternal, &g_sLangTxt_IEC_DescExternal);
 	rs_AddString(g_sLangID_Impedance_FunParas, &g_sLangTxt_Impedance_FunParas);
@@ -2843,7 +2839,7 @@ void CXLangResource_Native::RegisterLanguageResource()
 	rs_AddString(g_sLangID_Gradient_RampParas, &g_sLangTxt_Gradient_RampParas);
 	//rs_AddString(g_sLangID_Gradient_VarSet, &g_sLangTxt_Gradient_VarSet);
 	rs_AddString(g_sLangID_Gradient_CommonParas, &g_sLangTxt_Gradient_CommonParas);
-	rs_AddString(g_sLangID_Gradient_BinBout, &g_sLangTxt_Gradient_BinBout);
+	//rs_AddString(g_sLangID_Gradient_BinBout, &g_sLangTxt_Gradient_BinBout);
 	rs_AddString(g_sLangID_Gradient_BoutNormal, &g_sLangTxt_Gradient_BoutNormal);
 	rs_AddString(g_sLangID_Gradient_BoutFaultState, &g_sLangTxt_Gradient_BoutFaultState);
 
@@ -2921,8 +2917,931 @@ void CXLangResource_Native::RegisterLanguageResource()
 	rs_AddString(g_sLangID_CBOperate_Reverse, &g_sLangTxt_CBOperate_Reverse);
 	rs_AddString(g_sLangID_CBOperate_Positive, &g_sLangTxt_CBOperate_Positive);
 	rs_AddString(g_sLangID_CBOperate_ConversionFail, &g_sLangTxt_CBOperate_ConversionFail);
-	rs_AddString(g_sLangID_Native_CommandTimeout, &g_sLangTxt_Native_CommandTimeout);
 
+	rs_AddString(g_sLangID_Swing_PowerAngleBegin, &g_sLangTxt_Swing_PowerAngleBegin);
+	rs_AddString(g_sLangID_Swing_PowerAngleEnd, &g_sLangTxt_Swing_PowerAngleEnd);
+    rs_AddString(g_sLangID_Swing_SwingPeriod, &g_sLangTxt_Swing_SwingPeriod);
+	rs_AddString(g_sLangID_Swing_SwingCount, &g_sLangTxt_Swing_SwingCount);
+	rs_AddString(g_sLangID_Swing_TripPoint, &g_sLangTxt_Swing_TripPoint);
+    rs_AddString(g_sLangID_Swing_TripSpeedUp, &g_sLangTxt_Swing_TripSpeedUp);
+    rs_AddString(g_sLangID_Swing_TripSpeedDown, &g_sLangTxt_Swing_TripSpeedDown);
+    rs_AddString(g_sLangID_Swing_FaultType, &g_sLangTxt_Swing_FaultType);
+	rs_AddString(g_sLangID_Swing_Impedance, &g_sLangTxt_Swing_Impedance);
+	rs_AddString(g_sLangID_Swing_SCurrent, &g_sLangTxt_Swing_SCurrent);
+	rs_AddString(g_sLangID_Swing_FaultTime, &g_sLangTxt_Swing_FaultTime);
+	rs_AddString(g_sLangID_Swing_K0CalMode, &g_sLangTxt_Swing_K0CalMode);
+    rs_AddString(g_sLangID_Swing_Amplitude, &g_sLangTxt_Swing_Amplitude);
+    rs_AddString(g_sLangID_Swing_Phase, &g_sLangTxt_Swing_Phase);
+	rs_AddString(g_sLangID_Swing_IncreaseSpeed, &g_sLangTxt_Swing_IncreaseSpeed);
+	rs_AddString(g_sLangID_Swing_Decelerate, &g_sLangTxt_Swing_Decelerate);
+	rs_AddString(g_sLangID_Swing_FaultSwing, &g_sLangTxt_Swing_FaultSwing);
+	rs_AddString(g_sLangID_Swing_Reciprocating, &g_sLangTxt_Swing_Reciprocating);
+	rs_AddString(g_sLangID_Swing_OscParaSet, &g_sLangTxt_Swing_OscParaSet);
+	rs_AddString(g_sLangID_Swing_ImpDiagram, &g_sLangTxt_Swing_ImpDiagram);
+	rs_AddString(g_sLangID_Swing_EquCirSystem, &g_sLangTxt_Swing_EquCirSystem);
+
+	rs_AddString(g_sLangID_Gradient_FirstVar, &g_sLangTxt_Gradient_FirstVar);
+	rs_AddString(g_sLangID_Gradient_SecondVar, &g_sLangTxt_Gradient_SecondVar);
+	rs_AddString(g_sLangID_Gradient_FirstStep, &g_sLangTxt_Gradient_FirstStep);
+	rs_AddString(g_sLangID_Gradient_SecondStep, &g_sLangTxt_Gradient_SecondStep);
+	rs_AddString(g_sLangID_PowerManu_VolPower, &g_sLangTxt_PowerManu_VolPower);
+	rs_AddString(g_sLangID_PowerManu_PowerAct, &g_sLangTxt_PowerManu_PowerAct);
+
+	rs_AddString(g_sLangID_Swing_MinSwingVol, &g_sLangTxt_Swing_MinSwingVol);
+	rs_AddString(g_sLangID_Swing_MaxSwingCur, &g_sLangTxt_Swing_MaxSwingCur);
+	rs_AddString(g_sLangID_Swing_CenterSwing, &g_sLangTxt_Swing_CenterSwing);
+	rs_AddString(g_sLangID_Swing_Powerangle, &g_sLangTxt_Swing_Powerangle);
+	rs_AddString(g_sLangID_Swing_Time, &g_sLangTxt_Swing_Time);
+    rs_AddString(g_sLangID_Swing_CTPos, &g_sLangTxt_Swing_CTPos);
+	rs_AddString(g_sLangID_Swing_Zs, &g_sLangTxt_Swing_Zs);
+    rs_AddString(g_sLangID_Swing_ZsPhi, &g_sLangTxt_Swing_ZsPhi);
+	rs_AddString(g_sLangID_Swing_Transformer, &g_sLangTxt_Swing_Transformer);
+    rs_AddString(g_sLangID_Swing_Transformer_Phi, &g_sLangTxt_Swing_Transformer_Phi);
+	rs_AddString(g_sLangID_Swing_Dynamo, &g_sLangTxt_Swing_Dynamo);
+	rs_AddString(g_sLangID_PowerManu_PowerAct, &g_sLangTxt_PowerManu_PowerAct);
+	rs_AddString(g_sLangID_Power_Active, &g_sLangTxt_Power_Active);
+	rs_AddString(g_sLangID_Power_Reactive, &g_sLangTxt_Power_Reactive);
+
+    rs_AddString(g_sLangID_DistanceSearch_LNFault, &g_sLangTxt_DistanceSearch_LNFault);
+    rs_AddString(g_sLangID_DistanceSearch_LLFault, &g_sLangTxt_DistanceSearch_LLFault);
+    rs_AddString(g_sLangID_DistanceSearch_SectionOne, &g_sLangTxt_DistanceSearch_SectionOne);
+    rs_AddString(g_sLangID_DistanceSearch_SectionTwo, &g_sLangTxt_DistanceSearch_SectionTwo);
+    rs_AddString(g_sLangID_DistanceSearch_SectionThree, &g_sLangTxt_DistanceSearch_SectionThree);
+    rs_AddString(g_sLangID_DistanceSearch_SectionFour, &g_sLangTxt_DistanceSearch_SectionFour);
+    rs_AddString(g_sLangID_DistanceSearch_SectionFive, &g_sLangTxt_DistanceSearch_SectionFive);
+    rs_AddString(g_sLangID_DistanceSearch_LNShort, &g_sLangTxt_DistanceSearch_LNShort);
+    rs_AddString(g_sLangID_DistanceSearch_LLShort, &g_sLangTxt_DistanceSearch_LLShort);
+    rs_AddString(g_sLangID_DistanceSearch_ThreePhaseShort, &g_sLangTxt_DistanceSearch_ThreePhaseShort);
+    rs_AddString(g_sLangID_DistanceSearch_ActionTime, &g_sLangTxt_DistanceSearch_ActionTime);
+    rs_AddString(g_sLangID_DistanceSearch_SensAngle, &g_sLangTxt_DistanceSearch_SensAngle);
+    rs_AddString(g_sLangID_DistanceSearch_Z, &g_sLangTxt_DistanceSearch_Z);
+    rs_AddString(g_sLangID_DistanceSearch_Phi, &g_sLangTxt_DistanceSearch_Phi);
+	rs_AddString(g_sLangID_DistanceSearch_AutoClose, &g_sLangTxt_DistanceSearch_AutoClose);
+    rs_AddString(g_sLangID_DistanceSearch_XAxisName, &g_sLangTxt_DistanceSearch_XAxisName);
+    rs_AddString(g_sLangID_DistanceSearch_YAxisName, &g_sLangTxt_DistanceSearch_YAxisName);
+
+    rs_AddString(g_sLangID_DistanceSearch_ZoneType, &g_sLangTxt_DistanceSearch_ZoneType);
+    rs_AddString(g_sLangID_DistanceSearch_BeginZ, &g_sLangTxt_DistanceSearch_BeginZ);
+    rs_AddString(g_sLangID_DistanceSearch_BeginZAngle, &g_sLangTxt_DistanceSearch_BeginZAngle);
+    rs_AddString(g_sLangID_DistanceSearch_EndZ, &g_sLangTxt_DistanceSearch_EndZ);
+    rs_AddString(g_sLangID_DistanceSearch_EndZAngle, &g_sLangTxt_DistanceSearch_EndZAngle);
+    rs_AddString(g_sLangID_DistanceSearch_Step, &g_sLangTxt_DistanceSearch_Step);
+	rs_AddString(g_sLangID_DistanceSearch_TSetting, &g_sLangTxt_DistanceSearch_TSetting);
+    rs_AddString(g_sLangID_DistanceSearch_AbsErr, &g_sLangTxt_DistanceSearch_AbsErr);
+
+    rs_AddString(g_sLangID_DistanceSearch_TimeAfterTrigger, &g_sLangTxt_DistanceSearch_TimeAfterTrigger);
+    rs_AddString(g_sLangID_DistanceSearch_MinActionTime, &g_sLangTxt_DistanceSearch_MinActionTime);
+    rs_AddString(g_sLangID_DistanceSearch_Zl, &g_sLangTxt_DistanceSearch_Zl);
+    rs_AddString(g_sLangID_DistanceSearch_SearchWay, &g_sLangTxt_DistanceSearch_SearchWay);
+    rs_AddString(g_sLangID_DistanceSearch_K0Mode, &g_sLangTxt_DistanceSearch_K0Mode);
+    rs_AddString(g_sLangID_DistanceSearch_ZsMag, &g_sLangTxt_DistanceSearch_ZsMag);
+    rs_AddString(g_sLangID_DistanceSearch_ZsAngle, &g_sLangTxt_DistanceSearch_ZsAngle);
+    rs_AddString(g_sLangID_DistanceSearch_PTPos, &g_sLangTxt_DistanceSearch_PTPos);
+    rs_AddString(g_sLangID_DistanceSearch_CTPos, &g_sLangTxt_DistanceSearch_CTPos);
+    rs_AddString(g_sLangID_DistanceSearch_SimulateBreakerDelay, &g_sLangTxt_DistanceSearch_SimulateBreakerDelay);
+    rs_AddString(g_sLangID_DistanceSearch_BrkBreakTime, &g_sLangTxt_DistanceSearch_BrkBreakTime);
+    rs_AddString(g_sLangID_DistanceSearch_BrkCloseTime, &g_sLangTxt_DistanceSearch_BrkCloseTime);
+    rs_AddString(g_sLangID_DistanceSearch_FaultId, &g_sLangTxt_DistanceSearch_FaultId);
+    rs_AddString(g_sLangID_DistanceSearch_FaultAngMode, &g_sLangTxt_DistanceSearch_FaultAngMode);
+    rs_AddString(g_sLangID_DistanceSearch_FaultAng, &g_sLangTxt_DistanceSearch_FaultAng);
+    rs_AddString(g_sLangID_DistanceSearch_Header_ZoneType, &g_sLangTxt_DistanceSearch_Header_ZoneType);
+
+    rs_AddString(g_sLangID_DistanceSearch_OrigImp, &g_sLangTxt_DistanceSearch_OrigImp);
+    rs_AddString(g_sLangID_DistanceSearch_OrigAng, &g_sLangTxt_DistanceSearch_OrigAng);
+    rs_AddString(g_sLangID_DistanceSearch_SearchAngBeg, &g_sLangTxt_DistanceSearch_SearchAngBeg);
+    rs_AddString(g_sLangID_DistanceSearch_SearchAngEnd, &g_sLangTxt_DistanceSearch_SearchAngEnd);
+    rs_AddString(g_sLangID_DistanceSearch_AngStep, &g_sLangTxt_DistanceSearch_AngStep);
+    rs_AddString(g_sLangID_DistanceSearch_ZoneTypeSelect, &g_sLangTxt_DistanceSearch_ZoneTypeSelect);
+    rs_AddString(g_sLangID_DistanceSearch_SearchLen, &g_sLangTxt_DistanceSearch_SearchLen);
+    rs_AddString(g_sLangID_DistanceSearch_TripZ, &g_sLangTxt_DistanceSearch_TripZ);
+    rs_AddString(g_sLangID_DistanceSearch_TripZAngle, &g_sLangTxt_DistanceSearch_TripZAngle);
+    rs_AddString(g_sLangID_DistanceSearch_AddItemFailed, &g_sLangTxt_DistanceSearch_AddItemFailed);
+
+    rs_AddString(g_sLangID_ActionTime_LNShort, &g_sLangTxt_ActionTime_LNShort);
+    rs_AddString(g_sLangID_ActionTime_LLShort, &g_sLangTxt_ActionTime_LLShort);
+    rs_AddString(g_sLangID_ActionTime_ThreePhaseShort, &g_sLangTxt_ActionTime_ThreePhaseShort);
+    rs_AddString(g_sLangID_ActionTime_ZeroCur, &g_sLangTxt_ActionTime_ZeroCur);
+    rs_AddString(g_sLangID_ActionTime_NegCur, &g_sLangTxt_ActionTime_NegCur);
+    rs_AddString(g_sLangID_ActionTime_ThreeParallel, &g_sLangTxt_ActionTime_ThreeParallel);
+    rs_AddString(g_sLangID_ActionTime_ShortVol, &g_sLangTxt_ActionTime_ShortVol);
+    rs_AddString(g_sLangID_ActionTime_ZeroVol, &g_sLangTxt_ActionTime_ZeroVol);
+    rs_AddString(g_sLangID_ActionTime_NegVol, &g_sLangTxt_ActionTime_NegVol);
+    rs_AddString(g_sLangID_ActionTime_SettingTime, &g_sLangTxt_ActionTime_SettingTime);
+
+    rs_AddString(g_sLangID_ActionTime_FaultVolType, &g_sLangTxt_ActionTime_FaultVolType);
+    rs_AddString(g_sLangID_ActionTime_FaultVol, &g_sLangTxt_ActionTime_FaultVol);
+    rs_AddString(g_sLangID_ActionTime_FaultAngle, &g_sLangTxt_ActionTime_FaultAngle);
+    rs_AddString(g_sLangID_ActionTime_FaultFre, &g_sLangTxt_ActionTime_FaultFre);
+    rs_AddString(g_sLangID_ActionTime_RelErr, &g_sLangTxt_ActionTime_RelErr);
+    rs_AddString(g_sLangID_ActionTime_AbsErrPos, &g_sLangTxt_ActionTime_AbsErrPos);
+    rs_AddString(g_sLangID_ActionTime_AbsErrNeg, &g_sLangTxt_ActionTime_AbsErrNeg);
+
+    rs_AddString(g_sLangID_ActionTime_NormalVol, &g_sLangTxt_ActionTime_NormalVol);
+    rs_AddString(g_sLangID_ActionTime_NormalCur, &g_sLangTxt_ActionTime_NormalCur);
+    rs_AddString(g_sLangID_ActionTime_NormalAngle, &g_sLangTxt_ActionTime_NormalAngle);
+    rs_AddString(g_sLangID_ActionTime_NormalFre, &g_sLangTxt_ActionTime_NormalFre);
+    rs_AddString(g_sLangID_ActionTime_FaultTime, &g_sLangTxt_ActionTime_FaultTime);
+    rs_AddString(g_sLangID_ActionTime_ErrType, &g_sLangTxt_ActionTime_ErrType);
+
+    rs_AddString(g_sLangID_ActionTime_TestItem, &g_sLangTxt_ActionTime_TestItem);
+    rs_AddString(g_sLangID_ActionTime_FaultPhase, &g_sLangTxt_ActionTime_FaultPhase);
+    rs_AddString(g_sLangID_ActionTime_Select, &g_sLangTxt_ActionTime_Select);
+    rs_AddString(g_sLangID_ActionTime_TestResult, &g_sLangTxt_ActionTime_TestResult);
+    rs_AddString(g_sLangID_ActionTime_Title_SettingTime, &g_sLangTxt_ActionTime_Title_SettingTime);
+
+    rs_AddString(g_sLangID_Button_AddMultQuick, &g_sLangTxt_Button_AddMultQuick);
+    rs_AddString(g_sLangID_Button_AddMultDlg, &g_sLangTxt_Button_AddMultDlg);
+    rs_AddString(g_sLangID_Button_AddMultBatch, &g_sLangTxt_Button_AddMultBatch);
+    rs_AddString(g_sLangID_Button_AddCustomizedPara, &g_sLangTxt_Button_AddCustomizedPara);
+    rs_AddString(g_sLangID_Button_AddDefaultPara, &g_sLangTxt_Button_AddDefaultPara);
+
+    rs_AddString(g_sLangID_Button_DeleteSelItem, &g_sLangTxt_Button_DeleteSelItem);
+    rs_AddString(g_sLangID_Button_DeleteAllItem, &g_sLangTxt_Button_DeleteAllItem);
+    rs_AddString(g_sLangID_Button_ClearSelResult, &g_sLangTxt_Button_ClearSelResult);
+    rs_AddString(g_sLangID_Button_ClearAllResult, &g_sLangTxt_Button_ClearAllResult);
+    rs_AddString(g_sLangID_Button_AddOneItem, &g_sLangTxt_Button_AddOneItem);
+//     rs_AddString(g_sLangID_Button_AddMultiItem, &g_sLangTxt_Button_AddMultiItem);
+
+    rs_AddString(g_sLangID_Action_AddOneItem, &g_sLangTxt_Action_AddOneItem);
+    rs_AddString(g_sLangID_Action_DeleteSelItem, &g_sLangTxt_Action_DeleteSelItem);
+    rs_AddString(g_sLangID_Action_DeleteAllItem, &g_sLangTxt_Action_DeleteAllItem);
+    rs_AddString(g_sLangID_Action_ClearSelResult, &g_sLangTxt_Action_ClearSelResult);
+    rs_AddString(g_sLangID_Action_ClearAllResult, &g_sLangTxt_Action_ClearAllResult);
+
+    rs_AddString(g_sLangID_PowerDir_TestPhase_Zero, &g_sLangTxt_PowerDir_TestPhase_Zero);
+    rs_AddString(g_sLangID_PowerDir_TestPhase_Neg, &g_sLangTxt_PowerDir_TestPhase_Neg);
+    rs_AddString(g_sLangID_PowerDir_FaultPhase_ZeroCur, &g_sLangTxt_PowerDir_FaultPhase_ZeroCur);
+    rs_AddString(g_sLangID_PowerDir_FaultPhase_NegCur, &g_sLangTxt_PowerDir_FaultPhase_NegCur);
+    rs_AddString(g_sLangID_PowerDir_TestPhase, &g_sLangTxt_PowerDir_TestPhase);
+    rs_AddString(g_sLangID_PowerDir_FaultPhase, &g_sLangTxt_PowerDir_FaultPhase);
+    rs_AddString(g_sLangID_PowerDir_FaultTime, &g_sLangTxt_PowerDir_FaultTime);
+    rs_AddString(g_sLangID_PowerDir_MaxSenAngle, &g_sLangTxt_PowerDir_MaxSenAngle);
+    rs_AddString(g_sLangID_PowerDir_ActionAreaRange, &g_sLangTxt_PowerDir_ActionAreaRange);
+    rs_AddString(g_sLangID_PowerDir_StepValue, &g_sLangTxt_PowerDir_StepValue);
+    rs_AddString(g_sLangID_PowerDir_AbsErr, &g_sLangTxt_PowerDir_AbsErr);
+    rs_AddString(g_sLangID_PowerDir_NormalBout, &g_sLangTxt_PowerDir_NormalBout);
+    rs_AddString(g_sLangID_PowerDir_FaultBout, &g_sLangTxt_PowerDir_FaultBout);
+    rs_AddString(g_sLangID_PowerDir_UPre, &g_sLangTxt_PowerDir_UPre);
+    rs_AddString(g_sLangID_PowerDir_UPhSet, &g_sLangTxt_PowerDir_UPhSet);
+    rs_AddString(g_sLangID_PowerDir_IPre, &g_sLangTxt_PowerDir_IPre);
+    rs_AddString(g_sLangID_PowerDir_IPhSet, &g_sLangTxt_PowerDir_IPhSet);
+    rs_AddString(g_sLangID_PowerDir_PreAngle, &g_sLangTxt_PowerDir_PreAngle);
+    rs_AddString(g_sLangID_PowerDir_AngleMode, &g_sLangTxt_PowerDir_AngleMode);
+    rs_AddString(g_sLangID_PowerDir_ConnectMode, &g_sLangTxt_PowerDir_ConnectMode);
+    rs_AddString(g_sLangID_PowerDir_AngleMargin, &g_sLangTxt_PowerDir_AngleMargin);
+    rs_AddString(g_sLangID_PowerDir_FaultParas, &g_sLangTxt_PowerDir_FaultParas);
+//     rs_AddString(g_sLangID_PowerDir_TestParas, &g_sLangTxt_PowerDir_TestParas);
+    rs_AddString(g_sLangID_PowerDir_APhaseTest, &g_sLangTxt_PowerDir_APhaseTest);
+    rs_AddString(g_sLangID_PowerDir_BPhaseTest, &g_sLangTxt_PowerDir_BPhaseTest);
+    rs_AddString(g_sLangID_PowerDir_CPhaseTest, &g_sLangTxt_PowerDir_CPhaseTest);
+    rs_AddString(g_sLangID_PowerDir_ABPhaseTest, &g_sLangTxt_PowerDir_ABPhaseTest);
+    rs_AddString(g_sLangID_PowerDir_BCPhaseTest, &g_sLangTxt_PowerDir_BCPhaseTest);
+    rs_AddString(g_sLangID_PowerDir_CAPhaseTest, &g_sLangTxt_PowerDir_CAPhaseTest);
+
+    rs_AddString(g_sLangID_PowerDir_Title_MTA, &g_sLangTxt_PowerDir_Title_MTA);
+    rs_AddString(g_sLangID_PowerDir_Title_ActionAreaRange, &g_sLangTxt_PowerDir_Title_ActionAreaRange);
+    rs_AddString(g_sLangID_PowerDir_Title_StepValue, &g_sLangTxt_PowerDir_Title_StepValue);
+    rs_AddString(g_sLangID_PowerDir_Title_MaxSenAngle, &g_sLangTxt_PowerDir_Title_MaxSenAngle);
+    rs_AddString(g_sLangID_PowerDir_Title_AngleF, &g_sLangTxt_PowerDir_Title_AngleF);
+    rs_AddString(g_sLangID_PowerDir_Title_AngleS, &g_sLangTxt_PowerDir_Title_AngleS);
+
+	rs_AddString(g_sLangID_CrrInverTime_IAmp, &g_sLangTxt_CrrInverTime_IAmp);
+	rs_AddString(g_sLangID_CrrInverTime_IPh, &g_sLangTxt_CrrInverTime_IPh);
+	rs_AddString(g_sLangID_CrrInverTime_ChangeStart, &g_sLangTxt_CrrInverTime_ChangeStart);
+	rs_AddString(g_sLangID_CrrInverTime_ChangeFinish, &g_sLangTxt_CrrInverTime_ChangeFinish);
+	rs_AddString(g_sLangID_CrrInverTime_ChangeStep, &g_sLangTxt_CrrInverTime_ChangeStep);
+	rs_AddString(g_sLangID_Syn_ActVoltageTest, &g_sLangTxt_Syn_ActVoltageTest);
+	rs_AddString(g_sLangID_Syn_ActFreqTest, &g_sLangTxt_Syn_ActFreqTest);
+	rs_AddString(g_sLangID_Syn_LeadAngTest, &g_sLangTxt_Syn_LeadAngTest);
+	rs_AddString(g_sLangID_Syn_AutoAdjTest, &g_sLangTxt_Syn_AutoAdjTest);
+	rs_AddString(g_sLangID_Syn_AdjVolTest, &g_sLangTxt_Syn_AdjVolTest);
+	rs_AddString(g_sLangID_Syn_AdjFreqTest, &g_sLangTxt_Syn_AdjFreqTest);
+
+	//20240719 huangliang
+	rs_AddString(g_sLangID_Setting_NoWord, &g_sLangTxt_Setting_NoWord);
+	rs_AddString(g_sLangID_Setting_Link, &g_sLangTxt_Setting_Link);
+	rs_AddString(g_sLangID_Setting_Cancel, &g_sLangTxt_Setting_Cancel);
+	rs_AddString(g_sLangID_Setting_CancelAll, &g_sLangTxt_Setting_CancelAll);
+	//20240924 huangliang
+	rs_AddString(g_sLangID_Setting_NoFind, &g_sLangTxt_Setting_NoFind);
+	//20241127 huangliang
+	rs_AddString(g_sLangID_Setting_ModelName, &g_sLangTxt_Setting_ModelName);
+
+    rs_AddString(g_sLangID_Replay_WaveformEditing, &g_sLangTxt_Replay_WaveformEditing);
+    rs_AddString(g_sLangID_Replay_OriWaveEdit, &g_sLangTxt_Replay_OriWaveEdit);
+    rs_AddString(g_sLangID_Replay_InsertNorWave, &g_sLangTxt_Replay_InsertNorWave);
+    rs_AddString(g_sLangID_Replay_InsertWave, &g_sLangTxt_Replay_InsertWave);
+    rs_AddString(g_sLangID_Replay_InsertWaveParams, &g_sLangTxt_Replay_InsertWaveParams);
+    rs_AddString(g_sLangID_Replay_Time, &g_sLangTxt_Replay_Time);
+    rs_AddString(g_sLangID_Replay_PointNumber, &g_sLangTxt_Replay_PointNumber);
+    rs_AddString(g_sLangID_Replay_StartPointNumber, &g_sLangTxt_Replay_StartPointNumber);
+    rs_AddString(g_sLangID_Replay_EndPointNumber, &g_sLangTxt_Replay_EndPointNumber);
+    rs_AddString(g_sLangID_Replay_StartTime, &g_sLangTxt_Replay_StartTime);
+    rs_AddString(g_sLangID_Replay_EndTime, &g_sLangTxt_Replay_EndTime);
+    rs_AddString(g_sLangID_Replay_NumCycles, &g_sLangTxt_Replay_NumCycles);
+    rs_AddString(g_sLangID_Replay_Voltage, &g_sLangTxt_Replay_Voltage);
+    rs_AddString(g_sLangID_Replay_Current, &g_sLangTxt_Replay_Current);
+    rs_AddString(g_sLangID_Replay_OutputTime, &g_sLangTxt_Replay_OutputTime);
+    rs_AddString(g_sLangID_Replay_DeleteWave, &g_sLangTxt_Replay_DeleteWave);
+    rs_AddString(g_sLangID_Replay_WaveReset, &g_sLangTxt_Replay_WaveReset);
+    rs_AddString(g_sLangID_Replay_Delete, &g_sLangTxt_Replay_Delete);
+    rs_AddString(g_sLangID_Replay_Insert, &g_sLangTxt_Replay_Insert);
+	rs_AddString(g_sLangID_Replay_Model, &g_sLangTxt_Replay_Model);
+	rs_AddString(g_sLangID_Replay_Weak, &g_sLangTxt_Replay_Weak);
+
+    rs_AddString(g_sLangID_Native_ConnectingAtsTester, &g_sLangTxt_Native_ConnectingAtsTester);
+    rs_AddString(g_sLangID_Native_TesterConnectAtsSucc, &g_sLangTxt_Native_TesterConnectAtsSucc);
+    rs_AddString(g_sLangID_Native_TesterConnectAtsfail, &g_sLangID_Native_TesterConnectAtsfail);
+
+    rs_AddString(g_sLangID_LowFreq_ULock, &g_sLangTxt_LowFreq_ULock);//wangtao 20240722
+    rs_AddString(g_sLangID_LowFreq_ILock, &g_sLangTxt_LowFreq_ILock);
+    rs_AddString(g_sLangID_LowFreq_LowVol, &g_sLangTxt_LowFreq_LowVol);
+	rs_AddString(g_sLangID_Gradient_Norm, &g_sLangTxt_Gradient_Norm);
+	rs_AddString(g_sLangID_Diff_Rate, &g_sLangTxt_Diff_Rate);
+	rs_AddString(g_sLangID_Diff_Harm, &g_sLangTxt_Diff_Harm);
+    rs_AddString(g_sLangID_Diff_AddSearchLine, &g_sLangTxt_Diff_AddSearchLine);
+    rs_AddString(g_sLangID_Diff_Autocalculation, &g_sLangTxt_Diff_Autocalculation);
+    rs_AddString(g_sLangID_Diff_Manualcalculation, &g_sLangTxt_Diff_Manualcalculation);
+    rs_AddString(g_sLangID_Diff_Dichotomy, &g_sLangTxt_Diff_Dichotomy);
+    rs_AddString(g_sLangID_Diff_StepwiseApproach, &g_sLangTxt_Diff_StepwiseApproach);
+    rs_AddString(g_sLangID_Diff_Bequation1, &g_sLangTxt_Diff_Bequation1);
+    rs_AddString(g_sLangID_Diff_Bequation5, &g_sLangTxt_Diff_Bequation5);
+    rs_AddString(g_sLangID_Diff_LineCur, &g_sLangTxt_Diff_LineCur);
+    rs_AddString(g_sLangID_Diff_Variation, &g_sLangTxt_Diff_Variation);
+    rs_AddString(g_sLangID_Diff_sideAdjust, &g_sLangTxt_Diff_sideAdjust);
+    rs_AddString(g_sLangID_Diff_High, &g_sLangTxt_Diff_High);
+    rs_AddString(g_sLangID_Diff_Medium, &g_sLangTxt_Diff_Medium);
+    rs_AddString(g_sLangID_Diff_Low, &g_sLangTxt_Diff_Low);
+	rs_AddString(g_sLangID_MaintainatLeastOneItem, &g_sLangTxt_MaintainatLeastOneItem);
+	rs_AddString(g_sLangID_MaintainatLeastOneFault, &g_sLangTxt_MaintainatLeastOneFault);
+	rs_AddString(g_sLangID_MaintainatLeastOneFunc, &g_sLangTxt_MaintainatLeastOneFunc);
+
+    rs_AddString(g_sLangID_Syn_UDefineOne, &g_sLangTxt_Syn_UDefineOne);
+    rs_AddString(g_sLangID_Syn_UDefineTwo, &g_sLangTxt_Syn_UDefineTwo);
+    rs_AddString(g_sLangID_Syn_UDefineThree, &g_sLangTxt_Syn_UDefineThree);
+    rs_AddString(g_sLangID_Syn_UDefineFour, &g_sLangTxt_Syn_UDefineFour);
+    rs_AddString(g_sLangID_Syn_Pulse, &g_sLangTxt_Syn_Pulse);
+    rs_AddString(g_sLangID_Syn_Continuous, &g_sLangTxt_Syn_Continuous);
+	//rs_AddString(g_sLangID_Syn_State, &g_sLangTxt_Syn_State);
+	rs_AddString(g_sLangID_Syn_Mode, &g_sLangID_Syn_Mode);
+	rs_AddString(g_sLangID_Syn_ProOutSignals, &g_sLangTxt_Syn_ProOutSignals);
+	rs_AddString(g_sLangID_Syn_IncFSignals, &g_sLangTxt_Syn_IncFSignals);
+	rs_AddString(g_sLangID_Syn_DecFSignals, &g_sLangTxt_Syn_DecFSignals);
+	rs_AddString(g_sLangID_Sys_PointNum, &g_sLangTxt_Sys_PointNum);
+	rs_AddString(g_sLangID_Sys_PhaseDiff, &g_sLangTxt_Sys_PhaseDiff);
+
+	rs_AddString(g_sLangID_Vol_TestPointsAdd, &g_sLangTxt_Vol_TestPointsAdd);
+	rs_AddString(g_sLangID_Vol_FaultTypeSelect, &g_sLangTxt_Vol_FaultTypeSelect);
+	rs_AddString(g_sLangID_Vol_FaultOutput, &g_sLangTxt_Vol_FaultOutput);
+
+	rs_AddString(g_sLangID_Curr_FaultBeforeOutput, &g_sLangTxt_Curr_FaultBeforeOutput);
+		//240725 luozibing 
+	rs_AddString(g_sLangID_Distance_DeleteItem, &g_sLangTxt_Distance_DeleteItem);
+	rs_AddString(g_sLangID_Distance_ClearResult, &g_sLangTxt_Distance_ClearResult);
+	rs_AddString(g_sLangID_Distance_Zone1, &g_sLangTxt_Distance_Zone1);
+	rs_AddString(g_sLangID_Distance_Zone2, &g_sLangTxt_Distance_Zone2);
+	rs_AddString(g_sLangID_Distance_Zone3, &g_sLangTxt_Distance_Zone3);
+	rs_AddString(g_sLangID_Distance_Zone4, &g_sLangTxt_Distance_Zone4);
+	rs_AddString(g_sLangID_Distance_Zone5, &g_sLangTxt_Distance_Zone5);
+	rs_AddString(g_sLangID_Distance_ZoneLine, &g_sLangTxt_Distance_ZoneLine);
+	rs_AddString(g_sLangID_Distance_ZoneAllarea, &g_sLangTxt_Distance_ZoneAllarea);
+	rs_AddString(g_sLangID_Distance_ErrorNot, &g_sLangTxt_Distance_ErrorNot);
+	rs_AddString(g_sLangID_Distance_ErrorRelAndAbs, &g_sLangTxt_Distance_ErrorRelAndAbs);
+	rs_AddString(g_sLangID_Distance_ErrorRelorAbs, &g_sLangTxt_Distance_ErrorRelorAbs);
+	rs_AddString(g_sLangID_Distance_AddOneLN, &g_sLangTxt_Distance_AddOneLN);
+	rs_AddString(g_sLangID_Distance_AddOneLL, &g_sLangTxt_Distance_AddOneLL);
+	rs_AddString(g_sLangID_Distance_AddMult, &g_sLangTxt_Distance_AddMult);
+    rs_AddString(g_sLangID_Distance_VzDefine, &g_sLangTxt_Distance_VzDefine);
+    rs_AddString(g_sLangID_Distance_ZTYAxis, &g_sLangTxt_Distance_ZTYAxis);
+
+	rs_AddString(g_sLangID_Distance_Percent, &g_sLangTxt_Distance_Percent);
+	rs_AddString(g_sLangID_Distance_ZoneSel, &g_sLangTxt_Distance_ZoneSel);
+	rs_AddString(g_sLangID_Distance_FaultLN, &g_sLangTxt_Distance_FaultLN);
+	rs_AddString(g_sLangID_Distance_FaultLL, &g_sLangTxt_Distance_FaultLL);
+	rs_AddString(g_sLangID_Distance_MinTrip, &g_sLangTxt_Distance_MinTrip);
+	rs_AddString(g_sLangID_Distance_ZLineSet, &g_sLangTxt_Distance_ZLineSet);
+	rs_AddString(g_sLangID_Distance_AddOneTileLL, &g_sLangTxt_Distance_AddOneTileLL);
+	rs_AddString(g_sLangID_Distance_AddOneTileLN, &g_sLangTxt_Distance_AddOneTileLN);
+// 	rs_AddString(g_sLangID_Distance_AddMultTile, &g_sLangTxt_Distance_AddMultTile);
+	rs_AddString(g_sLangID_Distance_CommonParas, &g_sLangTxt_Distance_CommonParas);
+	rs_AddString(g_sLangID_Distance_ZImpValue, &g_sLangTxt_Distance_ZImpValue);
+	rs_AddString(g_sLangID_Distance_TSetting, &g_sLangTxt_Distance_TSetting);
+	rs_AddString(g_sLangID_Distance_SetActionTime, &g_sLangTxt_Distance_SetActionTime);
+	rs_AddString(g_sLangID_Distance_AddMultZone, &g_sLangTxt_Distance_AddMultZone);
+	rs_AddString(g_sLangID_Distance_FaultTypeSel, &g_sLangTxt_Distance_FaultTypeSel);
+	rs_AddString(g_sLangID_Distance_FailDirectSel, &g_sLangTxt_Distance_FailDirectSel);
+	rs_AddString(g_sLangID_Distance_AddMultZAng, &g_sLangTxt_Distance_AddMultZAng);
+	rs_AddString(g_sLangID_Distance_OutputHoldTimeS, &g_sLangTxt_Distance_OutputHoldTimeS);
+	rs_AddString(g_sLangID_Distance_OutputDelayTime, &g_sLangTxt_Distance_OutputDelayTime);
+	rs_AddString(g_sLangID_Distance_VzPh, &g_sLangTxt_Distance_VzPh);
+	rs_AddString(g_sLangID_Distance_AddTestItemTips, &g_sLangTxt_Distance_AddTestItemTips);
+	rs_AddString(g_sLangID_Distance_BreakTime_sec, &g_sLangTxt_Distance_BreakTime_sec);
+	rs_AddString(g_sLangID_Distance_BrkCloseTime_sec, &g_sLangTxt_Distance_BrkCloseTime_sec);
+	rs_AddString(g_sLangID_Distance_FaultPreTimeS, &g_sLangTxt_Distance_FaultPreTimeS);
+	rs_AddString(g_sLangID_Distance_FaultTimeMargin, &g_sLangTxt_Distance_FaultTimeMargin);
+
+
+	rs_AddString(g_sLangID_CharElement_StartPointAmp, &g_sLangTxt_CharElement_StartPointAmp);
+	rs_AddString(g_sLangID_CharElement_StartPointAngle, &g_sLangTxt_CharElement_StartPointAngle);
+	rs_AddString(g_sLangID_CharElement_EndPointAmp, &g_sLangTxt_CharElement_EndPointAmp);
+	rs_AddString(g_sLangID_CharElement_EndPointAngle, &g_sLangTxt_CharElement_EndPointAngle);
+	rs_AddString(g_sLangID_CharElement_ARCAmp, &g_sLangTxt_CharElement_ARCAmp);
+	rs_AddString(g_sLangID_CharElement_ARCAngle, &g_sLangTxt_CharElement_ARCAngle);
+
+	rs_AddString(g_sLangID_Distance_ImpActBorder, &g_sLangTxt_Distance_ImpActBorder);
+	rs_AddString(g_sLangID_Distance_ImpSetCheck, &g_sLangTxt_Distance_ImpSetCheck);
+	rs_AddString(g_sLangID_Distance_AbsErrPlus, &g_sLangTxt_Distance_AbsErrPlus);
+	rs_AddString(g_sLangID_Distance_AbsErrMinus, &g_sLangTxt_Distance_AbsErrMinus);
+	rs_AddString(g_sLangID_Distance_CharacterEng_UseZone, &g_sLangTxt_CharacterEng_UseZone);
+	rs_AddString(g_sLangID_Distance_CharacterEng_FaulTips, &g_sLangTxt_CharacterEng_FaulTips);
+	rs_AddString(g_sLangID_Distance_CharacterEng_FaulTipTile, &g_sLangTxt_CharacterEng_FaulTipTile);
+
+    rs_AddString(g_sLangID_Native_LangTip, &g_sLangTxt_Native_LangTip);
+    rs_AddString(g_sLangID_Native_FileSaveSuccess, &g_sLangTxt_Native_FileSaveSuccess);
+	rs_AddString(g_sLangID_Native_AckFileSave, &g_sLangTxt_Native_AckFileSave);
+    rs_AddString(g_sLangID_Native_ExportWordDoc, &g_sLangTxt_Native_ExportWordDoc);
+    rs_AddString(g_sLangID_Native_DocType, &g_sLangTxt_Native_DocType);
+    rs_AddString(g_sLangID_Iec_StartRcd, &g_sLangTxt_Iec_StartRcd);
+
+	//与国际版保持一致 移到XLanguageResourceAts里
+   // rs_AddString(g_sLangID_Xrio_EnterNumbers, &g_sLangTxt_Xrio_EnterNumbers);
+    rs_AddString(g_sLangID_Xrio_XrioError, &g_sLangTxt_Xrio_XrioError);
+   //rs_AddString(g_sLangID_Xrio_ValueLessThanOREqual, &g_sLangTxt_Xrio_ValueLessThanOREqual);
+    //rs_AddString(g_sLangID_Xrio_ValueGreaterThanOREqual, &g_sLangTxt_Xrio_ValueGreaterThanOREqual);
+
+    rs_AddString(g_sLangID_Xrio_DeviceSetting, &g_sLangTxt_Xrio_DeviceSetting);
+
+	rs_AddString(g_sLangID_MaintainatLeastOneErrorType, &g_sLangTxt_MaintainatLeastOneErrorType);
+	rs_AddString(g_sLangID_MaintainatLeastOneRate, &g_sLangTxt_MaintainatLeastOneRate);
+	rs_AddString(g_sLangID_MaintainatLeastOneDirection, &g_sLangTxt_MaintainatLeastOneDirection);
+
+	rs_AddString(g_sLangID_Native_ActTimeValueAbsErrNeg, &g_sLangTxt_Native_ActTimeValueAbsErrNeg);		// 动作时间值绝对误差负
+
+	rs_AddString(g_sLangID_ReplayTest_InsertWaveTip, &g_sLangTxt_ReplayTest_InsertWaveTip);
+	rs_AddString(g_sLangID_ReplayTest_RecoverWaveTip, &g_sLangTxt_ReplayTest_RecoverWaveTip);
+	rs_AddString(g_sLangID_ReplayTest_LeftMove, &g_sLangTxt_ReplayTest_LeftMove);
+	rs_AddString(g_sLangID_ReplayTest_RightMove, &g_sLangTxt_ReplayTest_RightMove);
+	rs_AddString(g_sLangID_ReplayTest_Cursor, &g_sLangTxt_ReplayTest_Cursor);
+	rs_AddString(g_sLangID_ReplayTest_TimeDiffer, &g_sLangTxt_ReplayTest_TimeDiffer);
+	rs_AddString(g_sLangID_ReplayTest_PointDiffer, &g_sLangTxt_ReplayTest_PointDiffer);
+
+    rs_AddString(g_sLangID_Xrio_InvalidInput, &g_sLangTxt_Xrio_InvalidInput);
+    rs_AddString(g_sLangID_Xrio_InputRestrictionTypeOne, &g_sLangTxt_Xrio_InputRestrictionTypeOne);
+    rs_AddString(g_sLangID_Xrio_InputRestrictionTypeTwo, &g_sLangTxt_Xrio_InputRestrictionTypeTwo);
+    rs_AddString(g_sLangID_Xrio_InputRestrictionTypeThree, &g_sLangTxt_Xrio_InputRestrictionTypeThree);
+
+	rs_AddString(g_sLangID_ReplayTest_DeleteTimeError, &g_sLangTxt_ReplayTest_DeleteTimeError);
+	rs_AddString(g_sLangID_ReplayTest_InsertBeginTimeError, &g_sLangTxt_ReplayTest_InsertBeginTimeError);
+	rs_AddString(g_sLangID_ReplayTest_InsertBeginPointError, &g_sLangID_ReplayTest_InsertBeginPointError);
+	
+	//20240719 huangliang
+	rs_AddString(g_sLangID_MappingRelation_Maps_CHName, &g_sLangTxt_MappingRelation_Maps_CHName);
+	rs_AddString(g_sLangID_MappingRelation_Maps_BinName, &g_sLangTxt_MappingRelation_Maps_BinName);
+	rs_AddString(g_sLangID_MappingRelation_Maps_BoutName, &g_sLangTxt_MappingRelation_Maps_BoutName);
+
+	rs_AddString(g_sLangID_MappingRelation_Maps_TitleID, &g_sLangTxt_MappingRelation_Maps_TitleID);
+	rs_AddString(g_sLangID_MappingRelation_Maps_TitleName, &g_sLangTxt_MappingRelation_Maps_TitleName);
+
+    rs_AddString(g_sLangID_Xrio_SettingFile, &g_sLangTxt_Xrio_SettingFile);
+    rs_AddString(g_sLangID_Xrio_ImportRefs, &g_sLangTxt_Xrio_ImportRefs);
+
+//xueyf 2024.9.26
+	rs_AddString(g_sLangID_RecloseAcc_InspectLineNoStrain, &g_sLangTxt_RecloseAcc_InspectLineNoStrain);
+	rs_AddString(g_sLangID_RecloseAcc_InspectLineStrain, &g_sLangTxt_RecloseAcc_InspectLineStrain);
+	rs_AddString(g_sLangID_RecloseAcc_InspectLineNoPressure, &g_sLangTxt_RecloseAcc_InspectLineNoPressure);
+	rs_AddString(g_sLangID_RecloseAcc_InspectLinePressure, &g_sLangTxt_RecloseAcc_InspectLinePressure);
+	rs_AddString(g_sLangID_RecloseAcc_InspectNoOutput, &g_sLangTxt_RecloseAcc_InspectNoOutput);
+    rs_AddString(g_sLangID_RecloseAcc_NoAct, &g_sLangTxt_RecloseAcc_NoAct);
+    rs_AddString(g_sLangID_RecloseAcc_Z, &g_sLangTxt_RecloseAcc_Z);
+    rs_AddString(g_sLangID_RecloseAcc_R, &g_sLangTxt_RecloseAcc_R);
+    rs_AddString(g_sLangID_RecloseAcc_X, &g_sLangTxt_RecloseAcc_X);
+    rs_AddString(g_sLangID_RecloseAcc_Fre, &g_sLangTxt_RecloseAcc_Fre);
+    rs_AddString(g_sLangID_RecloseAcc_RecloseTime, &g_sLangTxt_RecloseAcc_RecloseTime);
+    rs_AddString(g_sLangID_RecloseAcc_RecloseMode, &g_sLangTxt_RecloseAcc_RecloseMode);
+    rs_AddString(g_sLangID_RecloseAcc_UxMode, &g_sLangTxt_RecloseAcc_UxMode);
+    rs_AddString(g_sLangID_RecloseAcc_UxInputFre, &g_sLangTxt_RecloseAcc_UxInputFre);
+    rs_AddString(g_sLangID_RecloseAcc_UxInputMag, &g_sLangTxt_RecloseAcc_UxInputMag);
+    rs_AddString(g_sLangID_RecloseAcc_UxInputAng, &g_sLangTxt_RecloseAcc_UxInputAng);
+    rs_AddString(g_sLangID_RecloseAcc_Input, &g_sLangTxt_RecloseAcc_Input);
+    rs_AddString(g_sLangID_RecloseAcc_Output, &g_sLangTxt_RecloseAcc_Output);
+    rs_AddString(g_sLangID_RecloseAcc_BinSelect, &g_sLangTxt_RecloseAcc_BinSelect);
+    rs_AddString(g_sLangID_RecloseAcc_OutputSwitchMode, &g_sLangTxt_RecloseAcc_OutputSwitchMode);
+    rs_AddString(g_sLangID_RecloseAcc_OutputKeepTime, &g_sLangTxt_RecloseAcc_OutputKeepTime);
+    rs_AddString(g_sLangID_RecloseAcc_OutputDelayTime, &g_sLangTxt_RecloseAcc_OutputDelayTime);
+    rs_AddString(g_sLangID_RecloseAcc_FaultTrigMode, &g_sLangTxt_RecloseAcc_FaultTrigMode);
+
+    rs_AddString(g_sLangID_RecloseAcc_NoPre, &g_sLangTxt_RecloseAcc_NoPre);
+    rs_AddString(g_sLangID_RecloseAcc_SamPer, &g_sLangTxt_RecloseAcc_SamPer);
+    rs_AddString(g_sLangID_RecloseAcc_Frequency, &g_sLangTxt_RecloseAcc_Frequency);
+    rs_AddString(g_sLangID_RecloseAcc_AutoReclose, &g_sLangTxt_RecloseAcc_AutoReclose);
+    rs_AddString(g_sLangID_RecloseAcc_AftAcc, &g_sLangTxt_RecloseAcc_AftAcc);
+    rs_AddString(g_sLangID_RecloseAcc_NoPreSet, &g_sLangTxt_RecloseAcc_NoPreSet);
+    rs_AddString(g_sLangID_RecloseAcc_SynAngle, &g_sLangTxt_RecloseAcc_SynAngle);
+    rs_AddString(g_sLangID_RecloseAcc_K0Mode, &g_sLangTxt_RecloseAcc_K0Mode);
+
+    rs_AddString(g_sLangID_RecloseAcc_TripTime, &g_sLangTxt_RecloseAcc_TripTime);
+    rs_AddString(g_sLangID_RecloseAcc_TtripD, &g_sLangTxt_RecloseAcc_TtripD);
+    rs_AddString(g_sLangID_RecloseAcc_TtripAcc, &g_sLangTxt_RecloseAcc_TtripAcc);
+    rs_AddString(g_sLangID_RecloseAcc_Title_UxInputMag, &g_sLangTxt_RecloseAcc_Title_UxInputMag);
+    rs_AddString(g_sLangID_RecloseAcc_Title_UxInputAng, &g_sLangTxt_RecloseAcc_Title_UxInputAng);
+    rs_AddString(g_sLangID_RecloseAcc_Title_VZFreq, &g_sLangTxt_RecloseAcc_Title_VZFreq);
+
+//xueyf 2024.9.29
+	rs_AddString(g_sLangID_BinRecord_Channel, &g_sLangTxt_BinRecord_Channel);
+	rs_AddString(g_sLangID_BinRecord_RecordType, &g_sLangTxt_BinRecord_RecordType);
+	rs_AddString(g_sLangID_BinRecord_ClampRate, &g_sLangTxt_BinRecord_ClampRate);
+	rs_AddString(g_sLangID_BinRecord_Invalid, &g_sLangTxt_BinRecord_Invalid);
+	rs_AddString(g_sLangID_BinRecord_BinPassive, &g_sLangTxt_BinRecord_BinPassive);
+	rs_AddString(g_sLangID_BinRecord_BinActive, &g_sLangTxt_BinRecord_BinActive);
+	rs_AddString(g_sLangID_BinRecord_PlugName, &g_sLangTxt_BinRecord_PlugName);
+	rs_AddString(g_sLangID_BinRecord_PlugPOS, &g_sLangTxt_BinRecord_PlugPOS);
+	rs_AddString(g_sLangID_BinRecord_ChannelNum, &g_sLangTxt_BinRecord_ChannelNum);
+	rs_AddString(g_sLangID_BinRecord_PrimValue, &g_sLangTxt_BinRecord_PrimValue);
+	rs_AddString(g_sLangID_BinRecord_SecondValue, &g_sLangTxt_BinRecord_SecondValue);
+	rs_AddString(g_sLangID_BinRecord_StartRecord, &g_sLangTxt_BinRecord_StartRecord);
+	rs_AddString(g_sLangID_BinRecord_StopRecord, &g_sLangTxt_BinRecord_StopRecord);
+	rs_AddString(g_sLangID_BinRecord_Module, &g_sLangTxt_BinRecord_Module);
+	rs_AddString(g_sLangID_BinRecord_SaveDefaultCfg, &g_sLangTxt_BinRecord_SaveDefaultCfg);
+	rs_AddString(g_sLangID_BinRecord_SelFile, &g_sLangTxt_BinRecord_SelFile);
+	rs_AddString(g_sLangID_BinRecord_ArrangeTop, &g_sLangTxt_BinRecord_ArrangeTop);
+	rs_AddString(g_sLangID_BinRecord_ArrangeLast, &g_sLangTxt_BinRecord_ArrangeLast);
+
+    rs_AddString(g_sLangID_Xrio_InvalidName, &g_sLangTxt_Xrio_InvalidName);
+    //rs_AddString(g_sLangID_Xrio_InvalidDoublePrecisionValue, &g_sLangTxt_Xrio_InvalidDoublePrecisionValue);
+    //rs_AddString(g_sLangID_Xrio_InvalidIntValue, &g_sLangTxt_Xrio_InvalidIntValue);	
+
+    rs_AddString(g_sLangID_Xrio_TestObject, &g_sLangTxt_Xrio_TestObject);
+    rs_AddString(g_sLangID_Xrio_Update, &g_sLangTxt_Xrio_Update);
+
+    rs_AddString(g_sLangID_Xrio_Foreignid, &g_sLangTxt_Xrio_Foreignid);
+    rs_AddString(g_sLangID_Xrio_RefValue, &g_sLangTxt_Xrio_RefValue);
+    rs_AddString(g_sLangID_Xrio_ValueFormula, &g_sLangTxt_Xrio_ValueFormula);
+
+    rs_AddString(g_sLangID_Xrio_DeviceAttr_Name_Description, &g_sLangTxt_Xrio_DeviceAttr_Name_Description);
+    rs_AddString(g_sLangID_Xrio_DeviceAttr_Manufacturer, &g_sLangTxt_Xrio_DeviceAttr_Manufacturer);
+    rs_AddString(g_sLangID_Xrio_DeviceAttr_DeviceType, &g_sLangTxt_Xrio_DeviceAttr_DeviceType);
+    rs_AddString(g_sLangID_Xrio_DeviceAttr_SerialNumber, &g_sLangTxt_Xrio_DeviceAttr_SerialNumber);
+    rs_AddString(g_sLangID_Xrio_DeviceAttr_AdditionalInformationOne, &g_sLangTxt_Xrio_DeviceAttr_AdditionalInformationOne);
+    rs_AddString(g_sLangID_Xrio_DeviceAttr_AdditionalInformationTwo, &g_sLangTxt_Xrio_DeviceAttr_AdditionalInformationTwo);
+
+    rs_AddString(g_sLangID_Xrio_DeviceAttr_TransformerSubstation, &g_sLangTxt_Xrio_DeviceAttr_TransformerSubstation);
+    rs_AddString(g_sLangID_Xrio_DeviceAttr_NumberOfPhases, &g_sLangTxt_Xrio_DeviceAttr_NumberOfPhases);
+
+    rs_AddString(g_sLangID_Xrio_DeviceAttr_ZSVAndZSC, &g_sLangTxt_Xrio_DeviceAttr_ZSVAndZSC);
+    rs_AddString(g_sLangID_Xrio_DeviceAttr_ZSVDirection, &g_sLangTxt_Xrio_DeviceAttr_ZSVDirection);
+    rs_AddString(g_sLangID_Xrio_DeviceAttr_ZSCDirection, &g_sLangTxt_Xrio_DeviceAttr_ZSCDirection);
+    rs_AddString(g_sLangID_Xrio_DeviceAttr_UseOfMutualInductor, &g_sLangTxt_Xrio_DeviceAttr_UseOfMutualInductor);
+
+    rs_AddString(g_sLangID_Xrio_DeviceAttr_OtherDeviceProperties, &g_sLangTxt_Xrio_DeviceAttr_OtherDeviceProperties);
+
+    rs_AddString(g_sLangID_Xrio_DeviceAttr_MaxValueSetting, &g_sLangTxt_Xrio_DeviceAttr_MaxValueSetting);
+
+    rs_AddString(g_sLangID_Xrio_DeviceAttr_OvDetSens, &g_sLangTxt_Xrio_DeviceAttr_OvDetSens);
+
+    rs_AddString(g_sLangID_Xrio_DeviceAttr_Damping, &g_sLangTxt_Xrio_DeviceAttr_Damping);
+    rs_AddString(g_sLangID_Xrio_DeviceAttr_BroadeningTime, &g_sLangTxt_Xrio_DeviceAttr_BroadeningTime);
+rs_AddString(g_sLangID_Xrio_LogInfo_UpdateFile, &g_sLangTxt_Xrio_LogInfo_UpdateFile);
+	rs_AddString(g_sLangID_Gradient_kVActionValue, &g_sLangTxt_Gradient_kVActionValue);
+	rs_AddString(g_sLangID_State_MsgText48V, &g_sLangTxt_State_MsgText48V);
+	rs_AddString(g_sLangID_State_MsgText264V, &g_sLangTxt_State_MsgText264V);
+	rs_AddString(g_sLangID_MergeOutPutI, &g_sLangTxt_MergeOutPutI);
+	rs_AddString(g_sLangID_IEC_SecondRatedType, &g_sLangTxt_IEC_SecondRatedType);
+// 	rs_AddString(g_sLangID_IEC_ProtCodeValue, &g_sLangTxt_IEC_ProtCodeValue);
+// 	rs_AddString(g_sLangID_IEC_MeasCodeValue, &g_sLangTxt_IEC_MeasCodeValue);
+	rs_AddString(g_sLangID_IEC_SecondRatedCur, &g_sLangTxt_IEC_SecondRatedCur);
+
+
+//2024-10-23 xueyangfan
+	rs_AddString(g_sLangID_Native_Protection_CodeValue, &g_sLangTxt_Native_Protection_CodeValue);
+	rs_AddString(g_sLangID_Native_Measure_CodeValue, &g_sLangTxt_Native_Measure_CodeValue);
+	rs_AddString(g_sLangID_Native_SecondaryCur, &g_sLangTxt_Native_SecondaryCur);
+	rs_AddString(g_sLangID_Native_CodeValue_Corrspondence, &g_sLangTxt_Native_CodeValue_Corrspondence);
+	rs_AddString(g_sLangID_Native_OpticalPort_Occupation, &g_sLangTxt_Native_OpticalPort_Occupation);
+//	rs_AddString(g_sLangID_Native_Settingtime, &g_sLangTxt_Native_Settingtime);
+	rs_AddString(g_sLangID_DiffCBOp_AddOneItme, &g_sLangTxt_DiffCBOp_AddOneItme);
+	rs_AddString(g_sLangID_DiffCBOp_FaultLocation, &g_sLangTxt_DiffCBOp_FaultLocation);
+	rs_AddString(g_sLangID_DiffCBOp_ComBineFeature, &g_sLangTxt_DiffCBOp_ComBineFeature);
+	rs_AddString(g_sLangID_DiffCBOp_ZeroSeqElimiType, &g_sLangTxt_DiffCBOp_ZeroSeqElimiType);
+	rs_AddString(g_sLangID_DiffCBOp_Earthing, &g_sLangTxt_DiffCBOp_Earthing);
+	rs_AddString(g_sLangID_DiffCBOp_Coordinate, &g_sLangTxt_DiffCBOp_Coordinate);
+	rs_AddString(g_sLangID_DiffCBOp_TransfHvKph, &g_sLangTxt_DiffCBOp_TransfHvKph);
+	rs_AddString(g_sLangID_DiffCBOp_TransfHvKpm, &g_sLangTxt_DiffCBOp_TransfHvKpm);
+	rs_AddString(g_sLangID_DiffCBOp_TransfHvKpl, &g_sLangTxt_DiffCBOp_TransfHvKpl);
+	rs_AddString(g_sLangID_DiffCBOp_TransfRatedCapacity, &g_sLangTxt_DiffCBOp_TransfRatedCapacity);
+	rs_AddString(g_sLangID_DiffCBOp_SetKph, &g_sLangTxt_DiffCBOp_SetKph);
+
+	rs_AddString(g_sLangID_DiffCBOp_BoutSet, &g_sLangTxt_DiffCBOp_BoutSet);
+	rs_AddString(g_sLangID_DiffCBOp_FaultBoutSet, &g_sLangTxt_DiffCBOp_FaultBoutSet);
+	rs_AddString(g_sLangID_DiffCBOp_HSecondCur, &g_sLangTxt_DiffCBOp_HSecondCur);
+// 	rs_AddString(g_sLangID_DiffCBOp_SetValue, &g_sLangTxt_DiffCBOp_SetValue);
+// 	rs_AddString(g_sLangID_DiffCBOp_AllSecondCur, &g_sLangTxt_DiffCBOp_AllSecondCur);
+// 	rs_AddString(g_sLangID_DiffCBOp_FamousValue, &g_sLangTxt_DiffCBOp_FamousValue);
+// 	rs_AddString(g_sLangID_DiffCBOp_StandardValue, &g_sLangTxt_DiffCBOp_StandardValue);
+	rs_AddString(g_sLangID_DiffCBOp_Auxiliary, &g_sLangTxt_DiffCBOp_Auxiliary);
+
+	rs_AddString(g_sLangID_DiffCBOp_FauleInH, &g_sLangTxt_DiffCBOp_FauleInH);
+	rs_AddString(g_sLangID_DiffCBOp_FauleOutH, &g_sLangTxt_DiffCBOp_FauleOutH);
+	rs_AddString(g_sLangID_DiffCBOp_FauleInL, &g_sLangTxt_DiffCBOp_FauleInL);
+	rs_AddString(g_sLangID_DiffCBOp_FauleOutL, &g_sLangTxt_DiffCBOp_FauleOutL);
+	rs_AddString(g_sLangID_DiffCBOp_FauleInM, &g_sLangTxt_DiffCBOp_FauleInM);
+	rs_AddString(g_sLangID_DiffCBOp_FauleOutM, &g_sLangTxt_DiffCBOp_FauleOutM);
+
+	//add wangtao 20241023
+	rs_AddString(g_sLangID_Diff_RateSearch, &g_sLangTxt_Diff_RateSearch);            //_T("差动搜索")
+	rs_AddString(g_sLangID_Diff_FaultTime, &g_sLangTxt_Diff_FaultTime);            //_T("最大故障时间(s)")
+	rs_AddString(g_sLangID_Diff_Start, &g_sLangTxt_Diff_Start);            //_T("启动")
+	rs_AddString(g_sLangID_Diff_IQuick, &g_sLangTxt_Diff_IQuick);            //_T("速段")
+	rs_AddString(g_sLangID_Diff_SearchBand, &g_sLangTxt_Diff_SearchBand);            //_T("搜索带")
+	rs_AddString(g_sLangID_Diff_RateBeginVal, &g_sLangTxt_Diff_RateBeginVal);            //_T("制动电流始值")
+	rs_AddString(g_sLangID_Diff_RateEndVal, &g_sLangTxt_Diff_RateEndVal);            //_T("制动电流终值")
+	rs_AddString(g_sLangID_Diff_Step, &g_sLangTxt_Diff_Step);            //_T("变化步长")
+	rs_AddString(g_sLangID_Diff_Points, &g_sLangTxt_Diff_Points);            //_T("测试点数")
+	rs_AddString(g_sLangID_Diff_ActAbsErr, &g_sLangTxt_Diff_ActAbsErr);            //_T("动作值绝对误差")
+	rs_AddString(g_sLangID_Diff_ActRelErr, &g_sLangTxt_Diff_ActRelErr);            //_T("动作值相对误差(%)")
+	rs_AddString(g_sLangID_Diff_PrepareTime, &g_sLangTxt_Diff_PrepareTime);            //_T("准备时间(s)")
+	rs_AddString(g_sLangID_Diff_TimeAfter, &g_sLangTxt_Diff_TimeAfter);            //_T("动作后保持时间(s)")
+	rs_AddString(g_sLangID_Diff_KPSetMode, &g_sLangTxt_Diff_KPSetMode);            //_T("各侧平衡系数")
+	rs_AddString(g_sLangID_Diff_KphSet, &g_sLangTxt_Diff_KphSet);            //_T("高压侧差动平衡系数")
+	rs_AddString(g_sLangID_Diff_KpmSet, &g_sLangTxt_Diff_KpmSet);            //_T("中压侧差动平衡系数")
+	rs_AddString(g_sLangID_Diff_KplSet, &g_sLangTxt_Diff_KplSet);            //_T("低压侧差动平衡系数")
+	rs_AddString(g_sLangID_Native_HighVoltWindingConnType, &g_sLangTxt_Native_HighVoltWindingConnType);		 //_T("高压侧绕组接线型式")
+	rs_AddString(g_sLangID_Native_LowVoltWindingConnType, &g_sLangTxt_Native_LowVoltWindingConnType);		 //_T("低压侧绕组接线型式")
+	rs_AddString(g_sLangID_Diff_PhCorrectMode, &g_sLangTxt_Diff_PhCorrectMode);            //_T("校正选择")
+	rs_AddString(g_sLangID_Diff_AdoptWind, &g_sLangTxt_Diff_AdoptWind);            //_T("测试绕组")
+	rs_AddString(g_sLangID_Diff_TransGroupModeHM, &g_sLangTxt_Diff_TransGroupModeHM);            //_T("高-中绕组钟点数")
+	rs_AddString(g_sLangID_Diff_TransGroupModeHL, &g_sLangTxt_Diff_TransGroupModeHL);            //_T("高-低绕组钟点数")
+	rs_AddString(g_sLangID_Diff_JXFactor, &g_sLangTxt_Diff_JXFactor);            //_T("平衡系数计算")
+	rs_AddString(g_sLangID_Diff_Earthing, &g_sLangTxt_Diff_Earthing);            //_T("接地")
+	rs_AddString(g_sLangID_Diff_FaultType, &g_sLangTxt_Diff_FaultType);            //_T("故障相别")
+	rs_AddString(g_sLangID_Diff_CustomHarmIndex, &g_sLangTxt_Diff_CustomHarmIndex);            //_T("自定义谐波次数")
+	rs_AddString(g_sLangID_Diff_BeginVal, &g_sLangTxt_Diff_BeginVal);            //_T("搜索始值")
+	rs_AddString(g_sLangID_Diff_EndVal, &g_sLangTxt_Diff_EndVal);            //_T("搜索终值")
+	rs_AddString(g_sLangID_Diff_HarmOutSide, &g_sLangTxt_Diff_HarmOutSide);            //_T("谐波输出侧")
+	rs_AddString(g_sLangID_Diff_UpperLimit, &g_sLangTxt_Diff_UpperLimit);            //_T("搜索上限")
+	rs_AddString(g_sLangID_Diff_LowLimit, &g_sLangTxt_Diff_LowLimit);            //_T("搜索下限")
+	rs_AddString(g_sLangID_Diff_IdSetting, &g_sLangTxt_Diff_IdSetting);            //_T("差动理论值")
+	rs_AddString(g_sLangID_Diff_SglSideBalCoeff, &g_sLangTxt_Diff_SglSideBalCoeff);            //_T("Ⅰ侧平衡系数")
+	rs_AddString(g_sLangID_Diff_TwoSideBalCoeff, &g_sLangTxt_Diff_TwoSideBalCoeff);            //_T("Ⅱ侧平衡系数")
+	rs_AddString(g_sLangID_Diff_ThreeSideBalCoeff, &g_sLangTxt_Diff_ThreeSideBalCoeff);            //_T("Ⅲ侧平衡系数")
+	rs_AddString(g_sLangID_Diff_PerUnitVal, &g_sLangTxt_Diff_PerUnitVal);            //_T("标幺值")
+	rs_AddString(g_sLangID_Diff_WiringCoeff, &g_sLangTxt_Diff_WiringCoeff);            //_T("接线系数")
+	rs_AddString(g_sLangID_Diff_RefCurrentSel, &g_sLangTxt_Diff_RefCurrentSel);            //_T("基准电流")
+	rs_AddString(g_sLangID_Diff_HighVoltSide, &g_sLangTxt_Diff_HighVoltSide);            //_T("高压侧")
+	rs_AddString(g_sLangID_Diff_MedVoltSide, &g_sLangTxt_Diff_MedVoltSide);            //_T("中压侧")
+	rs_AddString(g_sLangID_Diff_LowVoltSide, &g_sLangTxt_Diff_LowVoltSide);            //_T("低压侧")
+	rs_AddString(g_sLangID_Diff_DiffProtCurrTerm, &g_sLangTxt_Diff_DiffProtCurrTerm);            //_T("差动保护电流端子")
+	rs_AddString(g_sLangID_Diff_RelayTest, &g_sLangTxt_Diff_RelayTest);            //_T("继电保护测试仪")
+	rs_AddString(g_sLangID_Diff_FuncParas, &g_sLangTxt_Diff_FuncParas);            //_T("功能参数")
+	rs_AddString(g_sLangID_Diff_AddOneItem, &g_sLangTxt_Diff_AddOneItem);            //_T("添加单项")
+	rs_AddString(g_sLangID_Diff_ClearResult, &g_sLangTxt_Diff_ClearResult);            //_T("清除结果")
+	rs_AddString(g_sLangID_Diff_CommonPara, &g_sLangTxt_Diff_CommonPara);            //_T("通用参数")
+	rs_AddString(g_sLangID_LowFreq_FreqRangeRate, &g_sLangTxt_LowFreq_FreqRangeRate);            //_T("频率变化范围及其变化率")
+	rs_AddString(g_sLangID_LowFreq_FreqBegin, &g_sLangTxt_LowFreq_FreqBegin);            //_T("频率起始值(Hz)")
+	rs_AddString(g_sLangID_LowFreq_FreqEnd, &g_sLangTxt_LowFreq_FreqEnd);            //_T("频率结束值(Hz)")
+	rs_AddString(g_sLangID_LowFreq_FreqFaultTrig, &g_sLangTxt_LowFreq_FreqFaultTrig);            //_T("闭锁电压选择")
+	rs_AddString(g_sLangID_LowFreq_PhaseV, &g_sLangTxt_LowFreq_PhaseV);            //_T("相电压")
+	rs_AddString(g_sLangID_LowFreq_SettingBegin, &g_sLangTxt_LowFreq_SettingBegin);            //_T("整定值作为计时起点")
+	rs_AddString(g_sLangID_LowFreq_FreqChangeBegin, &g_sLangTxt_LowFreq_FreqChangeBegin);            //_T("频率变化作为计时起点")
+	rs_AddString(g_sLangID_LowFreq_CommonParaSet, &g_sLangTxt_LowFreq_CommonParaSet);            //_T("通用参数设置")
+	rs_AddString(g_sLangID_LowFreq_dfdtSetting, &g_sLangTxt_LowFreq_dfdtSetting);            //_T("滑差定值")
+	rs_AddString(g_sLangID_LowFreq_GradientPara, &g_sLangTxt_LowFreq_GradientPara);            //_T("递变参数")
+	rs_AddString(g_sLangID_LowFreq_dfdtBegin, &g_sLangTxt_LowFreq_dfdtBegin);            //_T("滑差变化始值")
+	rs_AddString(g_sLangID_LowFreq_dfdtEnd, &g_sLangTxt_LowFreq_dfdtEnd);            //_T("滑差变化终值")
+	rs_AddString(g_sLangID_LowFreq_dfdtStep, &g_sLangTxt_LowFreq_dfdtStep);            //_T("滑差变化步长")
+	rs_AddString(g_sLangID_LowFreq_LowVoltage, &g_sLangTxt_LowFreq_LowVoltage);            //_T("低电压")
+	rs_AddString(g_sLangID_LowFreq_BeginVal, &g_sLangTxt_LowFreq_BeginVal);            //_T("变化始值")
+	rs_AddString(g_sLangID_LowFreq_EndVal, &g_sLangTxt_LowFreq_EndVal);            //_T("变化终值")
+	rs_AddString(g_sLangID_LowFreq_TestItem, &g_sLangTxt_LowFreq_TestItem);            //_T("测试项目")
+	rs_AddString(g_sLangID_LowFreq_dvdtRate, &g_sLangTxt_LowFreq_dvdtRate);            //_T("频率滑差倍数")
+	rs_AddString(g_sLangID_LowFreq_TimePara, &g_sLangTxt_LowFreq_TimePara);            //_T("时间参数")
+	rs_AddString(g_sLangID_LowFreq_ULockPara, &g_sLangTxt_LowFreq_ULockPara);            //_T("电压闭锁参数")
+	rs_AddString(g_sLangID_LowFreq_dvdtSetting, &g_sLangTxt_LowFreq_dvdtSetting);            //_T("频率滑差动作值(Hz/s)")
+	rs_AddString(g_sLangID_LowVol_BeginVal, &g_sLangTxt_LowVol_BeginVal);            //_T("变化起始值")
+	rs_AddString(g_sLangID_LowVol_EndVal, &g_sLangTxt_LowVol_EndVal);            //_T("变化结束值")
+	rs_AddString(g_sLangID_LowVol_Var, &g_sLangTxt_LowVol_Var);            //_T("变化量")
+	rs_AddString(g_sLangID_LowVol_FreqRangeRate, &g_sLangTxt_LowVol_FreqRangeRate);            //_T("电压变化范围及其变化率")
+	rs_AddString(g_sLangID_LowVol_dVdt, &g_sLangTxt_LowVol_dVdt);            //_T("滑差")
+	rs_AddString(g_sLangID_LowVol_dVdtRate, &g_sLangTxt_LowVol_dVdtRate);            //_T("电压滑差倍数")
+	rs_AddString(g_sLangID_LowVol_VolEnd, &g_sLangTxt_LowVol_VolEnd);            //_T("电压结束值(V)")
+	rs_AddString(g_sLangID_LowVol_OtherPara, &g_sLangTxt_LowVol_OtherPara);            //_T("其他参数")
+	rs_AddString(g_sLangID_LowVol_SteadyCur, &g_sLangTxt_LowVol_SteadyCur);            //_T("稳态电流(A)")
+	rs_AddString(g_sLangID_LowVol_Exegesis, &g_sLangTxt_LowVol_Exegesis);            //_T("注:" 低压减载动作值"测试项使用")
+	rs_AddString(g_sLangID_Diff_BorderSearch, &g_sLangTxt_Diff_BorderSearch);            //_T("比例制动边界搜索")
+	rs_AddString(g_sLangID_Diff_Section, &g_sLangTxt_Diff_Section);            //_T("区段")
+	rs_AddString(g_sLangID_Diff_Expression, &g_sLangTxt_Diff_Expression);            //_T("公式")
+	rs_AddString(g_sLangID_Diff_StraightLine, &g_sLangTxt_Diff_StraightLine);            //_T("直线")
+	rs_AddString(g_sLangID_Diff_InSet, &g_sLangTxt_Diff_InSet);            //_T("基准电流(其它)")
+	rs_AddString(g_sLangID_Diff_CombinedFeature, &g_sLangTxt_Diff_CombinedFeature);            //_T("复合特性")
+	rs_AddString(g_sLangID_Diff_ZeroSeqElimiType, &g_sLangTxt_Diff_ZeroSeqElimiType);            //_T("零序消除方式")
+	rs_AddString(g_sLangID_Diff_Setting, &g_sLangTxt_Diff_Setting);            //_T("整定定值")
+	rs_AddString(g_sLangID_Diff_Custom, &g_sLangTxt_Diff_Custom);            //_T("自定义")
+	rs_AddString(g_sLangID_Diff_TypeSel, &g_sLangTxt_Diff_TypeSel);            //_T("选择类型")
+	rs_AddString(g_sLangID_Native_ThirdPart, &g_sLangTxt_Native_ThirdPart);		//=_T("第三段")
+	rs_AddString(g_sLangID_Diff_QuickBreak, &g_sLangTxt_Diff_QuickBreak);            //_T("速断")
+	rs_AddString(g_sLangID_Native_InflectionPoint3, &g_sLangTxt_Native_InflectionPoint3); // = _T("拐点3")
+	rs_AddString(g_sLangID_Diff_QuickBreakVal, &g_sLangTxt_Diff_QuickBreakVal);            //_T("速断")
+	rs_AddString(g_sLangID_Diff_CurrChar, &g_sLangTxt_Diff_CurrChar);            //_T("当前曲线")
+	rs_AddString(g_sLangID_Native_LVLRActionVal, &g_sLangTxt_Native_LVLRActionVal);							/*低压减载动作值*/
+	rs_AddString(g_sLangID_Diff_ZAdjust, &g_sLangTxt_Diff_ZAdjust);							 //_T("Z侧校正")
+	rs_AddString(g_sLangID_Diff_Result, &g_sLangTxt_Diff_Result);							 //_T("测试结果")
+	rs_AddString(g_sLangID_Diff_IdTheory, &g_sLangTxt_Diff_IdTheory);							 //_T("理论值Id")
+	rs_AddString(g_sLangID_Diff_FaultType2, &g_sLangTxt_Diff_FaultType2);							//_T("故障相")
+	rs_AddString(g_sLangID_Diff_Select, &g_sLangTxt_Diff_Select);							 //_T("选择")
+	rs_AddString(g_sLangID_Diff_ActualVal, &g_sLangTxt_Diff_ActualVal);							 //_T("有名值"))
+	rs_AddString(g_sLangID_Diff_HSecondaryCur, &g_sLangTxt_Diff_HSecondaryCur);						//_T("高侧额定二次电流")
+	rs_AddString(g_sLangID_Diff_CurrSet, &g_sLangTxt_Diff_CurrSet);							 //_T("设定值")
+	rs_AddString(g_sLangID_Diff_EverySecondaryCur, &g_sLangTxt_Diff_EverySecondaryCur);				//_T("各侧二次额定电流")
+
+	rs_AddString(g_sLangID_Native_CRCTypeSelection, &g_sLangTxt_Native_CRCTypeSelection);
+	rs_AddString(g_sLangID_Native_MergeUnitAutoTest, &g_sLangTxt_Native_MergeUnitAutoTest);
+rs_AddString(g_sLangID_Native_MergeUnitAutoTest, &g_sLangTxt_Native_MergeUnitAutoTest);
+	rs_AddString(g_sLangID_Native_AccuracyTest, &g_sLangTxt_Native_AccuracyTest);
+	rs_AddString(g_sLangID_Native_ZeroDriftTest, &g_sLangTxt_Native_ZeroDriftTest);
+	rs_AddString(g_sLangID_Native_TimeTest, &g_sLangTxt_Native_TimeTest);
+	rs_AddString(g_sLangID_Native_TimingAccuracy, &g_sLangTxt_Native_TimingAccuracy);
+	rs_AddString(g_sLangID_Native_TimeKeepingAccuracy, &g_sLangTxt_Native_TimeKeepingAccuracy);
+	rs_AddString(g_sLangID_Native_FirstCycleTest, &g_sLangTxt_Native_FirstCycleTest);
+	rs_AddString(g_sLangID_Native_330ReplayAnalogError, &g_sLangTxt_Native_330ReplayAnalogError);
+
+
+//2024-10-30 xueyangfan
+	rs_AddString(g_sLangID_BinRecord_RecordTimeType, &g_sLangTxt_BinRecord_RecordTimeType);
+	rs_AddString(g_sLangID_BinRecord_All, &g_sLangTxt_BinRecord_All);
+	rs_AddString(g_sLangID_BinRecord_RecordAll, &g_sLangTxt_BinRecord_RecordAll);
+	rs_AddString(g_sLangID_BinRecord_RecordPlug, &g_sLangTxt_BinRecord_RecordPlug);
+	rs_AddString(g_sLangID_BinRecord_Once, &g_sLangTxt_BinRecord_Once);
+	rs_AddString(g_sLangID_BinRecord_Quadratic, &g_sLangTxt_BinRecord_Quadratic);
+	rs_AddString(g_sLangID_BinRecord_DisplayType, &g_sLangTxt_BinRecord_DisplayType);
+	rs_AddString(g_sLangID_BinRecord_RecordTriggerType, &g_sLangTxt_BinRecord_RecordTriggerType);
+	rs_AddString(g_sLangID_BinRecord_Rollover, &g_sLangTxt_BinRecord_Rollover);
+	rs_AddString(g_sLangID_BinRecord_RisingEdge, &g_sLangTxt_BinRecord_RisingEdge);
+	rs_AddString(g_sLangID_BinRecord_FallingEdge, &g_sLangTxt_BinRecord_FallingEdge);
+	rs_AddString(g_sLangID_BinRecord_TriggeredTime, &g_sLangTxt_BinRecord_TriggeredTime);
+	rs_AddString(g_sLangID_BinRecord_ChannelUp, &g_sLangTxt_BinRecord_ChannelUp);
+	rs_AddString(g_sLangID_BinRecord_ChannelDown, &g_sLangTxt_BinRecord_ChannelDown);
+	rs_AddString(g_sLangID_BinRecord_ChannelTop, &g_sLangTxt_BinRecord_ChannelTop);
+	rs_AddString(g_sLangID_BinRecord_ChannelBottom, &g_sLangTxt_BinRecord_ChannelBottom);
+	rs_AddString(g_sLangID_BinRecord_Recover, &g_sLangTxt_BinRecord_Recover);
+	rs_AddString(g_sLangID_BinRecord_DefaultSavePath, &g_sLangTxt_BinRecord_DefaultSavePath);
+	rs_AddString(g_sLangID_BinRecord_RecordSet, &g_sLangTxt_BinRecord_RecordSet);
+	rs_AddString(g_sLangID_BinRecord_ImportCfg, &g_sLangTxt_BinRecord_ImportCfg);
+	rs_AddString(g_sLangID_BinRecord_SaveCfg, &g_sLangTxt_BinRecord_SaveCfg);
+	rs_AddString(g_sLangID_BinRecord_BinRecord, &g_sLangTxt_BinRecord_BinRecord);
+	rs_AddString(g_sLangID_BinRecord_SavePath, &g_sLangTxt_BinRecord_SavePath);
+	rs_AddString(g_sLangID_BinRecord_AutoSaveRecordFile, &g_sLangTxt_BinRecord_AutoSaveRecordFile);
+
+	rs_AddString(g_sLangID_BinRecord_SaveType, &g_sLangTxt_BinRecord_SaveType);
+	rs_AddString(g_sLangID_BinRecord_SelPlugin, &g_sLangTxt_BinRecord_SelPlugin);
+	rs_AddString(g_sLangID_BinRecord_Wave, &g_sLangTxt_BinRecord_Wave);
+	rs_AddString(g_sLangID_BinRecord_Power, &g_sLangTxt_BinRecord_Power);
+	rs_AddString(g_sLangID_BinRecord_Vector, &g_sLangTxt_BinRecord_Vector);
+
+	//2024-11-4 wuxinyi
+	rs_AddString(g_sLangID_Native_TemplatePath, &g_sLangTxt_Native_TemplatePath);
+	rs_AddString(g_sLangID_Native_ModelFilePath, &g_sLangTxt_Native_ModelFilePath);
+	rs_AddString(g_sLangID_Native_TestRecordFilePath, &g_sLangTxt_Native_TestRecordFilePath);
+	rs_AddString(g_sLangID_Native_EmptyNode, &g_sLangTxt_Native_EmptyNode);
+	rs_AddString(g_sLangID_Native_FlipThreshold, &g_sLangTxt_Native_FlipThreshold);
+	rs_AddString(g_sLangID_SCL_Parsing, &g_sLangTxt_SCL_Parsing);
+	rs_AddString(g_sLangID_SCL_Loading, &g_sLangTxt_SCL_Loading);
+	rs_AddString(g_sLangID_SCL_InvalidFile, &g_sLangTxt_SCL_InvalidFile);
+	rs_AddString(g_sLangID_Native_TemplateGenerationSuccess, &g_sLangTxt_Native_TemplateGenerationSuccess);
+	rs_AddString(g_sLangID_Native_TemplateGenerationFail, &g_sLangTxt_Native_TemplateGenerationFail);
+	rs_AddString(g_sLangID_Native_CharacteristicCurveUpdateFail, &g_sLangTxt_Native_CharacteristicCurveUpdateFail);
+	rs_AddString(g_sLangID_Native_CheckReportSave, &g_sLangTxt_Native_CheckReportSave);
+
+
+	//2024-11-6 zhangyq
+	rs_AddString(g_sLangID_Syn_LeaderAngle, &g_sLangTxt_Syn_LeaderAngle);
+	rs_AddString(g_sLangID_Syn_LeaderTime, &g_sLangTxt_Syn_LeaderTime);
+	rs_AddString(g_sLangID_Syn_LAngle, &g_sLangTxt_Syn_LAngle);
+	rs_AddString(g_sLangID_Syn_LTime, &g_sLangTxt_Syn_LTime);
+	rs_AddString(g_sLangID_Syn_VolDeltValue, &g_sLangTxt_Syn_VolDeltValue);
+	rs_AddString(g_sLangID_Syn_FreqDeltValue, &g_sLangTxt_Syn_FreqDeltValue);
+	rs_AddString(g_sLangID_Syn_UgStart, &g_sLangTxt_Syn_UgStart);
+	rs_AddString(g_sLangID_Syn_FgStart, &g_sLangTxt_Syn_FgStart);
+	rs_AddString(g_sLangID_CurrInverse_SettingTime, &g_sLangTxt_CurrInverse_SettingTime);
+	//2024.11.12 gongyiping 
+	rs_AddString(g_sLangID_Syn_TestParas, &g_sLangTxt_Syn_TestParas);
+	rs_AddString(g_sLangID_NewTest_Native, &g_sLangTxt_NewTest_Native);
+	
+	//add wangtao 20241106
+	rs_AddString(g_sLangID_LowVol_VolChangeBegin, &g_sLangTxt_LowVol_VolChangeBegin);
+	rs_AddString(g_sLangID_Diff_EndValWarning, &g_sLangTxt_Diff_EndValWarning);
+	rs_AddString(g_sLangID_Power_OverLimitWarning, &g_sLangTxt_Power_OverLimitWarning);
+	
+	rs_AddString(g_sLangID_TemplateCreatedSuccessful, &g_sLangTxt_TemplateCreatedSuccessful);
+	rs_AddString(g_sLangID_TemplateCreatedFailed, &g_sLangTxt_TemplateCreatedFailed);
+	//2024-11-12 zhouyangyong
+	rs_AddString(g_sLangID_TransientTime, &g_sLangTxt_TransientTime);
+	rs_AddString(g_sLangID_MUInput, &g_sLangTxt_MUInput);
+	rs_AddString(g_sLangID_MUOutput, &g_sLangTxt_MUOutput);
+	rs_AddString(g_sLangID_Diff_DisjointWarning, &g_sLangTxt_Diff_DisjointWarning);
+	rs_AddString(g_sLangID_Diff_MultiDisjointWarning, &g_sLangTxt_Diff_MultiDisjointWarning);
+	rs_AddString(g_sLangID_Diff_InflectionPointWarning, &g_sLangTxt_Diff_InflectionPointWarning);
+	rs_AddString(g_sLangID_Diff_YDSupCT, &g_sLangTxt_Diff_YDSupCT);
+	rs_AddString(g_sLangID_Diff_ImportChar, &g_sLangTxt_Diff_ImportChar);
+
+	rs_AddString(g_sLangID_Native_NULL, &g_sLangTxt_Native_NULL);
+	rs_AddString(g_sLangID_Native_CheckSetDelfChMap, &g_sLangTxt_Native_CheckSetDelfChMap);
+	//rs_AddString(g_sLangID_Native_AckFileSave, &g_sLangTxt_Native_AckFileSave);
+
+	//add gongyiping 20241118
+	rs_AddString(g_sLangID_Native_ModTesterIP, &g_sLangTxt_Native_ModTesterIP);						// 修改测试仪IP
+	rs_AddString(g_sLangID_Native_FailToRetrieveNetAddr, &g_sLangTxt_Native_FailToRetrieveNetAddr); // 获取本地IP地址失败,当前值为空.
+	rs_AddString(g_sLangID_Native_FailToRetDevInfo, &g_sLangTxt_Native_FailToRetDevInfo);			// 取得设备信息失败
+	rs_AddString(g_sLangID_Native_AddrNotInSameSubnet, &g_sLangTxt_Native_AddrNotInSameSubnet);		// 测试仪IP地址(%1)与当前网卡IP不在同一网段,是否修改?
+	rs_AddString(g_sLangID_Native_CurrSelNetAdptEmpty, &g_sLangTxt_Native_CurrSelNetAdptEmpty);		// 当前选择的网卡为空.
+
+	rs_AddString(g_sLangID_Native_ClearReportData, &g_sLangTxt_Native_ClearReportData);
+	rs_AddString(g_sLangID_Native_IsContinueClearReport, &g_sLangTxt_Native_IsContinueClearReport);
+	rs_AddString(g_sLangID_Native_CreatIecParaError, &g_sLangTxt_Native_CreatIecParaError);
+	rs_AddString(g_sLangID_Native_CreatSysParaError, &g_sLangTxt_Native_CreatSysParaError);
+	rs_AddString(g_sLangID_Native_CreatChMapParaError, &g_sLangTxt_Native_CreatChMapParaError);
+	rs_AddString(g_sLangID_Native_CreatEngineError, &g_sLangTxt_Native_CreatEngineError);
+
+	//add wangtao 20241121
+	rs_AddString(g_sLangID_Diff_ImportCharFile, &g_sLangTxt_Diff_ImportCharFile);
+	rs_AddString(g_sLangID_Diff_ImportCharFilePath, &g_sLangTxt_Diff_ImportCharFilePath);
+	rs_AddString(g_sLangID_Diff_ImportCharWarning, &g_sLangTxt_Diff_ImportCharWarning);
+	//add luozibing 20241125
+	rs_AddString(g_sLangID_DistanceSearch_TileAxisName, &g_sLangTxt_DistanceSearch_TileAxisName);
+// 	rs_AddString(g_sLangID_DistanceSearch_AxisUnitMag, &g_sLangTxt_DistanceSearch_AxisUnitMag);
+// 	rs_AddString(g_sLangID_DistanceSearch_AxisUnitAng, &g_sLangTxt_DistanceSearch_AxisUnitAng);
+
+
+	rs_AddString(g_sLangID_Native_PulseSelection, &g_sLangTxt_Native_PulseSelection);
+	//2024-11-27 zhouyangyong
+	rs_AddString(g_sLangID_PhaseCurr, &g_sLangTxt_PhaseCurr);
+	rs_AddString(g_sLangID_PhaseVolt, &g_sLangTxt_PhaseVolt);
+	rs_AddString(g_sLangID_ActiveBin, &g_sLangTxt_ActiveBin);
+	rs_AddString(g_sLangID_PassiveBin, &g_sLangTxt_PassiveBin);
+	rs_AddString(g_sLangID_VoidBin, &g_sLangTxt_VoidBin);
+	
+	rs_AddString(g_sLangID_Native_CurrDeviceNumIsNull, &g_sLangTxt_Native_CurrDeviceNumIsNull);
+	rs_AddString(g_sLangID_Native_CurrDeviceFileNonexist, &g_sLangTxt_Native_CurrDeviceFileNonexist);
+	rs_AddString(g_sLangID_Native_SysxmlNonexist, &g_sLangTxt_Native_SysxmlNonexist);
+	rs_AddString(g_sLangID_Native_AnalyzeSysxmlFail, &g_sLangTxt_Native_AnalyzeSysxmlFail);
+	rs_AddString(g_sLangID_Native_IECParaFileNonexist, &g_sLangTxt_Native_IECParaFileNonexist);
+	rs_AddString(g_sLangID_Native_GetModuleTypeFail, &g_sLangTxt_Native_GetModuleTypeFail);
+	rs_AddString(g_sLangID_Native_NotMapModuleType, &g_sLangTxt_Native_NotMapModuleType);
+
+	rs_AddString(g_sLangID_ReplayTest_ReEnterWavePoint, &g_sLangTxt_ReplayTest_ReEnterWavePoint);
+	rs_AddString(g_sLangID_ReplayTest_CheckInputWavePoint, &g_sLangTxt_ReplayTest_CheckInputWavePoint);
+	rs_AddString(g_sLangID_ReplayTest_CheckBeginAndEndPoint, &g_sLangTxt_ReplayTest_CheckBeginAndEndPoint);
+	rs_AddString(g_sLangID_ReplayTest_CycleNumCheck, &g_sLangTxt_ReplayTest_CycleNumCheck);
+	rs_AddString(g_sLangID_ReplayTest_CheckInputWaveTime, &g_sLangTxt_ReplayTest_CheckInputWaveTime);
+	rs_AddString(g_sLangID_ReplayTest_CheckBeginAndEndTime, &g_sLangTxt_ReplayTest_CheckBeginAndEndTime);
+	rs_AddString(g_sLangID_ReplayTest_InsertWaveVolOver, &g_sLangTxt_ReplayTest_InsertWaveVolOver);
+	rs_AddString(g_sLangID_ReplayTest_InsertWaveCurOver, &g_sLangTxt_ReplayTest_InsertWaveCurOver);
+	rs_AddString(g_sLangID_ReplayTest_InsertWaveTimeOver, &g_sLangTxt_ReplayTest_InsertWaveTimeOver);
+	rs_AddString(g_sLangID_ReplayTest_CheckOverlapTime, &g_sLangTxt_ReplayTest_CheckOverlapTime);
+	rs_AddString(g_sLangID_Native_IsSaveChangeParas, &g_sLangTxt_Native_IsSaveChangeParas);
+
+    rs_AddString(g_sLangID_Native_DisConnectAll, &g_sLangTxt_Native_DisConnectAll);
+	rs_AddString(g_sLangID_Native_AllClosed, &g_sLangTxt_Native_AllClosed);
+	rs_AddString(g_sLangID_Native_BoutChannel, &g_sLangTxt_Native_BoutChannel);
+	rs_AddString(g_sLangID_Replay_ClearMap, &g_sLangTxt_Replay_ClearMap);
+	rs_AddString(g_sLangID_Native_ToPublish, &g_sLangTxt_Native_ToPublish);
+	rs_AddString(g_sLangID_Native_ToSubscriptions, &g_sLangTxt_Native_ToSubscriptions);
+
+	//20241227 dingxiaoya add
+	rs_AddString(g_sLangID_Native_TestInstrumentConfig, &g_sLangTxt_Native_TestInstrumentConfig);
+	rs_AddString(g_sLangID_Native_ScanLANTestInstrument, &g_sLangTxt_Native_ScanLANTestInstrument);
+	rs_AddString(g_sLangID_Native_DirectConfigRemoteInstrument, &g_sLangTxt_Native_DirectConfigRemoteInstrument);
+	rs_AddString(g_sLangID_Native_ScanRemoteTestInstrument, &g_sLangTxt_Native_ScanRemoteTestInstrument);
+	rs_AddString(g_sLangID_Native_Setup, &g_sLangTxt_Native_Setup);
+	rs_AddString(g_sLangID_Native_Upgrade, &g_sLangTxt_Native_Upgrade);
+	rs_AddString(g_sLangID_Native_EnablePUDA, &g_sLangTxt_Native_EnablePUDA);
+	rs_AddString(g_sLangID_Native_EnableTestSvr, &g_sLangTxt_Native_EnableTestSvr);
+	rs_AddString(g_sLangID_Native_TestInstrumentModel, &g_sLangTxt_Native_TestInstrumentModel);
+	rs_AddString(g_sLangID_Native_TestInstrumentID, &g_sLangTxt_Native_TestInstrumentID);
+	rs_AddString(g_sLangID_Native_CloudIP, &g_sLangTxt_Native_CloudIP);
+	rs_AddString(g_sLangID_Native_CloudPort, &g_sLangTxt_Native_CloudPort);
+	rs_AddString(g_sLangID_Native_TestInstrumentSerialNumber, &g_sLangTxt_Native_TestInstrumentSerialNumber);
+	rs_AddString(g_sLangID_Native_Password, &g_sLangTxt_Native_Password);
+	//rs_AddString(g_sLangID_Unit2, &g_sLangTxt_Unit2);
+	rs_AddString(g_sLangID_Native_Bind, &g_sLangTxt_Native_Bind);
+	rs_AddString(g_sLangID_Native_Query, &g_sLangTxt_Native_Query);
+	rs_AddString(g_sLangID_Native_TestInstrumentConnectionError, &g_sLangTxt_Native_TestInstrumentConnectionError);
+	rs_AddString(g_sLangID_Native_CloudServerConnectionError, &g_sLangTxt_Native_CloudServerConnectionError);
+	rs_AddString(g_sLangID_Native_IPIsEmpty, &g_sLangTxt_Native_IPIsEmpty);
+	rs_AddString(g_sLangID_Native_ConnectionTestInstrumentFailed, &g_sLangTxt_Native_ConnectionTestInstrumentFailed);
+	rs_AddString(g_sLangID_Native_MulticastInitSuccess, &g_sLangTxt_Native_MulticastInitSuccess);
+	rs_AddString(g_sLangID_Native_MulticastInitFailed, &g_sLangTxt_Native_MulticastInitFailed);
+	rs_AddString(g_sLangID_Native_MulticastInitBindSuccess, &g_sLangTxt_Native_MulticastInitBindSuccess);
+	rs_AddString(g_sLangID_Native_Disconnection, &g_sLangTxt_Native_Disconnection);
+	rs_AddString(g_sLangID_Native_CloudConnectionFailed, &g_sLangTxt_Native_CloudConnectionFailed);
+	rs_AddString(g_sLangID_Native_TestInstrumentUserInfoError, &g_sLangTxt_Native_TestInstrumentUserInfoError);
+	rs_AddString(g_sLangID_Native_Connect, &g_sLangTxt_Native_Connect);
+	rs_AddString(g_sLangID_Native_StopScanning, &g_sLangTxt_Native_StopScanning);
+	rs_AddString(g_sLangID_Native_Scanning, &g_sLangTxt_Native_Scanning);
+	rs_AddString(g_sLangID_Native_NanjingEnergyCloud, &g_sLangTxt_Native_NanjingEnergyCloud);
+	rs_AddString(g_sLangID_Native_TestInstrumentConfigFileNotFound, &g_sLangTxt_Native_TestInstrumentConfigFileNotFound);
+	rs_AddString(g_sLangID_Native_OAClientInitFail, &g_sLangTxt_Native_OAClientInitFail);
+	rs_AddString(g_sLangID_Native_Index,&g_sLangTxt_Native_Index);
+	//rs_AddString(g_sLangID_Native_IndepDCCurrChHWRange,&g_sLangTxt_Native_IndepDCCurrChHWRange);
+	rs_AddString(g_sLangID_Native_IndepDCVolChHWRange,&g_sLangTxt_Native_IndepDCVolChHWRange);
+	//rs_AddString(g_sLangID_Native_ModChRange,&g_sLangTxt_Native_ModChRange);
+	rs_AddString(g_sLangID_Native_IndepDCCurrIdc,&g_sLangTxt_Native_IndepDCCurrIdc);
+	rs_AddString(g_sLangID_Native_IndepDCVolUdc,&g_sLangTxt_Native_IndepDCVolUdc);
+	rs_AddString(g_sLangID_Native_ChannelOneToThree,&g_sLangTxt_Native_ChannelOneToThree);
+	rs_AddString(g_sLangID_Native_ChannelFourToSix,&g_sLangTxt_Native_ChannelFourToSix);
+	rs_AddString(g_sLangID_Native_GearFormat, &g_sLangTxt_Native_GearFormat);
+	rs_AddString(g_sLangID_Native_TempzoneFormat, &g_sLangTxt_Native_TempzoneFormat);
+	rs_AddString(g_sLangID_Native_TemplateFileNoExit, &g_sLangTxt_Native_TemplateFileNoExit);
+	rs_AddString(g_sLangID_Native_ModelDataError_NoModel, &g_sLangTxt_Native_ModelDataError_NoModel);
+	rs_AddString(g_sLangID_Native_ModelDataError_EmptyModel, &g_sLangTxt_Native_ModelDataError_EmptyModel);
+	rs_AddString(g_sLangID_Native_ExportCoefficientTemplateSuccess, &g_sLangTxt_Native_ExportCoefficientTemplateSuccess);
+	rs_AddString(g_sLangID_Native_ExportFailure, &g_sLangTxt_Native_ExportFailure);
+	rs_AddString(g_sLangID_Native_ModuleHardPos,&g_sLangTxt_Native_ModuleHardPos);
+	rs_AddString(g_sLangID_Native_ChMaxValue,&g_sLangTxt_Native_ChMaxValue);
+	rs_AddString(g_sLangID_Native_NewModuleType, &g_sLangTxt_Native_NewModuleType);
+
+//20250116 
+	rs_AddString(g_sLangID_Native_MUAccuracyTest, &g_sLangTxt_Native_MUAccuracyTest);
+	rs_AddString(g_sLangID_Native_DifferentialTest, &g_sLangTxt_Native_DifferentialTest);
+	rs_AddString(g_sLangID_Native_AngleDifferenceTest, &g_sLangTxt_Native_AngleDifferenceTest);
+	rs_AddString(g_sLangID_Native_CompositeErrorTest, &g_sLangTxt_Native_CompositeErrorTest);
+	rs_AddString(g_sLangID_Native_ChannelDelayTest, &g_sLangTxt_Native_ChannelDelayTest);
+	rs_AddString(g_sLangID_Native_MaximumRatioDifference, &g_sLangTxt_Native_MaximumRatioDifference);
+	rs_AddString(g_sLangID_Native_MinimumRatioDifference, &g_sLangTxt_Native_MinimumRatioDifference);
+	rs_AddString(g_sLangID_Native_AverageRatioDifference, &g_sLangTxt_Native_AverageRatioDifference);
+	rs_AddString(g_sLangID_Native_OutputAngle, &g_sLangTxt_Native_OutputAngle);
+	rs_AddString(g_sLangID_Native_MaximumAngleDifference, &g_sLangTxt_Native_MaximumAngleDifference);
+	rs_AddString(g_sLangID_Native_MinimumAngleDifference, &g_sLangTxt_Native_MinimumAngleDifference);
+	rs_AddString(g_sLangID_Native_AverageAngleDifference, &g_sLangTxt_Native_AverageAngleDifference);
+	rs_AddString(g_sLangID_Native_MaximumError, &g_sLangTxt_Native_MaximumError);
+	rs_AddString(g_sLangID_Native_MinimumError, &g_sLangTxt_Native_MinimumError);
+	rs_AddString(g_sLangID_Native_AverageError, &g_sLangTxt_Native_AverageError);
+	rs_AddString(g_sLangID_Native_ControlBlockDescription, &g_sLangTxt_Native_ControlBlockDescription);
+	rs_AddString(g_sLangID_Native_MaximumDelay, &g_sLangTxt_Native_MaximumDelay);
+	rs_AddString(g_sLangID_Native_MinimumDelay, &g_sLangTxt_Native_MinimumDelay);
+	rs_AddString(g_sLangID_Native_AverageDelay, &g_sLangTxt_Native_AverageDelay);
+	rs_AddString(g_sLangID_Native_MaximumZeroDrif, &g_sLangTxt_Native_MaximumZeroDrif);
+	rs_AddString(g_sLangID_Native_MinimumZeroDrif, &g_sLangTxt_Native_MinimumZeroDrif);
+	rs_AddString(g_sLangID_Native_AverageZeroDrif, &g_sLangTxt_Native_AverageZeroDrif);
+	rs_AddString(g_sLangID_Native_MUPunctAccurTest, &g_sLangTxt_Native_MUPunctAccurTest);
+	rs_AddString(g_sLangID_Native_MUSPunctuality, &g_sLangTxt_Native_MUSPunctuality);
+	rs_AddString(g_sLangID_Native_MUSTiming, &g_sLangTxt_Native_MUSTiming);
+	rs_AddString(g_sLangID_Native_MUTimingAccurTest, &g_sLangTxt_Native_MUTimingAccurTest);
+
+//国际版移植 20250207 xueyangfan
+	rs_AddString(g_sLangID_Smv_AddToSub, &g_sLangTxt_Smv_AddToSub);
+	rs_AddString(g_sLangID_Smv_AddToPub, &g_sLangTxt_Smv_AddToPub);
+	rs_AddString(g_sLangID_DistanceSearch_SectionSix, &g_sLangTxt_DistanceSearch_SectionSix);
+	rs_AddString(g_sLangID_DistanceSearch_SectionSeven, &g_sLangTxt_DistanceSearch_SectionSeven);
+	rs_AddString(g_sLangID_DistanceSearch_SectionEight, &g_sLangTxt_DistanceSearch_SectionEight);
+	rs_AddString(g_sLangID_CBOperate_VzDefineParas, &g_sLangTxt_CBOperate_VzDefineParas);
+	rs_AddString(g_sLangID_Transducer_ParasSet, &g_sLangTxt_Transducer_ParasSet);
+	rs_AddString(g_sLangID_Transducer_Phase_PhaseSingle, &g_sLangTxt_Transducer_Phase_APhaseSingle);
+	rs_AddString(g_sLangID_Transducer_Phase_A, &g_sLangTxt_Transducer_Phase_A);
+	rs_AddString(g_sLangID_Transducer_Phase_B, &g_sLangTxt_Transducer_Phase_B);
+	rs_AddString(g_sLangID_Transducer_Phase_C, &g_sLangTxt_Transducer_Phase_C);
+	rs_AddString(g_sLangID_Transducer_Phase_ABC, &g_sLangTxt_Transducer_Phase_ABC);
+	rs_AddString(g_sLangID_Transducer_UInputLimit, &g_sLangTxt_Transducer_UInputLimit);
+	rs_AddString(g_sLangID_Transducer_LInputLimit, &g_sLangTxt_Transducer_LInputLimit);
+	rs_AddString(g_sLangID_Transducer_UOutputLimit, &g_sLangTxt_Transducer_UOutputLimit);
+	rs_AddString(g_sLangID_Transducer_LOutputLimit, &g_sLangTxt_Transducer_LOutputLimit);
+	rs_AddString(g_sLangID_Transducer_Input, &g_sLangTxt_Transducer_Input);
+	rs_AddString(g_sLangID_Transducer_Un, &g_sLangTxt_Transducer_Un);
+	rs_AddString(g_sLangID_Transducer_UIAngle, &g_sLangTxt_Transducer_UIAngle);
+	rs_AddString(g_sLangID_Transducer_Imax, &g_sLangTxt_Transducer_Imax);
+	rs_AddString(g_sLangID_Transducer_StdFreq, &g_sLangTxt_Transducer_StdFreq);
+	rs_AddString(g_sLangID_Transducer_TestTimes, &g_sLangTxt_Transducer_TestTimes);
+	rs_AddString(g_sLangID_Transducer_GridInput, &g_sLangTxt_Transducer_GridInput);
+	rs_AddString(g_sLangID_Transducer_GridOutput, &g_sLangTxt_Transducer_GridOutput);
+	rs_AddString(g_sLangID_Transducer_GridRealOutput, &g_sLangTxt_Transducer_GridRealOutput);
+	rs_AddString(g_sLangID_Transducer_TestType, &g_sLangTxt_Transducer_TestType);
+	rs_AddString(g_sLangID_Transducer_Type, &g_sLangTxt_Transducer_Type);
+	rs_AddString(g_sLangID_Transducer_Level, &g_sLangTxt_Transducer_Level);
+	rs_AddString(g_sLangID_Transducer_TestValue, &g_sLangTxt_Transducer_TestValue);
+	rs_AddString(g_sLangID_Transducer_SettingTime, &g_sLangTxt_Transducer_SettingTime);
+	rs_AddString(g_sLangID_Transducer_Ratio, &g_sLangTxt_Transducer_Ratio);
+	rs_AddString(g_sLangID_Transducer_CopySelTest, &g_sLangTxt_Transducer_CopySelTest);
+	rs_AddString(g_sLangID_Transducer_PasteTest, &g_sLangTxt_Transducer_PasteTest);
+	rs_AddString(g_sLangID_Diff_MSecondaryCur, &g_sLangTxt_Diff_MSecondaryCur);
+	rs_AddString(g_sLangID_Diff_LSecondaryCur, &g_sLangTxt_Diff_LSecondaryCur);
+	rs_AddString(g_sLangID_Native_IsSaveTemp, &g_sLangTxt_Native_IsSaveTemp);
+	rs_AddString(g_sLangID_Native_isContinueExistSameSCD, &g_sLangTxt_Native_isContinueExistSameSCD);
+	rs_AddString(g_sLangID_Xrio_EnterValue, &g_sLangTxt_Xrio_EnterValue);
+	rs_AddString(g_sLangID_Xrio_EnterValidValue, &g_sLangTxt_Xrio_EnterValidValue);
+
+	//dingxy 20250311
+	rs_AddString(g_sLangID_Native_WeekPNMain, &g_sLangTxt_Native_WeekPNMain);
+	rs_AddString(g_sLangID_Native_WeeKL336DECTEVT, &g_sLangTxt_Native_WeeKL336DECTEVT);
+	rs_AddString(g_sLangID_Native_PIA0103, &g_sLangTxt_Native_PIA0103);
+	rs_AddString(g_sLangID_Native_PNS330UMax10, &g_sLangTxt_Native_PNS330UMax10);
+	rs_AddString(g_sLangID_Native_PNS330ABC_20, &g_sLangTxt_Native_PNS330ABC_20);
+	rs_AddString(g_sLangID_Native_PNS330_H, &g_sLangTxt_Native_PNS330_H);
+	rs_AddString(g_sLangID_Native_H_ABC_20, &g_sLangTxt_Native_H_ABC_20);
+	rs_AddString(g_sLangID_Native_PNS330_6, &g_sLangTxt_Native_PNS330_6);
+	rs_AddString(g_sLangID_Native_PNS331UMax10, &g_sLangTxt_Native_PNS331UMax10);
+	rs_AddString(g_sLangID_Native_PNS331_ABC_20, &g_sLangTxt_Native_PNS331_ABC_20);
+	rs_AddString(g_sLangID_Native_PNS330_H_EX2, &g_sLangTxt_Native_PNS330_H_EX2);
+	rs_AddString(g_sLangID_Native_PNS331_EX2, &g_sLangTxt_Native_PNS331_EX2);
+	rs_AddString(g_sLangID_IEC_EndVerification, &g_sLangTxt_IEC_EndVerification);
+	rs_AddString(g_sLangID_IEC_16ByteVerification, &g_sLangTxt_IEC_16ByteVerification);
 }
 
 void CXLangResource_Native::InitLangTxt()
@@ -3074,10 +3993,10 @@ void CXLangResource_Native::InitLangTxt()
 	g_sLangTxt_Native_GooseOutSet	= _T("GOOSE OUT-->开入");
 	g_sLangID_Native_GooseInSet	= _T("Native_GooseInSet");
 	g_sLangTxt_Native_GooseInSet = _T("开出-->GOOSE IN");
-	g_sLangID_Native_Bin = _T("Native_Bin");
-	g_sLangTxt_Native_Bin = _T("开入量");
-	g_sLangID_Native_Bout = _T("Native_Bout");
-	g_sLangTxt_Native_Bout = _T("开出量");
+	//g_sLangID_Native_Bin = _T("Native_Bin");
+	//g_sLangTxt_Native_Bin = _T("开入量");
+	//g_sLangID_Native_Bout = _T("Native_Bout");
+	//g_sLangTxt_Native_Bout = _T("开出量");
 
 	g_sLangID_Native_BinX = _T("Native_BinX");
 	g_sLangTxt_Native_BinX = _T("开入");
@@ -3245,8 +4164,8 @@ void CXLangResource_Native::InitLangTxt()
 	g_sLangTxt_Manual_MeasType = _T("接收报文类型");
 	g_sLangID_Manual_BCode = _T("Manual_BCode");
 	g_sLangTxt_Manual_BCode = _T("B码输出逻辑");
-	g_sLangID_Manual_TestReport = _T("Manual_TestReport");
-	g_sLangTxt_Manual_TestReport = _T("测试报告");
+	//g_sLangID_Manual_TestReport = _T("Manual_TestReport");
+	//g_sLangTxt_Manual_TestReport = _T("测试报告");
 	g_sLangID_Manual_TestTime = _T("Manual_TestTime");
 	g_sLangTxt_Manual_TestTime = _T("秒/次");
 	g_sLangID_Manual_PositiveLogic = _T("Manual_PositiveLogic");
@@ -3383,6 +4302,8 @@ void CXLangResource_Native::InitLangTxt()
 	g_sLangTxt_State_ShortI = _T("短路电流(A):");
 	g_sLangID_State_ShortU = _T("State_ShortU");
 	g_sLangTxt_State_ShortU = _T("短路电压(V):");
+	g_sLangID_State_ShortU_kV = _T("State_ShortU_kV");
+	g_sLangTxt_State_ShortU_kV = _T("短路电压(kV):");
 	g_sLangID_State_Hswindwirtype = _T("State_Hswindwirtype"); // LCQ
 	g_sLangTxt_State_Hswindwirtype = _T("高压侧绕组接线型式");
 	g_sLangID_State_Lswindwirtype = _T("State_Lswindwirtype"); // LCQ
@@ -3437,16 +4358,12 @@ void CXLangResource_Native::InitLangTxt()
 	g_sLangTxt_State_LastState = _T("上一个状态");
 	g_sLangID_State_FirstState = _T("State_FirstState");
 	g_sLangTxt_State_FirstState = _T("第一个状态");
- 	g_sLangID_State_No = _T("State_No");   //sun 
- 	g_sLangTxt_State_No = _T("否");        //sun
- 	g_sLangID_State_Yes = _T("State_Yes"); //sun
- 	g_sLangTxt_State_Yes = _T("是");       //sun
 	g_sLangID_State_Difflowcalculation = _T("State_Difflowcalculation");
 	g_sLangTxt_State_Difflowcalculation = _T("差流计算");
 	g_sLangID_State_HarmCount = _T("State_HarmCount");
 	g_sLangTxt_State_HarmCount = _T("次谐波");
-	g_sLangID_State_NoActioned = _T("State_NoActioned");
-	g_sLangTxt_State_NoActioned = _T("未动作");
+	//g_sLangID_State_NoActioned = _T("State_NoActioned");
+	//g_sLangTxt_State_NoActioned = _T("未动作");
 	g_sLangID_State_ActionValue = _T("State_ActionValue");
 	g_sLangTxt_State_ActionValue = _T("动作值");
 	g_sLangID_State_Error = _T("State_Error");
@@ -3514,38 +4431,38 @@ void CXLangResource_Native::InitLangTxt()
 	g_sLangID_State_YAdjust = _T("State_YAdjust");
 	g_sLangTxt_State_YAdjust = _T("Y侧校正");
 
-	g_sLangID_State_SettingValue = _T("State_SettingValue");
-	g_sLangTxt_State_SettingValue = _T("整定值");
+	//g_sLangID_State_SettingValue = _T("State_SettingValue");
+	//g_sLangTxt_State_SettingValue = _T("整定值");
 	g_sLangID_State_Estimate = _T("State_Estimate");
 	g_sLangTxt_State_Estimate = _T("整定及结果评估");
 	g_sLangID_State_InState = _T("State_InState");
 	g_sLangTxt_State_InState = _T("进入状态");
 	g_sLangID_StateEstimate_Start = _T("StateEstimate_Start");
-	; // 计时起点
+
 	g_sLangTxt_StateEstimate_State = _T("计时起点");
 	g_sLangID_StateEstimate_End = _T("StateEstimate_End ");
-	; // 计时终点
+
 	g_sLangTxt_StateEstimate_End = _T("计时终点");
 	g_sLangID_StateEstimate_ErrorType = _T("StateEstimate_ErrorType");
-	; // 误差类型
+
 	g_sLangTxt_StateEstimate_ErrorType = _T("误差类型");
 	g_sLangID_StateEstimate_RelError = _T("StateEstimate_RelError");
-	; // 相对误差
+
 	g_sLangTxt_StateEstimate_RelError = _T("相对误差");
+    g_sLangID_StateEstimate_RelError_Percent = _T("StateEstimate_RelError_Percent");
+    g_sLangTxt_StateEstimate_RelError_Percent = _T("相对误差(％)");  //相对误差(％)
 	g_sLangID_StateEstimate_AbsError = _T("StateEstimate_AbsError");
-	; // 绝对误差
+
 	g_sLangTxt_StateEstimate_AbsError = _T("绝对误差");
+    g_sLangID_StateEstimate_AbsError_Neg = _T("StateEstimate_AbsError_Neg"); // 绝对误差(-)
+    g_sLangTxt_StateEstimate_AbsError_Neg = _T("绝对误差(-)");
 	g_sLangID_StateEstimate_SettingValue = _T("StateEstimate_SettingValue");
-	; // 整定值(s)
 	g_sLangTxt_StateEstimate_SettingValue = _T("整定值(s)");
 	g_sLangID_StateEstimate_BinTrigger = _T("StateEstimate_BinTrigger");
-	; // 开入触发
 	g_sLangTxt_StateEstimate_BinTrigger = _T("开入触发");
 	g_sLangID_StateEstimate_CombinationError = _T("CombinationError");
-	; // 组合误差
 	g_sLangTxt_StateEstimate_CombinationError = _T("组合误差");
-	g_sLangID_StateEstimate_ResultEstimate = _T("ResultEstimate ");
-	; // 结果评估
+	g_sLangID_StateEstimate_ResultEstimate = _T("ResultEstimate");
 	g_sLangTxt_StateEstimate_ResultEstimate = _T("结果评估");
 	g_sLangID_State_12Oclock = _T("State_12Oclock"); // LCQ
 	g_sLangTxt_State_12Oclock = _T("12点");
@@ -3833,7 +4750,7 @@ void CXLangResource_Native::InitLangTxt()
 	g_sLangID_Gradient_InPPSfreemodevaluecontrolblock = _T("Gradient_InPPSfreemodevaluecontrolblock");
 	g_sLangTxt_Gradient_InPPSfreemodevaluecontrolblock = _T("无PPS模式下,需要先进行报文探测,选择对应采样值控制块."); // LCQ
 	g_sLangID_Gradient_GOOSEreleaseDataStatusIsempty = _T("Gradient_GOOSEreleaseDataStatusIsempty");
-	g_sLangID_Gradient_GOOSEreleaseDataStatusIsempty = _T("当前状态(%d)的GOOSE发布数据为空(出现异常)."); // LCQ
+	g_sLangTxt_Gradient_GOOSEreleaseDataStatusIsempty = _T("当前状态(%d)的GOOSE发布数据为空(出现异常)."); // LCQ
 	g_sLangID_Gradient_MaintainatLeastOneState = _T("Gradient_MaintainatLeastOneState");				 // LCQ
 	g_sLangTxt_Gradient_MaintainatLeastOneState = _T("至少保留一个状态.");
 	g_sLangID_Gradient_Intotalcheckarow = _T("Gradient_Intotalcheckarow"); // LCQ
@@ -3953,6 +4870,9 @@ void CXLangResource_Native::InitLangTxt()
 
 	g_sLangID_Gradient_IECConfiguration = _T("Gradient_IECConfiguration"); // LCQ;
 	g_sLangTxt_Gradient_IECConfiguration = _T("IEC配置");
+
+	g_sLangID_Gradient_CRCCheck = _T("Gradient_CRCCheck");
+	g_sLangTxt_Gradient_CRCCheck = _T("CRC类型选择");
 
 	g_sLangID_Gradient_MessageType = _T("Gradient_MessageType"); // LCQ;
 	g_sLangTxt_Gradient_MessageType = _T("报文类型");
@@ -4155,8 +5075,8 @@ void CXLangResource_Native::InitLangTxt()
 	g_sLangID_Gradient_FOpticalPower = _T("Gradient_FOpticalPower"); // LCQ;
 	g_sLangTxt_Gradient_FOpticalPower = _T("光功率(-dbm)");
 
-	g_sLangID_Gradient_FmFileName = _T("Gradient_FmFileName"); // LCQ;
-	g_sLangTxt_Gradient_FmFileName = _T("文件名称：");
+	//g_sLangID_Gradient_FmFileName = _T("Gradient_FmFileName"); // LCQ;
+	//g_sLangTxt_Gradient_FmFileName = _T("文件名称：");
 
 	g_sLangID_Gradient_DirectoryFile = _T("Gradient_DirectoryFile"); // LCQ;
 	g_sLangTxt_Gradient_DirectoryFile = _T("文件目录：");
@@ -4239,8 +5159,8 @@ void CXLangResource_Native::InitLangTxt()
 	g_sLangID_Gradient_MessResTime = _T("Gradient_MessResTime"); // LCQ;
 	g_sLangTxt_Gradient_MessResTime = _T("报文响应时间");
 
-	g_sLangID_Gradient_ChaDelay = _T("Gradient_ChaDelay"); // LCQ;
-	g_sLangTxt_Gradient_ChaDelay = _T("通道延时");
+// 	g_sLangID_Gradient_ChaDelay = _T("Gradient_ChaDelay"); // LCQ;
+// 	g_sLangTxt_Gradient_ChaDelay = _T("通道延时");
 
 	g_sLangID_Gradient_MergeUint = _T("Gradient_MergeUint"); // LCQ;
 	g_sLangTxt_Gradient_MergeUint = _T("合并单元测试功能ID()在配置文件中未查找到.");
@@ -4380,6 +5300,10 @@ void CXLangResource_Native::InitLangTxt()
 	g_sLangTxt_Gradient_BoutSet = _T("开出量设置");
 	g_sLangID_Gradient_BoutSets = _T("Gradient_BoutSets"); // 更多开出量设置
 	g_sLangTxt_Gradient_BoutSets = _T("更多开出量设置");
+	
+	g_sLangID_CurrentHigh330   =_T("CurrentHigh330");//高功率电流
+	g_sLangTxt_CurrentHigh330 =_T("高功率电流");
+	
 	g_sLangID_Report_TestChoose = _T("Report_TestChoose");
 	g_sLangTxt_Report_TestChoose = _T("内容选择");
 	g_sLangID_Report_TestObjInf = _T("Report_TestObjInf");
@@ -5082,8 +6006,8 @@ void CXLangResource_Native::InitLangTxt()
 	g_sLangTxt_Compound = _T("复合误差(%)");
 	g_sLangID_statistic = _T("statistic");
 	g_sLangTxt_statistic = _T("清空误差统计结果成功.");
-	g_sLangID_outputvalue = _T("outputvalue");
-	g_sLangTxt_outputvalue = _T("输出值(A/V)");
+	g_sLangID_MUoutputvalue = _T("MUoutputvalue");
+	g_sLangTxt_MUoutputvalue = _T("输出值(A/V)");
 	g_sLangID_Outputphase = _T("Outputphase");
 	g_sLangTxt_Outputphase = _T("输出相位(°)");
 	g_sLangID_Measureampl = _T("Measureampl");
@@ -5102,8 +6026,8 @@ void CXLangResource_Native::InitLangTxt()
 	g_sLangTxt_faultreplay = _T("故障回放试验模板文件");
 	g_sLangID_downloaddata = _T("downloaddata");
 	g_sLangTxt_downloaddata = _T("正在下载波形数据..");
-	g_sLangID_ReplayStarttest = _T("ReplayStarttest");
-	g_sLangTxt_ReplayStarttest = _T("当前打开录波文件为空,请先打开故障回放录波,再运行\"开始测试\".");
+	g_sLangID_starttest2 = _T("starttest");
+	g_sLangTxt_starttest2 = _T("当前打开录波文件为空,请先打开故障回放录波,再运行\"开始测试\".");
 	g_sLangID_playback = _T("playback");
 	g_sLangTxt_playback = _T("当前勾选的回放通道数量为空,请先需要回放的通道.");
 	g_sLangID_outputvoltage = _T("outputvoltage");
@@ -5140,8 +6064,8 @@ void CXLangResource_Native::InitLangTxt()
 	g_sLangTxt_addedblock = _T("当前控制块(%s)已添加.");
 	g_sLangID_configurationfile = _T("configurationfile");
 	g_sLangTxt_configurationfile = _T("打开配置文件(%s)失败.");
- 	g_sLangID_warning = _T("warning"); //sun
- 	g_sLangTxt_warning = _T("警告");    //sun
+// 	g_sLangID_warning = _T("warning");
+// 	g_sLangTxt_warning = _T("警告");
 	g_sLangID_NullIEC = _T("NullIEC");
 	g_sLangTxt_NullIEC = _T("当前IEC配置为空，请至少添加一个控制块！");
 	g_sLangID_IECpath = _T("IECpath");
@@ -6739,6 +7663,23 @@ void CXLangResource_Native::InitLangTxt()
 	g_sLangID_Native_ShortZImpAngExp = _T("Native_ShortZImpAngExp");
 	g_sLangTxt_Native_ShortZImpAngExp = _T("短路阻抗角(表达式)");
 
+	g_sLangID_Native_ErrUaAmp = _T("Native_ErrUaAmp");; // 故障Ua幅值
+	g_sLangTxt_Native_ErrUaAmp = _T("故障Ua幅值");; // 故障Ua幅值
+	g_sLangID_Native_ErrUbAmp = _T("Native_ErrUbAmp");;
+	g_sLangTxt_Native_ErrUbAmp = _T("故障Ub幅值");; // 故障Ub幅值
+	g_sLangID_Native_ErrUcAmp = _T("Native_ErrUcAmp");;
+	g_sLangTxt_Native_ErrUcAmp = _T("故障Uc幅值");; // 故障Uc幅值
+	g_sLangID_Native_ErrUzAmp = _T("Native_ErrUzAmp");;
+	g_sLangTxt_Native_ErrUzAmp = _T("故障Uz幅值");; // 故障Uz幅值
+	g_sLangID_Native_ErrUaPh = _T("Native_ErrUaPh");;
+	g_sLangTxt_Native_ErrUaPh = _T("故障Ua相位");; // 故障Ua相位
+	g_sLangID_Native_ErrUbPh = _T("Native_ErrUbPh");;
+	g_sLangTxt_Native_ErrUbPh = _T("故障Ub相位");; // 故障Ub相位
+	g_sLangID_Native_ErrUcPh = _T("Native_ErrUcPh");;
+	g_sLangTxt_Native_ErrUcPh = _T("故障Uc相位");; // 故障Uc相位
+	g_sLangID_Native_ErrUzPh = _T("Native_ErrUzPh");;
+	g_sLangTxt_Native_ErrUzPh = _T("故障Uz相位");; // 故障Uz相位
+
 	//
 	g_sLangID_Native_first_fault_type = _T("Native_first_fault_type");
 	g_sLangTxt_Native_first_fault_type = _T("第一次故障类型");
@@ -7454,6 +8395,8 @@ void CXLangResource_Native::InitLangTxt()
 	g_sLangTxt_Native_TIC_TransfRatio = _T("测试仪通道%d_变比");
 	g_sLangID_Native_SampFreq = _T("Native_SampFreq");
 	g_sLangTxt_Native_SampFreq = _T("采样频率");
+	g_sLangID_Native_OutputRate = _T("Native_OutputRate");
+	g_sLangTxt_Native_OutputRate = _T("输出速率");
 	g_sLangID_Native_PT_TxRatio_Primary = _T("Native_PT_TxRatio_Primary");
 	g_sLangTxt_Native_PT_TxRatio_Primary = _T("PT变比一次值");
 	g_sLangID_Native_PT_TxRatio_Secondary = _T("Native_PT_TxRatio_Secondary");
@@ -7540,7 +8483,8 @@ void CXLangResource_Native::InitLangTxt()
 
 	g_sLangID_Native_dataid = _T("Native_dataid");
 	g_sLangTxt_Native_dataid = _T("数据ID");
-
+	g_sLangID_Native_paramselect = _T("Native_paramselect");
+	g_sLangTxt_Native_paramselect = _T("参数选择");
 	g_sLangID_Native_globalparams = _T("Native_globalparams");
 	g_sLangTxt_Native_globalparams = _T("全局参数");
 	g_sLangID_Native_reportdata = _T("Native_reportdata");
@@ -7681,6 +8625,8 @@ void CXLangResource_Native::InitLangTxt()
 	g_sLangTxt_Native_ExportPath = _T("导出路径：");
 	g_sLangID_Native_AbnCurr = _T("Native_AbnCurr");
 	g_sLangTxt_Native_AbnCurr = _T("异常电流");
+	g_sLangID_Native_Pdfpdf = _T("Native_Pdfpdf");
+	g_sLangTxt_Native_Pdfpdf = _T("PDF报告(*.pdf)"); 
 
 	// 第九周马
 	g_sLangID_Native_UnzipError = _T("Native_UnzipError");
@@ -8103,8 +9049,8 @@ void CXLangResource_Native::InitLangTxt()
 	g_sLangTxt_Native_FaultTrigMethod = _T("故障触发方式");
 	g_sLangID_Native_FaultVoltDef = _T("Native_FaultVoltDef");
 	g_sLangTxt_Native_FaultVoltDef = _T("故障电压定义");
-	g_sLangID_Native_FileName = _T("Native_FileName");
-	g_sLangTxt_Native_FileName = _T("文件名称");
+	//g_sLangID_Native_FileName = _T("Native_FileName");
+	//g_sLangTxt_Native_FileName = _T("文件名称");
 	g_sLangID_Native_FlipMoment = _T("Native_FlipMoment");
 	g_sLangTxt_Native_FlipMoment = _T("翻转时刻");
 	g_sLangID_Native_FrameDrop = _T("Native_FrameDrop");
@@ -8236,12 +9182,13 @@ void CXLangResource_Native::InitLangTxt()
 	g_sLangID_Allow_FreqDifference = _T("Allow_FreqDifference");
 	g_sLangTxt_Allow_FreqDifference = _T("允许频差");
 	g_sLangID_LeadingAngle = _T("LeadingAngle");
-	g_sLangTxt_LeadingAngle = _T("导前角");
+	g_sLangTxt_LeadingAngle = _T("导前角(°)");
 
 	g_sLangID_LeadingTime = _T("LeadingTime");
 	g_sLangTxt_LeadingTime = _T("导前时间");
 	g_sLangID_Allow_VolDifference = _T("Allow_VolDifference");
 	g_sLangTxt_Allow_VolDifference = _T("允许压差");
+	g_sLangID_Vol_ReguPeriod = _T("Vol_ReguPeriod");
 	g_sLangTxt_Vol_ReguPeriod = _T("调压周期");
 	g_sLangID_Freq_ReguPeriod = _T("Freq_ReguPeriod");
 	g_sLangTxt_Freq_ReguPeriod = _T("调频周期");
@@ -8440,7 +9387,9 @@ void CXLangResource_Native::InitLangTxt()
 	g_sLangID_Impedance_Choose = _T("Impedance_Choose");
 	g_sLangTxt_Impedance_Choose = _T("阻抗输入选择");
 	g_sLangID_Impedance_ShortCurr = _T("Impedance_ShortCurr");
-	g_sLangTxt_Impedance_ShortCurr = _T("短路电流(A)");
+	g_sLangTxt_Impedance_ShortCurr = _T("短路电流(A):");
+	g_sLangID_Impedance_ShortVol = _T("Impedance_ShortVol");
+	g_sLangTxt_Impedance_ShortVol = _T("短路电压(V):");			 
 	g_sLangID_Impedance_Delayed = _T("Impedance_Delayed");
 	g_sLangTxt_Impedance_Delayed = _T("触发后延时（s）");
 	g_sLangID_Impedance_VarChoose = _T("Impedance_VarChoose");
@@ -8455,34 +9404,6 @@ void CXLangResource_Native::InitLangTxt()
 	g_sLangTxt_Impedance_Auto = _T("自动递变");
 	g_sLangID_Impedance_Mutation = _T("Impedance_Mutation");
 	g_sLangTxt_Impedance_Mutation = _T("突变量启动");
-
- 	g_sLangID_ExpSucc = _T("ExpSucc");                                                //sun
- 	g_sLangTxt_ExpSucc = _T("导出成功");                                               //sun
- 	g_sLangID_ExpFail = _T("ExpFail");                                                //sun
- 	g_sLangTxt_ExpFail = _T("导出失败");                                               //sun
- 	g_sLangID_ImpSucc = _T("ImpSucc");                                                //sun
- 	g_sLangTxt_ImpSucc = _T("导入成功");                                               //sun
- 	g_sLangID_ImpFail = _T("ImpFail");                                                //sun
- 	g_sLangTxt_ImpFail = _T("导入失败");                                               //sun
-																					  //sun
- 	g_sLangID_RemainingMemorySize = _T("RemainingMemorySize");                        //sun
- 	g_sLangTxt_RemainingMemorySize = _T("当前系统剩余内存大小%lu B.");                   //sun
- 	g_sLangID_InsufficientSystemMemory = _T("InsufficientSystemMemory");              //sun
- 	g_sLangTxt_InsufficientSystemMemory = _T("当前系统剩余内存不足");                    //sun
- 	g_sLangID_ExistenceSCDFiles = _T("ExistenceSCDFiles");                            //sun
- 	g_sLangTxt_ExistenceSCDFiles = _T("当前存在同名SCD文件，是否继续？");                  //sun
- 	g_sLangID_NoExistenceSCLFiles = _T("NoExistenceSCLFiles");                        //sun
- 	g_sLangTxt_NoExistenceSCLFiles = _T("当前文件(%s)没有扩展名不是SCL文件.");            //sun
-																					  //sun
- 	g_sLangID_AnalysisSCLFiles = _T("AnalysisSCLFiles");                              //sun
- 	g_sLangTxt_AnalysisSCLFiles = _T("SCL解析");                                       //sun
- 	g_sLangID_LoadSCLFiles = _T("LoadSCLFiles");                                      //sun
- 	g_sLangTxt_LoadSCLFiles = _T("正在加载SCL文件...");                                 //sun
- 	g_sLangID_LoadSCLFilesProgressBar = _T("LoadSCLFilesProgressBar");                //sun
- 	g_sLangTxt_LoadSCLFilesProgressBar = _T("SCL加载进度条");                           //sun
-																					  //sun
- 	g_sLangID_SaveSCLFiles = _T("SaveSCLFiles");                                      //sun
- 	g_sLangTxt_SaveSCLFiles = _T("正在保存SCL配置...");                                 //sun
 
 	g_sLangID_Impedance_FunParas =_T("Impedance_FunParas");
 	g_sLangTxt_Impedance_FunParas =_T("功能参数");
@@ -8524,12 +9445,10 @@ void CXLangResource_Native::InitLangTxt()
 	g_sLangTxt_Gradient_FailAngle =_T("故障前相角(°):");
 	g_sLangID_Gradient_RampParas =_T("Gradient_RampParas");
 	g_sLangTxt_Gradient_RampParas =_T("递变参数设置");
-	//g_sLangID_Gradient_VarSet =_T("Gradient_VarSet");
-	//g_sLangTxt_Gradient_VarSet =_T("变量设置");
 	g_sLangID_Gradient_CommonParas =_T("Gradient_CommonParas");
 	g_sLangTxt_Gradient_CommonParas =_T("通用参数");
-	g_sLangID_Gradient_BinBout =_T("Gradient_BinBout");
-	g_sLangTxt_Gradient_BinBout =_T("开入量");
+	//g_sLangID_Gradient_BinBout =_T("Gradient_BinBout");
+	//g_sLangTxt_Gradient_BinBout =_T("开入量");
 	g_sLangID_Gradient_BoutNormal =_T("Gradient_BoutNormal");
 	g_sLangTxt_Gradient_BoutNormal =_T("开出量正常态");
 	g_sLangID_Gradient_BoutFaultState =_T("Gradient_BoutFaultState");
@@ -8577,7 +9496,7 @@ void CXLangResource_Native::InitLangTxt()
 	g_sLangTxt_CBOperate_TimeAfterTrigger=_T("保护动作后持续时间(s)");
 	g_sLangID_CBOperate_PTVPos=_T("CBOperate_PTVPos");
 	g_sLangTxt_CBOperate_PTVPos=_T("TV安装位置");
-	g_sLangID_CBOperate_CTPos=_T("g_sLangID_CBOperate_CTPos");
+	g_sLangID_CBOperate_CTPos=_T("CBOperate_CTPos");
 	g_sLangTxt_CBOperate_CTPos=_T("TA正极性");
 	g_sLangID_CBOperate_AfterOpenTime=_T("CBOperate_AfterOpenTime");
 	g_sLangTxt_CBOperate_AfterOpenTime=_T("开关跳开后持续时间(s)");
@@ -8660,7 +9579,7 @@ void CXLangResource_Native::InitLangTxt()
 	g_sLangID_CBOperate_Perpetual=_T("CBOperate_Perpetual");
 	g_sLangTxt_CBOperate_Perpetual=_T("永久");
 	g_sLangID_CBOperate_MaxFaultTime=_T("CBOperate_MaxFaultTime");
-	g_sLangTxt_CBOperate_MaxFaultTime=_T("最大故障时间(S)");
+	g_sLangTxt_CBOperate_MaxFaultTime=_T("最大故障时间(s)");
 	g_sLangID_CBOperate_FaultMoment=_T("CBOperate_FaultMoment");
 	g_sLangTxt_CBOperate_FaultMoment=_T("故障触发时刻");
 	g_sLangID_CBOperate_Hour=_T("CBOperate_Hour");
@@ -8674,7 +9593,7 @@ void CXLangResource_Native::InitLangTxt()
 	g_sLangID_CBOperate_AmpPhase=_T("CBOperate_AmpPhase");
 	g_sLangTxt_CBOperate_AmpPhase=_T("幅值相位");
 	g_sLangID_CBOperate_ConversionTime=_T("CBOperate_ConversionTime");
-	g_sLangTxt_CBOperate_ConversionTime=_T("转换时间(S)");
+	g_sLangTxt_CBOperate_ConversionTime=_T("转换时间(s)");
 	g_sLangID_CBOperate_Reverse=_T("CBOperate_Reverse");
 	g_sLangTxt_CBOperate_Reverse=_T("反向");
 	g_sLangID_CBOperate_Positive=_T("CBOperate_Positive");
@@ -8682,14 +9601,1791 @@ void CXLangResource_Native::InitLangTxt()
 	g_sLangID_CBOperate_ConversionFail=_T("CBOperate_ConversionFail");
 	g_sLangTxt_CBOperate_ConversionFail=_T("转换性故障");
 
-	g_sLangID_CurrentHigh330   =_T("CurrentHigh330");//高功率电流
-	g_sLangTxt_CurrentHigh330 =_T("高功率电流");
-	g_sLangID_Native_CommandTimeout = _T("CommandTimeout");
+    g_sLangID_Swing_PowerAngleBegin = _T("Swing_PowerAngleBegin");
+    g_sLangTxt_Swing_PowerAngleBegin = _T("功角始值(°):");
+    g_sLangID_Swing_PowerAngleEnd = _T("Swing_PowerAngleEnd");
+    g_sLangTxt_Swing_PowerAngleEnd = _T("功角终值(°):");
+    g_sLangID_Swing_SwingPeriod = _T("Swing_Period");
+    g_sLangTxt_Swing_SwingPeriod = _T("振荡周期:");
+    g_sLangID_Swing_SwingCount = _T("Swing_SwingCount");
+    g_sLangTxt_Swing_SwingCount = _T("振荡次数:");
+    g_sLangID_Swing_TripPoint = _T("Swing_TripPoint");
+    g_sLangTxt_Swing_TripPoint = _T("跳闸接点:");
+    g_sLangID_Swing_TripSpeedUp = _T("Swing_TripSpeedUp");
+    g_sLangTxt_Swing_TripSpeedUp = _T("加速信号接点:");
+    g_sLangID_Swing_TripSpeedDown = _T("Swing_TripSpeedDown");
+    g_sLangTxt_Swing_TripSpeedDown = _T("减速信号接点:");
+    g_sLangID_Swing_FaultType = _T("Swing_FaultType");
+    g_sLangTxt_Swing_FaultType = _T("故障类型:");
+    g_sLangID_Swing_Impedance = _T("Swing_Impedance");
+    g_sLangTxt_Swing_Impedance = _T("短路阻抗(Ω):");
+    g_sLangID_Swing_SCurrent = _T("Swing_SCurrent");
+    g_sLangTxt_Swing_SCurrent = _T("故障电流(A):");
+    g_sLangID_Swing_FaultTime = _T("Swing_FaultTime");
+    g_sLangTxt_Swing_FaultTime = _T("故障发生时刻(s):");
+    g_sLangID_Swing_K0CalMode = _T("Swing_K0CalMode");
+    g_sLangTxt_Swing_K0CalMode = _T("表达方式:");
+    g_sLangID_Swing_Amplitude = _T("Swing_Amplitude");
+    g_sLangTxt_Swing_Amplitude = _T("幅值:");
+    g_sLangID_Swing_Phase = _T("Swing_Phase");
+    g_sLangTxt_Swing_Phase = _T("相位:");
+    g_sLangID_Swing_IncreaseSpeed = _T("Swing_IncreaseSpeed");
+    g_sLangTxt_Swing_IncreaseSpeed = _T("增速");
+    g_sLangID_Swing_Decelerate = _T("Swing_Decelerate");
+    g_sLangTxt_Swing_Decelerate = _T("减速");
+	g_sLangID_Swing_FaultSwing=_T("Swing_FaultSwing");
+	g_sLangTxt_Swing_FaultSwing=_T("振荡中再故障");
+	g_sLangID_Swing_Reciprocating=_T("Swing_Reciprocating");
+	g_sLangTxt_Swing_Reciprocating=_T("往复振荡");
+	g_sLangID_Swing_OscParaSet=_T("Swing_OscParaSet");
+	g_sLangTxt_Swing_OscParaSet=_T("振荡参数设置");
+	g_sLangID_Swing_ImpDiagram=_T("Swing_ImpDiagram");
+	g_sLangTxt_Swing_ImpDiagram=_T("振荡轨迹");
+	g_sLangID_Swing_EquCirSystem=_T("Swing_EquCirSystem");
+	g_sLangTxt_Swing_EquCirSystem=_T("系统等效电路图");
+	g_sLangID_Gradient_FirstVar=_T("Gradient_FirstVar");
+	g_sLangTxt_Gradient_FirstVar=_T("第一变量");
+	g_sLangID_Gradient_SecondVar=_T("Gradient_SecondVar");
+	g_sLangTxt_Gradient_SecondVar=_T("第二变量");
+	g_sLangID_Gradient_FirstStep=_T("Gradient_FirstStep");
+	g_sLangTxt_Gradient_FirstStep=_T("第一变量步长");
+	g_sLangID_Gradient_SecondStep=_T("Gradient_SecondStep");
+	g_sLangTxt_Gradient_SecondStep=_T("第二变量步长");
+	g_sLangID_PowerManu_VolPower=_T("PowerManu_VolPower");
+	g_sLangTxt_PowerManu_VolPower=_T("电压功率");
+	g_sLangID_PowerManu_PowerAct=_T("PowerManu_PowerAct");
+	g_sLangTxt_PowerManu_PowerAct=_T("功率动作值");
+
+	g_sLangID_Swing_MinSwingVol=_T("Swing_MinSwingVol");
+	g_sLangTxt_Swing_MinSwingVol=_T("最小振荡电压");
+	g_sLangID_Swing_MaxSwingCur=_T("Swing_MaxSwingCur");
+	g_sLangTxt_Swing_MaxSwingCur=_T("最大振荡电流");
+	g_sLangID_Swing_CenterSwing=_T("Swing_CenterSwing");
+	g_sLangTxt_Swing_CenterSwing=_T("振荡中心");
+	g_sLangID_Swing_Powerangle=_T("Swing_Powerangle");
+	g_sLangTxt_Swing_Powerangle=_T("功角");
+	g_sLangID_Swing_Time=_T("Swing_Time");
+    g_sLangTxt_Swing_Time=_T("振荡前时间(s)：");
+    g_sLangID_Swing_CTPos=_T("Swing_CTPos");
+    g_sLangTxt_Swing_CTPos=_T("TA正极性：");
+	g_sLangID_Swing_Zs=_T("Swing_Zs");
+    g_sLangTxt_Swing_Zs=_T("系统侧阻抗|Zs|(Ω)：");
+    g_sLangID_Swing_ZsPhi=_T("Swing_ZsPhi");
+    g_sLangTxt_Swing_ZsPhi=_T("PhI(Zs)(°)：");
+	g_sLangID_Swing_Transformer=_T("Swing_Transformer");
+    g_sLangTxt_Swing_Transformer=_T("变压器阻抗|Zt|(Ω)：");
+    g_sLangID_Swing_Transformer_Phi=_T("Swing_Transformer_Phi");
+    g_sLangTxt_Swing_Transformer_Phi=_T("Phi(Zt)(°)：");
+	g_sLangID_Swing_Dynamo=_T("Swing_Dynamo");
+    g_sLangTxt_Swing_Dynamo=_T("发电机暂态电抗(Ω)：");
+	g_sLangID_Power_Active=_T("Power_Active");
+	g_sLangTxt_Power_Active=_T("有功(W)");
+	g_sLangID_Power_Reactive=_T("Power_Reactive");
+	g_sLangTxt_Power_Reactive=_T("无功(Var)");
+
+	g_sLangID_DistanceSearch_LNFault =_T("DistanceSearch_LNFault");
+	g_sLangTxt_DistanceSearch_LNFault =_T("接\n地\n故\n障");
+	g_sLangID_DistanceSearch_LLFault =_T("DistanceSearch_LLFault");
+	g_sLangTxt_DistanceSearch_LLFault =_T("相\n间\n故\n障");
+	g_sLangID_DistanceSearch_SectionOne =_T("DistanceSearch_SectionOne");
+	g_sLangTxt_DistanceSearch_SectionOne =_T("Ⅰ");
+	g_sLangID_DistanceSearch_SectionTwo =_T("DistanceSearch_SectionTwo");
+	g_sLangTxt_DistanceSearch_SectionTwo =_T("Ⅱ");
+	g_sLangID_DistanceSearch_SectionThree =_T("DistanceSearch_SectionThree");
+	g_sLangTxt_DistanceSearch_SectionThree =_T("Ⅲ");
+	g_sLangID_DistanceSearch_SectionFour =_T("DistanceSearch_SectionFour");
+	g_sLangTxt_DistanceSearch_SectionFour =_T("Ⅳ");
+	g_sLangID_DistanceSearch_SectionFive =_T("DistanceSearch_SectionFive");
+	g_sLangTxt_DistanceSearch_SectionFive =_T("Ⅴ");
+
+	g_sLangID_DistanceSearch_LNShort =_T("DistanceSearch_LNShort");
+	g_sLangTxt_DistanceSearch_LNShort =_T("单相接地短路");
+	g_sLangID_DistanceSearch_LLShort =_T("DistanceSearch_LLShort");
+	g_sLangTxt_DistanceSearch_LLShort =_T("相间短路");
+	g_sLangID_DistanceSearch_ThreePhaseShort =_T("DistanceSearch_ThreePhaseShort");
+	g_sLangTxt_DistanceSearch_ThreePhaseShort =_T("三相短路");
+	g_sLangID_DistanceSearch_ActionTime =_T("DistanceSearch_ActionTime");
+	g_sLangTxt_DistanceSearch_ActionTime =_T("动作时间");
+	g_sLangID_DistanceSearch_SensAngle =_T("DistanceSearch_SensAngle");
+	g_sLangTxt_DistanceSearch_SensAngle =_T("灵敏角");
+	g_sLangID_DistanceSearch_Z =_T("DistanceSearch_Z");
+	g_sLangTxt_DistanceSearch_Z =_T("|Z|(Ω)");
+	g_sLangID_DistanceSearch_Phi =_T("DistanceSearch_Phi");
+	g_sLangTxt_DistanceSearch_Phi =_T("Phi(°)");
+	g_sLangID_DistanceSearch_RepeatTime =_T("DistanceSearch_RepeatTime");
+	g_sLangTxt_DistanceSearch_RepeatTime =_T("重复次数");
+	g_sLangID_DistanceSearch_Report =_T("DistanceSearch_Report");
+	g_sLangTxt_DistanceSearch_Report =_T("报告处理");
+	g_sLangID_DistanceSearch_AutoClose = _T("DistanceSearch_AutoClose");
+	g_sLangTxt_DistanceSearch_AutoClose = _T("边界自动闭合");
+    g_sLangID_DistanceSearch_XAxisName = _T("DistanceSearch_XAxisName");
+    g_sLangTxt_DistanceSearch_XAxisName = _T("R/Ω ");
+    g_sLangID_DistanceSearch_YAxisName = _T("DistanceSearch_YAxisName");
+    g_sLangTxt_DistanceSearch_YAxisName = _T("X/Ω ");
+
+    g_sLangID_DistanceSearch_ZoneType = _T("DistanceSearch_ZoneType");
+    g_sLangTxt_DistanceSearch_ZoneType = _T("区段:");
+    g_sLangID_DistanceSearch_BeginZ = _T("DistanceSearch_BeginZ");
+    g_sLangTxt_DistanceSearch_BeginZ = _T("首端阻抗(Ω):");
+    g_sLangID_DistanceSearch_BeginZAngle = _T("DistanceSearch_BeginZAngle");
+    g_sLangTxt_DistanceSearch_BeginZAngle = _T("首端阻抗角(°):");
+    g_sLangID_DistanceSearch_EndZ = _T("DistanceSearch_EndZ");
+    g_sLangTxt_DistanceSearch_EndZ = _T("末端阻抗(Ω):");
+    g_sLangID_DistanceSearch_EndZAngle = _T("DistanceSearch_EndZAngle");
+    g_sLangTxt_DistanceSearch_EndZAngle = _T("末端阻抗角(°):");
+    g_sLangID_DistanceSearch_Step = _T("DistanceSearch_Step");
+    g_sLangTxt_DistanceSearch_Step = _T("阻抗步长(Ω):");
+    g_sLangID_DistanceSearch_TSetting = _T("DistanceSearch_TSetting");
+    g_sLangTxt_DistanceSearch_TSetting = _T("时间定值(s):");
+    g_sLangID_DistanceSearch_AbsErr = _T("DistanceSearch_AbsErr");
+    g_sLangTxt_DistanceSearch_AbsErr = _T("绝对误差(Ω):");
+    g_sLangID_DistanceSearch_TimeAfterTrigger = _T("DistanceSearch_TimeAfterTrigger");
+    g_sLangTxt_DistanceSearch_TimeAfterTrigger = _T("保护动作后持续时间(s):");
+    g_sLangID_DistanceSearch_MinActionTime = _T("DistanceSearch_MinActionTime");
+    g_sLangTxt_DistanceSearch_MinActionTime = _T("最小动作时间(s):");
+    g_sLangID_DistanceSearch_Zl = _T("DistanceSearch_Zl");
+    g_sLangTxt_DistanceSearch_Zl = _T("线路阻抗(Ω):");
+    g_sLangID_DistanceSearch_SearchWay = _T("DistanceSearch_SearchWay");
+    g_sLangTxt_DistanceSearch_SearchWay = _T("搜索方式:");
+    g_sLangID_DistanceSearch_K0Mode = _T("DistanceSearch_K0Mode");
+    g_sLangTxt_DistanceSearch_K0Mode = _T("零序补偿系数计算方式:");
+    g_sLangID_DistanceSearch_ZsMag = _T("DistanceSearch_ZsMag");
+    g_sLangTxt_DistanceSearch_ZsMag = _T("系统阻抗(Ω):");
+    g_sLangID_DistanceSearch_ZsAngle = _T("DistanceSearch_ZsAngle");
+    g_sLangTxt_DistanceSearch_ZsAngle = _T("系统阻抗角(°):");
+    g_sLangID_DistanceSearch_PTPos = _T("DistanceSearch_PTPos");
+    g_sLangTxt_DistanceSearch_PTPos = _T("TV安装位置:");
+    g_sLangID_DistanceSearch_CTPos = _T("DistanceSearch_CTPos");
+    g_sLangTxt_DistanceSearch_CTPos = _T("TA正极性:");
+    g_sLangID_DistanceSearch_SimulateBreakerDelay = _T("DistanceSearch_SimulateBreakerDelay");
+    g_sLangTxt_DistanceSearch_SimulateBreakerDelay = _T("断路器模拟:");
+    g_sLangID_DistanceSearch_BrkBreakTime = _T("DistanceSearch_BrkBreakTime");
+    g_sLangTxt_DistanceSearch_BrkBreakTime = _T("分闸时间(ms):");
+    g_sLangID_DistanceSearch_BrkCloseTime = _T("DistanceSearch_BrkCloseTime");
+    g_sLangTxt_DistanceSearch_BrkCloseTime = _T("合闸时间(ms):");
+    g_sLangID_DistanceSearch_FaultId = _T("DistanceSearch_FaultId");
+    g_sLangTxt_DistanceSearch_FaultId = _T("是否叠加非周期分量:");
+    g_sLangID_DistanceSearch_FaultAngMode = _T("DistanceSearch_FaultAngMode");
+    g_sLangTxt_DistanceSearch_FaultAngMode = _T("合闸角方式:");
+    g_sLangID_DistanceSearch_FaultAng = _T("DistanceSearch_FaultAng");
+    g_sLangTxt_DistanceSearch_FaultAng = _T("合闸角(°):");
+    g_sLangID_DistanceSearch_Header_ZoneType = _T("DistanceSearch_Header_ZoneType");
+    g_sLangTxt_DistanceSearch_Header_ZoneType = _T("区段");
+    g_sLangID_DistanceSearch_OrigImp = _T("DistanceSearch_OrigImp");
+    g_sLangTxt_DistanceSearch_OrigImp = _T("中心点阻抗(Ω):");
+    g_sLangID_DistanceSearch_OrigAng = _T("DistanceSearch_OrigAng");
+    g_sLangTxt_DistanceSearch_OrigAng = _T("中心点阻抗角(°):");
+    g_sLangID_DistanceSearch_SearchAngBeg = _T("DistanceSearch_SearchAngBeg");
+    g_sLangTxt_DistanceSearch_SearchAngBeg = _T("搜索角度始值(°):");
+    g_sLangID_DistanceSearch_SearchAngEnd = _T("DistanceSearch_SearchAngEnd");
+    g_sLangTxt_DistanceSearch_SearchAngEnd = _T("搜索角度终值(°):");
+    g_sLangID_DistanceSearch_AngStep = _T("DistanceSearch_AngStep");
+    g_sLangTxt_DistanceSearch_AngStep = _T("角度改变步长(°):");
+    g_sLangID_DistanceSearch_ZoneTypeSelect = _T("DistanceSearch_ZoneTypeSelect");
+    g_sLangTxt_DistanceSearch_ZoneTypeSelect = _T("区段选择:");
+    g_sLangID_DistanceSearch_SearchLen = _T("DistanceSearch_SearchLen");
+    g_sLangTxt_DistanceSearch_SearchLen = _T("搜索半径(Ω):");
+    g_sLangID_DistanceSearch_TripZ = _T("DistanceSearch_TripZ");
+    g_sLangTxt_DistanceSearch_TripZ = _T("实测阻抗(Ω)");
+    g_sLangID_DistanceSearch_TripZAngle = _T("DistanceSearch_TripZAngle");
+    g_sLangTxt_DistanceSearch_TripZAngle = _T("实测阻抗角(°)");
+    g_sLangID_DistanceSearch_AddItemFailed = _T("DistanceSearch_AddItemFailed");
+    g_sLangTxt_DistanceSearch_AddItemFailed = _T("与特性曲线没有交点，不生成测试项。");
+
+	g_sLangID_ActionTime_LNShort =_T("ActionTime_LNShort");
+	g_sLangTxt_ActionTime_LNShort =_T("单相接地短路");
+	g_sLangID_ActionTime_LLShort =_T("ActionTime_LLShort");
+	g_sLangTxt_ActionTime_LLShort =_T("相间短路");
+	g_sLangID_ActionTime_ThreePhaseShort =_T("ActionTime_ThreePhaseShort");
+	g_sLangTxt_ActionTime_ThreePhaseShort =_T("三相短路");
+	g_sLangID_ActionTime_ZeroCur =_T("ActionTime_ZeroCur");
+    g_sLangTxt_ActionTime_ZeroCur =_T("零序电流3I0");
+	g_sLangID_ActionTime_NegCur =_T("ActionTime_NegCur");
+    g_sLangTxt_ActionTime_NegCur =_T("负序电流I2");
+	g_sLangID_ActionTime_ThreeParallel =_T("ActionTime_ThreeParallel");
+	g_sLangTxt_ActionTime_ThreeParallel =_T("三相电流并联");
+	g_sLangID_ActionTime_ShortVol =_T("ActionTime_ShortVol");
+	g_sLangTxt_ActionTime_ShortVol =_T("短路电压");
+	g_sLangID_ActionTime_ZeroVol =_T("ActionTime_ZeroVol");
+	g_sLangTxt_ActionTime_ZeroVol =_T("零序电压");
+	g_sLangID_ActionTime_NegVol =_T("ActionTime_NegVol");
+	g_sLangTxt_ActionTime_NegVol =_T("负序电压");
+
+    g_sLangID_ActionTime_SettingTime = _T("ActionTime_SettingTime");
+    g_sLangTxt_ActionTime_SettingTime = _T("动作时间定值(s):");
+    g_sLangID_ActionTime_FaultVolType = _T("ActionTime_FaultVolType");
+    g_sLangTxt_ActionTime_FaultVolType = _T("故障电压:");
+    g_sLangID_ActionTime_FaultVol = _T("ActionTime_FaultVol");
+    g_sLangTxt_ActionTime_FaultVol = _T("故障电压(V):");
+    g_sLangID_ActionTime_FaultAngle = _T("ActionTime_FaultAngle");
+    g_sLangTxt_ActionTime_FaultAngle = _T("故障态相位差(°):");
+    g_sLangID_ActionTime_FaultFre = _T("ActionTime_FaultFre");
+    g_sLangTxt_ActionTime_FaultFre = _T("故障态频率(Hz):");
+    g_sLangID_ActionTime_RelErr = _T("ActionTime_RelErr");
+    g_sLangTxt_ActionTime_RelErr = _T("相对误差(％):");
+    g_sLangID_ActionTime_AbsErrPos = _T("ActionTime_AbsErrPos");
+    g_sLangTxt_ActionTime_AbsErrPos = _T("绝对误差(s)+:");
+    g_sLangID_ActionTime_AbsErrNeg = _T("ActionTime_AbsErrNeg");
+    g_sLangTxt_ActionTime_AbsErrNeg = _T("绝对误差(s)-:");
+    g_sLangID_ActionTime_NormalVol = _T("ActionTime_NormalVol");
+    g_sLangTxt_ActionTime_NormalVol = _T("常态电压(V):");
+    g_sLangID_ActionTime_NormalCur = _T("ActionTime_NormalCur");
+    g_sLangTxt_ActionTime_NormalCur = _T("常态电流(A):");
+    g_sLangID_ActionTime_NormalAngle = _T("ActionTime_NormalAngle");
+    g_sLangTxt_ActionTime_NormalAngle = _T("常态相位差(°):");
+    g_sLangID_ActionTime_NormalFre = _T("ActionTime_NormalFre");
+    g_sLangTxt_ActionTime_NormalFre = _T("常态频率(Hz):");
+    g_sLangID_ActionTime_FaultTime = _T("ActionTime_FaultTime");
+    g_sLangTxt_ActionTime_FaultTime = _T("故障时间裕度(s):");
+    g_sLangID_ActionTime_ErrType = _T("ActionTime_ErrType");
+    g_sLangTxt_ActionTime_ErrType = _T("误差类型:");
+
+    g_sLangID_ActionTime_TestItem = _T("ActionTime_TestItem");
+    g_sLangTxt_ActionTime_TestItem = _T("测试项目");
+    g_sLangID_ActionTime_FaultPhase = _T("ActionTime_TestPhase");
+    g_sLangTxt_ActionTime_FaultPhase = _T("故障相别");
+    g_sLangID_ActionTime_Select = _T("ActionTime_Select");
+    g_sLangTxt_ActionTime_Select = _T("选择");
+    g_sLangID_ActionTime_TestResult = _T("ActionTime_TestResult");
+    g_sLangTxt_ActionTime_TestResult = _T("测试结果(s)");
+    g_sLangID_ActionTime_Title_SettingTime = _T("ActionTime_Title_SettingTime");
+    g_sLangTxt_ActionTime_Title_SettingTime = _T("时间定值(s)");
+
+    g_sLangID_Button_AddMultQuick = _T("AddMultQuick");
+    g_sLangTxt_Button_AddMultQuick = _T("快速添加");
+    g_sLangID_Button_AddMultDlg = _T("AddMultDlg");
+    g_sLangTxt_Button_AddMultDlg = _T("添加系列");
+    g_sLangID_Button_AddMultBatch = _T("AddMultBatch");
+    g_sLangTxt_Button_AddMultBatch = _T("批量添加");
+    g_sLangID_Button_AddCustomizedPara = _T("AddCustomizedPara");
+    g_sLangTxt_Button_AddCustomizedPara = _T("自定义参数添加");
+    g_sLangID_Button_AddDefaultPara = _T("AddDefaultPara");
+    g_sLangTxt_Button_AddDefaultPara = _T("默认参数添加");
+    g_sLangID_Button_DeleteSelItem = _T("DeleteSelItem");
+    g_sLangTxt_Button_DeleteSelItem = _T("删除当前");
+    g_sLangID_Button_DeleteAllItem = _T("DeleteAllItem");
+    g_sLangTxt_Button_DeleteAllItem = _T("删除全部");
+    g_sLangID_Button_ClearSelResult = _T("ClearSelResult");
+    g_sLangTxt_Button_ClearSelResult = _T("清除当前");
+    g_sLangID_Button_ClearAllResult = _T("_ClearAllResult");
+    g_sLangTxt_Button_ClearAllResult = _T("清除全部");
+    g_sLangID_Button_AddOneItem = _T("AddOneItem");
+    g_sLangTxt_Button_AddOneItem = _T("添加测试项");
+//     g_sLangID_Button_AddMultiItem = _T("AddMultiItem");
+//     g_sLangTxt_Button_AddMultiItem = _T("添加系列");
+
+    g_sLangID_Action_AddOneItem = _T("Action_AddOneItem");
+    g_sLangTxt_Action_AddOneItem = _T("添加测试项");
+    g_sLangID_Action_DeleteSelItem = _T("Action_DeleteSelItem");
+    g_sLangTxt_Action_DeleteSelItem = _T("删除当前测试项");
+    g_sLangID_Action_DeleteAllItem = _T("Action_DeleteAllItem");
+    g_sLangTxt_Action_DeleteAllItem = _T("删除所有测试项");
+    g_sLangID_Action_ClearSelResult = _T("Action_ClearSelResult");
+    g_sLangTxt_Action_ClearSelResult = _T("清除当前结果");
+    g_sLangID_Action_ClearAllResult = _T("Action_ClearAllResult");
+    g_sLangTxt_Action_ClearAllResult = _T("清除所有结果");
+
+    g_sLangID_PowerDir_TestPhase_Zero = _T("PowerDir_ZeroTest");
+    g_sLangTxt_PowerDir_TestPhase_Zero = _T("零序测试");
+    g_sLangID_PowerDir_TestPhase_Neg = _T("PowerDir_NegTest");
+    g_sLangTxt_PowerDir_TestPhase_Neg = _T("负序测试");
+    g_sLangID_PowerDir_FaultPhase_ZeroCur = _T("PowerDir_ZeroCurr");
+    g_sLangTxt_PowerDir_FaultPhase_ZeroCur = _T("零序电流");
+    g_sLangID_PowerDir_FaultPhase_NegCur = _T("PowerDir_NegCurr");
+    g_sLangTxt_PowerDir_FaultPhase_NegCur = _T("负序电流");
+    g_sLangID_PowerDir_TestPhase =  _T("PowerDir_TestPhase");
+    g_sLangTxt_PowerDir_TestPhase =  _T("测试相:");
+    g_sLangID_PowerDir_FaultPhase =  _T("PowerDir_FaultPhase");
+    g_sLangTxt_PowerDir_FaultPhase =  _T("故障相:");
+    g_sLangID_PowerDir_FaultTime =  _T("PowerDir_FaultTime");
+    g_sLangTxt_PowerDir_FaultTime =  _T("故障时间(s):");
+    g_sLangID_PowerDir_MaxSenAngle =  _T("PowerDir_MaxSenAngle");
+    g_sLangTxt_PowerDir_MaxSenAngle =  _T("最大灵敏角(°):");
+    g_sLangID_PowerDir_ActionAreaRange =  _T("PowerDir_ActionAreaRange");
+    g_sLangTxt_PowerDir_ActionAreaRange =  _T("动作区范围(°):");
+    g_sLangID_PowerDir_StepValue =  _T("PowerDir_StepValue");
+    g_sLangTxt_PowerDir_StepValue =  _T("变化步长(°):");
+    g_sLangID_PowerDir_AbsErr =  _T("PowerDir_AbsErr");
+    g_sLangTxt_PowerDir_AbsErr =  _T("绝对误差(°):");
+    g_sLangID_PowerDir_NormalBout =  _T("PowerDir_NormalBout");
+    g_sLangTxt_PowerDir_NormalBout =  _T("常态开出设置");
+    g_sLangID_PowerDir_FaultBout =  _T("PowerDir_FaultBout");
+    g_sLangTxt_PowerDir_FaultBout =  _T("故障态开出设置");
+    g_sLangID_PowerDir_UPre =  _T("PowerDir_UPre");
+    g_sLangTxt_PowerDir_UPre =  _T("常态电压幅值(V):");
+    g_sLangID_PowerDir_UPhSet =  _T("PowerDir_UPhSet");
+    g_sLangTxt_PowerDir_UPhSet =  _T("常态电压相序:");
+    g_sLangID_PowerDir_IPre =  _T("PowerDir_IPre");
+    g_sLangTxt_PowerDir_IPre =  _T("常态电流幅值(A):");
+    g_sLangID_PowerDir_IPhSet =  _T("PowerDir_IPhSet");
+    g_sLangTxt_PowerDir_IPhSet =  _T("常态电流相序:");
+    g_sLangID_PowerDir_PreAngle =  _T("PowerDir_PreAngle");
+    g_sLangTxt_PowerDir_PreAngle =  _T("常态相角(U-I):");
+    g_sLangID_PowerDir_AngleMode =  _T("PowerDir_AngleMode");
+    g_sLangTxt_PowerDir_AngleMode =  _T("角度定义:");
+    g_sLangID_PowerDir_ConnectMode =  _T("PowerDir_ConnectMode");
+    g_sLangTxt_PowerDir_ConnectMode =  _T("接线方式:");
+    g_sLangID_PowerDir_AngleMargin =  _T("PowerDir_AngleMargin");
+    g_sLangTxt_PowerDir_AngleMargin =  _T("角度裕度(°):");
+    g_sLangID_PowerDir_FaultParas =  _T("PowerDir_FaultParas");
+    g_sLangTxt_PowerDir_FaultParas =  _T("故障参数");
+//     g_sLangID_PowerDir_TestParas =  _T("PowerDir_TestParas");
+//     g_sLangTxt_PowerDir_TestParas =  _T("试验参数");
+    g_sLangID_PowerDir_APhaseTest =  _T("PowerDir_APhaseTest");
+    g_sLangTxt_PowerDir_APhaseTest =  _T("A相测试");
+    g_sLangID_PowerDir_BPhaseTest =  _T("PowerDir_BPhaseTest");
+    g_sLangTxt_PowerDir_BPhaseTest =  _T("B相测试");
+    g_sLangID_PowerDir_CPhaseTest =  _T("PowerDir_CPhaseTest");
+    g_sLangTxt_PowerDir_CPhaseTest =  _T("C相测试");
+    g_sLangID_PowerDir_ABPhaseTest =  _T("PowerDir_ABPhaseTest");
+    g_sLangTxt_PowerDir_ABPhaseTest =  _T("AB相测试");
+    g_sLangID_PowerDir_BCPhaseTest =  _T("PowerDir_BCPhaseTest");
+    g_sLangTxt_PowerDir_BCPhaseTest =  _T("BC相测试");
+    g_sLangID_PowerDir_CAPhaseTest =  _T("PowerDir_CAPhaseTest");
+    g_sLangTxt_PowerDir_CAPhaseTest =  _T("CA相测试");
+    g_sLangID_PowerDir_Title_MTA = _T("PowerDir_MTA");
+    g_sLangTxt_PowerDir_Title_MTA = _T("最大灵敏角理论值(°)");
+    g_sLangID_PowerDir_Title_ActionAreaRange = _T("PowerDir_Title_ActionAreaRange");
+    g_sLangTxt_PowerDir_Title_ActionAreaRange = _T("动作区范围(°)");
+    g_sLangID_PowerDir_Title_StepValue = _T("PowerDir_Title_StepValue");
+    g_sLangTxt_PowerDir_Title_StepValue = _T("变化步长(°)");
+    g_sLangID_PowerDir_Title_MaxSenAngle = _T("PowerDir_Title_MaxSenAngle");
+    g_sLangTxt_PowerDir_Title_MaxSenAngle = _T("最大灵敏角实测值(°)");
+    g_sLangID_PowerDir_Title_AngleF = _T("PowerDir_Title_AngleF");
+    g_sLangTxt_PowerDir_Title_AngleF = _T("边界1(°)");
+    g_sLangID_PowerDir_Title_AngleS = _T("PowerDir_Title_AngleS");
+    g_sLangTxt_PowerDir_Title_AngleS = _T("边界2(°)");
+
+	g_sLangID_CrrInverTime_IAmp =_T("CrrInverTime_IAmp");
+	g_sLangTxt_CrrInverTime_IAmp =_T("电流幅值");
+	g_sLangID_CrrInverTime_IPh =_T("CrrInverTime_IPh");
+	g_sLangTxt_CrrInverTime_IPh =_T("电流相位");
+	g_sLangID_CrrInverTime_ChangeStart = _T("CrrInverTime_ChangeStart");
+	g_sLangTxt_CrrInverTime_ChangeStart = _T("变化始值(°)");
+	g_sLangID_CrrInverTime_ChangeFinish = _T("CrrInverTime_ChangeFinish");
+	g_sLangTxt_CrrInverTime_ChangeFinish = _T("变化终值(°)");
+	g_sLangID_CrrInverTime_ChangeStep = _T("CrrInverTime_ChangeStep");
+	g_sLangTxt_CrrInverTime_ChangeStep = _T("变化步长(°)");
+
+	g_sLangID_Syn_ActVoltageTest = _T("Syn_ActVoltageTest");
+	g_sLangTxt_Syn_ActVoltageTest = _T("电压边界值测试");
+	g_sLangID_Syn_ActFreqTest = _T("Syn_ActFreqTest");
+	g_sLangTxt_Syn_ActFreqTest = _T("频率边界值测试");
+	g_sLangID_Syn_LeadAngTest = _T("Syn_LeadAngTest");
+	g_sLangTxt_Syn_LeadAngTest = _T("导前角及导前时间");
+	g_sLangID_Syn_AutoAdjTest = _T("Syn_AutoAdjTest");
+	g_sLangTxt_Syn_AutoAdjTest = _T("自动调整试验");
+	g_sLangID_Syn_AdjVolTest = _T("Syn_AdjVolTest");
+	g_sLangTxt_Syn_AdjVolTest = _T("调压周期测试");
+	g_sLangID_Syn_AdjFreqTest = _T("Syn_AdjFreqTest");
+	g_sLangTxt_Syn_AdjFreqTest = _T("调频周期测试");
+
+	g_sLangID_Setting_NoWord = _T("NoLink");
+	g_sLangTxt_Setting_NoWord = _T("尚未关联定值");
+	g_sLangID_Setting_Link = _T("SelectLink");
+	g_sLangTxt_Setting_Link = _T("关联选择定值");
+	g_sLangID_Setting_Cancel = _T("CancelLink");
+	g_sLangTxt_Setting_Cancel = _T("取消关联");
+	g_sLangID_Setting_CancelAll = _T("CancelAllLink");
+	g_sLangTxt_Setting_CancelAll = _T("取消全部");
+	//20240924 huangliang 
+	g_sLangID_Setting_NoFind = _T("NoFind");
+	g_sLangTxt_Setting_NoFind = _T("未找到");
+	//20241127 huangliang 
+	g_sLangID_Setting_ModelName = _T("Setting");
+	g_sLangTxt_Setting_ModelName = _T("关联定值");
+
+    g_sLangID_LowFreq_ULock = _T("LowFreq_ULock");
+    g_sLangTxt_LowFreq_ULock = _T("低电压闭锁值");
+    g_sLangID_LowFreq_ILock = _T("LowFreq_ILock");
+    g_sLangTxt_LowFreq_ILock = _T("低电流闭锁值");
+    g_sLangID_LowFreq_LowVol = _T("LowFreq_LowVol");
+    g_sLangTxt_LowFreq_LowVol = _T("低压");
+
+	g_sLangID_Distance_DeleteItem =_T("Distance_DeleteItem");//luozibing 2024.7.19
+	g_sLangTxt_Distance_DeleteItem =_T("删除测试项");
+	g_sLangID_Distance_ClearResult =_T("Distance_ClearResult");
+	g_sLangTxt_Distance_ClearResult =_T("清除测试结果");
+	g_sLangID_Distance_Zone1 =_T("Distance_Zone1");
+	g_sLangTxt_Distance_Zone1 =_T("Ⅰ段");
+	g_sLangID_Distance_Zone2 =_T("Distance_Zone2");
+	g_sLangTxt_Distance_Zone2 =_T("Ⅱ段");
+	g_sLangID_Distance_Zone3 =_T("Distance_Zone3");
+	g_sLangTxt_Distance_Zone3 =_T("Ⅲ段");
+	g_sLangID_Distance_Zone4 =_T("Distance_Zone4");
+	g_sLangTxt_Distance_Zone4 =_T("Ⅳ段");
+	g_sLangID_Distance_Zone5 =_T("Distance_Zone5");
+	g_sLangTxt_Distance_Zone5 =_T("Ⅴ段");
+	g_sLangID_Distance_ZoneLine =_T("Distance_ZoneLine");
+	g_sLangTxt_Distance_ZoneLine =_T("线路长度");
+	g_sLangID_Distance_ZoneAllarea =_T("Distance_ZoneAllarea");
+	g_sLangTxt_Distance_ZoneAllarea =_T("所有区域");
+	g_sLangID_Distance_ErrorNot =_T("Distance_ErrorNot");
+	g_sLangTxt_Distance_ErrorNot =_T("不评估");;
+	g_sLangID_Distance_ErrorRelAndAbs =_T("Distance_ErrorRelAndAbs");
+	g_sLangTxt_Distance_ErrorRelAndAbs =_T("绝对误差&amp;相对误差");
+	g_sLangID_Distance_ErrorRelorAbs =_T("Distance_ErrorRelorAbs");
+	g_sLangTxt_Distance_ErrorRelorAbs =_T("绝对误差or相对误差");
+	g_sLangID_Distance_AddOneLN =_T("Distance_AddOneLN");
+	g_sLangTxt_Distance_AddOneLN =_T("添加单个区段-接地故障");
+	g_sLangID_Distance_AddOneLL =_T("Distance_AddOneLL");
+	g_sLangTxt_Distance_AddOneLL =_T("添加单个区段-相间故障");
+	g_sLangID_Distance_AddMult =_T("Distance_AddMult");
+	g_sLangTxt_Distance_AddMult =_T("添加多个区段");
+    g_sLangID_Distance_VzDefine = _T("Distance_VzDefine");
+    g_sLangTxt_Distance_VzDefine = _T("√3×3U0");
+    g_sLangID_Distance_ZTYAxis=_T("Distance_ZTYAxis");
+    g_sLangTxt_Distance_ZTYAxis=_T("Z(Ω)");
+	//20241023 luozibing
+	g_sLangID_Distance_Percent = _T("Distance_Percent");
+	g_sLangTxt_Distance_Percent = _T("百分比(%):");
+	g_sLangID_Distance_ZoneSel = _T("Distance_ZoneSel");
+	g_sLangTxt_Distance_ZoneSel = _T("区段选择:");
+	g_sLangID_Distance_FaultLN = _T("Distance_FaultLN");
+	g_sLangTxt_Distance_FaultLN = _T("接\n地\n故\n障");
+	g_sLangID_Distance_FaultLL = _T("Distance_FaultLL");
+	g_sLangTxt_Distance_FaultLL = _T("相\n间\n故\n障");
+	g_sLangID_Distance_MinTrip = _T("Distance_MinTrip");
+	g_sLangTxt_Distance_MinTrip = _T("最小动作时间(s):");
+	g_sLangID_Distance_ZLineSet = _T("Distance_ZLineSet");
+	g_sLangTxt_Distance_ZLineSet = _T("线路阻抗(Ω):");
+	g_sLangID_Distance_AddOneTileLL = _T("Distance_AddOneTileLL");
+	g_sLangTxt_Distance_AddOneTileLL = _T("添加相间故障");
+	g_sLangID_Distance_AddOneTileLN = _T("Distance_AddOneTileLN");
+	g_sLangTxt_Distance_AddOneTileLN = _T("添加单相接地故障");
+// 	g_sLangID_Distance_AddMultTile = _T("Distance_AddMultTile");
+// 	g_sLangTxt_Distance_AddMultTile = _T("添加系列");
+	g_sLangID_Distance_CommonParas = _T("Distance_CommonParas");
+	g_sLangTxt_Distance_CommonParas = _T("通用参数设置");
+	g_sLangID_Distance_ZImpValue = _T("Distance_ZImpValue");
+	g_sLangTxt_Distance_ZImpValue = _T("阻抗(Ω):");
+	g_sLangID_Distance_TSetting = _T("Distance_TSetting");
+	g_sLangTxt_Distance_TSetting = _T("时间定值(s):");
+	g_sLangID_Distance_SetActionTime = _T("Distance_SetActionTime");
+	g_sLangTxt_Distance_SetActionTime = _T("整定动作时间(s):");
+	g_sLangID_Distance_AddMultZone = _T("Distance_AddMultZone");
+	g_sLangTxt_Distance_AddMultZone = _T("区段:");
+	g_sLangID_Distance_FaultTypeSel = _T("Distance_FaultTypeSel");
+	g_sLangTxt_Distance_FaultTypeSel = _T("故障类型选择:");
+	g_sLangID_Distance_FailDirectSel = _T("Distance_FailDirectSel");
+	g_sLangTxt_Distance_FailDirectSel = _T("故障方向选择:");
+	g_sLangID_Distance_AddMultZAng = _T("Distance_AddMultZAng");
+	g_sLangTxt_Distance_AddMultZAng = _T("阻抗角(°)");
+	g_sLangID_Distance_OutputHoldTimeS = _T("Distance_OutputHoldTimeS");
+	g_sLangTxt_Distance_OutputHoldTimeS = _T("开出保持时间(s)");
+	g_sLangID_Distance_OutputDelayTime = _T("Distance_OutputDelayTime");
+	g_sLangTxt_Distance_OutputDelayTime = _T("开出翻转时刻(s)");
+	g_sLangID_Distance_VzPh = _T("Distance_VzPh");
+	g_sLangTxt_Distance_VzPh = _T("抽取电压相角(相对参考相):");
+	g_sLangID_Distance_AddTestItemTips = _T("Distance_AddTestItemTips");
+	g_sLangTxt_Distance_AddTestItemTips = _T("请添加测试项！");
+	g_sLangID_Distance_BreakTime_sec = _T("Distance_BreakTime_sec");
+	g_sLangTxt_Distance_BreakTime_sec = _T("分闸时间(ms)");
+	g_sLangID_Distance_BrkCloseTime_sec = _T("Distance_BrkCloseTime_sec");
+	g_sLangTxt_Distance_BrkCloseTime_sec = _T("合闸时间(ms)");
+	g_sLangID_Distance_FaultPreTimeS = _T("Distance_FaultPreTimeS");;
+	g_sLangTxt_Distance_FaultPreTimeS = _T("故障前时间(s)"); // 故障前时间(s)
+	g_sLangID_Distance_FaultTimeMargin = _T("Distance_FaultTimeMargin");
+	g_sLangTxt_Distance_FaultTimeMargin = _T("故障时间裕度(s)");
+
+	g_sLangID_CharElement_StartPointAmp = _T("CharElement_StartPointAmp");
+	g_sLangTxt_CharElement_StartPointAmp = _T("起始点-幅值");
+	g_sLangID_CharElement_StartPointAngle = _T("CharElement_StartPointAngle");
+	g_sLangTxt_CharElement_StartPointAngle = _T("起始点-相位");
+	g_sLangID_CharElement_EndPointAmp = _T("CharElement_EndPointAmp");
+	g_sLangTxt_CharElement_EndPointAmp = _T("终止点-幅值");
+	g_sLangID_CharElement_EndPointAngle = _T("CharElement_EndPointAngle");
+	g_sLangTxt_CharElement_EndPointAngle = _T("终止点-相位");
+	g_sLangID_CharElement_ARCAmp  = _T("CharElement_ARCAmp");
+	g_sLangTxt_CharElement_ARCAmp = _T("幅值-圆心");
+	g_sLangID_CharElement_ARCAngle = _T("CharElement_ARCAngle");
+	g_sLangTxt_CharElement_ARCAngle = _T("相位-圆心");
+
+	g_sLangID_Distance_ImpActBorder =_T("Distance_ImpActBorder");
+	g_sLangTxt_Distance_ImpActBorder =_T("阻抗动作边界");
+	g_sLangID_Distance_ImpSetCheck =_T("Distance_ImpSetCheck");
+	g_sLangTxt_Distance_ImpSetCheck =_T("阻抗定值校验");
+	g_sLangID_Distance_AbsErrPlus =_T("Distance_AbsErrPlus");
+	g_sLangTxt_Distance_AbsErrPlus =_T("绝对误差(+)");
+	g_sLangID_Distance_AbsErrMinus =_T("Distance_AbsErrMinus");
+	g_sLangTxt_Distance_AbsErrMinus =_T("绝对误差(-)");
+	g_sLangID_Distance_CharacterEng_UseZone =_T("CharacterEng_UseZone");
+	g_sLangTxt_CharacterEng_UseZone =_T("使用");
+	g_sLangID_Distance_CharacterEng_FaulTips =_T("CharacterEng_FaulTips");
+	g_sLangTxt_CharacterEng_FaulTips =_T("带有故障环区域确实已存在!");
+	g_sLangID_Distance_CharacterEng_FaulTipTile =_T("CharacterEng_FaulTipTile");
+	g_sLangTxt_CharacterEng_FaulTipTile =_T("提示");
+
+    g_sLangTxt_Replay_WaveformEditing = _T("波形编辑");
+    g_sLangID_Replay_WaveformEditing = _T("Replay_WaveformEditing");
+    g_sLangTxt_Replay_OriWaveEdit = _T("原波形编辑");
+    g_sLangID_Replay_OriWaveEdit = _T("Replay_OriWaveEdit");
+    g_sLangTxt_Replay_InsertNorWave = _T("插入常态波形");
+    g_sLangID_Replay_InsertNorWave = _T("Replay_InsertNorWave");
+    g_sLangTxt_Replay_InsertWave = _T("插入波形");
+    g_sLangID_Replay_InsertWave = _T("Replay_InsertWave");
+    g_sLangTxt_Replay_InsertWaveParams = _T("插入波形参数:");
+    g_sLangID_Replay_InsertWaveParams = _T("Replay_InsertWaveParams");
+    g_sLangTxt_Replay_Time = _T("时间");
+    g_sLangID_Replay_Time = _T("Replay_Time");
+    g_sLangTxt_Replay_PointNumber = _T("点号");
+    g_sLangID_Replay_PointNumber = _T("Replay_PointNumber");
+    g_sLangTxt_Replay_StartPointNumber = _T("起始点号:");
+    g_sLangID_Replay_StartPointNumber = _T("Replay_StartPointNumber");
+    g_sLangTxt_Replay_EndPointNumber = _T("终止点号:");
+    g_sLangID_Replay_EndPointNumber = _T("Replay_EndPointNumber");
+    g_sLangTxt_Replay_StartTime = _T("起始时刻（s）:");
+    g_sLangID_Replay_StartTime = _T("Replay_StartTime");
+    g_sLangTxt_Replay_EndTime = _T("终止时刻（s）:");
+    g_sLangID_Replay_EndTime = _T("Replay_EndTime");
+    g_sLangTxt_Replay_NumCycles = _T("循环次数:");
+    g_sLangID_Replay_NumCycles = _T("Replay_NumCycles");
+    g_sLangTxt_Replay_Voltage = _T("电压（V）:");
+    g_sLangID_Replay_Voltage = _T("Replay_Voltage");
+    g_sLangTxt_Replay_Current = _T("电流（A）:");
+    g_sLangID_Replay_Current = _T("Replay_Current");
+    g_sLangTxt_Replay_OutputTime = _T("输出时间（s）:");
+    g_sLangID_Replay_OutputTime = _T("Replay_OutputTime");
+    g_sLangTxt_Replay_DeleteWave = _T("删除波形");
+    g_sLangID_Replay_DeleteWave = _T("Replay_DeleteWave");
+    g_sLangTxt_Replay_WaveReset = _T("波形复归");
+    g_sLangID_Replay_WaveReset = _T("Replay_WaveReset");
+    g_sLangTxt_Replay_Delete = _T("删除");
+    g_sLangID_Replay_Delete = _T("Replay_Delete");
+    g_sLangTxt_Replay_Insert = _T("插入");
+    g_sLangID_Replay_Insert = _T("Replay_Insert");
+	g_sLangTxt_Replay_Model = _T("模");
+	g_sLangID_Replay_Model = _T("Replay_Model");
+	g_sLangTxt_Replay_Weak = _T("弱");
+	g_sLangID_Replay_Weak = _T("Replay_Weak");
+
+
+    g_sLangID_Native_ConnectingAtsTester = _T("Native_ConnectingAtsTester");
+    g_sLangTxt_Native_ConnectingAtsTester = _T("正在连接自动测试服务......");
+    g_sLangID_Native_TesterConnectAtsSucc = _T("Native_TesterConnectAtsSucc");
+    g_sLangTxt_Native_TesterConnectAtsSucc = _T("自动测试服务连接成功");
+    g_sLangID_Native_TesterConnectAtsfail = _T("Native_TesterConnectAtsfail");
+    g_sLangTxt_Native_TesterConnectAtsfail = _T("连接自动测试服务失败，请检查网络链路是否连通，IP地址及端口配置是否正确；然后点击网络连接按钮重新连接");
 	g_sLangTxt_Native_CommandTimeout = _T("%s命令：超时");
+	g_sLangID_Native_CommandTimeout = _T("CommandTimeout");
 
 
+    g_sLangID_LowFreq_ULock = _T("LowFreq_ULock");//wangtao 20240722
+    g_sLangTxt_LowFreq_ULock = _T("低电压闭锁值");
+    g_sLangID_LowFreq_ILock = _T("LowFreq_ILock");
+    g_sLangTxt_LowFreq_ILock = _T("低电流闭锁值");
+    g_sLangID_LowFreq_LowVol = _T("LowFreq_LowVol");
+    g_sLangTxt_LowFreq_LowVol = _T("低压");
+	g_sLangID_Gradient_Norm = _T("Gradient_Norm");
+	g_sLangTxt_Gradient_Norm = _T("常态");
+	g_sLangID_Diff_Rate = _T("Diff_Rate");
+	g_sLangTxt_Diff_Rate = _T("差动曲线搜索");
+	g_sLangID_Diff_Harm = _T("Diff_Harm");
+	g_sLangTxt_Diff_Harm = _T("谐波制动搜索");
+    g_sLangID_Diff_AddSearchLine = _T("Diff_AddSearchLine");
+    g_sLangTxt_Diff_AddSearchLine = _T("添加搜索线");
+    g_sLangID_Diff_Autocalculation = _T("Diff_Autocalculation");
+    g_sLangTxt_Diff_Autocalculation = _T("自动计算");
+    g_sLangID_Diff_Manualcalculation = _T("Diff_Manualcalculation");
+    g_sLangTxt_Diff_Manualcalculation = _T("手动计算");
+    g_sLangID_Diff_Dichotomy = _T("Diff_Dichotomy");
+    g_sLangTxt_Diff_Dichotomy = _T("二分法");
+    g_sLangID_Diff_StepwiseApproach = _T("Diff_StepwiseApproach");
+    g_sLangTxt_Diff_StepwiseApproach = _T("单步逼近法");
+    g_sLangID_Diff_Bequation1 = _T("Diff_Bequation1");
+    g_sLangTxt_Diff_Bequation1 = _T("Ir=(|I1-I2|)/K1或Ir=(|I1+I2|)/K1");
+    g_sLangID_Diff_Bequation5 = _T("Diff_Bequation5");
+    g_sLangTxt_Diff_Bequation5 = _T("Ir=√(K1*I1*I2*Cos(δ))");
+    g_sLangID_Diff_LineCur = _T("Diff_LineCur");
+    g_sLangTxt_Diff_LineCur = _T("线电流");
+    g_sLangID_Diff_Variation = _T("Diff_Variation");
+	 g_sLangTxt_Diff_Variation = _T("△");
+    g_sLangID_Diff_sideAdjust = _T("Diff_Adjust");
+    g_sLangTxt_Diff_sideAdjust = _T("测校正");
+    g_sLangID_Diff_High = _T("Diff_High");
+    g_sLangTxt_Diff_High = _T("高");
+    g_sLangID_Diff_Medium = _T("Diff_Medium");
+    g_sLangTxt_Diff_Medium = _T("中");
+    g_sLangID_Diff_Low = _T("Diff_Low");
+    g_sLangTxt_Diff_Low = _T("低");
+	g_sLangID_MaintainatLeastOneItem = _T("MaintainatLeastOneItem");
+	g_sLangTxt_MaintainatLeastOneItem = _T("请至少勾选一个测试项！");
+	g_sLangID_MaintainatLeastOneFault = _T("MaintainatLeastOneFault");
+	g_sLangTxt_MaintainatLeastOneFault = _T("请至少勾选一个故障区段！");
+	g_sLangID_MaintainatLeastOneFunc = _T("MaintainatLeastOneFunc");
+	g_sLangTxt_MaintainatLeastOneFunc = _T("请至少勾选一个功能模块！");
+	g_sLangID_MaintainatLeastOneErrorType = _T("MaintainatLeastOneErrorType");
+	g_sLangTxt_MaintainatLeastOneErrorType = _T("请至少勾选一个故障类别！");
+	g_sLangID_MaintainatLeastOneRate = _T("MaintainatLeastOneRate");
+	g_sLangTxt_MaintainatLeastOneRate = _T("请至少勾选一个倍数！");
+	g_sLangID_MaintainatLeastOneDirection = _T("MaintainatLeastOneDirection");
+	g_sLangTxt_MaintainatLeastOneDirection = _T("请至少勾选一个故障方向！");
 
-}
+    g_sLangID_Syn_UDefineOne = _T("Syn_UDefineOne");
+    g_sLangTxt_Syn_UDefineOne = _T("系统->Ua1,待并->Ub1");
+    g_sLangID_Syn_UDefineTwo = _T("Syn_UDefineTwo");
+    g_sLangTxt_Syn_UDefineTwo = _T("系统->Ua1,待并->Ubc1");
+    g_sLangID_Syn_UDefineThree = _T("Syn_UDefineThree");
+    g_sLangTxt_Syn_UDefineThree = _T("系统->Ua2/Uz,待并->Uabc1");
+    g_sLangID_Syn_UDefineFour = _T("Syn_UDefineFour");
+    g_sLangTxt_Syn_UDefineFour = _T("系统->Uabc1,待并->Uabc2");
+    g_sLangID_Syn_Pulse = _T("Syn_Pulse");
+    g_sLangTxt_Syn_Pulse = _T("脉冲");
+    g_sLangID_Syn_Continuous = _T("Syn_Continuous");
+    g_sLangTxt_Syn_Continuous = _T("连续");
+	//g_sLangID_Syn_State = _T("Syn_State");
+	//g_sLangTxt_Syn_State = _T("状态");
+	g_sLangID_Syn_Mode = _T("Syn_Mode");
+	g_sLangTxt_Syn_Mode = _T("输出方式");
+	g_sLangID_Syn_ProOutSignals = _T("Syn_ProOutSignals");
+	g_sLangTxt_Syn_ProOutSignals = _T("保护出口信号");
+	g_sLangID_Syn_IncFSignals = _T("Syn_IncFSignals");
+	g_sLangTxt_Syn_IncFSignals = _T("增速信号");
+	g_sLangID_Syn_DecFSignals = _T("Syn_DecFSignals");
+	g_sLangTxt_Syn_DecFSignals = _T("减速信号");
+	g_sLangID_Sys_PointNum = _T("Sys_PointNum");
+	g_sLangTxt_Sys_PointNum = _T("钟点数:");
+	g_sLangID_Sys_PhaseDiff = _T("Sys_PhaseDiff");
+	g_sLangTxt_Sys_PhaseDiff = _T("两侧相位差(°):");
+
+	g_sLangID_Vol_TestPointsAdd = _T("Vol_TestPointsAdd");//20241024 gongyiping 电压反时限
+	g_sLangTxt_Vol_TestPointsAdd =  _T("测试点添加");
+	g_sLangID_Vol_FaultTypeSelect = _T("Vol_FaultTypeSelect");
+	g_sLangTxt_Vol_FaultTypeSelect = _T("故障类别选择");
+	g_sLangID_Vol_FaultOutput =_T("Vol_FaultOutput");
+	g_sLangTxt_Vol_FaultOutput = _T("故障态输出");
+
+	g_sLangID_Curr_FaultBeforeOutput = _T("Vol_FaultBeforeOutput");//20241024 gongyiping 电流反时限
+	g_sLangTxt_Curr_FaultBeforeOutput = _T("故障前输出");
+
+    g_sLangID_Native_LangTip = _T("Native_LangTip");
+    g_sLangTxt_Native_LangTip = _T("提示");
+    g_sLangID_Native_FileSaveSuccess = _T("Native_FileSaveSuccess");
+    g_sLangTxt_Native_FileSaveSuccess = _T("文件保存成功！");
+	g_sLangID_Native_AckFileSave = _T("Native_AckFileSave");
+	g_sLangTxt_Native_AckFileSave = _T("请确认当前报告是否保存！");
+    g_sLangID_Native_ExportWordDoc = _T("Native_ExportWordDoc");
+    g_sLangTxt_Native_ExportWordDoc = _T("导出word文件");
+    g_sLangID_Native_DocType = _T("Native_DocType");
+    g_sLangTxt_Native_DocType = _T("Word97-2003报告(*.doc);;Word报告(*.docx);;HTML报告(*.html);;PDF报告(*.pdf)");
+    g_sLangID_Iec_StartRcd =_T("Iec_StartRcd");
+    g_sLangTxt_Iec_StartRcd =_T("进入监视后，开始录波");
+
+
+//与国际版保持一致 移到XLanguageResourceAts里
+   // g_sLangID_Xrio_EnterNumbers = _T("Xrio_EnterNumbers");
+   // g_sLangTxt_Xrio_EnterNumbers = _T("请输入一个数字。");
+    g_sLangID_Xrio_XrioError = _T("Xrio_XrioError");
+    g_sLangTxt_Xrio_XrioError = _T("XRIO错误");
+    //g_sLangID_Xrio_ValueLessThanOREqual = _T("Xrio_ValueLessThanOREqual");
+   // g_sLangTxt_Xrio_ValueLessThanOREqual = _T("值必须 <= ");
+   // g_sLangID_Xrio_ValueGreaterThanOREqual = _T("Xrio_ValueGreaterThanOREqual");
+    //g_sLangTxt_Xrio_ValueGreaterThanOREqual = _T("值必须 >= ");
+
+    g_sLangID_Xrio_DeviceSetting  = _T("Xrio_DeviceSetting");
+    g_sLangTxt_Xrio_DeviceSetting = _T("装置定值");
+
+	g_sLangTxt_Native_ActTimeValueAbsErrNeg = _T("动作时间值绝对误差负");
+	g_sLangID_Native_ActTimeValueAbsErrNeg = _T("Native_ActTimeValueAbsErrNeg");
+
+	g_sLangID_ReplayTest_InsertWaveTip = _T("ReplayTest_InsertWaveTip");
+	g_sLangTxt_ReplayTest_InsertWaveTip = _T("正在生成新的波形,请稍等....");
+	g_sLangID_ReplayTest_RecoverWaveTip = _T("ReplayTest_RecoverWaveTip");
+	g_sLangTxt_ReplayTest_RecoverWaveTip = _T("波形正在复归，请稍等....");
+	g_sLangID_ReplayTest_LeftMove = _T("ReplayTest_LeftMove");
+	g_sLangTxt_ReplayTest_LeftMove = _T("左移");
+	g_sLangID_ReplayTest_RightMove = _T("ReplayTest_RightMove");
+	g_sLangTxt_ReplayTest_RightMove = _T("右移");
+	g_sLangID_ReplayTest_Cursor = _T("ReplayTest_Cursor");
+	g_sLangTxt_ReplayTest_Cursor = _T("光标:");
+	g_sLangID_ReplayTest_TimeDiffer = _T("ReplayTest_TimeDiffer");
+	g_sLangTxt_ReplayTest_TimeDiffer = _T("时差");
+	g_sLangID_ReplayTest_PointDiffer = _T("ReplayTest_PointDiffer");
+	g_sLangTxt_ReplayTest_PointDiffer = _T("点差");
+
+    g_sLangID_Xrio_InvalidInput = _T("Xrio_InvalidInput");
+    g_sLangTxt_Xrio_InvalidInput = _T("无效输入");
+
+    g_sLangID_Xrio_InputRestrictionTypeOne = _T("Xrio_InputRestrictionTypeOne");
+    g_sLangTxt_Xrio_InputRestrictionTypeOne = _T("输入必须是大于或等于0的数字。");
+
+    g_sLangID_Xrio_InputRestrictionTypeTwo = _T("Xrio_InputRestrictionTypeTwo");
+    g_sLangTxt_Xrio_InputRestrictionTypeTwo = _T("请输入介于0和800之间的值。");
+
+    g_sLangID_Xrio_InputRestrictionTypeThree = _T("Xrio_InputRestrictionTypeThree");
+    g_sLangTxt_Xrio_InputRestrictionTypeThree = _T("请输入介于0.00和0.025之间的值。");
+
+	g_sLangID_ReplayTest_DeleteTimeError = _T("ReplayTest_DeleteTimeError");
+	g_sLangTxt_ReplayTest_DeleteTimeError = _T("删除起点不能小于或等于终点，请重新输入!");
+	g_sLangID_ReplayTest_InsertBeginTimeError = _T("ReplayTest_InsertBeginTimeError");
+	g_sLangTxt_ReplayTest_InsertBeginTimeError = _T("插入起点不能小于或等于终止点号，请重新输入!");
+	g_sLangID_ReplayTest_InsertBeginPointError = _T("ReplayTest_InsertBeginTimeError");
+	g_sLangTxt_ReplayTest_InsertBeginPointError = _T("插入起始点号不能小于或等于终止点号，请重新输入!");
+
+	//20240905 huangliang
+	g_sLangID_MappingRelation_Maps_CHName = _T("CH");
+	g_sLangTxt_MappingRelation_Maps_CHName = _T("电压电流");
+	g_sLangID_MappingRelation_Maps_BinName = _T("Bin");
+	g_sLangTxt_MappingRelation_Maps_BinName = _T("开关量输入");
+	g_sLangID_MappingRelation_Maps_BoutName = _T("Binary");
+	g_sLangTxt_MappingRelation_Maps_BoutName = _T("开关量输出");
+
+	g_sLangID_MappingRelation_Maps_TitleID = _T("ID");
+	g_sLangTxt_MappingRelation_Maps_TitleID = _T("开关量通道");
+	g_sLangID_MappingRelation_Maps_TitleName = _T("Name");
+	g_sLangTxt_MappingRelation_Maps_TitleName = _T("显示名称");
+
+    //20240919 wangsen
+    g_sLangID_Xrio_SettingFile = _T("Xrio_SettingFile");
+    g_sLangTxt_Xrio_SettingFile = _T("定值文件");
+
+    g_sLangID_Xrio_ImportRefs = _T("Xrio_ImportRefs");
+    g_sLangTxt_Xrio_ImportRefs = _T("参数值已导入。");
+
+//xueyf 2024.9.26
+	g_sLangID_RecloseAcc_InspectLineNoStrain = _T("RecloseAcc_InspectLineNoStrain");
+	g_sLangTxt_RecloseAcc_InspectLineNoStrain = _T("检线无压母有压");
+	g_sLangID_RecloseAcc_InspectLineStrain =_T("RecloseAcc_InspectLineStrain");
+	g_sLangTxt_RecloseAcc_InspectLineStrain = _T("检线有压母无压");
+	g_sLangID_RecloseAcc_InspectLineNoPressure = _T("RecloseAcc_InspectLineNoPressure");
+	g_sLangTxt_RecloseAcc_InspectLineNoPressure = _T("检线无压母无压");
+	g_sLangID_RecloseAcc_InspectLinePressure = _T("RecloseAcc_InspectLinePressure");
+	g_sLangTxt_RecloseAcc_InspectLinePressure = _T("检线有压母有压");
+	g_sLangID_RecloseAcc_InspectNoOutput = _T("RecloseAcc_InspectNoOutput");
+	g_sLangTxt_RecloseAcc_InspectNoOutput = _T("无输出");
+
+    g_sLangID_RecloseAcc_NoAct = _T("RecloseAcc_NoAct");
+    g_sLangTxt_RecloseAcc_NoAct = _T("不动作");
+    g_sLangID_RecloseAcc_Z = _T("RecloseAcc_Z");
+    g_sLangTxt_RecloseAcc_Z = _T("阻抗(Ω):");
+    g_sLangID_RecloseAcc_R = _T("RecloseAcc_R");
+    g_sLangTxt_RecloseAcc_R = _T("R(Ω):");
+    g_sLangID_RecloseAcc_X = _T("RecloseAcc_X");
+    g_sLangTxt_RecloseAcc_X = _T("X(Ω):");
+    g_sLangID_RecloseAcc_Fre = _T("RecloseAcc_Fre");
+    g_sLangTxt_RecloseAcc_Fre = _T("频率(Hz):");
+    g_sLangID_RecloseAcc_RecloseTime = _T("RecloseAcc_RecloseTime");
+    g_sLangTxt_RecloseAcc_RecloseTime = _T("重合时间(s):");
+    g_sLangID_RecloseAcc_RecloseMode = _T("RecloseAcc_RecloseMode");
+    g_sLangTxt_RecloseAcc_RecloseMode = _T("故障性质:");
+    g_sLangID_RecloseAcc_UxMode = _T("RecloseAcc_UxMode");
+    g_sLangTxt_RecloseAcc_UxMode = _T("抽取电压选择:");
+    g_sLangID_RecloseAcc_UxInputFre = _T("RecloseAcc_UxInputFre");
+    g_sLangTxt_RecloseAcc_UxInputFre = _T("抽取电压频率(Hz):");
+    g_sLangID_RecloseAcc_UxInputMag = _T("RecloseAcc_UxInputMag");
+    g_sLangTxt_RecloseAcc_UxInputMag = _T("跳闸后抽取电压(V):");
+    g_sLangID_RecloseAcc_UxInputAng = _T("RecloseAcc_UxInputAng");
+    g_sLangTxt_RecloseAcc_UxInputAng = _T("跳闸后抽取电压相位(°):");
+    g_sLangID_RecloseAcc_Input = _T("RecloseAcc_Input");
+    g_sLangTxt_RecloseAcc_Input = _T("开入操作");
+    g_sLangID_RecloseAcc_Output = _T("RecloseAcc_Output");
+    g_sLangTxt_RecloseAcc_Output = _T("开出操作");
+    g_sLangID_RecloseAcc_BinSelect = _T("RecloseAcc_BinSelect");
+    g_sLangTxt_RecloseAcc_BinSelect = _T("开入选择:");
+    g_sLangID_RecloseAcc_OutputSwitchMode = _T("RecloseAcc_OutputSwitchMode");
+    g_sLangTxt_RecloseAcc_OutputSwitchMode = _T("开出翻转启动方式:");
+    g_sLangID_RecloseAcc_OutputKeepTime = _T("RecloseAcc_OutputKeepTime");
+    g_sLangTxt_RecloseAcc_OutputKeepTime = _T("开出保持时间(s):");
+    g_sLangID_RecloseAcc_OutputDelayTime = _T("RecloseAcc_OutputDelayTime");
+    g_sLangTxt_RecloseAcc_OutputDelayTime = _T("开出翻转时刻(s):");
+    g_sLangID_RecloseAcc_FaultTrigMode = _T("RecloseAcc_FaultTrigMode");
+    g_sLangTxt_RecloseAcc_FaultTrigMode = _T("故障触发方式:");
+
+    g_sLangID_RecloseAcc_NoPre = _T("RecloseAcc_NoPre");
+    g_sLangTxt_RecloseAcc_NoPre = _T("检无压测试:");
+    g_sLangID_RecloseAcc_SamPer = _T("RecloseAcc_SamPer");
+    g_sLangTxt_RecloseAcc_SamPer = _T("检同期测试");
+    g_sLangID_RecloseAcc_Frequency = _T("RecloseAcc_Frequency");
+    g_sLangTxt_RecloseAcc_Frequency = _T("检频率测试");
+    g_sLangID_RecloseAcc_AutoReclose = _T("RecloseAcc_AutoReclose");
+    g_sLangTxt_RecloseAcc_AutoReclose = _T("自动重合闸");
+    g_sLangID_RecloseAcc_AftAcc = _T("RecloseAcc_AftAcc");
+    g_sLangTxt_RecloseAcc_AftAcc = _T("后加速测试:");
+    g_sLangID_RecloseAcc_NoPreSet = _T("RecloseAcc_NoPreSet");
+    g_sLangTxt_RecloseAcc_NoPreSet = _T("无压定值(V):");
+    g_sLangID_RecloseAcc_SynAngle = _T("RecloseAcc_SynAngle");
+    g_sLangTxt_RecloseAcc_SynAngle = _T("合闸角度(°):");
+    g_sLangID_RecloseAcc_K0Mode = _T("RecloseAcc_K0Mode");
+    g_sLangTxt_RecloseAcc_K0Mode = _T("表达方式:");
+
+    g_sLangID_RecloseAcc_TripTime = _T("RecloseAcc_TripTime");
+    g_sLangTxt_RecloseAcc_TripTime = _T("跳闸时间(s)");
+    g_sLangID_RecloseAcc_TtripD = _T("RecloseAcc_TtripD");
+    g_sLangTxt_RecloseAcc_TtripD = _T("重合时间(s)");
+    g_sLangID_RecloseAcc_TtripAcc = _T("RecloseAcc_TtripAcc");
+    g_sLangTxt_RecloseAcc_TtripAcc = _T("后加速时间(s)");
+    g_sLangID_RecloseAcc_Title_UxInputMag = _T("RecloseAcc_Title_UxInputMag");
+    g_sLangTxt_RecloseAcc_Title_UxInputMag = _T("抽取电压(V)");
+    g_sLangID_RecloseAcc_Title_UxInputAng = _T("RecloseAcc_Title_UxInputAng");
+    g_sLangTxt_RecloseAcc_Title_UxInputAng = _T("抽取电压相位(°)");
+    g_sLangID_RecloseAcc_Title_VZFreq = _T("RecloseAcc_Title_VZFreq");
+    g_sLangTxt_RecloseAcc_Title_VZFreq = _T("抽取电压频率(Hz)");
+
+//xueyf 2024.9.29
+	g_sLangID_BinRecord_Channel =_T("BinRecord_Channel");
+	g_sLangTxt_BinRecord_Channel = _T("录波通道");
+	g_sLangID_BinRecord_RecordType =_T("BinRecord_RecordType");
+	g_sLangTxt_BinRecord_RecordType = _T("记录类型");
+	g_sLangID_BinRecord_ClampRate = _T("BinRecord_ClampRate");
+	g_sLangTxt_BinRecord_ClampRate = _T("夹钳比率");
+	g_sLangID_BinRecord_Invalid =_T("BinRecord_Invalid");
+	g_sLangTxt_BinRecord_Invalid = _T("无效");
+	g_sLangID_BinRecord_BinPassive =_T("BinRecord_BinPassive");
+	g_sLangTxt_BinRecord_BinPassive = _T("开关量(无源)");
+	g_sLangID_BinRecord_BinActive =_T("BinRecord_BinActive");
+	g_sLangTxt_BinRecord_BinActive = _T("开关量(有源)");
+	g_sLangID_BinRecord_PlugName = _T("BinRecord_PlugName");
+	g_sLangTxt_BinRecord_PlugName = _T("插件名称");
+	g_sLangID_BinRecord_PlugPOS =_T("BinRecord_PlugPOS");
+	g_sLangTxt_BinRecord_PlugPOS =_T("插件位置");
+	g_sLangID_BinRecord_ChannelNum =_T("BinRecord_ChannelNum");
+	g_sLangTxt_BinRecord_ChannelNum = _T("通道数量");
+	g_sLangID_BinRecord_PrimValue =_T("BinRecord_PrimValue");
+	g_sLangTxt_BinRecord_PrimValue = _T("一次侧");
+	g_sLangID_BinRecord_SecondValue =_T("BinRecord_SecondValue");
+	g_sLangTxt_BinRecord_SecondValue = _T("二次侧");
+	g_sLangID_BinRecord_StartRecord =_T("BinRecord_StartRecord");
+	g_sLangTxt_BinRecord_StartRecord = _T("启动录波");
+	g_sLangID_BinRecord_StopRecord =_T("BinRecord_StopRecord");
+	g_sLangTxt_BinRecord_StopRecord = _T("停止录波");
+	g_sLangID_BinRecord_Module =_T("BinRecord_Module");
+	g_sLangTxt_BinRecord_Module = _T("主板");
+	g_sLangID_BinRecord_SaveDefaultCfg =_T("BinRecord_SaveDefaultCfg");
+	g_sLangTxt_BinRecord_SaveDefaultCfg = _T("是否保存为默认配置");
+	g_sLangID_BinRecord_SelFile =_T("BinRecord_SelFile");
+	g_sLangTxt_BinRecord_SelFile = _T("选择文件");
+	g_sLangID_BinRecord_ArrangeTop =_T("BinRecord_ArrangeTop");
+	g_sLangTxt_BinRecord_ArrangeTop = _T("排列在最前");
+	g_sLangID_BinRecord_ArrangeLast =_T("BinRecord_ArrangeLast");
+	g_sLangTxt_BinRecord_ArrangeLast = _T("排列在最后");
+
+    //20240927 wangsen
+    g_sLangID_Xrio_InvalidName = _T("Xrio_InvalidName");
+    g_sLangTxt_Xrio_InvalidName = _T("无效名！不能为空！");
+
+    //20241010 wangsen
+    //g_sLangID_Xrio_InvalidDoublePrecisionValue = _T("Xrio_InvalidDoublePrecisionValue");
+    //g_sLangTxt_Xrio_InvalidDoublePrecisionValue = _T("无效的双精度值！");
+
+    //g_sLangID_Xrio_InvalidIntValue = _T("Xrio_InvalidIntValue");
+    //g_sLangTxt_Xrio_InvalidIntValue = _T("无效的整形值！");
+
+    //20241020 wangsen
+    g_sLangID_Xrio_TestObject = _T("Xrio_TestObject");
+    g_sLangTxt_Xrio_TestObject = _T("测试对象");
+    g_sLangID_Xrio_Update = _T("Xrio_Update");
+    g_sLangTxt_Xrio_Update = _T("更新");
+
+    g_sLangID_Xrio_Foreignid = _T("Xrio_Foreignid");
+    g_sLangTxt_Xrio_Foreignid = _T("不相关");
+    g_sLangID_Xrio_RefValue = _T("Xrio_RefValue");
+    g_sLangTxt_Xrio_RefValue = _T("参考值");
+    g_sLangID_Xrio_ValueFormula = _T("Xrio_ValueFormula");
+    g_sLangTxt_Xrio_ValueFormula = _T("公式");
+
+    g_sLangID_Xrio_DeviceAttr_Name_Description = _T("Xrio_DeviceAttr_Name_Description");
+    g_sLangTxt_Xrio_DeviceAttr_Name_Description = _T("名称/说明");
+    g_sLangID_Xrio_DeviceAttr_Manufacturer = _T("Xrio_DeviceAttr_Manufacturer");
+    g_sLangTxt_Xrio_DeviceAttr_Manufacturer = _T("制造厂商");
+    g_sLangID_Xrio_DeviceAttr_DeviceType = _T("Xrio_DeviceAttr_DeviceType");
+    g_sLangTxt_Xrio_DeviceAttr_DeviceType = _T("装置类型");
+    g_sLangID_Xrio_DeviceAttr_SerialNumber = _T("Xrio_DeviceAttr_SerialNumber");
+    g_sLangTxt_Xrio_DeviceAttr_SerialNumber = _T("序列号/型号");
+    g_sLangID_Xrio_DeviceAttr_AdditionalInformationOne = _T("Xrio_DeviceAttr_AdditionalInformationOne");
+    g_sLangTxt_Xrio_DeviceAttr_AdditionalInformationOne = _T("附加信息1");
+    g_sLangID_Xrio_DeviceAttr_AdditionalInformationTwo = _T("Xrio_DeviceAttr_AdditionalInformationTwo");
+    g_sLangTxt_Xrio_DeviceAttr_AdditionalInformationTwo = _T("附加信息2");
+
+    g_sLangID_Xrio_DeviceAttr_TransformerSubstation = _T("Xrio_DeviceAttr_TransformerSubstation");
+    g_sLangTxt_Xrio_DeviceAttr_TransformerSubstation = _T("变电站");
+    g_sLangID_Xrio_DeviceAttr_NumberOfPhases = _T("Xrio_DeviceAttr_NumberOfPhases");
+    g_sLangTxt_Xrio_DeviceAttr_NumberOfPhases = _T("相数");
+
+    g_sLangID_Xrio_DeviceAttr_ZSVAndZSC = _T("Xrio_DeviceAttr_ZSVAndZSC");
+    g_sLangTxt_Xrio_DeviceAttr_ZSVAndZSC = _T("零序电压和电流");
+    g_sLangID_Xrio_DeviceAttr_ZSVDirection = _T("Xrio_DeviceAttr_ZSVDirection");
+    g_sLangTxt_Xrio_DeviceAttr_ZSVDirection = _T("零序电压的方向");
+    g_sLangID_Xrio_DeviceAttr_ZSCDirection = _T("Xrio_DeviceAttr_ZSCDirection");
+    g_sLangTxt_Xrio_DeviceAttr_ZSCDirection = _T("零序电流的方向");
+    g_sLangID_Xrio_DeviceAttr_UseOfMutualInductor = _T("Xrio_DeviceAttr_UseOfMutualInductor");
+    g_sLangTxt_Xrio_DeviceAttr_UseOfMutualInductor = _T("使用互感仪");
+
+    g_sLangID_Xrio_DeviceAttr_OtherDeviceProperties = _T("Xrio_DeviceAttr_OtherDeviceProperties");
+    g_sLangTxt_Xrio_DeviceAttr_OtherDeviceProperties = _T("其他装置属性");
+
+    g_sLangID_Xrio_DeviceAttr_MaxValueSetting = _T("Xrio_DeviceAttr_MaxValueSetting");
+    g_sLangTxt_Xrio_DeviceAttr_MaxValueSetting = _T("最大值设置");
+
+    g_sLangID_Xrio_DeviceAttr_OvDetSens = _T("Xrio_DeviceAttr_OvDetSens");
+    g_sLangTxt_Xrio_DeviceAttr_OvDetSens = _T("过载检测灵敏度");
+
+    g_sLangID_Xrio_DeviceAttr_Damping = _T("Xrio_DeviceAttr_Damping");
+    g_sLangTxt_Xrio_DeviceAttr_Damping = _T("防抖/削峰过滤");
+    g_sLangID_Xrio_DeviceAttr_BroadeningTime = _T("Xrio_DeviceAttr_BroadeningTime");
+    g_sLangTxt_Xrio_DeviceAttr_BroadeningTime = _T("展宽时间");
+
+    g_sLangID_Xrio_LogInfo_UpdateFile = _T("Xrio_LogInfo_UpdateFile");
+    g_sLangTxt_Xrio_LogInfo_UpdateFile = _T("更新文件");
+	g_sLangID_Gradient_kVActionValue = _T("Gradient_kVActionValue");
+	g_sLangTxt_Gradient_kVActionValue = _T("电压动作值(kV)");
+	//最小直流设置为48V，强制设置为48V
+	g_sLangID_State_MsgText48V = _T("State_MsgText48V"); 
+	g_sLangTxt_State_MsgText48V = _T("最小直流设置为48V，强制设置为48V"); 
+	//最大直流设置为264V，强制设置为264V
+	g_sLangID_State_MsgText264V = _T("State_MsgText264V");  
+	g_sLangTxt_State_MsgText264V = _T("最大直流设置为264V，强制设置为264V"); 
+
+
+//2024-10-23 xueyangfan
+	g_sLangID_Native_Protection_CodeValue = _T("Native_Protection_CodeValue");
+	g_sLangTxt_Native_Protection_CodeValue = _T("保护码值");
+	g_sLangID_Native_Measure_CodeValue = _T("Native_Measure_CodeValue");
+	g_sLangTxt_Native_Measure_CodeValue = _T("测量码值");
+	g_sLangID_Native_SecondaryCur = _T("Native_SecondaryCur");
+	g_sLangTxt_Native_SecondaryCur = _T("二次额定电流");
+	g_sLangID_Native_CodeValue_Corrspondence = _T("Native_CodeValue_Corrspondence");
+	g_sLangTxt_Native_CodeValue_Corrspondence = _T("码值对应关系");
+	g_sLangID_Native_OpticalPort_Occupation = _T("OpticalPort_Occupation");
+	g_sLangTxt_Native_OpticalPort_Occupation = _T("光口已全部占用，当前无可选择的光口！");
+//	g_sLangID_Native_Settingtime = _T("Native_Settingtime");
+//	g_sLangTxt_Native_Settingtime = _T("理论时间(s)");
+	g_sLangID_DiffCBOp_AddOneItme = _T("DiffCBOp_AddOneItme");
+	g_sLangTxt_DiffCBOp_AddOneItme = _T("添加单项");
+	g_sLangID_DiffCBOp_FaultLocation = _T("DiffCBOp_FaultLocation");
+	g_sLangTxt_DiffCBOp_FaultLocation = _T("故障点位置");
+	g_sLangID_DiffCBOp_ComBineFeature = _T("DiffCBOp_ComBineFeature");
+	g_sLangTxt_DiffCBOp_ComBineFeature = _T("复合特性");
+	g_sLangID_DiffCBOp_ZeroSeqElimiType = _T("DiffCBOp_ZeroSeqElimiType");
+	g_sLangTxt_DiffCBOp_ZeroSeqElimiType = _T("零序消除方式");
+	g_sLangID_DiffCBOp_Earthing = _T("DiffCBOp_Earthing");
+	g_sLangTxt_DiffCBOp_Earthing = _T("中性点接地");
+	g_sLangID_DiffCBOp_Coordinate = _T("DiffCBOp_Coordinate");
+	g_sLangTxt_DiffCBOp_Coordinate = _T("坐标");
+	g_sLangID_DiffCBOp_TransfHvKph = _T("DiffCBOp_TransfHvKph");
+	g_sLangTxt_DiffCBOp_TransfHvKph = _T("变压器高压侧");
+	g_sLangID_DiffCBOp_TransfHvKpm = _T("DiffCBOp_TransfHvKpm");
+	g_sLangTxt_DiffCBOp_TransfHvKpm = _T("变压器中压侧");
+	g_sLangID_DiffCBOp_TransfHvKpl = _T("DiffCBOp_TransfHvKpl");
+	g_sLangTxt_DiffCBOp_TransfHvKpl = _T("变压器低压侧");
+	g_sLangID_DiffCBOp_TransfRatedCapacity = _T("DiffCBOp_TransfRatedCapacity");
+	g_sLangTxt_DiffCBOp_TransfRatedCapacity = _T("额定容量");
+	g_sLangID_DiffCBOp_SetKph = _T("DiffCBOp_SetKph");
+	g_sLangTxt_DiffCBOp_SetKph = _T("设置平衡系数");
+
+
+	g_sLangID_DiffCBOp_BoutSet = _T("DiffCBOp_BoutSet");
+	g_sLangTxt_DiffCBOp_BoutSet = _T("常态开出设置");
+	g_sLangID_DiffCBOp_FaultBoutSet = _T("DiffCBOp_FaultBoutSet");
+	g_sLangTxt_DiffCBOp_FaultBoutSet = _T("故障态开出设置");
+	g_sLangID_DiffCBOp_HSecondCur = _T("DiffCBOp_HSecondCur");
+	g_sLangTxt_DiffCBOp_HSecondCur = _T("高侧二次额定电流");
+// 	g_sLangID_DiffCBOp_SetValue = _T("DiffCBOp_SetValue");
+// 	g_sLangTxt_DiffCBOp_SetValue = _T("设定值");
+// 	g_sLangID_DiffCBOp_AllSecondCur = _T("DiffCBOp_AllSecondCur");
+// 	g_sLangTxt_DiffCBOp_AllSecondCur = _T("各侧二次额定电流");
+// 	g_sLangID_DiffCBOp_FamousValue = _T("DiffCBOp_FamousValue");
+// 	g_sLangTxt_DiffCBOp_FamousValue = _T("有名值");
+// 	g_sLangID_DiffCBOp_StandardValue = _T("DiffCBOp_StandardValue");
+// 	g_sLangTxt_DiffCBOp_StandardValue = _T("标幺值");
+	g_sLangID_DiffCBOp_Auxiliary = _T("DiffCBOp_Auxiliary");
+	g_sLangTxt_DiffCBOp_Auxiliary= _T("辅助");
+
+
+	g_sLangID_DiffCBOp_FauleInH = _T("DiffCBOp_FauleInH");
+	g_sLangTxt_DiffCBOp_FauleInH = _T("高压侧(区内)");
+	g_sLangID_DiffCBOp_FauleOutH = _T("DiffCBOp_FauleOutH");
+	g_sLangTxt_DiffCBOp_FauleOutH = _T("高压侧(区外)");
+	g_sLangID_DiffCBOp_FauleInL = _T("DiffCBOp_FauleInL");
+	g_sLangTxt_DiffCBOp_FauleInL = _T("低压侧(区内)");
+	g_sLangID_DiffCBOp_FauleOutL = _T("DiffCBOp_FauleOutL");
+	g_sLangTxt_DiffCBOp_FauleOutL = _T("低压侧(区外)");
+	g_sLangID_DiffCBOp_FauleInM = _T("DiffCBOp_FauleInM");
+	g_sLangTxt_DiffCBOp_FauleInM = _T("中压侧(区内)");
+	g_sLangID_DiffCBOp_FauleOutM = _T("DiffCBOp_FauleOutM");
+	g_sLangTxt_DiffCBOp_FauleOutM = _T("中压侧(区外)");
+
+//add wangtao 20241023
+	g_sLangID_Diff_RateSearch = _T("Diff_RateSearch");
+	g_sLangTxt_Diff_RateSearch = _T("差动搜索");
+	g_sLangID_Diff_FaultTime = _T("Diff_FaultTime");
+	g_sLangTxt_Diff_FaultTime = _T("最大故障时间(s)");
+	g_sLangID_Diff_Start = _T("Diff_Start");
+	g_sLangTxt_Diff_Start = _T("启动");
+	g_sLangID_Diff_IQuick = _T("Diff_IQuick");
+	g_sLangTxt_Diff_IQuick = _T("速段");
+	g_sLangID_Diff_SearchBand = _T("Diff_SearchBand");
+	g_sLangTxt_Diff_SearchBand = _T("搜索带");
+	g_sLangID_Diff_RateBeginVal = _T("Diff_RateBeginVal");
+	g_sLangTxt_Diff_RateBeginVal = _T("制动电流始值");
+	g_sLangID_Diff_RateEndVal = _T("Diff_RateEndVal");
+	g_sLangTxt_Diff_RateEndVal = _T("制动电流终值");
+	g_sLangID_Diff_Step = _T("Diff_Step");
+	g_sLangTxt_Diff_Step = _T("变化步长");
+	g_sLangID_Diff_Points = _T("Diff_Points");
+	g_sLangTxt_Diff_Points = _T("测试点数");
+	g_sLangID_Diff_ActAbsErr = _T("Diff_ActAbsErr");
+	g_sLangTxt_Diff_ActAbsErr = _T("动作值绝对误差");
+	g_sLangID_Diff_ActRelErr = _T("Diff_ActRelErr");
+	g_sLangTxt_Diff_ActRelErr = _T("动作值相对误差(%)");
+	g_sLangID_Diff_PrepareTime = _T("Diff_PrepareTime");
+	g_sLangTxt_Diff_PrepareTime = _T("准备时间(s)");
+	g_sLangID_Diff_TimeAfter = _T("Diff_TimeAfter");
+	g_sLangTxt_Diff_TimeAfter = _T("动作后保持时间(s)");
+	g_sLangID_Diff_KPSetMode = _T("Diff_KPSetMode");
+	g_sLangTxt_Diff_KPSetMode = _T("各侧平衡系数");
+	g_sLangID_Diff_KphSet = _T("Diff_KphSet");
+	g_sLangTxt_Diff_KphSet = _T("高压侧差动平衡系数");
+	g_sLangID_Diff_KpmSet = _T("Diff_KpmSet");
+	g_sLangTxt_Diff_KpmSet = _T("中压侧差动平衡系数");
+	g_sLangID_Diff_KplSet = _T("Diff_KplSet");
+	g_sLangTxt_Diff_KplSet = _T("低压侧差动平衡系数");
+	g_sLangID_Native_HighVoltWindingConnType = _T("Native_HighVoltWindingConnType");
+	g_sLangTxt_Native_HighVoltWindingConnType = _T("高压侧绕组接线型式");
+	g_sLangID_Native_LowVoltWindingConnType = _T("Native_LowVoltWindingConnType");
+	g_sLangTxt_Native_LowVoltWindingConnType = _T("低压侧绕组接线型式");
+	g_sLangID_Diff_PhCorrectMode = _T("Diff_PhCorrectMode");
+	g_sLangTxt_Diff_PhCorrectMode = _T("校正选择");
+	g_sLangID_Diff_AdoptWind = _T("Diff_AdoptWind");
+	g_sLangTxt_Diff_AdoptWind = _T("测试绕组");
+	g_sLangID_Diff_TransGroupModeHM = _T("Diff_TransGroupModeHM");
+	g_sLangTxt_Diff_TransGroupModeHM = _T("高-中绕组钟点数");
+	g_sLangID_Diff_TransGroupModeHL = _T("Diff_TransGroupModeHL");
+	g_sLangTxt_Diff_TransGroupModeHL = _T("高-低绕组钟点数");
+	g_sLangID_Diff_JXFactor = _T("Diff_JXFactor");
+	g_sLangTxt_Diff_JXFactor = _T("平衡系数计算");
+	g_sLangID_Diff_Earthing = _T("Diff_Earthing");
+	g_sLangTxt_Diff_Earthing = _T("接地");
+	g_sLangID_Diff_FaultType = _T("Diff_FaultType");
+	g_sLangTxt_Diff_FaultType = _T("故障相别");
+	g_sLangID_Diff_CustomHarmIndex = _T("Diff_CustomHarmIndex");
+	g_sLangTxt_Diff_CustomHarmIndex = _T("自定义谐波次数");
+	g_sLangID_Diff_BeginVal = _T("Diff_BeginVal");
+	g_sLangTxt_Diff_BeginVal = _T("搜索始值");
+	g_sLangID_Diff_EndVal = _T("Diff_EndVal");
+	g_sLangTxt_Diff_EndVal = _T("搜索终值");
+	g_sLangID_Diff_HarmOutSide = _T("Diff_HarmOutSide");
+	g_sLangTxt_Diff_HarmOutSide = _T("谐波输出侧");
+	g_sLangID_Diff_UpperLimit = _T("Diff_UpperLimit");
+	g_sLangTxt_Diff_UpperLimit = _T("搜索上限");
+	g_sLangID_Diff_LowLimit = _T("Diff_LowLimit");
+	g_sLangTxt_Diff_LowLimit = _T("搜索下限");
+	g_sLangID_Diff_IdSetting = _T("Diff_IdSetting");
+	g_sLangTxt_Diff_IdSetting = _T("差动理论值");
+	g_sLangID_Diff_SglSideBalCoeff = _T("Diff_SglSideBalCoeff");
+	g_sLangTxt_Diff_SglSideBalCoeff = _T("Ⅰ侧平衡系数");
+	g_sLangID_Diff_TwoSideBalCoeff = _T("Diff_TwoSideBalCoeff");
+	g_sLangTxt_Diff_TwoSideBalCoeff = _T("Ⅱ侧平衡系数");
+	g_sLangID_Diff_ThreeSideBalCoeff = _T("Diff_ThreeSideBalCoeff");
+	g_sLangTxt_Diff_ThreeSideBalCoeff = _T("Ⅲ侧平衡系数");
+	g_sLangID_Diff_PerUnitVal = _T("Diff_PerUnitVal");
+	g_sLangTxt_Diff_PerUnitVal = _T("标幺值");
+	g_sLangID_Diff_WiringCoeff = _T("Diff_WiringCoeff");
+	g_sLangTxt_Diff_WiringCoeff = _T("接线系数");
+	g_sLangID_Diff_RefCurrentSel = _T("Diff_RefCurrentSel");
+	g_sLangTxt_Diff_RefCurrentSel = _T("基准电流");
+	g_sLangID_Diff_HighVoltSide = _T("Diff_HighVoltSide");
+	g_sLangTxt_Diff_HighVoltSide = _T("高压侧");
+	g_sLangID_Diff_MedVoltSide = _T("Diff_MedVoltSide");
+	g_sLangTxt_Diff_MedVoltSide = _T("中压侧");
+	g_sLangID_Diff_LowVoltSide = _T("Diff_LowVoltSide");
+	g_sLangTxt_Diff_LowVoltSide = _T("低压侧");
+	g_sLangID_Diff_DiffProtCurrTerm = _T("Diff_DiffProtCurrTerm");
+	g_sLangTxt_Diff_DiffProtCurrTerm = _T("差动保护电流端子");
+	g_sLangID_Diff_RelayTest = _T("Diff_RelayTest");
+	g_sLangTxt_Diff_RelayTest = _T("继电保护测试仪");
+	g_sLangID_Diff_FuncParas = _T("Diff_FuncParas");
+	g_sLangTxt_Diff_FuncParas = _T("功能参数");
+	g_sLangID_Diff_AddOneItem = _T("Diff_AddOneItem");
+	g_sLangTxt_Diff_AddOneItem = _T("添加单项");
+	g_sLangID_Diff_ClearResult = _T("Diff_ClearResult");
+	g_sLangTxt_Diff_ClearResult = _T("清除结果");
+	g_sLangID_Diff_CommonPara = _T("Diff_CommonPara");
+	g_sLangTxt_Diff_CommonPara = _T("通用参数");
+	g_sLangID_LowFreq_FreqRangeRate = _T("LowFreq_FreqRangeRate");
+	g_sLangTxt_LowFreq_FreqRangeRate = _T("频率变化范围及其变化率");
+	g_sLangID_LowFreq_FreqBegin = _T("LowFreq_FreqBegin");
+	g_sLangTxt_LowFreq_FreqBegin = _T("频率起始值(Hz)");
+	g_sLangID_LowFreq_FreqEnd = _T("LowFreq_FreqEnd");
+	g_sLangTxt_LowFreq_FreqEnd = _T("频率结束值(Hz)");
+	g_sLangID_LowFreq_FreqFaultTrig = _T("LowFreq_FaultTrig");
+	g_sLangTxt_LowFreq_FreqFaultTrig = _T("闭锁电压选择");
+	g_sLangID_LowFreq_PhaseV = _T("LowFreq_PhaseV");
+	g_sLangTxt_LowFreq_PhaseV = _T("相电压");
+	g_sLangID_LowFreq_SettingBegin = _T("LowFreq_SettingBegin");
+	g_sLangTxt_LowFreq_SettingBegin = _T("整定值作为计时起点");
+	g_sLangID_LowFreq_FreqChangeBegin = _T("LowFreq_FreqChangeBegin");
+	g_sLangTxt_LowFreq_FreqChangeBegin = _T("频率变化作为计时起点");
+	g_sLangID_LowFreq_CommonParaSet = _T("LowFreq_CommonParaSet");
+	g_sLangTxt_LowFreq_CommonParaSet = _T("通用参数设置");
+	g_sLangID_LowFreq_dfdtSetting = _T("LowFreq_dfdtSetting");
+	g_sLangTxt_LowFreq_dfdtSetting = _T("滑差定值");
+	g_sLangID_LowFreq_GradientPara = _T("LowFreq_GradientPara");
+	g_sLangTxt_LowFreq_GradientPara = _T("递变参数");
+	g_sLangID_LowFreq_dfdtBegin = _T("LowFreq_dfdtBegin");
+	g_sLangTxt_LowFreq_dfdtBegin = _T("滑差变化始值");
+	g_sLangID_LowFreq_dfdtEnd = _T("LowFreq_dfdtEnd");
+	g_sLangTxt_LowFreq_dfdtEnd = _T("滑差变化终值");
+	g_sLangID_LowFreq_dfdtStep = _T("LowFreq_dfdtStep");
+	g_sLangTxt_LowFreq_dfdtStep = _T("滑差变化步长");
+	g_sLangID_LowFreq_LowVoltage = _T("LowFreq_LowVoltage");
+	g_sLangTxt_LowFreq_LowVoltage = _T("低电压");
+	g_sLangID_LowFreq_BeginVal = _T("LowFreq_BeginVal");
+	g_sLangTxt_LowFreq_BeginVal = _T("变化始值");
+	g_sLangID_LowFreq_EndVal = _T("LowFreq_EndVal");
+	g_sLangTxt_LowFreq_EndVal = _T("变化终值");
+	g_sLangID_LowFreq_TestItem = _T("LowFreq_TestItem");
+	g_sLangTxt_LowFreq_TestItem = _T("测试项目");
+	g_sLangID_LowFreq_dvdtRate = _T("LowFreq_dvdtRate");
+	g_sLangTxt_LowFreq_dvdtRate = _T("频率滑差倍数");
+	g_sLangID_LowFreq_TimePara = _T("LowFreq_TimePara");
+	g_sLangTxt_LowFreq_TimePara = _T("时间参数");
+	g_sLangID_LowFreq_ULockPara = _T("LowFreq_ULockPara");
+	g_sLangTxt_LowFreq_ULockPara = _T("电压闭锁参数");
+	g_sLangID_LowFreq_dvdtSetting = _T("LowFreq_dvdtSetting");
+	g_sLangTxt_LowFreq_dvdtSetting = _T("频率滑差动作值(Hz/s)");
+	g_sLangID_LowVol_BeginVal = _T("LowVol_BeginVal");
+	g_sLangTxt_LowVol_BeginVal = _T("变化起始值");
+	g_sLangID_LowVol_EndVal = _T("LowVol_EndVal");
+	g_sLangTxt_LowVol_EndVal = _T("变化结束值");
+	g_sLangID_LowVol_Var = _T("LowVol_Var");
+	g_sLangTxt_LowVol_Var = _T("变化量");
+	g_sLangID_LowVol_FreqRangeRate = _T("LowVol_FreqRangeRate");
+	g_sLangTxt_LowVol_FreqRangeRate = _T("电压变化范围及其变化率");
+	g_sLangID_LowVol_dVdt = _T("LowVol_dVdt");
+	g_sLangTxt_LowVol_dVdt = _T("滑差");
+	g_sLangID_LowVol_dVdtRate = _T("LowVol_dVdtRate");
+	g_sLangTxt_LowVol_dVdtRate = _T("电压滑差倍数");
+	g_sLangID_LowVol_VolEnd = _T("LowVol_VolEnd");
+	g_sLangTxt_LowVol_VolEnd = _T("电压结束值(V)");
+	g_sLangID_LowVol_OtherPara = _T("LowVol_OtherPara");
+	g_sLangTxt_LowVol_OtherPara = _T("其他参数");
+	g_sLangID_LowVol_SteadyCur = _T("LowVol_SteadyCur");
+	g_sLangTxt_LowVol_SteadyCur = _T("稳态电流(A)");
+	g_sLangID_LowVol_Exegesis = _T("LowVol_Exegesis");
+	g_sLangTxt_LowVol_Exegesis = _T("注:低压减载动作值测试项使用");
+	g_sLangID_Diff_BorderSearch = _T("Diff_BorderSearch");
+	g_sLangTxt_Diff_BorderSearch = _T("比例制动边界搜索");
+	g_sLangID_Diff_Section = _T("Diff_Section");
+	g_sLangTxt_Diff_Section = _T("区段");
+	g_sLangID_Diff_Expression = _T("Diff_Expression");
+	g_sLangTxt_Diff_Expression = _T("公式");
+	g_sLangID_Diff_StraightLine = _T("Diff_StraightLine");
+	g_sLangTxt_Diff_StraightLine = _T("直线");
+	g_sLangID_Diff_InSet = _T("Diff_InSet");
+	g_sLangTxt_Diff_InSet = _T("基准电流(其它)");
+	g_sLangID_Diff_CombinedFeature = _T("Diff_CombinedFeature");
+	g_sLangTxt_Diff_CombinedFeature = _T("复合特性");
+	g_sLangID_Diff_ZeroSeqElimiType = _T("Diff_ZeroSeqElimiType");
+	g_sLangTxt_Diff_ZeroSeqElimiType = _T("零序消除方式");
+	g_sLangID_Diff_Setting = _T("Diff_Setting");
+	g_sLangTxt_Diff_Setting = _T("整定定值");
+	g_sLangID_Diff_Custom = _T("Diff_Custom");
+	g_sLangTxt_Diff_Custom = _T("自定义");
+	g_sLangID_Diff_TypeSel = _T("Diff_TypeSel");
+	g_sLangTxt_Diff_TypeSel = _T("选择类型");
+	g_sLangID_Native_ThirdPart = _T("Native_ThirdPart");
+	g_sLangTxt_Native_ThirdPart = _T("第三段");
+	g_sLangID_Diff_QuickBreak = _T("Diff_QuickBreak");
+	g_sLangTxt_Diff_QuickBreak = _T("速断");
+	g_sLangID_Native_InflectionPoint3 = _T("Native_InflectionPoint3");
+	g_sLangTxt_Native_InflectionPoint3 = _T("拐点3");
+	g_sLangID_Diff_QuickBreakVal = _T("Diff_QuickBreakVal");
+	g_sLangTxt_Diff_QuickBreakVal = _T("速断");
+	g_sLangID_Diff_CurrChar = _T("Diff_CurrChar");
+	g_sLangTxt_Diff_CurrChar = _T("当前曲线");
+	g_sLangID_Diff_ZAdjust = _T("Diff_ZAdjust");
+	g_sLangTxt_Diff_ZAdjust = _T("Z侧校正");
+	g_sLangID_Diff_Result = _T("Diff_Result");
+	g_sLangTxt_Diff_Result = _T("测试结果");
+	g_sLangID_Diff_IdTheory = _T("Diff_IdTheory");
+	g_sLangTxt_Diff_IdTheory = _T("理论值Id");
+	g_sLangID_Diff_FaultType2 = _T("Diff_FaultType2");
+	g_sLangTxt_Diff_FaultType2 = _T("故障相");
+	g_sLangID_Diff_Select = _T("Diff_Select");
+	g_sLangTxt_Diff_Select = _T("选择");
+	g_sLangID_Diff_ActualVal = _T("Diff_ActualVal");
+	g_sLangTxt_Diff_ActualVal = _T("有名值");
+	g_sLangID_Diff_HSecondaryCur = _T("Diff_HSecondaryCur");
+	g_sLangTxt_Diff_HSecondaryCur = _T("高侧额定二次电流");
+	g_sLangID_Diff_CurrSet = _T("Diff_CurrSet");
+	g_sLangTxt_Diff_CurrSet = _T("设定值");
+	g_sLangID_Diff_EverySecondaryCur = _T("Diff_EverySecondaryCur");
+	g_sLangTxt_Diff_EverySecondaryCur = _T("各侧二次额定电流");
+
+	g_sLangID_Native_CRCTypeSelection = _T("Native_CRCTypeSelection");
+	g_sLangTxt_Native_CRCTypeSelection = _T("CRC类型选择");
+	g_sLangID_Native_MergeUnitAutoTest = _T("Native_MergeUnitAutoTest");
+	g_sLangTxt_Native_MergeUnitAutoTest = _T("合并单元自动测试");
+
+	//已合并电流输出,请手动并联电流端子.
+	g_sLangID_MergeOutPutI = _T("MergeOutPutI");  
+	g_sLangTxt_MergeOutPutI = _T("已合并电流输出,请手动并联电流端子.");
+	//二次额定电流(A)
+	g_sLangID_IEC_SecondRatedType = _T("IEC_SecondRatedType");  
+	g_sLangTxt_IEC_SecondRatedType = _T("二次额定电流(A)");
+	//保护码值
+// 	g_sLangID_IEC_ProtCodeValue = _T("IEC_ProtCodeValue");  
+// 	g_sLangTxt_IEC_ProtCodeValue = _T("保护码值");
+// 	//测量码值
+// 	g_sLangID_IEC_MeasCodeValue = _T("IEC_MeasCodeValue");  
+// 	g_sLangTxt_IEC_MeasCodeValue = _T("测量码值");
+	g_sLangID_IEC_SecondRatedCur = _T("IEC_SecondRatedCur ");  
+	g_sLangTxt_IEC_SecondRatedCur = _T("二次额定电压(V)");
+
+
+	g_sLangID_Native_AccuracyTest = _T("Native_AccuracyTest");
+	g_sLangTxt_Native_AccuracyTest = _T("精度测试");
+
+	g_sLangID_Native_ZeroDriftTest = _T("Native_ZeroDriftTest");
+	g_sLangTxt_Native_ZeroDriftTest = _T("零漂测试");
+
+	g_sLangID_Native_TimeTest = _T("Native_TimeTest");
+	g_sLangTxt_Native_TimeTest = _T("时间测试");
+
+	g_sLangID_Native_TimingAccuracy = _T("Native_TimingAccuracy");
+	g_sLangTxt_Native_TimingAccuracy = _T("对时精度");
+
+	g_sLangID_Native_TimeKeepingAccuracy = _T("Native_TimeKeepingAccuracy");
+	g_sLangTxt_Native_TimeKeepingAccuracy = _T("守时精度");
+	g_sLangID_Native_FirstCycleTest = _T("Native_FirstCycleTest");
+	g_sLangTxt_Native_FirstCycleTest = _T("首周波测试");
+	g_sLangID_Native_330ReplayAnalogError = _T("Native_330ReplayAnalogError");
+	g_sLangTxt_Native_330ReplayAnalogError = _T("当前PNS330只支持模拟量故障回放！");
+
+	g_sLangID_Native_TemplatePath = _T("Native_TemplatePath");
+	g_sLangTxt_Native_TemplatePath = _T("模板路径");
+
+	g_sLangID_Native_ModelFilePath = _T("Native_ModelFilePath");
+	g_sLangTxt_Native_ModelFilePath = _T("模型文件路径");
+
+	g_sLangID_Native_TestRecordFilePath = _T("Native_TestRecordFilePath");
+	g_sLangTxt_Native_TestRecordFilePath = _T("测试记录文件路径");
+
+	g_sLangID_Native_EmptyNode = _T("Native_EmptyNode");
+	g_sLangTxt_Native_EmptyNode = _T("空节点");
+
+	g_sLangID_Native_FlipThreshold  = _T("Native_FlipThreshold");
+	g_sLangTxt_Native_FlipThreshold = _T("翻转门槛");
+
+	g_sLangID_SCL_Parsing = _T("SCL_Parsing");
+	g_sLangTxt_SCL_Parsing = _T("SCL解析");
+
+	g_sLangID_SCL_Loading = _T("SCL_Loading");
+	g_sLangTxt_SCL_Loading = _T("正在加载SCL文件...");
+
+	g_sLangID_SCL_InvalidFile = _T("SCL_InvalidFile");
+	g_sLangTxt_SCL_InvalidFile = _T("当前文件(%s)没有扩展名不是SCL文件");
+
+	g_sLangID_Native_TemplateGenerationSuccess = _T("TemplateGenerationSuccess");
+	g_sLangTxt_Native_TemplateGenerationSuccess = _T("国际版模板生成完成.");
+
+	g_sLangID_Native_TemplateGenerationFail = _T("TemplateGenerationFail");
+	g_sLangTxt_Native_TemplateGenerationFail = _T("国际版模板生成失败.");
+
+	g_sLangID_Native_CharacteristicCurveUpdateFail = _T("CharacteristicCurveUpdateError");
+	g_sLangTxt_Native_CharacteristicCurveUpdateFail = _T("特性曲线更新失败.");
+
+	g_sLangID_Native_CheckReportSave = _T("Native_CheckReportSave！");
+	g_sLangTxt_Native_CheckReportSave = _T("请确认当前报告是否保存！");
+
+	g_sLangID_TransientTime = _T("TransientTime");
+	g_sLangTxt_TransientTime = _T("暂态响应时间");
+	g_sLangID_MUInput = _T("MUInput");
+	g_sLangTxt_MUInput = _T("合并单元输入");
+	g_sLangID_MUOutput = _T("MUOutput");
+	g_sLangTxt_MUOutput = _T("合并单元输出");
+
+
+	g_sLangID_Syn_LeaderAngle = _T("Syn_LeaderAngle");
+	g_sLangTxt_Syn_LeaderAngle = _T("导前角实测值(°)");
+	g_sLangID_Syn_LeaderTime = _T("Syn_LeaderTime");
+	g_sLangTxt_Syn_LeaderTime = _T("导前时间实测值(s)");
+	g_sLangID_Syn_LAngle = _T("Syn_LAngle");
+	g_sLangTxt_Syn_LAngle = _T("导前角理论值(°)");
+	g_sLangID_Syn_LTime = _T("Syn_LTime");
+	g_sLangTxt_Syn_LTime = _T("导前时间理论值(s)");
+	g_sLangID_Syn_VolDeltValue = _T("Syn_VolDeltValue");
+	g_sLangTxt_Syn_VolDeltValue = _T("实测压差(V)");
+	g_sLangID_Syn_FreqDeltValue = _T("Syn_FreqDeltValue");
+	g_sLangTxt_Syn_FreqDeltValue = _T("实测频差(Hz)");
+	g_sLangID_Syn_UgStart = _T("Syn_UgStart");
+	g_sLangTxt_Syn_UgStart = _T("待并测电压(V)");
+	g_sLangID_Syn_FgStart = _T("Syn_FgStart");
+	g_sLangTxt_Syn_FgStart = _T("待并测频率(Hz)");
+	g_sLangID_CurrInverse_SettingTime = _T("CurrInverse_SettingTime");
+	g_sLangTxt_CurrInverse_SettingTime = _T("理论时间(s)");
+	g_sLangID_Syn_TestParas = _T("Syn_TestParas");
+	g_sLangTxt_Syn_TestParas = _T("试验参数");
+	g_sLangID_NewTest_Native = "NewTest";
+	g_sLangTxt_NewTest_Native = "新建测试";
+//2024-10-30 xueyangfan
+	g_sLangID_BinRecord_RecordTimeType = _T("BinRecord_RecordTimeType");
+	g_sLangTxt_BinRecord_RecordTimeType = _T("记录时长");
+	g_sLangID_BinRecord_All = _T("BinRecord_All");
+	g_sLangTxt_BinRecord_All = _T("全部");
+	g_sLangID_BinRecord_RecordAll = _T("BinRecord_RecordAll");
+	g_sLangTxt_BinRecord_RecordAll = _T("按全部");
+	g_sLangID_BinRecord_RecordPlug = _T("BinRecord_RecordPlug");
+	g_sLangTxt_BinRecord_RecordPlug = _T("按插件");
+	g_sLangID_BinRecord_DisplayType = _T("BinRecord_DisplayType");
+	g_sLangTxt_BinRecord_DisplayType =_T("显示方式");
+	g_sLangID_BinRecord_Once = _T("BinRecord_Once");
+	g_sLangTxt_BinRecord_Once = _T("一次");
+	g_sLangID_BinRecord_Quadratic = _T("BinRecord_Quadratic");
+	g_sLangTxt_BinRecord_Quadratic = _T("二次");
+	g_sLangID_BinRecord_RecordTriggerType = _T("BinRecord_RecordTriggerType");
+	g_sLangTxt_BinRecord_RecordTriggerType = _T("录波触发方式");
+	g_sLangID_BinRecord_Rollover = _T("BinRecord_Rollover");
+	g_sLangTxt_BinRecord_Rollover = _T("翻转");
+	g_sLangID_BinRecord_RisingEdge = _T("BinRecord_RisingEdge");
+	g_sLangTxt_BinRecord_RisingEdge = _T("上升沿");
+	g_sLangID_BinRecord_FallingEdge = _T("BinRecord_FallingEdge");
+	g_sLangTxt_BinRecord_FallingEdge = _T("下降沿");
+	g_sLangID_BinRecord_TriggeredTime = _T("BinRecord_TriggeredTime");
+	g_sLangTxt_BinRecord_TriggeredTime = _T("对时触发（GPS/B码）");
+	g_sLangID_BinRecord_ChannelUp = _T("BinRecord_ChannelUp");
+	g_sLangTxt_BinRecord_ChannelUp = _T("通道上移");
+	g_sLangID_BinRecord_ChannelDown = _T("BinRecord_ChannelDown");
+	g_sLangTxt_BinRecord_ChannelDown = _T("通道下移");
+	g_sLangID_BinRecord_ChannelTop = _T("BinRecord_ChannelTop");
+	g_sLangTxt_BinRecord_ChannelTop = _T("置顶");
+	g_sLangID_BinRecord_ChannelBottom = _T("BinRecord_ChannelBottom");
+	g_sLangTxt_BinRecord_ChannelBottom = _T("底部");
+	g_sLangID_BinRecord_Recover = _T("BinRecord_Recover");
+	g_sLangTxt_BinRecord_Recover = _T("恢复默认");
+	g_sLangID_BinRecord_DefaultSavePath = _T("BinRecord_DefaultSavePath");
+	g_sLangTxt_BinRecord_DefaultSavePath = _T("默认保存路径");
+	g_sLangID_BinRecord_RecordSet = _T("BinRecord_RecordSet");
+	g_sLangTxt_BinRecord_RecordSet = _T("录波设置");
+	g_sLangID_BinRecord_ImportCfg = _T("BinRecord_ImportCfg");
+	g_sLangTxt_BinRecord_ImportCfg = _T("导入配置");
+	g_sLangID_BinRecord_SaveCfg = _T("BinRecord_SaveCfg");
+	g_sLangTxt_BinRecord_SaveCfg = _T("保存配置");
+	g_sLangID_BinRecord_BinRecord = _T("BinRecord_BinRecord");
+	g_sLangTxt_BinRecord_BinRecord = _T("开关量录波");
+	g_sLangID_BinRecord_SavePath = _T("BinRecord_SavePath");
+	g_sLangTxt_BinRecord_SavePath = _T("保存路径");
+	g_sLangID_BinRecord_AutoSaveRecordFile = _T("BinRecord_AutoSaveRecordFile");
+	g_sLangTxt_BinRecord_AutoSaveRecordFile = _T("自动保存录波文件");
+
+	g_sLangID_BinRecord_SaveType = _T("BinRecord_SaveType");
+	g_sLangTxt_BinRecord_SaveType = _T("保存类型");
+	g_sLangID_BinRecord_SelPlugin = _T("BinRecord_SelPlugin");
+	g_sLangTxt_BinRecord_SelPlugin = _T("选择插件");
+	g_sLangID_BinRecord_Wave = _T("BinRecord_Wave");
+	g_sLangTxt_BinRecord_Wave = _T("波形分析");
+	g_sLangID_BinRecord_Power = _T("BinRecord_Power");
+	g_sLangTxt_BinRecord_Power = _T("功率");
+	g_sLangID_BinRecord_Vector = _T("BinRecord_Vector");
+	g_sLangTxt_BinRecord_Vector = _T("向量");
+
+	//add wangtao 20241106
+	g_sLangID_LowVol_VolChangeBegin = _T("LowVol_VolChangeBegin");
+	g_sLangTxt_LowVol_VolChangeBegin = _T("电压变化作为计时起点");
+	g_sLangID_Diff_EndValWarning = _T("Diff_EndValWarning");
+	g_sLangTxt_Diff_EndValWarning = _T("搜索上限超过最大值");
+	g_sLangID_Power_OverLimitWarning = _T("Power_OverLimitWarning");
+	g_sLangTxt_Power_OverLimitWarning = _T("输入值%f绝对值大于最大功率绝对值(%f)，会导致电流超限(%f)");
+
+	g_sLangID_TemplateCreatedSuccessful = _T("TemplateCreatedSuccessful");
+	g_sLangTxt_TemplateCreatedSuccessful = _T("国际版模板生成完成.");
+	g_sLangID_TemplateCreatedFailed = _T("TemplateCreatedFailed");
+	g_sLangTxt_TemplateCreatedFailed = _T("国际版模板生成失败.");
+
+	//add wangtao 20241112 文本具体内容待确认
+	g_sLangID_Diff_DisjointWarning = _T("Diff_DisjointWarning");
+	g_sLangTxt_Diff_DisjointWarning = _T("当前测试项搜索上限最大值与特性曲线无交点");
+	g_sLangID_Diff_MultiDisjointWarning = _T("MultiDisjointWarning");
+	g_sLangTxt_Diff_MultiDisjointWarning = _T("以下测试项与特性曲线无交点:");
+	g_sLangID_Diff_InflectionPointWarning = _T("Diff_InflectionPointWarning");
+	g_sLangTxt_Diff_InflectionPointWarning = _T("拐点电流配置错误, 已跳过拐点");
+	g_sLangID_Diff_YDSupCT = _T("Diff_YDSupCT");
+	g_sLangTxt_Diff_YDSupCT = _T("YD辅助CT");
+	g_sLangID_Diff_ImportChar = _T("Diff_ImportChar");
+	g_sLangTxt_Diff_ImportChar = _T("导入特性曲线");
+
+	g_sLangID_Native_NULL = _T("Native_NULL");
+	g_sLangTxt_Native_NULL = _T("空");
+	g_sLangID_Native_CheckSetDelfChMap = _T("Native_CheckSetDelfChMap");
+	g_sLangTxt_Native_CheckSetDelfChMap = _T("当前%1映射为空，是否设置缺省通道映射?");
+
+	g_sLangID_Native_ModTesterIP = _T("Native_ModTesterIP");
+	g_sLangTxt_Native_ModTesterIP = _T("修改测试仪IP");
+	g_sLangID_Native_FailToRetrieveNetAddr = _T("Native_FailToRetrieveNetAddr");
+	g_sLangTxt_Native_FailToRetrieveNetAddr = _T("获取本地IP地址失败,当前值为空.");
+	g_sLangID_Native_FailToRetDevInfo = _T("Native_FailToRetDevInfo");
+	g_sLangTxt_Native_FailToRetDevInfo = _T("取得设备信息失败");
+	g_sLangID_Native_AddrNotInSameSubnet = _T("Native_AddrNotInSameSubnet");
+	g_sLangTxt_Native_AddrNotInSameSubnet = _T("测试仪IP地址(%1)与当前网卡IP不在同一网段,是否修改?");
+	g_sLangID_Native_CurrSelNetAdptEmpty = _T("Native_CurrSelNetAdptEmpty");
+	g_sLangTxt_Native_CurrSelNetAdptEmpty = _T("当前选择的网卡为空.");
+
+	g_sLangID_Native_ClearReportData = _T("Native_ClearReportData");
+	g_sLangTxt_Native_ClearReportData = _T("清除报告数据");
+	g_sLangID_Native_IsContinueClearReport = _T("Native_IsContinueClearReport");
+	g_sLangTxt_Native_IsContinueClearReport = _T("清除报告数据后，将无法恢复！请确认是否需要继续清除……");
+	g_sLangID_Native_CreatIecParaError = _T("Native_CreatIecParaError");
+	g_sLangTxt_Native_CreatIecParaError = _T("创建失败！该节点下，已经存在【IEC61850配置】项目");
+	g_sLangID_Native_CreatSysParaError = _T("Native_CreatSysParaError");
+	g_sLangTxt_Native_CreatSysParaError = _T("创建失败！该节点下，已经存在【系统参数配置】项目");
+	g_sLangID_Native_CreatChMapParaError = _T("Native_CreatChMapParaError");
+	g_sLangTxt_Native_CreatChMapParaError = _T("创建失败！该节点下，已经存在【硬件通道映射】项目");
+	g_sLangID_Native_CreatEngineError = _T("Native_CreatEngineError");
+	g_sLangTxt_Native_CreatEngineError = _T("新建通讯命令失败！");
+	
+	//add wangtao 20241121
+	g_sLangID_Diff_ImportCharFile = _T("Diff_ImportCharFile");
+	g_sLangTxt_Diff_ImportCharFile = _T("特性曲线文件");
+	g_sLangID_Diff_ImportCharFilePath = _T("Diff_ImportCharFilePath");
+	g_sLangTxt_Diff_ImportCharFilePath = _T("导入特性曲线文件路径");
+	g_sLangID_Diff_ImportCharWarning = _T("Diff_ImportCharWarning");
+	g_sLangTxt_Diff_ImportCharWarning = _T("导入了非法特性曲线文件");
+	
+	//add luozibing 20241125
+	g_sLangID_DistanceSearch_TileAxisName = _T("DistanceSearch_TileAxisName");
+	g_sLangTxt_DistanceSearch_TileAxisName = _T("R-X(Ω) ");
+// 	g_sLangID_DistanceSearch_AxisUnitMag = _T("DistanceSearch_AxisUnitMag");
+// 	g_sLangTxt_DistanceSearch_AxisUnitMag = _T("Ω");
+// 	g_sLangID_DistanceSearch_AxisUnitAng = _T("DistanceSearch_AxisUnitAng");
+// 	g_sLangTxt_DistanceSearch_AxisUnitAng = _T("°");
+
+	g_sLangID_Native_PulseSelection = _T("Native_PulseSelection");
+	g_sLangTxt_Native_PulseSelection = _T("脉冲选择 ");
+	//2024-11-27 zhouyangyong
+	g_sLangID_PhaseCurr = _T("CurrPhase_I");
+	g_sLangTxt_PhaseCurr = _T("相电流_I");
+	g_sLangID_PhaseVolt = _T("VoltPhase_U");
+	g_sLangTxt_PhaseVolt = _T("相电压_U");
+	g_sLangID_ActiveBin = _T("ActiveBin");
+	g_sLangTxt_ActiveBin = _T("有源开入");
+	g_sLangID_PassiveBin = _T("PassiveBin");
+	g_sLangTxt_PassiveBin = _T("无源开入");
+	g_sLangID_VoidBin = _T("VoidBin");
+	g_sLangTxt_VoidBin = _T("无效开入");
+
+	g_sLangID_Native_CurrDeviceNumIsNull = _T("Native_CurrDeviceNumIsNull");
+	g_sLangTxt_Native_CurrDeviceNumIsNull = _T("当前设备编号为空 ");
+	g_sLangID_Native_CurrDeviceFileNonexist = _T("Native_CurrDeviceFileNonexist");
+	g_sLangTxt_Native_CurrDeviceFileNonexist = _T("当前设备文件(%s)不存在 ");
+	g_sLangID_Native_SysxmlNonexist = _T("Native_SysxmlNonexist");
+	g_sLangTxt_Native_SysxmlNonexist = _T("系统参数文件【%s】不存在. ");
+	g_sLangID_Native_AnalyzeSysxmlFail = _T("Native_AnalyzeSysxmlFail");
+	g_sLangTxt_Native_AnalyzeSysxmlFail = _T("解析系统参数文件失败【%s】 ");
+	g_sLangID_Native_IECParaFileNonexist = _T("Native_IECParaFileNonexist");
+	g_sLangTxt_Native_IECParaFileNonexist = _T("IEC配置文件(%s)不存在. ");
+	g_sLangID_Native_GetModuleTypeFail = _T("Native_GetModuleTypeFail");
+	g_sLangTxt_Native_GetModuleTypeFail = _T("获取模块类型失败");
+	g_sLangID_Native_NotMapModuleType = _T("Native_NotMapModuleType");
+	g_sLangTxt_Native_NotMapModuleType = _T("未映射的模块类型");
+
+	g_sLangID_ReplayTest_ReEnterWavePoint = _T("ReplayTest_ReEnterWavePoint");
+	g_sLangTxt_ReplayTest_ReEnterWavePoint = _T("波形最小点号为1，请重新输入！");
+	g_sLangID_ReplayTest_CheckInputWavePoint = _T("ReplayTest_CheckInputWavePoint");
+	g_sLangTxt_ReplayTest_CheckInputWavePoint = _T("输入的起始点号/终止点号不能超出波形总点数[%d]，请重新输入！");
+	g_sLangID_ReplayTest_CheckBeginAndEndPoint = _T("ReplayTest_CheckBeginAndEndPoint");
+	g_sLangTxt_ReplayTest_CheckBeginAndEndPoint = _T("输入的终止点号不能小于输入的起始点号[%d]，请重新输入！");
+	g_sLangID_ReplayTest_CycleNumCheck = _T("ReplayTest_CycleNumCheck");
+	g_sLangTxt_ReplayTest_CycleNumCheck = _T("循环次数不能少于1次，请重新输入！");
+	g_sLangID_ReplayTest_CheckInputWaveTime = _T("ReplayTest_CheckInputWaveTime");
+	g_sLangTxt_ReplayTest_CheckInputWaveTime = _T("输入的起点/终点不能超出总波形长度[%.3fs]，请重新输入！");
+	g_sLangID_ReplayTest_CheckBeginAndEndTime = _T("ReplayTest_CheckBeginAndEndTime");
+	g_sLangTxt_ReplayTest_CheckBeginAndEndTime = _T("输入的终点不能小于输入的起点[%.3fs]，请重新输入！");
+	g_sLangID_ReplayTest_InsertWaveVolOver = _T("ReplayTest_InsertWaveVolOver");
+	g_sLangTxt_ReplayTest_InsertWaveVolOver = _T("当前输入的实际常态波形电压值(%f),大于测试仪最大输出电压(%f).");
+	g_sLangID_ReplayTest_InsertWaveCurOver = _T("ReplayTest_InsertWaveCurOver");
+	g_sLangTxt_ReplayTest_InsertWaveCurOver = _T("当前输入的实际常态波形电流值(%f),大于测试仪最大输出电流(%f).");
+	g_sLangID_ReplayTest_InsertWaveTimeOver = _T("ReplayTest_InsertWaveTimeOver");
+	g_sLangTxt_ReplayTest_InsertWaveTimeOver = _T("当前输出时间不能超出[%.3fs]，请重新输入！");
+	g_sLangID_ReplayTest_CheckOverlapTime = _T("ReplayTest_CheckOverlapTime");
+	g_sLangTxt_ReplayTest_CheckOverlapTime = _T("插入与删除时间段重叠，请重新选择时间！");
+
+	g_sLangID_Native_IsSaveChangeParas = _T("Native_IsSaveChangeParas");
+	g_sLangTxt_Native_IsSaveChangeParas = _T("是否保存相关修改?");
+
+	g_sLangID_Native_DisConnectAll =_T("Native_DisConnectAll");
+	g_sLangTxt_Native_DisConnectAll = _T("全部断开");
+	g_sLangID_Native_AllClosed =_T("Native_AllClosed");
+	g_sLangTxt_Native_AllClosed = _T("全部闭合");
+	g_sLangID_Native_BoutChannel =_T("Native_BoutChannel");
+	g_sLangTxt_Native_BoutChannel = _T("开出通道");
+	g_sLangID_Replay_ClearMap =_T("Replay_ClearMap");
+	g_sLangTxt_Replay_ClearMap = _T("清空映射");
+	g_sLangID_Native_ToPublish =_T("Native_ToPublish");
+	g_sLangTxt_Native_ToPublish = _T("至发布");
+	g_sLangID_Native_ToSubscriptions =_T("Native_ToSubscriptions");
+	g_sLangTxt_Native_ToSubscriptions = _T("至订阅");
+
+	//dingxy 20241227
+	g_sLangID_Native_TestInstrumentConfig = _T("TestInstrumentConfig");
+	g_sLangTxt_Native_TestInstrumentConfig = _T("测试仪配置");
+
+	g_sLangID_Native_ScanLANTestInstrument = _T("ScanLANTestInstrument");
+	g_sLangTxt_Native_ScanLANTestInstrument = _T("扫描局域网测试仪");
+
+	g_sLangID_Native_DirectConfigRemoteInstrument = _T("DirectConfigRemoteInstrument");
+	g_sLangTxt_Native_DirectConfigRemoteInstrument = _T("直接配置远程测试仪");
+
+	g_sLangID_Native_ScanRemoteTestInstrument = _T("ScanRemoteTestInstrument");
+	g_sLangTxt_Native_ScanRemoteTestInstrument = _T("扫描远程测试仪");
+	g_sLangID_Native_Setup = _T("Setup");
+	g_sLangTxt_Native_Setup = _T("设置");
+	g_sLangID_Native_Upgrade = _T("Upgrade");
+	g_sLangTxt_Native_Upgrade = _T("启升级");
+	g_sLangID_Native_EnablePUDA = _T("EnablePUDA");
+	g_sLangTxt_Native_EnablePUDA = _T("启PUDA");
+	g_sLangID_Native_EnableTestSvr = _T("EnableTestSvr");
+	g_sLangTxt_Native_EnableTestSvr = _T("启TestSvr");
+	g_sLangID_Native_TestInstrumentModel = _T("TestInstrumentModel");
+	g_sLangTxt_Native_TestInstrumentModel = _T("测试仪型号");
+	g_sLangID_Native_TestInstrumentID = _T("TestInstrumentID");
+	g_sLangTxt_Native_TestInstrumentID = _T("测试仪编号");
+	g_sLangID_Native_CloudIP = _T("CloudIP");
+	g_sLangTxt_Native_CloudIP = _T("云端IP");
+	g_sLangID_Native_CloudPort = _T("CloudPort");
+	g_sLangTxt_Native_CloudPort = _T("云端Port");
+	g_sLangID_Native_TestInstrumentSerialNumber = _T("TestInstrumentSerialNumber");
+	g_sLangTxt_Native_TestInstrumentSerialNumber = _T("测试仪序列号");
+	g_sLangID_Native_Password = _T("Password");
+	g_sLangTxt_Native_Password = _T("密码");
+// 	g_sLangID_Unit2 = _T("Unit");
+// 	g_sLangTxt_Unit2 = _T("单位:");
+	g_sLangID_Native_Bind = _T("Bind");
+	g_sLangTxt_Native_Bind = _T("绑定");
+	g_sLangID_Native_Query = _T("Query");
+	g_sLangTxt_Native_Query = _T("查询");
+	g_sLangID_Native_TestInstrumentConnectionError = _T("TestInstrumentConnectionError");
+	g_sLangTxt_Native_TestInstrumentConnectionError = _T("测试仪:%s 网络连接不通！");
+	g_sLangID_Native_CloudServerConnectionError = _T("CloudServerConnectionError");
+	g_sLangTxt_Native_CloudServerConnectionError = _T("云服务器:%s 网络连接不通！");
+	g_sLangID_Native_IPIsEmpty = _T("IPIsEmpty");
+	g_sLangTxt_Native_IPIsEmpty = _T("IP为空");
+	g_sLangID_Native_ConnectionTestInstrumentFailed = _T("ConnectionTestInstrumentFailed");
+	g_sLangTxt_Native_ConnectionTestInstrumentFailed = _T("连接测试仪失败");
+	g_sLangID_Native_MulticastInitSuccess = _T("MulticastInitSuccess");
+	g_sLangTxt_Native_MulticastInitSuccess = _T("组播初始化[%s][%d]成功");
+	g_sLangID_Native_MulticastInitFailed = _T("MulticastInitFailed");
+	g_sLangTxt_Native_MulticastInitFailed = _T("组播初始化[%s][%d]失败");
+	g_sLangID_Native_MulticastInitBindSuccess = _T("MulticastInitBindSuccess");
+	g_sLangTxt_Native_MulticastInitBindSuccess = _T("组播初始化[%s][%d]成功，绑定本地IP[%s]");
+	g_sLangID_Native_Disconnection = _T("Disconnection");
+	g_sLangTxt_Native_Disconnection = _T("断链");
+	g_sLangID_Native_CloudConnectionFailed = _T("CloudConnectionFailed");
+	g_sLangTxt_Native_CloudConnectionFailed = _T("连接云端失败");
+	g_sLangID_Native_TestInstrumentUserInfoError = _T("TestInstrumentUserInfoError");
+	g_sLangTxt_Native_TestInstrumentUserInfoError = _T("测试仪信息、用户信息输出错误");
+	g_sLangID_Native_Connect = _T("Connect");
+	g_sLangTxt_Native_Connect = _T("连接");
+	g_sLangID_Native_StopScanning = _T("StopScanning");
+	g_sLangTxt_Native_StopScanning = _T("停止扫描");
+	g_sLangID_Native_Scanning = _T("Scanning");
+	g_sLangTxt_Native_Scanning = _T("扫描");
+	g_sLangID_Native_NanjingEnergyCloud = _T("NanjingEnergyCloud");
+	g_sLangTxt_Native_NanjingEnergyCloud = _T("南京能云电力");
+	g_sLangID_Native_TestInstrumentConfigFileNotFound = _T("TestInstrumentConfigFileNotFound");
+	g_sLangTxt_Native_TestInstrumentConfigFileNotFound = _T("测试仪配置文件:%s 找不到！");
+	g_sLangID_Native_OAClientInitFail = _T("OAClientInitFail");
+	g_sLangTxt_Native_OAClientInitFail = _T("OA客户端COM接口初始化失败。");
+	g_sLangID_Native_Index = _T("SttAdjMain_Index");
+	g_sLangTxt_Native_Index = _T("编号");
+// 	g_sLangID_Native_IndepDCCurrChHWRange = _T("SttAdjMain_IndepDCCurrChHWRange");
+// 	g_sLangTxt_Native_IndepDCCurrChHWRange = _T("独立直流电流通道硬件档位");
+	g_sLangID_Native_IndepDCVolChHWRange = _T("SttAdjMain_IndepDCVolChHWRange");
+	g_sLangTxt_Native_IndepDCVolChHWRange = _T("独立直流电压通道硬件档位");
+// 	g_sLangID_Native_ModChRange = _T("SttAdjMain_ModChRange");
+// 	g_sLangTxt_Native_ModChRange = _T("模块通道档位");
+	g_sLangID_Native_IndepDCCurrIdc = _T("SttAdjMain_IndepDCCurrIdc");
+	g_sLangTxt_Native_IndepDCCurrIdc = _T("独立直流电流Idc");
+	g_sLangID_Native_IndepDCVolUdc = _T("SttAdjMain_IndepDCVolUdc");
+	g_sLangTxt_Native_IndepDCVolUdc = _T("独立直流电压Udc");
+	g_sLangID_Native_ChannelOneToThree = _T("SttAdjMain_ChannelOneToThree");
+	g_sLangTxt_Native_ChannelOneToThree = _T("通道1-通道3");
+	g_sLangID_Native_ChannelFourToSix = _T("SttAdjMain_ChannelFourToSix");
+	g_sLangTxt_Native_ChannelFourToSix = _T("通道4-通道6");
+	g_sLangID_Native_GearFormat = _T("SttAdjMain_GearFormat");
+	g_sLangTxt_Native_GearFormat = _T("档位%d");
+	g_sLangID_Native_TempzoneFormat = _T("SttAdjMain_TempzoneFormat");
+	g_sLangTxt_Native_TempzoneFormat = _T("温区%d");
+	g_sLangID_Native_TemplateFileNoExit = _T("SttAdjMain_TemplateFileNoExit");
+	g_sLangTxt_Native_TemplateFileNoExit = _T("模块[%s]模板文件不存在");
+	g_sLangID_Native_ModelDataError_NoModel = _T("SttAdjMain_ModelDataError_NoModel");
+	g_sLangTxt_Native_ModelDataError_NoModel = _T("模块数据错误，没有定义型号");
+	g_sLangID_Native_ModelDataError_EmptyModel = _T("SttAdjMain_ModelDataError_EmptyModel");
+	g_sLangTxt_Native_ModelDataError_EmptyModel = _T("模块数据错误，型号为空");
+	g_sLangID_Native_ExportCoefficientTemplateSuccess = _T("SttAdjMain_ExportCoefficientTemplateSuccess");
+	g_sLangTxt_Native_ExportCoefficientTemplateSuccess = _T("导出【%s】模块系数模板文件成功");
+	g_sLangID_Native_ExportFailure = _T("SttAdjMain_ExportFailure");
+	g_sLangTxt_Native_ExportFailure = _T("导出【%s】模块系数模板文件失败");
+	g_sLangID_Native_ModuleHardPos = _T("SttAdjMain_ModuleHardPos");
+	g_sLangTxt_Native_ModuleHardPos=  _T("模块硬件位置");
+	g_sLangID_Native_ChMaxValue = _T("SttAdjMain_ChMaxValue");
+	g_sLangTxt_Native_ChMaxValue = _T("通道最大值");
+	g_sLangID_Native_NewModuleType = _T("SttAdjMain_NewModuleType");
+	g_sLangTxt_Native_NewModuleType = _T("新模块类型");
+
+	g_sLangID_Native_MUAccuracyTest = _T("Native_MUAccuracyTest");
+	g_sLangTxt_Native_MUAccuracyTest = _T("准确度测试");
+	g_sLangID_Native_DifferentialTest = _T("Native_DifferentialTest ");
+	g_sLangTxt_Native_DifferentialTest = _T("比差测试");
+	g_sLangID_Native_AngleDifferenceTest = _T("Native_AngleDifferenceTest");
+	g_sLangTxt_Native_AngleDifferenceTest = _T("角差测试");
+	g_sLangID_Native_CompositeErrorTest = _T("Native_CompositeErrorTest");
+	g_sLangTxt_Native_CompositeErrorTest = _T("复合误差测试");
+	g_sLangID_Native_ChannelDelayTest = _T("Native_ChannelDelayTest");
+	g_sLangTxt_Native_ChannelDelayTest = _T("通道延时测试");
+	g_sLangID_Native_MaximumRatioDifference = _T("Native_MaximumRatioDifference");
+	g_sLangTxt_Native_MaximumRatioDifference = _T("最大比差");
+	g_sLangID_Native_MinimumRatioDifference = _T("Native_MinimumRatioDifferencet");
+	g_sLangTxt_Native_MinimumRatioDifference = _T("最小比差");
+	g_sLangID_Native_AverageRatioDifference = _T("Native_AverageRatioDifference");
+	g_sLangTxt_Native_AverageRatioDifference = _T("平均比差");
+	g_sLangID_Native_OutputAngle = _T("Native_OutputAngle");
+	g_sLangTxt_Native_OutputAngle = _T("输出角度");
+	g_sLangID_Native_MaximumAngleDifference = _T("Native_MaximumAngleDifference");
+	g_sLangTxt_Native_MaximumAngleDifference = _T("最大角差");
+	g_sLangID_Native_MinimumAngleDifference = _T("Native_MinimumAngleDifference");
+	g_sLangTxt_Native_MinimumAngleDifference = _T("最小角差");
+	g_sLangID_Native_AverageAngleDifference= _T("Native_AverageAngleDifference");
+	g_sLangTxt_Native_AverageAngleDifference= _T("平均角差");
+	g_sLangID_Native_MaximumError= _T("Native_MaximumErro");
+	g_sLangTxt_Native_MaximumError	= _T("最大误差");
+	g_sLangID_Native_MinimumError = _T("Native_MinimumError");
+	g_sLangTxt_Native_MinimumError =_T("最小误差");
+	g_sLangID_Native_AverageError	= _T("Native_AverageError");
+	g_sLangTxt_Native_AverageError	= _T("平均误差");
+	g_sLangID_Native_ControlBlockDescription = _T("Native_ControlBlockDescription");
+	g_sLangTxt_Native_ControlBlockDescription	= _T("控制块描述");
+	g_sLangID_Native_MaximumDelay	= _T("Native_MaximumDelay");
+	g_sLangTxt_Native_MaximumDelay	= _T("最大延时");
+	g_sLangID_Native_MinimumDelay	= _T("Native_MinimumDelay");
+	g_sLangTxt_Native_MinimumDelay	= _T("最小延时");
+	g_sLangID_Native_AverageDelay	= _T("Native_AverageDelay");
+	g_sLangTxt_Native_AverageDelay	= _T("平均延时");
+	g_sLangID_Native_MaximumZeroDrif	= _T("Native_MaximumZeroDrif");
+	g_sLangTxt_Native_MaximumZeroDrif	= _T("最大零漂");
+	g_sLangID_Native_MinimumZeroDrif	= _T("Native_MinimumZeroDrif");
+	g_sLangTxt_Native_MinimumZeroDrif	= _T("最小零漂");
+	g_sLangID_Native_AverageZeroDrif	= _T("Native_AverageZeroDrif");
+	g_sLangTxt_Native_AverageZeroDrif	= _T("平均零漂");
+	g_sLangID_Native_MUPunctAccurTest= _T("Native_MUPunctAccurTest");
+	g_sLangTxt_Native_MUPunctAccurTest= _T("守时误差测试");
+	g_sLangID_Native_MUSPunctuality = _T("Native_SPunctuality"); 
+	g_sLangTxt_Native_MUSPunctuality = _T("守时时长(s)");
+	g_sLangID_Native_MUSTiming 		= _T("Native_MUSTiming");
+	g_sLangTxt_Native_MUSTiming		 = _T("对时时长");
+	g_sLangID_Native_MUTimingAccurTest	= _T("Native_MUTimingAccurTest");
+	g_sLangTxt_Native_MUTimingAccurTest	= _T("对时误差测试");
+
+//国际版移植 20250207 xueyangfan
+	g_sLangID_Smv_AddToSub = _T("Smv_AddToSub");
+	g_sLangTxt_Smv_AddToSub = _T("至发布");
+	g_sLangID_Smv_AddToPub = _T("Smv_AddToPub");
+	g_sLangTxt_Smv_AddToPub = _T("至订阅");
+	g_sLangID_DistanceSearch_SectionSix = _T("DistanceSearch_SectionSix");
+	g_sLangTxt_DistanceSearch_SectionSix = _T("Ⅵ");
+	g_sLangID_DistanceSearch_SectionSeven = _T("DistanceSearch_SectionSeven");
+	g_sLangTxt_DistanceSearch_SectionSeven = _T("Ⅶ");
+	g_sLangID_DistanceSearch_SectionEight = _T("DistanceSearch_SectionEight");
+	g_sLangTxt_DistanceSearch_SectionEight = _T("Ⅷ");
+	g_sLangID_CBOperate_VzDefineParas = _T("CBOperate_VzDefineParas");
+	g_sLangTxt_CBOperate_VzDefineParas = _T("√3×3V0");
+	g_sLangID_Transducer_ParasSet=_T("Transducer_ParasSet");
+	g_sLangTxt_Transducer_ParasSet=_T("变送器设置");
+	g_sLangID_Transducer_Phase_PhaseSingle=_T("Transducer_PhaseSingle");
+	g_sLangTxt_Transducer_Phase_APhaseSingle=_T("单项");
+	g_sLangID_Transducer_Phase_A =_T("Transducer_Phase_A");
+	g_sLangTxt_Transducer_Phase_A =_T("单相(A相)");
+	g_sLangID_Transducer_Phase_B =_T("Transducer_Phase_B");
+	g_sLangTxt_Transducer_Phase_B =_T("单相(B相)");
+	g_sLangID_Transducer_Phase_C =_T("Transducer_Phase_C");
+	g_sLangTxt_Transducer_Phase_C =_T("单相(C相)");
+	g_sLangID_Transducer_Phase_ABC=_T("Transducer_Phase_ABC");
+	g_sLangTxt_Transducer_Phase_ABC=_T("三相");
+	g_sLangID_Transducer_UInputLimit =_T("Transducer_UInputLimit");
+	g_sLangTxt_Transducer_UInputLimit=_T("输入上限(uint)");
+	g_sLangID_Transducer_LInputLimit =_T("Transducer_LInputLimit");
+	g_sLangTxt_Transducer_LInputLimit=_T("输入下限(uint)");
+	g_sLangID_Transducer_UOutputLimit =_T("Transducer_UOutputLimit");
+	g_sLangTxt_Transducer_UOutputLimit=_T("输出上限(uint)");
+	g_sLangID_Transducer_LOutputLimit =_T("Transducer_LOutputLimit");
+	g_sLangTxt_Transducer_LOutputLimit=_T("输出下限(uint)");
+	g_sLangID_Transducer_Input =_T("Transducer_Input");
+	g_sLangTxt_Transducer_Input=_T("变送器输入值(uint):");
+	g_sLangID_Transducer_Un=_T("Transducer_Un");
+	g_sLangTxt_Transducer_Un=_T("额定相电压(V):");
+	g_sLangID_Transducer_UIAngle=_T("Transducer_UIAngle");
+	g_sLangTxt_Transducer_UIAngle=_T("相角(°):");
+	g_sLangID_Transducer_Imax=_T("Transducer_Imax");
+	g_sLangTxt_Transducer_Imax=_T("最大电流(A):");
+	g_sLangID_Transducer_StdFreq=_T("Transducer_StdFreq");
+	g_sLangTxt_Transducer_StdFreq=_T("额定频率(Hz):");
+	g_sLangID_Transducer_TestTimes=_T("Transducer_TestTimes");
+	g_sLangTxt_Transducer_TestTimes=_T("测试次数:");
+	g_sLangID_Transducer_GridInput = _T("Transducer_GridInput");
+	g_sLangTxt_Transducer_GridInput = _T("输入值(uint):");
+	g_sLangID_Transducer_GridOutput = _T("Transducer_GridOutput");
+	g_sLangTxt_Transducer_GridOutput = _T("理论值(uint)");
+	g_sLangID_Transducer_GridRealOutput = _T("Transducer_GridRealOutput");
+	g_sLangTxt_Transducer_GridRealOutput = _T("实际值(uint)");
+	g_sLangID_Transducer_TestType = _T("Transducer_TestType");
+	g_sLangTxt_Transducer_TestType = _T("测试类型:");
+	g_sLangID_Transducer_Type = _T("Transducer_Type");
+	g_sLangTxt_Transducer_Type = _T("输出信号类型:");
+	g_sLangID_Transducer_Level = _T("Transducer_Level");
+	g_sLangTxt_Transducer_Level = _T("变送器等级(%):");
+	g_sLangID_Transducer_TestValue = _T("Transducer_TestValue");
+	g_sLangTxt_Transducer_TestValue = _T("校验值:");
+	g_sLangID_Transducer_SettingTime = _T("Transducer_SettingTime");
+	g_sLangTxt_Transducer_SettingTime = _T("稳定时间(s):");
+	g_sLangID_Transducer_Ratio = _T("Transducer_Ratio");
+	g_sLangTxt_Transducer_Ratio = _T("CT/PT变比");
+	g_sLangID_Transducer_CopySelTest = _T("Transducer_CopySelTest");
+	g_sLangTxt_Transducer_CopySelTest = _T("复制选中测试项");
+	g_sLangID_Transducer_PasteTest = _T("Transducer_PasteTest");
+	g_sLangTxt_Transducer_PasteTest = _T("粘贴测试项");
+	g_sLangID_Diff_MSecondaryCur = _T("Diff_MSecondaryCur");
+	g_sLangTxt_Diff_MSecondaryCur = _T("中侧额定二次电流");
+	g_sLangID_Diff_LSecondaryCur = _T("Diff_LSecondaryCur");
+	g_sLangTxt_Diff_LSecondaryCur = _T("低侧额定二次电流");
+	g_sLangID_Native_IsSaveTemp=_T("Native_IsSaveTemp");
+	g_sLangTxt_Native_IsSaveTemp = _T("是否保存模板 ? ");
+	g_sLangID_Native_isContinueExistSameSCD = _T("Native_isContinueExistSameSCD");
+	g_sLangTxt_Native_isContinueExistSameSCD = _T("当前存在同名SCD文件，是否继续？");
+	g_sLangID_Xrio_EnterValue = _T("Xrio_EnterValue");
+	g_sLangTxt_Xrio_EnterValue = _T("请输入一个值。");
+	g_sLangID_Xrio_EnterValidValue = _T("Xrio_EnterValidValue");
+	g_sLangTxt_Xrio_EnterValidValue = _T("请输入一个有效值。");
+
+	g_sLangID_Native_WeekPNMain = _T("Native_WeekPNMain");
+	g_sLangTxt_Native_WeekPNMain = _T("PN机箱主板小信号模块");
+	g_sLangID_Native_WeeKL336DECTEVT = _T("Native_WeeKL336DECTEVT");
+	g_sLangTxt_Native_WeeKL336DECTEVT = _T("L336D_ECTEVT 模块");
+	g_sLangID_Native_PIA0103 = _T("Native_PIA0103");
+	g_sLangTxt_Native_PIA0103 = _T("PIA0103 模块");
+	g_sLangID_Native_PNS330UMax10 = _T("Native_PNS330UMax10");
+	g_sLangTxt_Native_PNS330UMax10 = _T("PNS330 模块(电流同相最大10安)");
+	g_sLangID_Native_PNS330ABC_20 = _T("Native_PNS330ABC_20");
+	g_sLangTxt_Native_PNS330ABC_20 = _T("PNS330 模块(电流同相最大20安)");
+	g_sLangID_Native_PNS330_H = _T("Native_PNS330_H");
+	g_sLangTxt_Native_PNS330_H = _T("PNS330_H 模块(电流同相最大10安)");
+	g_sLangID_Native_H_ABC_20 = _T("Native_H_ABC_20");
+	g_sLangTxt_Native_H_ABC_20 = _T("PNS330_H 模块(电流同相最大20安)");
+	g_sLangID_Native_PNS330_6 = _T("Native_PNS330_6");
+	g_sLangTxt_Native_PNS330_6 = _T("PNS330_6 模块");
+	g_sLangID_Native_PNS331UMax10 = _T("Native_PNS331UMax10");
+	g_sLangTxt_Native_PNS331UMax10 = _T("PNS331 模块(电流同相最大10安)");
+	g_sLangID_Native_PNS331_ABC_20 = _T("Native_PNS331_ABC_20");
+	g_sLangTxt_Native_PNS331_ABC_20 = _T("PNS331 模块(电流同相最大20安)");
+	g_sLangID_Native_PNS330_H_EX2 = _T("Native_PNS330_H_EX2");
+	g_sLangTxt_Native_PNS330_H_EX2 = _T("PNS330_H 模块(电源改型V2)");
+	g_sLangID_Native_PNS331_EX2 = _T("Native_PNS331_EX2");
+	g_sLangTxt_Native_PNS331_EX2 = _T("PNS331 模块(电源改型V2)");
+
+	g_sLangID_IEC_EndVerification = _T("IEC_EndVerification");
+	g_sLangTxt_IEC_EndVerification = _T("报文末尾校验");
+	g_sLangID_IEC_16ByteVerification = _T("IEC_16ByteVerification");
+	g_sLangTxt_IEC_16ByteVerification = _T("标准16字节校验");
+
+}	
 
 CString g_sLangID_Native_LangSetting;  //= _T("Native_LangSetting");
 CString g_sLangTxt_Native_LangSetting; //= _T("语言设置");
@@ -8842,10 +11538,10 @@ CString g_sLangID_Native_GooseOutSet;		//= _T("Native_GooseOutSet");
 CString g_sLangTxt_Native_GooseOutSet	;	//= _T("GOOSE OUT-->开入");
 CString g_sLangID_Native_GooseInSet;	//= _T("Native_GooseInSet");
 CString g_sLangTxt_Native_GooseInSet;	//= _T("开出-->GOOSE IN");
-CString g_sLangID_Native_Bin;			//= _T("Native_Bin");
-CString g_sLangTxt_Native_Bin;			//= _T("开入量");
-CString g_sLangID_Native_Bout;			//= _T("Native_Bout");
-CString g_sLangTxt_Native_Bout;			//= _T("开出量");
+//CString g_sLangID_Native_Bin;			//= _T("Native_Bin");
+//CString g_sLangTxt_Native_Bin;			//= _T("开入量");
+//CString g_sLangID_Native_Bout;			//= _T("Native_Bout");
+//CString g_sLangTxt_Native_Bout;			//= _T("开出量");
 
 CString g_sLangID_Native_BinX;	 //= _T("Native_BinX");
 CString g_sLangTxt_Native_BinX;	 //= _T("开入");
@@ -9028,8 +11724,8 @@ CString g_sLangID_Manual_MeasType;
 CString g_sLangTxt_Manual_MeasType;
 CString g_sLangID_Manual_BCode;
 CString g_sLangTxt_Manual_BCode;
-CString g_sLangID_Manual_TestReport;
-CString g_sLangTxt_Manual_TestReport;
+//CString g_sLangID_Manual_TestReport;
+//CString g_sLangTxt_Manual_TestReport;
 CString g_sLangID_Manual_TestTime;
 CString g_sLangTxt_Manual_TestTime;
 CString g_sLangID_Manual_PositiveLogic;
@@ -9153,6 +11849,8 @@ CString g_sLangID_State_ShortI;				 //=_T("State_ShortI");
 CString g_sLangTxt_State_ShortI;			 //=_T("短路电流(A):");
 CString g_sLangID_State_ShortU;				 //=_T("State_ShortU");
 CString g_sLangTxt_State_ShortU;			 //=_T("短路电压(V):");
+CString g_sLangID_State_ShortU_kV;				 //=_T("State_ShortU");
+CString g_sLangTxt_State_ShortU_kV;			 //=_T("短路电压(V):");
 CString g_sLangID_State_ZeroCoeff;			 //=_T("State_ZeroCoeff");
 CString g_sLangTxt_State_ZeroCoeff;			 //=_T("零序补偿系数");
 CString g_sLangID_State_CalcType;			 //=_T("State_CalcType");
@@ -9193,15 +11891,11 @@ CString g_sLangID_State_LastState;			 //=	_T("State_LastState");
 CString g_sLangTxt_State_LastState;			 //= _T("上一个状态");
 CString g_sLangID_State_FirstState;			 //= _T("State_FirstState");
 CString g_sLangTxt_State_FirstState;		 //= _T("第一个状态");
-CString g_sLangID_State_No;					 //= _T("State_No");  //sun
-CString g_sLangTxt_State_No;				 //= _T("否");        //sun
-CString g_sLangID_State_Yes;				 //= _T("State_Yes"); //sun
-CString g_sLangTxt_State_Yes;				 //= _T("是");        //sun
 CString g_sLangID_State_HarmCount;			 //= _T("State_HarmCount");
 CString g_sLangTxt_State_HarmCount;			 //= _T("次谐波");
 
-CString g_sLangID_State_NoActioned;	 //= _T("State_NoActioned");//LCQ
-CString g_sLangTxt_State_NoActioned; //= _T("未动作");
+//CString g_sLangID_State_NoActioned;	 //= _T("State_NoActioned");//LCQ
+//CString g_sLangTxt_State_NoActioned; //= _T("未动作");
 
 CString g_sLangID_State_ActionValue;  //= _T("State_ActionValue");//LCQ
 CString g_sLangTxt_State_ActionValue; // = _T("动作值");
@@ -9923,6 +12617,9 @@ CString g_sLangTxt_Gradient_IECConfiguration; //= _T("IEC配置");
 CString g_sLangID_Gradient_MessageType; //"报文类型"
 CString g_sLangTxt_Gradient_MessageType;
 
+CString g_sLangID_Gradient_CRCCheck;//"CRC类型选择"
+CString g_sLangTxt_Gradient_CRCCheck;
+
 CString g_sLangID_Gradient_SCLPars; // SCL解析界面 SCL parsing interface
 CString g_sLangTxt_Gradient_SCLPars;
 
@@ -10106,8 +12803,8 @@ CString g_sLangTxt_Gradient_POpticalPort;
 CString g_sLangID_Gradient_FOpticalPower; //"光功率(-dbm)"
 CString g_sLangTxt_Gradient_FOpticalPower;
 
-CString g_sLangID_Gradient_FmFileName; //"文件名称："
-CString g_sLangTxt_Gradient_FmFileName;
+//CString g_sLangID_Gradient_FmFileName; //"文件名称："
+//CString g_sLangTxt_Gradient_FmFileName;
 
 CString g_sLangID_Gradient_DirectoryFile; //"文件目录：""File directory:"
 CString g_sLangTxt_Gradient_DirectoryFile;
@@ -10191,8 +12888,8 @@ CString g_sLangTxt_Gradient_ResTimeErr;
 CString g_sLangID_Gradient_MessResTime; //"报文响应时间"
 CString g_sLangTxt_Gradient_MessResTime;
 
-CString g_sLangID_Gradient_ChaDelay; // 通道延时
-CString g_sLangTxt_Gradient_ChaDelay;
+// CString g_sLangID_Gradient_ChaDelay; // 通道延时
+// CString g_sLangTxt_Gradient_ChaDelay;
 
 CString g_sLangID_Gradient_MergeUint; //"合并单元测试功能ID()在配置文件中未查找到."
 CString g_sLangTxt_Gradient_MergeUint;
@@ -10340,8 +13037,8 @@ CString g_sLangTxt_State_NoAdjust;
 CString g_sLangID_State_YAdjust;
 CString g_sLangTxt_State_YAdjust;
 
-CString g_sLangID_State_SettingValue; // 整定值
-CString g_sLangTxt_State_SettingValue;
+//CString g_sLangID_State_SettingValue; // 整定值
+//CString g_sLangTxt_State_SettingValue;
 
 CString g_sLangID_State_Estimate; // 整定及结果评估
 CString g_sLangTxt_State_Estimate;
@@ -10358,8 +13055,12 @@ CString g_sLangID_StateEstimate_ErrorType; // 误差类型
 CString g_sLangTxt_StateEstimate_ErrorType;
 CString g_sLangID_StateEstimate_RelError; // 相对误差
 CString g_sLangTxt_StateEstimate_RelError;
+CString g_sLangID_StateEstimate_RelError_Percent ;//相对误差(％)
+CString g_sLangTxt_StateEstimate_RelError_Percent ;
 CString g_sLangID_StateEstimate_AbsError; // 绝对误差
 CString g_sLangTxt_StateEstimate_AbsError;
+CString g_sLangID_StateEstimate_AbsError_Neg ;//绝对误差(-)
+CString g_sLangTxt_StateEstimate_AbsError_Neg ;
 CString g_sLangID_StateEstimate_SettingValue; // 整定值(s)
 CString g_sLangTxt_StateEstimate_SettingValue;
 CString g_sLangID_StateEstimate_BinTrigger; // 开入触发
@@ -11126,8 +13827,8 @@ CString g_sLangID_Compound;
 CString g_sLangTxt_Compound;
 CString g_sLangID_statistic;
 CString g_sLangTxt_statistic;
-CString g_sLangID_outputvalue;
-CString g_sLangTxt_outputvalue;
+CString g_sLangID_MUoutputvalue;
+CString g_sLangTxt_MUoutputvalue;
 CString g_sLangID_Outputphase;
 CString g_sLangTxt_Outputphase;
 CString g_sLangID_Measureampl;
@@ -11146,8 +13847,8 @@ CString g_sLangID_faultreplay;
 CString g_sLangTxt_faultreplay;
 CString g_sLangID_downloaddata;
 CString g_sLangTxt_downloaddata;
-CString g_sLangID_ReplayStarttest;
-CString g_sLangTxt_ReplayStarttest;
+CString g_sLangID_starttest2;
+CString g_sLangTxt_starttest2;
 CString g_sLangID_playback;
 CString g_sLangTxt_playback;
 CString g_sLangID_outputvoltage;
@@ -11184,8 +13885,8 @@ CString g_sLangID_addedblock;
 CString g_sLangTxt_addedblock;
 CString g_sLangID_configurationfile;
 CString g_sLangTxt_configurationfile;
-CString g_sLangID_warning; //sun
- CString g_sLangTxt_warning; //sun
+// CString g_sLangID_warning;
+// CString g_sLangTxt_warning;
 CString g_sLangID_NullIEC;
 CString g_sLangTxt_NullIEC;
 CString g_sLangID_IECpath;
@@ -13796,6 +16497,9 @@ CString g_sLangTxt_Native_TIC_TransfRatio;
 /*"采样频率"*/
 CString g_sLangID_Native_SampFreq;
 CString g_sLangTxt_Native_SampFreq;
+//"输出速率"
+CString g_sLangID_Native_OutputRate;
+CString g_sLangTxt_Native_OutputRate;
 /*"PT变比一次值"*/
 CString g_sLangID_Native_PT_TxRatio_Primary;
 CString g_sLangTxt_Native_PT_TxRatio_Primary;
@@ -14061,6 +16765,9 @@ CString g_sLangID_Native_WordDoc;			// = _T("Native_WordDoc")
 CString g_sLangTxt_Native_WordDoc;			// = _T("Word报告文件 (*.doc)")
 CString g_sLangID_Native_ExportPath;		// = _T("Native_ExportPath")
 CString g_sLangTxt_Native_ExportPath;		// = _T("导出路径：")
+CString g_sLangID_Native_Pdfpdf;			// = _T("Native_Pdfpdf")
+CString g_sLangTxt_Native_Pdfpdf;			// = _T("PDF报告(*.pdf)")
+
 
 // 第九周马
 /*_T("stt_rcd_unzip_file解压缩出错.")*/
@@ -14612,8 +17319,8 @@ CString g_sLangTxt_Native_FaultTrigMethod;
 CString g_sLangID_Native_FaultVoltDef;
 CString g_sLangTxt_Native_FaultVoltDef;
 // 文件名称
-CString g_sLangID_Native_FileName;
-CString g_sLangTxt_Native_FileName;
+//CString g_sLangID_Native_FileName;
+//CString g_sLangTxt_Native_FileName;
 CString g_sLangID_Native_FlipMoment;  // = _T("Native_FlipMoment")
 CString g_sLangTxt_Native_FlipMoment; // = _T("翻转时刻")
 CString g_sLangID_Native_FrameDrop;	  // = _T("Native_FrameDrop")
@@ -15032,6 +17739,8 @@ CString g_sLangID_Impedance_Choose;			 //=_T("Impedance_Choose");
 CString g_sLangTxt_Impedance_Choose;			 //=_T("阻抗输入选择:");
 CString g_sLangID_Impedance_ShortCurr;			 //=_T("Impedance_ShortCurr");
 CString g_sLangTxt_Impedance_ShortCurr;			 //=_T("短路电流(A)");
+CString g_sLangID_Impedance_ShortVol;			 //=_T("Impedance_ShortVol");
+CString g_sLangTxt_Impedance_ShortVol;			 //=_T("短路电压(V)");
 CString g_sLangID_Impedance_Delayed;			 //=_T("Impedance_Delayed");
 CString g_sLangTxt_Impedance_Delayed;			 //=_T("触发后延时(s)");
 CString g_sLangID_Impedance_VarChoose;			 //=_T("Impedance_VarChoose");
@@ -15039,38 +17748,13 @@ CString g_sLangTxt_Impedance_VarChoose;			 //=_T("变量选择");
 CString g_sLangID_Impedance_Mode;			 //=_T("Impedance_Mode");
 CString g_sLangTxt_Impedance_Mode;			 //=_T("模式");
 CString g_sLangID_Impedance_Time;			 //=_T("Impedance_Time");
-CString g_sLangTxt_Impedance_Time;			 //=_T("变化时间");
+CString g_sLangTxt_Impedance_Time;			 //=_T("变化时间（s）");
 CString g_sLangID_Impedance_ChangeType;			 //=_T("Impedance_ChangeType");
 CString g_sLangTxt_Impedance_ChangeType;			 //=_T("变化方式");
 CString g_sLangID_Impedance_Auto;			 //=_T("Impedance_Auto");
 CString g_sLangTxt_Impedance_Auto;			 //=_T("自动递变");
 CString g_sLangID_Impedance_Mutation;			 //=_T("Impedance_Mutation");
 CString g_sLangTxt_Impedance_Mutation;			 //=_T("突变量启动");
- CString g_sLangID_ExpSucc;                          //sun
- CString g_sLangTxt_ExpSucc;                         //sun
- CString g_sLangID_ExpFail;                          //sun
- CString g_sLangTxt_ExpFail;                         //sun
- CString g_sLangID_ImpSucc;                          //sun
- CString g_sLangTxt_ImpSucc;                         //sun
- CString g_sLangID_ImpFail;                          //sun
- CString g_sLangTxt_ImpFail;                         //sun
- CString g_sLangID_RemainingMemorySize;              //sun
- CString g_sLangTxt_RemainingMemorySize;             //sun
- CString g_sLangID_InsufficientSystemMemory;         //sun
- CString g_sLangTxt_InsufficientSystemMemory;        //sun
- CString g_sLangID_ExistenceSCDFiles;                //sun
- CString g_sLangTxt_ExistenceSCDFiles;               //sun
- CString g_sLangID_NoExistenceSCLFiles;              //sun
- CString g_sLangTxt_NoExistenceSCLFiles;             //sun
- CString g_sLangID_AnalysisSCLFiles;                 //sun
- CString g_sLangTxt_AnalysisSCLFiles;                //sun
- CString g_sLangID_LoadSCLFiles;                     //sun
- CString g_sLangTxt_LoadSCLFiles;                    //sun
- CString g_sLangID_LoadSCLFilesProgressBar;          //sun
- CString g_sLangTxt_LoadSCLFilesProgressBar;         //sun
- CString g_sLangID_SaveSCLFiles;                     //sun
- CString g_sLangTxt_SaveSCLFiles;                    //sun
-
 CString g_sLangID_Impedance_FunParas;			 //=_T("Impedance_FunParas");
 CString g_sLangTxt_Impedance_FunParas;			 //=_T("功能参数");
 CString g_sLangID_Impedance_Variable;			 //=_T("Impedance_Variable");
@@ -15114,8 +17798,8 @@ CString g_sLangTxt_Gradient_RampParas;			 //=_T("递变参数设置");
 //CString g_sLangTxt_Gradient_VarSet;			 //=_T("变量设置");
 CString g_sLangID_Gradient_CommonParas;			 //=_T("Gradient_CommonParas");
 CString g_sLangTxt_Gradient_CommonParas;			 //=_T("通用参数");
-CString g_sLangID_Gradient_BinBout;			 //=_T("Gradient_BinBout");
-CString g_sLangTxt_Gradient_BinBout;			 //=_T("开入量");
+//CString g_sLangID_Gradient_BinBout;			 //=_T("Gradient_BinBout");
+//CString g_sLangTxt_Gradient_BinBout;			 //=_T("开入量");
 CString g_sLangID_Gradient_BoutNormal;			 //=_T("Gradient_BoutNormal");
 CString g_sLangTxt_Gradient_BoutNormal;			 //=_T("开出量正常态");
 CString g_sLangID_Gradient_BoutFaultState;			 //=_T("Gradient_BoutFaultState");
@@ -15157,6 +17841,8 @@ CString g_sLangID_Native_NegVolU2;			 //=_T("Native_NegVolU2");
 CString g_sLangTxt_Native_NegVolU2;			 //=_T("负序(U2)");
 CString g_sLangID_Native_Zero3U0;			 //=_T("Native_Zero3U0");
 CString g_sLangTxt_Native_Zero3U0;			 //=_T("零序(3U0)");
+CString g_sLangID_Native_CommandTimeout;
+CString g_sLangTxt_Native_CommandTimeout;
 
 CString g_sLangID_CBOperate_TimeAfterTrigger;			 //=_T("CBOperate_TimeAfterTrigger");
 CString g_sLangTxt_CBOperate_TimeAfterTrigger;			 //=_T("保护动作后持续时间(s)");
@@ -15266,18 +17952,1818 @@ CString g_sLangID_CBOperate_Positive;			 //=_T("CBOperate_Positive");
 CString g_sLangTxt_CBOperate_Positive;			 //=_T("正向");
 CString g_sLangID_CBOperate_ConversionFail;			 //=_T("CBOperate_ConversionFail");
 CString g_sLangTxt_CBOperate_ConversionFail;			 //=_T("转换性故障");
+CString g_sLangID_Swing_PowerAngleBegin;			 //=_T("Swing_PowerAngleBegin");
+CString g_sLangTxt_Swing_PowerAngleBegin;			 //=_T("功角始值(°)");
+CString g_sLangID_Swing_PowerAngleEnd;			 //=_T("Swing_PowerAngleEnd");
+CString g_sLangTxt_Swing_PowerAngleEnd;			 //=_T("功角终值(°)");
+CString g_sLangID_Swing_SwingPeriod;             //= _T("Swing_Period");
+CString g_sLangTxt_Swing_SwingPeriod;            //= _T("振荡周期:");
+CString g_sLangID_Swing_SwingCount;			 //=_T("Swing_SwingCount");
+CString g_sLangTxt_Swing_SwingCount;			 //=_T("振荡次数");
+CString g_sLangID_Swing_TripPoint;			 //=_T("Swing_TripPoint");
+CString g_sLangTxt_Swing_TripPoint;			 //=_T("跳闸接点");
+CString g_sLangID_Swing_TripSpeedUp;            //= _T("Swing_TripSpeedUp");
+CString g_sLangTxt_Swing_TripSpeedUp;           //= _T("加速信号接点:");
+CString g_sLangID_Swing_TripSpeedDown;          //= _T("Swing_TripSpeedDown");
+CString g_sLangTxt_Swing_TripSpeedDown;         //= _T("减速信号接点:");
+CString g_sLangID_Swing_FaultType;              //= _T("Swing_FaultType");
+CString g_sLangTxt_Swing_FaultType;             //= _T("故障类型:");
+CString g_sLangID_Swing_Impedance;			 //=_T("Swing_Impedance");
+CString g_sLangTxt_Swing_Impedance;			 //=_T("短路阻抗(Ω)");
+CString g_sLangID_Swing_SCurrent;			 //=_T("Swing_SCurrent");
+CString g_sLangTxt_Swing_SCurrent;			 //=_T("故障电流(A)");
+CString g_sLangID_Swing_FaultTime;			 //=_T("Swing_FaultTime");
+CString g_sLangTxt_Swing_FaultTime;			 //=_T("故障发生时刻(s):");
+CString g_sLangID_Swing_K0CalMode;			 //=_T("Swing_K0CalMode");
+CString g_sLangTxt_Swing_K0CalMode;			 //=_T("表达方式：");
+CString g_sLangID_Swing_Amplitude;            //= _T("Swing_Amplitude");
+CString g_sLangTxt_Swing_Amplitude;             //= _T("幅值:");
+CString g_sLangID_Swing_Phase;              //= _T("Swing_Phase");
+CString g_sLangTxt_Swing_Phase;             //= _T("相位:");
+CString g_sLangID_Swing_IncreaseSpeed;			 //=_T("Swing_IncreaseSpeed");
+CString g_sLangTxt_Swing_IncreaseSpeed;			 //=_T("增速");
+CString g_sLangID_Swing_Decelerate;			 //=_T("Swing_Decelerate");
+CString g_sLangTxt_Swing_Decelerate;			 //=_T("减速");
+CString g_sLangID_Swing_FaultSwing;			 //=_T("Swing_FaultSwing");
+CString g_sLangTxt_Swing_FaultSwing;			 //=_T("振荡中再故障");
+CString g_sLangID_Swing_Reciprocating;			 //=_T("Swing_Reciprocating");
+CString g_sLangTxt_Swing_Reciprocating;			 //=_T("往复振荡");
+CString g_sLangID_Swing_OscParaSet;			 //=_T("Swing_OscParaSet");
+CString g_sLangTxt_Swing_OscParaSet;			 //=_T("振荡参数设置");
+CString g_sLangID_Swing_ImpDiagram;			 //=_T("Swing_ImpDiagram");
+CString g_sLangTxt_Swing_ImpDiagram;			 //=_T("振荡轨迹");
+CString g_sLangID_Swing_EquCirSystem;			 //=_T("Swing_EquCirSystem");
+CString g_sLangTxt_Swing_EquCirSystem;			 //=_T("系统等效电路图");
+CString g_sLangID_Swing_MinSwingVol;			 //=_T("Swing_MinSwingVol");
+CString g_sLangTxt_Swing_MinSwingVol;			 //=_T("最小振荡电压");
+CString g_sLangID_Swing_MaxSwingCur;			 //=_T("Swing_MaxSwingCur");
+CString g_sLangTxt_Swing_MaxSwingCur;			 //=_T("最大振荡电流");
+CString g_sLangID_Swing_CenterSwing;			 //=_T("Swing_CenterSwing");
+CString g_sLangTxt_Swing_CenterSwing;			 //=_T("振荡中心");
+CString g_sLangID_Swing_Powerangle;			 //=_T("Swing_Powerangle");
+CString g_sLangTxt_Swing_Powerangle;			 //=_T("功角");
+CString g_sLangID_Swing_Time;			 //=_T("Swing_Time");
+CString g_sLangTxt_Swing_Time;			 //=_T("振荡前时间(s)：");
+CString g_sLangID_Swing_CTPos;          //=_T("Swing_CTPos");
+CString g_sLangTxt_Swing_CTPos;         //=_T("TA正极性：");
+CString g_sLangID_Swing_Zs;			 //=_T("Swing_Zs");
+CString g_sLangTxt_Swing_Zs;			 //=_T("系统侧阻抗|Zs|(Ω)：");
+CString g_sLangID_Swing_ZsPhi;          //=_T("Swing_ZsPhi");
+CString g_sLangTxt_Swing_ZsPhi;         //=_T("PhI(Zs)(°)：");
+CString g_sLangID_Swing_Transformer;			 //=_T("Swing_Transformer");
+CString g_sLangTxt_Swing_Transformer;			 //=_T("变压器阻抗|Zt|(Ω)：");
+CString g_sLangID_Swing_Transformer_Phi;        //=_T("Swing_Transformer_Phi");
+CString g_sLangTxt_Swing_Transformer_Phi;       //=_T("Phi(Zt)(°)：");
+CString g_sLangID_Swing_Dynamo;			 //=_T("Swing_Dynamo");
+CString g_sLangTxt_Swing_Dynamo;			 //=_T("发电机暂态电抗(Ω)：");
+
+CString g_sLangID_Gradient_FirstVar;			 //=_T("Gradient_FirstVar");
+CString g_sLangTxt_Gradient_FirstVar;			 //=_T("第一变量");
+CString g_sLangID_Gradient_SecondVar;			 //=_T("Gradient_SecondVar");
+CString g_sLangTxt_Gradient_SecondVar;			 //=_T("第二变量");
+CString g_sLangID_Gradient_FirstStep;			 //=_T("Gradient_FirstStep");
+CString g_sLangTxt_Gradient_FirstStep;			 //=_T("第一变量步长");
+CString g_sLangID_Gradient_SecondStep;			 //=_T("Gradient_SecondStep");
+CString g_sLangTxt_Gradient_SecondStep;			 //=_T("第二变量步长");
+
+CString g_sLangID_PowerManu_VolPower;			 //=_T("PowerManu_VolPower");
+CString g_sLangTxt_PowerManu_VolPower;			 //=_T("电压功率");
+CString g_sLangID_PowerManu_PowerAct;			 //=_T("PowerManu_PowerAct");
+CString g_sLangTxt_PowerManu_PowerAct;			 //=_T("功率动作值");
+CString g_sLangID_Power_Active;			 //=_T("Power_Active");
+CString g_sLangTxt_Power_Active;			 //=_T("有功(W)");
+CString g_sLangID_Power_Reactive;			 //=_T("Power_Reactive");
+CString g_sLangTxt_Power_Reactive;			 //=_T("无功(Var)");
+
+CString g_sLangID_DistanceSearch_LNFault;			 //=_T("DistanceSearch_LNFault");
+CString g_sLangTxt_DistanceSearch_LNFault;			 //=_T("接\n地\n故\n障");
+CString g_sLangID_DistanceSearch_LLFault;			 //=_T("DistanceSearch_LLFault");
+CString g_sLangTxt_DistanceSearch_LLFault;			 //=_T("相\n间\n故\n障");
+CString g_sLangID_DistanceSearch_SectionOne;			 //=_T("DistanceSearch_SectionOne");
+CString g_sLangTxt_DistanceSearch_SectionOne;			 //=_T("Ⅰ");
+CString g_sLangID_DistanceSearch_SectionTwo;			 //=_T("DistanceSearch_SectionTwo");
+CString g_sLangTxt_DistanceSearch_SectionTwo;			 //=_T("Ⅱ");
+CString g_sLangID_DistanceSearch_SectionThree;			 //=_T("DistanceSearch_SectionThree");
+CString g_sLangTxt_DistanceSearch_SectionThree;			 //=_T("Ⅲ");
+CString g_sLangID_DistanceSearch_SectionFour;			 //=_T("DistanceSearch_SectionFour");
+CString g_sLangTxt_DistanceSearch_SectionFour;			 //=_T("Ⅳ");
+CString g_sLangID_DistanceSearch_SectionFive;			 //=_T("DistanceSearch_SectionFive");
+CString g_sLangTxt_DistanceSearch_SectionFive;			 //=_T("Ⅴ");
+
+CString g_sLangID_DistanceSearch_LNShort;				//_T("DistanceSearch_LNShort")
+CString g_sLangTxt_DistanceSearch_LNShort;				//_T("单相接地短路")
+CString g_sLangID_DistanceSearch_LLShort;				//_T("DistanceSearch_LLShort")
+CString g_sLangTxt_DistanceSearch_LLShort;				//_T("相间短路")
+CString g_sLangID_DistanceSearch_ThreePhaseShort;       //_T("DistanceSearch_ThreePhaseShort")
+CString g_sLangTxt_DistanceSearch_ThreePhaseShort;       //_T("三相短路")
+CString g_sLangID_DistanceSearch_ActionTime;			 //_T("DistanceSearch_ActionTime")
+CString g_sLangTxt_DistanceSearch_ActionTime;			 //_T("动作时间")
+CString g_sLangID_DistanceSearch_SensAngle;				//_T("DistanceSearch_SensAngle")
+CString g_sLangTxt_DistanceSearch_SensAngle;			//_T("灵敏角")
+CString g_sLangID_DistanceSearch_Z;						//_T("DistanceSearch_Z")
+CString g_sLangTxt_DistanceSearch_Z;					//_T("|Z|(Ω)")
+CString g_sLangID_DistanceSearch_Phi;					//_T("DistanceSearch_Phi")
+CString g_sLangTxt_DistanceSearch_Phi;					 //_T("Phi(°)")
+CString g_sLangID_DistanceSearch_RepeatTime;			//_T("DistanceSearch_RepeatTime")
+CString g_sLangTxt_DistanceSearch_RepeatTime;			//_T("重复次数")
+CString g_sLangID_DistanceSearch_Report;				//_T("DistanceSearch_Report")
+CString g_sLangTxt_DistanceSearch_Report;				//_T("报告处理")
+CString g_sLangID_DistanceSearch_AutoClose;				//_T("DistanceSearch_AutoClose")
+CString g_sLangTxt_DistanceSearch_AutoClose;				//_T("边界自动闭合")
+CString g_sLangID_DistanceSearch_XAxisName;				//_T("DistanceSearch_XAxisName")
+CString g_sLangTxt_DistanceSearch_XAxisName;				//_T("R/Ω ")
+CString g_sLangID_DistanceSearch_YAxisName;				//_T("DistanceSearch_YAxisName")
+CString g_sLangTxt_DistanceSearch_YAxisName;				//_T("X/Ω ")
+CString g_sLangID_DistanceSearch_ZoneType;				//_T("DistanceSearch_ZoneType")
+CString g_sLangTxt_DistanceSearch_ZoneType;				//_T("区段:")
+CString g_sLangID_DistanceSearch_BeginZ;				//_T("DistanceSearch_BeginZ")
+CString g_sLangTxt_DistanceSearch_BeginZ;				//_T("首端阻抗(Ω):")
+CString g_sLangID_DistanceSearch_BeginZAngle;				//_T("DistanceSearch_BeginZAngle")
+CString g_sLangTxt_DistanceSearch_BeginZAngle;				//_T("首端阻抗角(°):")
+CString g_sLangID_DistanceSearch_EndZ;				//_T("DistanceSearch_EndZ")
+CString g_sLangTxt_DistanceSearch_EndZ;				//_T("末端阻抗(Ω):")
+CString g_sLangID_DistanceSearch_EndZAngle;				//_T("DistanceSearch_EndZAngle")
+CString g_sLangTxt_DistanceSearch_EndZAngle;				//_T("末端阻抗角(°):")
+CString g_sLangID_DistanceSearch_Step;				//_T("DistanceSearch_Step")
+CString g_sLangTxt_DistanceSearch_Step;				//_T("阻抗步长(Ω):")
+CString g_sLangID_DistanceSearch_TSetting;				//_T("DistanceSearch_TSetting")
+CString g_sLangTxt_DistanceSearch_TSetting;				//_T("时间定值(s):")
+CString g_sLangID_DistanceSearch_AbsErr;				//_T("DistanceSearch_AbsErr")
+CString g_sLangTxt_DistanceSearch_AbsErr;				//_T("绝对误差(Ω):")
+CString g_sLangID_DistanceSearch_TimeAfterTrigger;				//_T("DistanceSearch_TimeAfterTrigger")
+CString g_sLangTxt_DistanceSearch_TimeAfterTrigger;				//_T("保护动作后持续时间(s):")
+CString g_sLangID_DistanceSearch_MinActionTime;				//_T("DistanceSearch_MinActionTime")
+CString g_sLangTxt_DistanceSearch_MinActionTime;				//_T("最小动作时间(s):")
+CString g_sLangID_DistanceSearch_Zl;				//_T("DistanceSearch_Zl")
+CString g_sLangTxt_DistanceSearch_Zl;				//_T("线路阻抗(Ω):")
+CString g_sLangID_DistanceSearch_SearchWay;				//_T("DistanceSearch_SearchWay")
+CString g_sLangTxt_DistanceSearch_SearchWay;				//_T("搜索方式:")
+CString g_sLangID_DistanceSearch_K0Mode;				//_T("DistanceSearch_K0Mode")
+CString g_sLangTxt_DistanceSearch_K0Mode;				//_T("零序补偿系数计算方式:")
+CString g_sLangID_DistanceSearch_ZsMag;				//_T("DistanceSearch_ZsMag")
+CString g_sLangTxt_DistanceSearch_ZsMag;				//_T("系统阻抗(Ω):")
+CString g_sLangID_DistanceSearch_ZsAngle;				//_T("DistanceSearch_ZsAngle")
+CString g_sLangTxt_DistanceSearch_ZsAngle;				//_T("系统阻抗角(°):")
+CString g_sLangID_DistanceSearch_PTPos;				//_T("DistanceSearch_PTPos")
+CString g_sLangTxt_DistanceSearch_PTPos;				//_T("TV安装位置:")
+CString g_sLangID_DistanceSearch_CTPos;				//_T("DistanceSearch_CTPos")
+CString g_sLangTxt_DistanceSearch_CTPos;				//_T("TA正极性:")
+CString g_sLangID_DistanceSearch_SimulateBreakerDelay;				//_T("DistanceSearch_SimulateBreakerDelay")
+CString g_sLangTxt_DistanceSearch_SimulateBreakerDelay;				//_T("断路器模拟:")
+CString g_sLangID_DistanceSearch_BrkBreakTime;				//_T("DistanceSearch_BrkBreakTime")
+CString g_sLangTxt_DistanceSearch_BrkBreakTime;				//_T("分闸时间(ms):")
+CString g_sLangID_DistanceSearch_BrkCloseTime;				//_T("DistanceSearch_BrkCloseTime")
+CString g_sLangTxt_DistanceSearch_BrkCloseTime;				//_T("合闸时间(ms):")
+CString g_sLangID_DistanceSearch_FaultId;				//_T("DistanceSearch_FaultId")
+CString g_sLangTxt_DistanceSearch_FaultId;				//_T("是否叠加非周期分量:")
+CString g_sLangID_DistanceSearch_FaultAngMode;				//_T("DistanceSearch_FaultAngMode")
+CString g_sLangTxt_DistanceSearch_FaultAngMode;				//_T("合闸角方式:")
+CString g_sLangID_DistanceSearch_FaultAng;				//_T("DistanceSearch_FaultAng")
+CString g_sLangTxt_DistanceSearch_FaultAng;				//_T("合闸角(°):")
+CString g_sLangID_DistanceSearch_Header_ZoneType;				//_T("DistanceSearch_Header_ZoneType")
+CString g_sLangTxt_DistanceSearch_Header_ZoneType;				//_T("区段")
+CString g_sLangID_DistanceSearch_OrigImp;				//_T("DistanceSearch_OrigImp")
+CString g_sLangTxt_DistanceSearch_OrigImp;				//_T("中心点阻抗(Ω):")
+CString g_sLangID_DistanceSearch_OrigAng;				//_T("DistanceSearch_OrigAng")
+CString g_sLangTxt_DistanceSearch_OrigAng;				//_T("中心点阻抗角(°):")
+CString g_sLangID_DistanceSearch_SearchAngBeg;				//_T("DistanceSearch_SearchAngBeg")
+CString g_sLangTxt_DistanceSearch_SearchAngBeg;				//_T("搜索角度始值(°):")
+CString g_sLangID_DistanceSearch_SearchAngEnd;				//_T("DistanceSearch_SearchAngEnd")
+CString g_sLangTxt_DistanceSearch_SearchAngEnd;				//_T("搜索角度终值(°):")
+CString g_sLangID_DistanceSearch_AngStep;				//_T("DistanceSearch_AngStep")
+CString g_sLangTxt_DistanceSearch_AngStep;				//_T("角度改变步长(°):")
+CString g_sLangID_DistanceSearch_ZoneTypeSelect;				//_T("DistanceSearch_ZoneTypeSelect")
+CString g_sLangTxt_DistanceSearch_ZoneTypeSelect;				//_T("区段选择:")
+CString g_sLangID_DistanceSearch_SearchLen;				//_T("DistanceSearch_SearchLen")
+CString g_sLangTxt_DistanceSearch_SearchLen;				//_T("搜索半径(Ω):")
+CString g_sLangID_DistanceSearch_TripZ;				//_T("DistanceSearch_TripZ")
+CString g_sLangTxt_DistanceSearch_TripZ;				//_T("实测阻抗(Ω)")
+CString g_sLangID_DistanceSearch_TripZAngle;				//_T("DistanceSearch_TripZAngle")
+CString g_sLangTxt_DistanceSearch_TripZAngle;				//_T("实测阻抗角(°)")
+CString g_sLangID_DistanceSearch_AddItemFailed;				//_T("DistanceSearch_AddItemFailed")
+CString g_sLangTxt_DistanceSearch_AddItemFailed;				//_T("与特性曲线没有交点，不生成测试项。")
+
+CString g_sLangID_ActionTime_LNShort;            //_T("ActionTime_LNShort")
+CString g_sLangTxt_ActionTime_LNShort;            //_T("单相接地短路")
+CString g_sLangID_ActionTime_LLShort;            //_T("ActionTime_LLShort")
+CString g_sLangTxt_ActionTime_LLShort;            //_T("相间短路")
+CString g_sLangID_ActionTime_ThreePhaseShort;     //_T("ActionTime_ThreePhaseShort")
+CString g_sLangTxt_ActionTime_ThreePhaseShort;     //_T("三相短路")
+CString g_sLangID_ActionTime_ZeroCur;             //_T("ActionTime_ZeroCur")
+CString g_sLangTxt_ActionTime_ZeroCur;            //_T("零序电流3I0")
+CString g_sLangID_ActionTime_NegCur;              //_T("ActionTime_NegCur")
+CString g_sLangTxt_ActionTime_NegCur;             //_T("负序电流I2")
+CString g_sLangID_ActionTime_ThreeParallel;      //_T("ActionTime_ThreeParallel")
+CString g_sLangTxt_ActionTime_ThreeParallel;     //_T("三相电流并联")
+CString g_sLangID_ActionTime_ShortVol;            //_T("ActionTime_ShortVol")
+CString g_sLangTxt_ActionTime_ShortVol;            //_T("短路电压")
+CString g_sLangID_ActionTime_ZeroVol;            //_T("ActionTime_ZeroVol")
+CString g_sLangTxt_ActionTime_ZeroVol;            //_T("零序电压")
+CString g_sLangID_ActionTime_NegVol;            //_T("ActionTime_NegVol")
+CString g_sLangTxt_ActionTime_NegVol;            //_T("负序电压")
 CString g_sLangID_CurrentHigh330;//高功率电流
 CString g_sLangTxt_CurrentHigh330;
-CString g_sLangID_Native_CommandTimeout;
-CString g_sLangTxt_Native_CommandTimeout;
+
+CString g_sLangID_ActionTime_SettingTime;            //_T("ActionTime_SettingTime")
+CString g_sLangTxt_ActionTime_SettingTime;            //_T("动作时间定值(s):")
+CString g_sLangID_ActionTime_FaultVolType;            //_T("ActionTime_FaultVolType")
+CString g_sLangTxt_ActionTime_FaultVolType;            //_T("故障电压:")
+CString g_sLangID_ActionTime_FaultVol;            //_T("ActionTime_FaultVol")
+CString g_sLangTxt_ActionTime_FaultVol;            //_T("故障电压(V):")
+CString g_sLangID_ActionTime_FaultAngle;            //_T("ActionTime_FaultAngle")
+CString g_sLangTxt_ActionTime_FaultAngle;            //_T("故障态相位差(°):")
+CString g_sLangID_ActionTime_FaultFre;            //_T("ActionTime_FaultFre")
+CString g_sLangTxt_ActionTime_FaultFre;            //_T("故障态频率(Hz):")
+CString g_sLangID_ActionTime_RelErr;            //_T("ActionTime_RelErr")
+CString g_sLangTxt_ActionTime_RelErr;            //_T("相对误差(％):")
+CString g_sLangID_ActionTime_AbsErrPos;            //_T("ActionTime_AbsErrPos")
+CString g_sLangTxt_ActionTime_AbsErrPos;            //_T("绝对误差(s)+:")
+CString g_sLangID_ActionTime_AbsErrNeg;            //_T("ActionTime_AbsErrNeg")
+CString g_sLangTxt_ActionTime_AbsErrNeg;            //_T("绝对误差(s)-:")
+CString g_sLangID_ActionTime_NormalVol;            //_T("ActionTime_NormalVol")
+CString g_sLangTxt_ActionTime_NormalVol;            //_T("常态电压(V):")
+CString g_sLangID_ActionTime_NormalCur;            //_T("ActionTime_NormalCur")
+CString g_sLangTxt_ActionTime_NormalCur;            //_T("常态电流(A):")
+CString g_sLangID_ActionTime_NormalAngle;            //_T("ActionTime_NormalAngle")
+CString g_sLangTxt_ActionTime_NormalAngle;            //_T("常态相位差(°):")
+CString g_sLangID_ActionTime_NormalFre;            //_T("ActionTime_NormalFre")
+CString g_sLangTxt_ActionTime_NormalFre;            //_T("常态频率(Hz):")
+CString g_sLangID_ActionTime_FaultTime;            //_T("ActionTime_FaultTime")
+CString g_sLangTxt_ActionTime_FaultTime;            //_T("故障时间裕度(s):")
+CString g_sLangID_ActionTime_ErrType;            //_T("ActionTime_ErrType")
+CString g_sLangTxt_ActionTime_ErrType;            //_T("误差类型:")
+
+CString g_sLangID_ActionTime_TestItem;            //_T("ActionTime_TestItem")
+CString g_sLangTxt_ActionTime_TestItem;            //_T("测试项目")
+CString g_sLangID_ActionTime_FaultPhase;            //_T("ActionTime_TestPhase")
+CString g_sLangTxt_ActionTime_FaultPhase;            //_T("故障相别")
+CString g_sLangID_ActionTime_Select;            //_T("ActionTime_Select")
+CString g_sLangTxt_ActionTime_Select;            //_T("选择")
+CString g_sLangID_ActionTime_TestResult;            //_T("ActionTime_TestResult")
+CString g_sLangTxt_ActionTime_TestResult;            //_T("测试结果(s)")
+CString g_sLangID_ActionTime_Title_SettingTime;            //_T("ActionTime_Title_SettingTime")
+CString g_sLangTxt_ActionTime_Title_SettingTime;            //_T("时间定值(s)")
+
+CString g_sLangID_Button_AddMultQuick;		    //_T("AddMultQuick")
+CString g_sLangTxt_Button_AddMultQuick;		    //_T("快速添加")
+CString g_sLangID_Button_AddMultDlg;			//_T("AddMultDlg")
+CString g_sLangTxt_Button_AddMultDlg;			//_T("添加系列")
+CString g_sLangID_Button_AddMultBatch;          //_T("AddMultBatch")
+CString g_sLangTxt_Button_AddMultBatch;          //_T("批量添加")
+CString g_sLangID_Button_AddCustomizedPara;			//_T("AddCustomizedPara")
+CString g_sLangTxt_Button_AddCustomizedPara;			//_T("自定义参数添加")
+CString g_sLangID_Button_AddDefaultPara;          //_T("AddDefaultPara")
+CString g_sLangTxt_Button_AddDefaultPara;          //_T("默认参数添加")
+
+CString g_sLangID_Button_DeleteSelItem;         //_T("DeleteSelItem")
+CString g_sLangTxt_Button_DeleteSelItem;         //_T("删除当前")
+CString g_sLangID_Button_DeleteAllItem;         //_T("DeleteAllItem")
+CString g_sLangTxt_Button_DeleteAllItem;         //_T("删除全部")
+CString g_sLangID_Button_ClearSelResult;		//_T("ClearSelResult")
+CString g_sLangTxt_Button_ClearSelResult;		//_T("清除当前")
+CString g_sLangID_Button_ClearAllResult;		//_T("_ClearAllResult")
+CString g_sLangTxt_Button_ClearAllResult;		//_T("清除全部")
+CString g_sLangID_Button_AddOneItem;            //_T("AddOneItem")
+CString g_sLangTxt_Button_AddOneItem;            //_T("添加测试项")
+// CString g_sLangID_Button_AddMultiItem;            //_T("AddMultiItem")
+// CString g_sLangTxt_Button_AddMultiItem;            //_T("添加系列")
+
+CString g_sLangID_Action_AddOneItem;            //_T("Action_AddOneItem")
+CString g_sLangTxt_Action_AddOneItem;            //_T("添加测试项")
+CString g_sLangID_Action_DeleteSelItem;         //_T("Action_DeleteSelItem")
+CString g_sLangTxt_Action_DeleteSelItem;         //_T("删除当前测试项")
+CString g_sLangID_Action_DeleteAllItem;         //_T("Action_DeleteAllItem")
+CString g_sLangTxt_Action_DeleteAllItem;         //_T("删除所有测试项")
+CString g_sLangID_Action_ClearSelResult;		//_T("Action_ClearSelResult")
+CString g_sLangTxt_Action_ClearSelResult;		//_T("清除当前结果")
+CString g_sLangID_Action_ClearAllResult;		//_T("Action_ClearAllResult")
+CString g_sLangTxt_Action_ClearAllResult;		//_T("清除所有结果")
+
+CString g_sLangID_PowerDir_TestPhase_Zero;  // _T("PowerDir_ZeroTest");     //20240717 wanmj 功率方向界面中文多语言处理
+CString g_sLangTxt_PowerDir_TestPhase_Zero;  // _T("零序测试");
+CString g_sLangID_PowerDir_TestPhase_Neg;  // _T("PowerDir_NegTest");
+CString g_sLangTxt_PowerDir_TestPhase_Neg;  // _T("负序测试");
+CString g_sLangID_PowerDir_FaultPhase_ZeroCur;  // _T("PowerDir_ZeroCurr");
+CString g_sLangTxt_PowerDir_FaultPhase_ZeroCur;  // _T("零序电流");
+CString g_sLangID_PowerDir_FaultPhase_NegCur;  // _T("PowerDir_NegCurr");
+CString g_sLangTxt_PowerDir_FaultPhase_NegCur;  // _T("负序电流");
+CString g_sLangID_PowerDir_TestPhase;  // _T("PowerDir_TestPhase");
+CString g_sLangTxt_PowerDir_TestPhase;  // _T("测试相:");
+CString g_sLangID_PowerDir_FaultPhase;  // _T("PowerDir_FaultPhase");
+CString g_sLangTxt_PowerDir_FaultPhase;  // _T("故障相:");
+CString g_sLangID_PowerDir_FaultTime;  // _T("PowerDir_FaultTime");
+CString g_sLangTxt_PowerDir_FaultTime;  // _T("故障时间(s):");
+CString g_sLangID_PowerDir_MaxSenAngle;  // _T("PowerDir_MaxSenAngle");
+CString g_sLangTxt_PowerDir_MaxSenAngle;  // _T("最大灵敏角(°):");
+CString g_sLangID_PowerDir_ActionAreaRange;  // _T("PowerDir_ActionAreaRange");
+CString g_sLangTxt_PowerDir_ActionAreaRange;  // _T("动作区范围(°):");
+CString g_sLangID_PowerDir_StepValue;  // _T("PowerDir_StepValue");
+CString g_sLangTxt_PowerDir_StepValue;  // _T("变化步长(°):");
+CString g_sLangID_PowerDir_AbsErr;  // _T("PowerDir_AbsErr");
+CString g_sLangTxt_PowerDir_AbsErr;  // _T("绝对误差(°):");
+CString g_sLangID_PowerDir_NormalBout;  // _T("PowerDir_NormalBout");
+CString g_sLangTxt_PowerDir_NormalBout;  // _T("常态开出设置");
+CString g_sLangID_PowerDir_FaultBout;  // _T("PowerDir_FaultBout");
+CString g_sLangTxt_PowerDir_FaultBout;  // _T("故障态开出设置");
+CString g_sLangID_PowerDir_UPre;  // _T("PowerDir_UPre");
+CString g_sLangTxt_PowerDir_UPre;  // _T("常态电压幅值(V):");
+CString g_sLangID_PowerDir_UPhSet;  // _T("PowerDir_UPhSet");
+CString g_sLangTxt_PowerDir_UPhSet;  // _T("常态电压相序:");
+CString g_sLangID_PowerDir_IPre;  // _T("PowerDir_IPre");
+CString g_sLangTxt_PowerDir_IPre;  // _T("常态电流幅值(A):");
+CString g_sLangID_PowerDir_IPhSet;  // _T("PowerDir_IPhSet");
+CString g_sLangTxt_PowerDir_IPhSet;  // _T("常态电流相序:");
+CString g_sLangID_PowerDir_PreAngle;  // _T("PowerDir_PreAngle");
+CString g_sLangTxt_PowerDir_PreAngle;  // _T("常态相角(U-I):");
+CString g_sLangID_PowerDir_AngleMode;  // _T("PowerDir_AngleMode");
+CString g_sLangTxt_PowerDir_AngleMode;  // _T("角度定义:");
+CString g_sLangID_PowerDir_ConnectMode;  // _T("PowerDir_ConnectMode");
+CString g_sLangTxt_PowerDir_ConnectMode;  // _T("接线方式:");
+CString g_sLangID_PowerDir_AngleMargin;  // _T("PowerDir_AngleMargin");
+CString g_sLangTxt_PowerDir_AngleMargin;  // _T("角度裕度(°):");
+CString g_sLangID_PowerDir_FaultParas;  // _T("PowerDir_FaultParas");
+CString g_sLangTxt_PowerDir_FaultParas;  // _T("故障参数");
+// CString g_sLangID_PowerDir_TestParas;  // _T("PowerDir_TestParas");
+// CString g_sLangTxt_PowerDir_TestParas;  // _T("试验参数");
+CString g_sLangID_PowerDir_APhaseTest;  // _T("PowerDir_APhaseTest");
+CString g_sLangTxt_PowerDir_APhaseTest;  // _T("A相测试");
+CString g_sLangID_PowerDir_BPhaseTest;  // _T("PowerDir_BPhaseTest");
+CString g_sLangTxt_PowerDir_BPhaseTest;  // _T("B相测试");
+CString g_sLangID_PowerDir_CPhaseTest;  // _T("PowerDir_CPhaseTest");
+CString g_sLangTxt_PowerDir_CPhaseTest;  // _T("C相测试");
+CString g_sLangID_PowerDir_ABPhaseTest;  // _T("PowerDir_ABPhaseTest");
+CString g_sLangTxt_PowerDir_ABPhaseTest;  // _T("AB相测试");
+CString g_sLangID_PowerDir_BCPhaseTest;  // _T("PowerDir_BCPhaseTest");
+CString g_sLangTxt_PowerDir_BCPhaseTest;  // _T("BC相测试");
+CString g_sLangID_PowerDir_CAPhaseTest;  // _T("PowerDir_CAPhaseTest");
+CString g_sLangTxt_PowerDir_CAPhaseTest;  // _T("CA相测试");
+CString g_sLangID_PowerDir_Title_MTA;  // _T("PowerDir_MTA");
+CString g_sLangTxt_PowerDir_Title_MTA;  // _T("最大灵敏角理论值(°)");
+CString g_sLangID_PowerDir_Title_ActionAreaRange;  // _T("PowerDir_Title_ActionAreaRange");
+CString g_sLangTxt_PowerDir_Title_ActionAreaRange;  // _T("动作区范围(°)");
+CString g_sLangID_PowerDir_Title_StepValue;  // _T("PowerDir_Title_StepValue");
+CString g_sLangTxt_PowerDir_Title_StepValue;  // _T("变化步长(°)");
+CString g_sLangID_PowerDir_Title_MaxSenAngle;  // _T("PowerDir_Title_MaxSenAngle");
+CString g_sLangTxt_PowerDir_Title_MaxSenAngle;  // _T("最大灵敏角实测值(°)");
+CString g_sLangID_PowerDir_Title_AngleF;  // _T("PowerDir_Title_AngleF");
+CString g_sLangTxt_PowerDir_Title_AngleF;  // _T("边界1(°)");
+CString g_sLangID_PowerDir_Title_AngleS;  // _T("PowerDir_Title_AngleS");
+CString g_sLangTxt_PowerDir_Title_AngleS;  // _T("边界2(°)");
+
+CString g_sLangID_CrrInverTime_IAmp;            //_T("CrrInverTime_IAmp")
+CString g_sLangTxt_CrrInverTime_IAmp;            //_T("电流幅值")
+CString g_sLangID_CrrInverTime_IPh;            //_T("CrrInverTime_IPh")
+CString g_sLangTxt_CrrInverTime_IPh;            //_T("电流相位")
+CString g_sLangID_CrrInverTime_ChangeStart;            //_T("CrrInverTime_ChangeStart")
+CString g_sLangTxt_CrrInverTime_ChangeStart;            //_T("变化始值(°)")
+CString g_sLangID_CrrInverTime_ChangeFinish;            //_T("CrrInverTime_ChangeFinish")
+CString g_sLangTxt_CrrInverTime_ChangeFinish;            //_T("变化终值(°)")
+CString g_sLangID_CrrInverTime_ChangeStep;            //_T("CrrInverTime_ChangeStep")
+CString g_sLangTxt_CrrInverTime_ChangeStep;            //_T("变化步长(°)")
+CString g_sLangID_Syn_ActVoltageTest;            //_T("Syn_ActVoltageTest")
+CString g_sLangTxt_Syn_ActVoltageTest;            //_T("电压边界值测试")
+CString g_sLangID_Syn_ActFreqTest;            //_T("Syn_ActFreqTest")
+CString g_sLangTxt_Syn_ActFreqTest;            //_T("频率边界值测试")
+CString g_sLangID_Syn_LeadAngTest;            //_T("Syn_LeadAngTest")
+CString g_sLangTxt_Syn_LeadAngTest;            //_T("导前角及导前时间")
+CString g_sLangID_Syn_AutoAdjTest;            //_T("Syn_AutoAdjTest")
+CString g_sLangTxt_Syn_AutoAdjTest;            //_T("自动调整试验")
+CString g_sLangID_Syn_AdjVolTest;            //_T("Syn_AdjVolTest")
+CString g_sLangTxt_Syn_AdjVolTest;            //_T("调压周期测试")
+CString g_sLangID_Syn_AdjFreqTest;            //_T("Syn_AdjFreqTest")
+CString g_sLangTxt_Syn_AdjFreqTest;            //_T("调频周期测试")
+
+//20240719 huangliang
+CString g_sLangID_Setting_NoWord;
+CString g_sLangTxt_Setting_NoWord; //_T("尚未关联定值")
+CString g_sLangID_Setting_Link;
+CString g_sLangTxt_Setting_Link; //_T("关联选择定值")
+CString g_sLangID_Setting_Cancel;
+CString g_sLangTxt_Setting_Cancel; //_T("取消关联")
+CString g_sLangID_Setting_CancelAll;
+CString g_sLangTxt_Setting_CancelAll; //_T("取消全部")
+//20240924 huangliang 
+CString g_sLangID_Setting_NoFind;
+CString g_sLangTxt_Setting_NoFind; //_T("未找到")
+//20241127 huangliang 
+CString g_sLangID_Setting_ModelName;
+CString g_sLangTxt_Setting_ModelName; //_T("关联定值")
+
+//wangtao 20240722
+CString g_sLangID_LowFreq_ULock;            //_T("LowFreq_ULock")
+CString g_sLangTxt_LowFreq_ULock;            //_T("低电压闭锁值")
+CString g_sLangID_LowFreq_ILock;            //_T("LowFreq_ILock")
+CString g_sLangTxt_LowFreq_ILock;            //_T("低电流闭锁值")
+CString g_sLangID_LowFreq_LowVol;            //_T("LowFreq_LowVol")
+CString g_sLangTxt_LowFreq_LowVol;            //_T("低压")
+CString g_sLangID_Gradient_Norm;            //_T("Gradient_Norm")
+CString g_sLangTxt_Gradient_Norm;            //_T("常态")
+CString g_sLangID_Diff_Rate;            //_T("Diff_Rate")
+CString g_sLangTxt_Diff_Rate;            //_T("差动曲线搜索")
+CString g_sLangID_Diff_Harm;            //_T("Diff_Harm")
+CString g_sLangTxt_Diff_Harm;            //_T("谐波制动搜索")
+CString g_sLangID_Diff_AddSearchLine;            //_T("Diff_AddSearchLine")
+CString g_sLangTxt_Diff_AddSearchLine;            //_T("添加搜索线")
+CString g_sLangID_Diff_Autocalculation;            //_T("Diff_Autocalculation")
+CString g_sLangTxt_Diff_Autocalculation;            //_T("自动计算")
+CString g_sLangID_Diff_Manualcalculation;            //_T("Diff_Manualcalculation")
+CString g_sLangTxt_Diff_Manualcalculation;            //_T("手动计算")
+CString g_sLangID_Diff_Dichotomy;            //_T("Diff_Dichotomy")
+CString g_sLangTxt_Diff_Dichotomy;            //_T("二分法")
+CString g_sLangID_Diff_StepwiseApproach;            //_T("Diff_StepwiseApproach")
+CString g_sLangTxt_Diff_StepwiseApproach;            //_T("单步逼近法")
+CString g_sLangID_Diff_Bequation1;            //_T("Diff_Bequation1")
+CString g_sLangTxt_Diff_Bequation1;           //_T("Ir=(|I1-I2|)/K1或Ir=(|I1+I2|)/K1")
+CString g_sLangID_Diff_Bequation5;            //_T("Diff_Bequation5")
+CString g_sLangTxt_Diff_Bequation5;           //_T("Ir=√(K1*I1*I2*Cos(δ))")
+CString g_sLangID_Diff_LineCur;            //_T("Diff_LineCur")
+CString g_sLangTxt_Diff_LineCur;           //_T("线电流")
+CString g_sLangID_Diff_Variation;            //_T("Diff_Variation")
+CString g_sLangTxt_Diff_Variation;           //_T("△")
+CString g_sLangID_Diff_sideAdjust;            //_T("Diff_Adjust")
+CString g_sLangTxt_Diff_sideAdjust;           //_T("测校正")
+CString g_sLangID_Diff_High;            //_T("Diff_High")
+CString g_sLangTxt_Diff_High;           //_T("高")
+CString g_sLangID_Diff_Medium;            //_T("Diff_Medium")
+CString g_sLangTxt_Diff_Medium;           //_T("中")
+CString g_sLangID_Diff_Low;            //_T("Diff_Low")
+CString g_sLangTxt_Diff_Low;           //_T("低")
+CString g_sLangID_MaintainatLeastOneItem;            //_T("MaintainatLeastOneItem")
+CString g_sLangTxt_MaintainatLeastOneItem;           //_T("请至少勾选一个测试项！")
+CString g_sLangID_MaintainatLeastOneFault;            //_T("MaintainatLeastOneFault");
+CString g_sLangTxt_MaintainatLeastOneFault;            //_T("请至少勾选一个故障区段！");
+CString g_sLangID_MaintainatLeastOneFunc;            //_T("MaintainatLeastOneFunc");
+CString g_sLangTxt_MaintainatLeastOneFunc;            //_T("请至少勾选一个功能模块！");
+CString g_sLangID_MaintainatLeastOneErrorType;       //_T("MaintainatLeastOneErrorType");
+CString g_sLangTxt_MaintainatLeastOneErrorType;      //_T("请至少勾选一个故障类别！");
+CString g_sLangID_MaintainatLeastOneRate;			 //T("MaintainatLeastOneRate");
+CString g_sLangTxt_MaintainatLeastOneRate;           //_T("请至少勾选一个倍数！");
+CString g_sLangID_MaintainatLeastOneDirection;       // = _T("MaintainatLeastOneDirection");
+CString g_sLangTxt_MaintainatLeastOneDirection;      // = _T("请至少勾选一个故障方向！");
+
+//luozibing 2024.7.19
+CString g_sLangID_Distance_DeleteItem;			// _T("Distance_DeleteItem");
+CString g_sLangTxt_Distance_DeleteItem;			// _T("删除测试项");
+CString g_sLangID_Distance_ClearResult;			// _T("Distance_ClearResult");
+CString g_sLangTxt_Distance_ClearResult;		// _T("清除测试结果");
+CString g_sLangID_Distance_Zone1;				//_T("Distance_Zone1");
+CString g_sLangTxt_Distance_Zone1;				//_T("Ⅰ段");
+CString g_sLangID_Distance_Zone2;				//_T("Distance_Zone2");
+CString g_sLangTxt_Distance_Zone2;				//_T("Ⅱ段");
+CString g_sLangID_Distance_Zone3;				//_T("Distance_Zone3");
+CString g_sLangTxt_Distance_Zone3;				//_T("Ⅲ段");
+CString g_sLangID_Distance_Zone4;				//_T("Distance_Zone4");
+CString g_sLangTxt_Distance_Zone4;				//_T("Ⅳ段");
+CString g_sLangID_Distance_Zone5;				//_T("Distance_Zone5");
+CString g_sLangTxt_Distance_Zone5;				//_T("Ⅴ段");
+CString g_sLangID_Distance_ZoneLine;			//_T("Distance_ZoneLine");
+CString g_sLangTxt_Distance_ZoneLine;			//_T("线路长度");
+CString g_sLangID_Distance_ZoneAllarea;			//_T("Distance_ZoneAllarea");
+CString g_sLangTxt_Distance_ZoneAllarea;		//_T("所有区域");
+CString g_sLangID_Distance_ErrorNot;			//_T("Distance_ErrorNot");
+CString g_sLangTxt_Distance_ErrorNot;			//_T("不评估");;
+CString g_sLangID_Distance_ErrorRelAndAbs;		//_T("Distance_ErrorRelAndAbs");
+CString g_sLangTxt_Distance_ErrorRelAndAbs;		//_T("绝对误差&amp;相对误差");
+CString g_sLangID_Distance_ErrorRelorAbs;		//_T("Distance_ErrorRelorAbs");
+CString g_sLangTxt_Distance_ErrorRelorAbs;		//_T("绝对误差or相对误差");
+CString g_sLangID_Distance_AddOneLN;		//_T("Distance_AddOneLN");
+CString g_sLangTxt_Distance_AddOneLN;		//_T("添加单个区段-接地故障");
+CString g_sLangID_Distance_AddOneLL;		//_T("Distance_AddOneLL");
+CString g_sLangTxt_Distance_AddOneLL;		//_T("添加单个区段-相间故障");
+CString g_sLangID_Distance_AddMult;			//_T("Distance_AddMult");
+CString g_sLangTxt_Distance_AddMult;		//_T("添加多个区段");
+CString g_sLangID_Distance_VzDefine;		//_T("Distance_VzDefine");
+CString g_sLangTxt_Distance_VzDefine;		//_T("√3×3U0");
+CString g_sLangID_Distance_ZTYAxis;		//_T("Distance_ZTYAxis");
+CString g_sLangTxt_Distance_ZTYAxis;		//_T("Z(Ω)");
+
+CString g_sLangID_Distance_Percent;			// = _T("Distance_Percent");
+CString g_sLangTxt_Distance_Percent;			//= _T("百分比(%):");
+CString g_sLangID_Distance_ZoneSel;			// = _T("Distance_ZoneSel");
+CString g_sLangTxt_Distance_ZoneSel;		//= _T("区段选择");
+CString g_sLangID_Distance_FaultLN;			// = _T("Distance_FaultLN");
+CString g_sLangTxt_Distance_FaultLN;			//= _T("接\n地\n故\n障");
+CString g_sLangID_Distance_FaultLL;			// = _T("Distance_FaultLL");
+CString g_sLangTxt_Distance_FaultLL;			//= _T("相\n间\n故\n障");
+CString g_sLangID_Distance_MinTrip;			// = _T("Distance_MinTrip");
+CString g_sLangTxt_Distance_MinTrip;			//= _T("最小动作时间(s):");
+CString g_sLangID_Distance_ZLineSet;			// = _T("Distance_ZLineSet");
+CString g_sLangTxt_Distance_ZLineSet;			//= _T("线路阻抗(Ω):");
+CString g_sLangID_Distance_AddOneTileLL;			// = _T("Distance_AddOneTileLL");
+CString g_sLangTxt_Distance_AddOneTileLL;			//= _T("添加相间故障");
+CString g_sLangID_Distance_AddOneTileLN;			// = _T("Distance_AddOneTileLN");
+CString g_sLangTxt_Distance_AddOneTileLN;			//= _T("添加单相接地故障");
+// CString g_sLangID_Distance_AddMultTile;			// = _T("Distance_AddMultTile");
+// CString g_sLangTxt_Distance_AddMultTile;			//= _T("添加系列");
+CString g_sLangID_Distance_CommonParas;			// = _T("Distance_CommonParas");
+CString g_sLangTxt_Distance_CommonParas;			//= _T("通用参数设置");
+CString g_sLangID_Distance_ZImpValue;			// = _T("Distance_ZImpValue");
+CString g_sLangTxt_Distance_ZImpValue;			// = _T("阻抗(Ω):");
+CString g_sLangID_Distance_TSetting;			// = _T("Distance_TSetting");
+CString g_sLangTxt_Distance_TSetting;			// = _T("时间定值(s):");
+CString g_sLangID_Distance_SetActionTime;			// = _T("Distance_SetActionTime");
+CString g_sLangTxt_Distance_SetActionTime;			// = _T("整定动作时间(s):");
+CString g_sLangID_Distance_AddMultZone;			// = _T("Distance_AddMultZone");
+CString g_sLangTxt_Distance_AddMultZone;			// = _T("区段:");
+CString g_sLangID_Distance_FaultTypeSel;			// = _T("Distance_FaultTypeSel");
+CString g_sLangTxt_Distance_FaultTypeSel;			// = _T("故障类型选择:");
+CString g_sLangID_Distance_FailDirectSel;			// = _T("Distance_FailDirectSel");
+CString g_sLangTxt_Distance_FailDirectSel;			// = _T("故障方向选择:");
+CString g_sLangID_Distance_AddMultZAng;			// = _T("Distance_AddMultZAng");
+CString g_sLangTxt_Distance_AddMultZAng;			// = _T("阻抗角(°)");
+CString g_sLangID_Distance_OutputHoldTimeS;			// = _T("Distance_OutputHoldTimeS");
+CString g_sLangTxt_Distance_OutputHoldTimeS;			// = _T("开出保持时间(s)");
+CString g_sLangID_Distance_OutputDelayTime;			// = _T("Distance_OutputDelayTime");
+CString g_sLangTxt_Distance_OutputDelayTime;			// = _T("开出翻转时刻(s)");
+CString g_sLangID_Distance_VzPh;			// = _T("Distance_VzPh");
+CString g_sLangTxt_Distance_VzPh;			// = _T("抽取电压相角(相对参考相):");
+CString g_sLangID_Distance_AddTestItemTips;			// = _T("Distance_AddTestItemTips");
+CString g_sLangTxt_Distance_AddTestItemTips;			// = _T("请添加测试项！");
+CString g_sLangID_Distance_BreakTime_sec;			// = _T("Distance_BreakTime_sec");
+CString g_sLangTxt_Distance_BreakTime_sec;			// = _T("分闸时间(ms)");
+CString g_sLangID_Distance_BrkCloseTime_sec;			// = _T("Distance_BrkCloseTime_sec");
+CString g_sLangTxt_Distance_BrkCloseTime_sec;			// = _T("合闸时间(ms)");
+CString g_sLangID_Distance_FaultPreTimeS;
+CString g_sLangTxt_Distance_FaultPreTimeS; // 故障前时间(s)
+CString g_sLangID_Distance_FaultTimeMargin;			   // = _T("Distance_FaultTimeMargin")
+CString g_sLangTxt_Distance_FaultTimeMargin;			   // = _T("故障时间裕度(s)")
+
+CString g_sLangID_CharElement_StartPointAmp;			// = _T("CharElement_StartPointAmp");
+CString g_sLangTxt_CharElement_StartPointAmp;			// = _T("起始点-幅值");
+CString g_sLangID_CharElement_StartPointAngle;			// = _T("CharElement_StartPointAngle");
+CString g_sLangTxt_CharElement_StartPointAngle;			// = _T("起始点-相位");
+CString g_sLangID_CharElement_EndPointAmp;			// = _T("CharElement_EndPointAmp");
+CString g_sLangTxt_CharElement_EndPointAmp;			// = _T("终止点-幅值");
+CString g_sLangID_CharElement_EndPointAngle;			// = _T("CharElement_EndPointAngle");
+CString g_sLangTxt_CharElement_EndPointAngle;			// = _T("终止点-相位");
+CString g_sLangID_CharElement_ARCAmp;			// = _T("CharElement_ARCAmp");
+CString g_sLangTxt_CharElement_ARCAmp;			// = _T("幅值-圆心");
+CString g_sLangID_CharElement_ARCAngle;			// = _T("CharElement_ARCAngle");
+CString g_sLangTxt_CharElement_ARCAngle;			// = _T("相位-圆心");
 
 
+//重复删除
+// CString g_sLangID_Distance_Distance_ImpActBorder;		// =_T("Distance_ImpActBorder");
+// CString g_sLangTxt_Distance_ImpActBorder;				// =_T("阻抗动作边界");
+// CString g_sLangID_Distance_Distance_ImpSetCheck;		// =_T("Distance_ImpImpSetCheck");
+// CString g_sLangTxt_Distance_ImpImpSetCheck;				// =_T("阻抗定值校验");
+// CString g_sLangID_Distance_Distance_AbsErrPlus;			// =_T("Distance_AbsErrPlus");
+// CString g_sLangTxt_Distance_AbsErrPlus;					// =_T("绝对误差(+)");
+// CString g_sLangID_Distance_Distance_AbsErrMinus;		// =_T("Distance_AbsErrMinus");
+// CString g_sLangTxt_Distance_AbsErrMinus;				// =_T("绝对误差(-)");
+
+CString g_sLangTxt_Replay_WaveformEditing;         //_T("波形编辑")// wuxy 2024.7.22
+CString g_sLangID_Replay_WaveformEditing;          //_T("Replay_WaveformEditing")
+CString g_sLangTxt_Replay_OriWaveEdit;             //_T("原波形编辑")
+CString g_sLangID_Replay_OriWaveEdit;              //_T("Replay_OriWaveEdit")
+CString g_sLangTxt_Replay_InsertNorWave;           //_T("插入常态波形")
+CString g_sLangID_Replay_InsertNorWave;            //_T("Replay_InsertNorWave")
+CString g_sLangTxt_Replay_InsertWave;              //_T("插入波形")
+CString g_sLangID_Replay_InsertWave;               //_T("Replay_InsertWave")
+CString g_sLangTxt_Replay_InsertWaveParams;        //_T("插入波形参数")
+CString g_sLangID_Replay_InsertWaveParams;         //_T("Replay_InsertWaveParams")
+CString g_sLangTxt_Replay_Time;                    //_T("时间")
+CString g_sLangID_Replay_Time;                     //_T("Replay_Time")
+CString g_sLangTxt_Replay_PointNumber;             //_T("点号")
+CString g_sLangID_Replay_PointNumber;             //_T("Replay_PointNumber")
+CString g_sLangTxt_Replay_StartPointNumber;       //_T("起始点号")
+CString g_sLangID_Replay_StartPointNumber;        //_T("Replay_StartPointNumber")
+CString g_sLangTxt_Replay_EndPointNumber;         //_T("终止点号")
+CString g_sLangID_Replay_EndPointNumber;          //_T("Replay_EndPointNumber")
+CString g_sLangTxt_Replay_StartTime;               //_T("起始时刻（s）")
+CString g_sLangID_Replay_StartTime;                //_T("Replay_StartTime")
+CString g_sLangTxt_Replay_EndTime;                 //_T("终止时刻（s）")
+CString g_sLangID_Replay_EndTime;                  //_T("Replay_EndTime")
+CString g_sLangTxt_Replay_NumCycles;               //_T("循环次数")
+CString g_sLangID_Replay_NumCycles;                //_T("Replay_NumCycles")
+CString g_sLangTxt_Replay_Voltage;                 //_T("电压（V）")
+CString g_sLangID_Replay_Voltage;                  //_T("Replay_Voltage")
+CString g_sLangTxt_Replay_Current;                 //_T("电流（A）")
+CString g_sLangID_Replay_Current;                  //_T("Replay_Current")
+CString g_sLangTxt_Replay_OutputTime;              //_T("输出时间（s）")
+CString g_sLangID_Replay_OutputTime;               //_T("Replay_OutputTime")
+CString g_sLangTxt_Replay_DeleteWave;              //_T("删除波形")
+CString g_sLangID_Replay_DeleteWave;               //_T("Replay_DeleteWave")
+CString g_sLangTxt_Replay_WaveReset;               //_T("波形复归")
+CString g_sLangID_Replay_WaveReset;                //_T("Replay_WaveReset")
+CString g_sLangTxt_Replay_Delete;                  //_T("删除")
+CString g_sLangID_Replay_Delete;                   //_T("Replay_Delete")
+CString g_sLangTxt_Replay_Insert;                  //_T("插入")
+CString g_sLangID_Replay_Insert;                   //_T("Replay_Insert")
+CString g_sLangTxt_Replay_Model;					 //_T("模")
+CString g_sLangID_Replay_Model;                     //_T("Replay_Model")
+CString g_sLangTxt_Replay_Weak;                   //_T("弱")
+CString g_sLangID_Replay_Weak;                    //_T("Replay_Weak")
+
+CString g_sLangID_Native_ConnectingAtsTester;	//= _T("Native_ConnectingAtsTester");
+CString g_sLangTxt_Native_ConnectingAtsTester;	//= _T("正在连接自动测试服务......");
+CString g_sLangID_Native_TesterConnectAtsSucc;	//= _T("Native_TesterConnectAtsSucc");
+CString g_sLangTxt_Native_TesterConnectAtsSucc;//= _T("自动测试服务连接成功");
+CString g_sLangID_Native_TesterConnectAtsfail;	//= _T("Native_TesterConnectAtsfail");
+CString g_sLangTxt_Native_TesterConnectAtsfail;//= _T("连接自动测试服务失败，请检查网络链路是否连通，IP地址及端口配置是否正确；然后点击网络连接按钮重新连接");//zhangyq 2024.7.23 自动准同期通用参数中电压定义
+CString g_sLangID_Syn_UDefineOne;                   //_T("Syn_UDefineOne")
+CString g_sLangTxt_Syn_UDefineOne;                  //_T("系统->Ua1,待并->Ub1")
+CString g_sLangID_Syn_UDefineTwo;                   //_T("Syn_UDefineTwo")
+CString g_sLangTxt_Syn_UDefineTwo;                  //_T("系统->Ua1,待并->Ubc1")
+CString g_sLangID_Syn_UDefineThree;                   //_T("Syn_UDefineThree")
+CString g_sLangTxt_Syn_UDefineThree;                  //_T("系统->Ua2/Uz,待并->Uabc1")
+CString g_sLangID_Syn_UDefineFour;                   //_T("Syn_UDefineFour")
+CString g_sLangTxt_Syn_UDefineFour;                  //_T("系统->Uabc1,待并->Uabc2")
+//zhangyq 2024.7.24 自动准同期开关量设置中开出量
+CString g_sLangID_Syn_Pulse;                   //_T("Syn_Pulse")
+CString g_sLangTxt_Syn_Pulse;                    //_T("脉冲")
+CString g_sLangID_Syn_Continuous;                   //_T("Syn_Continuous")
+CString g_sLangTxt_Syn_Continuous;                    //_T("连续")
+//gongyiping 2024.9.30 自动准同期开关量设置中开出量名称
+//CString g_sLangID_Syn_State;                   //_T("Syn_State")
+//CString g_sLangTxt_Syn_State;                    //_T("状态")
+CString g_sLangID_Syn_Mode;                   //_T("Syn_Mode")
+CString g_sLangTxt_Syn_Mode;                    //_T("输出方式")
+//gongyiping 2024.10.24 自动准同期参数
+CString g_sLangID_Syn_ProOutSignals;			// _T("Syn_ProOutSignals");
+CString g_sLangTxt_Syn_ProOutSignals;			//_T("保护出口信号");
+CString g_sLangID_Syn_IncFSignals;			// _T("Syn_IncFSignals");
+CString g_sLangTxt_Syn_IncFSignals;			// _T("增速信号");
+CString g_sLangID_Syn_DecFSignals;			// _T("Syn_DecFSignals");
+CString g_sLangTxt_Syn_DecFSignals;			// _T("减速信号");
+CString g_sLangID_Sys_PointNum;			// _T("Sys_PointNum");
+CString g_sLangTxt_Sys_PointNum;			// _T("钟点数:");
+CString g_sLangID_Sys_PhaseDiff;			// _T("Sys_PhaseDiff");
+CString g_sLangTxt_Sys_PhaseDiff;			// _T("两侧相位差(°):");
+//gongyiping 2024.10.24 电压反时限
+CString g_sLangID_Vol_TestPointsAdd;					// _T("Vol_TestPointsAdd");
+CString g_sLangTxt_Vol_TestPointsAdd;					//  _T("测试点添加");
+CString g_sLangID_Vol_FaultTypeSelect;					// _T("Vol_FaultTypeSelect");
+CString g_sLangTxt_Vol_FaultTypeSelect;					//  _T("故障类别选择");
+CString g_sLangID_Vol_FaultOutput;					// _T("Vol_FaultOutput");
+CString g_sLangTxt_Vol_FaultOutput;					//  _T("故障态输出");
+//20241024 gongyiping 电流反时限
+CString g_sLangID_Curr_FaultBeforeOutput;				// _T("Vol_FaultBeforeOutput");
+CString g_sLangTxt_Curr_FaultBeforeOutput;				// _T("故障前输出");
+//zhangyq 2024.7.25 保存模版
+CString g_sLangID_Native_LangTip                 ;//= _T("Native_LangTip");
+CString g_sLangTxt_Native_LangTip                ;//= _T("提示");
+CString g_sLangID_Native_FileSaveSuccess             ;//= _T("Native_FileSaveSuccess");
+CString g_sLangTxt_Native_FileSaveSuccess;//= _T("文件保存成功！");
+CString g_sLangID_Native_AckFileSave;//= _T("Native_AckFileSave");
+CString g_sLangTxt_Native_AckFileSave;//= _T("请确认当前报告是否保存！");
+CString g_sLangID_Native_ExportWordDoc             ;//= _T("Native_ExportWordDoc");
+CString g_sLangTxt_Native_ExportWordDoc            ;//= _T("导出word文件");
+CString g_sLangID_Native_DocType             ;//= _T("Native_DocType");
+CString g_sLangTxt_Native_DocType            ;//= _T("Word97-2003报告(*.doc);;Word报告(*.docx);;HTML报告(*.html);;PDF报告(*.pdf)");
 
 
+CString g_sLangID_Distance_ImpActBorder;		// =_T("Distance_ImpActBorder");
+CString g_sLangTxt_Distance_ImpActBorder;				// =_T("阻抗动作边界");
+CString g_sLangID_Distance_ImpSetCheck;		// =_T("Distance_ImpSetCheck");
+CString g_sLangTxt_Distance_ImpSetCheck;				// =_T("阻抗定值校验");
+CString g_sLangID_Distance_AbsErrPlus;			// =_T("Distance_AbsErrPlus");
+CString g_sLangTxt_Distance_AbsErrPlus;					// =_T("绝对误差(+)");
+CString g_sLangID_Distance_AbsErrMinus;		// =_T("Distance_AbsErrMinus");
+CString g_sLangTxt_Distance_AbsErrMinus;				// =_T("绝对误差(-)");
+CString g_sLangID_Distance_CharacterEng_UseZone;		// =_T("CharacterEng_UseZone");
+CString g_sLangTxt_CharacterEng_UseZone;				// =_T("使用");
+CString g_sLangID_Distance_CharacterEng_FaulTips;		// =_T("CharacterEng_FaulTips");
+CString g_sLangTxt_CharacterEng_FaulTips;				// =_T("带有故障环区域确实已存在!");
+CString g_sLangID_Distance_CharacterEng_FaulTipTile;	// =_T("CharacterEng_FaulTipTile");
+CString g_sLangTxt_CharacterEng_FaulTipTile;			// =_T("提示");
+
+CString g_sLangID_Iec_StartRcd;                   //_T("Iec_StartRcd")
+CString g_sLangTxt_Iec_StartRcd;                    //_T("进入监视后，开始录波")
+
+//与国际版保持一致 移到XLanguageResourceAts里
+//CString g_sLangID_Xrio_EnterNumbers;                    //_T("Xrio_EnterNumbers");
+//CString g_sLangTxt_Xrio_EnterNumbers;                   //_T("请输入一个数字。");
+CString g_sLangID_Xrio_XrioError;                       //_T("Xrio_XrioError");
+CString g_sLangTxt_Xrio_XrioError;                      //_T("XRIO错误");
+//CString g_sLangID_Xrio_ValueLessThanOREqual;            //_T("Xrio_ValueLessThanOREqual");
+//CString g_sLangTxt_Xrio_ValueLessThanOREqual;           //_T("值必须<=");
+//CString g_sLangID_Xrio_ValueGreaterThanOREqual;         //_T("Xrio_ValueGreaterThanOREqual");
+//CString g_sLangTxt_Xrio_ValueGreaterThanOREqual;        //_T("值必须>=");
+
+CString g_sLangID_Xrio_DeviceSetting;                   //=_T("Xrio_DeviceSetting");
+CString g_sLangTxt_Xrio_DeviceSetting;                  //=_T("装置定值");
+
+CString g_sLangTxt_Native_ActTimeValueAbsErrNeg; // 动作时间值绝对误差负
+CString g_sLangID_Native_ActTimeValueAbsErrNeg;
+
+CString  g_sLangID_ReplayTest_InsertWaveTip;		//=_T("ReplayTest_InsertWaveTip")
+CString  g_sLangTxt_ReplayTest_InsertWaveTip;		//=_T("正在生成新的波形,请稍等....")
+CString  g_sLangID_ReplayTest_RecoverWaveTip;		//=_T("ReplayTest_RecoverWaveTip")
+CString  g_sLangTxt_ReplayTest_RecoverWaveTip;		//=_T("波形正在复归，请稍等....")
+CString  g_sLangID_ReplayTest_LeftMove;		//=_T("ReplayTest_LeftMove")
+CString  g_sLangTxt_ReplayTest_LeftMove;		//=_T("左移")
+CString  g_sLangID_ReplayTest_RightMove;		//=_T("ReplayTest_RightMove")
+CString  g_sLangTxt_ReplayTest_RightMove;		//=_T("右移")
+CString  g_sLangID_ReplayTest_Cursor;		//=_T("ReplayTest_Cursor")
+CString  g_sLangTxt_ReplayTest_Cursor;		//=_T("光标")
+CString  g_sLangID_ReplayTest_TimeDiffer;		//=_T("ReplayTest_TimeDiffer")
+CString  g_sLangTxt_ReplayTest_TimeDiffer;		//=_T("时差")
+CString  g_sLangID_ReplayTest_PointDiffer;		//=_T("ReplayTest_PointDiffer")
+CString  g_sLangTxt_ReplayTest_PointDiffer;		//=_T("点差")
+
+CString g_sLangID_Xrio_InvalidInput;                    //= _T("Xrio_InvalidInput")
+CString g_sLangTxt_Xrio_InvalidInput;                   //= _T("无效输入")
+
+CString g_sLangID_Xrio_InputRestrictionTypeOne;         //= _T("Xrio_InputRestrictionTypeOne")
+CString g_sLangTxt_Xrio_InputRestrictionTypeOne;        //= _T("输入必须是大于或等于0的数字。")
+
+CString g_sLangID_Xrio_InputRestrictionTypeTwo;         //= _T("Xrio_InputRestrictionTypeTwo")
+CString g_sLangTxt_Xrio_InputRestrictionTypeTwo;        //= _T("请输入介于0和800之间的值。")
+
+CString g_sLangID_Xrio_InputRestrictionTypeThree;       //= _T("Xrio_InputRestrictionTypeThree")
+CString g_sLangTxt_Xrio_InputRestrictionTypeThree;      //= _T("请输入介于0.00和0.025之间的值。")//2024-9-9 wuxinyi
+CString  g_sLangID_ReplayTest_DeleteTimeError;		//=_T("ReplayTest_DeleteTimeError");
+CString  g_sLangTxt_ReplayTest_DeleteTimeError;		//_T("删除起点不能小于或等于终点，请重新输入!");
+CString  g_sLangID_ReplayTest_InsertBeginTimeError;		//=_T("ReplayTest_InsertBeginTimeError");
+CString  g_sLangTxt_ReplayTest_InsertBeginTimeError;		//_T("插入起点不能小于或等于终止点号，请重新输入!");
+CString  g_sLangID_ReplayTest_InsertBeginPointError;		//=_T("ReplayTest_InsertBeginTimeError");
+CString  g_sLangTxt_ReplayTest_InsertBeginPointError;		//_T("插入起始点号不能小于或等于终止点号，请重新输入!");
+
+//20240905 huangliang
+CString g_sLangID_MappingRelation_Maps_CHName;
+CString g_sLangTxt_MappingRelation_Maps_CHName; //_T("电压电流")
+CString g_sLangID_MappingRelation_Maps_BinName;
+CString g_sLangTxt_MappingRelation_Maps_BinName; //_T("开关量输入")
+CString g_sLangID_MappingRelation_Maps_BoutName;
+CString g_sLangTxt_MappingRelation_Maps_BoutName; //_T("开关量输出")
+
+CString g_sLangID_MappingRelation_Maps_TitleID;
+CString g_sLangTxt_MappingRelation_Maps_TitleID; //_T("开关量通道")
+CString g_sLangID_MappingRelation_Maps_TitleName;
+CString g_sLangTxt_MappingRelation_Maps_TitleName; //_T("显示名称")
+
+//20240919 wangsen
+CString g_sLangID_Xrio_SettingFile;                     //= _T("Xrio_SettingFile");
+CString g_sLangTxt_Xrio_SettingFile;                    //= _T("定值文件");
+
+CString g_sLangID_Xrio_ImportRefs;                      //= _T("Xrio_ImportRefs")
+CString g_sLangTxt_Xrio_ImportRefs;                     //= _T("参数值已导入。")
+
+//2024-0926 xueyangfan 重合闸添加系列
+CString g_sLangID_RecloseAcc_InspectLineNoStrain;       //= _T("RecloseAcc_InspectLineNoStrain")
+CString g_sLangTxt_RecloseAcc_InspectLineNoStrain;      //= _T("检线无压母有压")
+CString  g_sLangID_RecloseAcc_InspectLineStrain;		//=_T("RecloseAcc_InspectLineStrain");
+CString  g_sLangTxt_RecloseAcc_InspectLineStrain;		//_T("检线有压母无压");
+CString  g_sLangID_RecloseAcc_InspectLineNoPressure;	//=_T("RecloseAcc_InspectLineNoPressure");
+CString  g_sLangTxt_RecloseAcc_InspectLineNoPressure;	//_T("检线无压母无压");
+CString  g_sLangID_RecloseAcc_InspectLinePressure;		//=_T("RecloseAcc_InspectLinePressure");
+CString  g_sLangTxt_RecloseAcc_InspectLinePressure;		//_T("检线有压母有压");
+CString  g_sLangID_RecloseAcc_InspectNoOutput;			//=_T("RecloseAcc_InspectNoOutput");
+CString  g_sLangTxt_RecloseAcc_InspectNoOutput;			//_T("无输出");
+CString g_sLangID_RecloseAcc_NoAct;       //= _T("RecloseAcc_NoAct")
+CString g_sLangTxt_RecloseAcc_NoAct;      //= _T("不动作")
+
+CString g_sLangID_RecloseAcc_Z;       //= _T("RecloseAcc_Z")
+CString g_sLangTxt_RecloseAcc_Z;      //= _T("阻抗(Ω):")
+CString g_sLangID_RecloseAcc_R;       //= _T("RecloseAcc_R")
+CString g_sLangTxt_RecloseAcc_R;      //= _T("R(Ω):")
+CString g_sLangID_RecloseAcc_X;       //= _T("RecloseAcc_X")
+CString g_sLangTxt_RecloseAcc_X;      //= _T("X(Ω):")
+CString g_sLangID_RecloseAcc_Fre;       //= _T("RecloseAcc_Fre")
+CString g_sLangTxt_RecloseAcc_Fre;      //= _T("频率(Hz):")
+CString g_sLangID_RecloseAcc_RecloseTime;       //= _T("RecloseAcc_RecloseTime")
+CString g_sLangTxt_RecloseAcc_RecloseTime;      //= _T("重合时间(s):")
+CString g_sLangID_RecloseAcc_RecloseMode;       //= _T("RecloseAcc_RecloseMode")
+CString g_sLangTxt_RecloseAcc_RecloseMode;      //= _T("故障性质:")
+CString g_sLangID_RecloseAcc_UxMode;       //= _T("RecloseAcc_UxMode")
+CString g_sLangTxt_RecloseAcc_UxMode;      //= _T("抽取电压选择:")
+CString g_sLangID_RecloseAcc_UxInputFre;       //= _T("RecloseAcc_UxInputFre")
+CString g_sLangTxt_RecloseAcc_UxInputFre;      //= _T("抽取电压频率(Hz):")
+CString g_sLangID_RecloseAcc_UxInputMag;       //= _T("RecloseAcc_UxInputMag")
+CString g_sLangTxt_RecloseAcc_UxInputMag;      //= _T("跳闸后抽取电压(V):")
+CString g_sLangID_RecloseAcc_UxInputAng;       //= _T("RecloseAcc_UxInputAng")
+CString g_sLangTxt_RecloseAcc_UxInputAng;      //= _T("跳闸后抽取电压相位(°):")
+CString g_sLangID_RecloseAcc_Input;       //= _T("RecloseAcc_Input")
+CString g_sLangTxt_RecloseAcc_Input;      //= _T("开入操作")
+CString g_sLangID_RecloseAcc_Output;       //= _T("RecloseAcc_Output")
+CString g_sLangTxt_RecloseAcc_Output;      //= _T("开出操作")
+CString g_sLangID_RecloseAcc_BinSelect;       //= _T("RecloseAcc_BinSelect")
+CString g_sLangTxt_RecloseAcc_BinSelect;      //= _T("开入选择:")
+CString g_sLangID_RecloseAcc_OutputSwitchMode;       //= _T("RecloseAcc_OutputSwitchMode")
+CString g_sLangTxt_RecloseAcc_OutputSwitchMode;      //= _T("开出翻转启动方式:")
+CString g_sLangID_RecloseAcc_OutputKeepTime;       //= _T("RecloseAcc_OutputKeepTime")
+CString g_sLangTxt_RecloseAcc_OutputKeepTime;      //= _T("开出保持时间(s):")
+CString g_sLangID_RecloseAcc_OutputDelayTime;       //= _T("RecloseAcc_OutputDelayTime")
+CString g_sLangTxt_RecloseAcc_OutputDelayTime;      //= _T("开出翻转时刻(s):")
+CString g_sLangID_RecloseAcc_FaultTrigMode;       //= _T("RecloseAcc_FaultTrigMode")
+CString g_sLangTxt_RecloseAcc_FaultTrigMode;      //= _T("故障触发方式:")
+
+CString g_sLangID_RecloseAcc_NoPre;       //= _T("RecloseAcc_NoPre")
+CString g_sLangTxt_RecloseAcc_NoPre;      //= _T("检无压测试:")
+CString g_sLangID_RecloseAcc_SamPer;       //= _T("RecloseAcc_SamPer")
+CString g_sLangTxt_RecloseAcc_SamPer;      //= _T("检同期测试")
+CString g_sLangID_RecloseAcc_Frequency;       //= _T("RecloseAcc_Frequency")
+CString g_sLangTxt_RecloseAcc_Frequency;      //= _T("检频率测试")
+CString g_sLangID_RecloseAcc_AutoReclose;       //= _T("RecloseAcc_AutoReclose")
+CString g_sLangTxt_RecloseAcc_AutoReclose;      //= _T("自动重合闸")
+CString g_sLangID_RecloseAcc_AftAcc;       //= _T("RecloseAcc_AftAcc")
+CString g_sLangTxt_RecloseAcc_AftAcc;      //= _T("后加速测试:")
+CString g_sLangID_RecloseAcc_NoPreSet;       //= _T("RecloseAcc_NoPreSet")
+CString g_sLangTxt_RecloseAcc_NoPreSet;      //= _T("无压定值(V):")
+CString g_sLangID_RecloseAcc_SynAngle;       //= _T("RecloseAcc_SynAngle")
+CString g_sLangTxt_RecloseAcc_SynAngle;      //= _T("合闸角度(°):")
+CString g_sLangID_RecloseAcc_K0Mode;       //= _T("RecloseAcc_K0Mode")
+CString g_sLangTxt_RecloseAcc_K0Mode;      //= _T("表达方式:")
+
+CString g_sLangID_RecloseAcc_TripTime;       //= _T("RecloseAcc_TripTime")
+CString g_sLangTxt_RecloseAcc_TripTime;      //= _T("跳闸时间(s)")
+CString g_sLangID_RecloseAcc_TtripD;       //= _T("RecloseAcc_TtripD")
+CString g_sLangTxt_RecloseAcc_TtripD;      //= _T("重合时间(s)")
+CString g_sLangID_RecloseAcc_TtripAcc;       //= _T("RecloseAcc_TtripAcc")
+CString g_sLangTxt_RecloseAcc_TtripAcc;      //= _T("后加速时间(s)")
+CString g_sLangID_RecloseAcc_Title_UxInputMag;       //= _T("RecloseAcc_Title_UxInputMag")
+CString g_sLangTxt_RecloseAcc_Title_UxInputMag;      //= _T("抽取电压(V)")
+CString g_sLangID_RecloseAcc_Title_UxInputAng;       //= _T("RecloseAcc_Title_UxInputAng")
+CString g_sLangTxt_RecloseAcc_Title_UxInputAng;      //= _T("抽取电压相位(°)")
+CString g_sLangID_RecloseAcc_Title_VZFreq;       //= _T("RecloseAcc_Title_VZFreq")
+CString g_sLangTxt_RecloseAcc_Title_VZFreq;      //= _T("抽取电压频率(Hz)")
+
+//2024-0929 xueyangfan 开关量录波
+CString  g_sLangID_BinRecord_Channel;			//=_T("BinRecord_Channel");
+CString  g_sLangTxt_BinRecord_Channel;			//_T("录波通道");
+CString  g_sLangID_BinRecord_RecordType;			//=_T("BinRecord_RecordType");
+CString  g_sLangTxt_BinRecord_RecordType;			//_T("记录类型");
+CString  g_sLangID_BinRecord_ClampRate;			//=_T("BinRecord_ClampRate");
+CString  g_sLangTxt_BinRecord_ClampRate;			//_T("夹钳比率");
+CString  g_sLangID_BinRecord_Invalid;			//=_T("BinRecord_Invalid");
+CString  g_sLangTxt_BinRecord_Invalid;			//_T("无效");
+CString  g_sLangID_BinRecord_BinPassive;			//=_T("BinRecord_BinPassive");
+CString  g_sLangTxt_BinRecord_BinPassive;			//_T("开关量(无源)");
+CString  g_sLangID_BinRecord_BinActive;			//=_T("BinRecord_BinActive");
+CString  g_sLangTxt_BinRecord_BinActive;			//_T("开关量(有源)");
+CString  g_sLangID_BinRecord_PlugName;			//=_T("BinRecord_PlugName");
+CString  g_sLangTxt_BinRecord_PlugName;			//_T("插件名称");
+CString  g_sLangID_BinRecord_PlugPOS;			//=_T("BinRecord_PlugPOS");
+CString  g_sLangTxt_BinRecord_PlugPOS;			//_T("插件位置");
+CString  g_sLangID_BinRecord_ChannelNum;			//=_T("BinRecord_ChannelNum");
+CString  g_sLangTxt_BinRecord_ChannelNum;			//_T("通道数量");
+CString  g_sLangID_BinRecord_PrimValue;			//=_T("BinRecord_PrimValue");
+CString  g_sLangTxt_BinRecord_PrimValue;			//_T("一次侧");
+CString  g_sLangID_BinRecord_SecondValue;			//=_T("BinRecord_SecondValue");
+CString  g_sLangTxt_BinRecord_SecondValue;			//_T("二次侧");
+CString  g_sLangID_BinRecord_StartRecord;			//=_T("BinRecord_StartRecord");
+CString  g_sLangTxt_BinRecord_StartRecord;			//_T("启动录波");
+CString  g_sLangID_BinRecord_StopRecord;			//=_T("BinRecord_StopRecord");
+CString  g_sLangTxt_BinRecord_StopRecord;			//_T("停止录波");
+CString  g_sLangID_BinRecord_Module;			//=_T("BinRecord_Module");
+CString  g_sLangTxt_BinRecord_Module;			//_T("主板");
+CString  g_sLangID_BinRecord_SaveDefaultCfg;			//=_T("BinRecord_SaveDefaultCfg");
+CString  g_sLangTxt_BinRecord_SaveDefaultCfg;			//_T("是否保存为默认配置");
+CString  g_sLangID_BinRecord_SelFile;			//=_T("BinRecord_SelFile");
+CString  g_sLangTxt_BinRecord_SelFile;			//_T("选择文件");
+CString  g_sLangID_BinRecord_ArrangeTop;			//=_T("BinRecord_ArrangeTop");
+CString  g_sLangTxt_BinRecord_ArrangeTop;			//_T("排列在最前");
+CString  g_sLangID_BinRecord_ArrangeLast;			//=_T("BinRecord_ArrangeLast");
+CString  g_sLangTxt_BinRecord_ArrangeLast;			//_T("排列在最后");
+//20240927 wangsen
+CString g_sLangID_Xrio_InvalidName;                     //= _T("Xrio_InvalidName");
+CString g_sLangTxt_Xrio_InvalidName;                    //= _T("无效名！不能为空！");
+
+//20241010 wangsen
+//CString g_sLangID_Xrio_InvalidDoublePrecisionValue;     //= _T("Xrio_InvalidDoublePrecisionValue")
+//CString g_sLangTxt_Xrio_InvalidDoublePrecisionValue;    //= _T("无效的双精度值！")
+
+//CString g_sLangID_Xrio_InvalidIntValue;                 //= _T("Xrio_InvalidIntValue")
+//CString g_sLangTxt_Xrio_InvalidIntValue;                //= _T("无效的整形值！")
+
+//20241020 wangsen
+CString g_sLangID_Xrio_TestObject;                      //= _T("Xrio_TestObject")
+CString g_sLangTxt_Xrio_TestObject;                     //= _T("测试对象")
+CString g_sLangID_Xrio_Update;                          //= _T("Xrio_Update")
+CString g_sLangTxt_Xrio_Update;                         //= _T("更新")
+
+CString g_sLangID_Xrio_Foreignid;                       //= _T("Xrio_Foreignid")
+CString g_sLangTxt_Xrio_Foreignid;                      //= _T("不相关")
+CString g_sLangID_Xrio_RefValue;                        //= _T("Xrio_RefValue")
+CString g_sLangTxt_Xrio_RefValue;                       //= _T("参考值")
+CString g_sLangID_Xrio_ValueFormula;                    //= _T("Xrio_ValueFormula")
+CString g_sLangTxt_Xrio_ValueFormula;                   //= _T("公式")
+
+CString g_sLangID_Xrio_DeviceAttr_Name_Description;  //= _T("Xrio_DeviceAttr_Name_Description")
+CString g_sLangTxt_Xrio_DeviceAttr_Name_Description; //= _T("名称/说明")
+CString g_sLangID_Xrio_DeviceAttr_Manufacturer;      //= _T("Xrio_DeviceAttr_Manufacturer")
+CString g_sLangTxt_Xrio_DeviceAttr_Manufacturer;     //= _T("制造厂商")
+CString g_sLangID_Xrio_DeviceAttr_DeviceType;        //= _T("Xrio_DeviceAttr_DeviceType")
+CString g_sLangTxt_Xrio_DeviceAttr_DeviceType;       //= _T("装置类型")
+CString g_sLangID_Xrio_DeviceAttr_SerialNumber;      //= _T("Xrio_DeviceAttr_SerialNumber")
+CString g_sLangTxt_Xrio_DeviceAttr_SerialNumber;     //= _T("序列号/型号")
+CString g_sLangID_Xrio_DeviceAttr_AdditionalInformationOne;   //= _T("Xrio_DeviceAttr_AdditionalInformationOne")
+CString g_sLangTxt_Xrio_DeviceAttr_AdditionalInformationOne;  //= _T("附加信息1")
+CString g_sLangID_Xrio_DeviceAttr_AdditionalInformationTwo;   //= _T("Xrio_DeviceAttr_AdditionalInformationTwo")
+CString g_sLangTxt_Xrio_DeviceAttr_AdditionalInformationTwo;  //= _T("附加信息2")
+
+CString g_sLangID_Xrio_DeviceAttr_TransformerSubstation;      //= _T("Xrio_DeviceAttr_TransformerSubstation")
+CString g_sLangTxt_Xrio_DeviceAttr_TransformerSubstation;     //= _T("变电站")
+CString g_sLangID_Xrio_DeviceAttr_NumberOfPhases;    //= _T("Xrio_DeviceAttr_NumberOfPhases")
+CString g_sLangTxt_Xrio_DeviceAttr_NumberOfPhases;   //= _T("相数")
+
+CString g_sLangID_Xrio_DeviceAttr_ZSVAndZSC;         //= _T("Xrio_DeviceAttr_ZSVAndZSC")
+CString g_sLangTxt_Xrio_DeviceAttr_ZSVAndZSC;        //= _T("零序电压和电流")
+CString g_sLangID_Xrio_DeviceAttr_ZSVDirection;      //= _T("Xrio_DeviceAttr_ZSVDirection")
+CString g_sLangTxt_Xrio_DeviceAttr_ZSVDirection;     //= _T("零序电压的方向")
+CString g_sLangID_Xrio_DeviceAttr_ZSCDirection;      //= _T("Xrio_DeviceAttr_ZSCDirection")
+CString g_sLangTxt_Xrio_DeviceAttr_ZSCDirection;     //= _T("零序电流的方向")
+CString g_sLangID_Xrio_DeviceAttr_UseOfMutualInductor;       //= _T("Xrio_DeviceAttr_UseOfMutualInductor")
+CString g_sLangTxt_Xrio_DeviceAttr_UseOfMutualInductor;      //= _T("使用互感仪")
+
+CString g_sLangID_Xrio_DeviceAttr_OtherDeviceProperties;     //= _T("Xrio_DeviceAttr_OtherDeviceProperties")
+CString g_sLangTxt_Xrio_DeviceAttr_OtherDeviceProperties;    //= _T("其他装置属性")
+
+CString g_sLangID_Xrio_DeviceAttr_MaxValueSetting;   //= _T("Xrio_DeviceAttr_MaxValueSetting")
+CString g_sLangTxt_Xrio_DeviceAttr_MaxValueSetting;  //= _T("最大值设置")
+
+CString g_sLangID_Xrio_DeviceAttr_OvDetSens;         //= _T("Xrio_DeviceAttr_OvDetSens")
+CString g_sLangTxt_Xrio_DeviceAttr_OvDetSens;        //= _T("过载检测灵敏度")
+
+CString g_sLangID_Xrio_DeviceAttr_Damping;           //= _T("Xrio_DeviceAttr_Damping")
+CString g_sLangTxt_Xrio_DeviceAttr_Damping;          //= _T("防抖/削峰过滤")
+CString g_sLangID_Xrio_DeviceAttr_BroadeningTime;    //= _T("Xrio_DeviceAttr_BroadeningTime")
+CString g_sLangTxt_Xrio_DeviceAttr_BroadeningTime;   //= _T("展宽时间")
+
+//20241022 wangsen
+CString g_sLangID_Xrio_LogInfo_UpdateFile;           //= _T("Xrio_LogInfo_UpdateFile")
+CString g_sLangTxt_Xrio_LogInfo_UpdateFile;          //= _T("更新文件")
+CString g_sLangID_Gradient_kVActionValue;  //= _T("Gradient_kVActionValue");
+CString g_sLangTxt_Gradient_kVActionValue; //= _T("电压动作值(kV)");
+CString g_sLangID_State_MsgText48V;  
+CString g_sLangTxt_State_MsgText48V;
+//最大直流设置为264V，强制设置为264V
+CString g_sLangID_State_MsgText264V;  
+
+CString g_sLangTxt_State_MsgText264V;
 
 
+//2024-10-23 xueyangfan
+CString g_sLangID_Native_Protection_CodeValue;		//= _T("Native_Protection_CodeValue")
+CString g_sLangTxt_Native_Protection_CodeValue;		 //= _T("保护码值")
+CString g_sLangID_Native_Measure_CodeValue;			 //= _T("Native_Measure_CodeValue")
+CString g_sLangTxt_Native_Measure_CodeValue;		//= _T("测量码值")
+CString g_sLangID_Native_SecondaryCur;		//= _T("Native_SecondaryCur")
+CString g_sLangTxt_Native_SecondaryCur;		//= _T("二次额定电流")
+CString g_sLangID_Native_CodeValue_Corrspondence;    //= _T("Native_CodeValue_Corrspondence")
+CString g_sLangTxt_Native_CodeValue_Corrspondence;   //= _T("码值对应关系")
+CString g_sLangID_Native_OpticalPort_Occupation;    //= _T("OpticalPort_Occupation")
+CString g_sLangTxt_Native_OpticalPort_Occupation;   //= _T("光口已全部占用，当前无可选择的光口！")
 
 
+CString g_sLangID_DiffCBOp_AddOneItme;				//= _T("DiffCBOp_AddOneItme")
+CString g_sLangTxt_DiffCBOp_AddOneItme;				//= _T("添加单项")
+
+CString g_sLangID_DiffCBOp_FaultLocation;				//= _T("DiffCBOp_FaultLocation")
+CString g_sLangTxt_DiffCBOp_FaultLocation;				//= _T("故障点位置");
+CString g_sLangID_DiffCBOp_ComBineFeature;				//= _T("DiffCBOp_ComBineFeature")
+CString g_sLangTxt_DiffCBOp_ComBineFeature;				//= _T("复合特性")
+CString g_sLangID_DiffCBOp_ZeroSeqElimiType;				//= _T("DiffCBOp_ZeroSeqElimiType")
+CString g_sLangTxt_DiffCBOp_ZeroSeqElimiType;				//= _T("零序消除方式")
+CString g_sLangID_DiffCBOp_Earthing;				//= _T("DiffCBOp_Earthing")
+CString g_sLangTxt_DiffCBOp_Earthing;				//= _T("中性点接地")
+CString g_sLangID_DiffCBOp_Coordinate;				//= _T("DiffCBOp_Coordinate")
+CString g_sLangTxt_DiffCBOp_Coordinate;				//= _T("坐标")
+CString g_sLangID_DiffCBOp_TransfHvKph;				//= _T("DiffCBOp_TransfHvKph")
+CString g_sLangTxt_DiffCBOp_TransfHvKph;				//= _T("变压器高压侧")
+CString g_sLangID_DiffCBOp_TransfHvKpm;				//= _T("DiffCBOp_TransfHvKpm")
+CString g_sLangTxt_DiffCBOp_TransfHvKpm;				//= _T("变压器中压侧")
+CString g_sLangID_DiffCBOp_TransfHvKpl;				//= _T("DiffCBOp_TransfHvKpl")
+CString g_sLangTxt_DiffCBOp_TransfHvKpl;				//= _T("变压器低压侧")
+CString g_sLangID_DiffCBOp_TransfRatedCapacity;				//= _T("DiffCBOp_TransfRatedCapacity")
+CString g_sLangTxt_DiffCBOp_TransfRatedCapacity;				//= _T("额定容量")
+CString g_sLangID_DiffCBOp_SetKph;				//= _T("DiffCBOp_SetKph")
+CString g_sLangTxt_DiffCBOp_SetKph;				//= _T("设置平衡系数")
+
+CString g_sLangID_DiffCBOp_BoutSet;				//= _T("DiffCBOp_BoutSet")
+CString g_sLangTxt_DiffCBOp_BoutSet;				//= _T("常态开出设置")
+CString g_sLangID_DiffCBOp_FaultBoutSet;				//= _T("DiffCBOp_FaultBoutSet")
+CString g_sLangTxt_DiffCBOp_FaultBoutSet;				//= _T("故障态开出设置")
+CString g_sLangID_DiffCBOp_HSecondCur;				//= _T("DiffCBOp_HSecondCur")
+CString g_sLangTxt_DiffCBOp_HSecondCur;				//= _T("高侧二次额定电流")
+// CString g_sLangID_DiffCBOp_SetValue;				//= _T("DiffCBOp_SetValue")
+// CString g_sLangTxt_DiffCBOp_SetValue;				//= _T("设定值")
+// CString g_sLangID_DiffCBOp_AllSecondCur;				//= _T("DiffCBOp_AllSecondCur")
+// CString g_sLangTxt_DiffCBOp_AllSecondCur;				//= _T("各侧二次额定电流")
+// CString g_sLangID_DiffCBOp_FamousValue;				//= _T("DiffCBOp_FamousValue")
+// CString g_sLangTxt_DiffCBOp_FamousValue;				//= _T("有名值")
+// CString g_sLangID_DiffCBOp_StandardValue;				//= _T("DiffCBOp_StandardValue")
+// CString g_sLangTxt_DiffCBOp_StandardValue;				//= _T("标幺值")
+CString g_sLangID_DiffCBOp_Auxiliary;				//= _T("DiffCBOp_Auxiliary")
+CString g_sLangTxt_DiffCBOp_Auxiliary;				//= _T("辅助");
+
+CString g_sLangID_DiffCBOp_FauleInH;				//= _T("DiffCBOp_FauleInH")
+CString g_sLangTxt_DiffCBOp_FauleInH;				//= _T("高压侧(区内)")
+CString g_sLangID_DiffCBOp_FauleOutH;				//= _T("DiffCBOp_FauleOutH")
+CString g_sLangTxt_DiffCBOp_FauleOutH;				//= _T("高压侧(区外)")
+CString g_sLangID_DiffCBOp_FauleInL;				//= _T("DiffCBOp_FauleInL")
+CString g_sLangTxt_DiffCBOp_FauleInL;				//= _T("低压侧(区内)")
+CString g_sLangID_DiffCBOp_FauleOutL;				//= _T("DiffCBOp_FauleOutL")
+CString g_sLangTxt_DiffCBOp_FauleOutL;				//= _T("低压侧(区外)")
+CString g_sLangID_DiffCBOp_FauleInM;				//= _T("DiffCBOp_FauleInM")
+CString g_sLangTxt_DiffCBOp_FauleInM;				//= _T("中压侧(区内)")
+CString g_sLangID_DiffCBOp_FauleOutM;				//= _T("DiffCBOp_FauleOutM")
+CString g_sLangTxt_DiffCBOp_FauleOutM;				//= _T("中压侧(区外)")
 
 
+//add wangtao 20241023
+CString g_sLangID_Diff_RateSearch;            //_T("Diff_RateSearch")
+CString g_sLangTxt_Diff_RateSearch;            //_T("差动搜索")
+CString g_sLangID_Diff_FaultTime;            //_T("Diff_FaultTime")
+CString g_sLangTxt_Diff_FaultTime;            //_T("最大故障时间(s)")
+CString g_sLangID_Diff_Start;            //_T("Diff_Start")
+CString g_sLangTxt_Diff_Start;            //_T("启动")
+CString g_sLangID_Diff_IQuick;            //_T("Diff_IQuick")
+CString g_sLangTxt_Diff_IQuick;            //_T("速段")
+CString g_sLangID_Diff_SearchBand;            //_T("Diff_SearchBand")
+CString g_sLangTxt_Diff_SearchBand;            //_T("搜索带")
+CString g_sLangID_Diff_RateBeginVal;            //_T("Diff_RateBeginVal")
+CString g_sLangTxt_Diff_RateBeginVal;            //_T("制动电流始值")
+CString g_sLangID_Diff_RateEndVal;            //_T("Diff_RateEndVal")
+CString g_sLangTxt_Diff_RateEndVal;            //_T("制动电流终值")
+CString g_sLangID_Diff_Step;            //_T("Diff_Step")
+CString g_sLangTxt_Diff_Step;            //_T("变化步长")
+CString g_sLangID_Diff_Points;            //_T("Diff_Points")
+CString g_sLangTxt_Diff_Points;            //_T("测试点数")
+CString g_sLangID_Diff_ActAbsErr;            //_T("Diff_ActAbsErr")
+CString g_sLangTxt_Diff_ActAbsErr;            //_T("动作值绝对误差")
+CString g_sLangID_Diff_ActRelErr;            //_T("Diff_ActRelErr")
+CString g_sLangTxt_Diff_ActRelErr;            //_T("动作值相对误差(%)")
+CString g_sLangID_Diff_PrepareTime;            //_T("Diff_PrepareTime")
+CString g_sLangTxt_Diff_PrepareTime;            //_T("准备时间(s)")
+CString g_sLangID_Diff_TimeAfter;            //_T("Diff_TimeAfter")
+CString g_sLangTxt_Diff_TimeAfter;            //_T("动作后保持时间(s)")
+CString g_sLangID_Diff_KPSetMode;            //_T("Diff_KPSetMode")
+CString g_sLangTxt_Diff_KPSetMode;            //_T("各侧平衡系数")
+CString g_sLangID_Diff_KphSet;            //_T("Diff_KphSet")
+CString g_sLangTxt_Diff_KphSet;            //_T("高压侧差动平衡系数")
+CString g_sLangID_Diff_KpmSet;            //_T("Diff_KpmSet")
+CString g_sLangTxt_Diff_KpmSet;            //_T("中压侧差动平衡系数")
+CString g_sLangID_Diff_KplSet;            //_T("Diff_KplSet")
+CString g_sLangTxt_Diff_KplSet;            //_T("低压侧差动平衡系数")
+CString g_sLangID_Native_HighVoltWindingConnType;			 //_T("Native_HighVoltWindingConnType")
+CString g_sLangTxt_Native_HighVoltWindingConnType;		 //_T("高压侧绕组接线型式")
+CString g_sLangID_Native_LowVoltWindingConnType;			 //_T("Native_LowVoltWindingConnType")
+CString g_sLangTxt_Native_LowVoltWindingConnType;		 //_T("低压侧绕组接线型式")
+CString g_sLangID_Diff_PhCorrectMode;            //_T("Diff_PhCorrectMode")
+CString g_sLangTxt_Diff_PhCorrectMode;            //_T("校正选择")
+CString g_sLangID_Diff_AdoptWind;            //_T("Diff_AdoptWind")
+CString g_sLangTxt_Diff_AdoptWind;            //_T("测试绕组")
+CString g_sLangID_Diff_TransGroupModeHM;            //_T("Diff_TransGroupModeHM")
+CString g_sLangTxt_Diff_TransGroupModeHM;            //_T("高-中绕组钟点数")
+CString g_sLangID_Diff_TransGroupModeHL;            //_T("Diff_TransGroupModeHL")
+CString g_sLangTxt_Diff_TransGroupModeHL;            //_T("高-低绕组钟点数")
+CString g_sLangID_Diff_JXFactor;            //_T("Diff_JXFactor")
+CString g_sLangTxt_Diff_JXFactor;            //_T("平衡系数计算")
+CString g_sLangID_Diff_Earthing;            //_T("Diff_Earthing")
+CString g_sLangTxt_Diff_Earthing;            //_T("接地")
+CString g_sLangID_Diff_FaultType;            //_T("Diff_FaultType")
+CString g_sLangTxt_Diff_FaultType;            //_T("故障相别")
+CString g_sLangID_Diff_CustomHarmIndex;            //_T("Diff_CustomHarmIndex")
+CString g_sLangTxt_Diff_CustomHarmIndex;            //_T("自定义谐波次数")
+CString g_sLangID_Diff_BeginVal;            //_T("Diff_BeginVal")
+CString g_sLangTxt_Diff_BeginVal;            //_T("搜索始值")
+CString g_sLangID_Diff_EndVal;            //_T("Diff_EndVal")
+CString g_sLangTxt_Diff_EndVal;            //_T("搜索终值")
+CString g_sLangID_Diff_HarmOutSide;            //_T("Diff_HarmOutSide")
+CString g_sLangTxt_Diff_HarmOutSide;            //_T("谐波输出侧")
+CString g_sLangID_Diff_UpperLimit;            //_T("Diff_UpperLimit")
+CString g_sLangTxt_Diff_UpperLimit;            //_T("搜索上限")
+CString g_sLangID_Diff_LowLimit;            //_T("Diff_LowLimit")
+CString g_sLangTxt_Diff_LowLimit;            //_T("搜索下限")
+CString g_sLangID_Diff_IdSetting;            //_T("Diff_IdSetting")
+CString g_sLangTxt_Diff_IdSetting;            //_T("差动理论值")
+CString g_sLangID_Diff_SglSideBalCoeff;            //_T("Diff_SglSideBalCoeff")
+CString g_sLangTxt_Diff_SglSideBalCoeff;            //_T("Ⅰ侧平衡系数")
+CString g_sLangID_Diff_TwoSideBalCoeff;            //_T("Diff_TwoSideBalCoeff")
+CString g_sLangTxt_Diff_TwoSideBalCoeff;            //_T("Ⅱ侧平衡系数")
+CString g_sLangID_Diff_ThreeSideBalCoeff;            //_T("Diff_ThreeSideBalCoeff")
+CString g_sLangTxt_Diff_ThreeSideBalCoeff;            //_T("Ⅲ侧平衡系数")
+CString g_sLangID_Diff_PerUnitVal;            //_T("Diff_PerUnitVal")
+CString g_sLangTxt_Diff_PerUnitVal;            //_T("标幺值")
+CString g_sLangID_Diff_WiringCoeff;            //_T("Diff_WiringCoeff")
+CString g_sLangTxt_Diff_WiringCoeff;            //_T("接线系数")
+CString g_sLangID_Diff_RefCurrentSel;            //_T("Diff_RefCurrentSel")
+CString g_sLangTxt_Diff_RefCurrentSel;            //_T("基准电流")
+CString g_sLangID_Diff_HighVoltSide;            //_T("Diff_HighVoltSide")
+CString g_sLangTxt_Diff_HighVoltSide;            //_T("高压侧")
+CString g_sLangID_Diff_MedVoltSide;            //_T("Diff_MedVoltSide")
+CString g_sLangTxt_Diff_MedVoltSide;            //_T("中压侧")
+CString g_sLangID_Diff_LowVoltSide;            //_T("Diff_LowVoltSide")
+CString g_sLangTxt_Diff_LowVoltSide;            //_T("低压侧")
+CString g_sLangID_Diff_DiffProtCurrTerm;            //_T("Diff_DiffProtCurrTerm")
+CString g_sLangTxt_Diff_DiffProtCurrTerm;            //_T("差动保护电流端子")
+CString g_sLangID_Diff_RelayTest;            //_T("Diff_RelayTest")
+CString g_sLangTxt_Diff_RelayTest;            //_T("继电保护测试仪")
+CString g_sLangID_Diff_FuncParas;            //_T("Diff_FuncParas")
+CString g_sLangTxt_Diff_FuncParas;            //_T("功能参数")
+CString g_sLangID_Diff_AddOneItem;            //_T("Diff_AddOneItem")
+CString g_sLangTxt_Diff_AddOneItem;            //_T("添加单项")
+CString g_sLangID_Diff_ClearResult;            //_T("Diff_ClearResult")
+CString g_sLangTxt_Diff_ClearResult;            //_T("清除结果")
+CString g_sLangID_Diff_CommonPara;            //_T("Diff_CommonPara")
+CString g_sLangTxt_Diff_CommonPara;            //_T("通用参数")
+CString g_sLangID_LowFreq_FreqRangeRate;            //_T("LowFreq_FreqRangeRate")
+CString g_sLangTxt_LowFreq_FreqRangeRate;            //_T("频率变化范围及其变化率")
+CString g_sLangID_LowFreq_FreqBegin;            //_T("LowFreq_FreqBegin")
+CString g_sLangTxt_LowFreq_FreqBegin;            //_T("频率起始值(Hz)")
+CString g_sLangID_LowFreq_FreqEnd;            //_T("LowFreq_FreqEnd")
+CString g_sLangTxt_LowFreq_FreqEnd;            //_T("频率结束值(Hz)")
+CString g_sLangID_LowFreq_FreqFaultTrig;            //_T("LowFreq_FaultTrig")
+CString g_sLangTxt_LowFreq_FreqFaultTrig;            //_T("闭锁电压选择")
+CString g_sLangID_LowFreq_PhaseV;            //_T("LowFreq_PhaseV")
+CString g_sLangTxt_LowFreq_PhaseV;            //_T("相电压")
+CString g_sLangID_LowFreq_SettingBegin;            //_T("LowFreq_SettingBegin")
+CString g_sLangTxt_LowFreq_SettingBegin;            //_T("整定值作为计时起点")
+CString g_sLangID_LowFreq_FreqChangeBegin;            //_T("LowFreq_FreqChangeBegin")
+CString g_sLangTxt_LowFreq_FreqChangeBegin;            //_T("频率变化作为计时起点")
+CString g_sLangID_LowFreq_CommonParaSet;            //_T("LowFreq_CommonParaSet")
+CString g_sLangTxt_LowFreq_CommonParaSet;            //_T("通用参数设置")
+CString g_sLangID_LowFreq_dfdtSetting;            //_T("LowFreq_dfdtSetting")
+CString g_sLangTxt_LowFreq_dfdtSetting;            //_T("滑差定值")
+CString g_sLangID_LowFreq_GradientPara;            //_T("LowFreq_GradientPara")
+CString g_sLangTxt_LowFreq_GradientPara;            //_T("递变参数")
+CString g_sLangID_LowFreq_dfdtBegin;            //_T("LowFreq_dfdtBegin")
+CString g_sLangTxt_LowFreq_dfdtBegin;            //_T("滑差变化始值")
+CString g_sLangID_LowFreq_dfdtEnd;            //_T("LowFreq_dfdtEnd")
+CString g_sLangTxt_LowFreq_dfdtEnd;            //_T("滑差变化终值")
+CString g_sLangID_LowFreq_dfdtStep;            //_T("LowFreq_dfdtStep")
+CString g_sLangTxt_LowFreq_dfdtStep;            //_T("滑差变化步长")
+CString g_sLangID_LowFreq_LowVoltage;            //_T("LowFreq_LowVoltage")
+CString g_sLangTxt_LowFreq_LowVoltage;            //_T("低电压")
+CString g_sLangID_LowFreq_BeginVal;            //_T("LowFreq_BeginVal")
+CString g_sLangTxt_LowFreq_BeginVal;            //_T("变化始值")
+CString g_sLangID_LowFreq_EndVal;            //_T("LowFreq_EndVal")
+CString g_sLangTxt_LowFreq_EndVal;            //_T("变化终值")
+CString g_sLangID_LowFreq_TestItem;            //_T("LowFreq_TestItem")
+CString g_sLangTxt_LowFreq_TestItem;            //_T("测试项目")
+CString g_sLangID_LowFreq_dvdtRate;            //_T("LowFreq_dvdtRate")
+CString g_sLangTxt_LowFreq_dvdtRate;            //_T("频率滑差倍数")
+CString g_sLangID_LowFreq_TimePara;            //_T("LowFreq_TimePara")
+CString g_sLangTxt_LowFreq_TimePara;            //_T("时间参数")
+CString g_sLangID_LowFreq_ULockPara;            //_T("LowFreq_ULockPara")
+CString g_sLangTxt_LowFreq_ULockPara;            //_T("电压闭锁参数")
+CString g_sLangID_LowFreq_dvdtSetting;            //_T("LowFreq_dvdtSetting")
+CString g_sLangTxt_LowFreq_dvdtSetting;            //_T("频率滑差动作值(Hz/s)")
+CString g_sLangID_LowVol_BeginVal;            //_T("LowVol_BeginVal")
+CString g_sLangTxt_LowVol_BeginVal;            //_T("变化起始值")
+CString g_sLangID_LowVol_EndVal;            //_T("LowVol_EndVal")
+CString g_sLangTxt_LowVol_EndVal;            //_T("变化结束值")
+CString g_sLangID_LowVol_Var;            //_T("LowVol_Var")
+CString g_sLangTxt_LowVol_Var;            //_T("变化量")
+CString g_sLangID_LowVol_FreqRangeRate;            //_T("LowVol_FreqRangeRate")
+CString g_sLangTxt_LowVol_FreqRangeRate;            //_T("电压变化范围及其变化率")
+CString g_sLangID_LowVol_dVdt;            //_T("LowVol_dVdt")
+CString g_sLangTxt_LowVol_dVdt;            //_T("滑差")
+CString g_sLangID_LowVol_dVdtRate;            //_T("LowVol_dVdtRate")
+CString g_sLangTxt_LowVol_dVdtRate;            //_T("电压滑差倍数")
+CString g_sLangID_LowVol_VolEnd;            //_T("LowVol_VolEnd")
+CString g_sLangTxt_LowVol_VolEnd;            //_T("电压结束值(V)")
+CString g_sLangID_LowVol_OtherPara;            //_T("LowVol_OtherPara")
+CString g_sLangTxt_LowVol_OtherPara;            //_T("其他参数")
+CString g_sLangID_LowVol_SteadyCur;            //_T("LowVol_SteadyCur")
+CString g_sLangTxt_LowVol_SteadyCur;            //_T("稳态电流(A)")
+CString g_sLangID_LowVol_Exegesis;            //_T("LowVol_Exegesis")
+CString g_sLangTxt_LowVol_Exegesis;            //_T("注:" 低压减载动作值"测试项使用")
+CString g_sLangID_Diff_BorderSearch;            //_T("Diff_BorderSearch")
+CString g_sLangTxt_Diff_BorderSearch;            //_T("比例制动边界搜索")
+CString g_sLangID_Diff_Section;            //_T("Diff_Section")
+CString g_sLangTxt_Diff_Section;            //_T("区段")
+CString g_sLangID_Diff_Expression;            //_T("Diff_Expression")
+CString g_sLangTxt_Diff_Expression;            //_T("公式")
+CString g_sLangID_Diff_StraightLine;            //_T("Diff_StraightLine")
+CString g_sLangTxt_Diff_StraightLine;            //_T("直线")
+CString g_sLangID_Diff_InSet;            //_T("Diff_InSet")
+CString g_sLangTxt_Diff_InSet;            //_T("基准电流(其它)")
+CString g_sLangID_Diff_CombinedFeature;            //_T("Diff_CombinedFeature")
+CString g_sLangTxt_Diff_CombinedFeature;            //_T("复合特性")
+CString g_sLangID_Diff_ZeroSeqElimiType;            //_T("Diff_ZeroSeqElimiType")
+CString g_sLangTxt_Diff_ZeroSeqElimiType;            //_T("零序消除方式")
+CString g_sLangID_Diff_Setting;            //_T("Diff_Setting")
+CString g_sLangTxt_Diff_Setting;            //_T("整定定值")
+CString g_sLangID_Diff_Custom;            //_T("Diff_Custom")
+CString g_sLangTxt_Diff_Custom;            //_T("自定义")
+CString g_sLangID_Diff_TypeSel;            //_T("Diff_TypeSel")
+CString g_sLangTxt_Diff_TypeSel;            //_T("选择类型")
+CString g_sLangID_Native_ThirdPart;		//=_T("Native_ThirdPart");
+CString g_sLangTxt_Native_ThirdPart;		//=_T("第三段");
+CString g_sLangID_Diff_QuickBreak;            //_T("Diff_QuickBreak")
+CString g_sLangTxt_Diff_QuickBreak;            //_T("速断")
+CString g_sLangID_Native_InflectionPoint3;	// = _T("Native_InflectionPoint3")
+CString g_sLangTxt_Native_InflectionPoint3; // = _T("拐点3")
+CString g_sLangID_Diff_QuickBreakVal;            //_T("Diff_QuickBreakVal")
+CString g_sLangTxt_Diff_QuickBreakVal;            //_T("速断")
+CString g_sLangID_Diff_CurrChar;            //_T("Diff_CurrChar")
+CString g_sLangTxt_Diff_CurrChar;            //_T("当前曲线")
+CString g_sLangID_Diff_ZAdjust;            //_T("Diff_ZAdjust")
+CString g_sLangTxt_Diff_ZAdjust;            //_T("Z侧校正")
+CString g_sLangID_Diff_Result;            //_T("Diff_Result")
+CString g_sLangTxt_Diff_Result;            //_T("测试结果")
+CString g_sLangID_Diff_IdTheory;            //_T("Diff_IdTheory")
+CString g_sLangTxt_Diff_IdTheory;            //_T("理论值Id")
+CString g_sLangID_Diff_FaultType2;            //_T("Diff_FaultType2")
+CString g_sLangTxt_Diff_FaultType2;            //_T("故障相")
+CString g_sLangID_Diff_Select;            //_T("Diff_Select")
+CString g_sLangTxt_Diff_Select;            //_T("选择")
+CString g_sLangID_Diff_ActualVal;            //_T("Diff_ActualVal")
+CString g_sLangTxt_Diff_ActualVal;            //_T("有名值")
+CString g_sLangID_Diff_HSecondaryCur;            //_T("Diff_HSecondaryCur")
+CString g_sLangTxt_Diff_HSecondaryCur;            //_T("高侧额定二次电流")
+CString g_sLangID_Diff_CurrSet;            //_T("Diff_CurrSet")
+CString g_sLangTxt_Diff_CurrSet;            //_T("设定值")
+CString g_sLangID_Diff_EverySecondaryCur;            //_T("Diff_EverySecondaryCur")
+CString g_sLangTxt_Diff_EverySecondaryCur;            //_T("各侧二次额定电流")
 
+//2024-10-29 wuxinyi
+// CString g_sLangID_Native_CRCTypeSelection;
+// CString g_sLangTxt_Native_CRCTypeSelection;
+// CString g_sLangID_Native_MergeUnitAutoTest;
+// CString g_sLangTxt_Native_MergeUnitAutoTest;
+
+// CString g_sLangID_Native_AccuracyTest;
+// CString g_sLangTxt_Native_AccuracyTest;
+
+// CString g_sLangID_Native_ZeroDriftTest;
+// CString g_sLangTxt_Native_ZeroDriftTest;
+
+// CString g_sLangID_Native_TimeTest;
+// CString g_sLangTxt_Native_TimeTest;
+
+// CString g_sLangID_Native_TimingAccuracy;
+// CString g_sLangTxt_Native_TimingAccuracy;
+
+// CString g_sLangID_Native_TimeKeepingAccuracy;
+// CString g_sLangTxt_Native_TimeKeepingAccuracy;
+// CString g_sLangID_Native_FirstCycleTest;
+// CString g_sLangTxt_Native_FirstCycleTest;
+
+CString g_sLangID_Native_330ReplayAnalogError;   // = _T("Native_330ReplayAnalogError");
+CString g_sLangTxt_Native_330ReplayAnalogError;   // = _T("当前PNS330只支持模拟量故障回放！");
+CString g_sLangID_MergeOutPutI;  
+CString g_sLangTxt_MergeOutPutI;
+//二次额定电流(A)
+CString g_sLangID_IEC_SecondRatedType;  
+CString g_sLangTxt_IEC_SecondRatedType;
+//保护码值
+// CString g_sLangID_IEC_ProtCodeValue;  
+// CString g_sLangTxt_IEC_ProtCodeValue;
+// //测量码值
+// CString g_sLangID_IEC_MeasCodeValue;  
+// CString g_sLangTxt_IEC_MeasCodeValue;
+CString g_sLangID_IEC_SecondRatedCur;  
+CString g_sLangTxt_IEC_SecondRatedCur;
+
+//2024-10-30 xueyangfan
+CString g_sLangID_BinRecord_RecordTimeType;            //_T("BinRecord_RecordTimeType");
+CString g_sLangTxt_BinRecord_RecordTimeType;            //_T("记录时长");
+CString g_sLangID_BinRecord_All;						//_T("BinRecord_All");
+CString g_sLangTxt_BinRecord_All;						//_T("全部");
+CString g_sLangID_BinRecord_RecordAll;					//_T("BinRecord_RecordAll");
+CString g_sLangTxt_BinRecord_RecordAll;					//_T("按全部");
+CString g_sLangID_BinRecord_RecordPlug;					//_T("BinRecord_RecordPlug");
+CString g_sLangTxt_BinRecord_RecordPlug;				 //_T("按插件");
+CString g_sLangID_BinRecord_DisplayType;					//_T("BinRecord_DisplayType");
+CString g_sLangTxt_BinRecord_DisplayType;				 //_T("显示方式");
+CString g_sLangID_BinRecord_Once;						//_T("BinRecord_Once");
+CString g_sLangTxt_BinRecord_Once;						//_T("一次");
+CString g_sLangID_BinRecord_Quadratic;					 //_T("BinRecord_Quadratic");
+CString g_sLangTxt_BinRecord_Quadratic;					 //_T("二次");
+CString g_sLangID_BinRecord_RecordTriggerType;            //_T("BinRecord_RecordTriggerType");
+CString g_sLangTxt_BinRecord_RecordTriggerType;            //_T("录波触发方式");
+CString g_sLangID_BinRecord_Rollover;						//_T("BinRecord_Rollover");
+CString g_sLangTxt_BinRecord_Rollover;						//_T("翻转");
+CString g_sLangID_BinRecord_RisingEdge;						//_T("BinRecord_RisingEdge");
+CString g_sLangTxt_BinRecord_RisingEdge;					//_T("上升沿");
+CString g_sLangID_BinRecord_FallingEdge;					//_T("BinRecord_FallingEdge");
+CString g_sLangTxt_BinRecord_FallingEdge;					//_T("下降沿");
+CString g_sLangID_BinRecord_TriggeredTime;            //_T("BinRecord_TriggeredTime");
+CString g_sLangTxt_BinRecord_TriggeredTime;            //_T("对时触发（GPS/B码）");
+CString g_sLangID_BinRecord_ChannelUp;					 //_T("BinRecord_ChannelUp");
+CString g_sLangTxt_BinRecord_ChannelUp;					//_T("通道上移");
+CString g_sLangID_BinRecord_ChannelDown;			 //_T("BinRecord_ChannelDown");
+CString g_sLangTxt_BinRecord_ChannelDown;				 //_T("通道下移");
+CString g_sLangID_BinRecord_ChannelTop;					//_T("BinRecord_ChannelTop");
+CString g_sLangTxt_BinRecord_ChannelTop;				//_T("置顶");
+CString g_sLangID_BinRecord_ChannelBottom;            //_T("BinRecord_ChannelBottom");
+CString g_sLangTxt_BinRecord_ChannelBottom;            //_T("底部");
+CString g_sLangID_BinRecord_Recover;            //_T("BinRecord_Recover");
+CString g_sLangTxt_BinRecord_Recover;					//_T("恢复默认");
+CString g_sLangID_BinRecord_DefaultSavePath;					//_T("BinRecord_DefaultSavePath");
+CString g_sLangTxt_BinRecord_DefaultSavePath;            //_T("默认保存路径");
+CString g_sLangID_BinRecord_RecordSet;            //_T("BinRecord_RecordSet");
+CString g_sLangTxt_BinRecord_RecordSet;            //_T("录波设置");
+CString g_sLangID_BinRecord_ImportCfg;            //_T("BinRecord_ImportCfg");
+CString g_sLangTxt_BinRecord_ImportCfg;            //_T("导入配置");
+CString g_sLangID_BinRecord_SaveCfg;            //_T("BinRecord_SaveCfg");
+CString g_sLangTxt_BinRecord_SaveCfg;            //_T("保存配置");
+CString g_sLangID_BinRecord_BinRecord;            //_T("BinRecord_BinRecord");
+CString g_sLangTxt_BinRecord_BinRecord;            //_T("开关量录波");
+CString g_sLangID_BinRecord_SavePath;            //_T("BinRecord_SavePath");
+CString g_sLangTxt_BinRecord_SavePath;            //_T("保存路径");
+CString g_sLangID_BinRecord_AutoSaveRecordFile;            //_T("BinRecord_AutoSaveRecordFile");
+CString g_sLangTxt_BinRecord_AutoSaveRecordFile;            //_T("自动保存录波文件");
+
+CString g_sLangID_BinRecord_SaveType;           // = _T("BinRecord_SaveType");
+CString g_sLangTxt_BinRecord_SaveType;            // = _T("保存类型");
+CString g_sLangID_BinRecord_SelPlugin;            // = _T("BinRecord_SelPlugin");
+CString g_sLangTxt_BinRecord_SelPlugin;            // = _T("选择插件");
+CString g_sLangID_BinRecord_Wave;            // = _T("BinRecord_Wave");
+CString g_sLangTxt_BinRecord_Wave;            // = _T("波形分析");
+CString g_sLangID_BinRecord_Power;            // = _T("BinRecord_Power");
+CString g_sLangTxt_BinRecord_Power;            // = _T("功率");
+CString g_sLangID_BinRecord_Vector;            // = _T("BinRecord_Vector");
+CString g_sLangTxt_BinRecord_Vector;            // = _T("向量");
+
+//2024-10-29 wuxinyi
+CString g_sLangID_Native_CRCTypeSelection;
+CString g_sLangTxt_Native_CRCTypeSelection;
+CString g_sLangID_Native_MergeUnitAutoTest;
+CString g_sLangTxt_Native_MergeUnitAutoTest;
+
+CString g_sLangID_Native_AccuracyTest;
+CString g_sLangTxt_Native_AccuracyTest;
+
+CString g_sLangID_Native_ZeroDriftTest;
+CString g_sLangTxt_Native_ZeroDriftTest;
+
+CString g_sLangID_Native_TimeTest;
+CString g_sLangTxt_Native_TimeTest;
+
+CString g_sLangID_Native_TimingAccuracy;
+CString g_sLangTxt_Native_TimingAccuracy;
+
+CString g_sLangID_Native_TimeKeepingAccuracy;
+CString g_sLangTxt_Native_TimeKeepingAccuracy;
+CString g_sLangID_Native_FirstCycleTest;
+CString g_sLangTxt_Native_FirstCycleTest;
+/*CString g_sLangID_Native_TemplatePath; //  Native_TemplatePath*/
+CString g_sLangID_Native_TemplatePath; //  Native_TemplatePath
+CString g_sLangTxt_Native_TemplatePath; //  模板路径
+
+CString g_sLangID_Native_ModelFilePath; // Native_ModelFilePath
+CString g_sLangTxt_Native_ModelFilePath; // 模型文件路径
+
+CString g_sLangID_Native_TestRecordFilePath; //  Native_TestRecordFilePath
+CString g_sLangTxt_Native_TestRecordFilePath; // 测试记录文件路径
+
+CString g_sLangID_Native_EmptyNode; // Native_EmptyNode
+CString g_sLangTxt_Native_EmptyNode; // 空节点
+
+CString g_sLangID_Native_FlipThreshold ; //  Native_FlipThreshold
+CString g_sLangTxt_Native_FlipThreshold; // 翻转门槛
+//2024.11.6 zhangyq 同期
+CString g_sLangID_Syn_LeaderAngle; //  Syn_LeaderAngle
+CString g_sLangTxt_Syn_LeaderAngle; // 导前角实测值
+CString g_sLangID_Syn_LeaderTime; //  Syn_LeaderTime
+CString g_sLangTxt_Syn_LeaderTime; // 导前时间实测值
+CString g_sLangID_Syn_LAngle; //  Syn_LAngle
+CString g_sLangTxt_Syn_LAngle; // 导前角理论值
+CString g_sLangID_Syn_LTime; //  Syn_LTime
+CString g_sLangTxt_Syn_LTime; // 导前时间理论值
+CString g_sLangID_Syn_VolDeltValue; //  Syn_VolDeltValue
+CString g_sLangTxt_Syn_VolDeltValue; // 实测压差
+CString g_sLangID_Syn_FreqDeltValue; //  Syn_FreqDeltValue
+CString g_sLangTxt_Syn_FreqDeltValue; // 实测频差
+CString g_sLangID_Syn_UgStart; //  Syn_UgStart
+CString g_sLangTxt_Syn_UgStart; // 待并测电压
+CString g_sLangID_Syn_FgStart; //  Syn_FgStart
+CString g_sLangTxt_Syn_FgStart; // 待并测频率
+CString g_sLangID_Syn_TestParas; //  Syn_TestParas
+CString g_sLangTxt_Syn_TestParas; // 试验参数
+CString g_sLangID_NewTest_Native; //  NewTest
+CString g_sLangTxt_NewTest_Native; // 新建测试
+
+//2024.11.7 zhangyq 电流反时限
+CString g_sLangID_CurrInverse_SettingTime; //  CurrInverse_SettingTime
+CString g_sLangTxt_CurrInverse_SettingTime; // 理论时间
+
+//add wangtao 20241106
+CString g_sLangID_LowVol_VolChangeBegin;            //_T("LowVol_VolChangeBegin")
+CString g_sLangTxt_LowVol_VolChangeBegin;            //_T("电压变化作为计时起点")
+CString g_sLangID_Diff_EndValWarning;            //_T("Diff_EndValWarning")
+CString g_sLangTxt_Diff_EndValWarning;            //_T("搜索上限超过最大值")
+CString g_sLangID_Power_OverLimitWarning;            //_T("Power_OverLimitWarning")
+CString g_sLangTxt_Power_OverLimitWarning;            //_T("输入值%f绝对值大于最大功率绝对值(%f)，会导致电流超限(%f)")
+
+CString g_sLangID_TemplateCreatedSuccessful;    // = _T("TemplateCreatedSuccessful");
+CString g_sLangTxt_TemplateCreatedSuccessful;   // = _T("国际版模板生成完成.")
+CString g_sLangID_TemplateCreatedFailed;    // = _T("TemplateCreatedFailed");
+CString g_sLangTxt_TemplateCreatedFailed;   // = _T("国际版模板生成失败.")
+
+//2024-11-7 wuxinyi
+CString g_sLangID_SCL_Parsing; // 对应ID: SCL_Parsing
+CString g_sLangTxt_SCL_Parsing; // 中文: SCL解析
+
+CString g_sLangID_SCL_Loading; // 对应ID: SCL_Loading
+CString g_sLangTxt_SCL_Loading; // 中文: 正在加载SCL文件...
+
+CString g_sLangID_SCL_InvalidFile; // SCL_InvalidFile
+CString g_sLangTxt_SCL_InvalidFile; //  当前文件(%s)没有扩展名不是SCL文件
+
+CString g_sLangID_Native_TemplateGenerationSuccess; // 对应ID: TemplateGenerationSuccess
+CString g_sLangTxt_Native_TemplateGenerationSuccess; // 中文: 国际版模板生成完成.
+
+CString g_sLangID_Native_TemplateGenerationFail; // 对应ID: TemplateGenerationFail
+CString g_sLangTxt_Native_TemplateGenerationFail; // 中文: 国际版模板生成失败.
+
+CString g_sLangID_Native_CharacteristicCurveUpdateFail; // 对应ID: CharacteristicCurveUpdateFail
+CString g_sLangTxt_Native_CharacteristicCurveUpdateFail; // 中文: 特性曲线更新失败.
+
+CString g_sLangID_Native_CheckReportSave; //_T("Native_CheckReportSave！");
+CString g_sLangTxt_Native_CheckReportSave; //_T("请确认当前报告是否保存！");
+//2024-11-12 zhouyangyong
+CString g_sLangID_TransientTime;//暂态响应时间
+CString g_sLangTxt_TransientTime;
+CString g_sLangID_MUInput;//合并单元输入
+CString g_sLangTxt_MUInput;
+CString g_sLangID_MUOutput;//合并单元输出
+CString g_sLangTxt_MUOutput;
+//add wangtao 20241112 文本具体内容待确认
+CString g_sLangID_Diff_DisjointWarning;            //_T("Diff_DisjointWarning")
+CString g_sLangTxt_Diff_DisjointWarning;            //_T("当前测试项搜索上限最大值与特性曲线无交点")
+CString g_sLangID_Diff_MultiDisjointWarning;            //_T("MultiDisjointWarning")
+CString g_sLangTxt_Diff_MultiDisjointWarning;            //_T("以下测试项与特性曲线无交点:")
+CString g_sLangID_Diff_InflectionPointWarning;            //_T("Diff_InflectionPointWarning")
+CString g_sLangTxt_Diff_InflectionPointWarning;            //_T("拐点电流配置错误, 已跳过拐点")
+CString g_sLangID_Diff_YDSupCT;            //_T("Diff_YDSupCT")
+CString g_sLangTxt_Diff_YDSupCT;            //_T("YD辅助CT")
+CString g_sLangID_Diff_ImportChar;            //_T("Diff_ImportChar")
+CString g_sLangTxt_Diff_ImportChar;            //_T("导入特性曲线")
+
+//2024-11-15 wuxinyi
+CString g_sLangID_Native_NULL;            //_T("Native_NULL")
+CString g_sLangTxt_Native_NULL;            //_T("空")
+CString g_sLangID_Native_CheckSetDelfChMap;            //_T("Native_CheckSetDelfChMap")
+CString g_sLangTxt_Native_CheckSetDelfChMap;            //_T("当前%1映射为空，是否设置缺省通道映射?:")
+
+//2024-11-18 gongyiping  QScanLanTesterDlg_trans
+CString g_sLangID_Native_ModTesterIP;				//_T("Native_ModTesterIP")
+CString g_sLangTxt_Native_ModTesterIP;				//_T("修改测试仪IP")
+CString g_sLangID_Native_FailToRetrieveNetAddr;		//_T("Native_FailToRetrieveNetAddr")
+CString g_sLangTxt_Native_FailToRetrieveNetAddr;	//_T("获取本地IP地址失败,当前值为空.")
+CString g_sLangID_Native_FailToRetDevInfo;			//_T("Native_FailToRetDevInfo")
+CString g_sLangTxt_Native_FailToRetDevInfo;			//_T("取得设备信息失败")
+CString g_sLangID_Native_AddrNotInSameSubnet;		//_T("Native_AddrNotInSameSubnet")
+CString g_sLangTxt_Native_AddrNotInSameSubnet;		//_T("测试仪IP地址(%1)与当前网卡IP不在同一网段,是否修改?")
+CString g_sLangID_Native_CurrSelNetAdptEmpty;		//_T("Native_CurrSelNetAdptEmpty")
+CString g_sLangTxt_Native_CurrSelNetAdptEmpty;		//_T("当前选择的网卡为空.")
+
+//2024-11-22 wuxinyi
+CString g_sLangID_Native_ClearReportData;            //_T("Native_ClearReportData")
+CString g_sLangTxt_Native_ClearReportData;            //_T("清除报告数据")
+CString g_sLangID_Native_IsContinueClearReport;            //_T("Native_IsContinueClearReport")
+CString g_sLangTxt_Native_IsContinueClearReport;            //_T("清除报告数据后，将无法恢复！请确认是否需要继续清除……")
+CString g_sLangID_Native_CreatIecParaError;            //_T("Native_CreatIecParaError")
+CString g_sLangTxt_Native_CreatIecParaError;            //_T("创建失败！该节点下，已经存在【IEC61850配置】项目")
+CString g_sLangID_Native_CreatSysParaError;            //_T("Native_CreatSysParaError")
+CString g_sLangTxt_Native_CreatSysParaError;            //_T("创建失败！该节点下，已经存在【系统参数配置】项目")
+CString g_sLangID_Native_CreatChMapParaError;            //_T("Native_CreatChMapParaError")
+CString g_sLangTxt_Native_CreatChMapParaError;            //_T("创建失败！该节点下，已经存在【硬件通道映射】项目")
+CString g_sLangID_Native_CreatEngineError;            //_T("Native_CreatEngineError")
+CString g_sLangTxt_Native_CreatEngineError;            //_T("新建通讯命令失败！")
+
+//add wangtao 20241121
+CString g_sLangID_Diff_ImportCharFile; //_T("Diff_ImportCharFile")
+CString g_sLangTxt_Diff_ImportCharFile; //_T("特性曲线文件")
+CString g_sLangID_Diff_ImportCharFilePath; //_T("Diff_ImportCharFilePath")
+CString g_sLangTxt_Diff_ImportCharFilePath; //_T("导入特性曲线文件路径")
+CString g_sLangID_Diff_ImportCharWarning; //_T("Diff_ImportCharWarning")
+CString g_sLangTxt_Diff_ImportCharWarning; //_T("导入了非法特性曲线文件")
+
+//add luozibing 20241125
+CString g_sLangID_DistanceSearch_TileAxisName;				//_T("DistanceSearch_TileAxisName")
+CString g_sLangTxt_DistanceSearch_TileAxisName;				//_T("R-X(Ω) ")
+
+//2024-11-27 wuxinyi 统一使用XLanguageResource
+// CString g_sLangID_DistanceSearch_AxisUnitMag;				//_T("DistanceSearch_AxisUnitMag")
+// CString g_sLangTxt_DistanceSearch_AxisUnitMag;				//_T("Ω")
+// CString g_sLangID_DistanceSearch_AxisUnitAng;				//_T("DistanceSearch_AxisUnitAng")
+// CString g_sLangTxt_DistanceSearch_AxisUnitAng;				//_T("°")
+CString g_sLangID_Native_PulseSelection;				//_T("Native_PulseSelection")
+CString g_sLangTxt_Native_PulseSelection;				//_T("脉冲选择 ")
+//2024-11-27 zhouyangyong
+CString g_sLangID_PhaseCurr;//_T("CurrPhase_I")
+CString g_sLangTxt_PhaseCurr;//_T("相电流_I")
+CString g_sLangID_PhaseVolt;//_T("VoltPhase_U")
+CString g_sLangTxt_PhaseVolt;//_T("相电压_U")
+CString g_sLangID_ActiveBin;//_T("ActiveBin")
+CString g_sLangTxt_ActiveBin;//_T("有源开入")
+CString g_sLangID_PassiveBin;//_T("PassiveBin")
+CString g_sLangTxt_PassiveBin;//_T("无源开入")
+CString g_sLangID_VoidBin;//_T("VoidBin")
+CString g_sLangTxt_VoidBin;//_T("无效开入")//2024-11-29 wuxinyi
+CString g_sLangID_Native_CurrDeviceNumIsNull;				//_T("Native_CurrDeviceNumIsNull")
+CString g_sLangTxt_Native_CurrDeviceNumIsNull;				//_T("当前设备编号为空 ")
+CString g_sLangID_Native_CurrDeviceFileNonexist;				//_T("Native_CurrDeviceFileNonexist")
+CString g_sLangTxt_Native_CurrDeviceFileNonexist;				//_T("当前设备文件(%s)不存在 ")
+CString g_sLangID_Native_SysxmlNonexist;				//_T("Native_SysxmlNonexist")
+CString g_sLangTxt_Native_SysxmlNonexist;				//_T("系统参数文件【%s】不存在. ")
+CString g_sLangID_Native_AnalyzeSysxmlFail;				//_T("Native_AnalyzeSysxmlFail")
+CString g_sLangTxt_Native_AnalyzeSysxmlFail;				//_T("解析系统参数文件失败【%s】 ")
+CString g_sLangID_Native_IECParaFileNonexist;				//_T("Native_IECParaFileNonexist")
+CString g_sLangTxt_Native_IECParaFileNonexist;				//_T("IEC配置文件(%s)不存在. ")
+CString g_sLangID_Native_GetModuleTypeFail;				//_T("Native_GetModuleTypeFail")
+CString g_sLangTxt_Native_GetModuleTypeFail;				//_T("获取模块类型失败")
+CString g_sLangID_Native_NotMapModuleType;				//_T("Native_NotMapModuleType")
+CString g_sLangTxt_Native_NotMapModuleType;				//_T("未映射的模块类型")    
+
+CString  g_sLangID_ReplayTest_ReEnterWavePoint;		//=_T("ReplayTest_ReEnterWavePoint");
+CString  g_sLangTxt_ReplayTest_ReEnterWavePoint;		//_T("波形最小点号为1，请重新输入！");
+CString  g_sLangID_ReplayTest_CheckInputWavePoint;		//=_T("ReplayTest_CheckInputWavePoint");
+CString  g_sLangTxt_ReplayTest_CheckInputWavePoint;		//_T("输入的起始点号/终止点号不能超出波形总点数[%d]，请重新输入！");
+CString  g_sLangID_ReplayTest_CheckBeginAndEndPoint;		//=_T("ReplayTest_CheckBeginAndEndPoint");
+CString  g_sLangTxt_ReplayTest_CheckBeginAndEndPoint;		//_T("输入的终止点号不能小于输入的起始点号[%d]，请重新输入！");
+CString  g_sLangID_ReplayTest_CycleNumCheck;		//=_T("ReplayTest_CycleNumCheck");
+CString  g_sLangTxt_ReplayTest_CycleNumCheck;		//_T("循环次数不能少于1次，请重新输入！");
+CString  g_sLangID_ReplayTest_CheckInputWaveTime;		//=_T("ReplayTest_CheckInputWaveTime");
+CString  g_sLangTxt_ReplayTest_CheckInputWaveTime;		//_T("输入的起点/终点不能超出总波形长度[%.3fs]，请重新输入！");
+CString  g_sLangID_ReplayTest_CheckBeginAndEndTime;		//=_T("ReplayTest_CheckBeginAndEndTime");
+CString  g_sLangTxt_ReplayTest_CheckBeginAndEndTime;		//_T("输入的终点不能小于输入的起点[%.3fs]，请重新输入！");
+CString  g_sLangID_ReplayTest_InsertWaveVolOver;		//=_T("ReplayTest_InsertWaveVolOver");
+CString  g_sLangTxt_ReplayTest_InsertWaveVolOver;		//_T("当前输入的实际常态波形电压值(%f),大于测试仪最大输出电压(%f).");
+CString  g_sLangID_ReplayTest_InsertWaveCurOver;		//=_T("ReplayTest_InsertWaveCurOver");
+CString  g_sLangTxt_ReplayTest_InsertWaveCurOver;		//_T("当前输入的实际常态波形电流值(%f),大于测试仪最大输出电流(%f).");
+CString  g_sLangID_ReplayTest_InsertWaveTimeOver;		//=_T("ReplayTest_InsertWaveTimeOver");
+CString  g_sLangTxt_ReplayTest_InsertWaveTimeOver;		//_T("当前输出时间不能超出[%.3fs]，请重新输入！");
+CString  g_sLangID_ReplayTest_CheckOverlapTime;		//=_T("ReplayTest_CheckOverlapTime");
+CString  g_sLangTxt_ReplayTest_CheckOverlapTime;		//_T("插入与删除时间段重叠，请重新选择时间！");
+//2024-12-5 wuxinyi
+CString  g_sLangID_Native_IsSaveChangeParas;		//=_T("Native_IsSaveChangeParas");
+CString  g_sLangTxt_Native_IsSaveChangeParas;		//_T("是否保存相关修改?");
+
+
+//2024-12-25 xueyangfan
+CString  g_sLangID_Native_DisConnectAll;		//=_T("Native_DisConnectAll");
+CString  g_sLangTxt_Native_DisConnectAll;		//_T("全部断开");
+CString  g_sLangID_Native_AllClosed;		//=_T("Native_AllClosed");
+CString  g_sLangTxt_Native_AllClosed;		//_T("全部闭合");
+CString  g_sLangID_Native_BoutChannel;		//=_T("Native_BoutChannel");
+CString  g_sLangTxt_Native_BoutChannel;		//_T("开出通道");
+CString  g_sLangID_Replay_ClearMap;		//=_T("Replay_ClearMap");
+CString  g_sLangTxt_Replay_ClearMap;		//_T("清空映射");
+CString  g_sLangID_Native_ToPublish;		//=_T("Native_ToPublish");
+CString  g_sLangTxt_Native_ToPublish;		//_T("至发布");
+CString  g_sLangID_Native_ToSubscriptions;		//=_T("Native_ToSubscriptions");
+CString  g_sLangTxt_Native_ToSubscriptions;		//_T("至订阅");
+
+
+//dingxy 20241227
+CString g_sLangID_Native_TestInstrumentConfig;              // = _T("TestInstrumentConfig");						
+CString g_sLangTxt_Native_TestInstrumentConfig;			// = _T("测试仪配置");		
+CString g_sLangID_Native_ScanLANTestInstrument;			// = _T("ScanLANTestInstrument");		
+CString g_sLangTxt_Native_ScanLANTestInstrument;			// = _T("扫描局域网测试仪");		
+CString g_sLangID_Native_DirectConfigRemoteInstrument;		// = _T("DirectConfigRemoteInstrument");		
+CString g_sLangTxt_Native_DirectConfigRemoteInstrument;	// = _T("直接配置远程测试仪");		
+CString g_sLangID_Native_ScanRemoteTestInstrument;			// = _T("ScanRemoteTestInstrument");		
+CString g_sLangTxt_Native_ScanRemoteTestInstrument;		// = _T("扫描远程测试仪");		
+CString g_sLangID_Native_Setup;							//= _T("Setup");		
+CString g_sLangTxt_Native_Setup;							//   = _T("设置");		
+CString g_sLangID_Native_Upgrade;							// = _T("Upgrade");		
+CString g_sLangTxt_Native_Upgrade;							// = _T("启升级");		
+CString g_sLangID_Native_EnablePUDA;						// = _T("EnablePUDA");		
+CString g_sLangTxt_Native_EnablePUDA;						// = _T("启PUDA");		
+CString g_sLangID_Native_EnableTestSvr;					// = _T("EnableTestSvr");		
+CString g_sLangTxt_Native_EnableTestSvr;					// = _T("启TestSvr");		
+CString g_sLangID_Native_TestInstrumentModel;				// = _T("TestInstrumentModel");		
+CString g_sLangTxt_Native_TestInstrumentModel;				// = _T("测试仪型号");		
+CString g_sLangID_Native_TestInstrumentID;					// = _T("TestInstrumentID");		
+CString g_sLangTxt_Native_TestInstrumentID;				// = _T("测试仪编号");		
+CString g_sLangID_Native_CloudIP;							// = _T("CloudIP");		
+CString g_sLangTxt_Native_CloudIP;							// = _T("云端IP：");		
+CString g_sLangID_Native_CloudPort;						// = _T("CloudPort");		
+CString g_sLangTxt_Native_CloudPort;						// = _T("云端Port：");		
+CString g_sLangID_Native_TestInstrumentSerialNumber;		// = _T("TestInstrumentSerialNumber");		
+CString g_sLangTxt_Native_TestInstrumentSerialNumber;		// = _T("测试仪序列号：");		
+CString g_sLangID_Native_Password;								// = _T("Password");		
+CString g_sLangTxt_Native_Password;							// = _T("密码：");		
+// CString g_sLangID_Unit2;								// = _T("Unit");		
+// CString g_sLangTxt_Unit2;								// = _T("单位：");		
+CString g_sLangID_Native_Bind;									// = _T("Bind");		
+CString g_sLangTxt_Native_Bind;								// = _T("绑定");		
+CString g_sLangID_Native_Query;								// = _T("Query");		
+CString g_sLangTxt_Native_Query;								// = _T("查询");		
+CString g_sLangID_Native_TestInstrumentConnectionError;	// = _T("TestInstrumentConnectionError");		
+CString g_sLangTxt_Native_TestInstrumentConnectionError;	// = _T("测试仪：%s 网络连接不通！");		
+CString g_sLangID_Native_CloudServerConnectionError;		// = _T("CloudServerConnectionError");		
+CString g_sLangTxt_Native_CloudServerConnectionError;		// = _T("云服务器：%s 网络连接不通！");		
+CString g_sLangID_Native_IPIsEmpty;						// = _T("IPIsEmpty");		
+CString g_sLangTxt_Native_IPIsEmpty;						// = _T("IP为空");		
+CString g_sLangID_Native_ConnectionTestInstrumentFailed;	// = _T("ConnectionTestInstrumentFailed");		
+CString g_sLangTxt_Native_ConnectionTestInstrumentFailed;	// = _T("连接测试仪失败");		
+CString g_sLangID_Native_MulticastInitSuccess;					// = _T("MulticastInitSuccess");		
+CString g_sLangTxt_Native_MulticastInitSuccess;				// = _T("组播初始化[%s][%d]成功");		
+CString g_sLangID_Native_MulticastInitFailed;					// = _T("MulticastInitFailed");		
+CString g_sLangTxt_Native_MulticastInitFailed;					// = _T("组播初始化[%s][%d]失败");		
+CString g_sLangID_Native_MulticastInitBindSuccess;				// = _T("MulticastInitBindSuccess");		
+CString g_sLangTxt_Native_MulticastInitBindSuccess;			// = _T("组播初始化[%s][%d]成功，绑定本地IP[%s]");		
+CString g_sLangID_Native_Disconnection;						// = _T("Disconnection");		
+CString g_sLangTxt_Native_Disconnection;						// = _T("断链");		
+CString g_sLangID_Native_CloudConnectionFailed;				// = _T("CloudConnectionFailed");		
+CString g_sLangTxt_Native_CloudConnectionFailed;				// = _T("连接云端失败");		
+CString g_sLangID_Native_TestInstrumentUserInfoError;		// = _T("TestInstrumentUserInfoError");		
+CString g_sLangTxt_Native_TestInstrumentUserInfoError;		// = _T("测试仪信息、用户信息输出错误");		
+CString g_sLangID_Native_Connect;								// = _T("Connect");		
+CString g_sLangTxt_Native_Connect;								//  = _T("连接");		
+CString g_sLangID_Native_StopScanning;							// = _T("StopScanning");		
+CString g_sLangTxt_Native_StopScanning;						// = _T("停止扫描");		
+CString g_sLangID_Native_Scanning;								// = _T("Scanning");		
+CString g_sLangTxt_Native_Scanning;							// = _T("扫描");		
+CString g_sLangID_Native_NanjingEnergyCloud;					// = _T("NanjingEnergyCloud");		
+CString g_sLangTxt_Native_NanjingEnergyCloud;					// = _T("南京能云电力");		
+CString g_sLangID_Native_TestInstrumentConfigFileNotFound;	// = _T("TestInstrumentConfigFileNotFound");		
+CString g_sLangTxt_Native_TestInstrumentConfigFileNotFound;// = _T("测试仪配置文件：%s 找不到！");		
+CString g_sLangID_Native_OAClientInitFail;					// = _T("OAClientInitFail");			
+CString g_sLangTxt_Native_OAClientInitFail;				// = _T("OA客户端COM接口初始化失败。");
+CString g_sLangID_Native_Index;					// = _T("SttAdjMain_Index");
+CString g_sLangTxt_Native_Index;				//  = _T("编号");
+// CString g_sLangID_Native_IndepDCCurrChHWRange;					// = _T("SttAdjMain_IndepDCCurrChHWRange");
+// CString g_sLangTxt_Native_IndepDCCurrChHWRange;					// = _T("独立直流电流通道硬件档位");
+CString g_sLangID_Native_IndepDCVolChHWRange;					// = _T("SttAdjMain_IndepDCVolChHWRange")		
+CString g_sLangTxt_Native_IndepDCVolChHWRange;					// = _T("独立直流电压通道硬件档位");
+// CString g_sLangID_Native_ModChRange;							// = _T("SttAdjMain_ModChRange");
+// CString g_sLangTxt_Native_ModChRange;							// = _T("模块通道档位");
+CString g_sLangID_Native_IndepDCCurrIdc;						// = _T("SttAdjMain_IndepDCCurrIdc");
+CString g_sLangTxt_Native_IndepDCCurrIdc;						// = _T("独立直流电流Idc");
+CString g_sLangID_Native_IndepDCVolUdc;							// = _T("SttAdjMain_IndepDCVolUdc");
+CString g_sLangTxt_Native_IndepDCVolUdc;						// = _T("独立直流电压Udc");
+CString g_sLangID_Native_ChannelOneToThree;						// = _T("SttAdjMain_ChannelOneToThree");
+CString g_sLangTxt_Native_ChannelOneToThree;					// = _T("通道1-通道3");
+CString g_sLangID_Native_ChannelFourToSix;						// = _T("SttAdjMain_ChannelFourToSix");
+CString g_sLangTxt_Native_ChannelFourToSix;						// = _T("通道4-通道6");
+CString g_sLangID_Native_GearFormat;							// = _T("SttAdjMain_GearFormat");
+CString g_sLangTxt_Native_GearFormat;							// = _T("档位%d");
+CString g_sLangID_Native_TempzoneFormat;						// = _T("SttAdjMain_TempzoneFormat");
+CString g_sLangTxt_Native_TempzoneFormat;						// = _T("温区%d");
+CString g_sLangID_Native_TemplateFileNoExit;					// = _T("SttAdjMain_TemplateFileNoExit");
+CString g_sLangTxt_Native_TemplateFileNoExit;					// = _T("模块[%s]模板文件不存在");
+CString g_sLangID_Native_ModelDataError_NoModel;				// = _T("SttAdjMain_ModelDataError_NoModel");
+CString g_sLangTxt_Native_ModelDataError_NoModel;				// = _T("模块数据错误，没有定义型号");
+CString g_sLangID_Native_ModelDataError_EmptyModel;				// = _T("SttAdjMain_ModelDataError_EmptyModel");
+CString g_sLangTxt_Native_ModelDataError_EmptyModel;			// = _T("模块数据错误，型号为空");
+CString g_sLangID_Native_ExportCoefficientTemplateSuccess;		// = _T("SttAdjMain_ExportCoefficientTemplateSuccess");	
+CString g_sLangTxt_Native_ExportCoefficientTemplateSuccess;		// = _T("导出【%s】模块系数模板文件成功");
+CString g_sLangID_Native_ExportFailure;							// = _T("SttAdjMain_ExportFailure");			
+CString g_sLangTxt_Native_ExportFailure;						// = _T("导出【%s】模块系数模板文件失败");
+CString g_sLangID_Native_ModuleHardPos;				// = _T("SttAdjMain_ModuleHardPos");
+CString g_sLangTxt_Native_ModuleHardPos;			// =  _T("模块硬件位置");
+CString g_sLangID_Native_ChMaxValue;				// = _T("SttAdjMain_ChMaxValue");
+CString g_sLangTxt_Native_ChMaxValue;				// = _T("通道最大值");
+CString g_sLangID_Native_NewModuleType;			// = _T("SttAdjMain_NewModuleType");
+CString g_sLangTxt_Native_NewModuleType;		// = _T("新模块类型");
+CString g_sLangID_Native_MUAccuracyTest;		
+CString g_sLangTxt_Native_MUAccuracyTest;	
+CString g_sLangID_Native_DifferentialTest;	//比差测试	
+CString g_sLangTxt_Native_DifferentialTest;	
+CString g_sLangID_Native_AngleDifferenceTest;	//角差测试
+CString g_sLangTxt_Native_AngleDifferenceTest;
+CString g_sLangID_Native_CompositeErrorTest;	//复合误差测试
+CString g_sLangTxt_Native_CompositeErrorTest;
+CString g_sLangID_Native_ChannelDelayTest;	//通道延时测试
+CString g_sLangTxt_Native_ChannelDelayTest;
+CString g_sLangID_Native_MaximumRatioDifference;	//最大比差
+CString g_sLangTxt_Native_MaximumRatioDifference;
+CString g_sLangID_Native_MinimumRatioDifference;	//最小比差
+CString g_sLangTxt_Native_MinimumRatioDifference;
+CString g_sLangID_Native_AverageRatioDifference;	//平均比差
+CString g_sLangTxt_Native_AverageRatioDifference ;
+CString g_sLangID_Native_OutputAngle;	//输出角度(°)
+CString g_sLangTxt_Native_OutputAngle;
+CString g_sLangID_Native_MaximumAngleDifference;	//最大角差(′)
+CString g_sLangTxt_Native_MaximumAngleDifference;
+CString g_sLangID_Native_MinimumAngleDifference;	//最小角差(′)
+CString g_sLangTxt_Native_MinimumAngleDifference;
+CString g_sLangID_Native_AverageAngleDifference;	//平均角差(′)
+CString g_sLangTxt_Native_AverageAngleDifference;
+CString g_sLangID_Native_MaximumError;	//最大误差(%)
+CString g_sLangTxt_Native_MaximumError;
+CString g_sLangID_Native_MinimumError;	//最小误差(%)
+CString g_sLangTxt_Native_MinimumError;
+CString g_sLangID_Native_AverageError;	//平均误差(%)
+CString g_sLangTxt_Native_AverageError;
+CString g_sLangID_Native_ControlBlockDescription;	//控制块描述
+CString g_sLangTxt_Native_ControlBlockDescription;
+CString g_sLangID_Native_MaximumDelay;	//最大延时
+CString g_sLangTxt_Native_MaximumDelay;
+CString g_sLangID_Native_MinimumDelay;	//最小延时
+CString g_sLangTxt_Native_MinimumDelay;
+CString g_sLangID_Native_AverageDelay;	//平均延时
+CString g_sLangTxt_Native_AverageDelay;
+CString g_sLangID_Native_MaximumZeroDrif;	//最大零漂
+CString g_sLangTxt_Native_MaximumZeroDrif;
+CString g_sLangID_Native_MinimumZeroDrif;	//最小零漂
+CString g_sLangTxt_Native_MinimumZeroDrif;
+CString g_sLangID_Native_AverageZeroDrif;	//平均零漂
+CString g_sLangTxt_Native_AverageZeroDrif;
+CString g_sLangID_Native_MUPunctAccurTest;	//守时误差测试
+CString g_sLangTxt_Native_MUPunctAccurTest;
+CString g_sLangID_Native_MUSPunctuality;  
+CString g_sLangTxt_Native_MUSPunctuality;
+CString g_sLangID_Native_MUSTiming;  //对时时长
+CString g_sLangTxt_Native_MUSTiming;
+CString g_sLangID_Native_MUTimingAccurTest;  //对时误差测试
+CString g_sLangTxt_Native_MUTimingAccurTest;
+
+//国际版移植 20250207 xueyangfan
+CString g_sLangID_Smv_AddToSub;//= _T("Smv_AddToSub");
+CString g_sLangTxt_Smv_AddToSub;// = _T("至发布");
+CString g_sLangID_Smv_AddToPub;// = _T("Smv_AddToPub");
+CString g_sLangTxt_Smv_AddToPub;// = _T("至订阅");
+CString g_sLangID_DistanceSearch_SectionSix;// = _T("DistanceSearch_SectionSix");
+CString g_sLangTxt_DistanceSearch_SectionSix;// = _T("Ⅵ");
+CString g_sLangID_DistanceSearch_SectionSeven;// = _T("DistanceSearch_SectionSeven");
+CString g_sLangTxt_DistanceSearch_SectionSeven;// = _T("Ⅶ");
+CString g_sLangID_DistanceSearch_SectionEight;// = _T("DistanceSearch_SectionEight");
+CString g_sLangTxt_DistanceSearch_SectionEight;// = _T("Ⅷ");
+CString g_sLangID_CBOperate_VzDefineParas;//		//_T("CBOperate_VzDefineParas");
+CString g_sLangTxt_CBOperate_VzDefineParas;//		//_T("√3×3V0");
+CString g_sLangID_Transducer_ParasSet;//=_T("Transducer_ParasSet");
+CString g_sLangTxt_Transducer_ParasSet;//=_T("变送器设置");
+CString g_sLangID_Transducer_Phase_PhaseSingle;//=_T("Transducer_PhaseSingle");
+CString g_sLangTxt_Transducer_Phase_APhaseSingle;//=_T("单项");
+CString g_sLangID_Transducer_Phase_A;// =_T("Transducer_Phase_A");
+CString g_sLangTxt_Transducer_Phase_A;// =_T("单相(A相)");
+CString g_sLangID_Transducer_Phase_B;// =_T("Transducer_Phase_B");
+CString g_sLangTxt_Transducer_Phase_B;// =_T("单相(B相)");
+CString g_sLangID_Transducer_Phase_C;// =_T("Transducer_Phase_C");
+CString g_sLangTxt_Transducer_Phase_C;// =_T("单相(C相)");
+CString g_sLangID_Transducer_Phase_ABC;//=_T("Transducer_Phase_ABC");
+CString g_sLangTxt_Transducer_Phase_ABC;//=_T("三相");
+CString g_sLangID_Transducer_UInputLimit;// =_T("Transducer_UInputLimit");
+CString g_sLangTxt_Transducer_UInputLimit;//=_T("输入上限(uint)");
+CString g_sLangID_Transducer_LInputLimit;// =_T("Transducer_LInputLimit");
+CString g_sLangTxt_Transducer_LInputLimit;//=_T("输入下限(uint)");
+CString g_sLangID_Transducer_UOutputLimit;// =_T("Transducer_UOutputLimit");
+CString g_sLangTxt_Transducer_UOutputLimit;//=_T("输出上限(uint)");
+CString g_sLangID_Transducer_LOutputLimit;// =_T("Transducer_LOutputLimit");
+CString g_sLangTxt_Transducer_LOutputLimit;//=_T("输出下限(uint)");
+CString g_sLangID_Transducer_Input;// =_T("Transducer_Input");
+CString g_sLangTxt_Transducer_Input;//=_T("变送器输入值(uint):");
+CString g_sLangID_Transducer_Un;//=_T("Transducer_Un");
+CString g_sLangTxt_Transducer_Un;//=_T("额定相电压(V):");
+CString g_sLangID_Transducer_UIAngle;//=_T("Transducer_UIAngle");
+CString g_sLangTxt_Transducer_UIAngle;//=_T("相角(°):");
+CString g_sLangID_Transducer_Imax;//=_T("Transducer_Imax");
+CString g_sLangTxt_Transducer_Imax;//=_T("最大电流(A):");
+CString g_sLangID_Transducer_StdFreq;//=_T("Transducer_StdFreq");
+CString g_sLangTxt_Transducer_StdFreq;//=_T("额定频率(Hz):");
+CString g_sLangID_Transducer_TestTimes;//=_T("Transducer_TestTimes");
+CString g_sLangTxt_Transducer_TestTimes;//=_T("测试次数:");
+CString g_sLangID_Transducer_GridInput;// = _T("Transducer_GridInput");
+CString g_sLangTxt_Transducer_GridInput;// = _T("输入值(uint):");
+CString g_sLangID_Transducer_GridOutput;// = _T("Transducer_GridOutput");
+CString g_sLangTxt_Transducer_GridOutput;// = _T("理论值(uint)");
+CString g_sLangID_Transducer_GridRealOutput;// = _T("Transducer_GridRealOutput");
+CString g_sLangTxt_Transducer_GridRealOutput;// = _T("实际值(uint)");
+CString g_sLangID_Transducer_TestType;// = _T("Transducer_TestType");
+CString g_sLangTxt_Transducer_TestType;// = _T("测试类型:");
+CString g_sLangID_Transducer_Type;// = _T("Transducer_Type");
+CString g_sLangTxt_Transducer_Type;// = _T("输出信号类型:");
+CString g_sLangID_Transducer_Level;// = _T("Transducer_Level");
+CString g_sLangTxt_Transducer_Level;// = _T("变送器等级(%):");
+CString g_sLangID_Transducer_TestValue;// = _T("Transducer_TestValue");
+CString g_sLangTxt_Transducer_TestValue;// = _T("校验值:");
+CString g_sLangID_Transducer_SettingTime;// = _T("Transducer_SettingTime");
+CString g_sLangTxt_Transducer_SettingTime;// = _T("稳定时间(s):");
+CString g_sLangID_Transducer_Ratio;// = _T("Transducer_Ratio");
+CString g_sLangTxt_Transducer_Ratio;// = _T("CT/PT变比");
+CString g_sLangID_Transducer_CopySelTest;// = _T("Transducer_CopySelTest");
+CString g_sLangTxt_Transducer_CopySelTest;// = _T("复制选中测试项");
+CString g_sLangID_Transducer_PasteTest;// = _T("Transducer_PasteTest");
+CString g_sLangTxt_Transducer_PasteTest;// = _T("粘贴测试项");
+CString g_sLangID_Diff_MSecondaryCur;// = _T("Diff_MSecondaryCur");
+CString g_sLangTxt_Diff_MSecondaryCur;// = _T("中侧额定二次电流");
+CString g_sLangID_Diff_LSecondaryCur;// = _T("Diff_LSecondaryCur");
+CString g_sLangTxt_Diff_LSecondaryCur;// = _T("低侧额定二次电流");
+CString g_sLangID_Native_IsSaveTemp;//=_T("Native_IsSaveTemp");
+CString g_sLangTxt_Native_IsSaveTemp;// = _T("是否保存模板 ? ");
+CString g_sLangID_Native_isContinueExistSameSCD;// = _T("Native_isContinueExistSameSCD");
+CString g_sLangTxt_Native_isContinueExistSameSCD;//= _T("当前存在同名SCD文件，是否继续？");
+CString g_sLangID_Xrio_EnterValue;// = _T("Xrio_EnterValue");
+CString g_sLangTxt_Xrio_EnterValue;// = _T("请输入一个值。");
+CString g_sLangID_Xrio_EnterValidValue;// = _T("Xrio_EnterValidValue");
+CString g_sLangTxt_Xrio_EnterValidValue;// = _T("请输入一个有效值。");
+
+CString g_sLangID_Native_WeekPNMain;  // = _T("Native_WeekPNMain");
+CString g_sLangTxt_Native_WeekPNMain; //= _T("PN机箱主板小信号模块");
+CString g_sLangID_Native_WeeKL336DECTEVT; //= _T("Native_WeeKL336DECTEVT");
+CString g_sLangTxt_Native_WeeKL336DECTEVT; //= _T("L336D_ECTEVT 模块");
+CString g_sLangID_Native_PIA0103; //= _T("Native_PIA0103");
+CString g_sLangTxt_Native_PIA0103; //= _T("PIA0103 模块");
+CString g_sLangID_Native_PNS330UMax10; //= _T("Native_PNS330UMax10");
+CString g_sLangTxt_Native_PNS330UMax10; //= _T("PNS330 模块(电流同相最大10安)");
+CString g_sLangID_Native_PNS330ABC_20; //= _T("Native_PNS330ABC_20");
+CString g_sLangTxt_Native_PNS330ABC_20; //= _T("PNS330 模块(电流同相最大20安)");
+CString g_sLangID_Native_PNS330_H; //= _T("Native_PNS330_H");
+CString g_sLangTxt_Native_PNS330_H; //= _T("PNS330_H 模块(电流同相最大10安)");
+CString g_sLangID_Native_H_ABC_20; // _T("Native_H_ABC_20");
+CString g_sLangTxt_Native_H_ABC_20; //= _T("PNS330_H 模块(电流同相最大20安)");
+CString g_sLangID_Native_PNS330_6; //= _T("Native_PNS330_6");
+CString g_sLangTxt_Native_PNS330_6; //= _T("PNS330_6 模块");
+CString g_sLangID_Native_PNS331UMax10;  //= _T("Native_PNS331UMax10");
+CString g_sLangTxt_Native_PNS331UMax10; //= _T("PNS331 模块(电流同相最大10安)");
+CString g_sLangID_Native_PNS331_ABC_20; //= _T("Native_PNS331_ABC_20");
+CString g_sLangTxt_Native_PNS331_ABC_20; //= _T("PNS331 模块(电流同相最大20安)");
+CString g_sLangID_Native_PNS330_H_EX2;			//= _T("Native_PNS330_H_EX2");
+CString g_sLangTxt_Native_PNS330_H_EX2;		 //= _T("PNS330_H 模块(电源改型V2)");
+CString g_sLangID_Native_PNS331_EX2;			//= _T("Native_PNS331_EX2");
+CString g_sLangTxt_Native_PNS331_EX2;		 //= _T("PNS331 模块(电源改型V2)");
+CString g_sLangID_IEC_EndVerification;
+CString g_sLangTxt_IEC_EndVerification;
+CString g_sLangID_IEC_16ByteVerification;
+CString g_sLangTxt_IEC_16ByteVerification;

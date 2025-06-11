@@ -2,11 +2,11 @@
 #define  QSTTANTISHAKETIMEDINEVENTGROUPGRID
 
 #include "../Module/UI/SttTestCntrCmdDefine.h"
-#include "../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/DataMngr/DataGroup.h"
 #include <QTableWidget>
 #include "../../Module/ScrollCtrl/ScrollTableWidget.h"
 #include "../../Module/CommonCtrl_QT/CommonCtrlInterface.h"
-#include "../../Module/DataMngr/DvmDataset.h"
+#include "../../../Module/DataMngr/DvmDataset.h"
 
 #ifdef _PSX_QT_LINUX_
 class QSttAntiShakeTimeDinEventGroupGrid:public QScrollTableWidget, public CCommonCtrlInterface

@@ -1,7 +1,7 @@
 #ifndef STTMACROPARAEDITVIEWHARM_H
 #define STTMACROPARAEDITVIEWHARM_H
 
-#include <QApplication>
+#include <QMainWindow>
 #include "../Interface/SttMacroParaEditViewOriginal.h"
 #include "HarmWidget.h"
 
@@ -13,15 +13,15 @@ class QSttMacroParaEditViewHarm: public CSttMacroParaEditViewOriginal
 	Q_OBJECT
 
 public:
-    QSttMacroParaEditViewHarm(QWidget *parent = 0, Qt::WindowFlags flags = Qt::WindowFlags());
+    QSttMacroParaEditViewHarm(QWidget *parent = 0, Qt::WindowFlags flags = 0);
 	virtual ~QSttMacroParaEditViewHarm();
 
 	virtual void ShowReport(CDvmValues *pValues);
 	virtual void SetDatas(CDataGroup *pParas);
 	virtual void GetDatas(CDataGroup *pParas);
 
-
-	tmt_HarmTest m_oTmtHarmTest;
+	//2024-9-13 lijunqing ”≈ªØ
+	tmt_HarmTest *m_oTmtHarmTest;
 	//tmt_HarmParas* m_pHarmPara;
 
 	QTimer m_oTimerDiBian;
@@ -40,7 +40,7 @@ public:
 	CSttTestResourceBase* CreateTestResource();
 	virtual void UpdateTestResource(BOOL bCreateChMaps);
 
-	virtual PTMT_PARAS_HEAD GetTestParas(){ return &m_oTmtHarmTest;};
+	virtual PTMT_PARAS_HEAD GetTestParas(){ return m_oTmtHarmTest;};
 	virtual char* GetMacroID(){ return "HarmTest"; }
 	virtual void SerializeTestParas(CSttXmlSerializeBase *pMacroParas, PTMT_PARAS_HEAD pParas,
 		long nVolRsNum,long nCurRsNum,long nBinExNum,long nBoutExNum,BOOL bHasGoosePub);
@@ -67,6 +67,7 @@ public:
 
 	void UpdateGoutTab_UI(CIecCfgGoutDatas* pCfgGoutDatas);
 	void UpdateFT3Tab_UI(CIecCfgDatasSMV* pIecCfgDatasSMV);
+	virtual void UpdatePrimParaSetUI();
 
 public:
     QHarmWidget *m_pHarmWidget;

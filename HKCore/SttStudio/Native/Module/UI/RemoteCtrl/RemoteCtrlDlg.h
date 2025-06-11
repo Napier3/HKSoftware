@@ -27,7 +27,7 @@ public:
 public slots:
 	void slot_OKClicked();
 	void slot_CancelClicked();
-
+	void CloseDialog();
 };
 
 #endif 

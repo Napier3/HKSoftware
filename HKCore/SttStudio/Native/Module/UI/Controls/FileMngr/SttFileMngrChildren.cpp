@@ -1,15 +1,15 @@
 #include "SttFileMngrChildren.h"
 #include "SttXFolderButton.h"
 
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../../../SttTestResourceMngr/SttTestResourceMngr.h"
-#include "../../Module/OSInterface/QT/XMessageBox.h"
+#include "../../../Module/OSInterface/QT/XMessageBox.h"
 #include "../../Module/CommonMethod/commonMethod.h"
-#include "../../Module/XfileMngrBase/XFolder.h"
+#include "../../../Module/XfileMngrBase/XFolder.h"
 #include "../../Module/PopupDialog/SttPopupOpenDialog.h"
 #include "../../Module/PopupDialog/SttPopupSaveAsDialog.h"
-#include "../../Module/OSInterface/QT/XMessageBox.h"
+#include "../../../Module/OSInterface/QT/XMessageBox.h"
 #include "../Module/XLangResource_Native.h"
 
 #ifdef _USE_SoftKeyBoard_
@@ -295,6 +295,7 @@ void QSttFileMngrChildren::slot_ImportClicked()
 	}
 
 	QSttPopupOpenDialog oOpenDlg(strUsbPath,astrPostfix,this);
+	oOpenDlg.m_bIsCheckExternalPath = TRUE;
 	oOpenDlg.InitUI();
 	oOpenDlg.InitTitle(g_sLangTxt_USB);
 	oOpenDlg.IniOpenSavetBtn(g_sLangTxt_Select);
@@ -431,6 +432,7 @@ void QSttFileMngrChildren::slot_ExportClicked()
 	}
 
 	QSttPopupSaveAsDialog oSavedlg(strUsbPath, astrPostfix,m_pCurrSelData->m_strName, this);
+	oSavedlg.m_bIsCheckExternalPath = TRUE;
 	oSavedlg.InitUI();
 
 

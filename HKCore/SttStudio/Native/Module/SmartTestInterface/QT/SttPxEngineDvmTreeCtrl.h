@@ -5,7 +5,7 @@
 #include <QStyleFactory>
 #include "../../../Module/DataMngr/DvmDevices.h"
 
-#include "../../../../Module/BaseClass/QT/ExBaseListTreeCtrl.h"
+#include "../../../Module/BaseClass/QT/ExBaseListTreeCtrl.h"
 #include "../../UI/Module/ScrollCtrl/ScrollCtrlInterface.h"
 
 class QSttPxEngineDvmTreeItem : public QExBaseTreeWidgetItem

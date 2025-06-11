@@ -2,10 +2,11 @@
 #include <QDirIterator>
 #include "../../../SttCmd/SttParas.h"
 #include "../../../SttGlobalDef.h"
-#include "../../Module/System/TickCount32.h"
+#include "../../../Module/System/TickCount32.h"
 #include "../../../SttTestResourceMngr/SttTestResourceMngr.h"
 #include "../CommonMethod/commonMethod.h"
 #include "../Module/XLangResource_Native.h"
+#include "../../../SttSystemConfig/SttSystemConfig.h"
 
 extern QFont *g_pSttGlobalFont;  
 
@@ -86,7 +87,8 @@ void QModuleSetDlg::initUI()
 	m_pCancel_PushButton->setFont(*g_pSttGlobalFont);
 
 	g_oSttTestResourceMngr.InitLocalSysPara();
-	InitDatas();
+	//InitDatas();
+	m_pModuleSetWidget->initUI();
  	connect(m_pOK_PushButton, SIGNAL(clicked()), this, SLOT(slot_OKClicked()));
  	connect(m_pCancel_PushButton, SIGNAL(clicked()), this, SLOT(slot_CancelClicked()));
 }
@@ -100,8 +102,10 @@ void QModuleSetDlg::InitDatas()
 {
 // 	m_pSysParas = pSysParas;
 	g_oSystemParas.m_oGearSetCurModules.CopyOwn(&m_oSysParas.m_oGearSetCurModules);
-	m_pModuleSetWidget->initUI(&m_oSysParas);
-
+	//m_pModuleSetWidget->initUI(&m_oSysParas);
+	m_pModuleSetWidget->SetSysParas(&m_oSysParas);
+	m_pModuleSetWidget->InitDatas();
+	m_pModuleSetWidget->UpdateCurSelModuleUI();
 }
 
 void QModuleSetDlg::slot_OKClicked()
@@ -110,17 +114,30 @@ void QModuleSetDlg::slot_OKClicked()
 	BOOL bMergeCurrHasChanged = m_oSysParas.m_oGearSetCurModules.MergeCurrHasChanged(&g_oSystemParas.m_oGearSetCurModules);
 	m_oSysParas.m_oGearSetCurModules.CopyOwn(&g_oSystemParas.m_oGearSetCurModules);
 	g_oSttTestResourceMngr.SaveSystemParasFile();
+	BOOL bCurrModulePowerHigh = FALSE;
+	CSttAdjDevice *pCurDevice = &g_oSttTestResourceMngr.m_oCurrDevice;
+	if ((pCurDevice->m_strModel == _T("PNS330-6")) || (pCurDevice->m_strModel == _T("PNS330-6A")) || (pCurDevice->m_strModel == _T("PNS330-6M")))
+	{
+		long nIPowerMode = g_oSystemParas.m_oGearSetCurModules.m_oCurModuleGear[0].m_nIPowerMode;
+		if (nIPowerMode == STT_CurrentMODULE_POWER_PNS330_6x10A_3x20A)
+			bCurrModulePowerHigh = TRUE;
+	}
 
 	if ((bMergeCurrHasChanged)&&(g_oSystemParas.m_nHasAnalog))
 	{
 		g_oSttTestResourceMngr.CreateDefaultChMapsByDevice(&g_oSttTestResourceMngr.m_oChMaps,g_oSystemParas.m_nIecFormat,g_oSystemParas.m_nHasDigital);
 		g_oSttTestResourceMngr.SaveCurChMapsFile();
 	}
-	emit sig_UpdateModulesGear(bMergeCurrHasChanged);
+	emit sig_UpdateModulesGear(bMergeCurrHasChanged, bCurrModulePowerHigh);
 	close();
 }
 
 void QModuleSetDlg::slot_CancelClicked()
 {
 	close();
+}
+
+void QModuleSetDlg::slot_UpdateModulesGearSwitchInfo()
+{
+	InitDatas();
 }

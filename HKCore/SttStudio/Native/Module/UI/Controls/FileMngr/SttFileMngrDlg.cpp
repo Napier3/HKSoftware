@@ -2,10 +2,10 @@
 
 #include "SttFileMngrChildren.h"
 #include "SttFileMoveDlg.h"
-#include "../../Module/API/GlobalConfigApi.h"
-#include "../../Module/DataMngr/DvmData.h"
-#include "../../Module/DataMngr/DataMngrGlobal.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/DataMngr/DvmData.h"
+#include "../../../Module/DataMngr/DataMngrGlobal.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../../XLangResource_Native.h"
 #ifdef _USE_SoftKeyBoard_
 #include "../../SoftKeyboard/SoftKeyBoard.h"

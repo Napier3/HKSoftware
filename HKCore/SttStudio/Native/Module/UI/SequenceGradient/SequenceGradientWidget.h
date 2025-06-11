@@ -5,7 +5,7 @@
 #include "../SttTestCntrFrameBase.h"
 #include <QWidget>
 #include "../Module/QExBaseListGridBase/QExBaseListGridBase.h"
-#include "../../Module/API/StringApi.h"
+#include "../../../Module/API/StringApi.h"
 
 class QSequenceGradientWidget : public QWidget
 {

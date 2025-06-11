@@ -1,7 +1,7 @@
 #include "IecCfgSmvData92InGrid.h"
-#include "../../61850/Module/CfgDataMngr/IecCfg92Data.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfg92Data.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../../Module/CommonMethod/commonMethod.h"
 
 CIecCfgSmvData92InGrid::CIecCfgSmvData92InGrid(QWidget* pparent):CIecCfgDataGridBase(pparent)

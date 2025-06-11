@@ -1,12 +1,12 @@
 #include "DiagramWidget.h"
 #include <QPainter>
 #include <QHeaderView>
-#include <QMutex>
-#include "../../Module/XLanguage/XLanguageMngr.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/API/GlobalConfigApi.h"
+
+#include "../../../Module/XLanguage/XLanguageMngr.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../../../XLangResource_Native.h"
-#include "../../Module/XLanguage/XLanguageResource.h"
+#include "../../../Module/XLanguage/XLanguageResource.h"
 
 //#include "../../SttTestCntrFrameBase.h"
 
@@ -15,12 +15,16 @@
 #define ZJOFFSET 15;
 int Diagram::m_l =10;
 float Diagram::m_a=0.9;
-QMutex g_diagramMutex;
+//QMutex g_oMutex_Diagram;  //zhouhj 2025.1.10 该全局锁改为成员变量方式
+CAutoCriticSection g_oMutex_Diagram;
 
 Diagram::Diagram(QWidget *parent) :QWidget(parent)
 {
 	setAutoFillBackground(true);
-	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+//#ifdef USE_pthread_mutex_lock
+//    pthread_mutex_init(&m_oMutex_Diagram,NULL);
+//#endif
 
 	//禁止整个绘图区重绘,减少闪烁
 	setAttribute(Qt::WA_OpaquePaintEvent);
@@ -35,7 +39,7 @@ Diagram::Diagram(QWidget *parent) :QWidget(parent)
 	fendAngle_arc = 0;
 	bStartSearch = 0;
 	m_bhasRadio = false;
-	m_UnitDispMode = 0;
+	m_nParaSetSecondValue = 1;
 	m_bUse = false;
 
 	m_VectorType = 0;
@@ -82,6 +86,13 @@ Diagram::Diagram(QWidget *parent) :QWidget(parent)
 	m_TableData = NULL;
 }
 
+Diagram::~Diagram()
+{
+//#ifdef USE_pthread_mutex_lock
+//    pthread_mutex_destroy(&m_oMutex_Diagram);
+//#endif
+}
+
 void Diagram::initTable(int RowNum)
 {
 	m_nRowNum = RowNum;
@@ -96,8 +107,8 @@ void Diagram::initTable(int RowNum)
 
 	//m_TableData->setStyleSheet(QString::fromUtf8("background-color: rgb(167,183,181);"));
 	QHeaderView* pTop = m_TableData->horizontalHeader();
-    pTop->setSectionsClickable(false);
-    pTop->setSectionsMovable(false);
+	pTop->setSectionsClickable(false);
+	pTop->setSectionsMovable(false);
 	pTop->setFont(*g_pSttGlobalFont);
 	QHeaderView* pLeft = m_TableData->verticalHeader();
 //	pLeft->setDefaultSectionSize(50);
@@ -157,13 +168,14 @@ void Diagram::initTable(int RowNum)
 		m_TableData->setFont(*g_pSttGlobalFont);
 //		m_TableData->horizontalHeader()->setFont(*g_pSttGlobalFont);
 		m_TableData->horizontalHeader()->setFont(*g_pSttGlobalFont);
-        m_TableData->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);  //平均分配列宽
+		m_TableData->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);  //平均分配列宽
 	}
 }
 
 void Diagram::updateTable()//更新表格
 {
-    g_diagramMutex.lock();//互斥锁
+    g_oMutex_Diagram.lock();//互斥锁
+
 	if (m_TableData == NULL)
 	{
 		return;
@@ -222,7 +234,7 @@ void Diagram::updateTable()//更新表格
 		{
 			if(m_infoList.at(i).m_lineType == Line_U)//显示单位
 			{
-				if (m_UnitDispMode == V_Primary)//一次值
+				if (m_nParaSetSecondValue == V_Primary)//一次值
 				{
 					m_TableData->item(i,2)->setText("kV");
 				}
@@ -241,7 +253,14 @@ void Diagram::updateTable()//更新表格
 			QString strName = m_infoList.at(i).m_strTableName;
 			if(m_infoList.at(i).m_lineType == Line_U)
 			{
+				if (m_nParaSetSecondValue == V_Primary)//一次值
+				{
+					m_TableData->item(i,2)->setText("kV");
+				}
+				else
+				{
 				m_TableData->item(i,2)->setText("V");
+			}
 			}
 			else
 			{
@@ -320,7 +339,7 @@ void Diagram::updateTable()//更新表格
 // 		}
 // 	}
 
-    g_diagramMutex.unlock();
+    g_oMutex_Diagram.unlock();//互斥锁
 }
 
 
@@ -772,7 +791,7 @@ void Diagram::drawDesText(QPainter *painter)
 
 void Diagram::drawVector(QPainter * painter)
 {
-    g_diagramMutex.lock();
+    g_oMutex_Diagram.lock();//互斥锁
 	painter->save();
 	painter->setPen(Qt::white);
 	painter->setRenderHint(QPainter::Antialiasing);
@@ -788,7 +807,7 @@ void Diagram::drawVector(QPainter * painter)
 	if(m_infoList.count()==0)
 	{
 		painter->restore();
-        g_diagramMutex.unlock();  //2022-3-27  lijunqing lock任何时候都应该有unlock与之对应
+        g_oMutex_Diagram.unlock();//互斥锁
 		return;
 	}
 
@@ -907,7 +926,7 @@ void Diagram::drawVector(QPainter * painter)
 		}
 	}
 	painter->restore();
-    g_diagramMutex.unlock();
+    g_oMutex_Diagram.unlock();//互斥锁
 }
 
 float Diagram::GetDistance(float flStartx,float flStarty,float flEndx,float flEndy)
@@ -1075,7 +1094,15 @@ void Diagram::setLineValue(float *fAmp,float *fPhe)
 		m_TableData->item(i,1)->setText(QString::number(fAmp[i], 'f', 3));
 		if(m_infoList.at(i).m_lineType == Line_U)
 		{
+			if (m_nParaSetSecondValue == V_Primary)//一次值
+			{
+				m_TableData->item(i,2)->setText("kV");
+			}
+			else
+			{
 			m_TableData->item(i,2)->setText("V");
+		}
+			
 		}
 		else
 		{
@@ -1165,8 +1192,7 @@ void Diagram::setPbnDisp(bool b)
 
 void Diagram::setlabNumText(QString str)
 {
-	m_labNum->setText(str);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
-	update();
+	m_labNum->setText(str);                                                                                                                                                               update();
 }
 
 void Diagram::InsertNewLineOfTable( QStringList str,bool bUse)
@@ -1189,4 +1215,17 @@ void Diagram::slot_Pbn_NextClicked()
 void Diagram::slot_Pbn_PreClicked()
 {
 	emit sig_Pbn_PreClicked();
+}
+
+void Diagram::setUnitOfTable(QStringList str)
+{
+	int num = str.size();
+	int rownum = m_TableData->rowCount();
+	if (num < rownum+1)
+	{
+		for (int i =0; i<num; i++)
+		{
+			m_TableData->item(i,2)->setText(str.at(i));
+		}
+	}
 }

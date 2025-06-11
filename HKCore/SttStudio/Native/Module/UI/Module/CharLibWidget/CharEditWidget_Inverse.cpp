@@ -3,7 +3,7 @@
 #include "../../SttTestCntrFrameBase.h"
 #include "../ZKCharaCurve/QCIFeatureAddDig.h"
 #include "../../../XLangResource_Native.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 
 #define CharInverse_ID_CurrentChangeStart              _T("CurrentChangeStart")//电流变化始值
 #define CharInverse_ID_CurrentChangeFinal              _T("CurrentChangeFinal")//电流变化终值
@@ -200,6 +200,7 @@ void QCharEditWidget_Inverse::InitChar()
 	pMainWidget->m_pImpCharactWidget->EnableSetting(FALSE);
 	pMainWidget->m_pImpCharactWidget->m_pCharacterDrawView->SetXYUnitShow(_T(""),_T("s"));
 	pMainWidget->m_pImpCharactWidget->m_pCharacterDrawView->SetIsShowText(false);
+	pMainWidget->m_pImpCharactWidget->m_pCharacterDrawView->SetIsShowTestPoint(false);
 	pMainWidget->m_pImpCharactWidget->setObjectName(QString::fromUtf8("QInverseCharactWidget"));
 
 	if (IsVolInverse())

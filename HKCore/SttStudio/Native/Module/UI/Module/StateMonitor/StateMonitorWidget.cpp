@@ -1,5 +1,5 @@
 #include "StateMonitorWidget.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../../SttTestResourceMngr/SttTestResourceMngr.h"
 #include "../../SttTestCntrFrameBase.h"
 
@@ -14,7 +14,35 @@ QStateMonitorWidget::QStateMonitorWidget(QWidget *parent) : QWidget(parent)
 	m_pBinBout = 0;
 	m_dLocalTime = 0;
 	m_dRealTime = 0;
+	m_bHasInitFinished = false;
+	m_nChannel = ia1_type;
+	m_nParaSetSecondValue = 1;
+	m_dUMin = 0;
+	m_dUMax = 0;
+	m_dIMin = 0;
+	m_dIMax = 0;
+	//InitUI();//dingxy 20240923 分割出来，单独设置是否为单通道，解决递变崩溃问题
+}
+
+void QStateMonitorWidget::showEvent(QShowEvent *event)
+{
+	if (m_bHasInitFinished)
+	{
+		return;
+	}
+	
+
 	InitUI();
+	m_bHasInitFinished = true;
+	UpdatePlotMaxMinValue(m_nChangedType);//dingxy 20240926 重新刷新状态图纵坐标
+	if (g_theTestCntrFrame->IsTestStarted())
+	{
+		StartStateMonitor();
+		OnRtDataChanged();
+	}
+
+	
+	QWidget::showEvent(event);
 }
 
 QStateMonitorWidget::~QStateMonitorWidget()
@@ -36,14 +64,24 @@ QStateMonitorWidget::~QStateMonitorWidget()
 		delete m_oVoltCurList[i];
 	}
 	m_oVoltCurList.clear();
+
 }
 
 void QStateMonitorWidget::InitStateMonitor(int nChannel, int nType, bool bStart, QWidget* pConnectWidget)
 {
+	if(m_nChannel != nChannel)
+	{
+		m_nChannel = nChannel;
+	}
+	
 	connect(pConnectWidget, SIGNAL(sig_YRangeChanged(changed_type ,QString ,float ,float )), 
 		this, SLOT(slot_YRangeChanged(changed_type,QString ,float ,float )));
 
-	m_pSingle->UpdateSingleChannel(nChannel, nType, bStart);
+	if (m_pSingle)
+	{
+		m_pSingle->UpdateSingleChannel(m_nChannel, nType, bStart);
+	}
+	
 }
 
 void QStateMonitorWidget::StopStateMonitor()
@@ -120,17 +158,36 @@ void QStateMonitorWidget::InitUI()
 	font.setPointSize(18);
 	setFont(font);
 
-	InitCurve(g_oSttTestResourceMngr.m_oRtDataMngr.m_pMacroChannels, 0, g_oLocalSysPara.m_fAC_VolMax, 0, g_oLocalSysPara.m_fAC_CurMax
+	if ((m_dIMax <= 0 )|| (m_dIMax > g_oLocalSysPara.m_fAC_CurMax) )
+	{
+		m_dIMax =g_oLocalSysPara.m_fAC_CurMax;
+	}
+	if ((m_dUMax <= 0)|| (m_dUMax > g_oLocalSysPara.m_fAC_VolMax))
+	{
+		m_dUMax = g_oLocalSysPara.m_fAC_VolMax;
+	}
+	InitCurve(g_oSttTestResourceMngr.m_oRtDataMngr.m_pMacroChannels, 0, /*g_oLocalSysPara.m_fAC_VolMax*/m_dUMax, 0, m_dIMax
 		, g_theTestCntrFrame->GetCurEventResult()->m_BinIn, g_theTestCntrFrame->GetCurEventResult()->m_BinOut);
+	UpdateAxisScale();//dingxy 20250208 初始化后更新坐标轴位置
 }
 
 void QStateMonitorWidget::UpdateCurve()
 {
 	CSttMacroChannels *pChls = g_oSttTestResourceMngr.m_oRtDataMngr.m_pMacroChannels;
 	double fUMin = 0;
-	double fUMax = g_oLocalSysPara.m_fAC_VolMax;
+	
+	if ((m_dUMax <= 0)|| (m_dUMax > g_oLocalSysPara.m_fAC_VolMax))
+	{
+		m_dUMax = g_oLocalSysPara.m_fAC_VolMax;
+	}
+	double fUMax = /*g_oLocalSysPara.m_fAC_VolMax*/m_dUMax;
 	double fIMin = 0;
-	double fIMax = g_oLocalSysPara.m_fAC_CurMax;
+
+	if ((m_dIMax <= 0 )|| (m_dIMax > g_oLocalSysPara.m_fAC_CurMax) )
+	{
+		m_dIMax =g_oLocalSysPara.m_fAC_CurMax;
+	}
+	double fIMax =/* g_oLocalSysPara.m_fAC_CurMax*/m_dIMax;
 	long *pBinInData = g_theTestCntrFrame->GetCurEventResult()->m_BinIn;
 	long *pBinOutData = g_theTestCntrFrame->GetCurEventResult()->m_BinOut;
 	//释放原数据
@@ -170,7 +227,8 @@ void QStateMonitorWidget::InitCurve(CSttMacroChannels *pChls,double fUMin,double
 			nGroup = 1;
 			QStateMonitorVoltCur* pChlPlot = new QStateMonitorVoltCur;
 			pChlPlot->InitYTick(fUMin,fUMax,fIMin,fIMax);
-			pChlPlot->InitCurve(&m_oUChls, &m_oIChls);	
+			pChlPlot->InitCurve(&m_oUChls, &m_oIChls);
+			pChlPlot->m_nParaSetSecondValue = m_nParaSetSecondValue;
 			m_oVoltCurList.append(pChlPlot);
 		}
 		else
@@ -184,6 +242,7 @@ void QStateMonitorWidget::InitCurve(CSttMacroChannels *pChls,double fUMin,double
 			for (int i=0; i<nGroup; i++)
 			{
 				QStateMonitorVoltCur* pChlPlot = new QStateMonitorVoltCur;
+				pChlPlot->m_nParaSetSecondValue = m_nParaSetSecondValue;
 				CExBaseList oUChls,oIChls;
 
 				for (int j=0; j<3; j++)
@@ -210,12 +269,19 @@ void QStateMonitorWidget::InitCurve(CSttMacroChannels *pChls,double fUMin,double
 				m_oVoltCurList.append(pChlPlot);
 			}
 		}
+		g_HL_bSingle = false;
 	}
 	else
 	{
+		if(m_pSingle == NULL)
+		{
 		m_pSingle = new QStateMonitorVoltCur;
+		}
+	
+		m_pSingle->GetMacroChannel(m_nChannel);
 		m_pSingle->InitCurve(&m_oUChls , &m_oIChls);
 		m_pSingle->setParent(this);
+		g_HL_bSingle = true;
 	}
 
 	//分配显示的图像
@@ -236,7 +302,15 @@ void QStateMonitorWidget::InitCurve(CSttMacroChannels *pChls,double fUMin,double
 	}
 	else
 	{
-		m_oLayout.addWidget(m_pSingle, 0, 0);
+		QFrame *m_pFrame = new QFrame(this);//dingxy 20250208 使m_pSingle和m_pBinBout显示上对齐
+		QHBoxLayout *m_FrameLayout = new QHBoxLayout(m_pFrame);
+		m_pFrame->setFrameShape(QFrame::NoFrame); // 设置边框样式
+		m_FrameLayout->addSpacing(9);
+		m_FrameLayout->addWidget(m_pSingle);
+		m_pFrame->setLayout(m_FrameLayout);
+		m_pFrame->setFixedHeight(280);
+		m_oLayout.addWidget(m_pFrame, 0, 0);
+		//m_oLayout.addWidget(m_pSingle, 0, 0);
 	}
 
 	if(!m_pBinBout)
@@ -244,8 +318,8 @@ void QStateMonitorWidget::InitCurve(CSttMacroChannels *pChls,double fUMin,double
 		m_pBinBout = new QStateMonitorBinBout(this);
 		m_oLayout.addWidget(m_pBinBout, 1, 0);
 	}
-	m_pBinBout->setBinBoutData(pBinInData, g_nBinCount, pBinOutData, g_nBoutCount);
 
+	m_pBinBout->setBinBoutData(pBinInData, g_nBinCount, pBinOutData, g_nBoutCount);//dingxy 20250121 更新坐标轴
 	m_oUChls.RemoveAll();
 	m_oIChls.RemoveAll();
 }
@@ -290,12 +364,17 @@ void QStateMonitorWidget::UpdateLocalTime(double dLocalTime)
 			m_pSingle->m_dLastTime = m_dLocalTime - m_pSingle->m_dRealTime;
 		}
 
+		if (m_pBinBout != NULL)
+		{
 		if(m_pBinBout->m_dRealTime)
 		{
 			m_pBinBout->m_dLastTime = m_dLocalTime - m_pBinBout->m_dRealTime;
 
 //			CLogPrint::LogFormatString(XLOGLEVEL_RESULT,_T("m_pBinBout->m_dLastTime=%lf,"),m_pBinBout->m_dLastTime);
 		}
+		
+		}
+
 		
 		for (int i = 0; i < m_oVoltCurList.size(); i++)
 		{
@@ -311,6 +390,7 @@ void QStateMonitorWidget::OnRtDataChanged()
 {
 	CSttGlobalRtDataMngr *pRtDataMngr = &g_oSttTestResourceMngr.m_oRtDataMngr;
 	CSttMacroChannels *pMacroChs = pRtDataMngr->m_pMacroChannels;	
+
 	double dTime = 0;
 
 	if (!pMacroChs->m_oHisTimesBuf.GetLastMemVal(dTime))
@@ -320,6 +400,8 @@ void QStateMonitorWidget::OnRtDataChanged()
 
 	if(m_bModeIsSingle)
 	{
+		if(m_pSingle)
+		{
 		if(!m_pSingle->m_dRealTime)
 		{
 			m_pSingle->m_dRealTime = dTime;
@@ -330,6 +412,8 @@ void QStateMonitorWidget::OnRtDataChanged()
 		}
 
 		m_pSingle->AddPoint(pMacroChs);
+	}
+	
 	}
 	else
 	{
@@ -349,11 +433,15 @@ void QStateMonitorWidget::OnRtDataChanged()
 		}
 	}
 
+	if (m_pBinBout != NULL)
+	{
 	if(!m_pBinBout->m_dRealTime)
 	{
 		m_pBinBout->m_dRealTime = dTime;
 		m_pBinBout->InitBinBoutPoint(0);
 	}
+	}
+	
 
 	if(!m_dRealTime)
 	{
@@ -363,7 +451,11 @@ void QStateMonitorWidget::OnRtDataChanged()
 
 void QStateMonitorWidget::AddBinBoutPoint(long nIndex, double x, double y)
 {
+	if (m_pBinBout != NULL)
+	{
 	m_pBinBout->AddBinBoutPoint(nIndex, x, y);
+	}
+	
 }
 
 void QStateMonitorWidget::SetSingle(bool bSingle)
@@ -390,10 +482,73 @@ void QStateMonitorWidget::slot_YRangeChanged(changed_type tagType, QString strTe
 
 void QStateMonitorWidget::ChangeListType( int type,double fUMin,double fUMax,double fIMin,double fIMax )
 {
+	m_dUMin = fUMin;
+	m_dUMax = fUMax;
+	m_dIMin = fIMin;
+	m_dIMax = fIMax;
+
 	for(int i=0; i<m_oVoltCurList.size(); i++)
 	{
 		QStateMonitorVoltCur *p = m_oVoltCurList.at(i);
 		p->ChangeType(type);
 		p->InitYTick(fUMin,fUMax,fIMin,fIMax);
+		p->replot();
 	}
+}
+void QStateMonitorWidget::UpdatePlotMaxMinValue(int nType)
+{
+	//低周 更新最大最小值显示 suyang 20240527 
+//	double dUMin,dUMax,dIMin,dIMax;
+// 
+// 	if (!g_oSystemParas.m_nHasAnalog && g_oSystemParas.m_nHasDigital)
+// 	{
+// 		m_dUMin = 0;
+// 		m_dUMax = 130;
+// 		m_dIMin = 0;
+// 		m_dIMax = 30;
+// 	}
+// 	else
+// 	{
+// 		dUMin = 0;
+// 		dUMax = g_oLocalSysPara.m_fAC_VolMax;
+// 		dIMin = 0;
+// 		dIMax = g_oLocalSysPara.m_fAC_CurMax;
+// 	}
+
+	if (nType == amplitude_type)
+	{
+		ChangeListType(nType, m_dUMin, m_dUMax, m_dIMin, m_dIMax);
+	}
+	else if (nType == fre_type)
+	{
+		ChangeListType(nType, 40, 60, 40, 60);
+	}
+}
+
+void QStateMonitorWidget::SetChangedType(int nType)
+{
+	m_nChangedType = nType;
+}
+
+void QStateMonitorWidget::SetParaSetSecondValue(int nParaSetSecondValue)
+{
+	m_nParaSetSecondValue = nParaSetSecondValue;
+
+	for(int i=0; i<m_oVoltCurList.size(); i++)
+	{
+		QStateMonitorVoltCur *p = m_oVoltCurList.at(i);
+		p->m_nParaSetSecondValue = nParaSetSecondValue;
+		p->UpdateCurvetile();
+		
+	}
+}
+
+void QStateMonitorWidget::UpdateAxisScale()
+{
+	if (m_pBinBout == NULL)
+		return;
+	m_pBinBout->setAxisScaleDraw(QwtPlot::yLeft, new BinBoutYScaleDraw(true));
+	m_pBinBout->setAxisScaleDraw(QwtPlot::yRight, new BinBoutYScaleDraw(false));
+
+	UpdateCurve();
 }

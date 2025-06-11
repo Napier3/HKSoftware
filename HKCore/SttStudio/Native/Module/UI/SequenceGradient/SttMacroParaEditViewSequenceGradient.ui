@@ -777,10 +777,9 @@ width: 24px;  height: 24px;
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>QSttTabWidget</class>
-   <extends>QTabWidget</extends>
-   <header>../Module/UI/Controls/SttTabWidget.h</header>
-   <container>1</container>
+   <class>QSttLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>../Module/UI/Controls/SttLineEdit.h</header>
   </customwidget>
   <customwidget>
    <class>QSttCheckBox</class>
@@ -794,14 +793,15 @@ width: 24px;  height: 24px;
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>QSttLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>../Module/UI/Controls/SttLineEdit.h</header>
-  </customwidget>
-  <customwidget>
    <class>QScrollComboBox</class>
    <extends>QComboBox</extends>
    <header>../Module/UI/Module/ScrollCtrl/ScrollComboBox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QSttTabWidget</class>
+   <extends>QTabWidget</extends>
+   <header>../Module/UI/Controls/SttTabWidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

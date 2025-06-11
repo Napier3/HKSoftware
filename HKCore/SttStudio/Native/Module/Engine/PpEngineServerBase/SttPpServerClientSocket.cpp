@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "SttPpServerClientSocket.h"
 #include "../SttTestEngineBase.h"
-#include "../../../../IotAtsMngr/Module/PxEngineServer/IotPxEngineDeviceBase.h"
-#include "../../../../IotAtsMngr/Module/PxEngineServer/IotPxEngineServer.h"
+#include "../../../IotAtsMngr/Module/PxEngineServer/IotPxEngineDeviceBase.h"
+#include "../../../IotAtsMngr/Module/PxEngineServer/IotPxEngineServer.h"
 #include "../../SttTestBase/SttXmlSerialize.h"
 
 CSttPpServerClientSocket::CSttPpServerClientSocket()

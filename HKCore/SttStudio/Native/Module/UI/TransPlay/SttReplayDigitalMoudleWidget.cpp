@@ -30,10 +30,10 @@ void QSttReplayDigitalModuleWidget::initUI()
 	setFont(*g_pSttGlobalFont);
 	m_pTab->setFont(*g_pSttGlobalFont);
 
-#ifdef _PSX_QT_LINUX_ 
-	m_pTab->setFixedSize(950, 480); // 设置固定大小,避免闪烁
 
-#endif
+//  #ifdef _PSX_QT_LINUX_ 
+//  	m_pTab->setFixedSize(950, 480); // 设置固定大小,避免闪烁
+//  #endif
 
 // 	connect(m_pTab, SIGNAL(currentChanged(QWidget *)), this, SLOT(slot_TabChanged(QWidget *)));
 }
@@ -102,6 +102,17 @@ void QSttReplayDigitalModuleWidget::uninitSignalSlots()
 		disconnect(pModuleChWidget,SIGNAL(sig_ModuleChRangeChanged()),g_pReplayTestMain,SLOT(slot_ModuleChRangeChanged()));  // slot_ModuleChChanged 用于更新波	
 
 	}
+}
+
+void QSttReplayDigitalModuleWidget::resizeEvent( QResizeEvent* event )
+{
+#ifdef _PSX_QT_LINUX_ 
+	QSize nSize = event->size();
+	int nWidth = nSize.width();
+	int nHeight = nSize.height();
+	m_pTab->setFixedSize(nWidth, nHeight); 
+#endif
+	QWidget::resizeEvent(event);
 }
 
 void QSttReplayDigitalModuleWidget::startInit()

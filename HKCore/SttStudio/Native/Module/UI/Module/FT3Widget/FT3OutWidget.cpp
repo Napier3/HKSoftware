@@ -2,7 +2,7 @@
 #include <QHeaderView>
 #include "../SttUIDefine.h"
 //#include "../../SttTestCntrFrameBase.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "FT3OutParaWidget.h"
 
 extern long g_nLogDebugInfor;

@@ -4,9 +4,9 @@
 #include <QWidget>
 #include "../QExBaseListGridBase/QExBaseListGridBase.h"
 #include "../QExBaseListGridBase/QExBaseListComBoxDelegBase.h"
-#include "../../Module/DataMngr/DataTypes.h"
-#include "../../Module/DataMngr/DataGroup.h"
-#include "OSInterface.h"
+#include "../../../Module/DataMngr/DataTypes.h"
+#include "../../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/OSInterface/OSInterface.h"
 
 class QCharEditGridBase : public QExBaseListGridBase
 {

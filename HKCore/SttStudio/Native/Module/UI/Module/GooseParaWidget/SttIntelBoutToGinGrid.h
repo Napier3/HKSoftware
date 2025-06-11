@@ -3,8 +3,8 @@
 
 #include "../QExBaseListGridBase/QExBaseListGridBase.h"
 #include "../QExBaseListGridBase/QExBaseListComBoxDelegBase.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgDataMngrGlobal.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgGinCh.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgDataMngrGlobal.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgGinCh.h"
 #include "../../IEC61850Config/Grid/IecCfgGinChsGrid.h"
 
 #define STTINTELBOUTTOGINGRID_GRID_COLS		6

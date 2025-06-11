@@ -42,7 +42,7 @@ void QShortTimeOverGridImp::DCStateChanged(int type,bool bdc)
 	}
 }
 
-void QShortTimeOverGridImp::setUAmpMaxMinValue()
+void QShortTimeOverGridImp::setUAmpMaxMinValue(bool bCanUpdateTable)
 {
 	int num = 0;
 	num = m_UCHannelTableList.size();
@@ -53,17 +53,17 @@ void QShortTimeOverGridImp::setUAmpMaxMinValue()
 			if((m_pArrUIVOL[0].Harm[1].bDC)&&
 				((m_MacroType != MACROTYPE_ManualHarm)&&(m_MacroType != MACROTYPE_ManualSequence)&&(m_MacroType != MACROTYPE_ManualLineVol)))
 			{
-				m_UCHannelTableList[i]->setAmpMaxMinValue(g_oLocalSysPara.m_fDC_VolMax,g_oLocalSysPara.m_fDC_VolMax*(-1));
+				m_UCHannelTableList[i]->setAmpMaxMinValue(g_oLocalSysPara.m_fDC_VolMax,g_oLocalSysPara.m_fDC_VolMax*(-1), bCanUpdateTable);
 			}
 			else
 			{
-				m_UCHannelTableList[i]->setAmpMaxMinValue(g_oLocalSysPara.m_fAC_VolMax,0);
+				m_UCHannelTableList[i]->setAmpMaxMinValue(g_oLocalSysPara.m_fAC_VolMax,0, bCanUpdateTable);
 			}
 		}
 	}
 }
 
-void QShortTimeOverGridImp::setIAmpMaxMinValue()
+void QShortTimeOverGridImp::setIAmpMaxMinValue(bool bCanUpdateTable)
 {
 	int num = 0;
 	num = m_ICHannelTableList.size();
@@ -74,11 +74,11 @@ void QShortTimeOverGridImp::setIAmpMaxMinValue()
 			if ((m_pArrUIVOL[0].Harm[1].bDC)&&
 				((m_MacroType != MACROTYPE_ManualHarm)&&(m_MacroType !=MACROTYPE_ManualSequence)&&(m_MacroType !=MACROTYPE_ManualLineVol)))
 			{
-				m_ICHannelTableList[i]->setAmpMaxMinValue(g_oLocalSysPara.m_fDC_CurMax,g_oLocalSysPara.m_fDC_CurMax*(-1));
+				m_ICHannelTableList[i]->setAmpMaxMinValue(g_oLocalSysPara.m_fDC_CurMax,g_oLocalSysPara.m_fDC_CurMax*(-1), bCanUpdateTable);
 			}
 			else
 			{
-				m_ICHannelTableList[i]->setAmpMaxMinValue(g_oLocalSysPara.m_fAC_CurMax,0);
+				m_ICHannelTableList[i]->setAmpMaxMinValue(g_oLocalSysPara.m_fAC_CurMax,0, bCanUpdateTable);
 			}
 		}
 	}
@@ -428,7 +428,7 @@ void QShortTimeOverGridImp::initUI(CSttTestResourceBase *pSttTestResource)
 	m_pMainGridLayout->addWidget(m_pIScrollArea,0,1);*/
 }
 
-void QShortTimeOverGridImp::initData()
+void QShortTimeOverGridImp::initData(bool bCanUpdateTable)
 {
 	if ((m_pParaSetSttTestResource == NULL)||(m_pArrUIVOL == NULL)||(m_pArrUICUR == NULL))
 	{
@@ -437,12 +437,12 @@ void QShortTimeOverGridImp::initData()
 
 	if (m_UCHannelTableList.size()>=1)
 	{
-		m_UCHannelTableList[0]->setTableData(m_pArrUIVOL);
+		m_UCHannelTableList[0]->setTableData(m_pArrUIVOL, bCanUpdateTable);
 	}
 
 	if (m_ICHannelTableList.size()>=1)
 	{
-		m_ICHannelTableList[0]->setTableData(m_pArrUICUR);
+		m_ICHannelTableList[0]->setTableData(m_pArrUICUR, bCanUpdateTable);
 	}
 }
 

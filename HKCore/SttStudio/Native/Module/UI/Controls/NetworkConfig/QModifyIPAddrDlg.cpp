@@ -1,10 +1,10 @@
 #include "QModifyIPAddrDlg.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
-#include "../../Module/OSInterface/QT/CString_QT.h"
-#include "../../Module/Log/LogPrint.h"
+#include "../../../Module/OSInterface/QT/CString_QT.h"
+#include "../../../Module/Log/LogPrint.h"
 #include "../Module/XLangResource_Native.h"
-#include"../../61850/Module/XLanguageResourcePp_Mms.h"
+#include "../../../61850/Module/XLanguageResourcePp_Mms.h"
 QModifyIPAddrDlg::QModifyIPAddrDlg(QWidget *pParent)
 	:QDialog(pParent)
 {

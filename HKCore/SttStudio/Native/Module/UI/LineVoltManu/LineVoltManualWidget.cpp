@@ -2,7 +2,7 @@
 #include "LineVoltManualWidget.h"
 
 #include "../Module/CommonMethod/commonMethod.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "SttMacroParaEditViewLineVoltManu.h"
 #include "../SttTestCntrFrameBase.h"
 #include "../Module/XLangResource_Native.h"
@@ -70,7 +70,7 @@ void QLineVoltManualWidget::InitUI()
 	m_pChangedType_ComboBox = new QScrollComboBox(this);
 
 	//strText = _T("¿ª³öÁ¿");
-	m_pBoutGroupBox = new QGroupBox(g_sLangTxt_Native_Bout,this);
+	m_pBoutGroupBox = new QGroupBox(/*g_sLangTxt_Native_Bout*/g_sLangTxt_OutputValue,this);
 	m_pBoutGroupBox->setFixedWidth(150);
 
 	m_pBout_GridLayout = new QGridLayout(m_pBoutGroupBox);

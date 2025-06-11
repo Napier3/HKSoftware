@@ -1,7 +1,7 @@
 #include "SttIecSmvMUAccuaryGrid.h"
-#include "../../../../Module/SmartCap/XSmartCapMngr.h"
-#include "../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../../../Module/SmartCap/XSttRcdInitChDvmData.h"
+#include "../../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/SmartCap/XSttRcdInitChDvmData.h"
 #include "../../XLangResource_Native.h"
 #include <QHeaderView>
 CSttIecSmvMUAccuracyGrid::CSttIecSmvMUAccuracyGrid(QWidget* pparent):CSttIecChsGridBase(pparent)
@@ -87,7 +87,7 @@ void CSttIecSmvMUAccuracyGrid::UpdataGridHeaders()
 	}
 
 	setHorizontalHeaderLabels(headers);
-//	horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);//适应表格内容 chenling20230707
+//	horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);//适应表格内容 chenling20230707
 }
 
 void CSttIecSmvMUAccuracyGrid::ShowData(CExBaseObject *pData, int& nRow, BOOL bInsertRow)

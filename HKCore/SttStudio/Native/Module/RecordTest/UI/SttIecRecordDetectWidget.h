@@ -4,7 +4,7 @@
 #include <QDialog>
 #include <QFont>
 #include "SttIecCbGrid.h"
-#include "../../../../Module/OSInterface/XWndInterface.h"
+#include "../../../Module/OSInterface/XWndInterface.h"
 #include "../../../Module/UI/Controls/SttCheckBox.h"
 //2022-12-02  lijunqing  
 #include "../../Assist/SttAssistGlobalApi.h"

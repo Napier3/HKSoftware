@@ -11,7 +11,7 @@
 #include <QFormLayout>
 #include <QPushButton>
 #include <QLabel>
-#include "../../61850/Module/CfgDataMngr/IecCfgSysParas.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgSysParas.h"
 
 #define STT_IEC_SYSPARAS_LC_FIBER_NUM                                        1
 #define STT_IEC_SYSPARAS_ST_FIBER_NUM                                        2

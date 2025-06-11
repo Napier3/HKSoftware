@@ -19,6 +19,7 @@ CTestMacroGroup::CTestMacroGroup()
 	//初始化属性
 
 	//初始化成员变量
+	m_nUseMutiSelect = 0;
 }
 
 CTestMacroGroup::~CTestMacroGroup()
@@ -32,6 +33,7 @@ long CTestMacroGroup::XmlReadOwn(CXmlRWNodeBase &oNode, CXmlRWKeys *pXmlRWKeys)
 	CClassDefMngrXmlRWKeys *pXmlKeys = (CClassDefMngrXmlRWKeys*)pXmlRWKeys;
 
 	xml_GetAttibuteValue(pXmlKeys->m_strPicKey, oNode, m_strPic);
+	xml_GetAttibuteValue(pXmlKeys->m_strMutiSelectKey, oNode, m_nUseMutiSelect);
 	return 0;
 }
 
@@ -42,6 +44,7 @@ long CTestMacroGroup::XmlWriteOwn(CXmlRWDocBase &oXMLDoc, CXmlRWElementBase &oEl
 	CClassDefMngrXmlRWKeys *pXmlKeys = (CClassDefMngrXmlRWKeys*)pXmlRWKeys;
 
 	xml_SetAttributeValue(pXmlKeys->m_strPicKey, oElement, m_strPic);
+	xml_SetAttributeValue(pXmlKeys->m_strMutiSelectKey, oElement, m_nUseMutiSelect);
 	return 0;
 }
 
@@ -52,14 +55,17 @@ long CTestMacroGroup::SerializeOwn(CBinarySerialBuffer &oBinaryBuffer)
 	if(oBinaryBuffer.IsCalSizeMode())
 	{
 		BinarySerializeCalLen(oBinaryBuffer, m_strPic);
+		BinarySerializeCalLen(oBinaryBuffer, m_nUseMutiSelect);
 	}
 	else if(oBinaryBuffer.IsReadMode())
 	{
 		BinarySerializeRead(oBinaryBuffer, m_strPic);
+		BinarySerializeRead(oBinaryBuffer, m_nUseMutiSelect);
 	}
 	else if(oBinaryBuffer.IsWriteMode())
 	{
 		BinarySerializeWrite(oBinaryBuffer, m_strPic);
+		BinarySerializeWrite(oBinaryBuffer, m_nUseMutiSelect);
 	}
 	return 0;
 }
@@ -87,6 +93,11 @@ BOOL CTestMacroGroup::IsEqualOwn(CBaseObject* pObj)
 		return FALSE;
 	}
 
+	if(m_nUseMutiSelect != p->m_nUseMutiSelect)
+	{
+		return FALSE;
+	}
+
 	return TRUE;
 }
 
@@ -102,6 +113,7 @@ BOOL CTestMacroGroup::CopyOwn(CBaseObject* pDest)
 	CTestMacroGroup *p = (CTestMacroGroup*)pDest;
 
 	p->m_strPic = m_strPic;
+	p->m_nUseMutiSelect = m_nUseMutiSelect;
 	return TRUE;
 }
 

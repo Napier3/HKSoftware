@@ -7,7 +7,8 @@
 #include <QStyleOptionGraphicsItem>
 #include <QPointF>
 #include "../../../Module/API/MathApi.h"
-
+#include <QGraphicsPolygonItem>
+#include <QPolygonF>
 
 class QSttCustomArrowLine : public QObject, public QGraphicsItem
 {
@@ -21,6 +22,7 @@ public:
 	virtual ~QSttCustomArrowLine() ;
 
 	virtual QRectF boundingRect() const ;// 返回图形项的边界矩形
+	virtual QPainterPath shape()const;//2024-9-18 wuxinyi 鼠标交互检测区域
 	virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) ; // 绘制图形
 
 	void setStartPoint(const QPointF& startPoint); // 设置起点坐标
@@ -41,6 +43,8 @@ public:
 	void setArrowLineGeometry(const QPointF& startPoint, const QPointF& endPointt);//设置位置
 	
 	bool bClicked(const QPointF& point);//chenling 20240104 在箭头线的附近就能emit arrowClicked 
+	void visualizeBoundingBox();//可视化m_boundingPolygon
+	void calculateLineBoundingBox(const QPointF& startPoint, const QPointF& endPoint, qreal width);
 
 signals:
 	void itemSelected();
@@ -64,6 +68,8 @@ private:
 
 	QColor m_hoverColor; // 鼠标悬停时的线条颜色
 	bool m_isHovered; // 是否鼠标悬停
+
+	QPolygonF m_boundingPolygon;  // 保存线段范围对应矩形
 };
 
 #endif

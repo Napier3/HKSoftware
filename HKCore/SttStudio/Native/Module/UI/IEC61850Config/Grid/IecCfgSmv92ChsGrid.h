@@ -2,7 +2,7 @@
 #define IECCFGSMV92CHSGRID_H
 
 #include "IecCfgChsGridBase.h"
-#include "../../61850/Module/CfgDataMngr/IecCfg92Ch.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfg92Ch.h"
 
 
 #define IECCFGSMV92CHS_GRID_COLS		5

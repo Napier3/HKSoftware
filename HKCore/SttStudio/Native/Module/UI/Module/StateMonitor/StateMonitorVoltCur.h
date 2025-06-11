@@ -44,6 +44,8 @@ private:
 	QVector<QLabel*> m_vecChlLabel;
 	QVector<QLabel*> m_vecChlValue;
 
+	int m_nShowLableCount;//dingxy 20250208
+
 private:
 	CSttMacroChannel* GetCurMacroChannelClone(int nChannel);
 	CSttMacroChannel* GetVoltMacroChannelClone(int nChannel);
@@ -63,6 +65,9 @@ public:
 
 	void ChangeType(int type);
 
+	void UpdateCurvetile();
+	int m_nParaSetSecondValue;	  //0-一次值 1-二次值
+	
 };
 
 #endif //!STATEMONITORVOLTCUR_H

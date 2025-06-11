@@ -12,6 +12,10 @@
 #include <QComboBox>
 #include <QRadioButton>
 #include "../Module/ScrollCtrl/ScrollComboBox.h"
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QLabel>
+#include <QGroupBox>
 
 class QManualView_Paras : public QObject
 {
@@ -31,7 +35,7 @@ public:
 
     QScrollComboBox* m_pCbbChannel;
     QScrollComboBox* m_pCbbSelect;//通道类型选择(幅值/相位/频率)
-    QScrollComboBox* m_pCbbChangeType;
+    QScrollComboBox* m_pCbbChangeType;//始终/始终始
 
 	QIcon m_imgLock;
 	QIcon m_imgUnlock;
@@ -86,6 +90,32 @@ public:
 	QLabel* m_pLabReturn;
 	*/
 
+	// 转速脉冲信号
+	QGroupBox* m_pGrpPulseSignal;
+	QCheckBox* m_pChkPulseEnable;
+	QLabel* m_pLblPulseType;
+	QScrollComboBox* m_pCbbPulseType;
+	QLabel* m_pLblPulseWidth;
+	QLineEdit* m_pEditPulseWidth;
+	QLabel* m_pLblPeakValue;
+	QScrollComboBox* m_pCbbPeakValue;
+	QLabel* m_pLblPulseFreq;
+	QLineEdit* m_pEditPulseFreq;
+
+	// 直流信号源
+	QHBoxLayout *m_pDcLayout ;
+	QGroupBox* m_pGrpDcSignal;
+	QCheckBox* m_pChkDcEnable;
+	QLabel* m_pLblDc1;
+	QLineEdit* m_pEditDc1;
+	QScrollComboBox* m_pCbbDcChangeType;//直流电流通道转换方式
+	QLineEdit* m_pEditDcChangeValue;
+// 	QLabel* m_pCbbDcChangeType;
+// 	QScrollComboBox* m_pEditDcChangeValue;
+	QLabel* m_pLblDc2;
+	QLineEdit* m_pEditDc2;
+	QPushButton* m_pBtnMapping;
+
 public:
 	CSttTestResourceBase* m_pTestResource;
 	tmt_ManualParas* m_pManualParas;
@@ -127,6 +157,12 @@ public:
 
 	void StartInit();
 	void StopInit();
+
+	void SetParaSetSecondValue(int nParaSetSecondValue);
+	int m_nParaSetSecondValue;	 //0 二 次值、1 一次值
+
+	long GetChanneType();
+	long GetCbbSelect();
 
 public:
 	void slot_btn_LockClicked();

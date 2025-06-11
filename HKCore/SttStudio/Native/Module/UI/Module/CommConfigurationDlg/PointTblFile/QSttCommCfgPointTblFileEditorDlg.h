@@ -14,7 +14,7 @@
 #include <QLineEdit>
 #include "SttPointTblEdtTabIntervalSetGrid.h"
 #include "SttPointTblEdtTabTeleParaCommGrid.h"
-#include "../../Module/DataMngr/DvmDevice.h"
+#include "../../../Module/DataMngr/DvmDevice.h"
 #include "../../../Controls/SttLineEdit.h"
 #include "../../ScrollCtrl/ScrollComboBox.h"
 

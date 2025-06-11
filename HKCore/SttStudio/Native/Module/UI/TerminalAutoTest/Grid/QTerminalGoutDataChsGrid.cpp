@@ -1,5 +1,5 @@
 #include "QTerminalGoutDataChsGrid.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgDatasMngr.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgDatasMngr.h"
 #include "../../../SttTestResourceMngr/SttTestResourceMngr.h"
 #include "../SttMacroParaEditViewTerminalAutoTest.h"
 

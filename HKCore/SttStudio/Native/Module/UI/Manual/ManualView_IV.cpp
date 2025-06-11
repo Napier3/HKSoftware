@@ -2,9 +2,9 @@
 #include "ManualView_IV.h"
 
 #include <QHeaderView>
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../SttTest/Common/tmt_manu_test.h"
-#include "../Module/XLangResource_Native.h"
+#include "../../../Module/XLangResource_Native.h"
 
 QManualView_IV::QManualView_IV()
 {
@@ -57,4 +57,17 @@ void QManualView_IV::slot_cb_DCClicked(bool bIsChecked)
 	pBasicTestParaSet = (QBasicTestParaSet*)m_pUIParaWidget;
 	pBasicTestParaSet->DCStateChanged(P_Common, bIsChecked);
 	m_pUIParaWidget->setMaxMinAndEDVal();
+}
+
+void QManualView_IV::SetParaSetSecondValue(int nParaSetSecondValue)
+{
+	if (m_pUIParaWidget != NULL)
+	{
+		m_pUIParaWidget->SetParaSetSecondValue(nParaSetSecondValue);
+	}
+
+	if (m_pHarmUIParaWidget != NULL)
+	{
+		m_pHarmUIParaWidget->SetParaSetSecondValue(nParaSetSecondValue);
+	}
 }

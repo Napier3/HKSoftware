@@ -13,7 +13,7 @@
 #include <QPushButton>
 #include <QLabel>
 #include "../Module/CommonCtrl_QT/QFloatLineEdit.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgSysParas.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgSysParas.h"
 
 #define STT_SYSPARAS_TRANS_RADIO_NUM                               6
 

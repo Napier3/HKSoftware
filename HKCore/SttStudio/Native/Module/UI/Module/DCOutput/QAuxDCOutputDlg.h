@@ -123,6 +123,7 @@ public slots:
 	void slot_CancelClicked();
 	void slot_ScaleSetValue(int nValue);
 		void SetUI_ToScaleValue(int nValue);
+	void slot_AuxDC_Vol_LineEdit();
 };
 
 #endif // QAUXDC_OUTPUT_DLG_H

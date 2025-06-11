@@ -17,8 +17,8 @@ public:
 	
 	void UpdateTables();
 
-	virtual void setUAmpMaxMinValue();
-	virtual void setIAmpMaxMinValue();
+	virtual void setUAmpMaxMinValue(bool bCanUpdateTable);
+	virtual void setIAmpMaxMinValue(bool bCanUpdateTable);
 	virtual void setUAmpEDValue(float fUEDVal);
 	virtual void setIAmpEDValue(float fIEDVal);
 	
@@ -26,10 +26,13 @@ public:
 	virtual void setChannelTableItemValue_Sequence(QString str,float fstep,int valueFlag,int AddOrMinus);//序分量表格值改变  20230209
 	
 	virtual void initUI(CSttTestResourceBase *pSttTestResource);
-	virtual void initData();
+	virtual void initData(bool bCanUpdateTable);
 	virtual void Release();
+	
+	virtual void SetParaSetSecondValue(int nParaSetSecondValue);
+	int m_nParaSetSecondValue;	//V_Primary:显示一次值；V_Secondary:显示二次值
 
-//	void GetUIMaxMinValue(double& dUMin,double& dUMax,double& dIMin,double& dIMax); zhouhj 20220819 该函数未用到删除
+	void GetUIMaxMinValue(double& dUMin,double& dUMax,double& dIMin,double& dIMax,bool bStart = false); //zhouhj 20220819 该函数未用到删除  //20241030 suyang 启用，用于更新状态图的电压电流最大值
 	void UpdateValidTableDatas();
 	void setHarmIndex(int *pnHarmIndex);
 
@@ -38,7 +41,7 @@ public:
 		,tmt_channel *pArrUIVOL,tmt_channel *pArrUICUR,bool bDC = false);
 	void setData(tmt_channel *pArrUIVOL,tmt_channel *pArrUICUR);
 	void setMacroType(int type);
-	void setMaxMinAndEDVal();
+	void setMaxMinAndEDVal(bool bCanUpdateTable=true);
 
 	void Send_UpdataParas();
 
@@ -68,6 +71,11 @@ private:
 	int m_nChannelTableItemValue_AndOrMinus;
 
 	int m_MacroType;
+
+	//chenling 20250117 存放历史输入过的电压电流最大幅值
+	float m_fHistoryUMax;
+	float m_fHistoryIMax;
+
 protected:
 	virtual void initUI();
 	virtual void setPropertyOfParaSet();

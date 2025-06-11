@@ -1,7 +1,8 @@
 #include "SttSelSclFileGrid.h"
-#include "../../61850/Module/SCL/SclFileMngr/XSclFileMngr.h"
-#include "../../Module/API//FileApi.h"
-#include"../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../61850/Module/SCL/SclFileMngr/XSclFileMngr.h"
+#include "../../../Module/API//FileApi.h"
+#include"../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+extern QFont *g_pSttGlobalFont;
 
 CSttSelSclFileGrid::CSttSelSclFileGrid(QWidget* pparent):QExBaseListGridBase(pparent)
 {
@@ -25,7 +26,8 @@ void CSttSelSclFileGrid::InitGrid()
 
 void CSttSelSclFileGrid::InitGridTitle()
 {
-	QFontMetrics fontMetrics = QFontMetrics(font());
+	//QFontMetrics fontMetrics = QFontMetrics(font());
+	QFontMetrics fontMetrics(*g_pSttGlobalFont);
 	QRect recContent_drugName = fontMetrics.boundingRect(_T("Ñ¡Ôñ"));
 	int nWidthLenth = recContent_drugName.width();
 	CString astrGridTitle[STTSELSCLFILE_GRID_COLS];

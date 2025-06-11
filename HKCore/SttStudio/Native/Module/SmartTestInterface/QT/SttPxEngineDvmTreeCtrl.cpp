@@ -1,8 +1,8 @@
 #include "SttPxEngineDvmTreeCtrl.h"
-#include "../../../../AutoTest/Module/AutoTestGlobalDefine.h"
+#include "../../../AutoTest/Module/AutoTestGlobalDefine.h"
 
-#include "../../../../IotProtoServer/Module/SttPxCommCmdDef.h"
-#include "../../../../61850/Module/XLanguageResourcePp_Mms.h"
+#include "../../../IotProtoServer/Module/SttPxCommCmdDef.h"
+#include "../../../61850/Module/XLanguageResourcePp_Mms.h"
 
 //////////////////////////////////////////////////////////////////////////
 //QSttPxEngineDvmTreeItem

@@ -1,20 +1,23 @@
 #include "SttMacroParaEditViewSoeWidget.h"
-#include "../../Module/OSInterface/QT/CString_QT.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/OSInterface/QT/CString_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../XLangResource_Native.h"
 #include "../Module/CommonMethod/commonMethod.h"
 #include "../SttTestCntrFrameBase.h"
 #ifdef _USE_SoftKeyBoard_	
 #include "../SoftKeyboard/SoftKeyBoard.h"
 #endif
-#include "../../Module/OSInterface/QT/XMessageBox.h"
+#include "../../../Module/OSInterface/QT/XMessageBox.h"
 
 QSttMacroParaEditViewSoeWidget* g_pSoeTest = NULL;
 
 QSttMacroParaEditViewSoeWidget::QSttMacroParaEditViewSoeWidget(QWidget *parent)
 {
 	setWindowFlags(Qt::FramelessWindowHint);
+
+	debug_time_long_log("SoeWidget setWindowFlags", true);
 	g_pTheSttTestApp->IinitGbWzdAiTool();
+	debug_time_long_log("SoeWidget IinitGbWzdAiTool", true);
 	m_bTmtParaChanged = FALSE;
 	m_pPulseWidth_Edit = NULL;
 	m_pPulseWidth_Label= NULL;
@@ -27,22 +30,28 @@ QSttMacroParaEditViewSoeWidget::QSttMacroParaEditViewSoeWidget(QWidget *parent)
 	m_pInterSelect_ComboBox = NULL;
 	m_pSoeFirstGrid = NULL;
 	m_pSoeSecondGrid = NULL;
+	m_pBtnClearEventRecords = NULL;
 	g_pSoeTest = this;
 	m_strParaFileTitle = g_sLangTxt_SOE_TemplateFile;
 	m_strParaFilePostfix = "project(*.mntxml)";
 	m_strDefaultParaFile = _P_GetConfigPath();
 	m_strDefaultParaFile.append("SoeTest.mntxml");
-	m_pOriginalSttTestResource = g_theTestCntrFrame->GetSttTestResource();
-	g_theTestCntrFrame->InitTestResource();
+// 	m_pOriginalSttTestResource = g_theTestCntrFrame->GetSttTestResource();
+// 	g_theTestCntrFrame->InitTestResource();//
 	m_pSoeParas = &m_oSoeTest.m_oSoeParas;
 	OpenTestTestMngrFile(m_strDefaultParaFile);
-
+	debug_time_long_log("SoeWidget OpenTestTestMngrFile", true);
 
 	InitUI();
+	debug_time_long_log("SoeWidget InitUI", true);
 	SetFont();
+	debug_time_long_log("SoeWidget SetFont", true);
 	InitConnections();
+	debug_time_long_log("SoeWidget InitConnections", true);
 	SetDatas(NULL);
+	debug_time_long_log("SoeWidget SetDatas", true);
 	InitData();
+	debug_time_long_log("SoeWidget InitData", true);
 }
 
 QSttMacroParaEditViewSoeWidget::~QSttMacroParaEditViewSoeWidget()
@@ -74,7 +83,11 @@ void QSttMacroParaEditViewSoeWidget::InitUI()
 	m_pInterSelect = new QLabel(this);
 	m_pInterSelect->setText(strTemp);
 	m_pInterSelect_ComboBox = new CExBaseListComboBox(this);
-	m_pInterSelect_ComboBox->setFixedWidth(120);
+	//m_pInterSelect_ComboBox->setFixedWidth(120);
+
+	strTemp = _T("清空事件记录");
+	m_pBtnClearEventRecords  = new QPushButton(this);
+	m_pBtnClearEventRecords->setText(strTemp);
 
 	QHBoxLayout *pHFirstLineLayout = new QHBoxLayout;
 	pHFirstLineLayout->addWidget(m_pPulseWidth_Label);
@@ -86,6 +99,8 @@ void QSttMacroParaEditViewSoeWidget::InitUI()
 	pHFirstLineLayout->addWidget(m_pInterSelect);
 	pHFirstLineLayout->addWidget(m_pInterSelect_ComboBox);
 	pHFirstLineLayout->addWidget(m_pLoopTestCheckBox);
+	pHFirstLineLayout->addWidget(m_pBtnClearEventRecords);
+
 
 	m_pSoeFirstGrid = new QSttMacroParaEditViewSoeTable(SOE_TABLE_First);
 	m_pSoeSecondGrid = new QSttMacroParaEditViewSoeTable(SOE_TABLE_Second);
@@ -108,6 +123,7 @@ void QSttMacroParaEditViewSoeWidget::SetFont()
 	m_pLoopTestCheckBox->setFont(*g_pSttGlobalFont);
 	m_pInterSelect->setFont(*g_pSttGlobalFont);
 	m_pInterSelect_ComboBox->setFont(*g_pSttGlobalFont);   
+	m_pBtnClearEventRecords->setFont(*g_pSttGlobalFont);
 	m_pSoeFirstGrid->setFont(*g_pSttGlobalFont);   
 	m_pSoeSecondGrid->setFont(*g_pSttGlobalFont);
 	m_pSoeFirstGrid->horizontalHeader()->setFont(*g_pSttGlobalFont);   
@@ -122,6 +138,7 @@ void QSttMacroParaEditViewSoeWidget::InitConnections()
 	connect(m_pTestCount_Edit,SIGNAL(editingFinished()),this,SLOT(slot_EditTestCount()));
 	connect(m_pLoopTestCheckBox, SIGNAL(clicked(bool)), this, SLOT(slot_Check_LoopTest(bool)));
 	connect(m_pInterSelect_ComboBox,SIGNAL(currentIndexChanged(int)),this,SLOT(slot_InterSelectIndexChanged(int)));
+	connect(m_pBtnClearEventRecords, SIGNAL(clicked()), this, SLOT(slot_btn_ClearClearEventRecordsClicked()));	
 }
 
 void QSttMacroParaEditViewSoeWidget::GetDatas( CDataGroup *pParas )
@@ -200,11 +217,11 @@ void QSttMacroParaEditViewSoeWidget::slot_EditPulseWidth()
 		if (pItem->checkState() !=  Qt::Unchecked)
 		{
 			m_pSoeParas->m_binOut[i].otmt_SoeState[1].time = fTime;
-			m_pSoeFirstGrid->item(i,STT_SOE_FirstTABLE_COL_ClosedTime)->setText(QString::number(fTime));
+			m_pSoeFirstGrid->item(i,STT_SOE_FirstTABLE_COL_ClosedTime)->setText(QString::number(fTime,'f', 0));
 		}
 	}
 
-	m_pPulseWidth_Edit->setText(QString::number(fTime));
+	m_pPulseWidth_Edit->setText(QString::number(fTime,'f', 0));
 }
 
 void QSttMacroParaEditViewSoeWidget::slot_EditSOEResolution()
@@ -235,7 +252,7 @@ void QSttMacroParaEditViewSoeWidget::slot_EditSOEResolution()
 	}
 
 	m_pSoeParas->m_nSoeResolution = fSoeTime;
-	m_pSOE_Edit->setText(QString::number(fSoeTime));
+	m_pSOE_Edit->setText(QString::number(fSoeTime,'f', 0));
 }
 
 void QSttMacroParaEditViewSoeWidget::slot_EditTestCount()
@@ -265,6 +282,7 @@ void QSttMacroParaEditViewSoeWidget::slot_Check_LoopTest( bool checked )
 	{	
 		m_pInterSelect->show();
 		m_pInterSelect_ComboBox->show();
+		m_pBtnClearEventRecords->show();
 		m_pSoeSecondGrid->show();
 		m_pSoeFirstGrid->setColumnHidden(STT_SOE_FirstTABLE_COL_Object, false);
 		m_pSoeParas->m_nLoopTest = 1;
@@ -273,6 +291,7 @@ void QSttMacroParaEditViewSoeWidget::slot_Check_LoopTest( bool checked )
 	{
 		m_pInterSelect->hide();
 		m_pInterSelect_ComboBox->hide();
+		m_pBtnClearEventRecords->hide();
 		m_pSoeSecondGrid->hide();
 		m_pSoeFirstGrid->setColumnHidden(STT_SOE_FirstTABLE_COL_Object, true);	
 		m_pSoeParas->m_nLoopTest = 0;
@@ -336,6 +355,7 @@ void QSttMacroParaEditViewSoeWidget::InitData()
 		m_pInterSelect_ComboBox->hide();
 		m_pSoeSecondGrid->hide();
 		m_pSoeFirstGrid->setColumnHidden(STT_SOE_FirstTABLE_COL_Object, true);
+		m_pBtnClearEventRecords->hide();
 	}
 }
 
@@ -395,7 +415,7 @@ void QSttMacroParaEditViewSoeWidget::InitIntervalListDatas()
 			continue;
 		}
 
-		if (pCurObj->m_strID == _T("report"))
+		if (pCurObj->m_strID == _T("report") || pCurObj->m_strID == _T("CommMessage"))
 		{
 			continue;
 		}
@@ -505,6 +525,16 @@ void QSttMacroParaEditViewSoeWidget::slot_InterSelectIndexChanged( int nIndex )
 
 
 
+void QSttMacroParaEditViewSoeWidget::slot_btn_ClearClearEventRecordsClicked()
+{
+	if (m_pSoeSecondGrid == NULL)
+	{
+		return;
+	}
+	m_pSoeSecondGrid->clearContents();
+	m_pSoeSecondGrid->setRowCount(0);
+}
+
 void QSttMacroParaEditViewSoeWidget::AddShowSoeReports( CDvmDataset *pSoeRptDataset )
 {
 	if (m_pSoeSecondGrid == NULL)
@@ -514,8 +544,14 @@ void QSttMacroParaEditViewSoeWidget::AddShowSoeReports( CDvmDataset *pSoeRptData
 	m_pSoeSecondGrid->AddShowSoeReports(pSoeRptDataset);
 }
 
-BOOL QSttMacroParaEditViewSoeWidget::GetDatas_Reports( CSttReport *pReport,const CString &strItemID /*= ""*/ )
+BOOL QSttMacroParaEditViewSoeWidget::GetDatas_Reports( CSttReport *pReport,CSttItemBase *pSttItem)
 {
+	if (pSttItem == NULL)
+	{
+		return FALSE;
+	}
+	CString strItemID = pSttItem->GetIDPathEx(STTGBXMLCLASSID_CSTTDEVICE, FALSE);
+
 	if(strItemID.Find(_T("ReadSoeRlts")) == -1)
 	{
 		return FALSE;

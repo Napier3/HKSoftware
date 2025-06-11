@@ -1,11 +1,11 @@
 #include "IecCfgSmvDataFT3Grid.h"
-#include "../../61850/Module/CfgDataMngr/IecCfg6044Data.h"
-#include "../../61850/Module/CfgDataMngr/IecCfg6044CommonData.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfg6044Data.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfg6044CommonData.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../../XLangResource_Native.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../../Module/CommonMethod/commonMethod.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgDatasBase.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgDatasBase.h"
 
 CIecCfgSmvDataFT3Grid::CIecCfgSmvDataFT3Grid(QWidget* pparent):CIecCfgDataGridBase(pparent)
 {
@@ -51,7 +51,7 @@ void CIecCfgSmvDataFT3Grid::InitGridTitle()
 {
 	//"State_SelectChannel","IEC_FIChoose","IEC_ChannelNumber","IEC_SmpByteNum","IEC_SmpCntType","IEC_RatedDelay"
 	CString astrGridTitle[IECCFGSMVDATAFT3_GRID_COLS] = {g_sLangTxt_Select,g_sLangTxt_IEC_FIChoose,g_sLangTxt_IEC_ChannelNumber,g_sLangTxt_IEC_SmpByteNum,g_sLangTxt_IEC_SmpCntType,g_sLangTxt_IEC_RatedDelay};
-	int iGridWidth[IECCFGSMVDATAFT3_GRID_COLS]={50, 140, 120, 120, 350, 125};
+	int iGridWidth[IECCFGSMVDATAFT3_GRID_COLS]={65, 140, 150, 160, 350, 125};
 	QExBaseListGridBase::InitGridTitle(astrGridTitle, iGridWidth, IECCFGSMVDATAFT3_GRID_COLS);
 }
 

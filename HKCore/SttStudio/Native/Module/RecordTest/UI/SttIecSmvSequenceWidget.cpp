@@ -1,7 +1,7 @@
 #include "SttIecSmvSequenceWidget.h"
-#include "../../../../Module/API/GlobalConfigApi.h"
-#include "../../../../Module/SmartCap/XSmartCapMngr.h"
-#include "../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../UI/SttTestCntrFrameBase.h"
 
 

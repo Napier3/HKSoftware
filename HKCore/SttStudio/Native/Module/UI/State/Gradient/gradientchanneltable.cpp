@@ -2,8 +2,8 @@
 #include <QFontMetrics>
 #include <QScrollBar>
 #include <cmath>
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/XLanguage/XLanguageMngr.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/XLanguageMngr.h"
 //#include "../../SttTestCntrFrameBase.h"
 #include "../Module/XLangResource_Native.h"
 
@@ -21,6 +21,7 @@ GradientChannelTable::GradientChannelTable(int moudleType,int gradientType,int g
 	m_ModuleType = moudleType;
 	m_nGradientType = gradientType;
 	m_nGradientObj = gradientObj,
+	m_nParaSetSecondValue = V_Secondary;
 
 	m_pArrUI = pArrUI;
 
@@ -175,11 +176,11 @@ void GradientChannelTable::init()
 
 	QHeaderView* pLeft = this->verticalHeader();
 	pLeft->setDefaultSectionSize(15);
-    pLeft->setSectionsClickable(false);
+	pLeft->setSectionsClickable(false);
 	pLeft->setVisible(false);
 
 	QHeaderView* pTopHeaderView = this->horizontalHeader();
-    pTopHeaderView->setSectionsClickable(false);
+	pTopHeaderView->setSectionsClickable(false);
 
 	QFont font1 = *g_pSttGlobalFont/*this->horizontalHeader()->font()*/;
 //	font1.setBold(true);
@@ -283,7 +284,15 @@ void GradientChannelTable::initTable()
 	{
 		if(m_ModuleType == Moudle_U)
 		{
+			if(m_nParaSetSecondValue == V_Primary)
+			{
+				strUnit = "(kV)";
+
+			}
+			else
+			{
 			strUnit = "(V)";
+		}
 		}
 		else if(m_ModuleType == Moudle_I)
 		{
@@ -298,8 +307,13 @@ void GradientChannelTable::initTable()
 	strBeginVal += strUnit;
 	strEndVal += strUnit;
 
-	if (m_nGradientType == GRADIENT_TYPE_Step)
+	if(m_nGradientType == GRADIENT_TYPE_Step)
 	{
+		if((m_ModuleType == Moudle_U)&& (m_nGradientObj == GRADIENT_AMP))
+	{
+			strUnit = "(V)";
+		}
+
 		strStep += strUnit;
 	}
 
@@ -888,7 +902,82 @@ void GradientChannelTable::InitLinearStepGradient()
 	}
 }
 
+void GradientChannelTable::setHeaderOfTable(int nParaSetSecondValue)
+{
+	if (m_nParaSetSecondValue == nParaSetSecondValue)
+	{
+		return;
+	}
 
+	m_nParaSetSecondValue = nParaSetSecondValue;
+
+	QStringList headers;
+
+	CString strChannel=/*"通道"*/g_sLangTxt_Native_Channel, strSelect=/*"选择"*/g_sLangTxt_Select, strBeginVal=/*"始值"*/g_sLangTxt_State_BeginVal, strEndVal=/*"终值"*/g_sLangTxt_State_EndVal, strStep=/*"步长"*/g_sLangTxt_Step,strUnit;
+
+	if(m_nGradientObj == GRADIENT_AMP)
+	{
+		if(m_ModuleType == Moudle_U)
+		{
+			if(m_nParaSetSecondValue == V_Primary)
+			{
+				strUnit = "(kV)";
+
+			}
+			else
+			{
+				strUnit = "(V)";
+			}
+
+		}
+		else if(m_ModuleType == Moudle_I)
+		{
+			strUnit = "(A)";
+		}
+	}
+	else if(m_nGradientObj == GRADIENT_FRE)
+	{
+		strUnit = "(Hz)";
+	}
+
+	strBeginVal += strUnit;
+	strEndVal += strUnit;
+
+	if (m_nGradientType == GRADIENT_TYPE_Step)
+	{
+		if((m_ModuleType == Moudle_U)&& (m_nGradientObj == GRADIENT_AMP))
+		{
+			strUnit = "(V)";
+		}
+
+		strStep += strUnit;
+	}
+
+	if(m_nGradientType == GRADIENT_TYPE_Linear)
+	{
+		if(m_nGradientObj == GRADIENT_AMP)
+		{
+			if(m_ModuleType == Moudle_U)
+			{
+				headers << strChannel << strSelect << strBeginVal << strEndVal <<tr("dv/dt(V/s)");
+			}
+			else if(m_ModuleType == Moudle_I)
+			{
+				headers << strChannel << strSelect << strBeginVal << strEndVal <<tr("di/dt(A/s)");
+			}
+		}
+		else if(m_nGradientObj == GRADIENT_FRE)
+		{
+			headers << strChannel << strSelect << strBeginVal << strEndVal <<tr("df/dt(Hz/s)");
+		}
+	}
+	else if(m_nGradientType == GRADIENT_TYPE_Step)
+	{
+		headers << strChannel << strSelect << strBeginVal << strEndVal <<strStep;
+	}
+
+	setHorizontalHeaderLabels(headers);
+}
 void GradientChannelTable::saveTable()
 {
 	POS pos = m_pChDatas->GetHeadPosition();

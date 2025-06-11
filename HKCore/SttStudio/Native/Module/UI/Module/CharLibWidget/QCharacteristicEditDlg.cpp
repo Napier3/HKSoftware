@@ -1,5 +1,5 @@
 #include "QCharacteristicEditDlg.h"
-#include "../../Module/XLanguage/XLanguageResource.h"
+#include "../../../Module/XLanguage/XLanguageResource.h"
 
 QCharacteristicEditDlg::QCharacteristicEditDlg(CCharacteristic *pCharacteristic,QWidget *parent)
 	: QDialog(parent)

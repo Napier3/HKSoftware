@@ -1,10 +1,12 @@
 #include "SttMacroParaEditViewFaultGradient.h"
 #include "CFaultGradientSetting.h"
 #include "FaultGradientEstimateDlg.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include"../Module/XLangResource_Native.h"
-#include "../../Module/XLanguage/XLanguageResource.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../Module/XLangResource_Native.h"
+#include "../../../Module/XLanguage/XLanguageResource.h"
 #include "../SttTestCntrFrameBase.h"
+#include "../Module/UI/SttTestCntrFrameApi.h"
+#include"../Module/SttGlobalDef.h"
 
 #ifdef _USE_SoftKeyBoard_
 #include "../SoftKeyboard/SoftKeyBoard.h"
@@ -21,12 +23,19 @@ QSttMacroParaEditViewFaultGradient::QSttMacroParaEditViewFaultGradient(QWidget *
 	m_nOutNormalError = (ui->btnGrpOutNormalError->buttons().count())/2;	
 	m_pGooseParaWidget = NULL;
 	m_pFT3OutParaWidget = NULL;
+        //国际版移植
+	m_strUnit = "";  
+	m_nChannel = if_type;
+	m_nType = amplitude_type;
 	InitLanuage();
 	//初始化创建测试项
 	SetData(CreateTestParas(GetMacroID())); 
 	InitUI();
 	m_pOriginalSttTestResource = g_theTestCntrFrame->GetSttTestResource();//创建软件资源类对象
 	g_theTestCntrFrame->InitTestResource();//软件资源初始化
+     //国际版移植
+	//m_pOriginalSttTestResource = stt_GetSttTestResource();//创建软件资源类对象
+	//stt_Frame_InitTestResource();//软件资源初始化
 
 	if (g_oSystemParas.m_nHasDigital)
 	{
@@ -46,12 +55,64 @@ QSttMacroParaEditViewFaultGradient::~QSttMacroParaEditViewFaultGradient()
 
 void QSttMacroParaEditViewFaultGradient::InitLanuage()
 {
+	xlang_SetLangStrToWidget(ui->m_labInit, "Gradient_Init", XLang_Ctrls_QLabel);
+	xlang_SetLangStrToWidget(ui->m_labFinish, "Gradient_Finish", XLang_Ctrls_QLabel);
+	xlang_SetLangStrToWidget(ui->m_labStep, "Gradient_Step", XLang_Ctrls_QLabel);
+	xlang_SetLangStrToWidget(ui->m_labTime, "Gradient_Time", XLang_Ctrls_QLabel);
+	if (!ui->m_labTime->text().contains("(s):"))
+	{
+		ui->m_labTime->setText(ui->m_labTime->text() + "(s):");
+	}//wangtao 20240726 
+	xlang_SetLangStrToWidget(ui->m_labType, "Native_Type", XLang_Ctrls_QLabel);
+	xlang_SetLangStrToWidget(ui->m_labVar, "Gradient_FailModes", XLang_Ctrls_QLabel);
+	if (!ui->m_labVar->text().contains(":"))
+	{
+		ui->m_labVar->setText(ui->m_labVar->text() + ":");
+	}
+	xlang_SetLangStrToWidget(ui->m_labVar_2, "Gradient_Change", XLang_Ctrls_QLabel);
+	if (!ui->m_labVar_2->text().contains(":"))
+	{
+		ui->m_labVar_2->setText(ui->m_labVar_2->text() + ":");
+	}
+	xlang_SetLangStrToWidget(ui->m_labShortVm, "Native_ShortCircuitVs", XLang_Ctrls_QLabel);
+	xlang_SetLangStrToWidget(ui->m_labDirection, "Impedance_ShortCurr", XLang_Ctrls_QLabel);
+	if (!ui->m_labDirection->text().contains(":"))
+	{
+		ui->m_labDirection->setText(ui->m_labDirection->text() + ":");
+	}
+	xlang_SetLangStrToWidget(ui->m_labDirection_2, "Gradient_ImpAngle", XLang_Ctrls_QLabel);
 
+	xlang_SetLangStrToWidget(ui->m_labTimeBeforeChange, "Gradient_ChangeTime", XLang_Ctrls_QLabel);
+	xlang_SetLangStrToWidget(ui->m_labTimeBeforeFail, "Native_PreFaultTime", XLang_Ctrls_QLabel);
+	if (!ui->m_labTimeBeforeFail->text().contains(":"))
+	{
+		ui->m_labTimeBeforeFail->setText(ui->m_labTimeBeforeFail->text() + ":");
+	}
+	xlang_SetLangStrToWidget(ui->m_labTimeBeforeChange_2, "Gradient_FailVol", XLang_Ctrls_QLabel);
+	xlang_SetLangStrToWidget(ui->m_labTimeBeforeFail_2, "Gradient_FailCur", XLang_Ctrls_QLabel);
+	xlang_SetLangStrToWidget(ui->m_labTimeBeforeFail_3, "Gradient_FailAngle", XLang_Ctrls_QLabel);
+
+	xlang_SetLangStrToWidget(ui->m_gpChangeSet, "Gradient_RampParas", XLang_Ctrls_QGroupBox);
+	xlang_SetLangStrToWidget(ui->m_gpVarSet, "Gradient_VarSet", XLang_Ctrls_QGroupBox);
+	xlang_SetLangStrToWidget(ui->m_gpMannual, "Gradient_CommonParas", XLang_Ctrls_QGroupBox);
+	xlang_SetLangStrToWidget(ui->m_gpBin, "Gradient_BinBout", XLang_Ctrls_QGroupBox);
+	xlang_SetLangStrToWidget(ui->m_gpBoutNormal, "Gradient_BoutNormal", XLang_Ctrls_QGroupBox);
+	xlang_SetLangStrToWidget(ui->m_gpBoutError, "Gradient_BoutFaultState", XLang_Ctrls_QGroupBox);
+
+	xlang_SetLangStrToWidget(ui->m_btnEstimate, "State_Estimate", XLang_Ctrls_QPushButton);
+	xlang_SetLangStrToWidget(ui->m_btnMoreOut, "Gradient_BoutSets", XLang_Ctrls_QPushButton);
+
+	xlang_SetLangStrToWidget(ui->m_rbOr, "Native_LogicOr", XLang_Ctrls_QRadioButton);
+	xlang_SetLangStrToWidget(ui->m_rbAnd, "Native_LogicAnd", XLang_Ctrls_QRadioButton);
 }
 
 void QSttMacroParaEditViewFaultGradient::SetUIFont(QWidget* pWidget)
 {
+
+#ifdef _PSX_QT_LINUX_//mod wangtao 20240827 只在Linux下调用，解决Windows下字体不一致问题
 	g_pSttGlobalFont->resolve(QFont::AllPropertiesResolved);
+#endif
+	setFont(*g_pSttGlobalFont);
 
 	if(pWidget == NULL) return;
 	pWidget->setFont(*g_pSttGlobalFont);
@@ -156,61 +217,101 @@ void QSttMacroParaEditViewFaultGradient::InitComboBox()
 	ui->m_cbbChangeVaule->clear();
 	ui->m_cbbShortVm->clear();
 
-	m_lstGradientType << _T("动作值") << _T("返回系数") << _T("最大灵敏角") ;
+	m_lstGradientType << /*_T("动作值")*/g_sLangTxt_State_ActionValue << /*_T("返回系数")*/g_sLangTxt_Native_ReturnCoeff /*<< g_sLangTxt_Gradient_MaxAngle/*_T("最大灵敏角")*/ ;
 	ui->m_cbbType->addItems(m_lstGradientType);
 
-	m_lstFaultMode << _T("A相短路") << _T("B相短路") << _T("C相短路") << _T("ABC相短路") << _T("AB相短路") << _T("BC相短路") << _T("CA相短路") 
-					<< _T("AB相短路，C相电流") << _T("BC相短路，A相电流") << _T("CA相短路，B相电流") << _T("AB相短路，B相电流") 
-					<< _T("BC相短路，C相电流") << _T("CA相短路，A相电流") /*<< _T("CA相短路，A相电流")*/ << _T("U/f") << _T("I2/I1");
+	m_lstFaultMode << /*_T("A相短路")*/g_sLangTxt_Native_PhaseAshort << /*_T("B相短路")*/g_sLangTxt_Native_PhaseBshort << /*_T("C相短路")*/g_sLangTxt_Native_PhaseCshort << /*_T("ABC相短路")*/g_sLangTxt_Native_PhaseABCshort
+		<< /*_T("AB相短路")*/g_sLangTxt_Native_PhaseABshort << /*_T("BC相短路")*/g_sLangTxt_Native_PhaseBCshort << /*_T("CA相短路")*/g_sLangTxt_Native_PhaseCAshort << /*_T("AB相短路，C相电流")*/g_sLangTxt_Native_PhaseABshortCcur << /*_T("BC相短路，A相电流")*/g_sLangTxt_Native_PhaseBCshortAcur << /*_T("CA相短路，B相电流")*/g_sLangTxt_Native_PhaseCAshortBcur << /*_T("AB相短路，B相电流")*/g_sLangTxt_Native_PhaseABshortBcur 
+		<< /*_T("BC相短路，C相电流")*/g_sLangTxt_Native_PhaseBCshortCcur << /*_T("CA相短路，A相电流")*/g_sLangTxt_Native_PhaseCAshortAcur /*<< _T("CA相短路，A相电流")*/ << _T("U/f") << _T("I2/I1");
 	ui->m_cbbFaultMode->addItems(m_lstFaultMode);
 
 	QStringList lstChangeValue;
-	lstChangeValue << _T("短路电压") << _T("短路电流") << _T("阻抗角") << _T("短路阻抗") << _T("频率") 
-					 << _T("正序电压") << _T("负序电压") << _T("零序电压（3U0）");
+    lstChangeValue << _T("短路电压") << /*_T("短路电流")*/g_sLangTxt_Native_ShortCircuit << /*_T("阻抗角")*/g_sLangTxt_Native_ImpedanceAngles << /*_T("短路阻抗")*/g_sLangTxt_Native_ShortZImp << /*_T("频率")*/g_sLangTxt_Native_Freq
+					 << /*_T("正序电压")*/g_sLangTxt_Native_PosVol << /*_T("负序电压")*/g_sLangTxt_Native_NegVol << /*_T("零序电压（3U0）")*/g_sLangTxt_Native_ZeroVol3U0;
 
 	m_mapChangValue[FG_FaultMode_Null] = lstChangeValue;
 	QStringList lstChangeValue_UF;
-	lstChangeValue_UF << _T("电压") << _T("频率");
+	lstChangeValue_UF << /*_T("电压")*/g_sLangTxt_Native_Voltage << /*_T("频率")*/g_sLangTxt_Native_Freq;
 	m_mapChangValue[FG_FaultMode_UF] = lstChangeValue_UF;
 	QStringList lstChangeValue_I2;
 	lstChangeValue_I2 << _T("I2");
 	m_mapChangValue[FG_FaultMode_I2I1] = lstChangeValue_I2;
 
+	if (xlang_IsCurrXLanguageChinese())//dingxy 20250121 英文环境下修改通道名称
+	{
 	QStringList lstChangeValue_AB_C;
-	lstChangeValue_AB_C << _T("Uab") << _T("Ic") << _T("Φ(Uab-Ic)");
+	lstChangeValue_AB_C << _T("Uab") << _T("Ic") << /*QString::fromLocal8Bit(STT_MATH_Phi)*/g_sLangTxt_AxisUnitPhi + QString::fromLocal8Bit("(Uab - Ic)");
 	m_mapChangValue[FG_FaultMode_AB_C] = lstChangeValue_AB_C;
 
 	QStringList lstChangeValue_BC_A;
-	lstChangeValue_BC_A << _T("Ubc") << _T("Ia") << _T("Φ(Ubc-Ia)");
+	lstChangeValue_BC_A << _T("Ubc") << _T("Ia") << /*QString::fromLocal8Bit(STT_MATH_Phi)*/g_sLangTxt_AxisUnitPhi + QString::fromLocal8Bit("(Ubc-Ia)");
 	m_mapChangValue[FG_FaultMode_BC_A] = lstChangeValue_BC_A;
 
 	QStringList lstChangeValue_CA_B;
-	lstChangeValue_CA_B << _T("Uca") << _T("Ib") << _T("Φ(Uca-Ib)");
+	lstChangeValue_CA_B << _T("Uca") << _T("Ib") << /*QString::fromLocal8Bit(STT_MATH_Phi)*/g_sLangTxt_AxisUnitPhi + QString::fromLocal8Bit("(Uca-Ib)");
 	m_mapChangValue[FG_FaultMode_CA_B] = lstChangeValue_CA_B;
 
 	QStringList lstChangeValue_AB_B;
-	lstChangeValue_AB_B << _T("Uab") << _T("Ib") << _T("Φ(Uab-Ib)");
+	lstChangeValue_AB_B << _T("Uab") << _T("Ib") << /*QString::fromLocal8Bit(STT_MATH_Phi)*/g_sLangTxt_AxisUnitPhi + QString::fromLocal8Bit("(Uab-Ib)");
 	m_mapChangValue[FG_FaultMode_AB_B] = lstChangeValue_AB_B;
 
 	QStringList lstChangeValue_BC_C;
-	lstChangeValue_BC_C << _T("Ubc") << _T("Ic") << _T("Φ(Ubc-Ic)");
+	lstChangeValue_BC_C << _T("Ubc") << _T("Ic") << /*QString::fromLocal8Bit(STT_MATH_Phi)*/g_sLangTxt_AxisUnitPhi + QString::fromLocal8Bit("(Ubc-Ic)");
 	m_mapChangValue[FG_FaultMode_BC_C] = lstChangeValue_BC_C;
 
 	QStringList lstChangeValue_CA_A;
-	lstChangeValue_CA_A << _T("Uca") << _T("Ia") << _T("Φ(Uca-Ia)");
+	lstChangeValue_CA_A << _T("Uca") << _T("Ia") << /*QString::fromLocal8Bit(STT_MATH_Phi)*/g_sLangTxt_AxisUnitPhi + QString::fromLocal8Bit("(Uca-Ia)");
 	m_mapChangValue[FG_FaultMode_CA_A] = lstChangeValue_CA_A;
+	}
+	else
+	{
+		QStringList lstChangeValue_AB_C;
+		lstChangeValue_AB_C << _T("Vab") << _T("Ic") << /*QString::fromLocal8Bit(STT_MATH_Phi)*/g_sLangTxt_AxisUnitPhi + QString::fromLocal8Bit("(Vab - Ic)");
+		m_mapChangValue[FG_FaultMode_AB_C] = lstChangeValue_AB_C;
+
+		QStringList lstChangeValue_BC_A;
+		lstChangeValue_BC_A << _T("Vbc") << _T("Ia") << /*QString::fromLocal8Bit(STT_MATH_Phi)*/g_sLangTxt_AxisUnitPhi + QString::fromLocal8Bit("(Vbc-Ia)");
+		m_mapChangValue[FG_FaultMode_BC_A] = lstChangeValue_BC_A;
+
+		QStringList lstChangeValue_CA_B;
+		lstChangeValue_CA_B << _T("Vca") << _T("Ib") << /*QString::fromLocal8Bit(STT_MATH_Phi)*/g_sLangTxt_AxisUnitPhi + QString::fromLocal8Bit("(Vca-Ib)");
+		m_mapChangValue[FG_FaultMode_CA_B] = lstChangeValue_CA_B;
+
+		QStringList lstChangeValue_AB_B;
+		lstChangeValue_AB_B << _T("Vab") << _T("Ib") << /*QString::fromLocal8Bit(STT_MATH_Phi)*/g_sLangTxt_AxisUnitPhi + QString::fromLocal8Bit("(Vab-Ib)");
+		m_mapChangValue[FG_FaultMode_AB_B] = lstChangeValue_AB_B;
+
+		QStringList lstChangeValue_BC_C;
+		lstChangeValue_BC_C << _T("Vbc") << _T("Ic") << /*QString::fromLocal8Bit(STT_MATH_Phi)*/g_sLangTxt_AxisUnitPhi + QString::fromLocal8Bit("(Vbc-Ic)");
+		m_mapChangValue[FG_FaultMode_BC_C] = lstChangeValue_BC_C;
+
+		QStringList lstChangeValue_CA_A;
+		lstChangeValue_CA_A << _T("Vca") << _T("Ia") << /*QString::fromLocal8Bit(STT_MATH_Phi)*/g_sLangTxt_AxisUnitPhi + QString::fromLocal8Bit("(Vca-Ia)");
+		m_mapChangValue[FG_FaultMode_CA_A] = lstChangeValue_CA_A;
+	}
+	
 
 	ui->m_cbbChangeVaule->addItems(lstChangeValue);
 
-	m_lstShortVm << _T("正序(U1)") << _T("负序(U2)") << _T("零序(3U0)");
+	m_lstShortVm <</* _T("正序(U1)")*/ g_sLangTxt_Native_PosVolU1<<g_sLangTxt_Native_NegVolU2/* _T("负序(U2)")*/ << /*_T("零序(3U0)")*/g_sLangTxt_Native_Zero3U0;
 	ui->m_cbbShortVm->addItems(m_lstShortVm);
+
+	ui->m_cbbShortVm->setMaximumHeight(ui->m_editInit->height());
+	ui->m_cbbShortVm->setMinimumHeight(ui->m_editInit->height());
+	ui->m_editShortVm->setMaximumHeight(ui->m_editInit->height());
+	ui->m_editShortVm->setMinimumHeight(ui->m_editInit->height());
+
 }
 
 void QSttMacroParaEditViewFaultGradient::InitUI()
 {
+
 	//初始化界面属性 和设置
 	SetUIFont(ui->m_tabWidget);
 	InitComboBox();
+
+	ui->m_tabWidget->setTabText(0, g_sLangTxt_Gradient_ParaSet);
+	ui->m_tabWidget->setTabText(1, /*g_sLangTxt_Native_Bout*/g_sLangTxt_OutputValue);
 
 	SetStyleStateValue(ui->m_gpBin);
 	SetStyleStateValue(ui->m_gpBoutNormal);
@@ -220,16 +321,18 @@ void QSttMacroParaEditViewFaultGradient::InitUI()
 
 void QSttMacroParaEditViewFaultGradient::SetParas()
 {
+	//20240808 gongyiping 添加定值关联
+	//((QSettingLineEdit*)ui->m_editInit)->UpdateStructText(CVariantDataAddress(&m_pCurFGTest->m_oFaultGradientParas.m_fStart), 3);
 	ui->m_editInit->setText(QString::number(m_pCurFGTest->m_oFaultGradientParas.m_fStart, 'f', 3));
 	ui->m_editFinish->setText(QString::number(m_pCurFGTest->m_oFaultGradientParas.m_fStop, 'f', 3));
+	//((QSettingLineEdit*)ui->m_editFinish)->UpdateStructText(CVariantDataAddress(&m_pCurFGTest->m_oFaultGradientParas.m_fStop), 3);
 	ui->m_editStep->setText(QString::number(m_pCurFGTest->m_oFaultGradientParas.m_fStep, 'f', 3));
+	//((QSettingLineEdit*)ui->m_editStep)->UpdateStructText(CVariantDataAddress(&m_pCurFGTest->m_oFaultGradientParas.m_fStep), 3);
 	ui->m_editFaultTime->setText(QString::number(m_pCurFGTest->m_oFaultGradientParas.m_fFaultTime, 'f', 3));
+	//((QSettingLineEdit*)ui->m_editFaultTime)->UpdateStructText(CVariantDataAddress(&m_pCurFGTest->m_oFaultGradientParas.m_fFaultTime), 3);
 	ui->m_cbbType->setCurrentIndex(m_pCurFGTest->m_oFaultGradientParas.m_nTestMode);
 
 	ui->m_cbbFaultMode->setCurrentIndex(m_pCurFGTest->m_oFaultGradientParas.m_nFaultMode);
-	on_FaultMode_currentIndexChanged(m_pCurFGTest->m_oFaultGradientParas.m_nFaultMode);
-	ui->m_cbbChangeVaule->setCurrentIndex(m_pCurFGTest->m_oFaultGradientParas.m_nChangeValue);
-	on_ChangeValue_currentIndexChanged(-1);
 
 	ui->m_cbbShortVm->setCurrentIndex(m_pCurFGTest->m_oFaultGradientParas.m_nShortVmType);
 	ui->m_editShortVm->setText(QString::number(m_pCurFGTest->m_oFaultGradientParas.m_fShortVm, 'f', 3));
@@ -240,8 +343,7 @@ void QSttMacroParaEditViewFaultGradient::SetParas()
 	if(m_pCurFGTest->m_oFaultGradientParas.m_fPreFaultTime < 0.0001)
 	{
 		m_pCurFGTest->m_oFaultGradientParas.m_fPreFaultTime = 0;
-		ui->m_editTimeBeforeFail->setText("0");
-		ui->m_editTimeBeforeFail->setEnabled(false);
+		ui->m_editTimeBeforeFail->setText("0.000");
 	}
 	else
 	{
@@ -252,9 +354,22 @@ void QSttMacroParaEditViewFaultGradient::SetParas()
 	ui->m_editFaultBeforeVa->setText(QString::number(m_pCurFGTest->m_oFaultGradientParas.m_fPreFaultEDI, 'f', 3));
 	ui->m_editFaultBeforeAngle->setText(QString::number(m_pCurFGTest->m_oFaultGradientParas.m_fEDUaIaAngle, 'f', 3));
 
+	if (m_pCurFGTest->m_oFaultGradientParas.m_nBinLogic == 1)
+	{
+		ui->m_rbAnd->setChecked(TRUE);
+	}
+	else
+	{
+		ui->m_rbOr->setChecked(TRUE);
+	}
+
 	SetStyleStateValue(ui->m_gpBin,-1,0);
 	SetStyleStateValue(ui->m_gpBoutNormal,-1,1);
 	SetStyleStateValue(ui->m_gpBoutError,-1,1);
+
+	on_FaultMode_currentIndexChanged(m_pCurFGTest->m_oFaultGradientParas.m_nFaultMode);
+	ui->m_cbbChangeVaule->setCurrentIndex(m_pCurFGTest->m_oFaultGradientParas.m_nChangeValue);
+	SetLableTextUnit(m_pCurFGTest->m_oFaultGradientParas.m_nFaultMode, m_pCurFGTest->m_oFaultGradientParas.m_nChangeValue);
 }
 
 void QSttMacroParaEditViewFaultGradient::InitConnections()
@@ -299,16 +414,19 @@ void QSttMacroParaEditViewFaultGradient::SetLableTextUnit(int nFaultIndex,int nC
 		{
 			SetUnit(nFaultIndex,nChangIndex,"V");
 			m_nEditControlType = 3;
+			m_pCurFGTest->m_oFaultGradientParas.m_nVarIndexType = 0;
 		}
 		else if(nChangIndex == 1)
 		{
 			SetUnit(nFaultIndex,nChangIndex,"A");
 			m_nEditControlType = 2;
+			m_pCurFGTest->m_oFaultGradientParas.m_nVarIndexType = 1;
 		}
 		else if(nChangIndex == 2)
 		{
-			SetUnit(nFaultIndex,nChangIndex,"°");
+			SetUnit(nFaultIndex, nChangIndex,/* QString::fromLocal8Bit(STT_MATH_degree)*/g_sLangTxt_AxisUnitAng);
 			m_nEditControlType = 4;
+			m_pCurFGTest->m_oFaultGradientParas.m_nVarIndexType = 2;
 		}
 	}
 	else if(nFaultIndex == FG_FaultMode_UF)
@@ -317,17 +435,20 @@ void QSttMacroParaEditViewFaultGradient::SetLableTextUnit(int nFaultIndex,int nC
 		{
 			SetUnit(nFaultIndex,nChangIndex,"V");
 			m_nEditControlType = 3;
+			m_pCurFGTest->m_oFaultGradientParas.m_nVarIndexType = 0;
 		}
 		else if(nChangIndex == FG_FM_Vaule_HZ) 
 		{
-			SetUnit(nFaultIndex,nChangIndex,"HZ");
+			SetUnit(nFaultIndex,nChangIndex,"Hz");
 			m_nEditControlType = 5;
+			m_pCurFGTest->m_oFaultGradientParas.m_nVarIndexType = 4;
 		}
 	}
 	else if(nFaultIndex == FG_FaultMode_I2I1)
 	{
 		SetUnit(nFaultIndex,nChangIndex,"A");
 		m_nEditControlType = 2;
+		m_pCurFGTest->m_oFaultGradientParas.m_nVarIndexType = 1;
 	}
 	else
 	{
@@ -336,34 +457,105 @@ void QSttMacroParaEditViewFaultGradient::SetLableTextUnit(int nFaultIndex,int nC
 		{
 			SetUnit(nFaultIndex,nChangIndex,"V");
 			m_nEditControlType = 3;
+			m_pCurFGTest->m_oFaultGradientParas.m_nVarIndexType = 0;
 		}
-		if(nChangIndex == FG_FM_Vaule_ShortVA || nChangIndex == FG_FM_Vaule_ShortImpede) 
+		if(nChangIndex == FG_FM_Vaule_ShortVA )
 		{
 			SetUnit(nFaultIndex,nChangIndex,"A");
 			m_nEditControlType = 2;
+			m_pCurFGTest->m_oFaultGradientParas.m_nVarIndexType = 1;
+		}
+		if (nChangIndex == FG_FM_Vaule_ShortImpede)
+		{
+			SetUnit(nFaultIndex, nChangIndex, /*QString::fromLocal8Bit(STT_MATH_ohm)*/g_sLangTxt_AxisUnitOmega);
+			m_nEditControlType = 1;
+			m_pCurFGTest->m_oFaultGradientParas.m_nVarIndexType = 3;
 		}
 		if(nChangIndex == FG_FM_Vaule_ImpedeAngle) 
 		{
-			SetUnit(nFaultIndex,nChangIndex,"°");
+			SetUnit(nFaultIndex,nChangIndex,/*QString::fromLocal8Bit(STT_MATH_degree)*/g_sLangTxt_AxisUnitAng);
 			m_nEditControlType = 4;
+			m_pCurFGTest->m_oFaultGradientParas.m_nVarIndexType = 2;
 		}
 		if(nChangIndex == FG_FM_Vaule_Frequency) 
 		{
-			SetUnit(nFaultIndex,nChangIndex,"HZ");
+			SetUnit(nFaultIndex,nChangIndex,"Hz");
 			m_nEditControlType = 5;
+			m_pCurFGTest->m_oFaultGradientParas.m_nVarIndexType = 4;
 		}
+		}
+	//add wangtao 20240818 更新右侧状态图的显示文本
+	CString strTemp1 = ui->m_labInit->text();
+	QRegExp re("\\(([^)]+)\\)");
+	if (re.indexIn(strTemp1) != -1)
+	{
+		m_strUnit = re.cap(1);
 	}
+	SetStateMonitorYRange();
+
 	SetAllEditValueControl();
 }
 
+void QSttMacroParaEditViewFaultGradient::GetStateMonitorYRange(float ftime, float fv, float fstart, float fend, float &up)
+{
+	float fNew = fv;
+	if (ftime < EPSINON)
+	{
+		fNew = 0;
+	}
+
+    float fUnit;
+	if (m_strUnit == "V")
+	{
+        fUnit = 57.735;
+        fNew =max(fUnit, fNew);
+	}
+	else if (m_strUnit == "Hz")
+	{
+        fUnit = 50;
+        fNew = max(fUnit, fNew);
+	}
+	up = getMaxFormThreeValue(fNew, fstart, fend);
+	
+}
+void QSttMacroParaEditViewFaultGradient::SetStateMonitorYRange()
+{
+	float fup = 0;
+	if (m_strUnit == "A")
+	{
+		GetStateMonitorYRange(m_pCurFGTest->m_oFaultGradientParas.m_fPreFaultTime, m_pCurFGTest->m_oFaultGradientParas.m_fPreFaultEDI, ui->m_editInit->text().toFloat(), ui->m_editFinish->text().toFloat(), fup);
+		emit sig_YRangeChanged(amplitude_type, ui->m_cbbChangeVaule->currentText() + "(" + m_strUnit + ")", fup, 0);
+	}
+	else if (m_strUnit == "V")
+	{
+		GetStateMonitorYRange(m_pCurFGTest->m_oFaultGradientParas.m_fPreFaultTime, m_pCurFGTest->m_oFaultGradientParas.m_fPreFaultEDU, ui->m_editInit->text().toFloat(), ui->m_editFinish->text().toFloat(), fup);
+		emit sig_YRangeChanged(amplitude_type, ui->m_cbbChangeVaule->currentText() + "(" + m_strUnit + ")", fup, 0);
+	}
+	else if (m_strUnit == QString::fromLocal8Bit(STT_MATH_degree))
+	{
+		GetStateMonitorYRange(m_pCurFGTest->m_oFaultGradientParas.m_fPreFaultTime, 0, ui->m_editInit->text().toFloat(), ui->m_editFinish->text().toFloat(), fup);
+		emit sig_YRangeChanged(phasor_type, ui->m_cbbChangeVaule->currentText() + "(" + m_strUnit + ")", fup, 0);
+	}
+	else
+	{
+		GetStateMonitorYRange(m_pCurFGTest->m_oFaultGradientParas.m_fPreFaultTime, 0, ui->m_editInit->text().toFloat(), ui->m_editFinish->text().toFloat(), fup);
+		emit sig_YRangeChanged(amplitude_type, ui->m_cbbChangeVaule->currentText() + "(" + m_strUnit + ")", fup, 0);
+	}
+}
 void QSttMacroParaEditViewFaultGradient::SetUnit(int nFaultMode,int nValueType,QString strUnit)
 {
-	QString strTemp = ui->m_labInit->text();
-	int nPos = strTemp.indexOf("(");
+	QString strTemp1 = ui->m_labInit->text();
+	int nPos1 = strTemp1.indexOf("(");
 
-	QString strLabInit = strTemp.left(nPos) + "(" + strUnit + ")";
-	QString strLabFinish = ((QString)ui->m_labFinish->text()).left(nPos) + "(" + strUnit + ")";
-	QString strLabStep = ((QString)ui->m_labStep->text()).left(nPos) + "(" + strUnit + ")";
+	QString strTemp2 = ui->m_labFinish->text();
+	int nPos2 = strTemp2.indexOf("(");
+
+	QString strTemp3 = ui->m_labStep->text();
+	int nPos3 = strTemp3.indexOf("(");
+
+	QString strLabInit = strTemp1.left(nPos1) + "(" + strUnit + "):";
+	QString strLabFinish = /*((QString)ui->m_labFinish->text())*/strTemp2.left(nPos2) + "(" + strUnit + "):";
+	QString strLabStep = /*((QString)ui->m_labStep->text())*/strTemp3.left(nPos3) + "(" + strUnit + "):";
 	ui->m_labInit->setText(strLabInit);
 	ui->m_labFinish->setText(strLabFinish);
 	ui->m_labStep->setText(strLabStep);
@@ -418,9 +610,18 @@ void QSttMacroParaEditViewFaultGradient::SetShortVaVmAngleEnable(int nShortVmFla
 	ui->m_editAngle->setEnabled(nAngleFlag);
 }
 
-//设置edit 值限制 1 时间  2 电流  3 电压  4 角度 5 HZ
+//设置edit 值限制 1 电阻  2 电流  3 电压  4 角度 5 HZ
 float QSttMacroParaEditViewFaultGradient::SetEditValueControl(float fValue,int nFlag,QSttLineEdit* pLine)
 {
+	//20240808 gongyiping 
+	if (pLine->inherits(STT_SETTING_LINEEDIT_ClassID/*"QSettingEdit"*/))
+	{
+		if (((QSettingLineEdit*)pLine)->IsSetting())
+		{
+			return fValue;
+		}
+	}
+
 	float fMaxValue = 0.000,fMinValue = 0.000;
 	switch(nFlag)
 	{
@@ -495,33 +696,36 @@ void QSttMacroParaEditViewFaultGradient::on_ReturnType_currentIndexChanged(int n
 	{
 		return;
 	}
-	if(m_nEditControlType == 4)
-	{
-		if(nIndex == FG_TestMode_ActValue || nIndex == FG_TestMode_ReturnCoef)
-		{
-			ui->m_cbbType->setCurrentIndex(FG_TestMode_MaxAngle);
-			return;
-		}
-	}
+	//if(m_nEditControlType == 4)//wangtao 20240902 需确认阻抗角是否需要选择动作值和返回系数
+	//{
+	//	if(nIndex == FG_TestMode_ActValue || nIndex == FG_TestMode_ReturnCoef)
+	//	{
+	//		ui->m_cbbType->setCurrentIndex(FG_TestMode_MaxAngle);
+	//		return;
+	//	}
+	//}
 	if (m_pCurFGTest->m_oFaultGradientParas.m_nTestMode != nIndex)
 	{
 		m_pCurFGTest->m_oFaultGradientParas.m_nTestMode = nIndex;
 		//ToDo W
 		m_bTmtParaChanged = TRUE;
 	}
+	if (m_pCurFGTest->m_oFaultGradientParas.m_nTestMode == FG_TestMode_ReturnCoef)//返回系数
+	{
+		m_pCurFGTest->m_oFaultGradientParas.m_nVarIndexType = 5;
+	}
+	else if (m_pCurFGTest->m_oFaultGradientParas.m_nTestMode == FG_TestMode_MaxAngle)//最大灵敏角
+	{
+		m_pCurFGTest->m_oFaultGradientParas.m_nVarIndexType = 6;
+	}
 }
 
 void QSttMacroParaEditViewFaultGradient::on_FaultMode_currentIndexChanged(int nIndex)
 {
-	if (m_pCurFGTest->m_oFaultGradientParas.m_nFaultMode != nIndex)
-	{
 		m_pCurFGTest->m_oFaultGradientParas.m_nFaultMode = nIndex;
-	}
-
-	if(m_nLastFaultModeIndex == nIndex) return;
-
+	
+	disconnect(ui->m_cbbChangeVaule, SIGNAL(currentIndexChanged(int)), this, SLOT(on_ChangeValue_currentIndexChanged(int)));
 	ui->m_cbbChangeVaule->clear();
-	m_nLastFaultModeIndex = nIndex;
 	if(nIndex > FG_FaultMode_CA)
 	{
 		ui->m_cbbChangeVaule->addItems(m_mapChangValue[nIndex]);
@@ -530,27 +734,47 @@ void QSttMacroParaEditViewFaultGradient::on_FaultMode_currentIndexChanged(int nI
 	{
 		ui->m_cbbChangeVaule->addItems(m_mapChangValue[FG_FaultMode_Null]);
 	}
+	connect(ui->m_cbbChangeVaule, SIGNAL(currentIndexChanged(int)), this, SLOT(on_ChangeValue_currentIndexChanged(int)));
+
+	//add wangtao 20240818 故障模式修改后，尽量保留当前变化量
+	if (ui->m_cbbChangeVaule->count() > m_pCurFGTest->m_oFaultGradientParas.m_nChangeValue)
+	{
+		ui->m_cbbChangeVaule->setCurrentIndex(m_pCurFGTest->m_oFaultGradientParas.m_nChangeValue);
+	}
+	else
+	{
+		on_ChangeValue_currentIndexChanged(0);
+	}
 }
 
 void QSttMacroParaEditViewFaultGradient::on_ChangeValue_currentIndexChanged(int nIndex)
 {
 	if(ui->m_cbbChangeVaule->IsScrolling()) return;
 
-	if (m_pCurFGTest->m_oFaultGradientParas.m_nChangeValue != nIndex)
-	{
-		if(nIndex == -1)
-		{
-			nIndex = m_pCurFGTest->m_oFaultGradientParas.m_nChangeValue;
-		}
 		m_pCurFGTest->m_oFaultGradientParas.m_nChangeValue = nIndex;
+		
 		//设置单位  控件使用
 		int nValIndex = ui->m_cbbFaultMode->currentIndex();
 		SetLableTextUnit(nValIndex,nIndex);
 		SetShortVaVmAngle(nValIndex,nIndex);
 
-	}
-	//ToDo
 	m_bTmtParaChanged = TRUE;
+	//del wangtao 20241104 删除最大灵敏角选项
+	//if (nIndex == FG_FM_Vaule_ImpedeAngle)
+	//{
+	//	m_lstGradientType.clear();
+	//	ui->m_cbbType->clear();
+	//	m_lstGradientType << /*_T("动作值")*/g_sLangTxt_State_ActionValue << /*_T("返回系数")*/g_sLangTxt_Native_ReturnCoeff << g_sLangTxt_Gradient_MaxAngle/*_T("最大灵敏角")*/;
+	//	ui->m_cbbType->addItems(m_lstGradientType);
+	//}
+	//else 
+	//{
+	//	m_lstGradientType.clear();
+	//	ui->m_cbbType->clear();
+	//	m_lstGradientType << /*_T("动作值")*/g_sLangTxt_State_ActionValue << /*_T("返回系数")*/g_sLangTxt_Native_ReturnCoeff;
+	//	ui->m_cbbType->addItems(m_lstGradientType);
+	//}
+
 }
 
 void QSttMacroParaEditViewFaultGradient::on_VMType_currentIndexChanged(int nIndex)
@@ -614,6 +838,7 @@ void QSttMacroParaEditViewFaultGradient::on_MoreOut_ButtonClick()
 {
 	CFaultGradientSetting dlg(m_pCurFGTest,this);
 	dlg.setWindowModality(Qt::WindowModal);
+	dlg.setWindowTitle(g_sLangTxt_Gradient_BoutSet);
 	int nRet = -1;
 #ifdef _USE_SoftKeyBoard_
 	QSoftKeyBoard::AttachObj(&dlg);
@@ -653,23 +878,55 @@ void QSttMacroParaEditViewFaultGradient::on_Estimate_ButtonClick()
 //变化始值
 void QSttMacroParaEditViewFaultGradient::on_EditInit_Finish()
 {
+	
+	if (ui->m_editInit->inherits(STT_SETTING_LINEEDIT_ClassID/*"QSettingEdit"*/))
+	{
+		if (((QSettingLineEdit*)ui->m_editInit)->IsSetting())
+		{
+			return;
+		}
+	}
+
 	float fv = 0.000;
 	GetEditFloatValue(ui->m_editInit,fv);
 	float fNewValue = SetEditValueControl(fv,m_nEditControlType,ui->m_editInit);
 	// 业务处理  暂无  直接赋值
 	m_pCurFGTest->m_oFaultGradientParas.m_fStart = fNewValue;
+
+	//更新实时图Y坐标轴范围
+	SetStateMonitorYRange();
 }
 //变化终值
 void QSttMacroParaEditViewFaultGradient::on_EditFinish_Finish()
 {
+	
+	if (ui->m_editFinish->inherits(STT_SETTING_LINEEDIT_ClassID/*"QSettingEdit"*/))
+	{
+		if (((QSettingLineEdit*)ui->m_editFinish)->IsSetting())
+		{
+			return;
+		}
+	}
+
 	float fv = 0.000;
 	GetEditFloatValue(ui->m_editFinish,fv);
 	float fNewValue = SetEditValueControl(fv,m_nEditControlType,ui->m_editFinish);
 	m_pCurFGTest->m_oFaultGradientParas.m_fStop = fNewValue;
+	//更新实时图Y坐标轴范围
+	SetStateMonitorYRange();
 }
 //变化步长
 void QSttMacroParaEditViewFaultGradient::on_EditStep_Finish()
 {
+	
+	if (ui->m_editStep->inherits(STT_SETTING_LINEEDIT_ClassID/*"QSettingEdit"*/))
+	{
+		if (((QSettingLineEdit*)ui->m_editStep)->IsSetting())
+		{
+			return;
+		}
+	}
+
 	float fv = 0.000;
 	GetEditFloatValue(ui->m_editStep,fv);
 	float fNewValue = SetEditValueControl(fv,m_nEditControlType,ui->m_editStep);
@@ -678,6 +935,15 @@ void QSttMacroParaEditViewFaultGradient::on_EditStep_Finish()
 //故障时间
 void QSttMacroParaEditViewFaultGradient::on_EditFaultTime_Finish()
 {
+	
+	if (ui->m_editFaultTime->inherits(STT_SETTING_LINEEDIT_ClassID/*"QSettingEdit"*/))
+	{
+		if (((QSettingLineEdit*)ui->m_editFaultTime)->IsSetting())
+		{
+			return;
+		}
+	}
+
 	float fv = 0.000;
 	GetEditFloatValue(ui->m_editFaultTime,fv);
 	float fNewValue = SetEditValueControl(fv,1,ui->m_editFaultTime);
@@ -722,6 +988,8 @@ void QSttMacroParaEditViewFaultGradient::on_EditTimeBeforeFail_Finish()
 	GetEditFloatValue(ui->m_editTimeBeforeFail,fv);
 	float fNewValue = SetEditValueControl(fv,1,ui->m_editTimeBeforeFail);
 	m_pCurFGTest->m_oFaultGradientParas.m_fPreFaultTime = fNewValue;
+	//更新实时图Y坐标轴范围
+	SetStateMonitorYRange();
 }
 //故障前电压
 void QSttMacroParaEditViewFaultGradient::on_EditFaultBeforeVm_Finish()
@@ -730,6 +998,8 @@ void QSttMacroParaEditViewFaultGradient::on_EditFaultBeforeVm_Finish()
 	GetEditFloatValue(ui->m_editFaultBeforeVm,fv);
 	float fNewValue = SetEditValueControl(fv,3,ui->m_editFaultBeforeVm);
 	m_pCurFGTest->m_oFaultGradientParas.m_fPreFaultEDU = fNewValue;
+	//更新实时图Y坐标轴范围
+	SetStateMonitorYRange();
 }
 //故障前电流
 void QSttMacroParaEditViewFaultGradient::on_EditFaultBeforeVa_Finish()
@@ -738,6 +1008,8 @@ void QSttMacroParaEditViewFaultGradient::on_EditFaultBeforeVa_Finish()
 	GetEditFloatValue(ui->m_editFaultBeforeVa,fv);
 	float fNewValue =SetEditValueControl(fv,2,ui->m_editFaultBeforeVa);
 	m_pCurFGTest->m_oFaultGradientParas.m_fPreFaultEDI = fNewValue;
+	//更新实时图Y坐标轴范围
+	SetStateMonitorYRange();
 }
 //故障前相角
 void QSttMacroParaEditViewFaultGradient::on_EditFaultBeforeAngle_Finish()
@@ -786,22 +1058,38 @@ void QSttMacroParaEditViewFaultGradient::OnViewTestStart()
 {
 	g_oSttTestResourceMngr.m_oRtDataMngr.m_pMacroChannels->ClearHisDatas();
 	ui->m_tabWidget->setEnabled(0);
-	//ToDo W
+        //ToDo W
 	g_theTestCntrFrame->ClearInfoWidget();
-	g_theTestCntrFrame->InitStateMonitor(m_pCurFGTest->m_oFaultGradientParas.m_nFaultMode, m_pCurFGTest->m_oFaultGradientParas.m_nChangeValue, g_theTestCntrFrame->IsTestStarted());
+	//g_theTestCntrFrame->InitStateMonitor(m_pCurFGTest->m_oFaultGradientParas.m_nFaultMode, m_pCurFGTest->m_oFaultGradientParas.m_nChangeValue, g_theTestCntrFrame->IsTestStarted());
 	g_theTestCntrFrame->StartStateMonitor();
 	g_theTestCntrFrame->StartVectorWidget();
 	g_theTestCntrFrame->StartPowerWidget();
 	g_theTestCntrFrame->EnableManualTriggerButton(false);
 
+	//ToDo W  国际版移植
+	//stt_Frame_ClearInfoWidget();
+	//ConvertChannelAndType();
+	//stt_Frame_InitStateMonitor(m_nChannel, m_nType, stt_Frame_IsTestStarted(), this);//状态图暂无对应m_nChangeValue，先写死 wangtao 20240902
+	//stt_Frame_StartStateMonitor();
+	//stt_Frame_StartVectorWidget();
+	//stt_Frame_StartPowerWidget();
+	//stt_Frame_EnableManualTriggerButton(false);
+
+
 }
 void QSttMacroParaEditViewFaultGradient::OnViewTestStop()
 {
 	ui->m_tabWidget->setEnabled(1);
+
 	//ToDo W
 	g_theTestCntrFrame->StopStateMonitor();
 	g_theTestCntrFrame->StopVectorWidget();
 	g_theTestCntrFrame->StopPowerWidget();
+
+	//ToDo W  国际版移植
+	//stt_Frame_StopStateMonitor();
+	//stt_Frame_StopVectorWidget();
+	//stt_Frame_StopPowerWidget();
 }
 
 void QSttMacroParaEditViewFaultGradient::ShowReport(CDvmValues *pValues)
@@ -831,22 +1119,22 @@ void QSttMacroParaEditViewFaultGradient::SetDatas(CDataGroup *pParas)
 	{
 		CSttDataGroupSerializeRead oRead(pParas);
 		stt_xml_serialize(&m_pCurFGTest->m_oFaultGradientParas, &oRead);
+		ReadModeDataSaveMaps(&oRead);	//add wangtao 20241010 保存模板中定值关联关系
 	}
-	//ToDo
-	/*if (m_oSequenceGradientChs.GetCount() == 0)
+
+	//国际版移植
+	/*if (m_oGradientChs.GetCount() == 0)
 	{
 		if (g_oSttTestResourceMngr.m_pTestResouce != NULL)
 		{
-			g_oSttTestResourceMngr.m_pTestResouce->AddGradientChs_All(m_oSequenceGradientChs);
+			g_oSttTestResourceMngr.m_pTestResouce->AddGradientChs_All(m_oGradientChs);
 		}
 	}*/
-
-	//ToDo
-	//g_theTestCntrFrame->InitVectorWidget(m_pCurPara->m_uiVOL[0],m_pCurPara->m_uiCUR[0]);
-	//g_theTestCntrFrame->InitPowerWidget(m_pCurPara->m_uiVOL[0],m_pCurPara->m_uiCUR[0]);
-	//g_theTestCntrFrame->InitStateMonitor(true, NULL);
-	//g_theTestCntrFrame->InitStateMonitor(m_pCurFGTest->m_oFaultGradientParas.m_nFaultMode, m_pCurFGTest->m_oFaultGradientParas.m_nChangeValue, g_theTestCntrFrame->IsTestStarted(), this);
-	//g_theTestCntrFrame->ClearInfoWidget();
+	g_theTestCntrFrame->InitVectorWidget(NULL, NULL);
+	g_theTestCntrFrame->InitPowerWidget(NULL, NULL);
+	g_theTestCntrFrame->InitStateMonitor(TRUE, NULL);//dingxy 20250208
+	g_theTestCntrFrame->InitStateMonitor(m_nChannel, m_nType, g_theTestCntrFrame->IsTestStarted(), this);
+	g_theTestCntrFrame->ClearInfoWidget();
 
 	SetParas();
 
@@ -954,7 +1242,7 @@ void QSttMacroParaEditViewFaultGradient::UpdateFT3Tab_UI(CIecCfgDatasSMV* pIecCf
 		if(nFT3Block > 0)
 		{
 // 			disconnect(m_pFT3OutParaWidget, SIGNAL(sig_FT3DataChanged()), this, SLOT(slot_FT3DataChanged()));
-		m_pFT3OutParaWidget->InitFT3Table(pIecCfgDatasSMV);
+			m_pFT3OutParaWidget->InitFT3Table(pIecCfgDatasSMV);
 // 			connect(m_pFT3OutParaWidget, SIGNAL(sig_FT3DataChanged()), this, SLOT(slot_FT3DataChanged()));
 		}
 		else
@@ -1050,4 +1338,30 @@ bool QSttMacroParaEditViewFaultGradient::ExistFT3OutParaWidget()
 {
 	int nIndex = ui->m_tabWidget->indexOf(m_pFT3OutParaWidget);
 	return (nIndex >= 0);
+}
+void QSttMacroParaEditViewFaultGradient::ConvertChannelAndType()
+{
+	switch (m_nEditControlType)
+	{
+	case 1://阻抗
+		m_nChannel = z_type;
+		m_nType = amplitude_type;
+		break;
+	case 2://故障电流
+		m_nChannel = if_type;
+		m_nType = amplitude_type;
+		break;
+	case 3://故障电压
+		m_nChannel = uf_type;
+		m_nType = amplitude_type;
+		break;
+	case 4://阻抗角
+		m_nChannel = z_type;
+		m_nType = phasor_type;
+		break;
+	case 5://频率
+		m_nChannel = if_type;
+		m_nType = fre_type;
+		break;
+	}
 }

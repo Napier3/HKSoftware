@@ -3,6 +3,7 @@
 #include <QApplication>
 #include "../../QExBaseListGridBase/QExBaseListGridBase.h"
 #include "../../../Module/DataMngr/DvmData.h"
+#include "../../../Controls/SttCheckBox.h"
 
 
 #define STTCCOMMCFGDEVICEATTR_COLS		2 
@@ -36,6 +37,7 @@ public:
 	bool eventFilter(QObject *obj, QEvent *event);
 	virtual void mousePressEvent(QMouseEvent *);
 	BOOL m_bRunning;
+	QSttCheckBox *m_pBroadCastCheck;//¹ã²¥
 
 signals:
 	void sig_ChangedDevAddr(long);
@@ -48,6 +50,7 @@ public slots:
 	void slot_CbByteSizeChanged(const QString& strText);
 	void slot_CbStopBitChanged(const QString& strText);
 	void slot_CbParityChanged(int index);  
+	void slot_BroadCastStateChanged(bool checked);
 };
 
 

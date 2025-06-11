@@ -7,7 +7,7 @@
 #pragma once
 
 #include "CapDeviceGlobal.h"
-#include "../../../../61850/Module/CfgDataMngr/IecCfgDataChBase.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgDataChBase.h"
 #include "../../../DataMngr/DvmDataset.h"
 
 

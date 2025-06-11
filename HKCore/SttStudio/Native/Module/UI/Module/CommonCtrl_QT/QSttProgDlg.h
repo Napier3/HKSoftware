@@ -12,7 +12,7 @@
 #include <QGridLayout>
 #include <QProgressBar>
 #include <QTimer>
-#include "OSInterface.h"
+#include "../../../Module/OSInterface/OSInterface.h"
 
 class QSttProgDlg : public QDialog
 {

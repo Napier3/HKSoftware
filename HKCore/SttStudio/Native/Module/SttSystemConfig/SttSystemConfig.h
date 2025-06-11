@@ -59,6 +59,9 @@ public:
     void SetLockMaps(const long &nLockMaps);
 	long GetSelSysPata();
 	long GetHasFT3();
+	BOOL IsAssist();
+	void SetAssist(const long &nAssist);
+	BOOL GetCurrDevSN(CString &strSN,BOOL bOpenCfg);//参数2标识是否删除当前链表内容，c重新打开配置文件
 };
 
 extern CSttSystemConfig g_oSttSystemConfig;

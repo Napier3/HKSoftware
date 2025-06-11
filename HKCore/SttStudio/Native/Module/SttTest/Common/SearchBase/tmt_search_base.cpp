@@ -1,6 +1,6 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "tmt_search_base.h"
-#include "../../../../../Module/API/MathApi.h"
+#include "../../../Module/API/MathApi.h"
 
 tmt_search_base::tmt_search_base(void)
 {

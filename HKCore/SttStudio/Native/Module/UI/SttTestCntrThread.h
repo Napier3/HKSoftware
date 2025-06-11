@@ -1,8 +1,8 @@
 #ifndef SttTestCntrThread_H
 #define SttTestCntrThread_H
 
-#include "../../Module/OSInterface/QT/CWinThread_QT.h"
-#include "../../Module/BaseClass/ExBaseObject.h"
+#include "../../../Module/OSInterface/QT/CWinThread_QT.h"
+#include "../../../Module/BaseClass/ExBaseObject.h"
 
 class QSttTestCntrThread : public CWinThread
 {

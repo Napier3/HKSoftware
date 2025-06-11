@@ -1,9 +1,9 @@
 #include "QTerminalGoutDataGrid.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgGoutData.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgGoutData.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../../Module/CommonMethod/commonMethod.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgDatasBase.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgDatasBase.h"
 
 QTerminalGoutDataGrid::QTerminalGoutDataGrid(QWidget* pparent):CIecCfgDataGridBase(pparent)
 {

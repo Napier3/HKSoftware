@@ -19,14 +19,50 @@
 #include "../IntelligentTerminal/SttMacroParaEditViewIntelligentTerminal.h"
 #include "../SttTestCntrCmdDefine.h"
 #include "../ShortTimeOver/QttMacroParaEditViewShortTimOver.h"
-#include "../VoltageTimeTypeSectorMode/QSttMacroParaEditViewVolTimeTypeSec.h"
+#include "../FA/QSttMacroParaEditViewVolTimeTypeSec.h"
 #include "../FaultGradient/SttMacroParaEditViewFaultGradient.h"
 #include "../AntiShakeTime/QSttMacroParaEditViewAntiShakeTime.h"
 #include "../ADMUAccurAutoTest/SttMacroParaEditViewADMUAccurAutoTest.h"
 #include "../PowerManu/SttMacroParaEditViewPowerManu.h"
 #include "../ImpedanceManu/SttMacroParaEditViewImpedanceManu.h"
+#include "../PrimFreqManu/SttMacroParaEditViewPrimFreqManu.h"
+#include "../PrimFreqState/SttMacroParaEditViewPrimFreqState.h"
 #include "../CBOperate/QSttMacroParaEditViewCBOperate.h"
+ #include "../SWing/SttMacroParaEditViewSwing.h"
 #include "../../TestUI/Distance/SttMultiMacroParaEditViewDistance.h"
+#include "../AnalogCircuitBreaker/SttMacroParaEditViewAnalogCirBreaker.h"
+#include "../Remote_AutoTest/SttMacroParaEditViewVolCurAccuracyWidget.h"
+#include "../Remote_AutoTest/SttMacroParaEditViewPowerAccuracyWidget.h"
+#include "../Remote_AutoTest/SttMacroParaEditViewFreqFactorErrorWidget.h"
+#include "../Remote_AutoTest/OverCurrTest/SttMacroParaEditViewOverCurrWidget.h"
+#include "../Remote_AutoTest/ZeroTest/SttMacroParaEditViewZeroWidget.h"
+#include "../Remote_AutoTest/SttMacroParaEditViewTURecloseAccWidget.h"
+#include "../Remote_AutoTest/SttMacroParaEditViewFreqChangeWidget.h"
+#include "../Remote_AutoTest/Remote_Accuracy/SttMacroParaEditViewRemote_AccuracyWidget.h"
+#include "../Remote_AutoTest/Remote_PriorityDelivery/SttMacroParaEditViewPriorityDeliverWidget.h"
+#include "../Remote_AutoTest/Remote_Shake/SttMacroParaEditViewRemote_ShakeWidget.h"
+#include "../Remote_AutoTest/Remote_DualPosition/SttMacroParaEditViewDualPositionWidget.h"
+#include "../Remote_AutoTest/Remote_Resolution/SttMacroParaEditViewResolutionWidget.h"
+#include "../Remote_AutoTest/SttMacroParaEditViewFreqChangeWidget.h"
+#include "../Remote_AutoTest/SttMacroParaEditViewThreePhUnbalanceWidget.h"
+#include "../Remote_AutoTest/SttMacroParaEditViewHarmContentWidget.h"
+#include "../Remote_AutoTest/SttMacroParaEditViewPowerFactorWidget.h"
+#include "../Remote_AutoTest/SttMacroParaEditViewMeasurLimitWidget.h"
+#include "../Remote_AutoTest/SttMacroParaEditViewInputVolWidget.h"
+#include "../Remote_AutoTest/SttMacroParaEditViewInputCurWidget.h"
+#include "../Remote_AutoTest/SttMacroParaEditViewRemoteWidget.h"
+#include "../Remote_AutoTest/SttMacroParaEditViewVolExcLimitWidget.h"
+#include "../Remote_AutoTest/SttMacroParaEditViewCurExcLimitWidget.h"
+#include "../AnalogCircuitBreaker/SttMacroParaEditViewAnalogCirBreaker.h"
+#include "../Remote_AutoTest/SttMacroParaEditViewLowCurrentWidget.h"
+#include "../Remote_AutoTest/SttMacroParaEditViewProInrushCurWidget.h"
+#include "../Remote_AutoTest/SttMacroParaEditViewPTAlarmWidget.h"
+#include "../Remote_AutoTest/SttMacroParaEditViewFaultResetWidget.h"
+#include "../Remote_AutoTest/SttMacroParaEditViewDeadZeroDriftWidget.h"
+#include "../Remote_AutoTest/Remote_TimeSync/SttMacroParaEditViewTimeSyncWidget.h"
+#include "../Remote_AutoTest/Remote_ParaRecall/SttMacroParaEditViewParaRecallWidget.h"
+#include "../ThreeTURecloseAcc/SttMacroParaEditViewThreeTURecloseAcc.h"
+#include "../FreqOutputTest/SttMacroParaEditViewFreqOutput.h"
 
 extern long g_nLogDebugInfor;
 
@@ -92,7 +128,7 @@ void CSttMacroParaEditViewMngr::DeleteSttMacroParaEditViewHtml()
     //QSttMacroParaEditViewHtml *pSttMacroParaEditViewHtml = NULL;
     //QSttMacroParaEditViewHtml *pSttMacroParaEditViewHtmlDelete = NULL;
     //pSttMacroParaEditViewHtml = (QSttMacroParaEditViewHtml*)g_pSttMacroParaEditViewMngr->m_pSttMacroParaEditViewHtml;
-
+    //
     //if (pSttMacroParaEditViewHtml != NULL)
     //{
     //	g_pSttMacroParaEditViewMngr->m_pSttMacroParaEditViewHtmlForDelete = pSttMacroParaEditViewHtml;
@@ -122,8 +158,6 @@ CSttMacroParaEditInterface* CSttMacroParaEditViewMngr::CreateSttMacroParaEditVie
 	CSttMacroParaEditInterface *pNew = NULL;
 	BOOL bWeb = FALSE;
 
-	if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> begin CreateSttMacroParaEditView -  >>");	}
-
  	if((strMacroID == STT_ORG_MACRO_ManualTest)||(strMacroID == STT_ORG_MACRO_MUAccuracyTest)||(strMacroID == STT_ORG_MACRO_MUFirstCycleTest)||
 		(strMacroID == STT_ORG_MACRO_MUTimingAccurTest)||(strMacroID == STT_ORG_MACRO_MUPunctAccurTest))
  	{
@@ -131,10 +165,9 @@ CSttMacroParaEditInterface* CSttMacroParaEditViewMngr::CreateSttMacroParaEditVie
  	}
  	else if(strMacroID == STT_ORG_MACRO_StateTest)
  	{
-		if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> begin new QSttMacroParaEditViewState -  >>");	}
 		QSttMacroParaEditViewState *pSttMacroParaEditViewState = new QSttMacroParaEditViewState(false);
 		pNew = pSttMacroParaEditViewState;
-		if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> end new QSttMacroParaEditViewState -  >>");	}
+		debug_time_long_log("new QSttMacroParaEditViewState", true);
 
 #ifndef SttTestCntrThread_H
 		pSttMacroParaEditViewState->initUI_Paras(false);
@@ -222,7 +255,11 @@ CSttMacroParaEditInterface* CSttMacroParaEditViewMngr::CreateSttMacroParaEditVie
 	{
 		pNew = new QttMacroParaEditViewShortTimOver;  
 	}
-	else if(strMacroID == STT_ORG_MACRO_VolTimeTypeSecTest)//20240112 xueyangfan 电压时间型分段模式
+	else if(strMacroID == STT_ORG_MACRO_VolTimeTypeSecTest || 
+		strMacroID ==  STT_ORG_MACRO_VolTimeTypeIntTest || 
+		strMacroID ==  STT_ORG_MACRO_VolCurTypeSecTest || 
+		strMacroID ==  STT_ORG_MACRO_VolCurTypeIntTest || 
+		strMacroID ==  STT_ORG_MACRO_AdaptiveTypeSecTest)//20250310 Xuzt FA测试
 	{
 		pNew = new QSttMacroParaEditViewVolTimeTypeSec;
 	}
@@ -232,7 +269,8 @@ CSttMacroParaEditInterface* CSttMacroParaEditViewMngr::CreateSttMacroParaEditVie
     }
 	else if(strMacroID == STT_ORG_MACRO_MUAccurAutoTest)//2024.5.28 ADMU自动测试
 	{
-		if (g_oSttSystemConfig.GetDevModel().Find(_T("PDU100")) >= 0)
+        if (g_oSttSystemConfig.GetDevModel().Find(_T("PDU100")) >= 0 ||g_oSttSystemConfig.GetDevModel().Find(_T("PTU100")) >= 0 
+			||g_oSttSystemConfig.GetDevModel().Find(_T("PNS331")) >= 0 ||g_oSttSystemConfig.GetDevModel().Find(_T("PTU200L")) >= 0)
 		{
 			pNew = new QSttMacroParaEditViewAdmuAccurAutoTest;
 		}
@@ -247,13 +285,162 @@ CSttMacroParaEditInterface* CSttMacroParaEditViewMngr::CreateSttMacroParaEditVie
 	{
 		pNew = new QSttMacroParaEditViewPowerManu;
 	}
-	else if(strMacroID == STT_ORG_MACRO_ImpedanceManuTest)//20240611 zhangyq 通用试验（阻抗）
+	else if(strMacroID == STT_ORG_MACRO_ImpedManualTest)//20240611 zhangyq 通用试验（阻抗）
 	{
 		pNew = new QSttMacroParaEditViewImpedanceManu;
+	}
+	else if (strMacroID == STT_ORG_MACRO_AnalogCirBreakerTest)
+	{
+		pNew = new QSttMacroParaEditViewAnalogCirBreaker;
+	}
+	else if (strMacroID == STT_ORG_MACRO_ThreeTURecloseAccTest)
+	{
+		pNew = new QSttMacroParaEditViewThreeTURecloseAcc;
 	}
 	else if(strMacroID == STT_ORG_MACRO_CBOperateTest)//20240612 xueyangfan 整组传动
 	{
 		pNew = new QSttMacroParaEditViewCBOperate;
+	}
+	else if (strMacroID == STT_ORG_MACRO_AnalogCirBreakerTest)
+	{
+		pNew = new QSttMacroParaEditViewAnalogCirBreaker;
+	}
+	else if(strMacroID == STT_ORG_MACRO_Remote_VolCurAccuracyTest)
+	{
+		pNew = new QSttMacroParaEditViewVolCurAccuracyWidget;
+	}
+	else if (strMacroID == STT_ORG_MACRO_Remote_PowerAccuracyTest)
+	{
+		pNew = new QSttMacroParaEditViewPowerAccuracyWidget;
+	}
+	else if (strMacroID == STT_ORG_MACRO_Remote_FreqFactorTest)
+	{
+		pNew = new QSttMacroParaEditViewFreqFactorErrorWidget;
+	}
+	else if (strMacroID == STT_ORG_MACRO_Remote_FreqChangeTest)
+	{
+		pNew = new QSttMacroParaEditViewFreqChangeWidget;
+	}
+        else if (strMacroID == STT_ORG_MACRO_Remote_OverCurrTest)
+	{
+		pNew = new QSttMacroParaEditViewOverCurrWidget;
+	}
+	else if (strMacroID == STT_ORG_MACRO_Remote_ZeroTest)
+	{
+		pNew = new QSttMacroParaEditViewZeroWidget;
+	}
+	else if (strMacroID == STT_ORG_MACRO_Remote_TURecloseAccTest)
+	{
+		pNew = new QSttMacroParaEditViewTURecloseAccWidget;
+	}
+	else if(strMacroID == STT_ORG_MACRO_Remote_AccuracyTest)
+	{
+		pNew = new QSttMacroParaEditViewRemote_AccuracyWidget;
+	}
+	else if(strMacroID == STT_ORG_MACRO_Remote_PriorityDeliveryTest)
+	{
+		pNew = new QSttMacroParaEditViewPriorityDeliverWidget;
+	}
+	else if(strMacroID == STT_ORG_MACRO_Remote_DualPositionTest)
+	{
+		pNew = new QSttMacroParaEditViewDualPositionWidget;
+	}
+	else if(strMacroID == STT_ORG_MACRO_Remote_ResolutionTest)
+	{
+		pNew = new QSttMacroParaEditViewResolutionWidget;
+	}
+	else if(strMacroID == STT_ORG_MACRO_Remote_AntiShakeTest)
+	{
+		pNew = new QSttMacroParaEditViewRemote_ShakeWidget;
+	}
+	else if (strMacroID == STT_ORG_MACRO_Remote_FreqChangeTest)
+	{
+		pNew = new QSttMacroParaEditViewFreqChangeWidget;
+	}
+	else if(strMacroID == STT_ORG_MACRO_Remote_ThreePhUnbalanceTest)
+	{
+		pNew = new QSttMacroParaEditViewThreePhUnbalanceWidget;
+	}
+	else if(strMacroID == STT_ORG_MACRO_Remote_HarmContentTest)
+	{
+		pNew = new QSttMacroParaEditViewHarmContentWidget;
+	}
+	else if(strMacroID == STT_ORG_MACRO_Remote_PowerFactorTest)
+	{
+		pNew = new QSttMacroParaEditViewPowerFactorWidget;
+	}
+	else if(strMacroID == STT_ORG_MACRO_Remote_MeasurLimitTest)
+	{
+		pNew = new QSttMacroParaEditViewMeasurLimitWidget;
+	}	
+	else if(strMacroID == STT_ORG_MACRO_Remote_InputVolTest)
+	{
+		pNew = new QSttMacroParaEditViewInputVolWidget;
+	}
+	else if(strMacroID == STT_ORG_MACRO_Remote_InputCurTest)
+	{
+		pNew = new QSttMacroParaEditViewInputCurWidget;
+	}
+	else if(strMacroID == STT_ORG_MACRO_Remote_Test)
+	{
+		pNew = new QSttMacroParaEditViewRemoteWidget;
+	}
+	else if(strMacroID == STT_ORG_MACRO_Remote_VolExcLimitTest)
+	{
+		pNew = new QSttMacroParaEditViewVolExcLimitWidget;
+	}
+	else if(strMacroID == STT_ORG_MACRO_Remote_CurExcLimitTest)
+	{
+		pNew = new QSttMacroParaEditViewCurExcLimitWidget;
+	}
+	else if(strMacroID == STT_ORG_MACRO_Remote_LowCurrentTest)
+	{
+		pNew = new QSttMacroParaEditViewLowCurrentWidget;
+	}
+	else if(strMacroID == STT_ORG_MACRO_Remote_ProInrushCurTest)
+	{
+		pNew = new QSttMacroParaEditViewProInrushCurWidget;
+	}
+	else if(strMacroID == STT_ORG_MACRO_Remote_PTAlarmTest)
+	{
+		pNew = new QSttMacroParaEditViewPTAlarmWidget;
+	}
+	else if(strMacroID == STT_ORG_MACRO_Remote_FaultResetTest)
+	{
+		pNew = new QSttMacroParaEditViewFaultResetWidget;
+	}
+	else if(strMacroID == STT_ORG_MACRO_Remote_DeadZeroDriftTest)
+	{
+		pNew = new QSttMacroParaEditViewDeadZeroDriftWidget;
+	}
+	else if(strMacroID == STT_ORG_MACRO_Remote_TimeSyncTest)//2024.12.3 zhangyq 对时功能测试
+	{
+		pNew = new QSttMacroParaEditViewTimeSyncWidget;
+	}
+	else if(strMacroID == STT_ORG_MACRO_Remote_ParaRecallTest)//2024.12.5 zhangyq 固有参数调阅
+	{
+		pNew = new QSttMacroParaEditViewParaRecallWidget;
+	}
+
+	else if(strMacroID == STT_ORG_MACRO_PowerManuTest)//
+	{
+		pNew = new QSttMacroParaEditViewPowerManu;
+	}
+	else if(strMacroID == STT_ORG_MACRO_SwingTest)
+	{
+		pNew = new QSttMacroParaEditViewSwing;
+	}
+// 	else if(strMacroID == STT_ORG_MACRO_ImpedanceManuTest)//20240611 zhangyq 通用试验（阻抗）//20250320 suyang 采用的是上面那个，注销
+// 	{
+// 		pNew = new QSttMacroParaEditViewImpedanceManu;
+// 	}
+	else if(strMacroID == STT_ORG_MACRO_CBOperateTest)//20240612 xueyangfan 整组传动
+	{
+		pNew = new QSttMacroParaEditViewCBOperate;
+	}
+	else if(strMacroID == STT_ORG_MACRO_FreqOutputTest)//2025.3.11 chenling 调频输出
+	{
+		pNew = new QSttMacroParaEditViewFreqOutput;
 	}
 	else if(strMacroID == STT_ORG_MACRO_DistanceTest_I)//20240620 zhouhj 国际版-距离保护
 	{
@@ -266,11 +453,26 @@ CSttMacroParaEditInterface* CSttMacroParaEditViewMngr::CreateSttMacroParaEditVie
 	{
 		return NULL;
 	}
+	else if(strMacroID == STT_ORG_MACRO_PrimFreqManuTest)
+	{
+		pNew = new QSttMacroParaEditViewPrimFreqManual;
+	}
+	else if(strMacroID == STT_ORG_MACRO_PrimFreqStateTest)
+	{
+		QSttMacroParaEditViewPrimFreqState *pSttMacroParaEditViewState = new QSttMacroParaEditViewPrimFreqState;
+		pNew = pSttMacroParaEditViewState;
+#ifndef SttTestCntrThread_H
+		pSttMacroParaEditViewState->initUI_Paras(false);
+#else
+		g_theSttTestCntrThread->PostThreadMessage(2, (unsigned long)pNew, (unsigned long)pNew);
+#endif
+	}
 	else
 	{
 		bWeb = TRUE;
 		pNew = GetSttMacroParaEditViewHtml();
 	}
+	debug_time_long_log("new MacroParaView", true);
 
 	if (g_pSttMacroParaEditViewMngr->m_pMacroParaView != NULL)
 	{
@@ -278,6 +480,7 @@ CSttMacroParaEditInterface* CSttMacroParaEditViewMngr::CreateSttMacroParaEditVie
 		{
 			CSttMacroParaEditViewOriginal *pView = (CSttMacroParaEditViewOriginal*)g_pSttMacroParaEditViewMngr->m_pMacroParaView;
 			pView->deleteLater();
+			debug_time_long_log("MacroParaEditViewOrigina deleteLater", true);
 		}
 	}
 
@@ -287,17 +490,16 @@ CSttMacroParaEditInterface* CSttMacroParaEditViewMngr::CreateSttMacroParaEditVie
         //pSttMacroParaEditViewHtml = (QSttMacroParaEditViewHtml*)g_pSttMacroParaEditViewMngr->m_pSttMacroParaEditViewHtml;
 
         //if (pSttMacroParaEditViewHtml != NULL)
-		{
-            //pSttMacroParaEditViewHtml->hide();
-            //pSttMacroParaEditViewHtml->deleteLater();
-			g_pSttMacroParaEditViewMngr->m_pSttMacroParaEditViewHtml = NULL;
-		}
+        //{
+        //	pSttMacroParaEditViewHtml->hide();
+        //	pSttMacroParaEditViewHtml->deleteLater();
+        //	g_pSttMacroParaEditViewMngr->m_pSttMacroParaEditViewHtml = NULL;
+        //	debug_time_long_log("SttMacroParaEditViewHtml deleteLater", true);
+        //}
 	}
 
 
 	g_pSttMacroParaEditViewMngr->m_pMacroParaView = pNew;
-
-	if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> end CreateSttMacroParaEditView -  >>");	}
 
 	return pNew;
 }
@@ -330,7 +532,7 @@ CSttMacroParaEditInterface* CSttMacroParaEditViewMngr::GetSttMacroParaEditViewHt
     //{
     //	pSttMacroParaEditViewHtml = new QSttMacroParaEditViewHtml();
     //}
-
+    //
     //g_pSttMacroParaEditViewMngr->m_pSttMacroParaEditViewHtml = pSttMacroParaEditViewHtml;
     //
     //if (g_nCreateNewViewEveryTime == 1)

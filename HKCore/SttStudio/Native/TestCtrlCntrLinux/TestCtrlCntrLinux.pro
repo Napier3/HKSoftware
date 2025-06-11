@@ -34,6 +34,7 @@ DESTDIR = "/home/uisrc/HK/Stt/Bin"
 
 SOURCES += main.cpp\
     ../Module/SttCmdToolMngr.cpp \
+    ../Module/SttGlobalDef.cpp \
     ../Module/SttTestSysGlobalPara.cpp \
     ../../../Module/XLanguage/XLanguageResource.cpp \
     ../../../61850/Module/XLanguageResourceIec.cpp \
@@ -69,6 +70,7 @@ SOURCES += main.cpp\
     ../Module/SttCmd/GuideBook/SttSafety.cpp \
     ../Module/SttCmd/GuideBook/SttSysParaEdit.cpp \
     ../Module/SttCmd/GuideBook/SttSysParas.cpp \
+    ../Module/SttCmd/GuideBook/SttTestGlobalDatasMngr.cpp \
     ../Module/SttCmd/SttChMap.cpp \
     ../Module/SttCmd/SttChMaps.cpp \
     ../Module/SttCmd/SttHdCh.cpp \
@@ -607,6 +609,13 @@ SOURCES += main.cpp\
     ../Module/UI/RemoteMeas/RemoteMeasRatWidget.cpp \
     ../Module/UI/RemoteMeas/RemoteMeasWidget.cpp \
     ../Module/UI/RemoteMeas/SttMacroParaEditViewRemoteMeas.cpp \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewVolCurAccuracyWidget.cpp \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewPowerAccuracyWidget.cpp \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewFreqFactorErrorWidget.cpp \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewTURecloseAccWidget.cpp \
+    ../Module/UI/Remote_AutoTest/OverCurrTest/SttMacroParaEditViewOverCurrWidget.cpp \
+    ../Module/UI/Remote_AutoTest/ZeroTest/SttMacroParaEditViewZeroWidget.cpp \
+    ../Module/UI/Remote_AutoTest/Remote_Accuracy/SttMacroParaEditViewRemote_AccuracyWidget.cpp \
     ../Module/UI/TerminalAutoTest/QTerminalSettingTabWidget.cpp \
     ../Module/UI/TerminalAutoTest/QTerminalTabWidget.cpp \
     ../Module/UI/TerminalAutoTest/QTerminalTreeWidget.cpp \
@@ -616,6 +625,7 @@ SOURCES += main.cpp\
     ../Module/UI/TerminalAutoTest/Grid/QTerminalGooseGrid.cpp \
     ../Module/UI/TerminalAutoTest/Grid/QTerminalGoutDataChsGrid.cpp \
     ../Module/UI/TerminalAutoTest/Grid/QTerminalGoutDataGrid.cpp \
+    ../Module/UI/ThreeTURecloseAcc/SttMacroParaEditViewThreeTURecloseAcc.cpp \
     ../Module/UI/RemoteCtrl/RemoteCtrlBtnWidget.cpp \
     ../Module/UI/RemoteCtrl/RemoteCtrlTable.cpp \
     ../Module/UI/RemoteCtrl/SttMacroParaEditViewRemoteCtrl.cpp \
@@ -653,14 +663,14 @@ SOURCES += main.cpp\
     ../Module/UI/Module/CommConfigurationDlg/PkgMonitor/QSttCommCfgPkgMonitorDlg.cpp \
     ../Module/UI/Module/CommConfigurationDlg/PkgMonitor/SttCommCfgPkgMonitorLeftGrid.cpp \
     ../Module/UI/Module/CommConfigurationDlg/PkgMonitor/SttCommCfgPkgMonitorRightGrid.cpp \
-    ../Module/UI/VoltageTimeTypeSectorMode/QSttVoltageTimeGroupTestItemWidget.cpp \
+    ../Module/UI/FA/QSttVoltageTimeGroupTestItemWidget.cpp \
     ../Module/UI/FaultGradient/SttMacroParaEditViewFaultGradient.cpp \
     ../Module/UI/FaultGradient/CFaultGradientSetting.cpp \
     ../Module/UI/FaultGradient/FaultGradientEstimateDlg.cpp \
     ../Module/UI/Module/FACommonSpyWidget/Grid/QSttFAStateSequenceGroupGrid.cpp \
     ../Module/UI/Module/FACommonSpyWidget/Grid/QSttFATestResultViewGroupGrid.cpp \
     ../Module/UI/Module/FAParasSetWidget/QSttFAParasSetDialog.cpp \
-    ../Module/UI/VoltageTimeTypeSectorMode/QSttMacroParaEditViewVolTimeTypeSec.cpp \
+    ../Module/UI/FA/QSttMacroParaEditViewVolTimeTypeSec.cpp \
     ../Module/UI/IEC61850Config/SttIecConfigDialog.cpp \
     ../Module/UI/Module/CommConfigurationDlg/PkgMonitor/QSttCommCfgPkgMonitorWidget.cpp \
     ../Module/UI/IEC61850Config/SttIecConfigWidgetBase.cpp \
@@ -761,6 +771,7 @@ SOURCES += main.cpp\
     ../../../Module/API/FileApi.cpp \
     ../../../Module/API/GlobalApi.cpp \
     ../../../Module/DataMngr/DataGroup.cpp \
+    ../../../Module/DataMngr/DataMaps.cpp \
     ../../../Module/DataMngr/DataMngrGlobal.cpp \
     ../../../Module/DataMngr/DataType.cpp \
     ../../../Module/DataMngr/DataTypes.cpp \
@@ -785,6 +796,7 @@ SOURCES += main.cpp\
     ../../../Module/DataMngr/Values.cpp \
     ../../../Module/System/TickCount32.cpp \
     ../../../Module/System/StringTokenizer.cpp \
+    ../../../Module/System/VariantDataAddress.cpp \
     ../../../Module/GpsPcTime/GpsPcTime.cpp \
     ../../../Module/xml/XmlRWBase.cpp \
     ../../../Module/xml/XmlRWFactory.cpp \
@@ -1068,6 +1080,7 @@ SOURCES += main.cpp\
     ../../../61850/Module/SCL_Qt/QScdFileRWDlg.cpp \
     ../../../Module/DataMngr/DvmValues.cpp \
     ../../../Module/API/StringConvertApi.cpp \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbSmartGenWzd.cpp \
     ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdAi/GbWzdAiParasBase.cpp \
     ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdAi/GbWzdAiBase.cpp \
     ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdAi/GbWzdAiDO.cpp \
@@ -1159,6 +1172,7 @@ SOURCES += main.cpp\
     ../Module/RecordTest/UI/SttIecSmvGrid_HarmAnalyze.cpp \
     ../Module/UI/ADMUAccurAutoTest/ADMUAccurAutoTestParasSetDialog.cpp \
     ../Module/UI/ADMUAccurAutoTest/SttMacroParaEditViewADMUAccurAutoTest.cpp \
+    ../Module/UI/AnalogCircuitBreaker/SttMacroParaEditViewAnalogCirBreaker.cpp \
     ../Module/UI/PowerManu/ManualView_PV.cpp \
     ../Module/UI/PowerManu/PowerManualEstimateDlg.cpp \
     ../Module/UI/PowerManu/PowerManualGrid.cpp \
@@ -1251,6 +1265,7 @@ HEADERS  += \
     ../Module/SttCmd/GuideBook/SttSafety.h \
     ../Module/SttCmd/GuideBook/SttSysParaEdit.h \
     ../Module/SttCmd/GuideBook/SttSysParas.h \
+    ../Module/SttCmd/GuideBook/SttTestGlobalDatasMngr.h \
     ../Module/SttCmd/SttChMap.h \
     ../Module/SttCmd/SttChMaps.h \
     ../Module/SttCmd/SttHdCh.h \
@@ -1803,6 +1818,13 @@ HEADERS  += \
     ../Module/UI/RemoteMeas/RemoteMeasRatWidget.h \
     ../Module/UI/RemoteMeas/RemoteMeasWidget.h \
     ../Module/UI/RemoteMeas/SttMacroParaEditViewRemoteMeas.h \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewVolCurAccuracyWidget.h \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewPowerAccuracyWidget.h \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewFreqFactorErrorWidget.h \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewTURecloseAccWidget.h \
+    ../Module/UI/Remote_AutoTest/OverCurrTest/SttMacroParaEditViewOverCurrWidget.h\
+    ../Module/UI/Remote_AutoTest/ZeroTest/SttMacroParaEditViewZeroWidget.h \
+    ../Module/UI/Remote_AutoTest/Remote_Accuracy/SttMacroParaEditViewRemote_AccuracyWidget.h \
     ../Module/UI/TerminalAutoTest/QTerminalSettingTabWidget.h \
     ../Module/UI/TerminalAutoTest/QTerminalTabWidget.h \
     ../Module/UI/TerminalAutoTest/QTerminalTreeWidget.h \
@@ -1812,6 +1834,7 @@ HEADERS  += \
     ../Module/UI/TerminalAutoTest/Grid/QTerminalGooseGrid.h \
     ../Module/UI/TerminalAutoTest/Grid/QTerminalGoutDataChsGrid.h \
     ../Module/UI/TerminalAutoTest/Grid/QTerminalGoutDataGrid.h \
+    ../Module/UI/ThreeTURecloseAcc/SttMacroParaEditViewThreeTURecloseAcc.h \
     ../Module/UI/RemoteCtrl/RemoteCtrlBtnWidget.h \
     ../Module/UI/RemoteCtrl/RemoteCtrlTable.h \
     ../Module/UI/RemoteCtrl/SttMacroParaEditViewRemoteCtrl.h \
@@ -1849,14 +1872,14 @@ HEADERS  += \
     ../Module/UI/Module/CommConfigurationDlg/PkgMonitor/QSttCommCfgPkgMonitorDlg.h \
     ../Module/UI/Module/CommConfigurationDlg/PkgMonitor/SttCommCfgPkgMonitorLeftGrid.h \
     ../Module/UI/Module/CommConfigurationDlg/PkgMonitor/SttCommCfgPkgMonitorRightGrid.h \
-    ../Module/UI/VoltageTimeTypeSectorMode/QSttVoltageTimeGroupTestItemWidget.h \
+    ../Module/UI/FA/QSttVoltageTimeGroupTestItemWidget.h \
     ../Module/UI/FaultGradient/SttMacroParaEditViewFaultGradient.h \
     ../Module/UI/FaultGradient/CFaultGradientSetting.h \
     ../Module/UI/FaultGradient/FaultGradientEstimateDlg.h \
     ../Module/UI/Module/FACommonSpyWidget/Grid/QSttFAStateSequenceGroupGrid.h \
     ../Module/UI/Module/FACommonSpyWidget/Grid/QSttFATestResultViewGroupGrid.h \
     ../Module/UI/Module/FAParasSetWidget/QSttFAParasSetDialog.h \
-    ../Module/UI/VoltageTimeTypeSectorMode/QSttMacroParaEditViewVolTimeTypeSec.h \
+    ../Module/UI/FA/QSttMacroParaEditViewVolTimeTypeSec.h \
     ../Module/UI/Module/CommConfigurationDlg/PkgMonitor/QSttCommCfgPkgMonitorWidget.h \
     ../../../61850/Module/CfgDataMngr/IecCfgDatasMngr.h \
     ../../../61850/Module/CfgDataMngr/IecCfgGoutDatas.h \
@@ -1956,6 +1979,7 @@ HEADERS  += \
     ../../../Module/API/FileApi.h \
     ../../../Module/API/GlobalApi.h \
     ../../../Module/DataMngr/DataGroup.h \
+    ../../../Module/DataMngr/DataMaps.h \
     ../../../Module/DataMngr/DataMngrGlobal.h \
     ../../../Module/DataMngr/DataType.h \
     ../../../Module/DataMngr/DataTypes.h \
@@ -2212,6 +2236,7 @@ HEADERS  += \
     ../../../61850/Module/CfgDataMngr/IecCfgDevice.h \
     ../../../Module/BaseClass/ExBaseCycleArray.h \
     ../../../Module/System/VariantData.h \
+    ../../../Module/System/VariantDataAddress.h \
     ../../../Module/SmartCap/XSttRcdInitChDvmData.h \
     ../../../Module/BaseClass/QT/ExBaseListComboBox.h \
     ../../../Module/SmartCap/61850Cap/CapDevice/CapAnalysisConfig.h \
@@ -2272,6 +2297,7 @@ HEADERS  += \
     ../../../61850/Module/SCL_Qt/QScdFileRWDlg.h \
     ../../../Module/DataMngr/DvmValues.h \
     ../../../Module/API/StringConvertApi.h \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbSmartGenWzd.h \
     ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdAi/GbWzdAiParasBase.h \
     ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdAi/GbWzdAiBase.h \
     ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdAi/GbWzdAiDO.h \
@@ -2364,6 +2390,7 @@ HEADERS  += \
     ../Module/RecordTest/UI/SttIecSmvGrid_HarmAnalyze.h \
     ../Module/UI/ADMUAccurAutoTest/ADMUAccurAutoTestParasSetDialog.h \
     ../Module/UI/ADMUAccurAutoTest/SttMacroParaEditViewADMUAccurAutoTest.h \
+    ../Module/UI/AnalogCircuitBreaker/SttMacroParaEditViewAnalogCirBreaker.h \
     ../Module/UI/PowerManu/ManualView_PV.h \
     ../Module/UI/PowerManu/PowerManualEstimateDlg.h \
     ../Module/UI/PowerManu/PowerManualGrid.h \
@@ -2446,7 +2473,7 @@ FORMS += \
     ../Module/UI/State/SmvAbnormal/SmvAbnormalParaset.ui \
     ../Module/UI/State/SmvAbnormal/SmvAbnormalPointset.ui \
     ../Module/UI/State/SmvAbnormal/SmvAbnormalQualityset.ui \
-    #../Module/UI/Module/CharLibWidget/CharInverseSet.ui \
+    ../Module/UI/Module/CharLibWidget/CharInverseSet.ui \
     ../Module/UI/Module/CharLibWidget/CharEditMainWidget.ui \
     ../Module/UI/Module/CharLibWidget/CharEditWidget_Distance.ui \
     ../Module/UI/Module/CharLibWidget/CharEditWidget_Inverse.ui \
@@ -2463,7 +2490,7 @@ FORMS += \
     ../Module/UI/SequenceGradient/SequenceGradientSettingDlg.ui \
     ../Module/UI/SequenceGradient/SttMacroParaEditViewSequenceGradient.ui \
     ../Module/UI/ShortTimeOver/QttMacroParaEditViewShortTimOver.ui \
-    ../Module/UI/VoltageTimeTypeSectorMode/QSttVoltageTimeGroupTestItemWidget.ui \
+    ../Module/UI/FA/QSttVoltageTimeGroupTestItemWidget.ui \
     ../Module/UI/FaultGradient/SttMacroParaEditViewFaultGradient.ui \
     ../Module/UI/FaultGradient/FaultGradientEstimateDlg.ui \
     ../Module/UI/FaultGradient/CFaultGradientSetting.ui \
@@ -2476,6 +2503,8 @@ FORMS += \
     ../Module/TestUI/Distance/DistanceItemParaEditWidget.ui \
     ../Module/TestUI/Distance/DistanceResultEstimateDlg.ui \
     ../Module/UI/TransPlay/SttReplayBoutModuleChWidget.ui \
+    ../Module/UI/CBOperate/QSttMacroParaEditViewCBOperate.ui \
+    ../Module/UI/ImpedanceManu/ImpedanceManuWidget.ui \
     ../Module/UI/TransPlay/SttReplayParaSetWidget.ui
 
 RESOURCES += \

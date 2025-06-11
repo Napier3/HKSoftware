@@ -1,15 +1,17 @@
 #include "StateButtonWidget.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/XLanguage/XLanguageMngr.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/XLanguageMngr.h"
 //#include "../SttTestCntrFrameBase.h"
 #include "../Module/XLangResource_Native.h"
+#include "../Module/SttTest/Common/PrimFreq/tmt_prim_freq_state_test.h"
 
-QStateButtonWidget::QStateButtonWidget(bool bHorizontal,QWidget *parent)
+
+QStateButtonWidget::QStateButtonWidget(bool bHorizontal,QWidget *parent, bool bFrimFreqModel)
 	: QWidget(parent)
 {
     m_pnCurStateIndex = NULL;
 	m_bHorizontal = bHorizontal;
-	initUI();
+	initUI(bFrimFreqModel);
 	SetStateButtonFont();
    
 	//2023-2-3  lijunqing 避免初始化时多次调用  slot_StatesIndexChanged
@@ -77,7 +79,7 @@ void QStateButtonWidget::AddComBox(QScrollComboBox** ppComBox,int nFontSize)
 	(*ppComBox)->setFont(font);
 }
 
-void QStateButtonWidget::initUI()
+void QStateButtonWidget::initUI( bool bFrimFreq)
 {
     //AddPushButton(&m_pPasteStateBF,QString(tr("粘贴状态—前")),18);
 	//AddPushButton(&m_pInsertStateBF,QString(tr("插入状态—前")),18);
@@ -128,48 +130,92 @@ void QStateButtonWidget::initUI()
 	pLayout->addWidget(m_pDeleteState);
 
 #ifndef _PSX_QT_LINUX_
+	if(!bFrimFreq)
+	{
 	pLayout->addWidget(m_pBtnEditState);
+	}
 #endif
 
 	setLayout(pLayout);	
 }
 
-void QStateButtonWidget::setData(tmt_state_test* pStateTest)
-{
-	m_pStateTest = pStateTest;
-	initBaseData();
+void QStateButtonWidget::setData(tmt_state_paras* pStateParas, bool bFrimFreq)
+{	
+	m_pStateParas = pStateParas;
+
+	initBaseData(bFrimFreq);
 }
 
-void QStateButtonWidget::initBaseData()
+void QStateButtonWidget::initBaseData(bool bFrimFreq )
 {
-	ASSERT(m_pStateTest != NULL);
+	ASSERT(m_pStateParas != NULL);
 
-	tmt_StatePara* m_pStatePara = NULL;
     CString strTmp;
 	CString strState,strNo;
 	xlang_GetLangStrByFile(strState,"sState");
 
 	QStringList listStates;
-	for (int i=0;i<m_pStateTest->m_oStateParas.m_nStateNumbers;i++)
+
+	tmt_PrimFreqStateParas *pPrimParas = NULL;
+	if (bFrimFreq)
 	{
-		m_pStatePara = &m_pStateTest->m_oStateParas.m_paraState[i];
-		CString strStateName = (CString)m_pStatePara->m_strName;
-		if (strStateName.GetLength()>0)
+		pPrimParas = (tmt_PrimFreqStateParas *)m_pStateParas;
+	}
+
+	int nStateNumbers = bFrimFreq ? pPrimParas->m_nStateNumbers : m_pStateParas->m_nStateNumbers;
+	tmt_StatePara* pStatePara = NULL;
+	tmt_PrimFreqStatePara *pPrimFreqPara = NULL;
+
+	for (int i = 0; i < nStateNumbers; i++)
+	{
+// 		tmt_StatePara* pStatePara = bFrimFreq ? &pPrimParas->m_paraPrimFreqState[i] : &m_pStateParas->m_paraState[i];
+		CString strStateName;
+		QString strTmp;
+		if(bFrimFreq)
 		{
-			strTmp = QString::fromLocal8Bit(m_pStatePara->m_strName);
-		}
-		else
-		{
-			if (CXLanguageMngr::xlang_IsCurrXLanguageChinese())
+			pPrimFreqPara = &pPrimParas->m_paraPrimFreqState[i];
+			strStateName = (CString)pPrimFreqPara->m_strName;
+			strTmp;
+
+			if (strStateName.GetLength() > 0)
 			{
-//              strTmp.Format("状态%d",i+1);
-				strNo.Format(_T("%d"),i+1);
-				strTmp = strState;
-				strTmp += strNo;
+				strTmp = QString::fromLocal8Bit(pPrimFreqPara->m_strName);
 			}
 			else
 			{
-				strTmp = QString("state%1").arg(i+1);
+				QString strNo = QString::number(i + 1);
+				if (CXLanguageMngr::xlang_IsCurrXLanguageChinese())
+				{
+					strTmp = strState + strNo;
+				}
+				else
+				{
+					strTmp = QString("state%1").arg(i + 1);
+				}
+			}
+// 			listStates << strTmp;
+		}
+		else
+		{
+			pStatePara = &m_pStateParas->m_paraState[i];
+			strStateName = (CString)pStatePara->m_strName;
+			strTmp;
+
+			if (strStateName.GetLength() > 0)
+		{
+				strTmp = QString::fromLocal8Bit(pStatePara->m_strName);
+		}
+		else
+		{
+				QString strNo = QString::number(i + 1);
+			if (CXLanguageMngr::xlang_IsCurrXLanguageChinese())
+			{
+					strTmp = strState + strNo;
+			}
+			else
+			{
+					strTmp = QString("state%1").arg(i + 1);
+				}
 			}
 		}
 
@@ -221,7 +267,7 @@ void QStateButtonWidget::stopInit(BOOL bHasPasteState)
 	EnableButtons();
 }
 
-void QStateButtonWidget::UpdateStateCombox()
+void QStateButtonWidget::UpdateStateCombox( bool bFrimFreq)
 {
-	initBaseData();
+	initBaseData(bFrimFreq);
 }

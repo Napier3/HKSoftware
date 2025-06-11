@@ -17,17 +17,19 @@ class QStateButtonWidget : public QWidget
 	Q_OBJECT
 
 public:
-	QStateButtonWidget(bool bHorizontal = true,QWidget *parent = 0);
+	QStateButtonWidget(bool bHorizontal = true,QWidget *parent = 0, bool bFrimFreqModel = false);
 	~QStateButtonWidget();
    
 	bool m_bHorizontal;
 	int  *m_pnCurStateIndex;//插入状态指针
 	
 	tmt_state_test* m_pStateTest;
-	void setData(tmt_state_test* pStateTest);
+	tmt_state_paras *m_pStateParas;
+// 	void setData(tmt_state_test* pStateTest);
+	void setData(tmt_state_paras* pStateParas, bool bFrimFreq = false);//兼容一次调频界面
 
-	void initUI();
-	void initBaseData();
+	void initUI( bool bFrimFreq = false);
+	void initBaseData( bool bFrimFreq = false);
 
 	void startInit();
 	void stopInit(BOOL bHasPasteState);
@@ -35,7 +37,7 @@ public:
 	void AddPushButton(QPushButton** ppBtn,QString strName,int nFontSize);
 	void AddComBox(QScrollComboBox** ppComBox,int nFontSize);
 
-	void UpdateStateCombox();
+	void UpdateStateCombox( bool bFrimFreq = false);
 	void SetStateButtonFont();
 	void EnableButtons();
 

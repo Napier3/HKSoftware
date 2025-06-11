@@ -10,7 +10,7 @@
 #ifndef _NOT_USE_GOOGLE_PINYIN_
 #include "googlepinyin.h"
 #endif
-#include "../../Module/OSInterface/OSInterface.h"
+#include "../../../Module/OSInterface/OSInterface.h"
 
 #define Stt_CurrVolKeyboardType_Vol                       0
 #define Stt_CurrVolKeyboardType_Curr                      1
@@ -232,7 +232,7 @@ public:
 	void UpdateBtnsRect(); //在不同风格下布局按钮
 
 	void SetIsDialog(bool bIsDialog) { m_bIsDialog = bIsDialog; } 
-    void SetPreFlags(Qt::WindowFlags flags) { Qt::WindowFlags(); }
+    void SetPreFlags(Qt::WindowFlags flags) { m_flagPre = 0; }
 	void UpdateCurrentLineEdit(QLineEdit* pLineEdit);
 
 	void SetSmooth(bool bSmooth) { m_bPreSmooth = bSmooth; } //准备滑动,但不一定滑动
@@ -273,7 +273,7 @@ public:
 	void btnClicked_Web();
 	void ShowWebPanel(const QString& strValue);
     //void SetWebAttribute(QWebFrame* pFrame, const QString& strID);
-	void CheckWebAttribute();
+    //void CheckWebAttribute();
 	bool IsSameWebCtrlID(const QString &strCtrlID);
 //*******************************************
 

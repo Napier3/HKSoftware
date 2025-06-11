@@ -550,8 +550,8 @@ Complex CFaultCalculat::GroundFactor(int nK0CalMode,double fRMRL,double fXMXL,do
 	if(nK0CalMode==2)
 	{
 		double fTempx,fTempr;
-		fTempr=fRMRL*cos(fXMXL*3.1415926/180.0)-1.0;
-		fTempx=fRMRL*sin(fXMXL*3.1415926/180.0);
+		fTempr = fRMRL*cos(fXMXL*3.1415926 / 180.0) / 3.0 - 1.0 / 3.0;//20220729 zhouhj 合并张萌代码
+		fTempx = fRMRL*sin(fXMXL*3.1415926 / 180.0) / 3.0;
 		Comp1.SetParameter(fTempr,fTempx);
 	}
 	return Comp1;

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1244</width>
-    <height>778</height>
+    <height>734</height>
    </rect>
   </property>
   <property name="font">
@@ -33,7 +33,7 @@
       <attribute name="title">
        <string>递变参数设置</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <layout class="QVBoxLayout" name="verticalLayout_3" stretch="3,2">
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,1,1">
          <item>
@@ -47,145 +47,245 @@
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>250</height>
+             <height>230</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16777215</height>
             </size>
            </property>
            <property name="title">
             <string>递变参数设置</string>
            </property>
-           <layout class="QGridLayout" name="gridLayout">
-            <item row="0" column="0">
-             <widget class="QLabel" name="m_labInit">
-              <property name="text">
-               <string>变化始值():</string>
-              </property>
-             </widget>
+           <layout class="QVBoxLayout" name="verticalLayout_4">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_11">
+              <item>
+               <widget class="QLabel" name="m_labInit">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>变化始值():</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSettingLineEdit" name="m_editInit">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>160</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>160</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
-            <item row="0" column="1">
-             <widget class="QSttLineEdit" name="m_editInit">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-             </widget>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_12">
+              <item>
+               <widget class="QLabel" name="m_labFinish">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>变化终值():</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSettingLineEdit" name="m_editFinish">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>160</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>160</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="m_labFinish">
-              <property name="text">
-               <string>变化终值():</string>
-              </property>
-             </widget>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_13">
+              <item>
+               <widget class="QLabel" name="m_labStep">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>变化步长():</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSettingLineEdit" name="m_editStep">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>160</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>160</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
-            <item row="1" column="1">
-             <widget class="QSttLineEdit" name="m_editFinish">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-             </widget>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_14">
+              <item>
+               <widget class="QLabel" name="m_labTime">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>故障时间(s):</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSettingLineEdit" name="m_editFaultTime">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>160</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>160</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="m_labStep">
-              <property name="text">
-               <string>变化步长():</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QSttLineEdit" name="m_editStep">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0">
-             <widget class="QLabel" name="m_labTime">
-              <property name="text">
-               <string>故障时间(s):</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="1">
-             <widget class="QSttLineEdit" name="m_editFaultTime">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="0">
-             <widget class="QLabel" name="m_labType">
-              <property name="text">
-               <string>类型:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="1">
-             <widget class="QScrollComboBox" name="m_cbbType">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>16777215</height>
-               </size>
-              </property>
-             </widget>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_15">
+              <item>
+               <widget class="QLabel" name="m_labType">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>类型:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QScrollComboBox" name="m_cbbType">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>160</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>160</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
            </layout>
-           <zorder>m_labInit</zorder>
-           <zorder>m_editInit</zorder>
-           <zorder>m_editFinish</zorder>
-           <zorder>m_labFinish</zorder>
-           <zorder>m_labStep</zorder>
-           <zorder>m_editStep</zorder>
-           <zorder>m_labTime</zorder>
-           <zorder>m_editFaultTime</zorder>
-           <zorder>m_cbbType</zorder>
-           <zorder>m_labType</zorder>
           </widget>
          </item>
          <item>
@@ -199,155 +299,287 @@
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>250</height>
+             <height>230</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16777215</height>
             </size>
            </property>
            <property name="title">
             <string>变量设置</string>
            </property>
-           <layout class="QGridLayout" name="gridLayout_2">
-            <item row="0" column="0">
-             <widget class="QLabel" name="m_labVar">
-              <property name="text">
-               <string>故障模式:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QScrollComboBox" name="m_cbbFaultMode">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maxVisibleItems">
-               <number>5</number>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="m_labVar_2">
-              <property name="text">
-               <string>变化量:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QScrollComboBox" name="m_cbbChangeVaule">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>20</pointsize>
-               </font>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="m_labShortVm">
-              <property name="text">
-               <string>短路电压(V):</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,1">
+           <layout class="QVBoxLayout" name="verticalLayout_5">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_6">
               <item>
-               <widget class="QSttLineEdit" name="m_editShortVm">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
+               <widget class="QLabel" name="m_labVar">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
                   <height>0</height>
                  </size>
                 </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>故障模式:</string>
+                </property>
                </widget>
               </item>
               <item>
-               <widget class="QScrollComboBox" name="m_cbbShortVm">
+               <widget class="QScrollComboBox" name="m_cbbFaultMode">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
                 <property name="minimumSize">
                  <size>
+                  <width>190</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>190</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="maxVisibleItems">
+                 <number>5</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_7">
+              <item>
+               <widget class="QLabel" name="m_labVar_2">
+                <property name="minimumSize">
+                 <size>
                   <width>0</width>
                   <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>变化量:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QScrollComboBox" name="m_cbbChangeVaule">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>190</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>190</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="maxVisibleItems">
+                 <number>5</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_8">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="m_labShortVm">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>短路电压(V):</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout">
+                <property name="spacing">
+                 <number>6</number>
+                </property>
+                <item>
+                 <widget class="QSttLineEdit" name="m_editShortVm">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>67</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>67</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QScrollComboBox" name="m_cbbShortVm">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>117</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>117</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="sizeAdjustPolicy">
+                   <enum>QComboBox::AdjustToMinimumContentsLengthWithIcon</enum>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_9">
+              <item>
+               <widget class="QLabel" name="m_labDirection">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>短路电流(A):</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSttLineEdit" name="m_editShortVa">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>190</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>190</width>
+                  <height>16777215</height>
                  </size>
                 </property>
                </widget>
               </item>
              </layout>
             </item>
-            <item row="3" column="0">
-             <widget class="QLabel" name="m_labDirection">
-              <property name="text">
-               <string>短路电流(A):</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="1">
-             <widget class="QSttLineEdit" name="m_editShortVa">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="0">
-             <widget class="QLabel" name="m_labDirection_2">
-              <property name="text">
-               <string>阻抗角(°):</string>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="1">
-             <widget class="QSttLineEdit" name="m_editAngle">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-             </widget>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_10">
+              <item>
+               <widget class="QLabel" name="m_labDirection_2">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>阻抗角(°):</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSttLineEdit" name="m_editAngle">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>190</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>190</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
            </layout>
           </widget>
@@ -357,97 +589,243 @@
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>250</height>
+             <height>230</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16777215</height>
             </size>
            </property>
            <property name="title">
             <string>通用参数</string>
            </property>
-           <layout class="QGridLayout" name="gridLayout_3">
-            <item row="0" column="0">
-             <widget class="QLabel" name="m_labTimeBeforeChange">
-              <property name="text">
-               <string>变化前时间(s):</string>
-              </property>
-             </widget>
+           <layout class="QVBoxLayout" name="verticalLayout_6">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_16">
+              <item>
+               <widget class="QLabel" name="m_labTimeBeforeChange">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>变化前时间(s):</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSttLineEdit" name="m_editTimeBeforeChange">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>130</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>160</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
-            <item row="0" column="1">
-             <widget class="QSttLineEdit" name="m_editTimeBeforeChange">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-             </widget>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_17">
+              <item>
+               <widget class="QLabel" name="m_labTimeBeforeFail">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>故障前时间(s):</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSttLineEdit" name="m_editTimeBeforeFail">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>130</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>160</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="m_labTimeBeforeFail">
-              <property name="text">
-               <string>故障前时间(s):</string>
-              </property>
-             </widget>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_18">
+              <item>
+               <widget class="QLabel" name="m_labTimeBeforeChange_2">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>故障前电压(V):</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSttLineEdit" name="m_editFaultBeforeVm">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>130</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>160</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
-            <item row="1" column="1">
-             <widget class="QSttLineEdit" name="m_editTimeBeforeFail">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-             </widget>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_19">
+              <item>
+               <widget class="QLabel" name="m_labTimeBeforeFail_2">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>故障前电流(A):</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSttLineEdit" name="m_editFaultBeforeVa">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>130</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>160</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="m_labTimeBeforeChange_2">
-              <property name="text">
-               <string>故障前电压(V):</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QSttLineEdit" name="m_editFaultBeforeVm">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0">
-             <widget class="QLabel" name="m_labTimeBeforeFail_2">
-              <property name="text">
-               <string>故障前电流(A):</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="1">
-             <widget class="QSttLineEdit" name="m_editFaultBeforeVa">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="0">
-             <widget class="QLabel" name="m_labTimeBeforeFail_3">
-              <property name="text">
-               <string>故障前相角(°):</string>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="1">
-             <widget class="QSttLineEdit" name="m_editFaultBeforeAngle">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-             </widget>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_20">
+              <item>
+               <widget class="QLabel" name="m_labTimeBeforeFail_3">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>故障前相角(°):</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSttLineEdit" name="m_editFaultBeforeAngle">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>130</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>160</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
            </layout>
           </widget>
@@ -482,6 +860,24 @@
               <property name="bottomMargin">
                <number>9</number>
               </property>
+              <item row="0" column="9">
+               <widget class="QSttCheckBox" name="m_cbBinJ9">
+                <property name="font">
+                 <font>
+                  <pointsize>16</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="text">
+                 <string>J</string>
+                </property>
+                <attribute name="buttonGroup">
+                 <string notr="true">btnGrpBin</string>
+                </attribute>
+               </widget>
+              </item>
               <item row="0" column="3">
                <widget class="QSttCheckBox" name="m_cbBinD3">
                 <property name="font">
@@ -490,9 +886,7 @@
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>D</string>
@@ -510,9 +904,7 @@ width: 24px;  height: 24px;
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>I</string>
@@ -522,20 +914,36 @@ width: 24px;  height: 24px;
                 </attribute>
                </widget>
               </item>
-              <item row="0" column="9">
-               <widget class="QSttCheckBox" name="m_cbBinJ9">
+              <item row="0" column="1">
+               <widget class="QSttCheckBox" name="m_cbBinB1">
                 <property name="font">
                  <font>
                   <pointsize>16</pointsize>
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
-                 <string>J</string>
+                 <string>B</string>
+                </property>
+                <attribute name="buttonGroup">
+                 <string notr="true">btnGrpBin</string>
+                </attribute>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QSttCheckBox" name="m_cbBinC2">
+                <property name="font">
+                 <font>
+                  <pointsize>16</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="text">
+                 <string>C</string>
                 </property>
                 <attribute name="buttonGroup">
                  <string notr="true">btnGrpBin</string>
@@ -547,26 +955,9 @@ width: 24px;  height: 24px;
                 <property name="text">
                  <string>逻辑或</string>
                 </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QSttCheckBox" name="m_cbBinB1">
-                <property name="font">
-                 <font>
-                  <pointsize>16</pointsize>
-                 </font>
+                <property name="checked">
+                 <bool>true</bool>
                 </property>
-                <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
-                </property>
-                <property name="text">
-                 <string>B</string>
-                </property>
-                <attribute name="buttonGroup">
-                 <string notr="true">btnGrpBin</string>
-                </attribute>
                </widget>
               </item>
               <item row="0" column="5">
@@ -577,9 +968,7 @@ width: 24px;  height: 24px;
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>F</string>
@@ -597,52 +986,10 @@ width: 24px;  height: 24px;
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>A</string>
-                </property>
-                <attribute name="buttonGroup">
-                 <string notr="true">btnGrpBin</string>
-                </attribute>
-               </widget>
-              </item>
-              <item row="0" column="2">
-               <widget class="QSttCheckBox" name="m_cbBinC2">
-                <property name="font">
-                 <font>
-                  <pointsize>16</pointsize>
-                 </font>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
-                </property>
-                <property name="text">
-                 <string>C</string>
-                </property>
-                <attribute name="buttonGroup">
-                 <string notr="true">btnGrpBin</string>
-                </attribute>
-               </widget>
-              </item>
-              <item row="0" column="6">
-               <widget class="QSttCheckBox" name="m_cbBinG6">
-                <property name="font">
-                 <font>
-                  <pointsize>16</pointsize>
-                 </font>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
-                </property>
-                <property name="text">
-                 <string>G</string>
                 </property>
                 <attribute name="buttonGroup">
                  <string notr="true">btnGrpBin</string>
@@ -657,32 +1004,10 @@ width: 24px;  height: 24px;
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>H</string>
-                </property>
-                <attribute name="buttonGroup">
-                 <string notr="true">btnGrpBin</string>
-                </attribute>
-               </widget>
-              </item>
-              <item row="0" column="4">
-               <widget class="QSttCheckBox" name="m_cbBinE4">
-                <property name="font">
-                 <font>
-                  <pointsize>16</pointsize>
-                 </font>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
-                </property>
-                <property name="text">
-                 <string>E</string>
                 </property>
                 <attribute name="buttonGroup">
                  <string notr="true">btnGrpBin</string>
@@ -695,8 +1020,44 @@ width: 24px;  height: 24px;
                  <string>逻辑与</string>
                 </property>
                 <property name="checked">
-                 <bool>true</bool>
+                 <bool>false</bool>
                 </property>
+               </widget>
+              </item>
+              <item row="0" column="4">
+               <widget class="QSttCheckBox" name="m_cbBinE4">
+                <property name="font">
+                 <font>
+                  <pointsize>16</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="text">
+                 <string>E</string>
+                </property>
+                <attribute name="buttonGroup">
+                 <string notr="true">btnGrpBin</string>
+                </attribute>
+               </widget>
+              </item>
+              <item row="0" column="6">
+               <widget class="QSttCheckBox" name="m_cbBinG6">
+                <property name="font">
+                 <font>
+                  <pointsize>16</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="text">
+                 <string>G</string>
+                </property>
+                <attribute name="buttonGroup">
+                 <string notr="true">btnGrpBin</string>
+                </attribute>
                </widget>
               </item>
              </layout>
@@ -722,9 +1083,7 @@ width: 24px;  height: 24px;
                    </font>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                   <string notr="true"/>
                   </property>
                   <property name="text">
                    <string>4</string>
@@ -742,9 +1101,7 @@ width: 24px;  height: 24px;
                    </font>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                   <string notr="true"/>
                   </property>
                   <property name="text">
                    <string>1</string>
@@ -762,9 +1119,7 @@ width: 24px;  height: 24px;
                    </font>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                   <string notr="true"/>
                   </property>
                   <property name="text">
                    <string>3</string>
@@ -782,9 +1137,7 @@ width: 24px;  height: 24px;
                    </font>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                   <string notr="true"/>
                   </property>
                   <property name="text">
                    <string>2</string>
@@ -815,9 +1168,7 @@ width: 24px;  height: 24px;
                    </font>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                   <string notr="true"/>
                   </property>
                   <property name="text">
                    <string>2</string>
@@ -835,9 +1186,7 @@ width: 24px;  height: 24px;
                    </font>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                   <string notr="true"/>
                   </property>
                   <property name="text">
                    <string>4</string>
@@ -855,9 +1204,7 @@ width: 24px;  height: 24px;
                    </font>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                   <string notr="true"/>
                   </property>
                   <property name="text">
                    <string>1</string>
@@ -875,9 +1222,7 @@ width: 24px;  height: 24px;
                    </font>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">QCheckBox::indicator {  
-width: 24px;  height: 24px;
-}</string>
+                   <string notr="true"/>
                   </property>
                   <property name="text">
                    <string>3</string>
@@ -910,16 +1255,16 @@ width: 24px;  height: 24px;
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="m_btnEstimate">
+            <widget class="QPushButton" name="m_btnMoreOut">
              <property name="text">
-              <string>整定及结果评估</string>
+              <string>更多开出量设置</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="m_btnMoreOut">
+            <widget class="QPushButton" name="m_btnEstimate">
              <property name="text">
-              <string>更多开出量设置</string>
+              <string>整定及结果评估</string>
              </property>
             </widget>
            </item>
@@ -935,14 +1280,25 @@ width: 24px;  height: 24px;
  </widget>
  <customwidgets>
   <customwidget>
+   <class>QSttTabWidget</class>
+   <extends>QTabWidget</extends>
+   <header>../Module/UI/Controls/SttTabWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QSttLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>../Module/UI/Controls/SttLineEdit.h</header>
+  </customwidget>
+  <customwidget>
    <class>QSttCheckBox</class>
    <extends>QCheckBox</extends>
    <header>../Module/UI/Controls/SttCheckBox.h</header>
   </customwidget>
   <customwidget>
-   <class>QSttLineEdit</class>
+   <class>QSettingLineEdit</class>
    <extends>QLineEdit</extends>
-   <header location="global">../Module/UI/Controls/SttLineEdit.h</header>
+   <header>../Module/UI/Controls/SettingCtrls/QSettingLineEdit.h</header>
   </customwidget>
   <customwidget>
    <class>QScrollComboBox</class>
@@ -951,12 +1307,6 @@ width: 24px;  height: 24px;
    <slots>
     <slot>on_FaultMode_currentIndexChanged(int)</slot>
    </slots>
-  </customwidget>
-  <customwidget>
-   <class>QSttTabWidget</class>
-   <extends>QTabWidget</extends>
-   <header>../Module/UI/Controls/SttTabWidget.h</header>
-   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

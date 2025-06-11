@@ -16,8 +16,8 @@ public:
 	
 	void UpdateTables();
 
-	virtual void setUAmpMaxMinValue();
-	virtual void setIAmpMaxMinValue();
+	virtual void setUAmpMaxMinValue(bool bCanUpdateTable);
+	virtual void setIAmpMaxMinValue(bool bCanUpdateTable);
 	virtual void setUAmpEDValue(float fUEDVal);
 	virtual void setIAmpEDValue(float fIEDVal);
 	
@@ -25,8 +25,9 @@ public:
 	virtual void setChannelTableItemValue_Sequence(QString str,float fstep,int valueFlag,int AddOrMinus);//序分量表格值改变  20230209
 	
 	virtual void initUI(CSttTestResourceBase *pSttTestResource);
-	virtual void initData();
+	virtual void initData(bool bCanUpdateTable);
 	virtual void Release();
+	virtual void SetParaSetSecondValue(int nParaSetSecondValue);
 
 //	void GetUIMaxMinValue(double& dUMin,double& dUMax,double& dIMin,double& dIMax); zhouhj 20220819 该函数未用到删除
 	void UpdateValidTableDatas();

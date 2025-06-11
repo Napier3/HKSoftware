@@ -1,5 +1,5 @@
 #include "QCIFeatureAddDig.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../../XLangResource_Native.h"
 
 QCIFeatureAddDig::QCIFeatureAddDig(const CString &strCharLibPath,QWidget *parent)

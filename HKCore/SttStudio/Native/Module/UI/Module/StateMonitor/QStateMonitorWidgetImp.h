@@ -12,8 +12,8 @@ public:
 	explicit QStateMonitorWidgetImp(QWidget *parent=0);
 	~QStateMonitorWidgetImp();
 
-public:
-	virtual void showEvent(QShowEvent *);
+// public:
+// 	virtual void showEvent(QShowEvent *);
 
 protected:
 	QStateMonitorWidget *m_pStateMonitor;
@@ -23,7 +23,6 @@ protected:
 	int m_nType;
 	bool m_bStart;
 	QWidget* m_pConnectWidget;
-
 //////////////////////////////////////////////////////////////////////////
 public://CSttRtDataChangeEvent
 	virtual void OnRtDataChanged();//抽象虚函数,实现收到实时数据后的处理
@@ -37,11 +36,21 @@ public:
 	virtual void UpdateLocalTime(double dLocalTime);
 	virtual void UpdateStateMonitorChs();
 	void SetSingle(bool bSingle);
-	void SetPlotDigitMaxMinValue();
+// 	void SetPlotDigitMaxMinValue(int nChangedType);
+	void SetPlotDigitMaxMinValue( int nChangedType,double fUMin,double fUMax,double fIMin,double fIMax );//20241030 suyang 设置状态图电压电流大小
+	double m_dUMin,m_dUMax,m_dIMin,m_dIMax;
+	void SetParaSetSecondValue(int nParaSetSecondValue);
+	int m_nParaSetSecondValue;
 
 private:
 	void SetSingle();
 	void InitStateMonitor();
+
+//2024-9-10 lijunqing 优化系统程序启动的效率
+protected:
+	bool m_bHasInitFinished;  //是否已经初始化完成，没有初始化，不能进行操作
+	virtual void showEvent(QShowEvent *event);
+	void InitStateMonitorWidget();
 
 };
 

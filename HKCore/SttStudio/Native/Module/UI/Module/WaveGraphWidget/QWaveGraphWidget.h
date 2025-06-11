@@ -4,9 +4,9 @@
 #include <QWidget>
 #include <QLabel>
 #include <QPushButton>
-//#include "../../Module/SttXTestMngrBaseApp.h"
-#include "../../Module/Record/Draw/ViewAnalyse.h"
-#include "../../Module/Record/RecordTest/RecordTest.h"
+//#include "../../../Module/SttXTestMngrBaseApp.h"
+#include "../../../Module/Record/Draw/ViewAnalyse.h"
+#include "../../../Module/Record/RecordTest/RecordTest.h"
 #include "../Module/ReplayTest/SttModuleChComtradeBind.h"
 
 class CWnd_WaveGraph;
@@ -50,6 +50,7 @@ public:
 	void UpdateDeleteWaveBackColor(double nValue1,double nValue2);//更新删除底色
 	bool m_bInsertWaveformBackColor;//是否有需要波形编辑插入底色
 	bool m_bDeleteWaveformBackColor;//是否有需要波形编辑删除底色
+	void UpdateButtonEnable(BOOL bState);
 
 private:
 	CRecordTest *m_pReplayRecordTest;

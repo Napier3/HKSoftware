@@ -10,7 +10,7 @@
 #include "../Module/SttTest/Common/tmt_common_def.h"
 #include "../Module/SttTestResourceMngr/TestResource/SttTestResourceBase.h"
 
-#include "../../Module/BaseClass/ExBaseList.h"
+#include "../../../Module/BaseClass/ExBaseList.h"
 #include "../ScrollCtrl/ScrollTableWidget.h"
 #include "../CommonCtrl_QT/CommonCtrlInterface.h"
 
@@ -43,11 +43,12 @@ public:
 	virtual void UpdateTable();
 
 	void setMacroType(int type){ m_MacroType = type; }
-	virtual void setTableData(tmt_channel *pArrUI);
+	virtual void setTableData(tmt_channel *pArrUI, bool bCanUpdateTable);
 	void setHarmIndex(int *pnHarmIndex);//20220819 zhouhj 增加用于手动谐波界面
 	
 	float getItemValue(int row,int col);
-	void setAmpMaxMinValue(float fmax,float fmin);
+	void setAmpMaxMinValue(float fmax,float fmin, bool bCanUpdateTable);  //2024-9-11 lijunqing 优化系统程序启动的效率  bool bCanUpdateTable
+	void setMultAmpMaxMinValue(float fmax[], float fmin[]);
 	void setAmpEDValue(float fEDValue);
 	
 	void setColumnWidthByNum(int col,int width);
@@ -64,6 +65,9 @@ public:
 //#endif
 
 	BOOL m_bRunning;
+
+	int m_nParaSetSecondValue;
+	void setHeaderOfTable(QStringList strheader);
 
 protected:
 	int GetHarmIndex();
@@ -152,6 +156,8 @@ public:
 
 	float m_fAmpMax;
 	float m_fAmpMin;
+	float m_fMultAmpMax[MAX_VOLTAGE_COUNT];//add wangtao 20240828 通用实验-功率根据每个通道的功率限制对应电压大小
+	float m_fMultAmpMin[MAX_VOLTAGE_COUNT];
 	float m_fEDVal;
 
 	int m_nRowHeight;
@@ -171,6 +177,10 @@ public:
 
 	bool HasHarmParaset();
 	int getChIndexByChName( const CString & strChName );
+	BOOL IsDevModel();
+
+	//比较四相之和是否大于10A
+	BOOL CompareMoudleIAmp(float fValue,int nRow,int nFlag);//nFlag 0幅值1相位
 };
 
 #endif // CHANNELTABLE_H

@@ -6,8 +6,9 @@
 #include <QComboBox>
 #include <QTableWidget>
 #include "../../SttTest/Common/Impedance/tmt_manuImped_test.h"
+#include "../Module/ScrollCtrl/ScrollTableWidget.h"
 
-class ImpedanceEstimateGrid : public QTableWidget
+class ImpedanceEstimateGrid : public  QScrollTableWidget //public QTableWidget//20240808 gongyiping
 {
 	Q_OBJECT
 public:
@@ -16,10 +17,15 @@ public:
 
 	virtual void InitGrid();
 	virtual void EnableRow(long nIndex, BOOL bEnabled = TRUE);
+	void SetItemEnable(int nRow, int nCol, BOOL bEnable);
 	virtual void InitData(tmt_ManualImpedParas* pParas);
 	void CbbErrorType(int nIndex, CString strText);
 	void ComboxModelStyle(QComboBox *pCombox);
 
+	BOOL m_bRunning;
+	bool eventFilter(QObject *obj, QEvent *event);
+	virtual void mousePressEvent(QMouseEvent *);
+	void SetOrGetErrorType(QComboBox *pComboBox, long &nErrorLogic, bool bSetMode);//第三参数 true - 设置  false - 获取
 
 private:
 	QComboBox* NewErrorType();

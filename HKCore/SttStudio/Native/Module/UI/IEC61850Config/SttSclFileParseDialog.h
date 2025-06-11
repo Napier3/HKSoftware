@@ -10,10 +10,10 @@
 #include <QGridLayout>
 #include <QSplitter>
 #include <QLabel>
-#include "../../61850/Module/CfgDataMngr/IecCfgDatasMngr.h"
-#include "../../61850/Module/SCL/SclIecCfgDatas.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgDatasMngr.h"
+#include "../../../61850/Module/SCL/SclIecCfgDatas.h"
 #include "../Controls/SttLineEdit.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "SttSclCtrlsWidget.h"
 //#include "./SCDView/SttSclIedViewWidget.h"
 #include <QToolButton>

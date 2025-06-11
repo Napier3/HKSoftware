@@ -8,8 +8,8 @@
 #include <qwt.h>
 #include <qwt_plot_multi_barchart.h>
 #include "SttIecSmvDiscretChartAxis.h"
-#include "../../../../Module/SmartCap/61850Cap/CapDevice/CapDeviceBase.h"
-#include "../../../../Module/SmartCap/61850Cap/CapDevice/CapDevice92.h"
+#include "../../../Module/SmartCap/61850Cap/CapDevice/CapDeviceBase.h"
+#include "../../../Module/SmartCap/61850Cap/CapDevice/CapDevice92.h"
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #define DISCRETCHARCOLUMN 7 //柱形图柱子个数

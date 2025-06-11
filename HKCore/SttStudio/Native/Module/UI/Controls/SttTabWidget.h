@@ -3,7 +3,7 @@
 
 #include <QTabWidget>
 #include <QTabBar>
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 
 const CString g_strQTabWidgetStyleSheet = _T("QTabBar::tab { ""min-height: 40px;"
 

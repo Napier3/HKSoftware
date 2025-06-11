@@ -13,6 +13,12 @@
 #include <QMenu>
 #include <QPushButton>
 
+#ifdef _PSX_QT_LINUX_
+#include <pthread.h>
+#else
+#include <QMutex>
+#endif
+
 #include "../CommonMethod/commonMethod.h"
 #include "../Module/SttTestBase/SttComplexp.h"
 #include "../ScrollCtrl/ScrollTableWidget.h"
@@ -72,6 +78,7 @@ class Diagram : public QWidget
 	Q_OBJECT
 public:
 	explicit Diagram(QWidget *parent = 0);
+    virtual ~Diagram();
 	void initTable(int RowNum);
 	void updateTable();
 	void setSize(int m_Height,int m_Width);
@@ -99,6 +106,7 @@ public:
 	void setPbnDisp(bool b);
 	void setlabNumText(QString str);
 	void InsertNewLineOfTable(QStringList str,bool bUse);//20211020 sf 复压闭锁 用其他不用
+	void setUnitOfTable(QStringList str);//20240918 suyang 设置一次/二次值单位转换显示
 
 protected:
 	void mousePressEvent(QMouseEvent *event);
@@ -108,6 +116,11 @@ public:
 	int m_PicWidth;
 	static int m_l;
 	static float m_a;
+//#ifdef USE_pthread_mutex_lock//zhouhj 2025.1.10 在Linux下采用此方式,避免锁死
+//    pthread_mutex_t m_oMutex_Diagram;
+//#else
+//	QMutex m_oMutex_Diagram;//zhouhj 2025.1.10 从全局变量改为成员变量
+//#endif
 	QVector<LineInfo> m_LineVector;
 	float GetDistance(float flStartx,float flStarty,float flEndx,float flEndy);
 
@@ -179,7 +192,7 @@ public:
 	QLabel *m_btnInstruction;
 
 	bool m_bhasRadio;
-	int m_UnitDispMode;
+	int m_nParaSetSecondValue;
 
 	int m_nRowNum;
 

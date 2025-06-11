@@ -1,7 +1,7 @@
 #include "IecCfgSmvRateGrid.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgSmvRate.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgSmvRate.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../../Module/CommonMethod/commonMethod.h"
 #include "../../SttTestCntrFrameBase.h"
 
@@ -48,7 +48,16 @@ void CIecCfgSmvRateGrid::ShowData(CExBaseObject *pData, int& nRow, BOOL bInsertR
 	}
 
 	CIecCfgSmvRate *pIecCfgSmvRate = (CIecCfgSmvRate*)pData;
-	Show_StaticString(pData,nRow,0,&pIecCfgSmvRate->m_strName);
+	//Show_StaticString(pData,nRow,0,&pIecCfgSmvRate->m_strName);
+	CString strTempValue = pIecCfgSmvRate->m_strName;
+	if (!xlang_IsCurrXLanguageChinese())//dingxy 20250121 英文环境下修改通道映射名称
+	{
+		if (strTempValue.Find(_T("U")) >= 0)
+		{
+			strTempValue.Replace(_T("U"), _T("V"));
+		}
+	}
+	Show_StaticString(pData, nRow, 0, &strTempValue/*pIecCfgSmvRate->m_strName*/);
 	Show_Float(pData,nRow,1,3,&pIecCfgSmvRate->m_fRate,1,EndEditCell_RateValue);
   	nRow++;
 }

@@ -7,9 +7,9 @@
 
 #include "stdafx.h"
 #include "SttMacroTestUI_TestMacroUIDB.h"
-#include "../../Module/API/GlobalConfigApi.h"
-#include "../../Module/XLanguage/XLanguageMngr.h"
-#include "../../Module/API/FileApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/XLanguage/XLanguageMngr.h"
+#include "../../../Module/API/FileApi.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE

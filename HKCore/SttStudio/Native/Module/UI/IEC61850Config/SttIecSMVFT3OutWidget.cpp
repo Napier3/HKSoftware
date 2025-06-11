@@ -5,9 +5,9 @@
 #include <QEvent>
 #include <QKeyEvent>
 #include "SttIecSMVFT3OtherSetDialog.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../XLangResource_Native.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../Module/CommonMethod/commonMethod.h"
 #include "../Module/ScrollCtrl/ScrollComboBox.h"
 //#include "../SttTestCntrFrameBase.h"
@@ -116,7 +116,8 @@ void QSttIecSMVFT3OutWidget::CreateToolbar()
 	m_pSMVFT3OutFirstHLayout->addWidget(m_pPkgTypeSel_Label);
 	m_pSMVFT3OutFirstHLayout->addWidget(m_pPkgTypeSelCombox);
 
-	m_pCRC_Label =new QLabel("CRC类型选择",this);
+	xlang_GetLangStrByFile(strTemp,"Gradient_CRCCheck");//CRC类型选择
+	m_pCRC_Label =new QLabel(strTemp,this);
 	m_pCRC_ComboBox = new QComboBox(this);
 	m_pSMVFT3OutFirstHLayout->addWidget(m_pCRC_Label);
 	m_pSMVFT3OutFirstHLayout->addWidget(m_pCRC_ComboBox);
@@ -190,8 +191,8 @@ void QSttIecSMVFT3OutWidget::InitData(CIecCfgDatasBase* pIecCfgDatasBase)
 		m_pCRC_ComboBox->show();
 		m_pCRC_Label->show();
 		m_pCRC_ComboBox->clear();
-		m_pCRC_ComboBox->insertItem(STT_IEC_SMVFT3_CRC_16BYTE_VERIFICATION,"标准16字节校验");
-		m_pCRC_ComboBox->insertItem(STT_IEC_SMVFT3_CRC_END_VERIFICATION,"报文末尾校验");
+        m_pCRC_ComboBox->insertItem(STT_IEC_SMVFT3_CRC_16BYTE_VERIFICATION,"标准16字节校验");
+        m_pCRC_ComboBox->insertItem(STT_IEC_SMVFT3_CRC_END_VERIFICATION,"报文末尾校验");
 		//m_pCRC_ComboBox->setCurrentIndex(STT_IEC_SMVFT3_CRC_16BYTE_VERIFICATION);
 
 		int nCrcIndex = pIecCfgDatasSMV->m_nFT3CRCType;
@@ -209,9 +210,25 @@ void QSttIecSMVFT3OutWidget::InitData(CIecCfgDatasBase* pIecCfgDatasBase)
 	}
 	else /*if(g_oSystemParas.m_nIecFormat == STT_IEC_FORMAT_60044_8)*/
 	{
-	CString strPath;
+		disconnect(m_pPkgTypeSelCombox,SIGNAL(currentIndexChanged(int)),this,SLOT(slot_CurrentPkgTypeSelChanged(int)));
+		CString strPath,strCurrLanguageID;
+		strCurrLanguageID = xlang_GetCurrLanguageID();
 	strPath = _P_GetConfigPath();
+
+		if (strCurrLanguageID == _T("English"))
+		{
+			strPath += _T("FT3Cfg-English/Pub/FT3_PkgTemplates.xml");
+		}
+		else if (strCurrLanguageID == _T("Russian"))
+		{
+			strPath += _T("FT3Cfg-Russian/Pub/FT3_PkgTemplates.xml");
+		}
+		else
+		{
 	strPath += _T("FT3Cfg/Pub/FT3_PkgTemplates.xml");
+
+		}
+
 
 	if (IsFileExist(strPath))
 	{
@@ -433,13 +450,19 @@ void QSttIecSMVFT3OutWidget::slot_CurrentPkgTypeSelChanged(int nIndex)
 		return;
 	}
 
+	//报文类型切换需要把拷贝内容null,同一个报文类型下才能拷贝
+	//报文类型为空，只有添加按钮开放
+	m_pCopy_IecCfgDataRef = NULL;
+
 	m_pIecCfgDatasSMVCopy->RemoveAll();
-	m_pIecCfgDatasBase->Copy(m_pIecCfgDatasSMVCopy);
-	UpdateDates(m_pIecCfgDatasSMVCopy);
-	m_pIecCfgDatasSMVCopy->Copy(m_pIecCfgDatasBase);
+	//m_pIecCfgDatasBase->Copy(m_pIecCfgDatasSMVCopy);
+	UpdateDates((CIecCfgDatasSMV*)m_pIecCfgDatasBase);
+	//m_pIecCfgDatasSMVCopy->Copy(m_pIecCfgDatasBase);
 
 	emit sig_UpdateCB_ChDatas(NULL);//更新控制块通道数据,切换时，有的标准是没有数据的，所以先将通道置为空
 	m_pIecCfgDataGridBase->ShowDatas(m_pIecCfgDatasBase);
+
+	UpDateEnableButtons();
 	update();
 }
 
@@ -569,17 +592,49 @@ CIecCfgDataBase* QSttIecSMVFT3OutWidget::AddNewIecCfgData()
 		return m_pIecCfgDatasBase->AddNewIecCfgData();
 	}
 	
-	CString strPath;
+	CString strPath,strCurrLanguageID;
+
+	strCurrLanguageID = xlang_GetCurrLanguageID();
+
+	strPath = _P_GetConfigPath();
+
 	if (g_oSystemParas.m_nIecFormat == STT_IEC_FORMAT_60044_8DC)
 	{
-		strPath = _P_GetConfigPath();
+	
+		if (strCurrLanguageID == _T("English"))
+		{
+			strPath += _T("FT3Cfg-English/Pub-DC/");
+		}
+		else if (strCurrLanguageID == _T("Russian"))
+		{
+			strPath += _T("FT3Cfg-Russian/Pub-DC/");
+		}
+		else
+		{
 		strPath += _T("FT3Cfg/Pub-DC/");
+
+		}
 	}
 	else if(g_oSystemParas.m_nIecFormat == STT_IEC_FORMAT_60044_8)
 	{
-	strPath = _P_GetConfigPath();
+		//strPath = _P_GetConfigPath();
+
+		
+		if (strCurrLanguageID == _T("English"))
+		{
+			strPath += _T("FT3Cfg-English/Pub/");
+		}
+		else if (strCurrLanguageID == _T("Russian"))
+		{
+			strPath += _T("FT3Cfg-Russian/Pub/");
+		}
+		else
+		{
 	strPath += _T("FT3Cfg/Pub/");
+
+		}
 	}
+
 	strPath += pDvmData->m_strValue;
 
 	if (!IsFileExist(strPath))

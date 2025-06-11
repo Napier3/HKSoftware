@@ -1,8 +1,9 @@
 #include "SttReplayWaveformEditWidget.h"
 #include "SttMacroParaEditViewTransPlay.h"
-#include "../../Module/OSInterface/QT/XMessageBox.h"
+#include "../../../Module/OSInterface/QT/XMessageBox.h"
 #include "../../ReplayTest/BigComtradeTransPlay.h"
-
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include"../Module/XLangResource_Native.h"
 
 SttReplayWaveformEditWidget::SttReplayWaveformEditWidget(QWidget *pParent)
 :QWidget(pParent)
@@ -11,13 +12,64 @@ SttReplayWaveformEditWidget::SttReplayWaveformEditWidget(QWidget *pParent)
 	initUI();	
 	InitWidget();
 	initSignalSlots();
-
+	InitLanuage();
+		
 	m_nWaveEditType = 0;
 }
 
 SttReplayWaveformEditWidget::~SttReplayWaveformEditWidget(void)
 {
 	
+}
+
+//241021  wangchao add language for ReplayTest 
+void SttReplayWaveformEditWidget::InitLanuage()
+{
+	CString strText;
+	xlang_GetLangStrByFile(strText, "Replay_OriWaveEdit");//原波形剪辑
+	ui.m_rb_WaveEdit->setText(strText);
+	xlang_GetLangStrByFile(strText, "Replay_InsertWaveParams");//插入常态波形
+	ui.m_rb_InsertWave->setText(strText);
+	xlang_GetLangStrByFile(strText, "Replay_WaveReset");//波形复归
+	ui.m_pb_Replay->setText(strText);
+	xlang_GetLangStrByFile(strText, "Replay_InsertNorWave");//插入常态波形
+	ui.m_rb_InsertWave->setText(strText);
+	xlang_GetLangStrByFile(strText, /*"Replay_WaveReset"*/"Replay_InsertWave");//波形复归改为插入波形
+	ui.m_Insert_GroupBox->setTitle(strText);
+	xlang_GetLangStrByFile(strText, "Replay_InsertWaveParams");//插入波形参考
+	ui.label->setText(strText);
+
+	if(g_theBigComtradeTransPlay->m_oComtradePlayConfig.m_oWaveEditParas.m_nInsertWaveType == INSERT_WAVE_TYPE_TIME)
+	{
+	//xlang_GetLangStrByFile(strText, "Initial_Time");//起始时刻
+    //xlang_GetLangStrByFile(strText, "End_Time");//终止时刻
+        ui.m_lb_InsertBegin->setText("起始时刻");
+         ui.label_2->setText("终止时刻");
+	}
+	else
+	{
+        ui.m_lb_InsertBegin->setText("g_sLangTxt_Replay_StartPointNumber");
+        ui.label_2->setText("g_sLangTxt_Replay_EndPointNumber");
+	}
+
+    ui.label_6->setText("起始时刻");
+    ui.label_4->setText("终止时刻");
+	xlang_GetLangStrByFile(strText, "Replay_NumCycles");//循环次数
+	ui.label_3->setText(strText/* + "(s)"*/);
+	xlang_GetLangStrByFile(strText, "Replay_InsertNorWave");//插入常态波形
+	ui.m_InsertNomal_GroupBox->setTitle(strText);
+	xlang_GetLangStrByFile(strText, "Replay_Voltage");//电压
+	ui.label_8->setText(strText);
+	xlang_GetLangStrByFile(strText, "Replay_Current");//电流
+	ui.label_5->setText(strText);
+	xlang_GetLangStrByFile(strText, "Replay_OutputTime");//输出时间
+	ui.label_7->setText(strText);
+	xlang_GetLangStrByFile(strText, "Replay_DeleteWave");//删除波形
+	ui.m_DeleteWave_GroupBox->setTitle(strText);
+	xlang_GetLangStrByFile(strText, "Replay_Delete");//删除
+	ui.m_pb_delete->setText(strText);
+	xlang_GetLangStrByFile(strText, "Replay_Insert");//插入
+	ui.m_pb_Insert->setText(strText);
 }
 
 void SttReplayWaveformEditWidget::initUI()
@@ -34,9 +86,9 @@ void SttReplayWaveformEditWidget::initUI()
 	ui.m_edt_InsertNormalVal->InitCoverage(0,999,3);
 	ui.m_edt_InsertNormaloutTime->InitCoverage(0,999,3);
 
-	CString strText = _T("时间");
+    CString strText = _T("g_sLangTxt_Replay_Time");
 	ui.m_Cbox_InsertType->addItem(strText);
-	strText = _T("点号");
+    strText = _T("g_sLangTxt_Replay_PointNumber");
 	ui.m_Cbox_InsertType->addItem(strText);
 
 	ui.m_Cbox_InsertType->setFont(*g_pSttGlobalFont);
@@ -238,12 +290,12 @@ void SttReplayWaveformEditWidget::slot_Insert_ZeroChanged()
 	if(nNewValue <= 0)
 	{
 		nNewValue = nCurValue;
-		CLogPrint::LogFormatString(XLOGLEVEL_WARNING, _T("波形最小点号为1，请重新输入！"));
+        CLogPrint::LogFormatString(XLOGLEVEL_WARNING, _T("波形最小点号为1，请重新输入！"));
 	}
 	else if(nNewValue > g_theBigComtradeTransPlay->m_oBigComtradeFileRead.GetTotalPointsNum())
 	{
 		nNewValue = g_theBigComtradeTransPlay->m_oBigComtradeFileRead.GetTotalPointsNum();
-		CLogPrint::LogFormatString(XLOGLEVEL_WARNING, _T("输入的起始点号/终点点号不能超出波形总点数[%d]，请重新输入！"),g_theBigComtradeTransPlay->m_oBigComtradeFileRead.GetTotalPointsNum());
+        CLogPrint::LogFormatString(XLOGLEVEL_WARNING, _T("输入的起始点号/终点点号不能超出波形总点数[%d]，请重新输入！"),g_theBigComtradeTransPlay->m_oBigComtradeFileRead.GetTotalPointsNum());
 	}
 	else if(nNewValue > nEnd)
 	{
@@ -267,17 +319,17 @@ void SttReplayWaveformEditWidget::slot_Insert_DestinationChanged()
 	if(nNewValue <= 0)
 	{
 		nNewValue = nCurValue;
-		CLogPrint::LogFormatString(XLOGLEVEL_WARNING, _T("波形最小点号为1，请重新输入！"));
+        CLogPrint::LogFormatString(XLOGLEVEL_WARNING, _T("波形最小点号为1，请重新输入！"));
 	}
 	else if(nNewValue > g_theBigComtradeTransPlay->m_oBigComtradeFileRead.GetTotalPointsNum())
 	{
 		nNewValue = g_theBigComtradeTransPlay->m_oBigComtradeFileRead.GetTotalPointsNum();
-		CLogPrint::LogFormatString(XLOGLEVEL_WARNING, _T("输入的起始点号/终止点号不能超出波形总点数[%d]，请重新输入！"),g_theBigComtradeTransPlay->m_oBigComtradeFileRead.GetTotalPointsNum());
+        CLogPrint::LogFormatString(XLOGLEVEL_WARNING, _T("输入的起始点号/终止点号不能超出波形总点数[%d]，请重新输入！"),g_theBigComtradeTransPlay->m_oBigComtradeFileRead.GetTotalPointsNum());
 	}
 	else if(nBegin > nNewValue)
 	{
 		nNewValue = nBegin;
-		CLogPrint::LogFormatString(XLOGLEVEL_WARNING, _T("输入的终止点号不能小于输入的起始点号[%d]，请重新输入！"),nBegin);
+        CLogPrint::LogFormatString(XLOGLEVEL_WARNING, _T("输入的终止点号不能小于输入的起始点号[%d]，请重新输入！"),nBegin);
 	}
 	g_theBigComtradeTransPlay->m_oComtradePlayConfig.m_oWaveEditParas.m_oInsertWaveData.m_nEndPoint = nNewValue;
 	ui.m_edt_InsertEnd->setText(QString::number(nNewValue));
@@ -291,7 +343,7 @@ void SttReplayWaveformEditWidget::slot_Insert_CycleIndexChanged()
 	if(dNewValue < 1)
 	{
 		dNewValue = dCurValue;
-		CLogPrint::LogFormatString(XLOGLEVEL_WARNING, _T("循环次数不能少于1次，请重新输入！"));
+        CLogPrint::LogFormatString(XLOGLEVEL_WARNING,_T("循环次数不能少于1次，请重新输入！"));
 	}
  	else
  	{
@@ -314,7 +366,7 @@ void SttReplayWaveformEditWidget::slot_Insert_OK()
 		{
 		if(dEnd <= dBegin)
 		{
-			CXMessageBox::information(this,_T("提示"),_T("插入起点不能小于或等于终止点号，请重新输入!"),QMessageBox::Yes);
+            CXMessageBox::information(this,_T("提示"),_T("插入起点不能小于或等于终止点号，请重新输入!"),QMessageBox::Yes);
 			return;
 		}		
 		g_pReplayTestMain->m_pWaveGraphWidget->m_bInsertWaveformBackColor = FALSE;
@@ -323,7 +375,7 @@ void SttReplayWaveformEditWidget::slot_Insert_OK()
 	{
 			if(nEnd <= nBegin)
 			{
-				CXMessageBox::information(this,_T("提示"),_T("插入起始点号不能小于或等于终止点号，请重新输入!"),QMessageBox::Yes);
+                CXMessageBox::information(this,_T("提示"),_T("插入起始点号不能小于或等于终止点号，请重新输入!"),QMessageBox::Yes);
 				return;
 			}
 		}	
@@ -359,7 +411,7 @@ void SttReplayWaveformEditWidget::slot_Delete_OK()
 
 	if(dEnd <= dBegin)
 	{
-		CXMessageBox::information(this,_T("提示"),_T("删除起点不能小于或等于终点，请重新输入!"),QMessageBox::Yes);
+        CXMessageBox::information(this,_T("提示"),_T("删除起点不能小于或等于终点，请重新输入!"),QMessageBox::Yes);
 		return;
 	}	
 	g_pReplayTestMain->m_pWaveGraphWidget->m_bDeleteWaveformBackColor = FALSE;
@@ -389,7 +441,7 @@ void SttReplayWaveformEditWidget::slot_Delete_ZeroChanged()
 			dCurValue = dRecordDataTimeLength;
 		}	
 		dNewValue = dCurValue;
-		CLogPrint::LogFormatString(XLOGLEVEL_WARNING, _T("输入的起点/终点不能超出总波形长度[%.3fs]，请重新输入！"),dRecordDataTimeLength);
+        CLogPrint::LogFormatString(XLOGLEVEL_WARNING, _T("输入的起点/终点不能超出总波形长度[%.3fs]，请重新输入！"),dRecordDataTimeLength);
 	}
 	else if(dNewValue > dEnd)
 	{
@@ -423,12 +475,12 @@ void SttReplayWaveformEditWidget::slot_Delete_DestinationChanged()
 			dCurValue = dRecordDataTimeLength;
 		}	
 		dNewValue = dCurValue;
-		CLogPrint::LogFormatString(XLOGLEVEL_WARNING, _T("输入的起点/终点不能超出总波形长度[%.3fs]，请重新输入！"),dRecordDataTimeLength);
+        CLogPrint::LogFormatString(XLOGLEVEL_WARNING, _T("输入的起点/终点不能超出总波形长度[%.3fs]，请重新输入！"),dRecordDataTimeLength);
 	}
 	else if(dBegin > dNewValue)
 	{
 		dNewValue = dBegin;
-		CLogPrint::LogFormatString(XLOGLEVEL_WARNING, _T("输入的终点不能小于输入的起点[%.3fs]，请重新输入！"),dBegin);
+        CLogPrint::LogFormatString(XLOGLEVEL_WARNING, _T("输入的终点不能小于输入的起点[%.3fs]，请重新输入！"),dBegin);
 	}
 	else
 	{
@@ -453,7 +505,7 @@ void SttReplayWaveformEditWidget::slot_InsertNormal_ValChanged()
 	// 确保插入的时间点在原来的时间范围内
 	if ((dNewValue* Ratio)>g_oLocalSysPara.m_fAC_VolMax)
 	{
-		CLogPrint::LogFormatString(XLOGLEVEL_ERROR,_T("当前输入的实际常态波形电压值(%f),大于测试仪最大输出电压(%f)."),dChangeValue,g_oLocalSysPara.m_fAC_VolMax);
+        CLogPrint::LogFormatString(XLOGLEVEL_ERROR,_T("当前输入的实际常态波形电压值(%f),大于测试仪最大输出电压(%f)."),dChangeValue,g_oLocalSysPara.m_fAC_VolMax);
 		dNewValue = dCurValue;
 	}
 	else
@@ -476,7 +528,7 @@ void SttReplayWaveformEditWidget::slot_InsertNormal_CurChanged()
 	// 确保插入的时间点在原来的时间范围内
 	if ((dNewValue* Ratio)>g_oLocalSysPara.m_fAC_CurMax)
 	{
-		CLogPrint::LogFormatString(XLOGLEVEL_ERROR,_T("当前输入的实际常态波形电流值(%f),大于测试仪最大输出电流(%f)."),dChangeValue,g_oLocalSysPara.m_fAC_CurMax);
+        CLogPrint::LogFormatString(XLOGLEVEL_ERROR,_T("当前输入的实际常态波形电流值(%f),大于测试仪最大输出电流(%f)."),dChangeValue,g_oLocalSysPara.m_fAC_CurMax);
 		dNewValue = dCurValue;
 	}
 	else
@@ -496,7 +548,7 @@ void SttReplayWaveformEditWidget::slot_InsertNormal_OutTimeChanged()
 	if(dNewValue >dTime)
 	{
 		dNewValue = dCurValue;
-		CLogPrint::LogFormatString(XLOGLEVEL_WARNING, _T("当前输出时间不能超出[%.3fs]，请重新输入！"),dTime);
+        CLogPrint::LogFormatString(XLOGLEVEL_WARNING, _T("当前输出时间不能超出[%.3fs]，请重新输入！"),dTime);
 	}
 	else
 	{
@@ -522,7 +574,7 @@ BOOL SttReplayWaveformEditWidget::VaildWaveOverlap()
 	// 检查重叠
 	if (!(dInsertEnd <= dDeleteBegin || dInsertBegin >= dDeleteEnd)) 
 	{
-		CXMessageBox::warning(this, "错误", "插入与删除时间段重叠，请重新选择时间！");
+        CXMessageBox::warning(this,"错误","插入与删除时间段重叠，请重新选择时间！");
 		return FALSE;
 	}
 	return TRUE;
@@ -553,9 +605,9 @@ void SttReplayWaveformEditWidget::UpdateInsertTypeWidgetChange( int nType )
 		connect(ui.m_edt_InsertEnd, SIGNAL(editingFinished()), this, SLOT(slot_Insert_EndTimeChanged()));
 		ui.m_edt_InsertBegin->InitCoverage(0,999,3);
 		ui.m_edt_InsertEnd->InitCoverage(0,999,3);
-        strText = _T("起始时刻（s）：");
+        strText = _T("g_sLangTxt_Replay_StartTime");
 		ui.m_lb_InsertBegin->setText(strText);
-        strText = _T("终止时刻（s）：");
+        strText = _T("g_sLangTxt_Replay_EndTime");
 		ui.label_2->setText(strText);
 		ui.m_edt_InsertBegin->setText(QString::number(g_theBigComtradeTransPlay->m_oComtradePlayConfig.m_oWaveEditParas.m_oInsertWaveData.m_dBegin,'f',3));
 		ui.m_edt_InsertEnd->setText(QString::number(g_theBigComtradeTransPlay->m_oComtradePlayConfig.m_oWaveEditParas.m_oInsertWaveData.m_dEnd,'f',3));
@@ -566,9 +618,9 @@ void SttReplayWaveformEditWidget::UpdateInsertTypeWidgetChange( int nType )
 		connect(ui.m_edt_InsertEnd, SIGNAL(editingFinished()), this, SLOT(slot_Insert_DestinationChanged()));
 		ui.m_edt_InsertBegin->InitCoverage(0,9999999,0);
 		ui.m_edt_InsertEnd->InitCoverage(0,9999999,0);
-        strText = _T("起始点号：");
+        strText = _T("g_sLangTxt_Replay_StartPointNumber");
 		ui.m_lb_InsertBegin->setText(strText);
-        strText = _T("终止点号：");
+        strText = _T("g_sLangTxt_Replay_EndPointNumber");
 		ui.label_2->setText(strText);
 		ui.m_edt_InsertBegin->setText(QString::number(g_theBigComtradeTransPlay->m_oComtradePlayConfig.m_oWaveEditParas.m_oInsertWaveData.m_nBeginPoint));
 		ui.m_edt_InsertEnd->setText(QString::number(g_theBigComtradeTransPlay->m_oComtradePlayConfig.m_oWaveEditParas.m_oInsertWaveData.m_nEndPoint));
@@ -596,7 +648,7 @@ void SttReplayWaveformEditWidget::slot_Insert_BeginTimeChanged()
 			dCurValue = dRecordDataTimeLength;
 		}		
 		dNewValue = dCurValue;
-		CLogPrint::LogFormatString(XLOGLEVEL_WARNING, _T("输入的起点/终点不能超出总波形长度[%.3fs]，请重新输入！"),dRecordDataTimeLength);
+        CLogPrint::LogFormatString(XLOGLEVEL_WARNING, _T("输入的起点/终点不能超出总波形长度[%.3fs]，请重新输入！"),dRecordDataTimeLength);
 	}
 	else if(dNewValue > dEnd)
 	{
@@ -627,12 +679,12 @@ void SttReplayWaveformEditWidget::slot_Insert_EndTimeChanged()
 			dCurValue = dRecordDataTimeLength;
 		}	
 		dNewValue = dCurValue;
-		CLogPrint::LogFormatString(XLOGLEVEL_WARNING, _T("输入的起点/终点不能超出总波形长度[%.3fs]，请重新输入！"),g_pReplayTestMain->m_pWaveGraphWidget->m_dRecordDataTimeLength);
+        CLogPrint::LogFormatString(XLOGLEVEL_WARNING, _T("输入的起点/终点不能超出总波形长度[%.3fs]，请重新输入！"),g_pReplayTestMain->m_pWaveGraphWidget->m_dRecordDataTimeLength);
 	}
 	else if(dBegin > dNewValue)
 	{
 		dNewValue = dBegin;
-		CLogPrint::LogFormatString(XLOGLEVEL_WARNING, _T("输入的终点不能小于输入的起点[%.3fs]，请重新输入！"),dBegin);
+        CLogPrint::LogFormatString(XLOGLEVEL_WARNING, _T("输入的终点不能小于输入的起点[%.3fs]，请重新输入！"),dBegin);
 	}
 	else
 	{

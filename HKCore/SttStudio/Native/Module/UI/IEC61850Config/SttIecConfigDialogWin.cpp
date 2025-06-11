@@ -122,6 +122,11 @@ void QSttIecConfigDialogWin::CreateNavigationTree(long nTotalFiberNum_LC , long 
 	m_IecConfigNavigationTree->header()->setVisible(false);
 	//m_IecConfigNavigationTree->setFont(m_oIecFont);
 	
+	bool bIsEnabled = FALSE;
+	if (g_oSystemParas.m_nIecFormat == 0)
+	{
+		 bIsEnabled = TRUE;
+	}
 	//2022-11-22  sy checkbox换成图片
 	CString strStyleSheet;
 #ifndef _PSX_QT_WINDOWS_
@@ -165,7 +170,15 @@ void QSttIecConfigDialogWin::CreateNavigationTree(long nTotalFiberNum_LC , long 
 	astrItemDesc<<strTemp;
 	QTreeWidgetItem *pChildItem = new QTreeWidgetItem(astrItemDesc,STT_IECCONFIG_TREE_LEVEL_SECOND);
 // 	pChildItem->setCheckState(0, Qt::Checked);
-	pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable);//2023-12-28 suyang 取消树形控件勾选框
+
+	if(bIsEnabled)
+	{
+		pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable| Qt::ItemIsEnabled);//2023-12-28 suyang 取消树形控件勾选框
+	}
+	else
+	{
+		pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable & ~Qt::ItemIsEnabled);
+	}
 
 	if (nTotalFiberNum_LC > 0)
 	{
@@ -174,7 +187,10 @@ void QSttIecConfigDialogWin::CreateNavigationTree(long nTotalFiberNum_LC , long 
 	m_pIecSMV92OutWidget = new QSttIecSMV92Widget(m_oIecFont,m_pIecConfigRightStackedWidget);
 //	m_pIecSMV92OutWidget->setFont(m_oIecFont);
 	m_pIecConfigRightStackedWidget->addWidget(m_pIecSMV92OutWidget);
+	if (bIsEnabled)
+	{
 	m_oTreeStackedWidgetHash.insert(pChildItem ,(m_pIecConfigRightStackedWidget->count()-1));
+	}
 	m_oRightStackedWidgetList.append(m_pIecSMV92OutWidget);
 
 	m_pSttIecChsEdit92OutWidget = new QSttIecChsEditWidget(STT_IEC_CHS_TYPE_SMV92);
@@ -187,15 +203,27 @@ void QSttIecConfigDialogWin::CreateNavigationTree(long nTotalFiberNum_LC , long 
 	astrItemDesc<<strTemp;
 	pChildItem = new QTreeWidgetItem(astrItemDesc,STT_IECCONFIG_TREE_LEVEL_SECOND);
 // 	pChildItem->setCheckState(0, Qt::Checked);
-	pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable);//2023-12-28 suyang 取消树形控件勾选框
+	//pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable);//2023-12-28 suyang 取消树形控件勾选框
+	if(bIsEnabled)
+	{
+		pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable & ~Qt::ItemIsEnabled);//2023-12-28 suyang 取消树形控件勾选框
+	}
+	else
+	{
+		pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
+	}
 
+	
 	if (nTotalFiberNum_STSend > 0)
 	{
 	pQTreeTopItem->addChild(pChildItem);
 	}
 	m_pIecSMVFT3OutWidget = new QSttIecSMVFT3OutWidget(m_oIecFont,m_pIecConfigRightStackedWidget);
 	m_pIecConfigRightStackedWidget->addWidget(m_pIecSMVFT3OutWidget);
+	if (!bIsEnabled)
+	{
 	m_oTreeStackedWidgetHash.insert(pChildItem ,(m_pIecConfigRightStackedWidget->count()-1));
+	}
 	m_oRightStackedWidgetList.append(m_pIecSMVFT3OutWidget);
 
 	m_pSttIecChsEditFT3OutWidget = new QSttIecChsEditWidget(STT_IEC_CHS_TYPE_SMV_FT3OUT);
@@ -218,8 +246,16 @@ void QSttIecConfigDialogWin::CreateNavigationTree(long nTotalFiberNum_LC , long 
 	astrItemDesc<<strTemp;
 	pChildItem = new QTreeWidgetItem(astrItemDesc,STT_IECCONFIG_TREE_LEVEL_SECOND);
 // 	pChildItem->setCheckState(0, Qt::Checked);
-	pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable);//2023-12-28 suyang 取消树形控件勾选框
+	//pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable);//2023-12-28 suyang 取消树形控件勾选框
 
+	if(bIsEnabled)
+	{
+		pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable| Qt::ItemIsEnabled);//2023-12-28 suyang 取消树形控件勾选框
+	}
+	else
+	{
+		pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable & ~Qt::ItemIsEnabled);
+	}
 	if (nTotalFiberNum_LC > 0)
 	{
 	pQTreeTopItem->addChild(pChildItem);
@@ -227,7 +263,10 @@ void QSttIecConfigDialogWin::CreateNavigationTree(long nTotalFiberNum_LC , long 
 	m_pIecSMV92InWidget = new QSttIecSMV92InWidget(m_oIecFont,m_pIecConfigRightStackedWidget);
 //	m_pIecSMV92InWidget->setFont(m_oIecFont);
 	m_pIecConfigRightStackedWidget->addWidget(m_pIecSMV92InWidget);
+	if (bIsEnabled)
+	{
 	m_oTreeStackedWidgetHash.insert(pChildItem ,(m_pIecConfigRightStackedWidget->count()-1));
+	}
 	m_oRightStackedWidgetList.append(m_pIecSMV92InWidget);  
 
 	m_pSttIecChsEdit92InWidget = new QSttIecChsEditWidget(STT_IEC_CHS_TYPE_SMV92IN);
@@ -239,7 +278,16 @@ void QSttIecConfigDialogWin::CreateNavigationTree(long nTotalFiberNum_LC , long 
 	strTemp = tr("FT3");
 	astrItemDesc<<strTemp;
 	pChildItem = new QTreeWidgetItem(astrItemDesc,STT_IECCONFIG_TREE_LEVEL_SECOND);
-	pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable);//2023-12-28 suyang 取消树形控件勾选框
+	//pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable);//2023-12-28 suyang 取消树形控件勾选框
+	if(bIsEnabled)
+	{
+		pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable & ~Qt::ItemIsEnabled);//2023-12-28 suyang 取消树形控件勾选框
+
+	}
+	else
+	{
+		pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
+	}
 
 // 	pChildItem->setCheckState(0, Qt::Checked);
 	if (nTotalFiberNum_STSend > 0)
@@ -249,7 +297,10 @@ void QSttIecConfigDialogWin::CreateNavigationTree(long nTotalFiberNum_LC , long 
 	}
 	m_pIecSMVFT3InWidget = new QSttIecSMVFT3InWidget(m_oIecFont,m_pIecConfigRightStackedWidget);
 	m_pIecConfigRightStackedWidget->addWidget(m_pIecSMVFT3InWidget);
+	if (!bIsEnabled)
+	{
 	m_oTreeStackedWidgetHash.insert(pChildItem ,(m_pIecConfigRightStackedWidget->count()-1));
+	}
 	m_oRightStackedWidgetList.append(m_pIecSMVFT3InWidget);
 
 	m_pSttIecChsEditFT3InWidget = new QSttIecChsEditWidget(STT_IEC_CHS_TYPE_SMV_FT3IN);
@@ -262,6 +313,14 @@ void QSttIecConfigDialogWin::CreateNavigationTree(long nTotalFiberNum_LC , long 
 	astrItemDesc<<strTemp;
 	pQTreeTopItem = new QTreeWidgetItem(astrItemDesc,STT_IECCONFIG_TREE_LEVEL_TOP);
 	pQTreeTopItem->setIcon(0,m_oIconTree);
+// 	if(bIsEnabled)
+// 	{
+// 		pQTreeTopItem->setFlags(pQTreeTopItem->flags() | Qt::ItemIsEnabled);
+// 	}
+// 	else
+// 	{
+// 		pQTreeTopItem->setFlags(pQTreeTopItem->flags() & ~Qt::ItemIsEnabled);
+// 	}
 	if (nTotalFiberNum_LC > 0)
 	{
 	m_IecConfigNavigationTree->addTopLevelItem(pQTreeTopItem);
@@ -270,7 +329,10 @@ void QSttIecConfigDialogWin::CreateNavigationTree(long nTotalFiberNum_LC , long 
 	m_pIecGoutWidget = new QSttIecGoutWidget(m_oIecFont,m_pIecConfigRightStackedWidget);
 // 	m_pIecGoutWidget->setFont(m_oIecFont);
 	m_pIecConfigRightStackedWidget->addWidget(m_pIecGoutWidget);
-	m_oTreeStackedWidgetHash.insert(pQTreeTopItem ,(m_pIecConfigRightStackedWidget->count()-1));
+// 	if (bIsEnabled)
+// 	{
+// 		m_oTreeStackedWidgetHash.insert(pQTreeTopItem ,(m_pIecConfigRightStackedWidget->count()-1));
+// 	}
 	m_oRightStackedWidgetList.append(m_pIecGoutWidget);
 
 	m_pSttIecChsEditGoutWidget = new QSttIecChsEditWidget(STT_IEC_CHS_TYPE_GOUT);
@@ -283,6 +345,14 @@ void QSttIecConfigDialogWin::CreateNavigationTree(long nTotalFiberNum_LC , long 
  	astrItemDesc<<strTemp;
  	pQTreeTopItem = new QTreeWidgetItem(astrItemDesc,STT_IECCONFIG_TREE_LEVEL_TOP);
 	pQTreeTopItem->setIcon(0,m_oIconTree);
+// 	if(bIsEnabled)
+// 	{
+// 		pQTreeTopItem->setFlags(pQTreeTopItem->flags() | Qt::ItemIsEnabled);
+// 	}
+// 	else
+// 	{
+// 		pQTreeTopItem->setFlags(pQTreeTopItem->flags() & ~Qt::ItemIsEnabled);
+// 	}
 	if (nTotalFiberNum_LC > 0)
 	{
  	m_IecConfigNavigationTree->addTopLevelItem(pQTreeTopItem);
@@ -292,8 +362,11 @@ void QSttIecConfigDialogWin::CreateNavigationTree(long nTotalFiberNum_LC , long 
  	m_pIecGinWidget = new QSttIecGinWidget(m_oIecFont,m_pIecConfigRightStackedWidget);
 // 	m_pIecGinWidget->setFont(m_oIecFont);
  	m_pIecConfigRightStackedWidget->addWidget(m_pIecGinWidget);
- 	m_oTreeStackedWidgetHash.insert(pQTreeTopItem ,(m_pIecConfigRightStackedWidget->count()-1));
-	
+// 	if (bIsEnabled)
+// 	{
+// 		m_oTreeStackedWidgetHash.insert(pQTreeTopItem ,(m_pIecConfigRightStackedWidget->count()-1));
+// 	}
+// 	
 	m_pSttIecChsEditGinWidget = new QSttIecChsEditWidget(STT_IEC_CHS_TYPE_GIN);
 	m_pSttIecChsEditGinWidget->setFont(m_oIecFont);
 	m_pSttIecChsEditStackedWidget->addWidget(m_pSttIecChsEditGinWidget);
@@ -337,6 +410,11 @@ void QSttIecConfigDialogWin::slot_TreeItemClicked(QTreeWidgetItem * pItem, int n
 {
 	if(pItem == NULL) 
 		return;
+
+	if ((pItem->flags() & Qt::ItemIsEnabled) == 0)
+	{
+		return;
+	}
 
 	QTreeWidgetItem *pCurSelItem = pItem;
 

@@ -17,7 +17,7 @@
 #include "../Controls/SttTabWidget.h"
 #include "../Controls/SttCheckBox.h"
 #include "../Controls/SttLineEdit.h"
-
+#include "../Controls/SettingCtrls/QSettingLineEdit.h"
 class QPowerManualWidget : public QWidget
 {
 	Q_OBJECT
@@ -38,7 +38,7 @@ public:
 	QScrollComboBox *m_pChSelect_ComboBox;
 	//QScrollComboBox *m_pChGradientType_ComboBox;//通道类型选择(幅值/相位/频率)
 	QLabel* m_pStepTime_Label; 
-	QSttLineEdit *m_pStepTime_LineEdit;
+	QSettingLineEdit *m_pStepTime_LineEdit;
 	QSttCheckBox *m_pAuto_CheckBox;
 
 	//2023/10/9 wjs 添加Widget，使“始值、终值、步长、变化方式“正常显示
@@ -52,13 +52,13 @@ public:
 
 
 	QLabel* m_pStartValue_Label; 
-	QSttLineEdit *m_pStartValue_LineEdit;
+	QSettingLineEdit *m_pStartValue_LineEdit;
 
 	QLabel* m_pEndValue_Label; 
-	QSttLineEdit *m_pEndValue_LineEdit;
+	QSettingLineEdit *m_pEndValue_LineEdit;
 
 	QLabel* m_pStepValue_Label; 
-	QSttLineEdit *m_pStepValue_LineEdit;
+	QSettingLineEdit *m_pStepValue_LineEdit;
 
 	QLabel* m_pChangedType_Label; 
 	QScrollComboBox *m_pChangedType_ComboBox;

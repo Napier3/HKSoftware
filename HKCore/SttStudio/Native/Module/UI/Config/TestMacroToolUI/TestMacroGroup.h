@@ -20,6 +20,7 @@ public:
 
 
 	CString  m_strPic;
+	long m_nUseMutiSelect;  //2025.1.6 zhangyq 是否支持多选
 //重载函数
 public:
 	virtual UINT GetClassID() {    return MNGRCLASSID_CTESTMACROGROUP;   }

@@ -11,6 +11,10 @@ extern QString g_strContent;
 QSttMacroParaEditViewHarm::QSttMacroParaEditViewHarm(QWidget *parent, Qt::WindowFlags flags)
 	:CSttMacroParaEditViewOriginal(parent,flags)
 {
+	//2024-9-13 lijunqing 优化
+	m_oTmtHarmTest = (tmt_HarmTest *)malloc(sizeof(tmt_HarmTest));
+	m_oTmtHarmTest->init();
+
 	g_pHarmTest = this;
 
 	m_nCurHarmIndex = 0;
@@ -23,6 +27,7 @@ QSttMacroParaEditViewHarm::QSttMacroParaEditViewHarm(QWidget *parent, Qt::Window
 	m_strParaFilePostfix = tr("project(*.hrmxml)");
 	m_strDefaultParaFile = _P_GetConfigPath();
 	m_strDefaultParaFile.append("HarmTest.hrmxml");
+	debug_time_long_log("ViewHarm 1", true);
 
 	//这个定时器在6.3的版本里面就这么用的，我觉得这个定时器没有啥用，就等了5毫秒然后调了一个函数，
 	//然后就把定时器关闭了，目测可以改成直接调用，等函模块写完再试 sf 20220224
@@ -30,10 +35,12 @@ QSttMacroParaEditViewHarm::QSttMacroParaEditViewHarm(QWidget *parent, Qt::Window
 
 	initUI();
 	initConnections();
+	debug_time_long_log("ViewHarm initUI", true);
 
 	m_pOriginalSttTestResource = g_theTestCntrFrame->GetSttTestResource();
 //	CreateTestResource();
 	g_theTestCntrFrame->InitTestResource();
+	debug_time_long_log("ViewHarm InitTestResource", true);
 
 // 	if (g_oSystemParas.m_nHasDigital)//zhouhj 在打开测试模板前先初始化当前GOOSE发布数据
 // 	{
@@ -41,13 +48,13 @@ QSttMacroParaEditViewHarm::QSttMacroParaEditViewHarm(QWidget *parent, Qt::Window
 // 	}
 
 	initTestParas();
+	debug_time_long_log("ViewHarm initTestParas", true);
+
 	InitArrUIValue();
+	debug_time_long_log("ViewHarm InitArrUIValue", true);
+
 	m_pHarmWidget->m_pParaWidget->UpdateBinaryInBinaryOutEnable();
-
-//	m_oTimerDiBian.start(700);
-//	connect(&m_oTimerDiBian,   SIGNAL(timeout()),    this,   SLOT(slot_DiBianTimer()));
-
-	//SetWavePlotTestResource();
+	debug_time_long_log("ViewHarm UpdateBinaryInBinaryOutEnable", true);
 }
 
 QSttMacroParaEditViewHarm::~QSttMacroParaEditViewHarm()
@@ -57,6 +64,9 @@ QSttMacroParaEditViewHarm::~QSttMacroParaEditViewHarm()
 		delete m_pHarmWidget;
 		m_pHarmWidget = NULL;
 	}
+
+	//2024-9-13 lijunqing 优化
+	free(m_oTmtHarmTest);
 }
 // 
 // CSttTestResourceBase* QSttMacroParaEditViewHarm::CreateTestResource()
@@ -93,8 +103,8 @@ void QSttMacroParaEditViewHarm::UpdateTestResource( BOOL bCreateChMaps )
 // 	}
 // 	else
 // 	{
-// 		m_pHarmWidget->m_pParaWidget->m_pCheck_Output9->setChecked(m_oTmtHarmTest.m_oHarmParas.m_oBinaryConfig.m_binOut[8].nState);
-// 		m_pHarmWidget->m_pParaWidget->m_pCheck_Output10->setChecked(m_oTmtHarmTest.m_oHarmParas.m_oBinaryConfig.m_binOut[9].nState);
+// 		m_pHarmWidget->m_pParaWidget->m_pCheck_Output9->setChecked(m_oTmtHarmTest->m_oHarmParas.m_oBinaryConfig.m_binOut[8].nState);
+// 		m_pHarmWidget->m_pParaWidget->m_pCheck_Output10->setChecked(m_oTmtHarmTest->m_oHarmParas.m_oBinaryConfig.m_binOut[9].nState);
 // 		m_pHarmWidget->m_pParaWidget->m_pCheck_Output9->setEnabled(true);
 // 		m_pHarmWidget->m_pParaWidget->m_pCheck_Output10->setEnabled(true);
 // 	}
@@ -108,11 +118,22 @@ void QSttMacroParaEditViewHarm::UpdateTestResource( BOOL bCreateChMaps )
 // 	}
 // 	else
 // 	{
-// 		m_pHarmWidget->m_pParaWidget->m_pCheck_Input9->setChecked(m_oTmtHarmTest.m_oHarmParas.m_oBinaryConfig.m_binIn[8].nSelect);
-// 		m_pHarmWidget->m_pParaWidget->m_pCheck_Input10->setChecked(m_oTmtHarmTest.m_oHarmParas.m_oBinaryConfig.m_binIn[9].nSelect);
+// 		m_pHarmWidget->m_pParaWidget->m_pCheck_Input9->setChecked(m_oTmtHarmTest->m_oHarmParas.m_oBinaryConfig.m_binIn[8].nSelect);
+// 		m_pHarmWidget->m_pParaWidget->m_pCheck_Input10->setChecked(m_oTmtHarmTest->m_oHarmParas.m_oBinaryConfig.m_binIn[9].nSelect);
 // 		m_pHarmWidget->m_pParaWidget->m_pCheck_Input9->setEnabled(true);
 // 		m_pHarmWidget->m_pParaWidget->m_pCheck_Input10->setEnabled(true);
 // 	}
+}
+
+void QSttMacroParaEditViewHarm::UpdatePrimParaSetUI()
+{
+	CSttMacroParaEditViewOriginal::UpdatePrimParaSetUI();
+	
+	if (m_pHarmWidget != NULL)
+	{
+		m_pHarmWidget->SetParaSetSecondValue(IsUseSecondParaSet());
+	}
+
 }
 
 void QSttMacroParaEditViewHarm::ShowReport( CDvmValues *pValues )
@@ -156,7 +177,7 @@ void QSttMacroParaEditViewHarm::SetDatas(CDataGroup *pParas)
 	if (pParas != NULL)
 	{
 		CSttDataGroupSerializeRead oRead(pParas);
-		stt_xml_serialize(&m_oTmtHarmTest.m_oHarmParas, &oRead);
+		stt_xml_serialize(&m_oTmtHarmTest->m_oHarmParas, &oRead);
 	}
 
 	g_theTestCntrFrame->ClearInfoWidget();	
@@ -183,7 +204,7 @@ void QSttMacroParaEditViewHarm::initUI()
 
 	m_pHarmWidget = new QHarmWidget(this);
 
-	m_pHarmWidget->setPropertyOfParaSet(P_Common,  g_theTestCntrFrame->GetSttTestResource(),  m_oTmtHarmTest.m_oHarmParas.m_uiVOL,  m_oTmtHarmTest.m_oHarmParas.m_uiCUR);
+	m_pHarmWidget->setPropertyOfParaSet(P_Common,  g_theTestCntrFrame->GetSttTestResource(),  m_oTmtHarmTest->m_oHarmParas.m_uiVOL,  m_oTmtHarmTest->m_oHarmParas.m_uiCUR);
 	m_pHarmWidget->setMaxMinAndEDVal();
 
 	m_pMainLayout->addWidget(m_pHarmWidget);
@@ -212,22 +233,26 @@ void QSttMacroParaEditViewHarm::UpdateHarmParas()
 {
 	if (m_pHarmWidget)
 	{
-		m_pHarmWidget->SetDatas(&m_oTmtHarmTest,g_theTestCntrFrame->GetSttTestResource());
+		m_pHarmWidget->SetDatas(m_oTmtHarmTest,g_theTestCntrFrame->GetSttTestResource());
+		debug_time_long_log("UpdateHarmParas HarmWidget->SetDatas", true);
 	}
 
 	UpdateBinBoutExTab();
 	if(m_pHarmWidget->ExistExBinParaWidget())
 	{
-		m_pHarmWidget->m_pExBinParaWidget->setData(m_oTmtHarmTest.m_oHarmParas.m_oBinaryConfig.m_binInEx,NULL);
+		m_pHarmWidget->m_pExBinParaWidget->setData(m_oTmtHarmTest->m_oHarmParas.m_oBinaryConfig.m_binInEx,NULL);
 	}
 
 	if(m_pHarmWidget->ExistExBoutParaWidget())
 	{
-		m_pHarmWidget->m_pExBoutParaWidget->setData(NULL,m_oTmtHarmTest.m_oHarmParas.m_oBinaryConfig.m_binOutEx);
+		m_pHarmWidget->m_pExBoutParaWidget->setData(NULL,m_oTmtHarmTest->m_oHarmParas.m_oBinaryConfig.m_binOutEx);
 	}
 
 	UpdateGoutTab();
+	debug_time_long_log("UpdateHarmParas UpdateGoutTab", true);
+
 	UpdateFT3Tab();
+	debug_time_long_log("UpdateHarmParas UpdateFT3Tab", true);
 }
 
 void QSttMacroParaEditViewHarm::OnViewTestLink( BOOL b/*=FALSE*/ )
@@ -238,7 +263,7 @@ void QSttMacroParaEditViewHarm::OnViewTestLink( BOOL b/*=FALSE*/ )
 void QSttMacroParaEditViewHarm::OnViewTestStart()
 {
 	m_pHarmWidget->StartInit();
-	if (m_oTmtHarmTest.m_oHarmParas.m_bAuto)
+	if (m_oTmtHarmTest->m_oHarmParas.m_bAuto)
 	{
 		if (m_pHarmWidget->m_pGooseParaWidget != NULL)
 		{
@@ -272,7 +297,7 @@ void QSttMacroParaEditViewHarm::OnViewTestStart()
 
 void QSttMacroParaEditViewHarm::OnViewTestStop()
 {
-	m_oTmtHarmTest.m_oHarmParas.m_bBinStop = FALSE;
+	m_oTmtHarmTest->m_oHarmParas.m_bBinStop = FALSE;
 	m_pHarmWidget->SetEnableTable(true);
 
 	if (m_pHarmWidget->m_pGooseParaWidget)
@@ -381,12 +406,18 @@ void QSttMacroParaEditViewHarm::initTestParas()
 {
 	if (!OpenTestTestMngrFile(_T("")))
 	{
-		m_oTmtHarmTest.m_oHarmParas.init();
+		m_oTmtHarmTest->m_oHarmParas.init();
+		debug_time_long_log("initTestParas HarmTest init", true);
 	}	
+	else
+	{
+		debug_time_long_log("initTestParas OpenTestTestMngrFile", true);
+	}
 
 	CopyBinaryConfig();
 	g_theTestCntrFrame->UpdateToolButtons();
 	SetDatas(NULL);
+	debug_time_long_log("initTestParas SetDatas", true);
 }
 
 void QSttMacroParaEditViewHarm::UpdateGoutTab( BOOL bUpdateList /*= FALSE*/ )
@@ -419,7 +450,7 @@ void QSttMacroParaEditViewHarm::UpdateBinBoutExTab()
 	if ((m_pHarmWidget->m_pExBinParaWidget == NULL)&&(g_oLocalSysPara.m_nCHBinInExNum > 0))
 	{
 		m_pHarmWidget->AddExBinParaWidget();
-		m_pHarmWidget->m_pExBinParaWidget->setData(m_oTmtHarmTest.m_oHarmParas.m_oBinaryConfig.m_binInEx,NULL);
+		m_pHarmWidget->m_pExBinParaWidget->setData(m_oTmtHarmTest->m_oHarmParas.m_oBinaryConfig.m_binInEx,NULL);
 		connect(m_pHarmWidget->m_pExBinParaWidget, SIGNAL(sig_ExSwitchChanged()), this, SLOT(slot_SwitchStateChanged()),Qt::UniqueConnection);
 	}
 	else if ((m_pHarmWidget->m_pExBinParaWidget != NULL)&&(g_oLocalSysPara.m_nCHBinInExNum == 0))
@@ -430,7 +461,7 @@ void QSttMacroParaEditViewHarm::UpdateBinBoutExTab()
 	else if ((m_pHarmWidget->m_pExBinParaWidget != NULL)&&(g_oLocalSysPara.m_nCHBinInExNum>0))
 	{
 		disconnect(m_pHarmWidget->m_pExBinParaWidget, SIGNAL(sig_ExSwitchChanged()), this, SLOT(slot_SwitchStateChanged()));
-		m_pHarmWidget->m_pExBinParaWidget->setData(m_oTmtHarmTest.m_oHarmParas.m_oBinaryConfig.m_binInEx,NULL);
+		m_pHarmWidget->m_pExBinParaWidget->setData(m_oTmtHarmTest->m_oHarmParas.m_oBinaryConfig.m_binInEx,NULL);
 		connect(m_pHarmWidget->m_pExBinParaWidget, SIGNAL(sig_ExSwitchChanged()), this, SLOT(slot_SwitchStateChanged()),Qt::UniqueConnection);
 
 		m_pHarmWidget->EnableBinParaWidget(true);
@@ -439,7 +470,7 @@ void QSttMacroParaEditViewHarm::UpdateBinBoutExTab()
 	if ((m_pHarmWidget->m_pExBoutParaWidget == NULL)&&(g_oLocalSysPara.m_nCHBinOutExNum>0))
 	{
 		m_pHarmWidget->AddExBoutParaWidget();
-		m_pHarmWidget->m_pExBoutParaWidget->setData(NULL,m_oTmtHarmTest.m_oHarmParas.m_oBinaryConfig.m_binOutEx);
+		m_pHarmWidget->m_pExBoutParaWidget->setData(NULL,m_oTmtHarmTest->m_oHarmParas.m_oBinaryConfig.m_binOutEx);
 		connect(m_pHarmWidget->m_pExBoutParaWidget, SIGNAL(sig_ExSwitchChanged()), this, SLOT(slot_SwitchStateChanged()),Qt::UniqueConnection);
 	}
 	else if ((m_pHarmWidget->m_pExBoutParaWidget != NULL)&&(g_oLocalSysPara.m_nCHBinOutExNum == 0))
@@ -450,7 +481,7 @@ void QSttMacroParaEditViewHarm::UpdateBinBoutExTab()
 	else if ((m_pHarmWidget->m_pExBoutParaWidget != NULL)&&(g_oLocalSysPara.m_nCHBinOutExNum>0))
 	{
 		disconnect(m_pHarmWidget->m_pExBoutParaWidget, SIGNAL(sig_ExSwitchChanged()), this, SLOT(slot_SwitchStateChanged()));
-		m_pHarmWidget->m_pExBoutParaWidget->setData(NULL,m_oTmtHarmTest.m_oHarmParas.m_oBinaryConfig.m_binOutEx);
+		m_pHarmWidget->m_pExBoutParaWidget->setData(NULL,m_oTmtHarmTest->m_oHarmParas.m_oBinaryConfig.m_binOutEx);
 		connect(m_pHarmWidget->m_pExBoutParaWidget, SIGNAL(sig_ExSwitchChanged()), this, SLOT(slot_SwitchStateChanged()),Qt::UniqueConnection);
 
 		m_pHarmWidget->EnableBoutParaWidget(true);
@@ -460,40 +491,40 @@ void QSttMacroParaEditViewHarm::CopyBinaryConfig( BOOL b/*=TRUE*/ )
 {
 	if(b)
 	{
-		g_theTestCntrFrame->GetBinaryConfig()->m_nBinLogic = m_oTmtHarmTest.m_oHarmParas.m_oBinaryConfig.m_nBinLogic;
+		g_theTestCntrFrame->GetBinaryConfig()->m_nBinLogic = m_oTmtHarmTest->m_oHarmParas.m_oBinaryConfig.m_nBinLogic;
 		for (int i=0;i<MAX_BINARYIN_COUNT;i++){
-			g_theTestCntrFrame->GetBinaryConfig()->m_binIn[i] = m_oTmtHarmTest.m_oHarmParas.m_oBinaryConfig.m_binIn[i];
+			g_theTestCntrFrame->GetBinaryConfig()->m_binIn[i] = m_oTmtHarmTest->m_oHarmParas.m_oBinaryConfig.m_binIn[i];
 		}
 
 // 		for (int i=0;i<MAX_BINARYOUT_COUNT;i++){
-// 			g_theTestCntrFrame->GetBinaryConfig()->m_binOut[i] = m_oTmtHarmTest.m_oHarmParas.m_oBinaryConfig.m_binOut[i];
+// 			g_theTestCntrFrame->GetBinaryConfig()->m_binOut[i] = m_oTmtHarmTest->m_oHarmParas.m_oBinaryConfig.m_binOut[i];
 // 		}
 
 		for (int i=0;i<MAX_ExBINARY_COUNT;i++){
-			g_theTestCntrFrame->GetBinaryConfig()->m_binInEx[i] = m_oTmtHarmTest.m_oHarmParas.m_oBinaryConfig.m_binInEx[i];
+			g_theTestCntrFrame->GetBinaryConfig()->m_binInEx[i] = m_oTmtHarmTest->m_oHarmParas.m_oBinaryConfig.m_binInEx[i];
 		}
 
 // 		for (int i=0;i<MAX_ExBINARY_COUNT;i++){
-// 			g_theTestCntrFrame->GetBinaryConfig()->m_binOutEx[i] = m_oTmtHarmTest.m_oHarmParas.m_oBinaryConfig.m_binOutEx[i];
+// 			g_theTestCntrFrame->GetBinaryConfig()->m_binOutEx[i] = m_oTmtHarmTest->m_oHarmParas.m_oBinaryConfig.m_binOutEx[i];
 // 		}
 	}
 	else
 	{
-		m_oTmtHarmTest.m_oHarmParas.m_oBinaryConfig.m_nBinLogic = g_theTestCntrFrame->GetBinaryConfig()->m_nBinLogic;
+		m_oTmtHarmTest->m_oHarmParas.m_oBinaryConfig.m_nBinLogic = g_theTestCntrFrame->GetBinaryConfig()->m_nBinLogic;
 		for (int i=0;i<MAX_BINARYIN_COUNT;i++){
-			m_oTmtHarmTest.m_oHarmParas.m_oBinaryConfig.m_binIn[i] = g_theTestCntrFrame->GetBinaryConfig()->m_binIn[i];
+			m_oTmtHarmTest->m_oHarmParas.m_oBinaryConfig.m_binIn[i] = g_theTestCntrFrame->GetBinaryConfig()->m_binIn[i];
 		}
 
 // 		for (int i=0;i<MAX_BINARYOUT_COUNT;i++){
-// 			m_oTmtHarmTest.m_oHarmParas.m_oBinaryConfig.m_binOut[i] = g_theTestCntrFrame->GetBinaryConfig()->m_binOut[i];
+// 			m_oTmtHarmTest->m_oHarmParas.m_oBinaryConfig.m_binOut[i] = g_theTestCntrFrame->GetBinaryConfig()->m_binOut[i];
 // 		}
 
 		for (int i=0;i<MAX_ExBINARY_COUNT;i++){
-			m_oTmtHarmTest.m_oHarmParas.m_oBinaryConfig.m_binInEx[i] = g_theTestCntrFrame->GetBinaryConfig()->m_binInEx[i];
+			m_oTmtHarmTest->m_oHarmParas.m_oBinaryConfig.m_binInEx[i] = g_theTestCntrFrame->GetBinaryConfig()->m_binInEx[i];
 		}
 
 // 		for (int i=0;i<MAX_ExBINARY_COUNT;i++){
-// 			m_oTmtHarmTest.m_oHarmParas.m_oBinaryConfig.m_binOutEx[i] = g_theTestCntrFrame->GetBinaryConfig()->m_binOutEx[i];
+// 			m_oTmtHarmTest->m_oHarmParas.m_oBinaryConfig.m_binOutEx[i] = g_theTestCntrFrame->GetBinaryConfig()->m_binOutEx[i];
 // 		}
 	}
 }
@@ -526,12 +557,12 @@ void QSttMacroParaEditViewHarm::OnTestResults( CDataGroup *pResults )
 
 	long nTripFlag;
 	stt_GetDataValueByID(pResults, "TripFlag", nTripFlag);
-	stt_GetDataValueByID(pResults, "TripTime", m_oTmtHarmTest.m_oHarmResult.m_fTripTime);
-	stt_GetDataValueByID(pResults, "ActValue", m_oTmtHarmTest.m_oHarmResult.m_fActValue);
+	stt_GetDataValueByID(pResults, "TripTime", m_oTmtHarmTest->m_oHarmResult.m_fTripTime);
+	stt_GetDataValueByID(pResults, "ActValue", m_oTmtHarmTest->m_oHarmResult.m_fActValue);
 
-	m_oTmtHarmTest.m_oHarmResult.m_nTripFlag  =  nTripFlag;
+	m_oTmtHarmTest->m_oHarmResult.m_nTripFlag  =  nTripFlag;
 
-	//m_pHarmWidget->UpdateResult(m_oTmtHarmTest.m_oHarmResult.m_fActValue,m_oTmtHarmTest.m_oHarmResult.m_fTripTime,   0,  0);
+	//m_pHarmWidget->UpdateResult(m_oTmtHarmTest->m_oHarmResult.m_fActValue,m_oTmtHarmTest->m_oHarmResult.m_fTripTime,   0,  0);
 }
 
 CString QSttMacroParaEditViewHarm::GetDefaultParaFile()
@@ -563,7 +594,7 @@ bool QSttMacroParaEditViewHarm::IsValidTestParasFile( const CString& strParasFil
 void QSttMacroParaEditViewHarm::slot_updateParas()
 {
 	//m_vectorWidget->updateData();
-	if (g_theTestCntrFrame->IsTestStarted() && (!m_oTmtHarmTest.m_oHarmParas.m_bLock))
+	if (g_theTestCntrFrame->IsTestStarted() && (!m_oTmtHarmTest->m_oHarmParas.m_bLock))
 	{
 		//g_theTestCntrFrame->OnCmd_SaveTemplate();
 		g_theTestCntrFrame->Ats_UpdateParameter();
@@ -593,7 +624,7 @@ void QSttMacroParaEditViewHarm::slot_SwitchStateChanged()
 		return;
 	}
 	//开始测试后，非锁定刷新开关量曲线
-	if (!m_oTmtHarmTest.m_oHarmParas.m_bLock)
+	if (!m_oTmtHarmTest->m_oHarmParas.m_bLock)
 	{
 		emit sig_updataParas();
 	}
@@ -607,42 +638,42 @@ void QSttMacroParaEditViewHarm::InitArrUIValue()
 		{
 			if (j<31)
 			{
-// 				m_oTmtHarmTest.m_oHarmParas.m_uiVOL[i].Harm[j].m_bSelect   =   true;//dingxy 20240412 根据模板值初始化
-// 				m_oTmtHarmTest.m_oHarmParas.m_uiCUR[i].Harm[j].m_bSelect   =   true;
+// 				m_oTmtHarmTest->m_oHarmParas.m_uiVOL[i].Harm[j].m_bSelect   =   true;//dingxy 20240412 根据模板值初始化
+// 				m_oTmtHarmTest->m_oHarmParas.m_uiCUR[i].Harm[j].m_bSelect   =   true;
 			}
 			else
 			{
-				m_oTmtHarmTest.m_oHarmParas.m_uiVOL[i].Harm[j].m_bSelect   =   false;
-				m_oTmtHarmTest.m_oHarmParas.m_uiCUR[i].Harm[j].m_bSelect   =   false;
+				m_oTmtHarmTest->m_oHarmParas.m_uiVOL[i].Harm[j].m_bSelect   =   false;
+				m_oTmtHarmTest->m_oHarmParas.m_uiCUR[i].Harm[j].m_bSelect   =   false;
 			}
 
-			m_oTmtHarmTest.m_oHarmParas.m_uiVOL[i].Harm[j].nIndex   =   j;
-			m_oTmtHarmTest.m_oHarmParas.m_uiCUR[i].Harm[j].nIndex   =   j;
+			m_oTmtHarmTest->m_oHarmParas.m_uiVOL[i].Harm[j].nIndex   =   j;
+			m_oTmtHarmTest->m_oHarmParas.m_uiCUR[i].Harm[j].nIndex   =   j;
 
 // 			if (j==0)
 // 			{
-// 				m_oTmtHarmTest.m_oHarmParas.m_uiVOL[i].Harm[j].fAmp   =   0;	
-// 				m_oTmtHarmTest.m_oHarmParas.m_uiVOL[i].Harm[j].fContent   =   0;
+// 				m_oTmtHarmTest->m_oHarmParas.m_uiVOL[i].Harm[j].fAmp   =   0;	
+// 				m_oTmtHarmTest->m_oHarmParas.m_uiVOL[i].Harm[j].fContent   =   0;
 // 
-// 				m_oTmtHarmTest.m_oHarmParas.m_uiCUR[i].Harm[j].fAmp   =   0;	
-// 				m_oTmtHarmTest.m_oHarmParas.m_uiCUR[i].Harm[j].fContent   =   0;
+// 				m_oTmtHarmTest->m_oHarmParas.m_uiCUR[i].Harm[j].fAmp   =   0;	
+// 				m_oTmtHarmTest->m_oHarmParas.m_uiCUR[i].Harm[j].fContent   =   0;
 // 			}
 // 			else if (j==1)
 // 			{
-// 				m_oTmtHarmTest.m_oHarmParas.m_uiVOL[i].Harm[j].fAmp   =   57.74;	
-// 				m_oTmtHarmTest.m_oHarmParas.m_uiVOL[i].Harm[j].fContent   =   100.00;
+// 				m_oTmtHarmTest->m_oHarmParas.m_uiVOL[i].Harm[j].fAmp   =   57.74;	
+// 				m_oTmtHarmTest->m_oHarmParas.m_uiVOL[i].Harm[j].fContent   =   100.00;
 // 
-// 				m_oTmtHarmTest.m_oHarmParas.m_uiCUR[i].Harm[j].fAmp   =  5;	
-// 				m_oTmtHarmTest.m_oHarmParas.m_uiCUR[i].Harm[j].fContent   =   100.00;
+// 				m_oTmtHarmTest->m_oHarmParas.m_uiCUR[i].Harm[j].fAmp   =  5;	
+// 				m_oTmtHarmTest->m_oHarmParas.m_uiCUR[i].Harm[j].fContent   =   100.00;
 // 
 // 			}
 // 			else 
 // 			{
-// 				m_oTmtHarmTest.m_oHarmParas.m_uiVOL[i].Harm[j].fAmp   =  0;	
-// 				m_oTmtHarmTest.m_oHarmParas.m_uiVOL[i].Harm[j].fContent   =   0;
+// 				m_oTmtHarmTest->m_oHarmParas.m_uiVOL[i].Harm[j].fAmp   =  0;	
+// 				m_oTmtHarmTest->m_oHarmParas.m_uiVOL[i].Harm[j].fContent   =   0;
 // 
-// 				m_oTmtHarmTest.m_oHarmParas.m_uiCUR[i].Harm[j].fAmp   =  0;	
-// 				m_oTmtHarmTest.m_oHarmParas.m_uiCUR[i].Harm[j].fContent   =   0;
+// 				m_oTmtHarmTest->m_oHarmParas.m_uiCUR[i].Harm[j].fAmp   =  0;	
+// 				m_oTmtHarmTest->m_oHarmParas.m_uiCUR[i].Harm[j].fContent   =   0;
 // 			}
 		}
 	}
@@ -653,19 +684,19 @@ void QSttMacroParaEditViewHarm::InitBinStateOnStarting()
 {
 // 	//初始化开出
 // 	for (int i=0;i< g_oLocalSysPara.m_nCHBinOutNum;i++)
-// 		m_oCurrEventResult.m_BinOut[i] = m_oTmtHarmTest.m_oHarmParas.m_oBinaryConfig.m_binOut[i].nState;
+// 		m_oCurrEventResult.m_BinOut[i] = m_oTmtHarmTest->m_oHarmParas.m_oBinaryConfig.m_binOut[i].nState;
 // 
 // 	for (int i=0;i< g_oLocalSysPara.m_nCHBinOutExNum;i++)
-// 		m_oCurrEventResult.m_BinOutEx[i] = m_oTmtHarmTest.m_oHarmParas.m_oBinaryConfig.m_binOutEx[i].nState;
+// 		m_oCurrEventResult.m_BinOutEx[i] = m_oTmtHarmTest->m_oHarmParas.m_oBinaryConfig.m_binOutEx[i].nState;
 
 //	UpdateToolButtons();
 }
 
 void QSttMacroParaEditViewHarm::slot_LockChanged()
 {
-	if (!m_oTmtHarmTest.m_oHarmParas.m_bLock)  //解锁状态
+	if (!m_oTmtHarmTest->m_oHarmParas.m_bLock)  //解锁状态
 	{
-		m_oTmtHarmTest.m_oHarmParas.m_bBinStop = TRUE;
+		m_oTmtHarmTest->m_oHarmParas.m_bBinStop = TRUE;
 		slot_updateParas();
 	}
 
@@ -720,8 +751,8 @@ void QSttMacroParaEditViewHarm::slot_GooseDataChanged()
 // 	QHarmWidget  * pHarmWidget   =   (QHarmWidget *)m_testParaView->getMainPara()->m_templateWidget ;
 // 
 // 	//设置电压和电流结构体指针；
-// 	m_pWaveGroupWidget->setArrUIVOL(m_oTmtHarmTest.m_oHarmParas.m_uiVOL);
-// 	m_pWaveGroupWidget->setArrUICUR(m_oTmtHarmTest.m_oHarmParas.m_uiCUR);
+// 	m_pWaveGroupWidget->setArrUIVOL(m_oTmtHarmTest->m_oHarmParas.m_uiVOL);
+// 	m_pWaveGroupWidget->setArrUICUR(m_oTmtHarmTest->m_oHarmParas.m_uiCUR);
 // 
 // 	//设置电压和电流结构体指针；
 // 	//m_pWaveGroupWidget->setArrUIVOL(pHarmWidget->m_pSyncParaSet->m_pArrUIVOL);
@@ -890,9 +921,9 @@ void QSttMacroParaEditViewHarm::slot_currentChangedTabWidget(int nCurrIndex)
 		m_pHarmWidget->m_pCurrSelBtn->hide();
 	}
 
-	if (bIsWaveCtrls)
-	{
-		m_pHarmWidget->m_pOscillogramGroupWidget->slot_updateOscillogramGroup();
-	}
+// 	if (bIsWaveCtrls)
+// 	{
+// 		m_pHarmWidget->m_pOscillogramGroupWidget->slot_updateOscillogramGroup();
+// 	}
 
 }

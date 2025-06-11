@@ -1,6 +1,6 @@
 #include "SttIecSysParasOtherSetDialog.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../Module/XLangResource_Native.h"
 
 QSttIecSysParasOtherSetDialog::QSttIecSysParasOtherSetDialog(QWidget *parent)

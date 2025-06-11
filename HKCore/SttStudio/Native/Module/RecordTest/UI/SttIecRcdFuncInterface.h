@@ -1,9 +1,9 @@
 #ifndef SttIecRcdFuncInterface_H
 #define SttIecRcdFuncInterface_H
 
-#include "../../../../Module/SmartCap/61850Cap/CapDevice/CapDeviceBase.h"
-#include "../../../../Module/SmartCap/61850Cap/CapDevice/CapDeviceSmvCh.h"
-#include "../../../../Module/SmartCap/61850Cap/CapDevice/CapDeviceGooseCh.h"
+#include "../../Module/SmartCap/61850Cap/CapDevice/CapDeviceBase.h"
+#include "../../Module/SmartCap/61850Cap/CapDevice/CapDeviceSmvCh.h"
+#include "../../Module/SmartCap/61850Cap/CapDevice/CapDeviceGooseCh.h"
 
 #define IECRCD_FUNC_SttIecRcdSmvFuncs  "IecRcdSmvFuncs"
 #define IECRCD_FUNC_IecRcdGooseFuncs  "IecRcdGooseFuncs"

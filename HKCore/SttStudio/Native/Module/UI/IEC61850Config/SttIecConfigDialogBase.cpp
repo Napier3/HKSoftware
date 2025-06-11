@@ -5,13 +5,13 @@
 #include <QFileDialog>
 #include <QFile>
 #include "../SttTestCntrFrameBase.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "SttSclFileParseDialog.h"
-#include "../../61850/Module/SCL_Qt/QScdFileRWDlg.h"
+#include "../../../61850/Module/SCL_Qt/QScdFileRWDlg.h"
 #include "../Module/PopupDialog/SttPopupOpenDialog.h"
 #include "../Controls/SttFileSaveAsDlg.h"
-#include "../../Module/OSInterface/QT/XMessageBox.h"
+#include "../../../Module/OSInterface/QT/XMessageBox.h"
 #include "../Controls/SttTabWidget.h"
 #include "../SCL/QSttSelSclFileDlg.h"
 #include "../../../61850/Module/SCL/SclFileMngr/XSclFileMngr.h"
@@ -21,7 +21,7 @@
 #endif
 #include "../Module/PopupDialog/SttFileMngrTool.h"
 #include "../Module/XLangResource_Native.h"
-#include "../../AutoTest/Module/XLanguageResourceAts.h"
+#include "../../../AutoTest/Module/XLanguageResourceAts.h"
 #include "../../XLangResource_Native.h"
 
 
@@ -556,6 +556,11 @@ void QSttIecConfigDialogBase::slot_TreeItemClicked(QTreeWidgetItem * pItem, int 
 	if(pItem == NULL) 
 		return;
 
+	if ((pItem->flags() & Qt::ItemIsEnabled) == 0)
+	{
+		return;
+	}
+
 	QTreeWidgetItem *pCurSelItem = pItem;
 
 	while(!m_oTreeStackedWidgetHash.contains(pCurSelItem))//判断当前节点是否映射了Hash表如果未映射,则获取其第一个子节点
@@ -987,7 +992,7 @@ void QSttIecConfigDialogBase::slot_SaveBtnClicked()
 		CString strTitle, strText;
 		//strTitle = _T("警告");
 		//strText = _T("当前IEC配置为空.");
-		CXMessageBox::information(this,g_sLangTxt_warning ,g_sLangTxt_NullIEC);
+        CXMessageBox::information(this, _T("警告") ,_T("当前IEC配置为空."));
 		m_pSaveToolBtn->setDisabled(false);
 		return;
 	}

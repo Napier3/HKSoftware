@@ -18,8 +18,8 @@ public:
 
 	void UpdateTables();
 
-	virtual void setUAmpMaxMinValue();
-	virtual void setIAmpMaxMinValue();
+	virtual void setUAmpMaxMinValue(bool bCanUpdateTable);
+	virtual void setIAmpMaxMinValue(bool bCanUpdateTable);
 	virtual void setUAmpEDValue(float fUEDVal);
 	virtual void setIAmpEDValue(float fIEDVal);
 
@@ -41,7 +41,7 @@ public:
 		,tmt_channel *pArrUIVOL,tmt_ChannelPower *pArrPOW,bool bDC = false);
 	void setData(tmt_channel *pArrUIVOL,tmt_channel *pArrUICUR);
 	void setMacroType(int type);
-	void setMaxMinAndEDVal();
+	void setMaxMinAndEDVal(bool bCanUpdateTable=true);
 
 	void Send_UpdataParas();
 

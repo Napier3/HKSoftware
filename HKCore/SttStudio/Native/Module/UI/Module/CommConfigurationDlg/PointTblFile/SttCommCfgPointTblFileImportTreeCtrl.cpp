@@ -1,7 +1,7 @@
 #include "SttCommCfgPointTblFileImportTreeCtrl.h"
-#include "../../AutoTest/Module/AutoTestGlobalDefine.h"
-#include "../../IotProtoServer/Module/SttPxCommCmdDef.h"
-#include "../../61850/Module/XLanguageResourcePp_Mms.h"
+#include "../../../AutoTest/Module/AutoTestGlobalDefine.h"
+#include "../../../IotProtoServer/Module/SttPxCommCmdDef.h"
+#include "../../../61850/Module/XLanguageResourcePp_Mms.h"
 extern QFont *g_pSttGlobalFont;
 //////////////////////////////////////////////////////////////////////////
 

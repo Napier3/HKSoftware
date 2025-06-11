@@ -1,7 +1,7 @@
 #include "SclCtrlGInChsGrid.h"
-#include "../../61850/Module/SCL/SclIecCfgDatas.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../61850/Module/SCL/SclIecCfgDatas.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../../../XLangResource_Native.h"
 
 QSclCtrlGInChsGrid::QSclCtrlGInChsGrid(QWidget* pparent):QSclCtrlChsGridBase(pparent)

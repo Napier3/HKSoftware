@@ -14,7 +14,7 @@ QCommCfgTcpClientDlg::~QCommCfgTcpClientDlg()
     delete ui;
 }
 
-#include "../../../../../Protocol/Module/Engine/DeviceModel/DeviceModelXmlKeys.h"
+#include "../../../Protocol/Module/Engine/DeviceModel/DeviceModelXmlKeys.h"
 
 //void QCommCfgTcpClientDlg::ShowData(CDvmData *pData)
 //{

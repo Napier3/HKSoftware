@@ -12,7 +12,7 @@
 #include <QPushButton>
 #include <QLabel>
 #include <QCheckBox>
-#include "../../61850/Module/CfgDataMngr/IecCfg92Ch.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfg92Ch.h"
 #include "../Module/CommonCtrl_QT/QNumberCheckBox.h"
 #include "../Module/CommonCtrl_QT/QIecLineEdit.h"
 

@@ -1,16 +1,16 @@
 #include "QSttMUTimeTestWidget.h"
-#include "../../Module/OSInterface/OSInterface.h"
-#include "../../Module/SmartCap/X61850CapBase.h"
-#include "../../Module/XLanguage/XLanguageMngr.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/API/GlobalConfigApi.h"
-#include "../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../Module/OSInterface/OSInterface.h"
+#include "../../../Module/SmartCap/X61850CapBase.h"
+#include "../../../Module/XLanguage/XLanguageMngr.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/SmartCap/XSmartCapMngr.h"
 #include "../Module/CommonMethod/commonMethod.h"
 #include <QPixmap>
 //#include "../SttTestCntrFrameBase.h"
 #include "../Controls/SttCheckBox.h"
 #include "../SttTestCntrCmdDefine.h"
-#include "../Module/XLangResource_Native.h"
+#include "../../../Module/XLangResource_Native.h"
 
 #ifndef NOT_USE_ASSIST
 #include "../../Assist/DynEffect/SttAssistWndDynEffExecTool.h"
@@ -24,8 +24,19 @@ QSttMUTimeTestWidget::QSttMUTimeTestWidget(BOOL *pbTmtParaChanged,QWidget *paren
 	m_pManualParas = NULL;
 	m_pManualTest = NULL;
 	m_pMuTimeRlt = NULL;
-//	setFocusPolicy(Qt::NoFocus);//为
+//	setFocusPolicy(Qt::NoFocus);
+	m_bHasInitFinished = false;
+}
+
+void QSttMUTimeTestWidget::showEvent(QShowEvent *event)
+{
+	if (!m_bHasInitFinished)
+	{
 	InitUI();
+		InitSttMUTimeTestWidget();
+		m_bHasInitFinished = true;
+	}
+	QWidget::showEvent(event);
 }
 
 QSttMUTimeTestWidget::~QSttMUTimeTestWidget()
@@ -234,27 +245,24 @@ void QSttMUTimeTestWidget::UpdateUI()
 	UpdateResultsDesc();
 }
 
-void QSttMUTimeTestWidget::InitData(tmt_manual_test *pManualTest)
+void QSttMUTimeTestWidget::InitSttMUTimeTestWidget()
 {
-	if (pManualTest == NULL)
-	{
-		return;
-	}
-
 	CString strTemp;
-	m_pManualTest = pManualTest;
-	m_pManualParas = &pManualTest->m_oManuParas;
-	m_pMuTimeRlt = &pManualTest->m_oManuResult.m_oMuTimeRlt;
-
 	//20230712 suyang 适配6.4合并单元分辨率 1024X768
 	QDesktopWidget* desktopWidget = QApplication::desktop(); 
 	QRect rect = desktopWidget->screenGeometry();
-	
+
 
 	if (m_pManualParas->m_nFuncType == TMT_MANU_FUNC_TYPE_MUTimingAccur)
 	{
+		if (CXLanguageMngr::xlang_IsCurrXLanguageChinese())
+		{
 		m_strRightPicName = "MUTimingAccur.png";
-
+		}
+		else
+		{
+			m_strRightPicName = "MUTimingAccur_English.png";
+		}
 #ifdef _PSX_QT_WINDOWS_
 		if (rect.width() <= 1366)//2040223 suyang 在6.4分辨率1366*768下 图片显示不全
 		{
@@ -267,7 +275,14 @@ void QSttMUTimeTestWidget::InitData(tmt_manual_test *pManualTest)
 	} 
 	else
 	{
+		if (CXLanguageMngr::xlang_IsCurrXLanguageChinese())
+		{
 		m_strRightPicName = "MUPunctAccur.png";
+		}
+		else
+		{
+			m_strRightPicName = "MUPunctAccur_English.png";
+		}
 
 #ifdef _PSX_QT_WINDOWS_
 		if (rect.width() <= 1366)//2040223 suyang 在6.4分辨率1366*768下 图片显示不全
@@ -286,16 +301,16 @@ void QSttMUTimeTestWidget::InitData(tmt_manual_test *pManualTest)
 	m_pFallingEdgeRadio->setChecked(m_pManualParas->m_oMuParas.nPPS_SetType == 1);
 	m_pNoPPSEdgeRadio->setChecked(m_pManualParas->m_oMuParas.nPPS_SetType == 2);
 
-// 	if (m_pManualParas->m_oMuParas.nPPS_SetType == 2)
-// 	{
-// 		m_pDelayComp_Label->setEnabled(true);
-// 		m_pDelayComp_FloatLineEdit->setEnabled(true);
-// 	} 
-// 	else
-// 	{
-// 		m_pDelayComp_Label->setEnabled(false);
-// 		m_pDelayComp_FloatLineEdit->setEnabled(false);
-// 	}
+	// 	if (m_pManualParas->m_oMuParas.nPPS_SetType == 2)
+	// 	{
+	// 		m_pDelayComp_Label->setEnabled(true);
+	// 		m_pDelayComp_FloatLineEdit->setEnabled(true);
+	// 	} 
+	// 	else
+	// 	{
+	// 		m_pDelayComp_Label->setEnabled(false);
+	// 		m_pDelayComp_FloatLineEdit->setEnabled(false);
+	// 	}
 
 	for (int nIndex = 0;nIndex<10;nIndex++)
 	{
@@ -303,8 +318,8 @@ void QSttMUTimeTestWidget::InitData(tmt_manual_test *pManualTest)
 		m_pOutCheckBox[nIndex]->setVisible(g_nBoutCount>nIndex);
 	}
 
-//	m_pDelayComp_FloatLineEdit->InitCoverage(-1000,1000,3);
-//	m_pDelayComp_FloatLineEdit->SetValue(&m_pManualParas->m_oMuParas.fDelayCompens_NoPPS);
+	//	m_pDelayComp_FloatLineEdit->InitCoverage(-1000,1000,3);
+	//	m_pDelayComp_FloatLineEdit->SetValue(&m_pManualParas->m_oMuParas.fDelayCompens_NoPPS);
 
 	UpdateResultsDesc();
 	ConnectAllSigSlot();
@@ -314,6 +329,19 @@ void QSttMUTimeTestWidget::InitData(tmt_manual_test *pManualTest)
 		m_oAssistTimer.start(500);
 
 	}
+
+}
+
+void QSttMUTimeTestWidget::InitData(tmt_manual_test *pManualTest)
+{
+	if (pManualTest == NULL)
+	{
+		return;
+	}
+
+	m_pManualTest = pManualTest;
+	m_pManualParas = &pManualTest->m_oManuParas;
+	m_pMuTimeRlt = &pManualTest->m_oManuResult.m_oMuTimeRlt;
 }
 
 void QSttMUTimeTestWidget::SetRightPicLabel(const CString &strPicName)

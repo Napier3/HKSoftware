@@ -237,12 +237,15 @@
   <customwidget>
    <class>QSttLineEdit</class>
    <extends>QLineEdit</extends>
-   <header location="global">../Module/UI/Controls/SttLineEdit.h</header>
+   <header>../Module/UI/Controls/SttLineEdit.h</header>
   </customwidget>
   <customwidget>
    <class>QScrollComboBox</class>
    <extends>QComboBox</extends>
    <header>../Module/UI/Module/ScrollCtrl/ScrollComboBox.h</header>
+   <slots>
+    <slot>on_FaultMode_currentIndexChanged(int)</slot>
+   </slots>
   </customwidget>
  </customwidgets>
  <resources/>

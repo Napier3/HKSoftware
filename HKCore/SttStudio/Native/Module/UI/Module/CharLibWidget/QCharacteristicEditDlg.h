@@ -8,7 +8,7 @@
 #include <QPushButton>
 #include <QGroupBox>
 #include <QRadioButton>
-#include "../../AutoTest/Module/Characteristic/Characteristic.h"
+#include "../../../AutoTest/Module/Characteristic/Characteristic.h"
 
 class QCharacteristicEditDlg : public QDialog
 {

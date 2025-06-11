@@ -43,19 +43,19 @@ void QPowerManualGrid::DCStateChanged()
 	m_pParaSetImp->DCStateChanged(m_ndc_type, m_bDC);
 }
 
-void QPowerManualGrid::setUAmpMaxMinValue()
+void QPowerManualGrid::setUAmpMaxMinValue(bool bCanUpdateTable)
 {
 	if (m_pParaSetImp != NULL)
 	{
-		m_pParaSetImp->setUAmpMaxMinValue();
+		m_pParaSetImp->setUAmpMaxMinValue(bCanUpdateTable);
 	}
 }
 
-void QPowerManualGrid::setIAmpMaxMinValue()
+void QPowerManualGrid::setIAmpMaxMinValue(bool bCanUpdateTable)
 {
 	if (m_pParaSetImp != NULL)
 	{
-		m_pParaSetImp->setIAmpMaxMinValue();
+		m_pParaSetImp->setIAmpMaxMinValue(bCanUpdateTable);
 	}
 }
 
@@ -175,7 +175,7 @@ void QPowerManualGrid::initData()
 {
 	if (m_pParaSetImp != NULL)
 	{
-		m_pParaSetImp->initData();
+		m_pParaSetImp->initData(true);
 	}
 }
 
@@ -291,7 +291,7 @@ void QPowerManualGrid::SetBasicTestParaSetImp(QPowerManualGridImp* pParaSetImp)
 	m_pParaSetImp = pParaSetImp;
 }
 
-void QPowerManualGrid::setMaxMinAndEDVal()
+void QPowerManualGrid::setMaxMinAndEDVal(bool bCanUpdateTable)
 {
 	if (m_pParaSetImp != NULL)
 	{

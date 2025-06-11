@@ -5,7 +5,7 @@
 #include <QPushButton>
 #include <QScrollArea>
 #include "SttSclIedDrawViewWidget.h"
-#include "../../61850/Module/SCL/SclIecCfgDatas.h"
+#include "../../../61850/Module/SCL/SclIecCfgDatas.h"
 
 
 class QSttSclIedSkectMapWidget : public QWidget

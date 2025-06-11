@@ -6,7 +6,7 @@
 #include <QPushButton>
 #include <QAction>
 #include <QMenu>
-#include "../../AutoTest/Module/Characteristic/CharacteristicLib.h"
+#include "../../../AutoTest/Module/Characteristic/CharacteristicLib.h"
 #include "PsuCharDrawView.h"
 
 class QCharactWidgetForTest : public QWidget

@@ -39,6 +39,10 @@ public:
 	Diagram *m_pDiagram;
 	void SetVectorMode(int nVectorType, CDataGroup *pGroup);//2023.7.28 zhangyq 设置矢量图工作模式
 	void SetDatas_PowerDir(CDataGroup *pGroup); //2023.7.28 zhangyq 增加动作区域
+
+	int m_nParaSetSecondValue;
+	void SetParaSetSecondValue(int nParaSetSecondValue);
+
 public slots:
 	void slot_PbnNextClicked();
 	void slot_PbnPreClicked();

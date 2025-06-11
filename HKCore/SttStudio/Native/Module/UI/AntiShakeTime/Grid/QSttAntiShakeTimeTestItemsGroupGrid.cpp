@@ -1,9 +1,9 @@
 #include "QSttAntiShakeTimeTestItemsGroupGrid.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../../UI/SttTestCntrFrameBase.h"
 #include "../Module/SttGlobalDef.h"
-#include"../Module/XLangResource_Native.h"
-#include "../../Module/XLanguage/XLanguageResource.h"
+#include"../../../../Module/XLangResource_Native.h"
+#include "../../../Module/XLanguage/XLanguageResource.h"
 #include "../../../UI/AntiShakeTime/QSttMacroParaEditViewAntiShakeTime.h"
 #include <QComboBox>
 
@@ -268,9 +268,13 @@ void QSttAntiShakeTimeTestItemsGroupGrid::UpdateDatas( CDvmValues *pValues,CExBa
 
 		if (strID == pDvmData->m_strID)
 		{
-			Show_StaticString(pDvmData, nRow, 8, &pDvmData->m_strValue);
+			CDvmValue* pDvmValue = pDvmData->FindValueByID(_T("$st_all"));
+			if (pDvmValue)
+			{
+				Show_StaticString(pDvmData, nRow, 8, &pDvmValue->m_strValue);
 			break;
 		}
+	}
 	}
 
 	CDvmValue *pDvmValue = (CDvmValue*)pValues->FindByID(_T("RsltDsc"));

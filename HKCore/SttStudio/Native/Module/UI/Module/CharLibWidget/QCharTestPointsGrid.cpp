@@ -1,8 +1,8 @@
 #include "QCharTestPointsGrid.h"
 #include "../../SttTestCntrCmdDefine.h"
 #include "../../../XLangResource_Native.h"
-#include "../../Module/XLanguage/XLanguageResource.h"
-#include "../../AutoTest/Module/XLanguageResourceAts.h"
+#include "../../../Module/XLanguage/XLanguageResource.h"
+#include "../../../AutoTest/Module/XLanguageResourceAts.h"
 
 QCharTestPointsGrid::QCharTestPointsGrid(CCharacteristics *pCharacteristics,QWidget *parent)
 	: QExBaseListGridBase(parent)
@@ -202,7 +202,7 @@ void QCharTestPointsGrid::UpdateResult(CExBaseObject *pData,double dX,double dY,
 	} 
 	else
 	{
-		strActValue = /*_T("未动作")*/g_sLangTxt_State_NoActioned; //lcq
+		strActValue = /*_T("未动作")*//*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact; //lcq
 		strErrorValue =  _T("--");
 	}
 

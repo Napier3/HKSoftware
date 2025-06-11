@@ -12,7 +12,7 @@
 #include <QCheckBox>
 #include "../Module/CommonCtrl_QT/QFloatLineEdit.h"
 #include "../Module/CommonCtrl_QT/QNumberCheckBox.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgGinDatas.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgGinDatas.h"
 #include "Grid/IecCfgGinDataGrid.h"
 
 

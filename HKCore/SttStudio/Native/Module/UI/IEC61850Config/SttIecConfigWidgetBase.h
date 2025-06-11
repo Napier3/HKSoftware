@@ -12,9 +12,9 @@
 #include <QLabel>
 
 #include "../Module/QExBaseListGridBase/QExBaseListGridBase.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgDatasBase.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgDatasBase.h"
 #include "Grid/IecCfgDataGridBase.h"
-#include "../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/DataMngr/DataGroup.h"
 
 #define STT_IEC_SMVFT3_CRC_16BYTE_VERIFICATION 		   0 //0-标准16字节校验
 #define STT_IEC_SMVFT3_CRC_END_VERIFICATION 		   1  //1-报文末尾校验
@@ -46,6 +46,7 @@ protected:
 	virtual CIecCfgDataBase* AddNewIecCfgData();
 	void AutoSetCfgDataValue(CIecCfgDataBase *pCfgData, long nOffset);
 	void SetIecConfigWidgetFont();
+	void UpDateEnableButtons();//控制块为空，除添加按钮其他都是灰化状态
 
 	QVBoxLayout *m_pMainVLayout;
 

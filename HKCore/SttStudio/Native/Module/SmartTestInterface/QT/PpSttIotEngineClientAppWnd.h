@@ -1,7 +1,7 @@
 #ifndef _PpSttIotEngineClientWidgetWnd_h__
 #define _PpSttIotEngineClientWidgetWnd_h__
 
-#include "../../../../Module/API/StringApi.h"
+#include "../../../Module/API/StringApi.h"
 
 #include "../PpSttIotEngineClientApp.h"
 

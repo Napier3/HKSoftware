@@ -4,9 +4,9 @@
 #include "../../UI/Module/QExBaseListGridBase/QExBaseListGridBase.h"
 
 
-#include "../../../../Module/SmartCap/61850Cap/CapDevice/CapDeviceBase.h"
-#include "../../../../Module/SmartCap/61850Cap/CapDevice/CapDeviceSmvCh.h"
-#include "../../../../Module/SmartCap/61850Cap/CapDevice/CapDeviceGooseCh.h"
+#include "../../../Module/SmartCap/61850Cap/CapDevice/CapDeviceBase.h"
+#include "../../../Module/SmartCap/61850Cap/CapDevice/CapDeviceSmvCh.h"
+#include "../../../Module/SmartCap/61850Cap/CapDevice/CapDeviceGooseCh.h"
 
 //表格显示类型分为两种,即9-2,GOOSE； FT3，两者需要显示的列不同
 #define STT_IECCBGRID_SHOW_TYPE_61850                  0

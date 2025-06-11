@@ -1,7 +1,7 @@
 #include "HarmParaWidget.h"
-#include "../../Module/XLanguage/XLanguageMngr.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/XLanguage/XLanguageMngr.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../Module/CommonMethod/commonMethod.h"
 #include "../Interface/SttMacroParaEditViewOriginal.h"
 #include "QHarmTable.h"
@@ -13,7 +13,7 @@ QHarmParaWidget::QHarmParaWidget(QWidget *parent) : QWidget(parent)
 {
 	m_pTestResource = NULL;
 	m_pHarmParas = NULL;
-	m_nDispMode = V_Secondary;
+	m_nParaSetSecondValue = V_Secondary;
 	m_nHarmGradType = Amplitude_HarmGradType;
     InitUI();
 	InitConnect();
@@ -528,6 +528,13 @@ void QHarmParaWidget::InitUI()
 // 	}
 }
 
+void QHarmParaWidget::SetParaSetSecondValue(int nParaSetSecondValue)
+{
+	m_nParaSetSecondValue = nParaSetSecondValue;
+	UpdateGradLabelUnit();
+}
+
+
 void QHarmParaWidget::paintEvent( QPaintEvent *e )
 {
 	QStyleOption opt;
@@ -562,6 +569,11 @@ void QHarmParaWidget::UpdataPara()
 	SetHarmOrderCombox();
 
 	UpdateBinaryInBinaryOutEnable();
+
+	//更新完需要刷新始值、终值、步长 如果是超出范围的，不会自动变化到范围内
+	slot_lne_StartChanged();
+	slot_lne_EndChanged();
+	slot_lne_StepChanged();
 
 	bool bAuto = m_pHarmParas->m_bAuto;
 	m_pEdit_Start->setDisabled(!bAuto);
@@ -709,7 +721,7 @@ void QHarmParaWidget::SetGradientCurSelCh()
 	while(pos)
 	{
 		pCurData = (CDataTypeValue *)m_oGradientChs.GetNext(pos);
-		m_pCmb_Chanel->addItem(pCurData->m_strID.GetString());
+		m_pCmb_Chanel->addItem(pCurData->m_strName.GetString());
 	}
 
 	para_type var = getParaTypeByInt(m_pHarmParas->m_nGradientChSelect);
@@ -886,7 +898,7 @@ void QHarmParaWidget::UpdateGradLabelUnit()
 	}
 	else if (text.contains("U"))
 	{
-		if (m_nDispMode == V_Primary)//一次值
+		if (m_nParaSetSecondValue == V_Primary)//一次值
 		{
 			str = tr("(kV):");
 		}
@@ -908,7 +920,24 @@ void QHarmParaWidget::UpdateGradLabelUnit()
 
 	m_pLabel_Start->setText(strStart + str);
 	m_pLabel_End->setText(strEnd + str);
+
+	if (text.contains("U"))
+	{
+		
+		str = tr("(V):");
+	}
+	else
+	{	
+		str = tr("(A):");
+	}
+
 	m_pLabel_Step->setText(strStep + str);
+
+	if (m_nHarmGradType == 1)
+	{
+		m_pLabel_Step->setText(g_sLangTxt_Step + "(%)");  //2024-12-17 xueyangfan 勾选谐波按百分比递变，递变参数的步长单位应该由V变为%
+	}
+
 }
 
 bool QHarmParaWidget::IsHarmGradPercentType()
@@ -967,8 +996,41 @@ void QHarmParaWidget::slot_cmb_HarmOrderIndexChanged( int index )
 
 void QHarmParaWidget::slot_lne_StartChanged()
 {
-	float fAcVMax = g_oLocalSysPara.m_fAC_VolMax;
-	float fAcIMax = g_oLocalSysPara.m_fAC_CurMax;
+	float fAcVMax = 0,fAcIMax = 0;
+	CString strChanel = m_pCmb_Chanel->currentText();
+	if (g_oSystemParas.m_nHasWeek)//弱信号限制
+	{
+		if (strChanel == _T("U0"))
+		{
+			fAcVMax = 8.300;
+		}
+		else if(strChanel == _T("I0"))
+		{
+			fAcIMax = 4.200;
+		}
+		else
+		{
+#ifdef _PSX_OS_CENTOS_
+			fAcVMax = 10.000;
+
+#else
+			fAcVMax = 4.200;
+#endif
+			fAcIMax = 21.000;
+		}
+	}
+	else
+	{
+		fAcVMax = g_oLocalSysPara.m_fAC_VolMax;
+		fAcIMax = g_oLocalSysPara.m_fAC_CurMax;
+	}
+	long nIndex = m_pCmb_HarmNum->currentIndex();
+	if (nIndex == 0)
+	{
+		fAcVMax = fAcVMax * 1.414;
+		fAcIMax = fAcIMax* 1.414;
+	}
+
 	float fv = m_pEdit_Start->text().toFloat();	  //变化始值
 
 	if (m_pCmb_Chanel->currentText().contains("U"))
@@ -986,8 +1048,42 @@ void QHarmParaWidget::slot_lne_StartChanged()
 
 void QHarmParaWidget::slot_lne_EndChanged()
 {
-	float fAcVMax = g_oLocalSysPara.m_fAC_VolMax;
-	float fAcIMax = g_oLocalSysPara.m_fAC_CurMax;
+	float fAcVMax = 0,fAcIMax = 0;
+	CString strChanel = m_pCmb_Chanel->currentText();
+	if (g_oSystemParas.m_nHasWeek)//弱信号限制
+	{
+		if (strChanel == _T("U0"))
+		{
+			fAcVMax = 8.300;
+		}
+		else if(strChanel == _T("I0"))
+		{
+			fAcIMax = 4.200;
+		}
+		else
+		{
+#ifdef _PSX_OS_CENTOS_
+			fAcVMax = 10.000;
+
+#else
+			fAcVMax = 4.200;
+#endif
+			fAcIMax = 21.000;
+		}
+	}
+	else
+	{
+		fAcVMax = g_oLocalSysPara.m_fAC_VolMax;
+		fAcIMax = g_oLocalSysPara.m_fAC_CurMax;
+	}
+
+	long nIndex = m_pCmb_HarmNum->currentIndex();
+	if (nIndex == 0)
+	{
+		fAcVMax = fAcVMax * 1.414;
+		fAcIMax = fAcIMax* 1.414;
+	}
+	
 	float fv = m_pEdit_End->text().toFloat();
 
 	if (m_pCmb_Chanel->currentText().contains("U"))
@@ -1004,8 +1100,42 @@ void QHarmParaWidget::slot_lne_EndChanged()
 
 void QHarmParaWidget::slot_lne_StepChanged()
 {
-	float fAcVMax = g_oLocalSysPara.m_fAC_VolMax;
-	float fAcIMax = g_oLocalSysPara.m_fAC_CurMax;
+	float fAcVMax = 0,fAcIMax = 0;
+	CString strChanel = m_pCmb_Chanel->currentText();
+	if (g_oSystemParas.m_nHasWeek)//弱信号限制
+	{
+		if (strChanel == _T("U0"))
+		{
+			fAcVMax = 8.300;
+		}
+		else if(strChanel == _T("I0"))
+		{
+			fAcIMax = 4.200;
+		}
+		else
+		{
+#ifdef _PSX_OS_CENTOS_
+			fAcVMax = 10.000;
+
+#else
+			fAcVMax = 4.200;
+#endif
+			fAcIMax = 21.000;
+		}
+	}
+	else
+	{
+		fAcVMax = g_oLocalSysPara.m_fAC_VolMax;
+		fAcIMax = g_oLocalSysPara.m_fAC_CurMax;
+	}
+
+	long nIndex = m_pCmb_HarmNum->currentIndex();
+	if (nIndex == 0)
+	{
+		fAcVMax = fAcVMax * 1.414;
+		fAcIMax = fAcIMax* 1.414;
+	}
+
 	float fv = m_pEdit_Step->text().toFloat();
 
 	if (m_pCmb_Chanel->currentText().contains("U"))

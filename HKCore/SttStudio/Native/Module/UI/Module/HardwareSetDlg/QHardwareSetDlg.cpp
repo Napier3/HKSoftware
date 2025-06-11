@@ -2,9 +2,9 @@
 #include <QDirIterator>
 #include "../../../SttCmd/SttParas.h"
 #include "../../../SttGlobalDef.h"
-#include "../../Module/System/TickCount32.h"
+#include "../../../Module/System/TickCount32.h"
 #include "../../../SttTestResourceMngr/SttTestResourceMngr.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../CommonMethod/commonMethod.h"
 #include "../Module/XLangResource_Native.h"
 
@@ -95,24 +95,25 @@ void QHardwareSetDlg::initUI(STT_SystemParas *pSysParas)
 // 	m_pBackLightTime_HBoxLayout->addWidget(m_pBackLightTime_LineEdit);
 // 	m_pBackLightTime_HBoxLayout->addWidget(m_pReMarks_Label);
 
-	strTmp = _T("机器散热风扇模式");
-	xlang_GetLangStrByFile(strTmp,"State_FanMode");
-	m_pFanMode_Label = new QLabel(strTmp);
-
-	strTmp = _T("正常");
-	xlang_GetLangStrByFile(strTmp,"State_Normal");
-	m_pNormal_RadioButton = new QRadioButton(strTmp);
-	strTmp = _T("静音");
-	xlang_GetLangStrByFile(strTmp,"State_Mute");
-	m_pMute_RadioButton = new QRadioButton(strTmp);
-	m_pFanModeBtnGroup = new QButtonGroup(this);
-	m_pFanModeBtnGroup->addButton(m_pMute_RadioButton,0);
-	m_pFanModeBtnGroup->addButton(m_pNormal_RadioButton,1);
-	m_pFanModeBtnGroup->setExclusive(true);
+	//20241128 suyang 应要求不显示
+// 	strTmp = _T("机器散热风扇模式");
+// 	xlang_GetLangStrByFile(strTmp,"State_FanMode");
+// 	m_pFanMode_Label = new QLabel(strTmp);
+// 
+// 	strTmp = _T("正常");
+// 	xlang_GetLangStrByFile(strTmp,"State_Normal");
+// 	m_pNormal_RadioButton = new QRadioButton(strTmp);
+// 	strTmp = _T("静音");
+// 	xlang_GetLangStrByFile(strTmp,"State_Mute");
+// 	m_pMute_RadioButton = new QRadioButton(strTmp);
+// 	m_pFanModeBtnGroup = new QButtonGroup(this);
+// 	m_pFanModeBtnGroup->addButton(m_pMute_RadioButton,0);
+// 	m_pFanModeBtnGroup->addButton(m_pNormal_RadioButton,1);
+// 	m_pFanModeBtnGroup->setExclusive(true);
 
 
 	m_pTimeZoneSet_HBoxLayout = new QHBoxLayout;
-	m_pFanMode_HBoxLayout = new QHBoxLayout;
+// 	m_pFanMode_HBoxLayout = new QHBoxLayout;
 	strTmp = _T("时区设置");
 	xlang_GetLangStrByFile(strTmp,"State_Timezonesetting");   //LCQ
 	m_pTimeZoneSet_Label = new QLabel(strTmp);
@@ -210,13 +211,13 @@ void QHardwareSetDlg::initUI(STT_SystemParas *pSysParas)
 	m_pOtherSet_GridLayout->addWidget(m_pBackLightTime_Label, 1, 0);
 	m_pOtherSet_GridLayout->addWidget(m_pBackLightTime_LineEdit, 1, 1);
 	m_pOtherSet_GridLayout->addWidget(m_pReMarks_Label, 1, 2);
-	m_pFanMode_HBoxLayout->addWidget(m_pFanMode_Label);
-	m_pFanMode_HBoxLayout->addWidget(m_pMute_RadioButton);
-	m_pFanMode_HBoxLayout->addWidget(m_pNormal_RadioButton);
+// 	m_pFanMode_HBoxLayout->addWidget(m_pFanMode_Label);
+// 	m_pFanMode_HBoxLayout->addWidget(m_pMute_RadioButton);
+// 	m_pFanMode_HBoxLayout->addWidget(m_pNormal_RadioButton);
 	// 	m_pOtherSet_VLayout->addLayout(m_pBackLightTime_HBoxLayout);
 #ifndef _PSX_OS_CENTOS_
 	m_pOtherSet_VLayout->addLayout(m_pOtherSet_GridLayout);
-	m_pOtherSet_VLayout->addLayout(m_pFanMode_HBoxLayout);
+// 	m_pOtherSet_VLayout->addLayout(m_pFanMode_HBoxLayout);
 #endif
 	m_pOtherSet_GroupBox->setLayout(m_pOtherSet_VLayout);
 
@@ -260,8 +261,8 @@ void QHardwareSetDlg::initUI(STT_SystemParas *pSysParas)
  	connect(m_pOK_PushButton, SIGNAL(clicked()), this, SLOT(slot_OKClicked()));
  	connect(m_pCancel_PushButton, SIGNAL(clicked()), this, SLOT(slot_CancelClicked()));
 
-	connect(m_pNormal_RadioButton, SIGNAL(toggled(bool )), this, SLOT(slot_radio_NormalLogicChanged(bool)));
-	connect(m_pMute_RadioButton, SIGNAL(toggled(bool )), this, SLOT(slot_radio_MuteLogicChanged(bool)));
+// 	connect(m_pNormal_RadioButton, SIGNAL(toggled(bool )), this, SLOT(slot_radio_NormalLogicChanged(bool)));
+// 	connect(m_pMute_RadioButton, SIGNAL(toggled(bool )), this, SLOT(slot_radio_MuteLogicChanged(bool)));
 }
 
 void QHardwareSetDlg::ReleaseUI()
@@ -300,16 +301,16 @@ void QHardwareSetDlg::InitDatas()
 	m_pScreenBright_LineEdit->SetValue(g_oSystemParas.m_oPeripheral.m_nLcdLight);
 	m_pBackLightTime_LineEdit->SetValue(g_oSystemParas.m_oPeripheral.m_nLcdTimes);
 	m_pTimeZoneSet_ComboBox->setCurrentIndex(g_oSystemParas.m_nTimeZone+12);
-	if (g_oSystemParas.m_nWindSpeed == 0)
-	{
-		m_pMute_RadioButton->setChecked(true);
-		m_pNormal_RadioButton->setChecked(false);
-	} 
-	else
-	{
-		m_pNormal_RadioButton->setChecked(true);
-		m_pMute_RadioButton->setChecked(false);
-	}
+// 	if (g_oSystemParas.m_nWindSpeed == 0)
+// 	{
+// 		m_pMute_RadioButton->setChecked(true);
+// 		m_pNormal_RadioButton->setChecked(false);
+// 	} 
+// 	else
+// 	{
+// 		m_pNormal_RadioButton->setChecked(true);
+// 		m_pMute_RadioButton->setChecked(false);
+// 	}
 }
 
 void QHardwareSetDlg::Update4GEnable()
@@ -317,6 +318,10 @@ void QHardwareSetDlg::Update4GEnable()
 	m_pSttFrameConfig = CSttFrameConfig::g_pSttFrameConfig;
 	CSttFrame_BarBase* pToolBar = m_pSttFrameConfig->GetToolBar();
 	CExBaseList *pList = (CExBaseList*)pToolBar->FindByID("state-pic");
+	if (pList == NULL)
+	{
+		return;
+	}
 	POS pos = pList->GetHeadPosition();
 	CExBaseObject *pCurObj = NULL;
 	while (pos != NULL)

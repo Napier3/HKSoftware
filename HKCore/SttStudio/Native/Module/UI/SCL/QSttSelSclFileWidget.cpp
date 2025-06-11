@@ -1,14 +1,14 @@
 #include "QSttSelSclFileWidget.h"
-#include "../../Module/API/StringApi.h"
-#include "../../Module/API/StringConvertApi.h"
-#include "../../61850/Module/SCL/SclFileMngr/XSclFileMngr.h"
+#include "../../../Module/API/StringApi.h"
+#include "../../../Module/API/StringConvertApi.h"
+#include "../../../61850/Module/SCL/SclFileMngr/XSclFileMngr.h"
 #include "../Module/PopupDialog/SttPopupOpenDialog.h"
-#include "../../Module/OSInterface/QT/XMessageBox.h"
-#include "../../61850/Module/SCL_Qt/QScdFileRWDlg.h"
-#include "../../61850/Module/SCL/CcdFileRead.h"
-#include "../../Module/System/TickCount32.h"
+#include "../../../Module/OSInterface/QT/XMessageBox.h"
+#include "../../../61850/Module/SCL_Qt/QScdFileRWDlg.h"
+#include "../../../61850/Module/SCL/CcdFileRead.h"
+#include "../../../Module/System/TickCount32.h"
 #include "../Module/PopupDialog/SttFileMngrTool.h"
-#include"../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include"../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "QSttSelSclIedWidget.h"
 #include <QFileDialog>
 #include <QFile>
@@ -20,7 +20,7 @@
 #include"../../XLangResource_Native.h"
 
 // #ifndef _PSX_QT_LINUX_
-// #include "../../61850/Module/SCL/SclFileRead.h"
+// #include "../../../61850/Module/SCL/SclFileRead.h"
 // // #include "../src/gui/dialogs/qfiledialog.h"
 // #endif
 
@@ -48,7 +48,7 @@ void QSttSelSclFileWidget::InitUI()
 	m_pMainVLayout = new QVBoxLayout;
 	m_pBtns_HBoxLayout = new QHBoxLayout;
 	m_pSttSelSclFileGrid = new CSttSelSclFileGrid(this);
-	m_pSttSelSclFileGrid->SetTableFont(this->font());
+	m_pSttSelSclFileGrid->SetTableFont(/*this->font()*/*g_pSttGlobalFont);
 	m_pSttSelSclFileGrid->InitGrid();
 	CString strText;
 	//strText = _T("ÐÂÔöSCL");
@@ -76,15 +76,27 @@ void QSttSelSclFileWidget::InitUI()
 	m_pSttSelSclFileGrid->AttachDataViewOptrInterface(this);
 	EnableButtons();
 
-	QFontMetrics fontMetrics = QFontMetrics(font());
+	//QFontMetrics fontMetrics = QFontMetrics(font());
+	QFontMetrics fontMetrics(*g_pSttGlobalFont);
 	QRect recContent_drugName = fontMetrics.boundingRect(g_sLangID_IEC_DeleteNow);
 	int nDrugNameWidth = recContent_drugName.width();
-	nDrugNameWidth *= 1.2;
+	if(xlang_IsCurrXLanguageChinese())
+	{
+		nDrugNameWidth *= 1.2;
+	}
+	else
+	{
+		nDrugNameWidth *= 2.0;
+	}
 
 	m_pAddScl_Btn->setFixedWidth(nDrugNameWidth);
 	m_pDelCurr_Btn->setFixedWidth(nDrugNameWidth);
 	m_pClearAll_Btn->setFixedWidth(nDrugNameWidth);
 	m_pSclIedSelect_Btn->setFixedWidth(nDrugNameWidth);
+	m_pAddScl_Btn->setFont(*g_pSttGlobalFont);
+	m_pDelCurr_Btn->setFont(*g_pSttGlobalFont);
+	m_pClearAll_Btn->setFont(*g_pSttGlobalFont);
+	m_pSclIedSelect_Btn->setFont(*g_pSttGlobalFont);
 
 	connect(m_pAddScl_Btn, SIGNAL(clicked()), this, SLOT(slot_AddScl_Clicked()));
 	connect(m_pDelCurr_Btn, SIGNAL(clicked()), this, SLOT(slot_DelCurr_Clicked()));

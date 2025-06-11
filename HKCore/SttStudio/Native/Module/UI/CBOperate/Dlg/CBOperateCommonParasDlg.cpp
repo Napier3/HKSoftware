@@ -2,6 +2,7 @@
 
 #include "../Module/SttGlobalDef.h"
 #include "../../SttTestCntrFrameBase.h"
+#include "../../SttTestCntrFrameApi.h"
 
 CBOperateCommonParasDlg::CBOperateCommonParasDlg(tmt_CBOperateParas *pCBOperateParas ,QWidget *parent) : QDialog(parent)
 {
@@ -25,46 +26,46 @@ void CBOperateCommonParasDlg::InitUI()
 	m_pGeneralParas = new QWidget(this);
 	m_pBinBout = new QWidget(this);
 
-    m_pCommonParas->addTab(m_pGeneralParas, _T("通用参数"));
+	m_pCommonParas->addTab(m_pGeneralParas, g_sLangTxt_Gradient_CommonParas/*_T("通用参数")*/);
 
-    m_pLabPreFaultTime = new QLabel(_T("故障前时间(s)"),this);                //故障前时间(s)
-    m_pLabTimeAfterTrigger = new QLabel(_T("保护动作后持续时间(s)"),this);    //保护动作后持续时间(s)
-    m_pLabFaultTrigMode = new QLabel(_T("故障触发方式"),this);                //故障触发方式
-    m_pLabPTPos = new QLabel(_T("TV安装位置"),this);			              //TV安装位置
-    m_pLabCTPos = new QLabel(_T("TA正极性"),this);                            //TA正极性
-    m_pLabTestProcess = new QLabel(_T("试验过程"),this);		              //试验过程
-    m_pLabRecloseMode = new QLabel(_T("重合方式"),this);                      //重合方式
-    m_pLabAfterOpenTime = new QLabel(_T("开关跳开后持续时间(s)"),this);	      //开关跳开后持续时间(s)
-    m_pLabRecloseTime = new QLabel(_T("重合持续时间(s)"),this);               //重合持续时间(s)
-    m_pLabAfterAccTime = new QLabel(_T("后加速开关跳开后持续时间(s)"),this);  //后加速开关跳开后持续时间(s)
-    m_pLabK0Mode = new QLabel(_T("零序补偿系数表达方式"),this);			      //零序补偿系数表达方式
+    m_pLabPreFaultTime = new QLabel(/*_T("故障前时间(s)")*/g_sLangTxt_Native_PreFaultTime + ":",this);                //故障前时间(s)
+	m_pLabTimeAfterTrigger = new QLabel(/*_T("保护动作后持续时间(s)")*/g_sLangTxt_CBOperate_TimeAfterTrigger + ":", this);    //保护动作后持续时间(s)
+	m_pLabFaultTrigMode = new QLabel(/*_T("故障触发方式")*/g_sLangTxt_Native_FaultTrigMethod + ":", this);                //故障触发方式
+	m_pLabPTPos = new QLabel(/*_T("TV安装位置")*/g_sLangTxt_CBOperate_PTVPos + ":", this);			              //TV安装位置
+	m_pLabCTPos = new QLabel(/*_T("TA正极性")*/g_sLangTxt_CBOperate_CTPos + ":", this);                            //TA正极性
+	m_pLabTestProcess = new QLabel(/*_T("试验过程")*/g_sLangTxt_Native_testprocess + ":", this);		              //试验过程
+	m_pLabRecloseMode = new QLabel(/*_T("重合方式")*/g_sLangTxt_Native_redundancy_mode + ":", this);                      //重合方式
+	m_pLabAfterOpenTime = new QLabel(/*_T("开关跳开后持续时间(s)")*/g_sLangTxt_CBOperate_AfterOpenTime + ":", this);	      //开关跳开后持续时间(s)
+	m_pLabRecloseTime = new QLabel(/*_T("重合持续时间(s)")*/g_sLangTxt_CBOperate_RecloseTime + ":", this);               //重合持续时间(s)
+	m_pLabAfterAccTime = new QLabel(/*_T("后加速开关跳开后持续时间(s)")*/g_sLangTxt_CBOperate_AfterAccTime + ":", this);  //后加速开关跳开后持续时间(s)
+	m_pLabK0Mode = new QLabel(/*_T("零序补偿系数表达方式")*/g_sLangTxt_Native_ZeroSeqCompExp + ":", this);			      //零序补偿系数表达方式
 	m_pLabKlKr = new QLabel(this);				      //零序补偿系数RMRL
 	m_pLabAngKx = new QLabel(this);               //零序补偿系数XMXL
 
 	m_pEditPreFaultTime = new QLineEdit(this);    //故障前时间(s)
 	m_pEditTimeAfterTrigger = new QLineEdit(this);//保护动作后持续时间(s)
 	m_pCmbFaultTrigMode = new QComboBox(this);    //故障触发方式
-    m_pCmbFaultTrigMode->addItem("时间触发");
-    m_pCmbFaultTrigMode->addItem("手动触发");
-    m_pCmbFaultTrigMode->addItem("开入量触发");
-    m_pCmbFaultTrigMode->addItem("GPS或B码触发");
+	m_pCmbFaultTrigMode->addItem(/*"时间触发"*/g_sLangTxt_State_Trigger_Time);
+	m_pCmbFaultTrigMode->addItem(/*"手动触发"*/g_sLangTxt_State_Trigger_Manu);
+	m_pCmbFaultTrigMode->addItem(/*"开入量触发"*/g_sLangTxt_State_Trigger_Bin);
+	m_pCmbFaultTrigMode->addItem(/*"GPS或B码触发"*/g_sLangTxt_State_Trigger_GPSB);
 
 	m_pCmbPTPos = new QComboBox(this);			  //TV安装位置
-    m_pCmbPTPos->addItem("母线侧");
-    m_pCmbPTPos->addItem("线路侧");
+	m_pCmbPTPos->addItem(/*"母线侧"*/g_sLangTxt_CBOperate_PTPos);
+	m_pCmbPTPos->addItem(/*"线路侧"*/g_sLangTxt_CBOperate_TPos);
 
 	m_pCmbCTPos = new QComboBox(this);	          //TA正极性
-    m_pCmbCTPos->addItem("指向母线");
-    m_pCmbCTPos->addItem("指向线路");
+	m_pCmbCTPos->addItem(/*"指向母线"*/g_sLangTxt_CBOperate_CTPos1);
+	m_pCmbCTPos->addItem(/*"指向线路"*/g_sLangTxt_CBOperate_TPos1);
 
 	m_pCmbTestProcess = new QComboBox(this);	  //试验过程
-    m_pCmbTestProcess->addItem("跳合信号控制");
-    m_pCmbTestProcess->addItem("时间控制");
+	m_pCmbTestProcess->addItem(/*"跳合信号控制"*/g_sLangTxt_Native_jumpctrl);
+	m_pCmbTestProcess->addItem(/*"时间控制"*/g_sLangTxt_Native_timectrl);
 
 	m_pCmbRecloseMode = new QComboBox(this);	  //重合方式
-    m_pCmbRecloseMode->addItem("综重");
-    m_pCmbRecloseMode->addItem("三重");
-    m_pCmbRecloseMode->addItem("不重合");
+	m_pCmbRecloseMode->addItem(/*"综重"*/g_sLangTxt_CBOperate_Overall);
+	m_pCmbRecloseMode->addItem(/*"三重"*/g_sLangTxt_Native_tripleweight);
+	m_pCmbRecloseMode->addItem(/*"不重合"*/g_sLangTxt_Native_norepeat);
 
 	m_pEditAfterOpenTime = new QLineEdit(this);   //开关跳开后持续时间(s)
 	m_pEditRecloseTime = new QLineEdit(this);     //重合持续时间(s)
@@ -74,42 +75,43 @@ void CBOperateCommonParasDlg::InitUI()
 	m_pCmbK0Mode->addItem("RERL,XEXL");
 	m_pCmbK0Mode->addItem("|Z0/Z1|,Phi(Z0/Z1)");
 
-	m_pEditKlKr = new QLineEdit(this);			  //零序补偿系数RMRL
-	m_pEditAngKx = new QLineEdit(this);           //零序补偿系数XMXL
+    m_pEditKlKr = new QSettingLineEdit(this);			  //零序补偿系数RMRL
+    m_pEditAngKx = new QSettingLineEdit(this);           //零序补偿系数XMXL
 
-    m_pLabCalMode = new QLabel(_T("计算方式"),this);                  //计算方式
-    m_pLabZs = new QLabel(_T("系统阻抗(Ω)"),this);                  //系统阻抗(Ω)
-    m_pLabZsPh = new QLabel(_T("系统阻抗角(°)"),this);                //系统阻抗角(°)
-    m_pLabSimulateBreakerDelay = new QLabel(_T("断路器模拟"),this);//断路器模拟
-    m_pLabBrkBreakTime = new QLabel(_T("分闸时间(ms)"),this);        //分闸时间(ms)
-    m_pLabBrkCloseTime = new QLabel(_T("合闸时间(ms)"),this);        //合闸时间(ms)
-    m_pLabFaultIncMode = new QLabel(_T("合闸角选择"),this);        //合闸角选择
-    m_pLabFaultAngle = new QLabel(_T("合闸角(°)"),this);          //合闸角(°)
-    m_pLabBIPlusDC = new QLabel(_T("叠加非周期分量"),this);            //叠加非周期分量
-    m_pLabVzDefine = new QLabel(_T("抽取电压输出定义"),this);            //抽取电压输出定义
-    m_pLabPsuVzRefPhase = new QLabel(_T("抽取电压参考相定义"),this);       //抽取电压参考相定义
-    m_pLabVzPh = new QLabel(_T("抽取电压相角"),this);                //抽取电压相角
+	m_pLabCalMode = new QLabel(/*_T("计算方式")*/g_sLangTxt_State_CalcType, this);                  //计算方式
+	m_pLabZs = new QLabel(/*_T("系统阻抗(Ω)")*/g_sLangTxt_CBOperate_Zs + ":", this);                  //系统阻抗(Ω)
+	m_pLabZsPh = new QLabel(/*_T("系统阻抗角(°)")*/g_sLangTxt_CBOperate_ZsPh + ":", this);                //系统阻抗角(°)
+	m_pLabSimulateBreakerDelay = new QLabel(/*_T("断路器模拟")*/g_sLangTxt_CBOperate_SimulateBreakerDelay + ":", this);//断路器模拟
+	m_pLabBrkBreakTime = new QLabel(/*_T("分闸时间(ms)")*/g_sLangTxt_CBOperate_BrkBreakTime + ":", this);        //分闸时间(ms)
+	m_pLabBrkCloseTime = new QLabel(/*_T("合闸时间(ms)")*/g_sLangTxt_CBOperate_BrkCloseTime + ":", this);        //合闸时间(ms)
+	m_pLabFaultIncMode = new QLabel(/*_T("合闸角选择")*/g_sLangTxt_CBOperate_FaultIncMode + ":", this);        //合闸角选择
+	m_pLabFaultAngle = new QLabel(/*_T("合闸角(°)")*/g_sLangTxt_CBOperate_FaultAngle + ":", this);          //合闸角(°)
+	m_pLabBIPlusDC = new QLabel(/*_T("叠加非周期分量")*/g_sLangTxt_CBOperate_BIPlusDC + ":", this);            //叠加非周期分量
+	m_pLabVzDefine = new QLabel(/*_T("抽取电压输出定义")*/g_sLangTxt_CBOperate_VzDefine + ":", this);            //抽取电压输出定义
+	m_pLabPsuVzRefPhase = new QLabel(/*_T("抽取电压参考相定义")*/g_sLangTxt_CBOperate_PsuVzRefPhase + ":", this);       //抽取电压参考相定义
+	m_pLabVzPh = new QLabel(/*_T("抽取电压相角")*/g_sLangTxt_CBOperate_VzPh + ":", this);                //抽取电压相角
 
 	m_pCmbCalMode = new QComboBox(this);             //计算方式
-    m_pCmbCalMode->addItem("电流不变");
-    m_pCmbCalMode->addItem("电压不变");
-    m_pCmbCalMode->addItem("系统阻抗不变");
+	m_pCmbCalMode->addItem(/*"电流不变"*/g_sLangTxt_Native_INotChange);
+	m_pCmbCalMode->addItem(/*"电压不变"*/g_sLangTxt_Native_UNotChange);
+	m_pCmbCalMode->addItem(/*"系统阻抗不变"*/g_sLangTxt_Native_ZNotChange);
 
 	m_pEditZs = new QLineEdit(this);              //系统阻抗(Ω)
 	m_pEditZsPh = new QLineEdit(this);            //系统阻抗角(°)
 	m_pCmbSimulateBreakerDelay = new QComboBox(this);//断路器模拟
-    m_pCmbSimulateBreakerDelay->addItem("模拟");
-    m_pCmbSimulateBreakerDelay->addItem("不模拟");
+	m_pCmbSimulateBreakerDelay->addItem(/*"不模拟"*/g_sLangTxt_CBOperate_NotSimulated);
+	m_pCmbSimulateBreakerDelay->addItem(/*"模拟"*/g_sLangTxt_ChMaps_Analog);
+	
 
 	m_pEditBrkBreakTime = new QLineEdit(this);    //分闸时间(ms)
 	m_pEditBrkCloseTime = new QLineEdit(this);    //合闸时间(ms)
 	m_pCmbFaultIncMode = new QComboBox(this);        //合闸角选择
-    m_pCmbFaultIncMode->addItem("随机");
-    m_pCmbFaultIncMode->addItem("定值");
+	m_pCmbFaultIncMode->addItem(/*"随机"*/g_sLangTxt_CBOperate_Random);
+	m_pCmbFaultIncMode->addItem(/*"定值"*/g_sLangTxt_CBOperate_FixedValue);
 
 	m_pEditFaultAngle = new QLineEdit(this);      //合闸角(°)
 	m_pCmbBIPlusDC = new QComboBox(this);            //叠加非周期分量
-    m_pCmbBIPlusDC->addItem("否");
+	m_pCmbBIPlusDC->addItem(/*"否"*/g_sLangTxt_State_No);
     m_pCmbBIPlusDC->addItem("是");
 
 	m_pCmbVzDefine = new QComboBox(this);            //抽取电压输出定义
@@ -117,21 +119,23 @@ void CBOperateCommonParasDlg::InitUI()
 	m_pCmbVzDefine->addItem("Ua");
 	m_pCmbVzDefine->addItem("Ub");
 	m_pCmbVzDefine->addItem("Uc");
-	m_pCmbVzDefine->addItem("√3x3U0");
-	m_pCmbVzDefine->addItem("-√3x3U0");
+	CString strPlus = "√3x3U0";
+	CString strMinus = "-√3x3U0";
+	m_pCmbVzDefine->addItem(strPlus);
+	m_pCmbVzDefine->addItem(strMinus);
 	m_pCmbVzDefine->addItem("3U0");
 	m_pCmbVzDefine->addItem("-3U0");
 
 	m_pCmbPsuVzRefPhase = new QComboBox(this);       //抽取电压参考相定义
-    m_pCmbPsuVzRefPhase->addItem("Ua相位");
-    m_pCmbPsuVzRefPhase->addItem("Ub相位");
-    m_pCmbPsuVzRefPhase->addItem("Uc相位");
-    m_pCmbPsuVzRefPhase->addItem("Uab相位");
-    m_pCmbPsuVzRefPhase->addItem("Ubc相位");
-    m_pCmbPsuVzRefPhase->addItem("Uca相位");
+	m_pCmbPsuVzRefPhase->addItem(/*"Ua相位"*/g_sLangTxt_Native_UaPhase);
+	m_pCmbPsuVzRefPhase->addItem(/*"Ub相位"*/g_sLangTxt_Native_UbPhase);
+	m_pCmbPsuVzRefPhase->addItem(/*"Uc相位"*/g_sLangTxt_Native_UcPhase);
+	m_pCmbPsuVzRefPhase->addItem(/*"Uab相位"*/g_sLangTxt_CBOperate_UabPhase);
+	m_pCmbPsuVzRefPhase->addItem(/*"Ubc相位"*/g_sLangTxt_CBOperate_UbcPhase);
+	m_pCmbPsuVzRefPhase->addItem(/*"Uca相位"*/g_sLangTxt_CBOperate_UcaPhase);
 
 	m_pEditVzPh = new QLineEdit(this);            //抽取电压相角
-	m_pGeneralParasLayout = new QGridLayout(m_pGeneralParas);
+	m_pGeneralParasLayout = new QGridLayout();
 
 	m_pGeneralParasLayout->addWidget(m_pLabPreFaultTime, 0, 0);
 	m_pGeneralParasLayout->addWidget(m_pLabTimeAfterTrigger, 1, 0);
@@ -188,36 +192,46 @@ void CBOperateCommonParasDlg::InitUI()
 	m_pGeneralParasLayout->addWidget(m_pCmbPsuVzRefPhase, 10, 3);
 	m_pGeneralParasLayout->addWidget(m_pEditVzPh, 11, 3);
 
-    m_pBtnOKCommonParas = new QPushButton(_T("确定"));
-    m_pBtnCancelCommonParas = new QPushButton(_T("取消"));
-	m_pBtnCommonParasLayout = new QHBoxLayout;
+	m_pBtnOKCommonParas = new QPushButton(/*_T("确定")*/g_sLangTxt_OK);
+	m_pBtnCancelCommonParas = new QPushButton(/*_T("取消")*/g_sLangTxt_Cancel);
 	m_pBtnOKCommonParas->setFixedWidth(100);
 	m_pBtnCancelCommonParas->setFixedWidth(100);
+	m_pBtnCommonParasLayout = new QHBoxLayout;
+    m_pSpacerleft = new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Fixed);
+    m_pSpacerright = new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Fixed);
+
+	m_pGeneralParas->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+	// 添加左侧弹簧控件、确定按钮、取消按钮和右侧弹簧控件到水平布局中
+	m_pBtnCommonParasLayout->addItem(m_pSpacerleft);
 	m_pBtnCommonParasLayout->addWidget(m_pBtnOKCommonParas);
 	m_pBtnCommonParasLayout->addWidget(m_pBtnCancelCommonParas);
+	m_pBtnCommonParasLayout->addItem(m_pSpacerright);
 
-	m_pGeneralParasLayout->addLayout(m_pBtnCommonParasLayout, 13, 1, 1, 2, Qt::AlignCenter);
-	m_pGeneralParas->setLayout(m_pGeneralParasLayout);
+	m_pLayout = new QVBoxLayout;
+	m_pLayout->addLayout(m_pGeneralParasLayout);
+	m_pLayout->addLayout(m_pBtnCommonParasLayout);
 
-    m_pCommonParas->addTab(m_pBinBout, _T("开关量"));
+	m_pGeneralParas->setLayout(m_pLayout);
+
+	m_pCommonParas->addTab(m_pBinBout, /*_T("开关量")*/g_sLangTxt_Native_SwitchVal);
 	m_pBinBoutLayout = new QGridLayout();
 	QStringList BinList;
-    BinList  << "单跳" << "三跳" << "重合";
+	BinList  << /*"单跳"*/g_sLangTxt_CBOperate_SingleHop << /*"三跳"*/g_sLangTxt_CBOperate_TripleJump << /*"重合"*/g_sLangTxt_CBOperate_Reclose;
 	QStringList BoutList;
-    BoutList  << "断开" << "闭合";
-    m_pLabBinSelect= new QLabel(_T("开入选择"),this);            //开入量选择
-    m_pLabBinA= new QLabel(_T("开入A"),this);                      //开入A
-    m_pLabBinB= new QLabel(_T("开入B"),this);                      //开入B
-    m_pLabBinC= new QLabel(_T("开入C"),this);                      //开入C
-    m_pLabBinD= new QLabel(_T("开入D"),this);                      //开入D
-    m_pLabBinE= new QLabel(_T("开入E"),this);                      //开入E
-    m_pLabBinF= new QLabel(_T("开入F"),this);                      //开入F
-    m_pLabBinG= new QLabel(_T("开入G"),this);                      //开入G
-    m_pLabBinH= new QLabel(_T("开入H"),this);                      //开入H
+	BoutList  << /*"断开"*/g_sLangTxt_SOE_Break << /*"闭合"*/g_sLangTxt_SOE_Shutting;
+	m_pLabBinSelect= new QLabel(/*_T("开入选择")*/g_sLangTxt_CBOperate_BinBoutSelect,this);            //开入量选择
+	m_pLabBinA= new QLabel(/*_T("开入A")*/g_sLangTxt_Manual_InA,this);                      //开入A
+	m_pLabBinB= new QLabel(/*_T("开入B")*/g_sLangTxt_Manual_InB,this);                      //开入B
+	m_pLabBinC= new QLabel(/*_T("开入C")*/g_sLangTxt_Manual_InC,this);                      //开入C
+	m_pLabBinD= new QLabel(/*_T("开入D")*/g_sLangTxt_Manual_InD,this);                      //开入D
+	m_pLabBinE= new QLabel(/*_T("开入E")*/g_sLangTxt_Manual_InE,this);                      //开入E
+	m_pLabBinF= new QLabel(/*_T("开入F")*/g_sLangTxt_Manual_InF,this);                      //开入F
+	m_pLabBinG= new QLabel(/*_T("开入G")*/g_sLangTxt_Manual_InG,this);                      //开入G
+	m_pLabBinH= new QLabel(/*_T("开入H")*/g_sLangTxt_Manual_InH,this);                      //开入H
 
 	m_pCmbBinSelect = new QComboBox(this);           //开入量选择
-    m_pCmbBinSelect->addItem("开入A-B-C-D");
-    m_pCmbBinSelect->addItem("开入E-F-G-H");
+	m_pCmbBinSelect->addItem(/*"开入A-B-C-D"*/g_sLangTxt_CBOperate_BinABCD);
+	m_pCmbBinSelect->addItem(/*"开入E-F-G-H"*/g_sLangTxt_CBOperate_BinEFGH);
 	m_pCmbBinA = new QComboBox(this);                //开入A
 	m_pCmbBinB = new QComboBox(this);                //开入B
 	m_pCmbBinC = new QComboBox(this);                //开入C
@@ -235,17 +249,17 @@ void CBOperateCommonParasDlg::InitUI()
 	m_pCmbBinG->addItems(BinList);
 	m_pCmbBinH->addItems(BinList);
 
-    m_pLabBoutA= new QLabel(_T("开出1"),this);               //开出1
-    m_pLabBoutB= new QLabel(_T("开出2"),this);               //开出2
-    m_pLabBoutC= new QLabel(_T("开出3"),this);               //开出3
-    m_pLabBoutD= new QLabel(_T("开出4"),this);               //开出4
-    m_pLabBoutE= new QLabel(_T("开出5"),this);               //开出5
-    m_pLabBoutF= new QLabel(_T("开出6"),this);               //开出6
-    m_pLabBoutG= new QLabel(_T("开出7"),this);               //开出7
-    m_pLabBoutH= new QLabel(_T("开出8"),this);               //开出8
-    m_pLabOutputSwitchMode= new QLabel(_T("开出翻转启动方式"),this);//开出翻转启动方式
-    m_pLabOutputKeepTime= new QLabel(_T("开出保持时间"),this);      //开出保持时间
-    m_pLabOutputDelayTime= new QLabel(_T("开出翻转时刻"),this);     //开出翻转时刻
+	m_pLabBoutA= new QLabel(/*_T("开出1")*/g_sLangTxt_Manual_Out1,this);               //开出1
+	m_pLabBoutB= new QLabel(/*_T("开出2")*/g_sLangTxt_Manual_Out2,this);               //开出2
+	m_pLabBoutC= new QLabel(/*_T("开出3")*/g_sLangTxt_Manual_Out3,this);               //开出3
+	m_pLabBoutD= new QLabel(/*_T("开出4")*/g_sLangTxt_Manual_Out4,this);               //开出4
+	m_pLabBoutE= new QLabel(/*_T("开出5")*/g_sLangTxt_Manual_Out5,this);               //开出5
+	m_pLabBoutF= new QLabel(/*_T("开出6")*/g_sLangTxt_Manual_Out6,this);               //开出6
+	m_pLabBoutG= new QLabel(/*_T("开出7")*/g_sLangTxt_Manual_Out7,this);               //开出7
+	m_pLabBoutH= new QLabel(/*_T("开出8")*/g_sLangTxt_Manual_Out8,this);               //开出8
+	m_pLabOutputSwitchMode= new QLabel(/*_T("开出翻转启动方式")*/g_sLangTxt_CBOperate_OutputSwitchMode,this);//开出翻转启动方式
+	m_pLabOutputKeepTime= new QLabel(/*_T("开出保持时间")*/g_sLangTxt_Native_OutputHoldTimeS,this);      //开出保持时间
+	m_pLabOutputDelayTime= new QLabel(/*_T("开出翻转时刻")*/g_sLangTxt_CBOperate_OutputDelayTime,this);     //开出翻转时刻
 
 	m_pCmbBoutA = new QComboBox(this);               //开出A
 	m_pCmbBoutB = new QComboBox(this);               //开出B
@@ -265,8 +279,8 @@ void CBOperateCommonParasDlg::InitUI()
 	m_pCmbBoutH->addItems(BoutList);
 
 	m_pCmbOutputSwitchMode = new QComboBox(this);    //开出翻转启动方式
-    m_pCmbOutputSwitchMode->addItem("时间启动");
-    m_pCmbOutputSwitchMode->addItem("开入量启动");
+	m_pCmbOutputSwitchMode->addItem(/*"时间启动"*/g_sLangTxt_CBOperate_StartTime);
+	m_pCmbOutputSwitchMode->addItem(/*"开入量启动"*/g_sLangTxt_CBOperate_BinStart);
 	m_pEditOutputKeepTime = new QLineEdit(this);     //开出保持时间
 	m_pEditOutputDelayTime = new QLineEdit(this);    //开出翻转时刻
 
@@ -280,7 +294,7 @@ void CBOperateCommonParasDlg::InitUI()
 	m_pBinBoutLayout->addWidget(m_pLabBinG, 7, 0);
 	m_pBinBoutLayout->addWidget(m_pLabBinH, 8, 0);
 
-	m_pCmbBinSelect->setMinimumWidth(270);
+	m_pCmbBinSelect->setMinimumWidth(250);
 
 	m_pBinBoutLayout->addWidget(m_pCmbBinSelect, 0, 1);
 	m_pBinBoutLayout->addWidget(m_pCmbBinA, 1, 1);
@@ -315,9 +329,9 @@ void CBOperateCommonParasDlg::InitUI()
 	m_pBinBoutLayout->addWidget(m_pCmbOutputSwitchMode, 8, 3);
 	m_pBinBoutLayout->addWidget(m_pEditOutputKeepTime, 9, 3);
 	m_pBinBoutLayout->addWidget(m_pEditOutputDelayTime, 10, 3);
-	
-    m_pBtnOKBinBout = new QPushButton(_T("确定"));
-    m_pCancelBinBout = new QPushButton(_T("取消"));
+
+	m_pBtnOKBinBout = new QPushButton(/*_T("确定")*/g_sLangTxt_OK);
+	m_pCancelBinBout = new QPushButton(/*_T("取消")*/g_sLangTxt_Cancel);
 	m_pBtnOKBinBout->setFixedWidth(100);
 	m_pCancelBinBout->setFixedWidth(100);
 	m_pBtnResultAssessLayout = new QHBoxLayout;
@@ -335,28 +349,23 @@ void CBOperateCommonParasDlg::InitUI()
     m_pMainLayout->addLayout(m_pBtnResultAssessLayout);
 
 	m_pBinBout->setLayout(m_pMainLayout);
+	
 
-	m_pCommonParas->setFixedSize(800, 600); // 设置固定大小
+	QVBoxLayout *tabWidgetLayout = new QVBoxLayout(this);
+	tabWidgetLayout->addWidget(m_pCommonParas);
+	setLayout(tabWidgetLayout);
 
-	m_pCmbBinA->setEnabled(true);                
-	m_pCmbBinB->setEnabled(true);                
-	m_pCmbBinC->setEnabled(true);               
-	m_pCmbBinD->setEnabled(true);               
-	m_pCmbBinE->setEnabled(false);               
-	m_pCmbBinF->setEnabled(false);                
-	m_pCmbBinG->setEnabled(false);               
-	m_pCmbBinH->setEnabled(false);    
+	m_pCommonParas->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-	m_pCmbRecloseMode->setEnabled(false);
-	m_pEditAfterOpenTime->setEnabled(false);
-	m_pEditRecloseTime->setEnabled(false);
-	m_pEditAfterAccTime->setEnabled(false);
+	slot_SimulateBreakerDelay(m_oCBOperateParas->m_bCBSimulation);
+	slot_BinSelect(m_oCBOperateParas->m_nBinSelect);
+	slot_TestProcess(m_oCBOperateParas->m_nTestProcCtrlMode);
+	slot_OutputSwitchMode(m_oCBOperateParas->m_nOutputSwitchMode);
+	slot_FaultTrigMode(m_oCBOperateParas->m_nFaultTrigMode);
+	slot_CalMode(m_oCBOperateParas->m_nCalMode);
+	slot_FaultIncMode(m_oCBOperateParas->m_nFaultIncMode);
+	slot_VzDefine(m_oCBOperateParas->m_nVzDefine);
 
-	m_pEditZs->setEnabled(false);
-	m_pEditZsPh->setEnabled(false);
-	m_pEditFaultAngle->setEnabled(false);
-	m_pCmbPsuVzRefPhase->setEnabled(false);
-	m_pEditVzPh->setEnabled(false);
 	Initdates();
 }
 
@@ -478,6 +487,8 @@ void CBOperateCommonParasDlg::Initdates()
 	m_pEditRecloseTime->setText(QString::number(m_oCBOperateParas->m_fRecloseTime, 'f', 3));
 	m_pEditAfterAccTime->setText(QString::number(m_oCBOperateParas->m_fTAfterAccTrig, 'f', 3));
 	m_pCmbK0Mode->setCurrentIndex(m_oCBOperateParas->m_nK0CalMode); 
+	//m_pEditKlKr->UpdateStructText(CVariantDataAddress(&m_oCBOperateParas->m_fK0Amp), 3);
+	//m_pEditAngKx->UpdateStructText(CVariantDataAddress(&m_oCBOperateParas->m_fK0Angle), 3);
 	m_pEditKlKr->setText(QString::number(m_oCBOperateParas->m_fK0Amp, 'f', 3));
 	m_pEditAngKx->setText(QString::number(m_oCBOperateParas->m_fK0Angle, 'f', 3));
 	m_pCmbCalMode->setCurrentIndex(m_oCBOperateParas->m_nCalMode); 
@@ -653,13 +664,13 @@ void CBOperateCommonParasDlg::slot_SimulateBreakerDelay(int nIndex)
 {
 	if (nIndex == 0)
 	{
-		m_pEditBrkBreakTime->setEnabled(true);
-		m_pEditBrkCloseTime->setEnabled(true);
+		m_pEditBrkBreakTime->setEnabled(false);
+		m_pEditBrkCloseTime->setEnabled(false);
 	}
 	if (nIndex == 1)
 	{
-		m_pEditBrkBreakTime->setEnabled(false);
-		m_pEditBrkCloseTime->setEnabled(false);
+		m_pEditBrkBreakTime->setEnabled(true);
+		m_pEditBrkCloseTime->setEnabled(true);
 	}
 }
 
@@ -692,15 +703,15 @@ void CBOperateCommonParasDlg::slot_VzDefine(int nIndex)
 void CBOperateCommonParasDlg::slot_BtnOKCommonParas()
 {
 	m_oCBOperateParas->m_fPreFaultTime = m_pEditPreFaultTime->text().toFloat(); 
-	m_oCBOperateParas->m_fPostFaultTime = m_pEditTimeAfterTrigger->text().toFloat();
+	
 	m_oCBOperateParas->m_nFaultTrigMode = m_pCmbFaultTrigMode->currentIndex();
 	m_oCBOperateParas->m_nPTPoint = m_pCmbPTPos->currentIndex();
 	m_oCBOperateParas->m_nCTPoint = m_pCmbCTPos->currentIndex();
 	m_oCBOperateParas->m_nTestProcCtrlMode = m_pCmbTestProcess->currentIndex();
 	m_oCBOperateParas->m_nRecloseMode = m_pCmbRecloseMode->currentIndex();
-	m_oCBOperateParas->m_fPostFaultTime  = m_pEditAfterOpenTime->text().toFloat();;
+
 	m_oCBOperateParas->m_fRecloseTime = m_pEditRecloseTime->text().toFloat();
-	m_oCBOperateParas->m_fAfterAcceTime = m_pEditAfterAccTime->text().toFloat();
+	m_oCBOperateParas->m_fTAfterAccTrig = m_pEditAfterAccTime->text().toFloat();
 	m_oCBOperateParas->m_nK0CalMode = m_pCmbK0Mode->currentIndex();
 	m_oCBOperateParas->m_fK0Amp = m_pEditKlKr->text().toFloat();
 	m_oCBOperateParas->m_fK0Angle = m_pEditAngKx->text().toFloat();
@@ -719,6 +730,15 @@ void CBOperateCommonParasDlg::slot_BtnOKCommonParas()
 	m_oCBOperateParas->m_nVzDefine = m_pCmbVzDefine->currentIndex();
 	m_oCBOperateParas->m_nVzPhDefine = m_pCmbPsuVzRefPhase->currentIndex();
 	m_oCBOperateParas->m_fUxInput_Ang = m_pEditVzPh->text().toFloat();
+
+	if (m_oCBOperateParas->m_nTestProcCtrlMode == 0)
+	{
+		m_oCBOperateParas->m_fPostFaultTime = m_pEditTimeAfterTrigger->text().toFloat();
+	}
+	else if (m_oCBOperateParas->m_nTestProcCtrlMode == 1)
+	{
+		m_oCBOperateParas->m_fPostFaultTime = m_pEditAfterOpenTime->text().toFloat();
+	}
 
 	accept();
 }
@@ -753,6 +773,12 @@ void CBOperateCommonParasDlg::slot_BtnOKBinBout()
 	m_oCBOperateParas->m_fBoutHoldTime = m_pEditOutputKeepTime->text().toFloat();
 	m_oCBOperateParas->m_fBoutTimeTrig = m_pEditOutputDelayTime->text().toFloat();
 
+	for (int i = 0; i < MAX_BINARYIN_COUNT; i++)
+	{
+		g_theTestCntrFrame->GetBinaryConfig()->m_binIn[i].nSelect = (m_oCBOperateParas->m_nBinSelect == 0) ? (i < 4 ? 1 : 0) : (i >= 4 ? 1 : 0);
+	}
+
+	g_theTestCntrFrame->UpdateToolButtons();
 	accept();
 }
 
@@ -772,12 +798,14 @@ void CBOperateCommonParasDlg::slot_EditTimeAfterTrigger()
 	float fv = m_pEditTimeAfterTrigger->text().toFloat();
 	fv = setLimit(0,100000.000,fv);
 	m_pEditTimeAfterTrigger->setText(QString::number(fv, 'f', 3));
+	m_pEditAfterOpenTime->setText(QString::number(fv, 'f', 3));
 }
 void CBOperateCommonParasDlg::slot_EditAfterOpenTime()
 {
 	float fv = m_pEditAfterOpenTime->text().toFloat();
 	fv = setLimit(0,100000.000,fv);
 	m_pEditAfterOpenTime->setText(QString::number(fv, 'f', 3));
+	m_pEditTimeAfterTrigger->setText(QString::number(fv, 'f', 3));
 }
 void CBOperateCommonParasDlg::slot_EditRecloseTime()
 {
@@ -793,15 +821,33 @@ void CBOperateCommonParasDlg::slot_EditAfterAccTime()
 }
 void CBOperateCommonParasDlg::slot_EditKlKr()
 {
+    if (m_pEditAngKx->inherits(STT_SETTING_LINEEDIT_ClassID/*QSettingEdit*/))
+    {
+        if(((QSettingLineEdit*)m_pEditAngKx)->IsSetting())
+        {
+            return ;
+        }
+    }
+
 	float fv = m_pEditKlKr->text().toFloat();
 	fv = setLimit(0,100000.000,fv);
 	m_pEditKlKr->setText(QString::number(fv, 'f', 3));
+    return ;
 }
 void CBOperateCommonParasDlg::slot_EditAngKx()
 {
+    if (m_pEditAngKx->inherits(STT_SETTING_LINEEDIT_ClassID/*QSettingEdit*/))
+    {
+        if(((QSettingLineEdit*)m_pEditAngKx)->IsSetting())
+        {
+            return ;
+        }
+    }
+
 	float fv = m_pEditAngKx->text().toFloat();
 	fv = setLimit(0,100000.000,fv);
 	m_pEditAngKx->setText(QString::number(fv, 'f', 3));
+    return ;
 }
 void CBOperateCommonParasDlg::slot_EditZs()
 {
@@ -856,17 +902,17 @@ void CBOperateCommonParasDlg::slot_EditK0Mode(int nValue)
 {
 	if (nValue == 0)
 	{
-		m_pLabKlKr->setText(_T("|KO|"));
-		m_pLabAngKx->setText(_T("Phi(KO)"));
+		m_pLabKlKr->setText(_T("|KO|:"));
+		m_pLabAngKx->setText(_T("Phi(KO):"));
 	}
 	if (nValue == 1)
 	{
-		m_pLabKlKr->setText(_T("RERL"));
-		m_pLabAngKx->setText(_T("XEXL"));
+		m_pLabKlKr->setText(_T("RERL:"));
+		m_pLabAngKx->setText(_T("XEXL:"));
 	}
 	if (nValue == 2)
 	{
-		m_pLabKlKr->setText(_T("|Z0/Z1|"));
-		m_pLabAngKx->setText(_T("phi(Z0/Z1)"));
+		m_pLabKlKr->setText(_T("|Z0/Z1|:"));
+		m_pLabAngKx->setText(_T("phi(Z0/Z1):"));
 	}
 }

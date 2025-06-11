@@ -10,6 +10,7 @@ QParaSetBase::QParaSetBase(QWidget *parent)
 	m_pParaSetSttTestResource = NULL;
 	m_MacroType = 0;
 	m_type = P_Common;
+	m_nParaSetSecondValue = 1;//¶þ´Î
 }
 
 QParaSetBase::~QParaSetBase()
@@ -41,7 +42,7 @@ void QParaSetBase::setPropertyOfParaSet(plugin_type type,CSttTestResourceBase *p
 	m_bDC = bDC;
 
 	initUI(pSttTestResource);
-	initData();
+	initData(false);
 }
 
 void QParaSetBase::setData(tmt_channel *pArrUIVOL,tmt_channel *pArrUICUR)
@@ -53,10 +54,10 @@ void QParaSetBase::setData(tmt_channel *pArrUIVOL,tmt_channel *pArrUICUR)
 	m_pArrUICUR = pArrUICUR;
 }
 
-void QParaSetBase::setMaxMinAndEDVal()
+void QParaSetBase::setMaxMinAndEDVal(bool bCanUpdateTable)
 {
-	setUAmpMaxMinValue();
-	setIAmpMaxMinValue();
+	setUAmpMaxMinValue(bCanUpdateTable);
+	setIAmpMaxMinValue(bCanUpdateTable);
 
 	setUAmpEDValue(g_oSystemParas.m_fVNom);
 	setIAmpEDValue(g_oSystemParas.m_fINom);

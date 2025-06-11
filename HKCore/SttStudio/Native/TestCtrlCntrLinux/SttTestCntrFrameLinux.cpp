@@ -510,7 +510,7 @@ void QSttTestCntrFrameLinux::OnCmd_ULiveupdate()
 
 	if (!Global_GetUsbRootFolderPath(strFolderPath))
 	{
-		CXMessageBox::information(this,/*tr("警告")*/g_sLangTxt_warning,/*tr("未识别到U盘,请插好U盘进行升级.")*/
+        CXMessageBox::information(this,tr("警告"),/*tr("未识别到U盘,请插好U盘进行升级.")*/
 			g_sLangTxt_Native_UnrecognizedUSB);
 		return;
 	}
@@ -532,7 +532,7 @@ void QSttTestCntrFrameLinux::OnCmd_ULiveupdate()
 
 	if (!m_oDataBtnsMngr.IsCharging())
 	{
-		CXMessageBox::information(this,/*tr("警告")*/g_sLangTxt_warning,/*tr("请插好充电线进行升级.")*/g_sLangTxt_Native_ChargingUpgrade);
+        CXMessageBox::information(this,tr("警告"),/*tr("请插好充电线进行升级.")*/g_sLangTxt_Native_ChargingUpgrade);
 		
 		if(!m_oDataBtnsMngr.IsCharging())
 		{
@@ -747,7 +747,7 @@ void QSttTestCntrFrameLinux::OnCmd_Liveupdate()
 	
  	if (!m_oDataBtnsMngr.IsCharging())
  	{
- 		CXMessageBox::information(this,/*tr("警告")*/g_sLangTxt_warning,/*tr("请插好充电线进行升级.")*/g_sLangTxt_Native_Upgradation);
+        CXMessageBox::information(this,tr("警告"),/*tr("请插好充电线进行升级.")*/g_sLangTxt_Native_Upgradation);
 
  		if(!m_oDataBtnsMngr.IsCharging())
 		{
@@ -1445,7 +1445,7 @@ BOOL QSttTestCntrFrameLinux::ModifyReport( CSttReport *pReport,const CString &st
 	if (g_pTheSttTestApp->m_pTestMacroUI->IsUIOriginal())
 	{	
 		CSttMacroParaEditViewOriginal* pOriginalView  = ((CSttMacroParaEditViewOriginal*)m_pMacroEditView);
-		return pOriginalView->GetDatas_Reports(pReport,strItemID);
+        //return pOriginalView->GetDatas_Reports(pReport,strItemID);
 	}
 	return TRUE;
 }

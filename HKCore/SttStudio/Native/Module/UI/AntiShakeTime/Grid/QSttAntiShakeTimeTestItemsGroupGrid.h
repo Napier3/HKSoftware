@@ -3,10 +3,10 @@
 
 #include <QWidget>
 #include <QTableWidget>
-#include "..//Module/UI/SttTestCntrCmdDefine.h"
+#include "../Module/UI/SttTestCntrCmdDefine.h"
 #include "../../../UI/Module/QExBaseListGridBase/QExBaseListGridBase.h"
-#include "../../Module/DataMngr/DataGroup.h"
-#include "../../Module/DataMngr/DvmValues.h"
+#include "../../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/DataMngr/DvmValues.h"
 #include "../../../UI/Module/ScrollCtrl/ScrollTableWidget.h"
 #include "../../../UI/Module/QExBaseListGridBase/QExBaseListComBoxDelegBase.h"
 

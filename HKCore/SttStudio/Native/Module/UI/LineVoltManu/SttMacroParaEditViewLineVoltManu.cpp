@@ -1,7 +1,7 @@
 #include "SttMacroParaEditViewLineVoltManu.h"
 #include "ui_SttMacroParaEditViewManual.h"
 #include "../../SmartCap/XSmartCapMngr.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../SttTest/Common/tmt_manu_test.h"
 #include "../SttTestCntrFrameBase.h"
 #include "../../SttTestResourceMngr/TestResource/SttTestResource_Sync.h"
@@ -274,7 +274,7 @@ void QSttMacroParaEditViewLineVoltManu::UpdateTestResource(BOOL bCreateChMaps)
 	if (m_oIV.m_pUIParaWidget != NULL)
 	{
 		m_oIV.m_pUIParaWidget->initUI(g_theTestCntrFrame->GetSttTestResource());
-		m_oIV.m_pUIParaWidget->initData();
+		m_oIV.m_pUIParaWidget->initData(true);
 		m_oIV.m_pUIParaWidget->setMaxMinAndEDVal();
 	}
 
@@ -413,7 +413,7 @@ void QSttMacroParaEditViewLineVoltManu::UpdateBinBoutExTab()
 
 void QSttMacroParaEditViewLineVoltManu::UpdateManualParas()
 {
-	m_oIV.m_pUIParaWidget->initData();
+	m_oIV.m_pUIParaWidget->initData(true);
 	m_pLinevoltManualWidget->UpdateData();
 	
 	UpdateBinBoutExTab();
@@ -653,46 +653,55 @@ void QSttMacroParaEditViewLineVoltManu::slot_updateParas()
 void QSttMacroParaEditViewLineVoltManu::CalPhaseValues() //2023-2-28 chenling
 {
 	float dA_mag,dA_ang,dB_mag,dB_ang,dC_mag,dC_ang;
+	float dline_mag,dline_ang,dzero_mag,dzero_ang;
 
-	for (int i = 0;i < 4;i++ )
+	//chenling 2024.8.14 三倍零序电压/线电压计算三相电压
+	int nIndex = 0;
+
+	for (int i = 0;i < m_pLinevoltManualWidget->m_pTestResource->GetVolRsNum();i++ )
 	{
-		CalABCValues_BySequenceValues_Float(dA_mag,dA_ang,dB_mag,dB_ang,dC_mag,dC_ang
-			,m_pManualParas->m_uiVOL[i].Harm[1].fAmp,m_pManualParas->m_uiVOL[i].Harm[1].fAngle
-			,m_pManualParas->m_uiVOL[i+1].Harm[1].fAmp,m_pManualParas->m_uiVOL[i+1].Harm[1].fAngle
-			,m_pManualParas->m_uiVOL[i+2].Harm[1].fAmp,m_pManualParas->m_uiVOL[i+2].Harm[1].fAngle);
-			
+
+		dline_mag = m_pManualParas->m_uiVOL[i-nIndex].Harm[1].fAmp;
+		dline_ang = m_pManualParas->m_uiVOL[i-nIndex].Harm[1].fAngle;
+		dzero_mag = m_pManualParas->m_uiVOL[i-nIndex+1].Harm[1].fAmp;
+		dzero_ang = m_pManualParas->m_uiVOL[i-nIndex+1].Harm[1].fAngle;
+
+		CalABCValues_BySequenceValues_Float(dA_mag,dA_ang,dB_mag,dB_ang,dC_mag,dC_ang,
+			dline_mag/1.7320508, dline_ang-30,0.0f, 0.0f,dzero_mag/3, dzero_ang);
+
 		m_uiVOL[i].Harm[1].fAmp = dA_mag;
 		m_uiVOL[i].Harm[1].fAngle = dA_ang;
 		m_uiVOL[i+1].Harm[1].fAmp = dB_mag;
 		m_uiVOL[i+1].Harm[1].fAngle = dB_ang;
 		m_uiVOL[i+2].Harm[1].fAmp = dC_mag;
 		m_uiVOL[i+2].Harm[1].fAngle = dC_ang;
-		
+
 		m_uiVOL[i].Harm[1].fFreq=m_pLinevoltManualWidget->m_pFreq_LineEdit->text().toFloat();
 		m_uiVOL[i+1].Harm[1].fFreq=m_pLinevoltManualWidget->m_pFreq_LineEdit->text().toFloat();
 		m_uiVOL[i+2].Harm[1].fFreq=m_pLinevoltManualWidget->m_pFreq_LineEdit->text().toFloat();
-		
-		i=i+2;
-	}     
-	
-	for (int j = 0;j < 6;j++ )
-	{
-		CalABCValues_BySequenceValues_Float(dA_mag,dA_ang,dB_mag,dB_ang,dC_mag,dC_ang
-			,m_pManualParas->m_uiCUR[j].Harm[1].fAmp,m_pManualParas->m_uiCUR[j].Harm[1].fAngle
-			,m_pManualParas->m_uiCUR[j+1].Harm[1].fAmp,m_pManualParas->m_uiCUR[j+1].Harm[1].fAngle
-			,m_pManualParas->m_uiCUR[j+2].Harm[1].fAmp,m_pManualParas->m_uiCUR[j+2].Harm[1].fAngle);
 
-		m_uiCUR[j].Harm[1].fAmp = dA_mag;
-		m_uiCUR[j].Harm[1].fAngle = dA_ang;
-		m_uiCUR[j+1].Harm[1].fAmp = dB_mag;
-		m_uiCUR[j+1].Harm[1].fAngle = dB_ang;
-		m_uiCUR[j+2].Harm[1].fAmp = dC_mag;
-		m_uiCUR[j+2].Harm[1].fAngle = dC_ang;
+		i = i+2;
+		nIndex ++;
+	}     
+
+	for (int j = 0;j < m_pLinevoltManualWidget->m_pTestResource->GetVCurRsNum();j++ )
+	{
+		//		CalABCValues_BySequenceValues_Float(dA_mag,dA_ang,dB_mag,dB_ang,dC_mag,dC_ang
+		//			,m_pManualParas->m_uiCUR[j].Harm[1].fAmp,m_pManualParas->m_uiCUR[j].Harm[1].fAngle
+		//			,m_pManualParas->m_uiCUR[j+1].Harm[1].fAmp,m_pManualParas->m_uiCUR[j+1].Harm[1].fAngle
+		//			,m_pManualParas->m_uiCUR[j+2].Harm[1].fAmp,m_pManualParas->m_uiCUR[j+2].Harm[1].fAngle);
+
+		m_uiCUR[j].Harm[1].fAmp = m_pManualParas->m_uiCUR[j].Harm[1].fAmp;
+		m_uiCUR[j].Harm[1].fAngle = m_pManualParas->m_uiCUR[j].Harm[1].fAngle;
+		m_uiCUR[j+1].Harm[1].fAmp = m_pManualParas->m_uiCUR[j+1].Harm[1].fAmp;
+		m_uiCUR[j+1].Harm[1].fAngle = m_pManualParas->m_uiCUR[j+1].Harm[1].fAngle;
+		m_uiCUR[j+2].Harm[1].fAmp = m_pManualParas->m_uiCUR[j+2].Harm[1].fAmp;
+		m_uiCUR[j+2].Harm[1].fAngle = m_pManualParas->m_uiCUR[j+2].Harm[1].fAngle;
 
 		m_uiCUR[j].Harm[1].fFreq=m_pLinevoltManualWidget->m_pFreq_LineEdit->text().toFloat();
 		m_uiCUR[j+1].Harm[1].fFreq=m_pLinevoltManualWidget->m_pFreq_LineEdit->text().toFloat();
 		m_uiCUR[j+2].Harm[1].fFreq=m_pLinevoltManualWidget->m_pFreq_LineEdit->text().toFloat();
-		
+
 		j=j+2;
 	}
 

@@ -12,10 +12,10 @@
 #define CTRL_TEXTEDIT		"QTextEdit"
 #define CTRL_WIDGET			"QWidget"
 
-#include "../../Module/API/GlobalConfigApi.h"
-#include "../../Module/API/MathApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/MathApi.h"
 #include "../../../XLangResource_Native.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 
 
 
@@ -23,8 +23,8 @@ Keyboard *Keyboard::m_pSelf = NULL;
 Keyboard *Keyboard::Instance(QWidget *parent)
 {
     if (!m_pSelf) {
-        QMutex mutex;
-        QMutexLocker locker(&mutex);
+//         QMutex mutex;  //zhouhj 2025.1.10 未找到该锁的实际意义,避免
+//         QMutexLocker locker(&mutex);
         if (!m_pSelf) {
             m_pSelf = new Keyboard(parent);
         }
@@ -120,7 +120,7 @@ void Keyboard::InitUI(tagMode oMode)
 	//Initialize WEB component judgment
 	m_bIsWebCtrl = false;
 	m_bSelectAll = false;
-    //m_pCurWebFrame = NULL;
+//	m_pCurWebFrame = NULL;
 
 	//Default keyboard auto placement
 	m_bAuto = true;
@@ -345,6 +345,10 @@ void Keyboard::SetDefaultStyle()
 
 void Keyboard::UpdateVisible(tagMode nMode)
 {
+	if (!xlang_IsCurrXLanguageChinese()&&(nMode == CHINESE))
+	{
+		nMode = NUMBER;
+	}
 	switch(nMode)
 	{
 	case CHINESE: 
@@ -399,7 +403,15 @@ void Keyboard::UpdateVisible(tagMode nMode)
 		ui->btnFun3->hide();
 		ui->btnFun4->show();
 		ui->btnFun3->setIcon(QIcon());
+		
+		if (!xlang_IsCurrXLanguageChinese())
+		{
+			ui->btnFun4->setIcon(m_icoNumber);
+		}
+		else
+		{
 		ui->btnFun4->setIcon(m_icoChinese);
+		}
 		ui->widgetTop->setVisible(false);
 		ui->btnSpace->setVisible(true);
 		break;
@@ -426,6 +438,11 @@ void Keyboard::UpdateVisible(tagMode nMode)
 
 void Keyboard::SetInputType(tagMode nMode)
 {
+	if (!xlang_IsCurrXLanguageChinese()&&(nMode == CHINESE))
+	{
+		nMode = NUMBER;
+	}
+
 	m_nInputMode = nMode;
 	switch(nMode)
 	{
@@ -958,7 +975,7 @@ void Keyboard::HidePanel()
 		}
 		if(m_bIsWebCtrl)
 		{
-            //QString strScript = "document.activeElement.blur()";
+			QString strScript = "document.activeElement.blur()";
             //m_pCurWebFrame->evaluateJavaScript(strScript);
 		}
 		else
@@ -1080,75 +1097,75 @@ void Keyboard::ShowWebPanel(const QString& strValue)
 		UpdateBtnsRect();
 	}
 }
+/*
+QVariant Keyboard::GetAttrVariant(QWebFrame* pFrame, const QString& strAttr)
+{
+	QString strScript = QString("document.activeElement.attributes.%1.value").arg(strAttr);
+	QVariant var = pFrame->evaluateJavaScript(strScript);
+	return var;
+}
 
-//QVariant Keyboard::GetAttrVariant(QWebFrame* pFrame, const QString& strAttr)
-//{
-//	QString strScript = QString("document.activeElement.attributes.%1.value").arg(strAttr);
-//	QVariant var = pFrame->evaluateJavaScript(strScript);
-//	return var;
-//}
+void Keyboard::GetAttrVariantValue(QWebFrame* pFrame, const QString& strAttr, long& nValue, bool& bEnable)
+{
+	QVariant var = GetAttrVariant(pFrame, strAttr);
+    if(var.type() != QVariant::Invalid)
+	{
+		bEnable = true;
+		nValue = var.toInt();
+	}
+	else
+	{
+		bEnable = false;
+		nValue = 0;
+	}
+}
 
-//void Keyboard::GetAttrVariantValue(QWebFrame* pFrame, const QString& strAttr, long& nValue, bool& bEnable)
-//{
-//	QVariant var = GetAttrVariant(pFrame, strAttr);
-//    if(var.type() != QVariant::Invalid)
-//	{
-//		bEnable = true;
-//		nValue = var.toInt();
-//	}
-//	else
-//	{
-//		bEnable = false;
-//		nValue = 0;
-//	}
-//}
+void Keyboard::GetAttrVariantValue(QWebFrame* pFrame, const QString& strAttr, float& fValue, bool& bEnable)
+{
+	QVariant var = GetAttrVariant(pFrame, strAttr);
+    if(var.type() != QVariant::Invalid)
+	{
+		bEnable = true;
+		fValue = var.toFloat();
+	}
+	else
+	{
+		bEnable = false;
+		fValue = 0;
+	}
+}
 
-//void Keyboard::GetAttrVariantValue(QWebFrame* pFrame, const QString& strAttr, float& fValue, bool& bEnable)
-//{
-//	QVariant var = GetAttrVariant(pFrame, strAttr);
-//    if(var.type() != QVariant::Invalid)
-//	{
-//		bEnable = true;
-//		fValue = var.toFloat();
-//	}
-//	else
-//	{
-//		bEnable = false;
-//		fValue = 0;
-//	}
-//}
+void Keyboard::GetAttrVariantValue(QWebFrame* pFrame, const QString& strAttr, QString& strValue, bool& bEnable)
+{
+	QVariant var = GetAttrVariant(pFrame, strAttr);
 
-//void Keyboard::GetAttrVariantValue(QWebFrame* pFrame, const QString& strAttr, QString& strValue, bool& bEnable)
-//{
-//	QVariant var = GetAttrVariant(pFrame, strAttr);
-//
-//    if(var.type() != QVariant::Invalid)
-//	{
-//		bEnable = true;
-//		strValue = var.toString();
-//	}
-//	else
-//	{
-//		bEnable = false;
-//		strValue = "";
-//	}
-//}
+    if(var.type() != QVariant::Invalid)
+	{
+		bEnable = true;
+		strValue = var.toString();
+	}
+	else
+	{
+		bEnable = false;
+		strValue = "";
+	}
+}
 
-//void Keyboard::SetWebAttribute(QWebFrame* pFrame, const QString& strID)
-//{
-//	m_pCurWebFrame = pFrame;
-//
-//	if(m_strCurWebCtrlID.length() && m_strCurWebCtrlID != strID)
-//	{
-//		CheckWebAttribute();
-//	}
-//
-//	m_strCurWebCtrlID = strID;
-//	GetAttrVariantValue(pFrame, "max", m_unAttri.m_fMax, m_unEnAttri.m_bMax);
-//	GetAttrVariantValue(pFrame, "min", m_unAttri.m_fMin, m_unEnAttri.m_bMin);
-//	GetAttrVariantValue(pFrame, "size", m_unAttri.m_nSize, m_unEnAttri.m_bSize);
-//}
+void Keyboard::SetWebAttribute(QWebFrame* pFrame, const QString& strID)
+{
+	m_pCurWebFrame = pFrame;
 
+	if(m_strCurWebCtrlID.length() && m_strCurWebCtrlID != strID)
+	{
+		CheckWebAttribute();
+	}
+
+	m_strCurWebCtrlID = strID;
+	GetAttrVariantValue(pFrame, "max", m_unAttri.m_fMax, m_unEnAttri.m_bMax);
+	GetAttrVariantValue(pFrame, "min", m_unAttri.m_fMin, m_unEnAttri.m_bMin);
+	GetAttrVariantValue(pFrame, "size", m_unAttri.m_nSize, m_unEnAttri.m_bSize);
+}
+*/
 void Keyboard::btnClicked_Web()
 {
 
@@ -1168,98 +1185,98 @@ bool Keyboard::IsSameWebCtrlID(const QString &strCtrlID)
 {
 	return (strCtrlID == m_strCurWebCtrlID);
 }
-
+/*
 void Keyboard::CheckWebAttribute()
 {
-    //if(!m_pCurWebFrame)
-    //{
-    //	return;
-    //}
-    //
-    //QString strScript = QString("document.getElementById(\"%1\").value").arg(m_strCurWebCtrlID);
-    //QVariant var = m_pCurWebFrame->evaluateJavaScript(strScript);
-    //QString strValue = var.toString();
-    //
-    //strScript = strScript + "= '%1'";
-    //
-    //QVariant varCur;
-    //if(m_unEnAttri.m_bMax)
-    //{
-    //	float fValue = var.toFloat();
-    //	if(fValue > m_unAttri.m_fMax)
-    //	{
-    //		varCur = m_pCurWebFrame->evaluateJavaScript(strScript.arg(m_unAttri.m_fMax));
-    //	}
-    //}
-    //
-    //if(m_unEnAttri.m_bMin)
-    //{
-    //	float fValue = var.toFloat();
-    //	if(fValue < m_unAttri.m_fMin)
-    //	{
-    //		varCur = m_pCurWebFrame->evaluateJavaScript(strScript.arg(m_unAttri.m_fMin));
-    //	}
-    //}
-    //
-    //if(m_unEnAttri.m_bSize)
-    //{
-    //	if(varCur.type() == QVariant::String)
-    //	{
-    //		strValue = varCur.toString();
-    //	}
-    //
-    //	if(m_unAttri.m_nSize == 0)
-    //	{
-    //		//存在size属性但值为0
-    //		long nIndex = strValue.indexOf(".");
-    //		if(nIndex != -1)
-    //		{
-    //			strValue = strValue.left(strValue.indexOf("."));
-    //			m_pCurWebFrame->evaluateJavaScript(strScript.arg(strValue));
-    //		}
-    //	}
-    //	else
-    //	{
-    //		long nIndex = strValue.indexOf(".");
-    //		if(nIndex == -1)
-    //		{
-    //			strValue = strValue + ".";
-    //			for (int i = 0; i < m_unAttri.m_nSize; i++)
-    //			{
-    //				strValue += "0";
-    //			}
-    //			m_pCurWebFrame->evaluateJavaScript(strScript.arg(strValue));
-    //			return;
-    //		}
-    //		else if(nIndex == 0)
-    //		{
-    //			//小数点之前没有数值,补0
-    //			strValue = "0" + strValue;
-    //		}
-    //
-    //		long nLength = strValue.length() - 1;
-    //		long nOffset = nLength - m_unAttri.m_nSize - nIndex;
-    //
-    //		if(nOffset > 0)
-    //		{
-    //			strValue = strValue.left(strValue.length() - nOffset);
-    //			m_pCurWebFrame->evaluateJavaScript(strScript.arg(strValue));
-    //		}
-    //		else if(nOffset < 0)
-    //		{
-    //			for (int i = 0; i < qAbs(nOffset); i++)
-    //			{
-    //				strValue = strValue + "0";
-    //			}
-    //			m_pCurWebFrame->evaluateJavaScript(strScript.arg(strValue));
-    //		}
-    //	}
-    //}
-    //
-    //m_pCurWebFrame = NULL;
-    //m_strCurWebCtrlID = "";
-}
+	if(!m_pCurWebFrame)
+	{
+		return;
+	}
 
+	QString strScript = QString("document.getElementById(\"%1\").value").arg(m_strCurWebCtrlID);
+	QVariant var = m_pCurWebFrame->evaluateJavaScript(strScript);
+	QString strValue = var.toString();
+
+	strScript = strScript + "= '%1'";
+
+	QVariant varCur;
+	if(m_unEnAttri.m_bMax)
+	{
+		float fValue = var.toFloat();
+		if(fValue > m_unAttri.m_fMax)
+		{
+			varCur = m_pCurWebFrame->evaluateJavaScript(strScript.arg(m_unAttri.m_fMax));
+		}
+	}
+
+	if(m_unEnAttri.m_bMin)
+	{
+		float fValue = var.toFloat();
+		if(fValue < m_unAttri.m_fMin)
+		{
+			varCur = m_pCurWebFrame->evaluateJavaScript(strScript.arg(m_unAttri.m_fMin));
+		}	
+	}
+
+	if(m_unEnAttri.m_bSize)
+	{
+		if(varCur.type() == QVariant::String)
+		{
+			strValue = varCur.toString();
+		}
+
+		if(m_unAttri.m_nSize == 0)
+		{
+			//存在size属性但值为0
+			long nIndex = strValue.indexOf(".");
+			if(nIndex != -1)
+			{
+				strValue = strValue.left(strValue.indexOf("."));
+				m_pCurWebFrame->evaluateJavaScript(strScript.arg(strValue));
+			}
+		}
+		else
+		{
+			long nIndex = strValue.indexOf(".");
+			if(nIndex == -1)
+			{
+				strValue = strValue + ".";
+				for (int i = 0; i < m_unAttri.m_nSize; i++)
+				{
+					strValue += "0";
+				}
+				m_pCurWebFrame->evaluateJavaScript(strScript.arg(strValue));
+				return;
+			}
+			else if(nIndex == 0)
+			{
+				//小数点之前没有数值,补0
+				strValue = "0" + strValue;
+			}
+
+			long nLength = strValue.length() - 1;
+			long nOffset = nLength - m_unAttri.m_nSize - nIndex;
+
+			if(nOffset > 0)
+			{
+				strValue = strValue.left(strValue.length() - nOffset);
+				m_pCurWebFrame->evaluateJavaScript(strScript.arg(strValue));
+			}
+			else if(nOffset < 0)
+			{
+				for (int i = 0; i < qAbs(nOffset); i++)
+				{
+					strValue = strValue + "0";
+				}
+				m_pCurWebFrame->evaluateJavaScript(strScript.arg(strValue));
+			}
+		}
+	}
+
+	m_pCurWebFrame = NULL;
+	m_strCurWebCtrlID = "";
+}
+*/
 void Keyboard::InsertValue_Web(const QString &v)
 {
 	m_bSelectAll = true;
@@ -1319,7 +1336,15 @@ void Keyboard::DealBtnFun4()
 		SetInputType(SYMBOL);
 		break;
 	case SYMBOL:
+		if (!xlang_IsCurrXLanguageChinese())
+		{
+			SetInputType(NUMBER);
+		}
+		else
+		{
 		SetInputType(CHINESE);
+		}
+		
 		break;
 	default:
 		break;

@@ -1,8 +1,8 @@
 #ifndef QMUGOOSEBINGRID_H
 #define QMUGOOSEBINGRID_H
 #include "../../Module/QExBaseListGridBase/QExBaseListGridBase.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgGoutCh.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgGinCh.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgGoutCh.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgGinCh.h"
 #include <QPair>
 
 class QTerminalGooseGrid :public  QExBaseListGridBase

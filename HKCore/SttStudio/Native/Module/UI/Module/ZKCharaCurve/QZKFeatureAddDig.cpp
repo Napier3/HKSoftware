@@ -1,7 +1,7 @@
 #include "QZKFeatureAddDig.h"
-#include "../../AutoTest/Module/Characteristic/CharacterFolder.h"
-#include "../../Module/API/GlobalConfigApi.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../AutoTest/Module/Characteristic/CharacterFolder.h"
+#include "../../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../../XLangResource_Native.h"
 
 QZKFeatureAddDig::QZKFeatureAddDig(CString strLoadName,QWidget *parent)

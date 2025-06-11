@@ -29,6 +29,7 @@ public:
 	void InitLinearStepGradient();
 
 	void saveData();
+	void SetParaSetSecondValue(int nParaSetSecondValue);
 
 public:
 	virtual void initUI(CSttTestResourceBase *pSttTestResource);

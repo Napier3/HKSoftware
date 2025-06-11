@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "tmt_harm_test.h"
-#include "../../../../Module/API/StringApi.h"
+#include "../../../Module/API/StringApi.h"
 #include "tmt_system_config.h"
 #include <math.h>
 
@@ -538,7 +538,7 @@ void stt_xml_serialize(tmt_HarmResult *pResults, CSttXmlSerializeBase *pXmlSieri
 }
 
 #include"../../SttCmd/SttTestCmd.h"
-#include"../../../../Module/API/GlobalConfigApi.h"
+#include"../../../Module/API/GlobalConfigApi.h"
 void stt_xml_serialize_write_HarmTest()
 {
     tmt_HarmTest oHarmTest;

@@ -22,7 +22,29 @@ QSttCommCfgDeviceDlg::QSttCommCfgDeviceDlg(QPpSttIotEngineClientWidget *pSttComm
 
 QSttCommCfgDeviceDlg::~QSttCommCfgDeviceDlg()
 {
+	//if (m_pSttCommCfgDeviceWidget != NULL)
+	//{
+	//	delete m_pSttCommCfgDeviceWidget;
+	//	m_pSttCommCfgDeviceWidget = NULL;
+	//}
 
+	if (m_pMainLayout != NULL)
+	{
+		delete m_pMainLayout;
+		m_pMainLayout = NULL;
+	}
+
+	if (m_pOK_PushButton != NULL)
+	{
+		delete m_pOK_PushButton;
+		m_pOK_PushButton = NULL;
+	}
+
+	if (m_pCancel_PushButton != NULL)
+	{
+		delete m_pCancel_PushButton;
+		m_pCancel_PushButton = NULL;
+	}
 }
 
 

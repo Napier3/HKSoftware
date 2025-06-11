@@ -12,12 +12,13 @@
 #include "../../SttSystemConfig/SttSystemConfig.h"
 
 #define FILENAME_STTIECCONCFIG	"SttIecConfig.ixml"
+#define STT_SETTING_ORIGINAL_ClassID	"CSttMacroParaEditViewOriginal"	//20240802 huangliang 
 
 class CSttMacroParaEditViewOriginal : public QWidget, public CSttMacroParaEditInterface
 {
 	Q_OBJECT
 public:
-    CSttMacroParaEditViewOriginal(QWidget *parent = 0, Qt::WindowFlags flags = Qt::WindowFlags());
+    CSttMacroParaEditViewOriginal(QWidget *parent = 0, Qt::WindowFlags flags = 0);
 	virtual ~CSttMacroParaEditViewOriginal();
 
 	virtual void SysConfig(CDataGroup *pSysConfig){};
@@ -38,11 +39,22 @@ public:
 	virtual UINT GetMacroEditViewType()	{	return MACRO_EDIT_VIEW_TYPE_ORIGINAL;	}
 	virtual void UpdateEventMsg(CEventResult *pCurrEventResult){}
 	virtual void UpdateDeviceModelRef(){}
+	virtual BOOL IsInternationalMode(){return FALSE;}
+    virtual CExBaseList* GetCurrentMacroDatas(){ return NULL;};  //20240716 wanmj 单功能多点的测试功能获取当前测试项的数据
+
+	virtual void InitBinaryInBinaryOutUI(){};	//20240913 huangliang 在基类中添加界面更新虚函数，用以刷新非模态对话框的开入开出量
+	void ReadModeDataSaveMaps(CSttDataGroupSerializeRead *pRead);//20240913 huangliang 定值关联Maps记录
+	virtual void UpdateSettingAttachUI(){}//更新定值关联相关控件,做定值关联的模块使用,可以将全部界面都刷新,也可以只刷新定值关联控件
+
 	virtual void AddShowSoeReports(CDvmDataset *pSoeRptDataset){};//soe事件
 	virtual void UpdateDinCount(CDvmValues *pValues,CDvmDataset *pSoeRptDataset,CString strItemID){};//遥信变位次数
-	virtual BOOL GetDatas_Reports( CSttReport *pReport,const CString &strItemID = ""){return TRUE;}//报告获取不到的参数添加到report里
+	virtual BOOL GetDatas_Reports( CSttReport *pReport,CSttItemBase *pSttItem){return TRUE;}//报告获取不到的参数添加到report里
+	virtual void UpdateRemoteBoutData(CDataGroup *pParas){};//更新331自动测试开关量配置
+	virtual void UpdateFAParasData(CDataGroup *pParas){};//更新FA参数
 
-
+	virtual void UpdatePrimParaSetUI();
+	virtual BOOL IsUseSecondParaSet();
+	virtual void SetPlotAcDcMaxMinValue(){}
 	//单功能测试
 public:
 	CString m_strParaFileTitle;		//过流试验模板文件

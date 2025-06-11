@@ -1,5 +1,5 @@
 #include "StateSettingValueDlg.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../XLangResource_Native.h"
 
 #include <QBoxLayout>
@@ -20,7 +20,7 @@ StateSettingValueDlg::~StateSettingValueDlg()
 
 void StateSettingValueDlg::InitUI()
 {
-	CString strTitle = /*"整定值"*/g_sLangTxt_State_SettingValue; //lcq
+	CString strTitle = /*"整定值"*//*g_sLangTxt_State_SettingValue*/g_sLangTxt_SetValue; //lcq
 	setWindowTitle(strTitle);
 	setWindowFlags(Qt::CustomizeWindowHint|Qt::WindowTitleHint| Qt::Dialog);
 

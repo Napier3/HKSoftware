@@ -15,6 +15,7 @@ public:
 	virtual ~QHarmParaTable();
 
 	void InitUI();
+	void SetParaSetSecondValue(int nParaSetSecondValue);
 public:
 	QHarmTable *m_pUChannel;
 	QHarmTable *m_pIChannel;

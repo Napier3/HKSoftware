@@ -28,6 +28,7 @@ public:
 	~SttReplayWaveformEditWidget(void);
 
 public:
+	 void InitLanuage();
 	void initUI();
 	void InitWaveEditWidget();
 	void initSignalSlots();

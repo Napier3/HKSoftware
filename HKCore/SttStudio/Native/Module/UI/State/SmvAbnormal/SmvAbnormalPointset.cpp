@@ -3,7 +3,7 @@
 #include "stdafx.h"
 #include "../../Controls/SttCheckBox.h"
 #include "../../../XLangResource_Native.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 
 QSmvAbnormalPointSet::QSmvAbnormalPointSet(int flag,QList<bool> &validpoint,QWidget *parent)
 	: QDialog(parent)

@@ -751,7 +751,7 @@ void stt_xml_sequence_pnv_serialize(tmt_GradientResult *pResults, CSttXmlSeriali
     pXmlSierialize->xml_serialize("¶¯×÷ÃèÊö", "ActDsc", "", "number", pResults->m_nAct);
 }
 
-#include "../../../../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 void stt_xml_serialize_write_SequenceGradientTest()
 {
 	tmt_SequenceGradientTest oSequenceGradientTest;

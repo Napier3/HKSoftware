@@ -12,7 +12,7 @@ class QSttMacroParaEditViewGooseAbnormal: public QSttMacroParaEditViewState
 	Q_OBJECT
 
 public:
-    explicit QSttMacroParaEditViewGooseAbnormal(bool bHorizontal = true,QWidget *parent = 0, Qt::WindowFlags flags = 0);
+	explicit QSttMacroParaEditViewGooseAbnormal(bool bHorizontal = true,QWidget *parent = 0, Qt::WindowFlags flags = 0);
 	virtual ~QSttMacroParaEditViewGooseAbnormal();
 
 	QGooseAbnormalParaSet* m_pGooseAbnParaWidget;

@@ -3,13 +3,14 @@
 
 #include <QWidget>
 #include"PlotOscillogram.h"
-#include"../Module/SttTest/Common/tmt_harm_test.h"
+#include"../../../Module/SttTest/Common/tmt_harm_test.h"
 #include <QResizeEvent>
 #include <QRadioButton>
 //#include <QCheckBox>
 #include "../Module/UI/Controls/SttCheckBox.h"
 #include <QLabel>
 #include "../Module/SttTestResourceMngr/TestResource/SttTestResourceBase.h"
+
 class QOscillogramWidget : public QWidget
 {
 	Q_OBJECT
@@ -45,6 +46,9 @@ public:
 	public slots:
 		void slot_UpdateOscillogramV(bool);
 		void slot_UpdateOscillogramI(bool);
+public:
+	int m_nParaSetSecondValue;				//0:显示一次值 1:显示二次值
+	void SetParaSetSecondValue(int nParaSetSecondValue);
 
 private:
 	void clearPlot();
@@ -71,6 +75,14 @@ private:
 	QList<QLabel *> m_listLableCur;
 	int m_nVolFlag;
 	int m_nCurFlag;
+        QList<PlotOscillogram*> m_PlotList_Volt;//增加是为了在修改一次值/二次值时更新界面电压单位 20240830 suyang
+
+//2024-9-16 lijunqing 优化系统程序启动的效率
+protected:
+	bool m_bHasInitFinished;  //是否已经初始化完成，没有初始化，不能进行操作
+	virtual void showEvent(QShowEvent *event);
+	
+	void InitOscillogramWidget();
 };
 
 extern QFont *g_pSttGlobalFont; 

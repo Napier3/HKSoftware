@@ -10,19 +10,19 @@
 #define UI_CHARINVERSESET_H
 
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QCheckBox>
-#include <QtGui/QGridLayout>
-#include <QtGui/QGroupBox>
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QHeaderView>
-#include <QtGui/QLabel>
-#include <QtGui/QLineEdit>
-#include <QtGui/QPushButton>
-#include <QtGui/QVBoxLayout>
-#include <QtGui/QWidget>
+#include <QAction>
+#include <QApplication>
+#include <QButtonGroup>
+#include <QCheckBox>
+#include <QGridLayout>
+#include <QGroupBox>
+#include <QHBoxLayout>
+#include <QHeaderView>
+#include <QLabel>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QVBoxLayout>
+#include <QWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -258,22 +258,22 @@ public:
 
     void retranslateUi(QWidget *QCharInverseSet)
     {
-        QCharInverseSet->setWindowTitle(QApplication::translate("QCharInverseSet", "QCharInverseSet", 0, QApplication::UnicodeUTF8));
+        QCharInverseSet->setWindowTitle(QApplication::translate("QCharInverseSet", "QCharInverseSet", 0));
         groupBox_3->setTitle(QString());
-        label_26->setText(QApplication::translate("QCharInverseSet", "\345\212\250\344\275\234\345\256\232\345\200\274", 0, QApplication::UnicodeUTF8));
-        label_34->setText(QApplication::translate("QCharInverseSet", "A", 0, QApplication::UnicodeUTF8));
-        label_35->setText(QApplication::translate("QCharInverseSet", "s", 0, QApplication::UnicodeUTF8));
-        label_30->setText(QApplication::translate("QCharInverseSet", "A", 0, QApplication::UnicodeUTF8));
-        checkBox_Set3->setText(QApplication::translate("QCharInverseSet", "3\346\256\265\345\256\232\346\227\266\351\231\220", 0, QApplication::UnicodeUTF8));
-        checkBox_Set2->setText(QApplication::translate("QCharInverseSet", "2\346\256\265\345\256\232\346\227\266\351\231\220", 0, QApplication::UnicodeUTF8));
-        label_27->setText(QApplication::translate("QCharInverseSet", "\345\212\250\344\275\234\346\227\266\351\227\264", 0, QApplication::UnicodeUTF8));
-        label_31->setText(QApplication::translate("QCharInverseSet", "s", 0, QApplication::UnicodeUTF8));
-        label_38->setText(QApplication::translate("QCharInverseSet", "A", 0, QApplication::UnicodeUTF8));
-        label_39->setText(QApplication::translate("QCharInverseSet", "s", 0, QApplication::UnicodeUTF8));
-        checkBox_Set1->setText(QApplication::translate("QCharInverseSet", "1\346\256\265\345\256\232\346\227\266\351\231\220", 0, QApplication::UnicodeUTF8));
+        label_26->setText(QApplication::translate("QCharInverseSet", "\345\212\250\344\275\234\345\256\232\345\200\274", 0));
+        label_34->setText(QApplication::translate("QCharInverseSet", "A", 0));
+        label_35->setText(QApplication::translate("QCharInverseSet", "s", 0));
+        label_30->setText(QApplication::translate("QCharInverseSet", "A", 0));
+        checkBox_Set3->setText(QApplication::translate("QCharInverseSet", "3\346\256\265\345\256\232\346\227\266\351\231\220", 0));
+        checkBox_Set2->setText(QApplication::translate("QCharInverseSet", "2\346\256\265\345\256\232\346\227\266\351\231\220", 0));
+        label_27->setText(QApplication::translate("QCharInverseSet", "\345\212\250\344\275\234\346\227\266\351\227\264", 0));
+        label_31->setText(QApplication::translate("QCharInverseSet", "s", 0));
+        label_38->setText(QApplication::translate("QCharInverseSet", "A", 0));
+        label_39->setText(QApplication::translate("QCharInverseSet", "s", 0));
+        checkBox_Set1->setText(QApplication::translate("QCharInverseSet", "1\346\256\265\345\256\232\346\227\266\351\231\220", 0));
         groupBox->setTitle(QString());
-        pushButton_OK->setText(QApplication::translate("QCharInverseSet", "\347\241\256\345\256\232", 0, QApplication::UnicodeUTF8));
-        pushButton_CANCEL->setText(QApplication::translate("QCharInverseSet", "\345\217\226\346\266\210", 0, QApplication::UnicodeUTF8));
+        pushButton_OK->setText(QApplication::translate("QCharInverseSet", "\347\241\256\345\256\232", 0));
+        pushButton_CANCEL->setText(QApplication::translate("QCharInverseSet", "\345\217\226\346\266\210", 0));
     } // retranslateUi
 
 };

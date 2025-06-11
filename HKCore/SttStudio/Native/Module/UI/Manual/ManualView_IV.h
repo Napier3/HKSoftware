@@ -20,6 +20,7 @@ public:
 	QTabWidget* m_pTabWidget;
 public:
     void InitUI(int nFuncType);
+	void SetParaSetSecondValue(int nParaSetSecondValue);
 
 public:
 	void slot_cb_DCClicked(bool bIsChecked);

@@ -172,14 +172,14 @@ void CSttReplayParaSetWidget::init(CSttModulesComtradeBind *pSttModulesComtradeB
 	header<<g_sLangTxt_IEC_SamplingRate<<g_sLangTxt_Samples;
 	ui.tableWidget->setHorizontalHeaderLabels(header);
 	ui.tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers); //设置不可编辑
-    ui.tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);//列自行填充; //设置充满表宽度
+	ui.tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);//列自行填充; //设置充满表宽度
 	ui.tableWidget->horizontalHeader()->setFont(QFont("song",16));
 
 	QStringList header1;
 	header1<<g_sLangTxt_Name<<g_sLangTxt_Momentaryvalue;
 	ui.tableWidgetIns->setHorizontalHeaderLabels(header1);
 	ui.tableWidgetIns->setEditTriggers(QAbstractItemView::NoEditTriggers); //设置不可编辑
-    ui.tableWidgetIns->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);//列自行填充; //设置充满表宽度
+	ui.tableWidgetIns->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);//列自行填充; //设置充满表宽度
 	ui.tableWidgetIns->setRowCount(GetTotalChannelNum());
 	ui.tableWidgetIns->horizontalHeader()->setFont(QFont("song",16));
 
@@ -191,7 +191,7 @@ void CSttReplayParaSetWidget::init(CSttModulesComtradeBind *pSttModulesComtradeB
 	CSttReplayModuleChWidget *pSttReplayModuleChWidget = NULL;
 	int nChIndex = 0;
 	QString strTabName, strDigitalTabName;
-	CString strAnalogName = _T("模"),strWeekName = _T("弱");
+    CString strAnalogName = "g_sLangTxt_Replay_Model",strWeekName = "g_sLangTxt_Replay_Weak", strChName;
 
 	while(pos != NULL)
 	{
@@ -205,7 +205,7 @@ void CSttReplayParaSetWidget::init(CSttModulesComtradeBind *pSttModulesComtradeB
 // 			strTabName = pModuleInfo->m_strName;//(tr("模块%1")).arg(nModuleIndex+1);
 			//xlang_GetLangStrByFile(g_sLangTxt_Module1,"Module1");
 // 			strTabName.Format(_T("模块%d (%s-%s)"), nModuleIndex+1, strAnalogName, pModuleInfo->m_strName);
-			strTabName = QString("模块%1 (%2-%3)").arg(nModuleIndex + 1).arg(strAnalogName).arg(g_sLangTxt_State_VoltageandCurrent);
+			strTabName = QString(g_sLangTxt_Module1+"(%2-%3)").arg(nModuleIndex + 1).arg(strAnalogName).arg(g_sLangTxt_State_VoltageandCurrent);
 
 			ui.tabWidget->insertTab(nModuleIndex,pSttReplayModuleChWidget,strTabName);
 			nModuleIndex++;
@@ -223,7 +223,17 @@ void CSttReplayParaSetWidget::init(CSttModulesComtradeBind *pSttModulesComtradeB
 
 				item = new QTableWidgetItem();
 				item->setTextAlignment(Qt::AlignCenter);
-				item->setText(pCh->m_strID);
+				//item->setText(pCh->m_strID);
+				strChName = pCh->m_strID;//dingxy 20250121 英文环境下修改通道映射名称
+				if (!xlang_IsCurrXLanguageChinese())
+				{
+					if (strChName.Find(_T("U") )>= 0)
+					{
+						strChName.Replace(_T("U"), _T("V"));
+					}
+				}
+
+				item->setText(strChName);
 				ui.tableWidgetIns->setItem(nChIndex, 0, item);
 
 				item = new QTableWidgetItem();
@@ -257,7 +267,17 @@ void CSttReplayParaSetWidget::init(CSttModulesComtradeBind *pSttModulesComtradeB
 
 				item = new QTableWidgetItem();
 				item->setTextAlignment(Qt::AlignCenter);
-				item->setText(pCh->m_strID);
+				//item->setText(pCh->m_strID);
+				strChName = pCh->m_strID;
+				if (!xlang_IsCurrXLanguageChinese())
+				{
+					if (strChName.Find(_T("U") )>= 0)
+					{
+						strChName.Replace(_T("U"), _T("V"));
+					}
+				}
+
+				item->setText(strChName);
 				ui.tableWidgetIns->setItem(nChIndex, 0, item);
 
 				item = new QTableWidgetItem();
@@ -283,7 +303,17 @@ void CSttReplayParaSetWidget::init(CSttModulesComtradeBind *pSttModulesComtradeB
 
 				item = new QTableWidgetItem();
 				item->setTextAlignment(Qt::AlignCenter);
-				item->setText(pCh->m_strName);
+				//item->setText(pCh->m_strName);
+				strChName = pCh->m_strID;
+				if (!xlang_IsCurrXLanguageChinese())
+				{
+					if (strChName.Find(_T("U") )>= 0)
+					{
+						strChName.Replace(_T("U"), _T("V"));
+					}
+				}
+
+				item->setText(strChName);
 				ui.tableWidgetIns->setItem(nChIndex, 0, item);
 
 				item = new QTableWidgetItem();
@@ -311,16 +341,16 @@ void CSttReplayParaSetWidget::init(CSttModulesComtradeBind *pSttModulesComtradeB
 	if(g_pReplayTestMain->isNeedBinaryModule())
 	{
 		m_pBinaryOutSetWidget = new CSttReplayBoutModuleChWidget(this,pSttModulesComtradeBind->GetBinaryModule());
-		ui.tabWidget->insertTab(nModuleIndex++,m_pBinaryOutSetWidget,(_T("开出量设置")));
+		ui.tabWidget->insertTab(nModuleIndex++,m_pBinaryOutSetWidget,(/*_T("开出量设置"))*/g_sLangTxt_Gradient_BoutSet));
 	}
 
 	//增加了触发条件
 
 	m_pSttReplayTriggerWidget = new CSttReplayTriggerWidget(this);
-	ui.tabWidget->insertTab(nModuleIndex++,m_pSttReplayTriggerWidget,g_sLangTxt_Manual_OtherParam);
+    ui.tabWidget->insertTab(nModuleIndex++,m_pSttReplayTriggerWidget,"g_sLangTxt_Manual_OtherParam");
 
 	m_pWaveformEditWidget = new SttReplayWaveformEditWidget(this);
-	ui.tabWidget->insertTab(nModuleIndex++, m_pWaveformEditWidget, _T("波形编辑"));
+    ui.tabWidget->insertTab(nModuleIndex++, m_pWaveformEditWidget, _T("g_sLangTxt_Replay_WaveformEditing"));
 
 	ui.tabWidget->setCurrentIndex(0);
 
@@ -414,7 +444,7 @@ void CSttReplayParaSetWidget::initTabPage()
 	header<<g_sLangTxt_IEC_SamplingRate	<<g_sLangTxt_Samples;
 	ui.tableWidget->setHorizontalHeaderLabels(header);
 	ui.tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers); //设置不可编辑
-    ui.tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);//列自行填充; //设置充满表宽度
+	ui.tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);//列自行填充; //设置充满表宽度
 
 	ui.tableWidget->setRowCount(g_theBigComtradeTransPlay->m_oBigComtradeFileRead.m_nSamAmount);
 
@@ -445,7 +475,12 @@ void CSttReplayParaSetWidget::UpdateStateView(bool bEnable)
 
 	if(g_pReplayTestMain->isNeedDigitalModule())
 	{	
+		if(m_pDigitalModuleWidget != NULL)
+		{
 		m_pDigitalModuleWidget->setEnableStateUI(bEnable);
+
+		}
+		
 	}
 
 	if(g_pReplayTestMain->isNeedWeekModule())

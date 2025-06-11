@@ -2,8 +2,8 @@
 #define SttIecChsGridBase_H
 
 #include "../../UI/Module/QExBaseListGridBase/QExBaseListGridBase.h"
-#include "../../../../Module/DataMngr/DvmData.h"
-#include "../../../../Module/System/TickCount32.h"
+#include "../../../Module/DataMngr/DvmData.h"
+#include "../../../Module/System/TickCount32.h"
 
 class CSttIecChsGridBase : public QExBaseListGridBase
 {

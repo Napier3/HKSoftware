@@ -1,7 +1,11 @@
 #include "commonMethod.h"
 #include "../Module/SttTestResourceMngr/SttTestResourceMngr.h"
 #include "../Module/XLangResource_Native.h"
+
 float sinData[SINCOUNT*2+4];
+
+//2024-9-16 lijunqing 优化系统程序启动的效率
+long g_nSinDataFlag = 0;
 
 //全局系统参数对象
 #include "../../../SttTestSysGlobalPara.h"
@@ -11,8 +15,14 @@ float sinData[SINCOUNT*2+4];
 
 void generagelsinData()
 {
+	if (g_nSinDataFlag != 0)
+	{//2024-9-16 lijunqing 优化系统程序启动的效率
+		return;
+	}
+
+	g_nSinDataFlag = 1;
 	int nCnt = SINCOUNT*2+2;
-	float fVal = 2*pi/SINCOUNT;
+    float fVal = 2*HK_pi/SINCOUNT;
 
 	for(int i=0; i<nCnt; i++)
 	{
@@ -1196,18 +1206,18 @@ PowerValue GetPowerValue(bool isDC, tmt_Channel*pUa, tmt_Channel*pUb, tmt_Channe
 
 	if ( !isDC )
 	{
-		ret.FactorA = qCos( (pUa->Harm[1].fAngle - pIa->Harm[1].fAngle )*pi/180 );
-		ret.FactorB = qCos( (pUb->Harm[1].fAngle - pIb->Harm[1].fAngle )*pi/180 );
-		ret.FactorC = qCos( (pUc->Harm[1].fAngle - pIc->Harm[1].fAngle )*pi/180 );
+        ret.FactorA = qCos( (pUa->Harm[1].fAngle - pIa->Harm[1].fAngle )*HK_pi/180 );
+        ret.FactorB = qCos( (pUb->Harm[1].fAngle - pIb->Harm[1].fAngle )*HK_pi/180 );
+        ret.FactorC = qCos( (pUc->Harm[1].fAngle - pIc->Harm[1].fAngle )*HK_pi/180 );
 
 		ret.PA = pUa->Harm[1].fAmp*pIa->Harm[1].fAmp*ret.FactorA;
 		ret.PB = pUb->Harm[1].fAmp*pIb->Harm[1].fAmp*ret.FactorB;
 		ret.PC = pUc->Harm[1].fAmp*pIc->Harm[1].fAmp*ret.FactorC;
 		ret.PSum = ret.PA + ret.PB + ret.PC;
 
-		ret.QA = pUa->Harm[1].fAmp*pIa->Harm[1].fAmp*qSin( (pUa->Harm[1].fAngle - pIa->Harm[1].fAngle )*pi/180 );
-		ret.QB = pUb->Harm[1].fAmp*pIb->Harm[1].fAmp*qSin( (pUb->Harm[1].fAngle - pIb->Harm[1].fAngle )*pi/180 );
-		ret.QC = pUc->Harm[1].fAmp*pIc->Harm[1].fAmp*qSin( (pUc->Harm[1].fAngle - pIc->Harm[1].fAngle )*pi/180 );
+        ret.QA = pUa->Harm[1].fAmp*pIa->Harm[1].fAmp*qSin( (pUa->Harm[1].fAngle - pIa->Harm[1].fAngle )*HK_pi/180 );
+        ret.QB = pUb->Harm[1].fAmp*pIb->Harm[1].fAmp*qSin( (pUb->Harm[1].fAngle - pIb->Harm[1].fAngle )*HK_pi/180 );
+        ret.QC = pUc->Harm[1].fAmp*pIc->Harm[1].fAmp*qSin( (pUc->Harm[1].fAngle - pIc->Harm[1].fAngle )*HK_pi/180 );
 		ret.QSum = ret.QA + ret.QB + ret.QC;
 
 		ret.SA = pUa->Harm[1].fAmp*pIa->Harm[1].fAmp;
@@ -1242,9 +1252,9 @@ PowerValue GetPowerValue(bool isDC, tmt_Channel*pUa, tmt_Channel*pUb, tmt_Channe
 
 SeqValue GetZeroSeqValue( tmt_Channel*pA, tmt_Channel*pB, tmt_Channel*pC )
 {
-	std::complex<double> a1( pA->Harm[1].fAmp*qCos( pA->Harm[1].fAngle*pi/180), pA->Harm[1].fAmp*qSin( pA->Harm[1].fAngle*pi/180) );
-	std::complex<double> b1( pB->Harm[1].fAmp*qCos( pB->Harm[1].fAngle*pi/180), pB->Harm[1].fAmp*qSin( pB->Harm[1].fAngle*pi/180) );
-	std::complex<double> c1( pC->Harm[1].fAmp*qCos( pC->Harm[1].fAngle*pi/180), pC->Harm[1].fAmp*qSin( pC->Harm[1].fAngle*pi/180) );
+    std::complex<double> a1( pA->Harm[1].fAmp*qCos( pA->Harm[1].fAngle*HK_pi/180), pA->Harm[1].fAmp*qSin( pA->Harm[1].fAngle*HK_pi/180) );
+    std::complex<double> b1( pB->Harm[1].fAmp*qCos( pB->Harm[1].fAngle*HK_pi/180), pB->Harm[1].fAmp*qSin( pB->Harm[1].fAngle*HK_pi/180) );
+    std::complex<double> c1( pC->Harm[1].fAmp*qCos( pC->Harm[1].fAngle*HK_pi/180), pC->Harm[1].fAmp*qSin( pC->Harm[1].fAngle*HK_pi/180) );
 	std::complex<double> result = (a1 + b1 + c1)/3.0;
 	SeqValue ret = {0};
 	ret.amp = GetAmp(result);
@@ -1254,11 +1264,11 @@ SeqValue GetZeroSeqValue( tmt_Channel*pA, tmt_Channel*pB, tmt_Channel*pC )
 
 SeqValue GetPositiveSeqValue( tmt_Channel*pA, tmt_Channel*pB, tmt_Channel*pC )
 {
-	const  std::complex<double> alpha( qCos( 120*pi/180), qSin( 120*pi/180));
+    const  std::complex<double> alpha( qCos( 120*HK_pi/180), qSin( 120*HK_pi/180));
 
-	std::complex<double> a1( pA->Harm[1].fAmp*qCos( pA->Harm[1].fAngle*pi/180), pA->Harm[1].fAmp*qSin( pA->Harm[1].fAngle*pi/180) );
-	std::complex<double> b1( pB->Harm[1].fAmp*qCos( pB->Harm[1].fAngle*pi/180), pB->Harm[1].fAmp*qSin( pB->Harm[1].fAngle*pi/180) );
-	std::complex<double> c1( pC->Harm[1].fAmp*qCos( pC->Harm[1].fAngle*pi/180), pC->Harm[1].fAmp*qSin( pC->Harm[1].fAngle*pi/180) );
+    std::complex<double> a1( pA->Harm[1].fAmp*qCos( pA->Harm[1].fAngle*HK_pi/180), pA->Harm[1].fAmp*qSin( pA->Harm[1].fAngle*HK_pi/180) );
+    std::complex<double> b1( pB->Harm[1].fAmp*qCos( pB->Harm[1].fAngle*HK_pi/180), pB->Harm[1].fAmp*qSin( pB->Harm[1].fAngle*HK_pi/180) );
+    std::complex<double> c1( pC->Harm[1].fAmp*qCos( pC->Harm[1].fAngle*HK_pi/180), pC->Harm[1].fAmp*qSin( pC->Harm[1].fAngle*HK_pi/180) );
 	std::complex<double> result = (a1 + alpha*b1 + alpha*alpha*c1)/3.0;
 	SeqValue ret = {0};
 	ret.amp = GetAmp(result);
@@ -1268,10 +1278,10 @@ SeqValue GetPositiveSeqValue( tmt_Channel*pA, tmt_Channel*pB, tmt_Channel*pC )
 
 SeqValue GetNegativeSeqValue( tmt_Channel*pA, tmt_Channel*pB, tmt_Channel*pC )
 {
-	const  std::complex<double> alpha( qCos( 120*pi/180), qSin( 120*pi/180));
-	std::complex<double> a1( pA->Harm[1].fAmp*qCos( pA->Harm[1].fAngle*pi/180), pA->Harm[1].fAmp*qSin( pA->Harm[1].fAngle*pi/180) );
-	std::complex<double> b1( pB->Harm[1].fAmp*qCos( pB->Harm[1].fAngle*pi/180), pB->Harm[1].fAmp*qSin( pB->Harm[1].fAngle*pi/180) );
-	std::complex<double> c1( pC->Harm[1].fAmp*qCos( pC->Harm[1].fAngle*pi/180), pC->Harm[1].fAmp*qSin( pC->Harm[1].fAngle*pi/180) );
+    const  std::complex<double> alpha( qCos( 120*HK_pi/180), qSin( 120*HK_pi/180));
+    std::complex<double> a1( pA->Harm[1].fAmp*qCos( pA->Harm[1].fAngle*HK_pi/180), pA->Harm[1].fAmp*qSin( pA->Harm[1].fAngle*HK_pi/180) );
+    std::complex<double> b1( pB->Harm[1].fAmp*qCos( pB->Harm[1].fAngle*HK_pi/180), pB->Harm[1].fAmp*qSin( pB->Harm[1].fAngle*HK_pi/180) );
+    std::complex<double> c1( pC->Harm[1].fAmp*qCos( pC->Harm[1].fAngle*HK_pi/180), pC->Harm[1].fAmp*qSin( pC->Harm[1].fAngle*HK_pi/180) );
 	std::complex<double> result = (a1 + alpha*alpha*b1 + alpha*c1)/3.0;
 	SeqValue ret = {0};
 	ret.amp = GetAmp(result);
@@ -1282,8 +1292,8 @@ SeqValue GetNegativeSeqValue( tmt_Channel*pA, tmt_Channel*pB, tmt_Channel*pC )
 double GetASubBAngle( tmt_Channel*pA, tmt_Channel*pB )
 {
 	double PI = 3.1415926;
-	std::complex<double> a1( pA->Harm[1].fAmp*qCos( pA->Harm[1].fAngle*pi/180), pA->Harm[1].fAmp*qSin( pA->Harm[1].fAngle*pi/180) );
-	std::complex<double> b1( pB->Harm[1].fAmp*qCos( pB->Harm[1].fAngle*pi/180), pB->Harm[1].fAmp*qSin( pB->Harm[1].fAngle*pi/180) );
+    std::complex<double> a1( pA->Harm[1].fAmp*qCos( pA->Harm[1].fAngle*HK_pi/180), pA->Harm[1].fAmp*qSin( pA->Harm[1].fAngle*HK_pi/180) );
+    std::complex<double> b1( pB->Harm[1].fAmp*qCos( pB->Harm[1].fAngle*HK_pi/180), pB->Harm[1].fAmp*qSin( pB->Harm[1].fAngle*HK_pi/180) );
 	std::complex<double> c1 = a1 - b1;
 	return GetAngle(c1 );
 }
@@ -1291,8 +1301,8 @@ double GetASubBAngle( tmt_Channel*pA, tmt_Channel*pB )
 double  GetASubBAmp( tmt_Channel*pA, tmt_Channel*pB )
 {
 	double PI = 3.1415926;
-	std::complex<double> a1( pA->Harm[1].fAmp*qCos( pA->Harm[1].fAngle*pi/180), pA->Harm[1].fAmp*qSin( pA->Harm[1].fAngle*pi/180) );
-	std::complex<double> b1( pB->Harm[1].fAmp*qCos( pB->Harm[1].fAngle*pi/180), pB->Harm[1].fAmp*qSin( pB->Harm[1].fAngle*pi/180) );
+    std::complex<double> a1( pA->Harm[1].fAmp*qCos( pA->Harm[1].fAngle*HK_pi/180), pA->Harm[1].fAmp*qSin( pA->Harm[1].fAngle*HK_pi/180) );
+    std::complex<double> b1( pB->Harm[1].fAmp*qCos( pB->Harm[1].fAngle*HK_pi/180), pB->Harm[1].fAmp*qSin( pB->Harm[1].fAngle*HK_pi/180) );
 	std::complex<double> c1 = a1 - b1;
 	return GetAmp( c1);
 }

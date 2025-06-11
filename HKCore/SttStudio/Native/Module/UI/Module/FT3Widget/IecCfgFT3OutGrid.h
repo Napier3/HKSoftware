@@ -3,7 +3,7 @@
 
 #include "../QExBaseListGridBase/QExBaseListGridBase.h"
 #include "../QExBaseListGridBase/QExBaseListComBoxDelegBase.h"
-#include "../../61850/Module/CfgDataMngr/IecCfg6044CommonCh.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfg6044CommonCh.h"
 #include "../SttUIDefine.h"
 #define FT3CHS_GRID_COLS		6
 

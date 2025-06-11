@@ -3,8 +3,8 @@
 #include <QLineEdit>
 #include <QScrollBar>
 #include <cmath>
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/XLanguage/XLanguageMngr.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/XLanguageMngr.h"
 #include "../../../SttTestSysGlobalPara.h"
 #include "../ScrollCtrl/ScrollComboBox.h"
 #ifdef _USE_SoftKeyBoard_	
@@ -18,6 +18,7 @@ QChannelHarmTable::QChannelHarmTable(MOUDLEType moudleType,CExBaseList *pChList,
 {
 	m_pCurrKeyboardItem = NULL;
 	m_pComboBoxHarmDelegate = NULL;
+	m_nParaSetSecondValue = 1;
 
 }
 
@@ -186,7 +187,16 @@ void QChannelHarmTable::initTable()
 #endif
 	if (m_moudleType==Moudle_U)//U
 	{
+		if (m_nParaSetSecondValue == 0)
+		{
+			strAmplitude += "(kV)";
+
+		}
+		else
+		{
 		strAmplitude += "(V)";
+
+		}
 	}
 	else
 	{
@@ -258,6 +268,24 @@ void QChannelHarmTable::initTable()
 	creatTableMenu();
 }
 
+void QChannelHarmTable::setHeaderOfTable(QStringList strheader)
+{
+	QString str = strheader.at(1);
+
+	if (str.contains(tr("V")))
+	{
+		if (str.contains(tr("kV")))
+		{
+			m_nParaSetSecondValue = V_Primary;
+		}
+		else
+		{
+			m_nParaSetSecondValue = V_Secondary;
+		}
+	}
+
+	setHorizontalHeaderLabels(strheader);
+}
 int QChannelHarmTable::getHarmSelectedCount(tmt_channel *pCh)
 {
 	if (pCh == NULL)
@@ -434,13 +462,17 @@ void QChannelHarmTable::UpdateHarmCell(int row,bool bEnable)
 	}
 }
 
-void QChannelHarmTable::setTableData(tmt_channel *pArrUI)
+void QChannelHarmTable::setTableData(tmt_channel *pArrUI, bool bCanUpdateTable)
 {
 	disconnect(this,SIGNAL(cellChanged (int,int)),this,SLOT(slot_OnCellChanged(int ,int)));
 	disconnect(this,SIGNAL(itemClicked(QTableWidgetItem *)),this,SLOT(slot_OnItemClicked(QTableWidgetItem *)));
 
  	m_pArrUI = pArrUI;
+
+	if (bCanUpdateTable)
+	{
  	UpdateTable(); 
+	}
 
 	connect(this,SIGNAL(cellChanged (int,int)),this,SLOT(slot_OnCellChanged(int ,int)),Qt::UniqueConnection);
 	connect(this,SIGNAL(itemClicked(QTableWidgetItem *)),this,SLOT(slot_OnItemClicked(QTableWidgetItem *)),Qt::UniqueConnection);
@@ -761,7 +793,7 @@ void CComboBoxHarmDelegate::setEditorData(QWidget *editor, const QModelIndex &in
 	CString strHarmCount;
 	xlang_GetLangStrByFile(strHarmCount, "State_HarmCount");
 
-	for(int i=2;i<=31;i++)
+	for(int i=2;i</*=*/31;i++)//20241220 suyang 注销 =  谐波只能输出30次，31次无输出
 	{
 		if (CXLanguageMngr::xlang_IsCurrXLanguageChinese())
 		{

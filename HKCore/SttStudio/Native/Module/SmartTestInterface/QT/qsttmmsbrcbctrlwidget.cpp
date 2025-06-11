@@ -1,6 +1,6 @@
 #include "qsttmmsbrcbctrlwidget.h"
 #include "ui_qsttmmsbrcbctrlwidget.h"
-#include "../../../../Module/OSInterface/OSInterface.h"
+#include "../../../Module/OSInterface/OSInterface.h"
 
 QSttMmsBrcbCtrlWidget::QSttMmsBrcbCtrlWidget(QWidget *parent) :
     QDialog(parent),

@@ -1,7 +1,7 @@
 #include "QCharactWidgetForTest.h"
 #include <QResizeEvent>
 
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../../SttTestCntrCmdDefine.h"
 
 #include <QCoreApplication>
@@ -9,7 +9,7 @@
 #include <QDir>
 #include <QMessageBox>
 #include "../../SttTestCntrFrameBase.h"
-#include "../../Module/OSInterface/QT/XMessageBox.h"
+#include "../../../Module/OSInterface/QT/XMessageBox.h"
 #include "../../../XLangResource_Native.h"
 
 QCharactWidgetForTest::QCharactWidgetForTest(QWidget *parent,  BOOL bUseMouseMoveChar) :
@@ -391,7 +391,7 @@ void QCharactWidgetForTest::AddTestResultPoint(CExBaseList* pValue)
 			pX_set = pX;
 			pY_set = (CDvmValue*)pValues->FindByID("IdSetting");
 
-			if ((pY != NULL)&&(pY->m_strValue != /*_T("未动作")*/g_sLangTxt_State_NoActioned))//lcq
+			if ((pY != NULL)&&(pY->m_strValue != /*_T("未动作")*//*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact))//lcq
 			{
 				bHasAct = TRUE;
 			}
@@ -407,7 +407,7 @@ void QCharactWidgetForTest::AddTestResultPoint(CExBaseList* pValue)
 			pX_set = (CDvmValue*)pValues->FindByID("RateHarmSet");
 			pY_set = pY;
 
-			if ((pX != NULL)&&(pX->m_strValue != /*_T("未动作")*/g_sLangTxt_State_NoActioned))//lcq
+			if ((pX != NULL)&&(pX->m_strValue != /*_T("未动作")*//*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact))//lcq
 			{
 				bHasAct = TRUE;
 			}
@@ -424,7 +424,7 @@ void QCharactWidgetForTest::AddTestResultPoint(CExBaseList* pValue)
 		pX_set = pX;
 		pY_set = (CDvmValue*)pValues->FindByID("SettingTime");
 
-		if ((pY != NULL)&&(pY->m_strValue != /*_T("未动作")*/g_sLangTxt_State_NoActioned))//lcq
+		if ((pY != NULL)&&(pY->m_strValue != /*_T("未动作")*//*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact))//lcq
 		{
 			bHasAct = TRUE;
 		}
@@ -440,7 +440,7 @@ void QCharactWidgetForTest::AddTestResultPoint(CExBaseList* pValue)
 		pX_set = pX;
 		pY_set = (CDvmValue*)pValues->FindByID("SettingTime");
 
-		if ((pY != NULL)&&(pY->m_strValue != /*_T("未动作")*/g_sLangTxt_State_NoActioned))//lcq
+		if ((pY != NULL)&&(pY->m_strValue != /*_T("未动作")*//*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact))//lcq
 		{
 			bHasAct = TRUE;
 		}
@@ -456,7 +456,7 @@ void QCharactWidgetForTest::AddTestResultPoint(CExBaseList* pValue)
 		pX_set = pX;
 		pY_set = (CDvmValue*)pValues->FindByID("MaxFaultTime");
 
-		if ((pY != NULL)&&(pY->m_strValue != /*_T("未动作")*/g_sLangTxt_State_NoActioned))//lcq
+		if ((pY != NULL)&&(pY->m_strValue != /*_T("未动作")*//*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact))//lcq
 		{
 			bHasAct = TRUE;
 		}
@@ -474,7 +474,7 @@ void QCharactWidgetForTest::AddTestResultPoint(CExBaseList* pValue)
 		pX_set = (CDvmValue*)pValues->FindByID("ValSetting");;
 		pY_set = (CDvmValue*)pValues->FindByID("ValSettingAngle");
 
-		if ((pX != NULL)&&(pX->m_strValue != /*_T("未动作")*/g_sLangTxt_State_NoActioned))//lcq
+		if ((pX != NULL)&&(pX->m_strValue != /*_T("未动作")*//*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact))//lcq
 		{
 			bHasAct = TRUE;
 		}

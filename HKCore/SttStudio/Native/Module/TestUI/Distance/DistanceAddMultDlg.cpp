@@ -1,5 +1,6 @@
 #include "DistanceAddMultDlg.h"
 #include "ui_DistanceAddMultDlg.h"
+#include "../../UI/Interface/SttHtmlViewApi.h"
 
 QDistanceAddMultDlg::QDistanceAddMultDlg(QWidget *parent) :
     m_pAddMult_UI(new Ui::QDistanceAddMultDlg)

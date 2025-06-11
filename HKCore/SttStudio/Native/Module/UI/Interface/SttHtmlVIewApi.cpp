@@ -1,8 +1,9 @@
 #include "stdafx.h"
-#include "../Module/UI/Interface/SttHtmlViewApi.h"
-#include "../../Module/XLanguage/XLanguageMngr.h"
-#include "../../Module/API/FileApi.h"
-#include "../../Module/API/StringConvert/String_Utf8_To_Gbk.h"
+#include "SttHtmlReportVIewInterface.h"
+#include "../../../Module/XLanguage/XLanguageMngr.h"
+#include "../../../Module/API/FileApi.h"
+#include "../../../Module/API/StringConvert/String_Utf8_To_Gbk.h"
+#include "../../SttGlobalDef.h"
 
 char* stt_ui_OpenFile(const CString &strPath)
 {
@@ -160,12 +161,34 @@ BOOL stt_ui_OpenParasFile(const CString &strFileName, CDataGroup *pParas)
 {
 	pParas->DeleteAll();
 	CString strPath = stt_ui_GetParasFile(strFileName);
+#ifdef USE_ExBaseFile_AutoTrans_BinaryBsttFile	
+	CString strPathB = ChangeFilePostfix(strPath, _T("bstt"));
+	BOOL bRet = FALSE;
 
+	if (::IsFileExist(strPathB))
+	{
+		CLogPrint::LogString(XLOGLEVEL_TRACE, strPathB);
+		bRet = dvm_OpenBinaryFile(pParas, strPathB, true);
+		debug_time_long_log("stt_ui_OpenParasFile:Binary", true);
+	}
+	else
+	{
+	dvm_IncGroupUseDvmData(CDataMngrXmlRWKeys::g_pXmlKeys);
+	CDataMngrXmlRWKeys::IncXmlOnlyRead_MainAttr(CDataMngrXmlRWKeys::g_pXmlKeys);
+		bRet = pParas->OpenXmlFile(strPath, CDataMngrXmlRWKeys::g_pXmlKeys);
+	CDataMngrXmlRWKeys::DecXmlOnlyRead_MainAttr(CDataMngrXmlRWKeys::g_pXmlKeys);
+	dvm_DecGroupUseDvmData(CDataMngrXmlRWKeys::g_pXmlKeys);
+		dvm_SaveBinaryFile(pParas, strPathB, true);
+		debug_time_long_log("stt_ui_OpenParasFile XML", true);
+	}
+#else
 	dvm_IncGroupUseDvmData(CDataMngrXmlRWKeys::g_pXmlKeys);
 	CDataMngrXmlRWKeys::IncXmlOnlyRead_MainAttr(CDataMngrXmlRWKeys::g_pXmlKeys);
 	BOOL bRet = pParas->OpenXmlFile(strPath, CDataMngrXmlRWKeys::g_pXmlKeys);
 	CDataMngrXmlRWKeys::DecXmlOnlyRead_MainAttr(CDataMngrXmlRWKeys::g_pXmlKeys);
 	dvm_DecGroupUseDvmData(CDataMngrXmlRWKeys::g_pXmlKeys);
+#endif
+
 
 	return bRet;
 }

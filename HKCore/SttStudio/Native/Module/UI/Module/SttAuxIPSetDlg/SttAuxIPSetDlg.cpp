@@ -1,9 +1,9 @@
 #include "SttAuxIPSetDlg.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
-#include "../../Module/Log/LogPrint.h"
+#include "../../../Module/Log/LogPrint.h"
 #include "../CommonMethod/commonMethod.h"
-#include "../../Module/XLanguage/XLanguageResource.h"
+#include "../../../Module/XLanguage/XLanguageResource.h"
 #include "../../../XLangResource_Native.h"
 
 QSttAuxIPSetDlg::QSttAuxIPSetDlg(QWidget *pParent)

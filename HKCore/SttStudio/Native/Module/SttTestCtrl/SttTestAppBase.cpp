@@ -72,7 +72,7 @@ CSttTestAppBase::~CSttTestAppBase()
 	}
 }
 
-#include <QtWebKit>
+//#include <QtWebKit>
 
 #ifndef _PSX_QT_LINUX_
 #include "../../../Module/XMinidmp/XMinidmp.h"

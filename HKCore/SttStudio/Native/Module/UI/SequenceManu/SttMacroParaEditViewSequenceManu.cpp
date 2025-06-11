@@ -1,7 +1,7 @@
 #include "SttMacroParaEditViewSequenceManu.h"
 #include "ui_SttMacroParaEditViewManual.h"
 #include "../../SmartCap/XSmartCapMngr.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../SttTest/Common/tmt_manu_test.h"
 #include "../SttTestCntrFrameBase.h"
 #include "../../SttTestResourceMngr/TestResource/SttTestResource_Sync.h"
@@ -264,6 +264,47 @@ void QSttMacroParaEditViewSequenceManu::InitOtherParasUI()
 	SetManualOtherParasFont();
 }
 
+void QSttMacroParaEditViewSequenceManu::SetPlotAcDcMaxMinValue()
+{
+	bool bStart = false;
+	if (g_theTestCntrFrame->IsTestStarted())
+	{
+		bStart = true;
+	}
+	if ((m_oIV.m_pUIParaWidget)/*&&(!g_theTestCntrFrame->IsTestStarted())*/)
+	{
+		if (g_oSystemParas.m_nHasAnalog || g_oSystemParas.m_nHasDigital)
+		{
+			double dUMin = 0;
+			double dUMax = 0;
+			double dIMin = 0;
+			double dIMax = 0;
+			m_oIV.m_pUIParaWidget->GetUIMaxMinValue(dUMin,dUMax,dIMin,dIMax,bStart);
+			if (dUMin>=0)
+			{
+				dUMin = 0;
+			}
+			else
+			{
+				dUMin -= 20;
+			}
+
+			if (dIMin>=0)
+			{
+				dIMin = 0;
+			}
+			else
+			{
+				dIMin -= 10;
+			}
+
+			g_theTestCntrFrame->SetPlotAcDcMaxMinValue(FALSE,dUMin,dUMax,dIMin,dIMax);
+
+		}
+
+	}
+
+}
 
 void QSttMacroParaEditViewSequenceManu::UpdateTestResource(BOOL bCreateChMaps)
 {
@@ -272,7 +313,7 @@ void QSttMacroParaEditViewSequenceManu::UpdateTestResource(BOOL bCreateChMaps)
 	UpdateBinBoutExTab();
 
 	m_oIV.m_pUIParaWidget->initUI(g_theTestCntrFrame->GetSttTestResource());
-	m_oIV.m_pUIParaWidget->initData();
+	m_oIV.m_pUIParaWidget->initData(true);
 	m_oIV.m_pUIParaWidget->setMaxMinAndEDVal();
 
 	m_pSequenceManualWidget->SetData(g_theTestCntrFrame->GetSttTestResource(), m_pManualParas, 0);
@@ -411,7 +452,7 @@ void QSttMacroParaEditViewSequenceManu::UpdateBinBoutExTab()
 
 void QSttMacroParaEditViewSequenceManu::UpdateManualParas()
 {
-	m_oIV.m_pUIParaWidget->initData();
+	m_oIV.m_pUIParaWidget->initData(true);
 	m_pSequenceManualWidget->UpdateData();
 	
 	UpdateBinBoutExTab();
@@ -649,6 +690,7 @@ void QSttMacroParaEditViewSequenceManu::slot_updateParas()
     CalPhaseValues();
 	
 	SetParaChanged();
+	SetPlotAcDcMaxMinValue();
 }                        
 void QSttMacroParaEditViewSequenceManu::CalPhaseValues() //2023-2-28 chenling
 {

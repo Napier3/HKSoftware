@@ -29,6 +29,7 @@ CClassDefMngrXmlRWKeys::CClassDefMngrXmlRWKeys()
 	m_strPicKey = L"pic";
 	m_strFormatKey = L"format";
 	m_strValueKey = L"value";
+	m_strMutiSelectKey = L"multiselect";
 }
 
 CClassDefMngrXmlRWKeys::~CClassDefMngrXmlRWKeys()

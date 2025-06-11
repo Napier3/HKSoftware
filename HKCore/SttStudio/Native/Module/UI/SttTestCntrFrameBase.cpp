@@ -15,12 +15,12 @@
 #include "../SttSystemConfig/SttSystemConfig.h"
 #include "Controls/SttFileSaveAsDlg.h"
 #include "Module/PopupDialog/SttPopupOpenDialog.h"
-#include "../../Module/OSInterface/QT/XMessageBox.h"
-#include "../../Module/SmartCap/XSmartCapMngr.h"
+#include "../../../Module/OSInterface/QT/XMessageBox.h"
+#include "../../../Module/SmartCap/XSmartCapMngr.h"
 #include "../SttCmd/GuideBook/SttItemStateObject.h"
 #include "../SttTestCtrl/SttTestCtrlCntrNative.h"
 #include "Manual/SttMacroParaEditViewManual.h"
-#include "../../Module/UI/Controls/SttCustomSetDlg.h"
+#include "../Module/UI/Controls/SttCustomSetDlg.h"
 #include "Module/ModuleSetDlg/QModuleSetDlg.h"
 #include "Controls/FileMngr/SttFileMngrDlg.h"
 #include "Module/PopupDialog/SttFileMngrTool.h"
@@ -28,10 +28,8 @@
 #include "../Module/SttTest/Common/tmt_replay_test.h"
 #include "../XLangResource_Native.h"
 #include "../RecordTest/UI/SttIecCapDialog.h"
-#include "../Module/UI/Interface/SttHtmlViewApi.h"
-#ifndef _PSX_QT_LINUX_
 #include "Module/SysParas/QSysParasDlg.h"
-#endif
+#include "../Module/UI/Interface/SttHtmlViewApi.h"
 
 #ifdef _PSX_QT_LINUX_
 #include "IEC61850Config/SttIecConfigDialogLinux.h"
@@ -62,12 +60,28 @@
 #include "Module/CommConfigurationDlg/PkgMonitor/QSttCommCfgPkgMonitorDlg.h"
 #include "../RecordTest/UI/MUTest/SttMUTestIecCbSelWidget.h"
 #include "../RecordTest/UI/MUTest/SttIecRecordCbInterface.h"
+//#include "Module/BinReverseConfig/QBinReverseCfgDialog.h"
+#include "Module/BinBoutCommMap/QBinBoutCommMapDialog.h"
 
+//#include "../../../AutoTest/Module/XrioRead/XDeviceModel/XDeviceModel.h"
+#include "Controls/SettingCtrls/QSettingGlobal.h"
+
+#include "../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbSmartGenWzd.h"
+#include "Module/FAParasSetWidget/QSttFAParasSetDialog.h"
+#include "FA/QSttMacroParaEditViewVolTimeTypeSec.h"
+
+extern CGbSmartGenWzd *g_theGbSmartGenWzd;
 QSttTestCntrFrameBase *g_theTestCntrFrame = NULL;
 double g_dUIShowCoef = 1.0f; // 界面显示缩放比例
 
 // bool g_bIsOpenMacroFromMain = FALSE;
 CDataGroup *g_pGlobalDatas = NULL;
+
+#ifdef use_sttdebuglogwidget
+//2024-9-9 lijunqing 
+extern long g_sttdebuglogwidget;
+#endif
+int g_nUpdateMultiMacroParaEditView = 1;
 
 BOOL QSttTestCntrFrameBase::HasManuTrigerBtn()
 {
@@ -355,6 +369,12 @@ void QSttTestCntrFrameBase::slot_UpdateSysConfig()
 	Cmd_SendChMapsConfig();//20221026 zhouhj 先发送通道映射,后发送系统参数更新消息,系统更新后会上送新的模板生成文件,同时更新上位机界面相关内容
 	Cmd_SendSystemConfig();
 
+
+	if ((g_dFixFreqCalValue>1.0f)&&(g_oSystemParas.m_fFNom>1.0f))
+	{
+		g_dFixFreqCalValue = g_oSystemParas.m_fFNom;
+	}
+
 	//2024-6-27 wuxinyi 向底层发送完成系统参数，再开始刷新实时数据
 	g_theTestCntrFrame->m_bUpdateHardCfgFromRealTime = true;
 
@@ -363,10 +383,6 @@ void QSttTestCntrFrameBase::slot_UpdateSysConfig()
 void QSttTestCntrFrameBase::slot_UpdatePowerGear()
 {
 	Cmd_SendSystemConfig();
-
-	//2024-6-27 wuxinyi 向底层发送完成，再开始刷新实时数据
-	g_theTestCntrFrame->m_bUpdateOutputPowerFromRealTime = true;
-
 }
 
 void QSttTestCntrFrameBase::slot_OnItemStateChanged_Frame(CExBaseObject *pItem)
@@ -382,41 +398,70 @@ void QSttTestCntrFrameBase::slot_OnItemStateChanged_Frame(CExBaseObject *pItem)
 	CString strParentItemsPath, /*strItemID,*/ strState;
 	CExBaseObject *pParent = (CExBaseObject*)pSttItem->GetParent();
 	strParentItemsPath = pParent->GetIDPathEx(STTGBXMLCLASSID_CSTTDEVICE, FALSE);
-	//strItemID = pObj->m_pItem->GetIDPathEx(STTGBXMLCLASSID_CSTTDEVICE, FALSE);
+	if (strParentItemsPath.IsEmpty() || g_pTheSttTestApp->m_pTestMacroUI == NULL)
+	{
+		return;
+	}
+	strItemID = pObj->m_pItem->GetIDPathEx(STTGBXMLCLASSID_CSTTDEVICE, FALSE);
+	strState = Gb_GetTestStateByID(pSttItem->m_nState);
 	//如果是状态序列则重新生成id
+
 	if (g_pTheSttTestApp->m_pTestMacroUI->IsUIOriginal())
 	{
 		CString strMacroID =  g_pTheSttTestApp->GetCurrTestMacroUI();
 		if (strMacroID == STT_MACRO_ID_StateTest)
 		{
+            if(m_pMacroEditView)
+            {
 			QSttMacroParaEditViewState *pState = (QSttMacroParaEditViewState *)m_pMacroEditView;
 			if (pState->m_nCircle >= 2)
 			{
-				//收到下一个ItemChange时，将第一个循环的状态改为初始状态
-				strItemID = pObj->m_pItem->GetIDPathEx(STTGBXMLCLASSID_CSTTDEVICE, FALSE);
-				strState = TEST_STATE_DESC_NORMAL;
-
-                //if ((m_pSttReportViewHtml != NULL) && !m_bIsUpdateStateTestFirstReportColor)
-				{
-                    //m_pSttReportViewHtml->ItemStateChanged(strParentItemsPath, strItemID, strState);
-					m_bIsUpdateStateTestFirstReportColor = TRUE;
-				}
 				CExBaseObject *pParent = (CExBaseObject *)pObj->m_pItem->GetParent();
-				if (pParent)
+				CString strId;
+				strId.Format(_T("StateTest%d"), pState->m_nCircle);
+				//状态序列循环时，最后一次为测试状态，其余为NORMAL
+
+                //if ((pParent->m_strID != strId) && (m_pSttReportViewHtml != NULL))
+                //{
+                //	m_pSttReportViewHtml->ItemStateChanged(strParentItemsPath, strItemID, TEST_STATE_DESC_NORMAL);
+                //	strState = Gb_GetTestStateByID(pSttItem->m_nState);
+                //	m_pSttReportViewHtml->ItemStateChanged(strParentItemsPath, strId, strState);
+                //	m_bIsUpdateStateTestFirstReportColor = TRUE;
+                //}
+			}
+		}
+	}
+
+		//更新结果状态
+		if (strMacroID == STT_ORG_MACRO_VolTimeTypeSecTest || 
+			strMacroID ==  STT_ORG_MACRO_VolTimeTypeIntTest || 
+			strMacroID ==  STT_ORG_MACRO_VolCurTypeSecTest || 
+			strMacroID ==  STT_ORG_MACRO_VolCurTypeIntTest || 
+			strMacroID ==  STT_ORG_MACRO_AdaptiveTypeSecTest)
+		{
+			if(m_pMacroEditView)
+			{
+				QSttMacroParaEditViewVolTimeTypeSec *pVolTimeTypeSec = (QSttMacroParaEditViewVolTimeTypeSec *)m_pMacroEditView;
+				if (pSttItem->GetClassID() == STTGBXMLCLASSID_CSTTMACROTEST && !strItemID.contains(strBeforeTestString))
 				{
-					pParent->m_strID.Format(_T("StateTest%d"), pState->m_nCircle);
+					pVolTimeTypeSec->UpdateResultState(strItemID,strState);	
 				}
 			}
 		}
 	}
 	
-	strItemID = pObj->m_pItem->GetIDPathEx(STTGBXMLCLASSID_CSTTDEVICE, FALSE);
-	strState = Gb_GetTestStateByID(pSttItem->m_nState);
-
+	if (!m_bIsUpdateStateTestFirstReportColor)
+	{
     //if (m_pSttReportViewHtml != NULL)
     //{
     //	m_pSttReportViewHtml->ItemStateChanged(strParentItemsPath, strItemID, strState);
     //}
+	}
+	
+	if (IsAutoTest())
+	{
+		return;
+	}
 
 	if (pSttItem->m_nState == TEST_STATE_TESTING)//zhouhj 20220406 如果是测试过程中,更新手动触发按钮
 	{
@@ -537,6 +582,29 @@ void QSttTestCntrFrameBase::slot_OnImportDvm(CExBaseList *pListItems)
 
 }
 
+void QSttTestCntrFrameBase::slot_BinBoutCommMapDataUpdate( CDataGroup *pDataGroup )
+{
+
+}
+
+void QSttTestCntrFrameBase::slot_UpdateFAParasData( CDataGroup *pDataGroup )
+{
+	if(!g_pTheSttTestApp->m_pTestMacroUI)
+	{
+		return;
+	}
+	if (!g_pTheSttTestApp->m_pTestMacroUI->IsUIOriginal())
+	{
+		return;
+	}
+
+	CSttMacroParaEditViewOriginal *pMacroEditView = (CSttMacroParaEditViewOriginal*)m_pMacroEditView;
+	if (pMacroEditView)
+	{
+		pMacroEditView->UpdateFAParasData(pDataGroup);
+	}
+}
+
 QSttTestCntrFrameBase::QSttTestCntrFrameBase(QWidget *parent)
 : QMainWindow(parent)
 {
@@ -545,7 +613,15 @@ QSttTestCntrFrameBase::QSttTestCntrFrameBase(QWidget *parent)
 	m_pManualTriggerBtn = NULL;
 	m_pExitBtn = NULL;
 	m_pMenu_FrameButton = NULL;
+#ifdef use_sttdebuglogwidget
+	if (g_sttdebuglogwidget == 0)
+	{
 	CLogPrint::Create(this);
+	}
+#else
+	CLogPrint::Create(this);
+
+#endif
 	m_pStatusBar = NULL;
 	m_pResultBarUI = NULL;
 	m_pResultWidget = NULL;
@@ -566,7 +642,7 @@ QSttTestCntrFrameBase::QSttTestCntrFrameBase(QWidget *parent)
 	m_pCharactWidgetForTest = NULL;
 	m_pCharTestPointsGrid = NULL;
 	m_pMacroEditView = NULL;
-//	m_pSysParaEditView = NULL;
+    //m_pSysParaEditView = NULL;
 
 	m_pActiveWidget = NULL;
 	m_pPrevActiveWidget = NULL; 
@@ -582,8 +658,11 @@ QSttTestCntrFrameBase::QSttTestCntrFrameBase(QWidget *parent)
 
 	m_pRemoteCtrlWidget = NULL;
 	m_bUpdateHardCfgFromRealTime = TRUE;
-	m_bUpdateOutputPowerFromRealTime = TRUE;
+	m_bUpdateOutputPowerFromRealTime = FALSE;
+ 	m_bIsRtDataUpdateChMaps_System = FALSE;
 // 	m_bFirstUpadeIPowerMode = TRUE;
+	m_bOutputTypeHasChanged = FALSE;
+	m_fUdc = 0.0f;
 
 	m_pCharacteristics = new CCharacteristics();
 	m_pSttCharacterDrawPng = new CSttCharacterDrawPng();
@@ -593,7 +672,6 @@ QSttTestCntrFrameBase::QSttTestCntrFrameBase(QWidget *parent)
 	m_oItemStateList.AllocBuffer(50);
 	m_pSttMulticastClientSocket = NULL;
 	m_tagAppState = APPSTATE_NULL;
-	m_pSttFaParasSetDialog = NULL;
 	m_pSttCommCfgPkgWidget = NULL;
 	m_oTimerAtsAutoSave.start(30000);
 }
@@ -602,16 +680,25 @@ QSttTestCntrFrameBase::QSttTestCntrFrameBase(QWidget *parent)
 void QSttTestCntrFrameBase::InitFrame(const CString &strFrameCfgFile)
 {
 //	stt_xml_serialize_write_ReplayTest();
-	InitConfig(strFrameCfgFile);
+	debug_enter_time_long_log();
+
+	if (!IsAutoTest())
+	{
 	g_oFileMngrTool.OpenConfigFile();
+	}
+	debug_time_long_log("InitFrame OpenConfigFile", true);
+
 	InitUI();
+	debug_time_long_log("InitFrame InitUI", true);
 
 	InitIcon();
+	debug_time_long_log("InitFrame InitIcon", true);
 
 #ifdef _USE_SoftKeyBoard_
 	InitPinyinLib();
 	CreateKeyBoardWidget();
-	QSoftKeyBoard::AttachObj(this);
+	//QSoftKeyBoard::AttachObj(this); //20240914 suyang 优化代码，此处注销
+	debug_time_long_log("InitFrame QSoftKeyBoard", true);
 #endif
 
 	//2022-2-26  lijunqing  如果文件不存在，输出提示信息的时候窗口还没创建成功，程序崩溃
@@ -647,7 +734,7 @@ void QSttTestCntrFrameBase::InitFrame(const CString &strFrameCfgFile)
 	connect(&m_oTimerHtmlViewReturn,SIGNAL(timeout()),this,SLOT(slot_ReturnPrevActiveWidget()));
 	connect(&m_oTimerAtsAutoSave,SIGNAL(timeout()),this,SLOT(slot_Timer_AutoSave()));
 
-	connect(this,SIGNAL(sig_OnItemStateChanged(CExBaseObject *)),m_pSttGbTreeView,SLOT(slot_ItemStateChanged(CExBaseObject *)));
+	connect(this,SIGNAL(sig_OnItemStateChanged(CExBaseObject *)),m_pSttGbTreeView,SLOT(slot_ItemStateChanged(CExBaseObject *)),Qt::QueuedConnection);
 	connect(this,SIGNAL(sig_ShowItems_TreeView(CExBaseList *)),m_pSttGbTreeView,SLOT(slot_ShowItems(CExBaseList *)));
 	connect(this, SIGNAL(sig_UpdateTestResource()), this, SLOT(slot_UpdateTestResource()),Qt::QueuedConnection);
 	connect(this, SIGNAL(sig_UpdateHtmlManuTrigerBtn_Testing()), this, SLOT(slot_UpdateHtmlManuTrigerBtn_Testing()));
@@ -661,16 +748,29 @@ void QSttTestCntrFrameBase::InitFrame(const CString &strFrameCfgFile)
 	connect(this, SIGNAL(sig_OnInputData(CDataGroup *, CExBaseList *)), this, SLOT(slot_OnInputData(CDataGroup *, CExBaseList *)));
 	connect(this,SIGNAL(sig_OnImportDvm(CExBaseList *)),this,SLOT(slot_OnImportDvm(CExBaseList *)));
 
+	connect(this,SIGNAL(sig_SendChMapsConfig()),this,SLOT(slot_SendChMapsConfig()),Qt::QueuedConnection);
+
 	connect(this, SIGNAL(sig_MsgBox(QString,QString)), this, SLOT(slot_MsgBox(QString,QString)),Qt::QueuedConnection);
+	connect(this, SIGNAL(sig_UpdateReportSysState(CDataGroup *)),this,SLOT(slot_UpdateReportSysState(CDataGroup*)),Qt::QueuedConnection);//不同线程,槽函数需要使用队列模式在主线程执行
+	debug_time_long_log("InitFram connecte", true);
 
 	m_bInited = false;
 
 	if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> begin TestResourceMngr >>");	}
+
+	if (!IsAutoTest())
+	{
 	g_oSttTestResourceMngr.SetIecConfigFileName(FILENAME_STTIECCONCFIG);//zhouhj 20220316 改为独立设置文件名的方式
 	g_oSttSystemConfig.OpenSystemConfig();
 	g_oSttTestResourceMngr.LoadDefaultIec61850Config();
+	}
+
+	debug_time_long_log("InitFrame SttTestResourceMng", true);
+
 	if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> end TestResourceMngr >>");	}
 
+	//2024-9-15 lijunqing 优化系统程序启动的效率
+	connect(this,SIGNAL(sig_OpenMacroTest(unsigned long)),this,SLOT(slot_OpenMacroTest(unsigned long)),Qt::QueuedConnection);
 }
 
 QSttTestCntrFrameBase::~QSttTestCntrFrameBase()
@@ -680,9 +780,16 @@ QSttTestCntrFrameBase::~QSttTestCntrFrameBase()
 #endif
 	m_oTimerAtsAutoSave.stop();
 	CAutoSimpleLock oLock(m_oCriticSection_AutoSave);
-
+#ifdef use_sttdebuglogwidget
+	if (g_sttdebuglogwidget == 0)
+	{
 	CLogPrint::SetLog(NULL);
 	CLogPrint::Release();
+	}
+#else
+	CLogPrint::SetLog(NULL);
+	CLogPrint::Release();
+#endif
 	ReleaseConfig();
 
 // 	if (m_pSttTestResource != NULL)
@@ -862,6 +969,11 @@ void QSttTestCntrFrameBase::OnUpdateTestResource(BOOL bCreateChMaps)
 		g_oLocalSysPara.m_fDC_CurMin *= nMergeCurrCoef;
 	}
 
+	if (g_pStateMonitorWidget)	//dingxy 20250208 更新状态图
+	{
+		g_pStateMonitorWidget->UpdateAxisScale();
+	}
+
 	//当加载了测试功能且该功能是递变时，不需要对状态图进行重新初始化
 	bool bIsOriginal = false;
 	bool bIsGradient = false;
@@ -873,7 +985,12 @@ void QSttTestCntrFrameBase::OnUpdateTestResource(BOOL bCreateChMaps)
 			m_pMacroEditView->UpdateTestResource(FALSE);//zhouhj20220319 在非网页界面界面时,更新
 			UpdateRptHtml();//zhouhj 20220329 只有在原生界面,在更改软件资源映射后,需要更新报告中的通道
 			bIsOriginal = true;
+			
+			if (g_pTheSttTestApp->GetCurrTestMacroUI() != STT_ORG_MACRO_RemoteCtrlTest)//遥控不继承CSttMacroParaEditViewOriginal
+			{
 			bIsGradient = (strcmp(((CSttMacroParaEditViewOriginal*)m_pMacroEditView)->GetMacroID(), "GradientTest") == 0);
+		}
+			
 		}
 		else
 		{
@@ -919,6 +1036,31 @@ void QSttTestCntrFrameBase::OnUpdateTestResource(BOOL bCreateChMaps)
 		m_pPowerDiagramWidget->initData();
 	}
 
+	if (m_pStateMonitorWidget)
+	{
+// 		CString strCurrUI_ID = GetCurrentUI_ID();
+// 		if (strCurrUI_ID == STT_CMD_ATS_MACRO_ID_LowFreqTest)
+// 		{
+// 			m_pStateMonitorWidget->SetPlotDigitMaxMinValue(fre_type);
+// 		}
+// 		else
+// 			m_pStateMonitorWidget->SetPlotDigitMaxMinValue(amplitude_type);
+
+		//chenling 20250117 弱信号调整状态图幅值纵坐标最大
+		//SetPlotAcDcMaxMinValue(false,0,130,0,30);
+		float fUMax = 130,fIMax = 30;
+ 		if((g_oSystemParas.m_nHasWeek == 1) && (g_oSystemParas.m_nHasAnalog == 0)&& (g_oSystemParas.m_nHasDigital == 0))
+ 		{
+#ifdef _PSX_OS_CENTOS_
+			fUMax = 10.000;
+#else
+			fUMax = 8.300;
+#endif
+			fIMax = 21.275;
+ 		}
+		SetPlotAcDcMaxMinValue(false,0,fUMax,0,fIMax);
+	}
+
 	//系统参数页面，未勾选“数字”，应隐藏“IEC配置”按钮 sf 20220317
 	if (!g_oSystemParas.HasDigitalInOrOut())
 	{
@@ -935,6 +1077,12 @@ void QSttTestCntrFrameBase::OnUpdateTestResource(BOOL bCreateChMaps)
 	}
 
 	UpdateToolButtons();
+
+	if (m_pMacroEditView)
+	{
+		m_pMacroEditView->UpdatePrimParaSetUI();
+	}
+
 }
 
 // void QSttTestCntrFrameBase::initLocalSysPara()
@@ -1083,6 +1231,7 @@ void QSttTestCntrFrameBase::UpdateResultWidget(CSttReport *pReport,const CString
 	strResultsString += "[";
 	double dValue = 0;
 	BOOL bHasResult = FALSE,bHasActValue = FALSE;
+	CString strUint;
 
 
 	CSttItems* pItems = (CSttItems*)pValues->GetAncestor(STTGBXMLCLASSID_CSTTITEMS);
@@ -1112,7 +1261,7 @@ void QSttTestCntrFrameBase::UpdateResultWidget(CSttReport *pReport,const CString
 	else if (strMacroID == STT_MACRO_ID_FaultGradientTest)  //2024-01-03 yuanting  故障递变测试
 	{
 
-
+		bHasResult = GetResultStringFaultGradientTest(pValues, bHasActValue, strResultsString, m_oTestMacroResults);
 	} //
 	else if(strMacroID == STT_ORG_MACRO_SoeTest)
 	{
@@ -1151,6 +1300,15 @@ void QSttTestCntrFrameBase::UpdateResultWidget(CSttReport *pReport,const CString
 	{
 		bHasResult = GetResultStringStateTest(pValues,bHasActValue,strResultsString,m_oTestMacroResults);
 	}
+	else if(strMacroID == STT_MACRO_ID_PsuSwing)
+	{
+		bHasResult = GetResultStringSwingTest(pValues,bHasActValue,strResultsString,m_oTestMacroResults);
+	}
+	//xueyangfan 20241219 谐波 只进行动作时间测试时，测试报告结果动作值一栏不应该显示未动作，改为显示——
+	else if (strMacroID == STT_MACRO_ID_HarmTest)
+	{
+		bHasResult = GetResultStringHarmTest(pValues,bHasActValue,strResultsString,m_oTestMacroResults);
+	}
 	else
 	{
 		POS pos = m_oTestMacroResults.GetHeadPosition();
@@ -1164,11 +1322,11 @@ void QSttTestCntrFrameBase::UpdateResultWidget(CSttReport *pReport,const CString
 			{
 				bHasResult = TRUE;
 
-				if (pResultValue->m_strValue != g_sLangTxt_State_NoActioned)
+				if (pResultValue->m_strValue != /*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact)
 				{
 					if (pResultValue->m_strValue == "未动作")
 					{
-						pResultValue->m_strValue = g_sLangTxt_State_NoActioned;
+						pResultValue->m_strValue = /*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact;
 					}
 					else
 					{
@@ -1176,7 +1334,7 @@ void QSttTestCntrFrameBase::UpdateResultWidget(CSttReport *pReport,const CString
 
 						if ((pCurrData->m_strUnit != "°")&&(dValue<= 0.00001))
 						{
-							pResultValue->m_strValue = g_sLangTxt_State_NoActioned;
+							pResultValue->m_strValue = /*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact;
 						}
 						else
 						{
@@ -1200,7 +1358,16 @@ void QSttTestCntrFrameBase::UpdateResultWidget(CSttReport *pReport,const CString
 							//strFormat.Format(_T("%%.%dlf"),nPrecision);
 							pResultValue->m_strValue = QString::number(dValue,'f',nPrecision);//.Format("%.5lf",dValue);
 							strResultsString += pResultValue->m_strValue;
+							if ((pCurrData->m_strID == _T("TripValue")) || (pCurrData->m_strID == _T("ActValue")) || (pCurrData->m_strID == _T("ReturnValue")))
+							{
+								strUint = GetMacroTestResultUnit();
+								strResultsString += strUint;
+							}
+							else
+							{
 							strResultsString += pCurrData->m_strUnit;
+							}
+
 							strResultsString += ";";
 						}
 					}
@@ -1214,7 +1381,7 @@ void QSttTestCntrFrameBase::UpdateResultWidget(CSttReport *pReport,const CString
 	{
 		if (!bHasActValue)
 		{
-			strResultsString += /*_T("未动作")*/g_sLangTxt_State_NoActioned;
+			strResultsString += /*_T("未动作")*//*g_sLangTxt_State_NoActioned*/g_sLangTxt_Unact;
 		}
 
 		strResultsString += "].";
@@ -1222,17 +1389,86 @@ void QSttTestCntrFrameBase::UpdateResultWidget(CSttReport *pReport,const CString
 	}
 }
 
+CString QSttTestCntrFrameBase::GetMacroTestResultUnit()
+{
+	if ((g_pTheSttTestApp->m_pTestMacroUI == NULL)||(m_pMacroEditView == NULL))
+	{
+		return _T("");
+	}
+
+	CString strUnit;
+
+	if (g_pTheSttTestApp->m_pTestMacroUI->IsUIOriginal())
+	{
+		strUnit = m_pMacroEditView->GetMacroTestResultUnit();
+	}
+	return strUnit;
+}
+
+bool need_connect_app(CString &strCurrDialogID)
+{
+
+	if (strCurrDialogID == STT_CNTR_CMD_PpIotEngineClient || strCurrDialogID == STT_CNTR_CMD_CommConfig
+		|| strCurrDialogID == STT_CNTR_CMD_PpXmlFileMngr || strCurrDialogID == STT_CNTR_CMD_DvmFileMngr
+		|| strCurrDialogID == STT_CNTR_CMD_FileMngr || strCurrDialogID == STT_CNTR_CMD_LangSetting
+		|| strCurrDialogID == STT_CNTR_CMD_OutputDebug )
+	{
+		return false;
+	}
+	
+	return true;
+}
+
 void QSttTestCntrFrameBase::OpenDialog(const CString &strDialogID)
 {
     CString strCurrDialogID;
     strCurrDialogID = strDialogID;
  //   CXMessageBox::information(NULL,"001","000000" );
-	OnCmd_ConnectApp();//连接服务端
- //   CXMessageBox::information(NULL,"002","000000" );
+	bool bRet = need_connect_app(strCurrDialogID);
 
-	//升级程序时,需要保证当前具有足够电量,先获取当前电量信息  20230106 zhouhj
-    if ((strCurrDialogID == STT_CNTR_CMD_Liveupdate)||(strCurrDialogID == STT_CNTR_CMD_ULiveupdate))
+	if (!g_oSttTestResourceMngr.HasLoadDevice())
 	{
+		g_oSttTestResourceMngr.SelectDeviceFromLocalDB();
+	}
+
+
+#ifdef _USE_SoftKeyBoard_
+	QSoftKeyBoard::AttachObj(this); //dingxy 20241008 报文探测第二次打开iec配置崩溃问题修改
+#endif
+	//升级程序时,需要保证当前具有足够电量,先获取当前电量信息  20230106 zhouhj
+    if ((strCurrDialogID == STT_CNTR_CMD_Liveupdate)||(strCurrDialogID == STT_CNTR_CMD_ULiveupdate)||(strCurrDialogID == STT_CNTR_CMD_BinConfig))
+	{
+		OpenDialogModal(strCurrDialogID, bRet);
+	}
+	else if (strCurrDialogID == STT_CNTR_CMD_PpIotEngineClient || strCurrDialogID == STT_CNTR_CMD_CommConfig
+		|| strCurrDialogID == STT_CNTR_CMD_PkgMonitor || strCurrDialogID == STT_CNTR_CMD_PpXmlFileMngr
+		|| strCurrDialogID == STT_CNTR_CMD_DvmFileMngr || strCurrDialogID == STT_CNTR_CMD_OutputPower
+		|| strCurrDialogID == STT_CNTR_CMD_HardConfig || strCurrDialogID == STT_CNTR_CMD_VersionInfo
+		|| strCurrDialogID == STT_CNTR_CMD_FileMngr || strCurrDialogID == STT_CNTR_CMD_LumPowerView
+		|| strCurrDialogID == STT_CNTR_CMD_LangSetting || strCurrDialogID == STT_CNTR_CMD_IecCapDialog
+		|| strCurrDialogID == STT_CNTR_CMD_OutputDebug || strCurrDialogID == STT_CNTR_CMD_LiveupdateDevice
+		|| strCurrDialogID == STT_CNTR_CMD_AuxDCOutput || strCurrDialogID == STT_CNTR_CMD_SystemParas
+		|| strCurrDialogID == STT_CNTR_CMD_IECConfig|| strCurrDialogID == STT_CNTR_CMD_ChRsMaps)
+	{
+		OpenDialogModeless(strCurrDialogID, bRet);
+	}
+#ifdef _PSX_QT_LINUX_	 //Windows关闭会触发closeEvent,导致下发两次CloseTest
+	if (m_pTestCtrlCntrBase != 0)
+	{
+		m_pTestCtrlCntrBase->CloseTest(STT_CMD_Send_Async);
+	}
+#endif
+//	g_pTheSttTestApp->ExitSttTestApp();
+	this->close();
+}
+
+void QSttTestCntrFrameBase::OpenDialogModal(const CString &strDialogID, bool bNeedConnect)
+{
+	show();//在线升级或离线升级时,显示界面,用于在输出窗口界面显示打印信息
+	if (bNeedConnect)
+	{
+		OnCmd_ConnectApp();//连接服务端
+	}
 		CTickCount32 oTickCount;
 		long nCurrIndex = 0;
 
@@ -1241,18 +1477,49 @@ void QSttTestCntrFrameBase::OpenDialog(const CString &strDialogID)
 			oTickCount.DoEvents(10);
 			nCurrIndex++;
 		}
-
-		show();//在线升级或离线升级时,显示界面,用于在输出窗口界面显示打印信息
 		OnCmd_DebugOutPutWidget();
-	}
 
-	if (!g_oSttTestResourceMngr.HasLoadDevice())
+// 	if (!g_oSttTestResourceMngr.HasLoadDevice())
+// 	{
+// 		g_oSttTestResourceMngr.SelectDeviceFromLocalDB();
+// 	}
+
+	if (strDialogID == STT_CNTR_CMD_Liveupdate)
 	{
-		g_oSttTestResourceMngr.SelectDeviceFromLocalDB();
+		OnCmd_Liveupdate();
 	}
-	else if (strCurrDialogID == STT_CNTR_CMD_HardConfig || strCurrDialogID == STT_CNTR_CMD_OutputPower)
+	else if (strDialogID == STT_CNTR_CMD_ULiveupdate)
 	{
-		CTickCount32 oTickCount;
+		OnCmd_ULiveupdate();
+	}
+	else if (strDialogID == STT_CNTR_CMD_BinConfig)
+	{
+		OnCmd_BinConfig();
+	}
+}
+
+void QSttTestCntrFrameBase::OpenDialogModeless(const CString &strDialogID, bool bNeedConnect)
+{
+	CTickCount32 oTickCount;
+
+	if (bNeedConnect)
+	{
+		//20250325 suyang 确保软件资源已全部初始化完成，防止进入时获取硬件信号后起冲突。主要是主线程未完成子线程开始，主线程等待导致
+		
+		oTickCount.DoEvents(100);
+
+		OnCmd_ConnectApp();//连接服务端
+	}
+// 	if (!g_oSttTestResourceMngr.HasLoadDevice())
+// 	{
+// 		g_oSttTestResourceMngr.SelectDeviceFromLocalDB();
+// 	}
+
+
+
+	else if (strDialogID == STT_CNTR_CMD_HardConfig || strDialogID == STT_CNTR_CMD_OutputPower)
+	{
+		
 		long nCurrIndex = 0;
 
 		while((g_oLocalSysPara.m_nRTData_Num <= 0) && (nCurrIndex<200))//dingxy 20240614 硬件设置界面首次等待获取当前风扇档位,最多等待2s
@@ -1262,77 +1529,87 @@ void QSttTestCntrFrameBase::OpenDialog(const CString &strDialogID)
 		}
 	}
 
-    if (strCurrDialogID == STT_CNTR_CMD_Liveupdate)
-	{
-		OnCmd_Liveupdate();
-	}
-    else if (strCurrDialogID == STT_CNTR_CMD_ULiveupdate)
-	{
-		OnCmd_ULiveupdate();
-	}
-    else if (strCurrDialogID == STT_CNTR_CMD_PpIotEngineClient)
+	if (strDialogID == STT_CNTR_CMD_PpIotEngineClient)
 	{
 		OnCmd_PpIotEngineClientDlg();
 	}
-    else if (strCurrDialogID == STT_CNTR_CMD_CommConfig)
+	else if (strDialogID == STT_CNTR_CMD_CommConfig)
 	{
 		OnCmd_CommConfiguration();
 	}
-    else if (strCurrDialogID == STT_CNTR_CMD_PkgMonitor)
+	else if (strDialogID == STT_CNTR_CMD_PkgMonitor)
 	{
 		/*OnCmd_PkgMonitor();*/
 		OnCmd_PkgMonitorDlg();
 	}
-    else if (strCurrDialogID == STT_CNTR_CMD_PpXmlFileMngr)
+	else if (strDialogID == STT_CNTR_CMD_PpXmlFileMngr)
 	{
 		OnCmd_PpXmlFileMngr();
 	}
-    else if (strCurrDialogID == STT_CNTR_CMD_DvmFileMngr)
+	else if (strDialogID == STT_CNTR_CMD_DvmFileMngr)
 	{
 		OnCmd_DvmFileMngr();
 	}
 
-    else if (strCurrDialogID == STT_CNTR_CMD_OutputPower)
+	else if (strDialogID == STT_CNTR_CMD_OutputPower)
 	{
 		OnCmd_OutputPower();
 	}
-    else if (strCurrDialogID == STT_CNTR_CMD_HardConfig)
+	else if (strDialogID == STT_CNTR_CMD_HardConfig)
 	{
 		OnCmd_HardConfig();
 	}
-    else if (strCurrDialogID == STT_CNTR_CMD_VersionInfo)
+	else if (strDialogID == STT_CNTR_CMD_VersionInfo)
 	{
 		OnCmd_VersionInfo();
 	}
-    else if (strCurrDialogID == STT_CNTR_CMD_FileMngr)
+	else if (strDialogID == STT_CNTR_CMD_FileMngr)
 	{
 		OnCmd_FileMngr();
 	}
-    else if (strCurrDialogID == STT_CNTR_CMD_LumPowerView)
+	else if (strDialogID == STT_CNTR_CMD_LumPowerView)
 	{
 		OnCmd_LumPowerView();
 	}
-    else if (strCurrDialogID == STT_CNTR_CMD_LangSetting)
+	else if (strDialogID == STT_CNTR_CMD_LangSetting)
 	{
 		OnCmd_LangSettingView();
 	}
-    else if (strCurrDialogID == STT_CNTR_CMD_IecCapDialog)
+	else if (strDialogID == STT_CNTR_CMD_IecCapDialog)
 	{
 		OnCmd_IecCapDialog();
 	}
-    else if(strCurrDialogID == STT_CNTR_CMD_OutputDebug)
+	else if(strDialogID == STT_CNTR_CMD_OutputDebug)
 	{
 	     OnCmd_OutputDebug();
 	}
-    else if(strCurrDialogID == STT_CNTR_CMD_LiveupdateDevice)
+	else if(strDialogID == STT_CNTR_CMD_LiveupdateDevice)
 	{
 		OnCmd_LiveupdateDevice();
 	}
+	else if (strDialogID == STT_CNTR_CMD_SystemParas)  // 2024-12-05 xueyangfan 国际版移植
+	{
+		OnCmd_SystemParas();
+	}
+	else if (strDialogID == STT_CNTR_CMD_AuxDCOutput)
+	{
+		OnCmd_AuxDCOutput();
+	}
+	else if (strDialogID == STT_CNTR_CMD_IECConfig)
+	{
+		OnCmd_IECConfig();
+	}
+	else if (strDialogID == STT_CNTR_CMD_ChRsMaps)
+	{
+		if (g_pTheSttTestApp->m_pTestCtrlCntr)
+		{
+			g_pTheSttTestApp->m_pTestCtrlCntr->InitDefaultHdRs();//20250110  suyang dialog的通道映射需要初始化资源
+		}
 
-	m_pTestCtrlCntrBase->CloseTest();
-//	g_pTheSttTestApp->ExitSttTestApp();
-	this->close();
+		OnCmd_ChRsMaps();
+	}
 }
+
 
 void QSttTestCntrFrameBase::slot_UpdateRptHtml()
 {
@@ -1362,8 +1639,6 @@ void QSttTestCntrFrameBase::UpdateRptHtml()
 	if (nLen > 0)
 	{
 		//2022-4-6  lijunqing
-		//m_pSttReportViewHtml->UpdateRptHtml("", strMacroID, strReport);	
-		//delete strReport;
         //if (m_pSttReportViewHtml)
         //{
         //	m_pSttReportViewHtml->AddUpdateCmd(g_pTheSttTestApp->m_pTestMacroUI, "", strMacroID, strReport);
@@ -1465,6 +1740,15 @@ long QSttTestCntrFrameBase::OnTestStoped()
 
 void QSttTestCntrFrameBase::slot_UpdateToolButtons()
 {
+	//dingxy 20250321 在停止测试、结束测试时，把灯的状态恢复为默认值
+	CExBaseList *pTestGlobalParas = g_pTheSttTestApp->m_pTestCtrlCntr->GetTestGlobalParas();
+	if (pTestGlobalParas != NULL)
+	{
+		stt_SetDataValueByID(pTestGlobalParas, STT_SYS_STATE_ID_IBreak, "0");
+		stt_SetDataValueByID(pTestGlobalParas, STT_SYS_STATE_ID_UShort, "0");
+		stt_SetDataValueByID(pTestGlobalParas, STT_SYS_STATE_ID_OverHeat, "0");
+	}
+	
 	UpdateToolButtons();
 }
 
@@ -1509,6 +1793,7 @@ void QSttTestCntrFrameBase::slot_OnViewTestStart()
 	m_oDataBtnsMngr.UpdataDataButtons(&dataGroup);
 
 	m_oTimerAtsTest.start(100);
+	m_bIsUpdateStateTestFirstReportColor = FALSE;
 
 	if (g_pTheSttTestApp->m_pTestMacroUI == NULL)
 	{//Win模式下或者自动测试模式下，没有功能界面
@@ -1704,6 +1989,15 @@ void QSttTestCntrFrameBase::OnReport_ReadDevice(CDataGroup *pDeviceGroup)
 		g_oSttTestResourceMngr.SaveCurDeviceFile();
 		g_oSttTestResourceMngr.GetAllModuleTags();
 
+		CString strMergeCurTerminal;
+		CDataGroup* pAttrGroup = (CDataGroup *)pCurDevice->GetDeviceAttrs();
+		if (pAttrGroup)
+		{
+			strMergeCurTerminal.Format(_T("%d"), oReadDevice.m_nMergeCurTerminal);
+			pAttrGroup->SetDataValue(STT_ADJ_ID_MergeCurTerminal, strMergeCurTerminal);
+		}
+		
+
         if (g_oSttSystemConfig.GetLockMaps() == 0)
         {
             CSttChMaps oSttChMaps;
@@ -1719,6 +2013,7 @@ void QSttTestCntrFrameBase::OnReport_ReadDevice(CDataGroup *pDeviceGroup)
 			g_oSttTestResourceMngr.SaveCurChMapsFile();
         }
 
+		m_bIsRtDataUpdateChMaps_System = TRUE;
 		emit sig_UpdateTestResource();//发送信号更新软件资源
 	}
 	else//需要将读取出来的模块的电流档位等信息更新到系统参数中去?????????????在装置型号及编号相同的情况下,无需再重新刷新界面
@@ -1734,14 +2029,79 @@ void QSttTestCntrFrameBase::OnReport_ReadDevice(CDataGroup *pDeviceGroup)
 		{
 			emit sig_UpdateTestResource();//发送信号更新软件资源
 		}
+
+
+	if ((g_oSystemParas.m_nHasAnalog == 1)&&(g_oSystemParas.m_nHasDigital == 0))//只有在纯模拟量，不需要判断小信号
+	{
+		//（-1 不支持合并输出；0 不合并输出； 1  合并为1个通道输出；3 合并为3个通道输出）
+		if ((oReadDevice.m_nMergeCurTerminal!= 1)&&(oReadDevice.m_nMergeCurTerminal!= 3))
+		{
+// 			if ((pCurDevice->m_nMergeCurTerminal == 0)&&(pCurDevice->m_nMergeCurTerminal == -1))
+			{
+				CSttChMaps oSttChMaps;
+				oSttChMaps.DeleteAll();
+				g_oSttTestResourceMngr.m_oChMaps.Copy(&oSttChMaps);
+
+				if (!g_oSttTestResourceMngr.CreateDefaultChMapsByDevice(&oSttChMaps,g_oSystemParas.m_nIecFormat,g_oSystemParas.m_nHasDigital))
+				{
+					CLogPrint::LogFormatString(XLOGLEVEL_ASSIST,g_sLangTxt_Gradient_MissingDefaultMappings.GetString()); //缺少硬件资源文件,无法创建缺省通道映射
+					return;
+				}
+				oSttChMaps.Copy(&g_oSttTestResourceMngr.m_oChMaps);
+				g_oSttTestResourceMngr.SaveCurChMapsFile();
+				
+				if (g_oSystemParas.m_oGearSetCurModules.m_oCurModuleGear[0].m_nMergeCurTerminal != oReadDevice.m_nMergeCurTerminal)
+				{
+					g_oSystemParas.m_oGearSetCurModules.m_oCurModuleGear[0].m_nMergeCurTerminal = oReadDevice.m_nMergeCurTerminal;
+				}
+				g_oSttTestResourceMngr.SaveSystemParasFile();
+				m_bIsRtDataUpdateChMaps_System = TRUE;
+					//emit sig_UpdateTestResource();//发送信号更新软件资源
+
+			}
+		}
 	}
+
+
+	}
+
+	
+
 
 	oReadDevice.AttatchAdjRef(NULL);
 }
 
+void QSttTestCntrFrameBase::OnReport_ReadSystemState(const CString &strMacroID, CDataGroup *pParas)
+{
+	//线程发送信号，主进程中处理数据，避免卡顿
+	CDataGroup* pParasTemp = (CDataGroup*)pParas->Clone();
+ 	emit sig_UpdateReportSysState(pParasTemp);
+}
+
+void QSttTestCntrFrameBase::slot_UpdateReportSysState(CDataGroup* pSystemState)
+{
+	if(m_bUpdateOutputPowerFromRealTime)//更新输出功率
+	{
+		OnUpdateRtCurrModules(pSystemState);//dingxy 20250320 RTDATA中CurrModules节点迁移到GetSystemState中
+		emit sig_UpdateModulesGearSwitchInfo();
+	}
+}
+
+
 void QSttTestCntrFrameBase::slot_UpdateTestResource()
 {
 	OnUpdateTestResource(TRUE);
+	//更新通道映射
+// 	if (m_bIsRtDataUpdateChMaps_System)
+// 	{
+// 		if (IsTestStarted())
+// 		{
+// 			return;
+// 		}
+//  		CLogPrint::LogFormatString(XLOGLEVEL_RESULT,_T("[更新通道映射-------Cmd_SendChMapsConfig();"));
+// 		Cmd_SendChMapsConfig();
+// 		m_bIsRtDataUpdateChMaps_System = FALSE;
+// 	}
 }
 
 void QSttTestCntrFrameBase::OnAtsGenerate()
@@ -1749,6 +2109,8 @@ void QSttTestCntrFrameBase::OnAtsGenerate()
 	if(!m_pMacroEditView)
 	{
 		CLogPrint::LogFormatString(XLOGLEVEL_ERROR,/*_T("当前测试项为空.")*/g_sLangTxt_Gradient_EmptyCurTI.GetString()); //lcq
+		CSttGuideBook *pSttGuideBook= (CSttGuideBook *)m_pTestCtrlCntrBase->GetGuideBook();
+		emit sig_ShowItems_TreeView((CExBaseList *)pSttGuideBook);//模板刷新，应更新项目列表，否则崩溃
 		return;
 	}
 	//20230213 zhangyq
@@ -1768,7 +2130,10 @@ void QSttTestCntrFrameBase::OnAtsGenerate()
 
 void QSttTestCntrFrameBase::OnAtsGenerateItems(CExBaseObject *pItems, BOOL bUpdateParent)
 {
+	if (g_nUpdateMultiMacroParaEditView == 1)//不需要单个节点刷，打开模板那边处理
+	{
 	emit sig_ShowItems_TreeView((CExBaseList *)pItems);
+	}	
 	UpdateRptHtml();
 }
 
@@ -1806,6 +2171,73 @@ void QSttTestCntrFrameBase::FillReport(CExBaseObject *pItem)
 void QSttTestCntrFrameBase::FillReport()
 {
 
+}
+
+void QSttTestCntrFrameBase::FillReport_OnlyHtmlRpt(CExBaseObject *pItem)
+{
+
+}
+
+void QSttTestCntrFrameBase::FillReport_HtmlRptData()
+{
+	CExBaseList *pGuideBook = (CExBaseList *)m_pTestCtrlCntrBase->GetGuideBook();
+	FillReport_HtmlRptDataByGuideBook(pGuideBook);
+}
+
+void QSttTestCntrFrameBase::FillReport_HtmlRptDataByGuideBook(CExBaseList *pItems)
+{
+	if (pItems == NULL)
+	{
+		return;
+	}
+
+	POS posDevice = pItems->GetHeadPosition();
+	CExBaseObject *p = NULL;
+	while (posDevice)
+	{
+		p = pItems->GetNext(posDevice);
+ 		if (p->GetClassID() == STTGBXMLCLASSID_CSTTITEMS
+			|| p->GetClassID() == STTGBXMLCLASSID_CSTTDEVICE)
+ 		{
+ 			FillReport_HtmlRptDataByGuideBook((CExBaseList *)p);
+ 		}
+
+ 		CSttItemBase* pSttItemBase = (CSttItemBase*)p;
+ 		if (pSttItemBase->m_nSelect == 0)
+ 		{
+ 			continue;
+ 		}
+
+		POS pos = ((CExBaseList*)p)->GetHeadPosition();
+		CExBaseObject* pObject = NULL;
+		while (pos)
+		{
+			pObject = ((CExBaseList*)p)->GetNext(pos);
+			CSttItemBase *pItem = (CSttItemBase*)pObject;
+			if (pItem == NULL)
+			{
+				return;
+			}
+
+			if (pItem->m_nSelect == 0)
+			{
+				continue;
+			}
+
+			if ((pItem->m_strID == STT_MACRO_ID_ChMapsConfig)||(pItem->m_strID == STT_MACRO_ID_Iec61850Config)
+				||(pItem->m_strID == STT_MACRO_ID_SystemConfig))
+			{
+				continue;
+			}
+
+			if (pObject->GetClassID() == STTGBXMLCLASSID_CSTTMACROTEST || pObject->GetClassID() == STTGBXMLCLASSID_CSTTCOMMCMD
+				|| pObject->GetClassID() == STTGBXMLCLASSID_CSTTSAFETY || pObject->GetClassID() == STTGBXMLCLASSID_CSTTSYSPARAEDIT)
+			{
+				FillReport_OnlyHtmlRpt(pObject);
+			}
+		}
+
+	}
 }
 
 void QSttTestCntrFrameBase::SetTestCtrlCntrBase(CSttTestCtrlCntrBase *pTestCtrlCntrBase)
@@ -1874,12 +2306,32 @@ void QSttTestCntrFrameBase::AddMacroTestReport()
 
 	if (pTestMacroUI != NULL)
 	{
-		AddMacroTestReport(pTestMacroUI, NULL, g_pTheSttTestApp->m_pTestMacroUI->m_strName, g_pTheSttTestApp->m_pTestMacroUI->m_strID);
+		//AddMacroTestReport(pTestMacroUI, NULL, g_pTheSttTestApp->m_pTestMacroUI->m_strName, g_pTheSttTestApp->m_pTestMacroUI->m_strID);
+        //if (m_pSttReportViewHtml == NULL)
+        //{
+        //	return;
+        //}
+
+		char *strReport = NULL;
+		long nLen = 0;
+
+		GetMacroItemsXml(pTestMacroUI->m_strID,&strReport, nLen,_T(""));
+        //if (m_pSttReportViewHtml)
+        //{
+        //	m_pSttReportViewHtml->AddInsertCmd(pTestMacroUI, "", pTestMacroUI->m_strID, strReport);
+        //	m_pSttReportViewHtml->AddUpdateCmd(pTestMacroUI, "", g_pTheSttTestApp->m_pTestMacroUI->m_strID, strReport);
+        //	m_pMacroEditView->ProcessRptAfterGenTemplate(m_pSttReportViewHtml);
+        //}
 	}
 }
 
 void QSttTestCntrFrameBase::AddMacroTestReport(CSttMacroTestUI_TestMacroUI *pTestMacroUI, CExBaseObject *pParent, const CString &strItemsName, const CString &strItemsID)
 {
+    //if (m_pSttReportViewHtml == NULL)
+    //{//2024-9-12 lijunqing 优化
+    //	return;
+    //}
+
 	char *strReport = NULL;
 //	CString strMacroID = g_pTheSttTestApp->m_pTestMacroUI->m_strID;
 	long nLen = 0;
@@ -1892,18 +2344,11 @@ void QSttTestCntrFrameBase::AddMacroTestReport(CSttMacroTestUI_TestMacroUI *pTes
 	} 
 
 	GetMacroItemsXml(strItemsID,&strReport, nLen,strParentPath);
-	//2022-4-6  lijunqing
-	//m_pSttReportViewHtml->AddMacroTestReport("", pTestMacroUI->m_strID, pTestMacroUI, strReport);
 
     //if (m_pSttReportViewHtml)
     //{
     //	m_pSttReportViewHtml->AddInsertCmd(pTestMacroUI, "", pTestMacroUI->m_strID, strReport);
     //}
-
-// 	if (strReport != NULL)
-// 	{
-// 		delete strReport;
-// 	}
 }
 
 CSttTestResourceBase* QSttTestCntrFrameBase::GetSttTestResource()
@@ -1914,6 +2359,11 @@ CSttTestResourceBase* QSttTestCntrFrameBase::GetSttTestResource()
 	}
 
 	return m_pTestCtrlCntrBase->m_pSttTestResouce;
+}
+
+CSttMacroParaEditInterface* QSttTestCntrFrameBase::GetCurrMacroParaEditInterface()
+{
+	return m_pMacroEditView;
 }
 
 CSttMacroParaEditInterface* QSttTestCntrFrameBase::CreateSttMacroParaEditView(const CString &strMacroID,const CString &strGridFile, BOOL bUseExist)
@@ -1931,10 +2381,13 @@ void QSttTestCntrFrameBase::CreateSttMacroParaEditView(CSttMacroTestUI_TestMacro
 // 		strUi_ID = pTestMacroUI->m_strID;
 // 	}
 
+	debug_time_long_log("CreateSttMacroParaEditView >>>>>", true);
 	m_pMacroEditView = CreateSttMacroParaEditView(pTestMacroUI->m_strID/*strUi_ID*/,pTestMacroUI->m_strGirdFile);//2023.7.16 仍改为采用MacroID方式,因为对应函数其他人在其它地方使用时都已默认当成MacroID处理
+
 	QWidget *pMacroEditWidget = GetMacroEditWidget();
 	pMacroEditWidget->setParent(this);
 	pMacroEditWidget->setGeometry(m_rcWorkArea);
+	debug_time_long_log("CreateSttMacroParaEditView setGeometry", true);
 
 #ifdef _USE_SoftKeyBoard_
 	QSoftKeyBoard::AttachObj(this);
@@ -1972,6 +2425,7 @@ void QSttTestCntrFrameBase::AdjustMacroEditWidgetToFrame(CSttMacroTestUI_TestMac
 	disconnect(m_pSttGbTreeView->m_pTreeCtrl,SIGNAL(itemChanged(QTreeWidgetItem *, int)),m_pSttGbTreeView->m_pTreeCtrl,SLOT(slot_TreeItemChanged(QTreeWidgetItem *, int)));
 	m_pSttGbTreeView->ShowBaseList((CExBaseList *)m_pTestCtrlCntrBase->GetGuideBook());
 	connect(m_pSttGbTreeView->m_pTreeCtrl,SIGNAL(itemChanged(QTreeWidgetItem *, int)),m_pSttGbTreeView->m_pTreeCtrl,SLOT(slot_TreeItemChanged(QTreeWidgetItem *, int)));
+	debug_time_long_log("OpenMacroTestUI_Test AdjustMacroEditWidgetToFrame GbTreeView", true);
 
 	QWidget *pMacroEditWidget = GetMacroEditWidget();
 
@@ -1983,6 +2437,8 @@ void QSttTestCntrFrameBase::AdjustMacroEditWidgetToFrame(CSttMacroTestUI_TestMac
 	{
 		SetActiveWidget(pMacroEditWidget, ActiveWidgetType_MacroUI_Html);
 	}
+
+	debug_time_long_log("OpenMacroTestUI_Test AdjustMacroEditWidgetToFrame ActiveWidget", true);
 }
 
 BOOL QSttTestCntrFrameBase::CreateEngineClientWidget()
@@ -2161,7 +2617,7 @@ void QSttTestCntrFrameBase::OpenMacroTestUI(CSttMacroTestUI_TestMacroUI *pTestMa
 	CLogPrint::LogString(XLOGLEVEL_TRACE, ">> end GenerateTemplate >>");
 
 	if (g_nLogDebugInfor == 1)
-	{
+    {
 		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> end OpenMacroTestUI >>");
 	}
 
@@ -2183,12 +2639,15 @@ void QSttTestCntrFrameBase::OpenMacroTestUI_Test(CSttMacroTestUI_TestMacroUI *pT
 	}
 
 	SetActiveWidget(NULL);
+	debug_time_long_log("OpenMacroTestUI_Test SetActiveWidget(0)", true);
 
 	//第一步：创建参数编辑页面、加载报告html页面
 	m_pTestCtrlCntrBase->OpenMacroTestUI(pTestMacroUI);
+	debug_time_long_log("OpenMacroTestUI_Test OpenMacroTestUI", true);
 
 	//2022-3-27  lijunqing  创建参数编辑窗口
 	CreateSttMacroParaEditView(pTestMacroUI);
+	debug_time_long_log("OpenMacroTestUI_Test CreateSttMacroParaEditView", true);
 
 	if (g_nLogDebugInfor == 1)	{		CLogPrint::LogString(XLOGLEVEL_TRACE, ">> begin OpenMacroTestUI 2 >>");	}
 
@@ -2197,34 +2656,46 @@ void QSttTestCntrFrameBase::OpenMacroTestUI_Test(CSttMacroTestUI_TestMacroUI *pT
 		if (m_pMacroEditView != NULL)
 		{
 			m_pMacroEditView->GetDatas(m_pTestMacroUI_Paras);
+			debug_time_long_log("OpenMacroTestUI_Test GetDatas", true);
 		}
 	}
 	else//网页界面的矢量图、状态图、信息图在此处统一初始化,原生界面在各自构造函数中初始化 zhouhj 20220329
 	{
 		InitBinaryIn_WebUI(m_pTestMacroUI_Paras);
+		debug_time_long_log("OpenMacroTestUI_Test InitBinaryIn_WebUI", true);
 		g_theTestCntrFrame->InitVectorWidget(NULL,NULL);
+		debug_time_long_log("OpenMacroTestUI_Test InitVectorWidget", true);
 		g_theTestCntrFrame->InitPowerWidget(NULL,NULL);
+		debug_time_long_log("OpenMacroTestUI_Test InitPowerWidget", true);
 		g_theTestCntrFrame->InitStateMonitor();
+		debug_time_long_log("OpenMacroTestUI_Test InitStateMonitor", true);
 		g_theTestCntrFrame->ClearInfoWidget();	
+		debug_time_long_log("OpenMacroTestUI_Test ClearInfoWidget", true);
 	}
 
 	InitAfterCreateSttMacroPara();
+	debug_time_long_log("OpenMacroTestUI_Test InitAfterCreateSttMacroPara", true);
 
 	if (pTestMacroUI->HasCharLib()) //2022-6-30  lijunqing
 	{
 		g_theTestCntrFrame->InitCharLibWidget();
+		debug_time_long_log("OpenMacroTestUI_Test InitCharLibWidget", true);
 	}
 
 	if (pTestMacroUI->m_strUI_File.GetLength() > 0)
 	{
         //QSttMacroParaEditViewHtml *pSttMacroParaEditViewHtml = (QSttMacroParaEditViewHtml*)m_pMacroEditView->m_pMacroParaEditWnd;
         //pSttMacroParaEditViewHtml->OpenHtmlFile(pTestMacroUI->m_strUI_File);
+		debug_time_long_log("OpenMacroTestUI_Test OpenHtmlFile-UI_File", true);
 	}
 
 	AdjustMacroEditWidgetToFrame(pTestMacroUI);
+	debug_time_long_log("OpenMacroTestUI_Test AdjustMacroEditWidgetToFrame", true);
 	InitAllButtonStateByTestMacroUI(pTestMacroUI);//根据测试功能初始化工具栏等按钮
+	debug_time_long_log("OpenMacroTestUI_Test InitAllButtonStateByTestMacroUI", true);
 
 	AdjustToolBarButtons();
+	debug_time_long_log("OpenMacroTestUI_Test AdjustToolBarButtons", true);
 	CExBaseObject *pSel = m_pSttGbTreeView->GetCurrSelectGbItem();
 
 	if ((m_pSttGbTreeView!= NULL)&&(pSel != NULL))
@@ -2247,7 +2718,14 @@ void QSttTestCntrFrameBase::OpenMacroTestUI_Test(CSttMacroTestUI_TestMacroUI *pT
 
 	//if (! g_bIsOpenMacroFromMain)
 	{
+		//2024-9-12 lijunqing 优化系统程序启动的效率  在打开报告的时候显示报告
+		//AddMacroTestReport(pTestMacroUI, pSel, strItemsName, strItemsID);
+#ifdef _PSX_QT_LINUX_
+        //m_pSttReportViewHtml->XAddMacroTestReport(pTestMacroUI, pSel, strItemsName, strItemsID);
+#else
 		AddMacroTestReport(pTestMacroUI, pSel, strItemsName, strItemsID);
+#endif
+		debug_time_long_log("OpenMacroTestUI_Test AddMacroTestReport", true);
 	}
 
 	//若有特性曲线，打开特性曲线定义，在测试模板生成后，返回的模板信息中如果不带测试模板，则使用默认测试模板
@@ -2258,6 +2736,7 @@ void QSttTestCntrFrameBase::OpenMacroTestUI_Test(CSttMacroTestUI_TestMacroUI *pT
 	if (IsFileExist(strFile))
 	{
 		m_pCharacteristics->OpenXmlFile(strFile,CCharacteristicXmlRWKeys::CCharacteristicsKey(),CCharacteristicXmlRWKeys::g_pXmlKeys);
+		debug_time_long_log("OpenMacroTestUI_Test Characteristics->OpenXmlFile", true);
 	}
 
 	//发送特性曲线改变事件
@@ -2277,6 +2756,7 @@ void QSttTestCntrFrameBase::OpenMacroTestUI_Test(CSttMacroTestUI_TestMacroUI *pT
 		{
 			m_pCharTestPointsGrid->InitMacroID(pTestMacroUI->m_strID);
 		}
+		debug_time_long_log("OpenMacroTestUI_Test CharLibWidget", true);
 	}
 
 	//2022-3-21 李俊庆 最后发送生成模板指令，保证添加报告完成
@@ -2302,7 +2782,14 @@ void QSttTestCntrFrameBase::OpenMacroTestUI_Test(CSttMacroTestUI_TestMacroUI *pT
 	}
 
 	UpdateToolButtons();
+	debug_time_long_log("OpenMacroTestUI_Test UpdateToolButtons", true);
 	InitToolBtnFocusPos(STT_CNTR_CMD_TemplateView);
+	debug_time_long_log("OpenMacroTestUI_Test InitToolBtnFocusPos", true);
+	if (m_pMacroEditView != NULL)
+	{
+		m_pMacroEditView->UpdatePrimParaSetUI();//20240920 suyang 初始化时更新现在是一次/二次更新界面电压单位
+		//g_oSttTestResourceMngr.SaveSystemParasFile();//防止IEC配置与系统参数中一次值不一致导致输出错误
+	}
 }
 
 void QSttTestCntrFrameBase::UpdateButtonsStateByID(const CString &strButtonID, BOOL bEnable)
@@ -2493,7 +2980,7 @@ void QSttTestCntrFrameBase::OpenMacroTestUI(CSttTestMacroUiParas *pUIParas, CStt
 		g_theTestCntrFrame->InitPowerWidget(NULL,NULL);
 		g_theTestCntrFrame->InitStateMonitor();
 		g_theTestCntrFrame->ClearInfoWidget();
-		//g_theTestCntrFrame->InitFAParasSetDialog();
+        g_theTestCntrFrame->InitFAParasSetDialog();
 	}
 
 	AdjustMacroEditWidgetToFrame(pTestMacroUI);
@@ -2536,7 +3023,7 @@ void QSttTestCntrFrameBase::DeleteMacroTestReport(const CString &strParentItemsP
     //{
     //	return;
     //}
-
+    //
     //m_pSttReportViewHtml->DeleteMacroTestReport(strParentItemsPath, strItemsID);
 }
 
@@ -2558,20 +3045,6 @@ void QSttTestCntrFrameBase::UpdateRptHtml(const CString &strItemsID,const CStrin
 	{
         //m_pSttReportViewHtml->AddUpdateCmd(pTestMacroUI, strParentPath, strItemsID, strReport);
 	}
-// 	if (m_pSttReportViewHtml == NULL)
-// 	{
-// 		return;
-// 	}
-// 
-// 	char *strReport = NULL;
-// 	long nLen = 0;
-// 
-// 	GetMacroItemsXml(&strReport, nLen);
-// 
-// 	if (nLen > 0)
-// 	{
-// 		m_pSttReportViewHtml->AddUpdateCmd(g_pTheSttTestApp->m_pTestMacroUI, "", strItemsID, strReport);
-// 	}
 }
 
 void QSttTestCntrFrameBase::SetMacroTest_Original(CExBaseObject *pMacroTest)
@@ -2628,6 +3101,9 @@ void QSttTestCntrFrameBase::InitConfig(const CString &strFrameCfgFile)
 {
 	m_pSttFrameConfig = CSttFrameConfig::Create(strFrameCfgFile);
 //	CXMessageBox::information(NULL,"Title",m_pSttFrameConfig->m_strFile);
+
+	if (!IsAutoTest())
+	{
 	CString strTestMacroResultsFilePath,strTestMacroBinSelected, strSafetyMsgCfgs;
 	strTestMacroResultsFilePath = _P_GetConfigPath();
 	strTestMacroResultsFilePath += _T("SttTestMacroResults.xml");//2023.3.11 zhouhj 用于测试结果输出栏显示需要的测试结果ID
@@ -2653,6 +3129,17 @@ void QSttTestCntrFrameBase::InitConfig(const CString &strFrameCfgFile)
 	g_nLogDebugInfor = m_pSttFrameConfig->m_nLogDebugInfor;
 	m_nSelMacroShow = m_pSttFrameConfig->m_nSelMacroShow;
 	CVerUpdateCfgXmlRWKeys::Create();
+	}
+
+	CSttFrame_Font *pFont = m_pSttFrameConfig->GetFont();
+//#ifndef _PSX_QT_WINDOWS_   //chenling 20241224 北京觉得7.0字体太小，开放读配置文件
+	m_gFont.setFamily(pFont->m_strName);
+	m_gFont.setPixelSize(pFont->m_nHeigth);
+	m_gFont.setBold(pFont->m_nBold);
+//#endif
+	g_pSttGlobalFont = &m_gFont;   //2022-9-16  lijunqing
+
+	debug_time_long_log("InitFrame_InitConfig", true);
 }
 
 void QSttTestCntrFrameBase::ReleaseConfig()
@@ -2873,19 +3360,13 @@ QFont *g_pSttGlobalFont = NULL;
 void QSttTestCntrFrameBase::InitUI()
 {
 	g_oSttButtonIconMngr.Init();//初始化图片资源 sf 20220302
-
-	CSttFrame_Font *pFont = m_pSttFrameConfig->GetFont();
-#ifndef _PSX_QT_WINDOWS_
-	m_gFont.setFamily(pFont->m_strName);
-	m_gFont.setPixelSize(pFont->m_nHeigth);
-	m_gFont.setBold(pFont->m_nBold);
-#endif
-	g_pSttGlobalFont = &m_gFont;   //2022-9-16  lijunqing
+	debug_time_long_log("InitUI-g_oSttButtonIconMngr", true);
 
 // 	CSttFrame_ToolBar *pToolBarParas = m_pSttFrameConfig->GetToolBar();
 // 	CSttFrame_StatusBar *pStatusBarParas = m_pSttFrameConfig->GetStatusBar();
 	GetStartTestBtn();
 	GetManualTriggerBtn();
+	debug_time_long_log("InitUI-GetButton", true);
 
 // 	m_pToolBar = new QSttBarBase(pToolBarParas, m_oDataBtnsMngr,m_gFont,this);
 // 	m_pToolBar->setGeometry(0,0,pToolBarParas->m_nWidth,pToolBarParas->m_nHeight);
@@ -3138,10 +3619,14 @@ void QSttTestCntrFrameBase::LogString(long nLevel, const CString &strMsg)
 	else if (nLevel == XLOGLEVEL_ASSIST)
 	{
 #ifndef NOT_USE_ASSIST
+		if (g_oSttSystemConfig.IsAssist())
+		{
 		if (g_theAssistWndDynEffExecTool != NULL)
 		{
 			g_theAssistWndDynEffExecTool->ShowMsg(strMsg,6000);
 		}
+		}
+		
 #endif
 	}
 
@@ -3466,15 +3951,40 @@ void QSttTestCntrFrameBase::InitStateMonitor(bool bIsEx, QWidget* pParent)
 		m_pStateMonitorWidget->setParent(pParent);
 	}
 
-	CString strCurrUI_ID = GetCurrentUI_ID();
-	if (strCurrUI_ID == STT_CMD_ATS_MACRO_ID_LowFreqTest)
+// 	CString strCurrUI_ID = GetCurrentUI_ID();
+// 	if (strCurrUI_ID == STT_CMD_ATS_MACRO_ID_LowFreqTest)
+// 	{
+// 		m_pStateMonitorWidget->SetPlotDigitMaxMinValue(fre_type);
+// 	}
+// 	else
+// 	{
+// 		m_pStateMonitorWidget->SetPlotDigitMaxMinValue(amplitude_type);
+// 	}
+	float fUMax = 130,fIMax = 30;
+	if((g_oSystemParas.m_nHasWeek == 1) && (g_oSystemParas.m_nHasAnalog == 0)&& (g_oSystemParas.m_nHasDigital == 0))
 	{
-		m_pStateMonitorWidget->SetPlotDigitMaxMinValue();
+#ifdef _PSX_OS_CENTOS_
+		fUMax = 10.000;
+#else
+		fUMax = 8.300;
+#endif
+		fIMax = 21.275;
+		//SetPlotAcDcMaxMinValue(false,0,fUMax,0,fIMax);
 	}
+		SetPlotAcDcMaxMinValue(false,0,fUMax,0,fIMax);//20250221  初始化使用固定值，高级模块否则坐标轴会很大
+//		SetPlotAcDcMaxMinValue(false,0,(double)g_oLocalSysPara.m_fAC_VolMax,0,(double)g_oLocalSysPara.m_fAC_CurMax);
+
+
 
 	m_pStateMonitorWidget->SetSingle(bIsEx);
 	g_oSttTestResourceMngr.m_oRtDataMngr.m_pEventToProgress = m_pStateMonitorWidget;
 	m_pStateMonitorWidget->setGeometry(m_rcWorkArea);
+
+	//dingxiaoya 解决关闭窗口奔溃
+	if (m_pActiveWidget != m_pStateMonitorWidget)
+	{
+		m_pStateMonitorWidget->hide();
+	}
 }	
 
 void QSttTestCntrFrameBase::InitInfoWidget(QWidget* pParent)
@@ -3488,23 +3998,23 @@ void QSttTestCntrFrameBase::InitInfoWidget(QWidget* pParent)
 
 void QSttTestCntrFrameBase::InitFAParasSetDialog(QWidget* pParent)
 {
-	if(pParent == NULL)
-	{
-		pParent  =this;
-	}
+    if(pParent == NULL)
+    {
+        pParent  =this;
+    }
 
-	if (m_pSttFaParasSetDialog == NULL)
-	{
-		m_pSttFaParasSetDialog = new QSttFAParasSetDialog(pParent);
-		m_pSttFaParasSetDialog->setParent(pParent);
-	}
+    if (m_pSttFaParasSetDialog == NULL)
+    {
+        m_pSttFaParasSetDialog = new QSttFAParasSetDialog(pParent);
+        m_pSttFaParasSetDialog->setParent(pParent);
+    }
 
-	m_pSttFaParasSetDialog->setGeometry(m_rcWorkArea);
+    m_pSttFaParasSetDialog->setGeometry(m_rcWorkArea);
 
-	if (m_pActiveWidget != NULL)
-	{
-		m_pSttFaParasSetDialog->hide();
-	}
+    if (m_pActiveWidget != NULL)
+    {
+        m_pSttFaParasSetDialog->hide();
+    }
 }
 
 void QSttTestCntrFrameBase::ClearInfoWidget()
@@ -3569,7 +4079,15 @@ void QSttTestCntrFrameBase::UpdateDeviceModelRef()
 		return;
 	}
 
+
+	if (g_pTheSttTestApp->GetCurrTestMacroUI() != STT_ORG_MACRO_RemoteCtrlTest)//解决遥控闪退问题
+	{
+		if (m_pMacroEditView)
+		{
 	((CSttMacroParaEditViewOriginal*)m_pMacroEditView)->UpdateDeviceModelRef();
+	}
+	}
+
 }
 
 void QSttTestCntrFrameBase::InitCommCmdWzdMain(CExBaseList *pParentItem)
@@ -3772,7 +4290,7 @@ void QSttTestCntrFrameBase::slot_MenuButtonClick(QString strID)
 		CloseIecCapDetect();
 		setEnabled(false);
 		m_pResultWidget->LogString(0, /*"等待测试服务停止后关闭."*/g_sLangTxt_Gradient_WaitSASD.GetString()); //lcq
-		m_pTestCtrlCntrBase->CloseTest();
+		m_pTestCtrlCntrBase->CloseTest(STT_CMD_Send_Async);
 		this->close();
         QApplication::setOverrideCursor(Qt::BlankCursor);    // xueyangfan 隐藏鼠标光标
 		return;
@@ -4157,19 +4675,51 @@ void QSttTestCntrFrameBase::slot_MenuButtonClick(QString strID)
 	{
 		OnCmd_Minimize();
 	}
+	else if (strID == STT_CNTR_CMD_BinConfig)
+	{
+		OnCmd_BinConfig();
+	}
+	else if (strID == STT_CNTR_CMD_BinBoutCommMap)
+	{
+		onCmd_BinBoutCommMap();
+	}
+}
+
+void QSttTestCntrFrameBase::slot_SendChMapsConfig()
+{
+	if (IsTestStarted())
+	{
+		return;
+	}
+	Cmd_SendChMapsConfig();
+	m_bIsRtDataUpdateChMaps_System = FALSE;
+// CLogPrint::LogFormatString(XLOGLEVEL_RESULT,_T("更新通道映射."));
+	emit sig_UpdateTestResource();//发送信号更新软件资源
+
+	
 }
 
 //yyj 
 bool QSttTestCntrFrameBase::GenerateTemplate(CExBaseObject *pParentItems, const CString &strItemsName, const CString &strItemsID
 											 , long nRepeatTimes, long nRptTitle, long nTitleLevel)
 {
+// 	CLogPrint::LogFormatString(XLOGLEVEL_RESULT,_T("底层测试模板生成."));
 	bool bTemplateGened = false;
 	long nRet = m_pTestCtrlCntrBase->Ats_GenerateTemplate();
+	
+	if (m_bHasClosedUI)
+	{
+		return bTemplateGened;//点击关闭按钮后,不再更新此处
+	}
 
 	if (nRet == STT_CMD_ExecStatus_SUCCESS)	//模板生成完成
 	{
 		bTemplateGened = true;
-//		CLogPrint::LogFormatString(XLOGLEVEL_INFOR,_T("底层测试模板生成完成."));
+		if (m_bIsRtDataUpdateChMaps_System)
+		{
+			emit sig_SendChMapsConfig();
+		}
+// 		CLogPrint::LogFormatString(XLOGLEVEL_RESULT,_T("底层测试模板生成完成."));
 	}
 	else
 	{
@@ -4207,6 +4757,32 @@ bool QSttTestCntrFrameBase::IsStateTest()
 		return true;
 	}
 	else if (CSttMacroParaEditViewMngr::GetCurMacroID() == STT_ORG_MACRO_GseAbnTest)
+	{
+		return true;
+	}
+	else
+		return false;
+}
+
+bool QSttTestCntrFrameBase::IsUseStateIndex()
+{
+	if (CSttMacroParaEditViewMngr::GetCurMacroID() == STT_ORG_MACRO_StateTest)
+	{
+		return true;
+	}
+	else if (CSttMacroParaEditViewMngr::GetCurMacroID() == STT_ORG_MACRO_SmvAbnTest)
+	{
+		return true;
+	}
+	else if (CSttMacroParaEditViewMngr::GetCurMacroID() == STT_ORG_MACRO_GseAbnTest)
+	{
+		return true;
+	}
+	else if (CSttMacroParaEditViewMngr::GetCurMacroID() == STT_ORG_MACRO_VolTimeTypeSecTest || 
+		CSttMacroParaEditViewMngr::GetCurMacroID() ==  STT_ORG_MACRO_VolTimeTypeIntTest || 
+		CSttMacroParaEditViewMngr::GetCurMacroID() ==  STT_ORG_MACRO_VolCurTypeSecTest || 
+		CSttMacroParaEditViewMngr::GetCurMacroID() ==  STT_ORG_MACRO_VolCurTypeIntTest || 
+		CSttMacroParaEditViewMngr::GetCurMacroID() ==  STT_ORG_MACRO_AdaptiveTypeSecTest)
 	{
 		return true;
 	}
@@ -4304,6 +4880,44 @@ void QSttTestCntrFrameBase::StopStateMonitor()
 	if (m_pStateMonitorWidget)
 	{
 		m_pStateMonitorWidget->StopStateMonitor();
+	}
+}
+
+void QSttTestCntrFrameBase::SetPlotAcDcMaxMinValue( bool bDC,double fUMin,double fUMax,double fIMin,double fIMax )
+{
+	CString strCurrUI_ID = GetCurrentUI_ID();
+
+	if (m_pStateMonitorWidget)
+	{
+		
+		if(bDC)
+		{
+			//if (m_pStateMonitorWidget)
+			{
+				m_pStateMonitorWidget->SetPlotDigitMaxMinValue(amplitude_type,(double)g_oLocalSysPara.m_fDC_VolMin,(double)g_oLocalSysPara.m_fDC_VolMax,
+			(double)g_oLocalSysPara.m_fDC_CurMin,(double)g_oLocalSysPara.m_fDC_CurMax);
+
+			}
+			
+		}
+		else
+		{
+			//if (m_pStateMonitorWidget)
+			{
+				if (strCurrUI_ID == STT_CMD_ATS_MACRO_ID_LowFreqTest || strCurrUI_ID == STT_ORG_MACRO_FreqOutputTest)//调频输出需要显示频率
+				{
+					m_pStateMonitorWidget->SetPlotDigitMaxMinValue(fre_type,40, 60, 40, 60);
+				}
+				else
+				{
+					m_pStateMonitorWidget->SetPlotDigitMaxMinValue(amplitude_type,fUMin,fUMax,fIMin,fIMax);
+				}
+
+				
+			}
+			
+		}
+
 	}
 }
 
@@ -4433,6 +5047,8 @@ void QSttTestCntrFrameBase::UpdateEventMsg(CEventResult *pEventInfo)
 {
 	pEventInfo->Copy(&m_pTestCtrlCntrBase->m_oCurrEventResult);
 
+	if (!IsAutoTest())
+	{
 	if (m_pTestCtrlCntrBase->m_oCurrEventResult.m_strEventID == SYS_STATE_REPORT_OnSwichInChanged 
 		|| m_pTestCtrlCntrBase->m_oCurrEventResult.m_strEventID == SYS_STATE_REPORT_OnSwichOutChanged
 		|| m_pTestCtrlCntrBase->m_oCurrEventResult.m_strEventID == SYS_STATE_RETTYPE_UPDATE)
@@ -4468,17 +5084,16 @@ void QSttTestCntrFrameBase::UpdateEventMsg(CEventResult *pEventInfo)
 		}
 		m_pInfoWidget->ShowBinInResultMsg(&m_pTestCtrlCntrBase->m_oCurrEventResult);
 	}
-
-	if (IsStateTest())
+	if (IsUseStateIndex())
 	{
 		//dingxy 20240523 都采用下面重写方式
-// 		if (m_pTestCtrlCntrBase->m_oCurrEventResult.m_fActTime>0.00001)
-// 		{
-// 			CString strResultMsg;
-// 			strResultMsg.Format(g_sLangTxt_Native_StatusLDActTime.GetString()/*_T("状态%ld动作时间%.4lfs.")*/,
-// 				pEventInfo->m_nCurrStateIndex+1,pEventInfo->m_fActTime);
-// 			CLogPrint::LogString(XLOGLEVEL_RESULT,strResultMsg);
-// 		}
+	// 		if (m_pTestCtrlCntrBase->m_oCurrEventResult.m_fActTime>0.00001)
+	// 	{
+	// 			CString strResultMsg;
+	// 			strResultMsg.Format(g_sLangTxt_Native_StatusLDActTime.GetString()/*_T("状态%ld动作时间%.4lfs.")*/,
+	// 				pEventInfo->m_nCurrStateIndex+1,pEventInfo->m_fActTime);
+	// 			CLogPrint::LogString(XLOGLEVEL_RESULT,strResultMsg);
+	// 	}
 
 		m_pInfoWidget->InsertSwitchInfoTable(&m_pTestCtrlCntrBase->m_oCurrEventResult,true);
 	}
@@ -4497,6 +5112,7 @@ void QSttTestCntrFrameBase::UpdateEventMsg(CEventResult *pEventInfo)
 		|| m_pTestCtrlCntrBase->m_oCurrEventResult.m_strEventID == SYS_STATE_EVENT_OnTestStarted)
 	{
 		SysStateReport_OnStateChanged(pEventInfo);
+	}
 	}
 
 	if(IsTestStarted())
@@ -4752,14 +5368,19 @@ void QSttTestCntrFrameBase::UpdateToolButtons_Light()
 		m_oDataBtnsMngr.UpdatePicSet("Run",STT_LIGHT_BTN_INDEX_ShutOff);
 	}
 
-	if (m_pTestCtrlCntrBase->m_oCurrEventResult.m_nUdc != 0)
-	{
+// 	if (m_pTestCtrlCntrBase->m_oCurrEventResult.m_nUdc != 0)
+// 	{
+// 		m_oDataBtnsMngr.UpdatePicSet("Udc",STT_LIGHT_BTN_INDEX_Yellow);
+// 	}
+// 	else
+// 	{
+// 		m_oDataBtnsMngr.UpdatePicSet("Udc",STT_LIGHT_BTN_INDEX_Red);
+// 	}
+	//dingxy 20250320 数据获取来源改变
+	if (m_fUdc != 0)
 		m_oDataBtnsMngr.UpdatePicSet("Udc",STT_LIGHT_BTN_INDEX_Yellow);
-	}
 	else
-	{
 		m_oDataBtnsMngr.UpdatePicSet("Udc",STT_LIGHT_BTN_INDEX_Red);
-	}
 
 	if (g_pTheSttTestApp->m_pTestCtrlCntr == NULL)
 	{
@@ -4775,29 +5396,49 @@ void QSttTestCntrFrameBase::UpdateToolButtons_Light()
 
 	if (/*m_pTestCtrlCntrBase->m_oCurrEventResult.m_nIOverLoad*/stt_GetDataValueByID2(pTestGlobalParas, STT_SYS_STATE_ID_IBreak, 0) > 0)
 	{
-		m_oDataBtnsMngr.UpdatePicSet("OI",STT_LIGHT_BTN_INDEX_Yellow);
-	} 
+		//m_oDataBtnsMngr.UpdatePicSet("OI",STT_LIGHT_BTN_INDEX_Yellow);
+		m_oDataBtnsMngr.UpdatePicSet("OI",STT_LIGHT_BTN_INDEX_Red);
+		if (IsTestStarted())
+		{
+			//CLogPrint::LogString(XLOGLEVEL_RESULT, _T("测试仪电流开路"));
+		}
+	}
 	else
 	{
-		m_oDataBtnsMngr.UpdatePicSet("OI",STT_LIGHT_BTN_INDEX_Red);
+		m_oDataBtnsMngr.UpdatePicSet("OI",STT_LIGHT_BIN_INDEX_Black);
+		//m_oDataBtnsMngr.UpdatePicSet("OI",STT_LIGHT_BTN_INDEX_Red);
 	}
 
 	if (/*m_pTestCtrlCntrBase->m_oCurrEventResult.m_nUOverLoad*/stt_GetDataValueByID2(pTestGlobalParas, STT_SYS_STATE_ID_UShort, 0) > 0)
 	{
-		m_oDataBtnsMngr.UpdatePicSet("U",STT_LIGHT_BTN_INDEX_Yellow);
+		//m_oDataBtnsMngr.UpdatePicSet("U",STT_LIGHT_BTN_INDEX_Yellow);
+		m_oDataBtnsMngr.UpdatePicSet("U",STT_LIGHT_BTN_INDEX_Red);
+		if (IsTestStarted())
+		{
+			//CLogPrint::LogString(XLOGLEVEL_RESULT, _T("测试仪电压短路"));
+		}
 	} 
 	else
 	{
-		m_oDataBtnsMngr.UpdatePicSet("U",STT_LIGHT_BTN_INDEX_Red);
+		//m_oDataBtnsMngr.UpdatePicSet("U",STT_LIGHT_BTN_INDEX_Red);
+		m_oDataBtnsMngr.UpdatePicSet("U",STT_LIGHT_BIN_INDEX_Black);
 	}
 
 	if (/*m_pTestCtrlCntrBase->m_oCurrEventResult.m_nOverHeat*/stt_GetDataValueByID2(pTestGlobalParas, STT_SYS_STATE_ID_OverHeat, 0) > 0)
 	{
-		m_oDataBtnsMngr.UpdatePicSet("OH",STT_LIGHT_BTN_INDEX_Yellow);
+		//m_oDataBtnsMngr.UpdatePicSet("OH",STT_LIGHT_BTN_INDEX_Yellow);
+		//dingxy 20241016 按照测试要求过载告警正常时修改为红色
+		m_oDataBtnsMngr.UpdatePicSet("OH",STT_LIGHT_BTN_INDEX_Red);
+		if (IsTestStarted())
+		{
+			//CLogPrint::LogString(XLOGLEVEL_RESULT, _T("测试仪温度过高"));
+		}
 	} 
 	else
 	{
-		m_oDataBtnsMngr.UpdatePicSet("OH",STT_LIGHT_BTN_INDEX_Red);
+		//m_oDataBtnsMngr.UpdatePicSet("OH",STT_LIGHT_BTN_INDEX_Red);
+		//过载告警正常时修改为黑色
+		m_oDataBtnsMngr.UpdatePicSet("OH",STT_LIGHT_BIN_INDEX_Black);
 	}
 }
 
@@ -4932,9 +5573,12 @@ void QSttTestCntrFrameBase::SysStateReport_OnStateChanged(CEventResult *pEventIn
 	if((CSttMacroParaEditViewMngr::GetCurMacroID() == STT_ORG_MACRO_StateTest)||(CSttMacroParaEditViewMngr::GetCurMacroID() == STT_ORG_MACRO_SmvAbnTest)
 		||(CSttMacroParaEditViewMngr::GetCurMacroID() == STT_ORG_MACRO_GseAbnTest))
 	{
+        if(m_pMacroEditView)
+        {
 		((QSttMacroParaEditViewState*)m_pMacroEditView)->SysStateReport_OnStateChanged(pEventInfo);
 	}
-	else if (g_pTheSttTestApp->m_pTestMacroUI->IsUIWeb()&&HasManuTrigerBtn()&&(pEventInfo->m_nCurrStateIndex == 1))//zhouhj 20220403 在网页模块 进入第二个状态后,都需要将手动触发灰掉
+	}
+    else if((g_pTheSttTestApp->m_pTestMacroUI != NULL) &&g_pTheSttTestApp->m_pTestMacroUI->IsUIWeb()&&HasManuTrigerBtn()&&(pEventInfo->m_nCurrStateIndex == 1))//zhouhj 20220403 在网页模块 进入第二个状态后,都需要将手动触发灰掉
 	{
 		EnableManualTriggerButton(false);
 //		UpdateButtonStateByID(STT_CNTR_CMD_ManuTriger,false,true);
@@ -5001,7 +5645,7 @@ void QSttTestCntrFrameBase::OnCmd_DebugUpdateReport()
 	UpdateRptHtml();
 }
 
-#include "../../Module/QT/Png64/DrawPngBase64.h"
+#include "../../../Module/QT/Png64/DrawPngBase64.h"
 
 void QSttTestCntrFrameBase::OnCmd_DebugFillReport()
 {
@@ -5012,39 +5656,6 @@ void QSttTestCntrFrameBase::OnCmd_DebugFillReport()
 	}
 
 	FillReport();
-
-
-// 	//调试FillReportImg
-// 	CDrawPngBase64 oPngDraw;
-// 	oPngDraw.CreatePngDraw(600, 400);
-// 	oPngDraw.FillBack(RGB(0, 0, 255));
-// 	oPngDraw.PngDrawDemo();
-// 	oPngDraw.GetPngBase64();
-// 
-// 	m_pSttReportViewHtml->FillReportImg("", "TestPng", oPngDraw.m_strPngBase64);
-// 
-// 	//调试FillReportDataset
-// 	CDvmDataset oDataset;
- //	CString strFile;
-// 	strFile = _P_GetDBPath();
-// 	strFile += _T("SttReportDebug_Dataset.xml");
-// 	if  (! oDataset.OpenXmlFile(strFile, CDataMngrXmlRWKeys::g_pXmlKeys) )
-// 	{
-// 		return;
-// 	}
-// 
-// 	m_pSttReportViewHtml->FillReportDataset("", "TestFillDataset", &oDataset);
-
-// 	//调试FillRptMapDatas
-// 	CSttRptMapDatas oSttRptMapDatas;
-// 	strFile = _P_GetDBPath();
-// 	strFile += _T("SttReportDebug_RptMapDatas.xml");
-// 	if  (! oSttRptMapDatas.OpenXmlFile(strFile, CSttCmdDefineXmlRWKeys::g_pXmlKeys) )
-// 	{
-// 		return;
-// 	}
-// 
-// 	m_pSttReportViewHtml->FillRptMapDatas(&oSttRptMapDatas, "INLEGIBLE");
 }
 
 void QSttTestCntrFrameBase::OnCmd_DebugItemStateChanged()
@@ -5058,7 +5669,7 @@ void QSttTestCntrFrameBase::OnCmd_DebugItemStateChanged()
     //{
     //	return;
     //}
-
+    //
     //m_pSttReportViewHtml->ItemStateChanged("DistanceTest$GPDis1", "DistanceTest$GPDis1$A095", "TESTING");
 }
 
@@ -5099,7 +5710,7 @@ void QSttTestCntrFrameBase::OnCmd_Debug()
     //{
     //	return;
     //}
-
+    //
     //pSttMacroParaEditViewHtml->Debug();
 }
 
@@ -5263,11 +5874,16 @@ void QSttTestCntrFrameBase::InitIecCapTest(bool bActiveIecCap, bool bStartDetect
 		UpdateButtonStateByID(STT_CNTR_CMD_ItemList,false,false);
 		UpdateButtonStateByID(STT_CNTR_CMD_ReportView,false,false);
 		UpdateButtonStateByID(STT_CNTR_CMD_ChRsMaps,false,false);
+		UpdateButtonStateByID(STT_CNTR_CMD_BinBoutCommMap,false,false);
+
 		AdjustToolBarButtons();
 	}
 
 	if (bActiveIecCap)
 	{
+#ifdef _USE_SoftKeyBoard_
+		QSoftKeyBoard::AttachObj(this); //dingxy 20241008 报文探测第二次打开iec配置崩溃问题修改
+#endif
 		OnCmd_IecCap();
 	}
 
@@ -5362,7 +5978,7 @@ bool QSttTestCntrFrameBase::PrepStartTest()
 	{
 		if (!g_oSttTestResourceMngr.HasContrlBlockSelected_IecConfig())
 		{
-			CXMessageBox::information(this,/*tr("警告")*/g_sLangTxt_warning.GetString(),/*tr("当前IEC配置为空.")*/g_sLangTxt_NullIEC.GetString()); //lcq
+            CXMessageBox::information(this,tr("警告"),/*tr("当前IEC配置为空.")*/g_sLangTxt_NullIEC.GetString()); //lcq
 			return false;
 		}
 
@@ -5372,6 +5988,13 @@ bool QSttTestCntrFrameBase::PrepStartTest()
 			((CSttMacroParaEditViewOriginal*)m_pMacroEditView)->m_bIECGoutMapChanged = FALSE;
 		}
 	}
+
+	//开始测试前,如果当前频率计算值为非自动计算方式,则更新为额定频率
+	if ((g_dFixFreqCalValue>1.0f)&&(g_oSystemParas.m_fFNom>1.0f))
+	{
+		g_dFixFreqCalValue = g_oSystemParas.m_fFNom;
+	}
+	
 
 	if (m_pCharLibWidget)
 	{
@@ -5571,6 +6194,26 @@ BOOL QSttTestCntrFrameBase::CanAddTestMacroUI()
 
 void QSttTestCntrFrameBase::closeEvent( QCloseEvent * event )
 {
+
+// #ifdef _PSX_QT_LINUX_
+// #ifndef _PSX_OS_CENTOS_
+	//if(g_pTheSttTestApp->GetCurrTestMacroUI() == STT_ORG_MACRO_MUAccurAutoTest)
+	{
+		//20241218 suyang 增加在析构时先断开自动测试
+		CSttTestCtrlCntrNative *pNative = (CSttTestCtrlCntrNative*)g_pTheSttTestApp->m_pTestCtrlCntr;
+		if (pNative)
+		{
+			//pNative->m_oSttAtsClient.m_pXClientEngine->System_Logout();
+			pNative->m_oSttAtsClient.DisConnectAtsTestServer();
+			
+		}
+	
+	}
+
+// #endif
+// 
+// #endif
+
 	g_pTheSttTestApp->ExitSttTestApp();
 #ifndef NOT_USE_ASSIST
 	assist_release();
@@ -5866,11 +6509,34 @@ void QSttTestCntrFrameBase::OnCmd_PowerDrawView()
 
 void QSttTestCntrFrameBase::OnCmd_FAParasSetDialog()
 {
-	if (m_pSttFaParasSetDialog != NULL)
-	{
-		SetActiveWidget(m_pSttFaParasSetDialog, ActiveWidgetType_Other);
-	}
+	QSttFAParasSetDialog dlg(this);
+	connect(&dlg, SIGNAL(sig_UpdatepFAParasData(CDataGroup *)),this,SLOT(slot_UpdateFAParasData(CDataGroup *)));
+
+#ifdef _USE_SoftKeyBoard_
+	QSoftKeyBoard::AttachObj(&dlg, Keyboard::NUMBER);
+	dlg.exec();
+	QSoftKeyBoard::ReAttachObj();
+#else
+	dlg.exec();
+#endif
+	disconnect(&dlg, SIGNAL(sig_UpdatepFAParasData(CDataGroup *)),this,SLOT(slot_UpdateFAParasData(CDataGroup *)));
 }
+
+void QSttTestCntrFrameBase::onCmd_BinBoutCommMap()
+{
+	QBinBoutCommMapDialog dlg(this);
+	connect(&dlg, SIGNAL(sig_BinBoutCommMapDataUpdate(CDataGroup *)),this,SLOT(slot_BinBoutCommMapDataUpdate(CDataGroup *)));
+#ifdef _USE_SoftKeyBoard_
+	QSoftKeyBoard::AttachObj(&dlg, Keyboard::ENGLISH);
+	dlg.exec();
+	QSoftKeyBoard::ReAttachObj();
+#else
+	dlg.exec();
+#endif
+	disconnect(&dlg, SIGNAL(sig_BinBoutCommMapDataUpdate(CDataGroup *)),this,SLOT(slot_BinBoutCommMapDataUpdate(CDataGroup *)));
+}
+
+
 
 void QSttTestCntrFrameBase::TemplateView_Prepare()
 {
@@ -5977,6 +6643,23 @@ BOOL QSttTestCntrFrameBase::OpenTemplate(CString strFilePath, const CString &str
 	CSttGuideBook *pGuideBook = (CSttGuideBook *)m_pTestCtrlCntrBase->GetGuideBook();
 	pGuideBook->m_strFile = strFilePath;
 
+	//chenling 20241226 打开模板时，从模板dscxml中更新通讯参数到TestCtrlCommConfig.xml
+	CString strFile;
+	strFile = _P_GetConfigPath();
+	strFile += _T("TestCtrlCommConfig.xml");
+	CPpSttCommConfig oCommConfig;
+	CSttTestGlobalDatasMngr *pTestGlobalDatasMngr = pGuideBook->m_pTestGlobalDatasMngr;
+	if(pTestGlobalDatasMngr)
+	{
+		CDataGroup* pCommConfigData = pTestGlobalDatasMngr->GetCommConfig(FALSE);
+		if (oCommConfig.OpenCommConfigFile(strFile) && pCommConfigData)
+		{
+			oCommConfig.DeleteAll();
+			oCommConfig.AppendCloneEx2(*pCommConfigData);
+			oCommConfig.SaveCommConfigFile(strFile);
+		}
+	}
+
 	if (! AfterOpenDscXmlFile(strFilePath))
 	{
 		return FALSE;
@@ -6000,14 +6683,6 @@ BOOL QSttTestCntrFrameBase::OpenTemplate(CString strFilePath, const CString &str
     //	m_pSttReportViewHtml->InitReport(strFilePath2);
     //}
 
-	//zhouhj 2023.9.26 对应函数中实际最新已不需要打开对应数据,只是类似判断文件是否存在
-// 	if (! m_pSttReportViewHtml->OpenRptFileData(pTestMacroUI->m_strReportFile, "", pTestMacroUI->m_strID))
-// 	{
-// 		CLogPrint::LogFormatString(XLOGLEVEL_TRACE, _T("Open Report File [%s] error...."), pTestMacroUI->m_strReportFile.GetString());
-// 		//shaolei 2022-1-7 注释此处。打开报告失败，应当也要下发打开模板的指令
-// 		//return;
-// 	}
-
 	//下发OpenTemplate指令
 	strFilePath = ChangeFilePostfix(strFilePath, "gbxml");
 	return m_pTestCtrlCntrBase->OpenTemplate(strFilePath, strDvmFile);
@@ -6020,9 +6695,26 @@ BOOL QSttTestCntrFrameBase::OpenDscXmlFile(CString strFilePath)
 	strFilePath = ChangeFilePostfix(strFilePath, "dscxml");
 	pGuideBook->DeleteAll();
 	pGuideBook->m_pGlobalDatas = NULL;
+//chenling 20250207 转成二进制优化打开模板时间
+#ifdef USE_ExBaseFile_AutoTrans_BinaryBsttFile
+	BOOL bRet = FALSE;
+    CString strFileB = ChangeFilePostfix(strFilePath, _T("bstt"));
+    if (IsFileExist(strFileB))
+	{
+		bRet = dvm_OpenBinaryFile(pGuideBook, strFileB, true);
+	}
+	else
+	{
+		CSttCmdDefineXmlRWKeys::g_pXmlKeys->m_nIsGroupUseDvmData++;
+		bRet = pGuideBook->OpenXmlFile(strFilePath, CSttCmdDefineXmlRWKeys::g_pXmlKeys);
+		CSttCmdDefineXmlRWKeys::g_pXmlKeys->m_nIsGroupUseDvmData--;
+		dvm_SaveBinaryFile(pGuideBook, strFileB, true);
+	}
+#else
 	CSttCmdDefineXmlRWKeys::g_pXmlKeys->m_nIsGroupUseDvmData++;
 	BOOL bRet = pGuideBook->OpenXmlFile(strFilePath, CSttCmdDefineXmlRWKeys::g_pXmlKeys);
 	CSttCmdDefineXmlRWKeys::g_pXmlKeys->m_nIsGroupUseDvmData--;
+#endif
 	return bRet;
 }
 
@@ -6034,19 +6726,14 @@ BOOL QSttTestCntrFrameBase::AfterOpenDscXmlFile(CString strFilePath)
 	CSttItems* pRootNode = pGuideBook->FindFirstItems(STTITEMS_NODETYPE_ROOTNODE, TRUE);
 
 	//刷新树形控件显示
+	//if (g_nUpdateMultiMacroParaEditView == 1)
+	{
 	disconnect(m_pSttGbTreeView->m_pTreeCtrl,SIGNAL(itemChanged(QTreeWidgetItem *, int)),m_pSttGbTreeView->m_pTreeCtrl,SLOT(slot_TreeItemChanged(QTreeWidgetItem *, int)));
 	m_pSttGbTreeView->ShowBaseList(pGuideBook);
 	m_pSttGbTreeView->m_pTreeCtrl->UpdateItemColour();
 	connect(m_pSttGbTreeView->m_pTreeCtrl,SIGNAL(itemChanged(QTreeWidgetItem *, int)),m_pSttGbTreeView->m_pTreeCtrl,SLOT(slot_TreeItemChanged(QTreeWidgetItem *, int)));
-
-	//zhouhj 2023.9.27 此处写法有问题,传入的应该是当前测试项的路径,不是功能ID
-	//在打开测试模板或者测试记录后,在打开对应的网页报告文件前,统一将当前网页报告内容清空
-// 	//打开时,删除上一次选择的测试功能的报告
-// 	if (g_pTheSttTestApp->m_pTestMacroUI != NULL)
-// 	{
-// 		m_pSttReportViewHtml->DeleteMacroTestReport("", g_pTheSttTestApp->m_pTestMacroUI->m_strID);
-// 	}
-
+	}
+	
 	if (pRootNode == NULL)
 	{
 		//CLogPrint::LogString(XLOGLEVEL_DEBUG, _T("模板错误！找不到rootnode节点"));
@@ -6068,6 +6755,9 @@ BOOL QSttTestCntrFrameBase::AfterOpenDscXmlFile(CString strFilePath)
 	}
 
 	g_pTheSttTestApp->m_pTestMacroUI = pTestMacroUI;
+
+	if (g_nUpdateMultiMacroParaEditView == 1)
+	{
 	CSttTestMacroUiParas *pUIParas = GetTestMacroUiParas(pRootNode);
 
 	if (m_pMacroEditView == NULL)
@@ -6079,16 +6769,18 @@ BOOL QSttTestCntrFrameBase::AfterOpenDscXmlFile(CString strFilePath)
 	g_pTheSttTestApp->SetCurrTestMacroUI(pTestMacroUI);
 	g_pTheSttTestApp->m_pTestCtrlCntr->stt_OpenHdRsFile(pTestMacroUI->m_strHdRsFile);
 	g_theTestCntrFrame->OpenMacroTestUI(pUIParas, pTestMacroUI,pSttTestMacroCharParas);
+	}
+	
 
 	return TRUE;
 }
 
 BOOL QSttTestCntrFrameBase::FillRptTitle(CExBaseObject *pCurrSelGbItem)
 {
-    if ((pCurrSelGbItem == NULL))//(m_pSttReportViewHtml == NULL))
-	{
-		return FALSE;
-	}
+    //if ((pCurrSelGbItem == NULL)||(m_pSttReportViewHtml == NULL))
+    //{
+    //	return FALSE;
+    //}
 
 // 	if (pCurrSelGbItem->GetClassID() != STTGBXMLCLASSID_CSTTITEMS)
 // 	{
@@ -6120,7 +6812,7 @@ BOOL QSttTestCntrFrameBase::FillRptTitle(CExBaseObject *pCurrSelGbItem)
 		pData->m_strID = _T("$");
 	}
 
-   //m_pSttReportViewHtml->FillReportTitle(strRootItemPath,&oDataGroup);
+    //m_pSttReportViewHtml->FillReportTitle(strRootItemPath,&oDataGroup);
     return true;
 }
 
@@ -6156,14 +6848,6 @@ BOOL QSttTestCntrFrameBase::OpenTest(CString strFilePath, const CString &strDvmF
     //{
     //	m_pSttReportViewHtml->InitReport(strFilePath2);
     //}
-
-	//zhouhj 2023.9.26 对应函数中实际最新已不需要打开对应数据,只是类似判断文件是否存在
-// 	if (! m_pSttReportViewHtml->OpenRptFileData(pTestMacroUI->m_strReportFile, "", pTestMacroUI->m_strID))
-// 	{
-// 		CLogPrint::LogFormatString(XLOGLEVEL_TRACE, _T("Open Report File [%s] error...."), pTestMacroUI->m_strReportFile.GetString());
-// 		//shaolei 2022-1-7 注释此处。打开报告失败，应当也要下发打开模板的指令
-// 		//return;
-// 	}
 
 	//下发OpenTest指令
 	strFilePath = ChangeFilePostfix(strFilePath, "gbrpt");
@@ -6276,6 +6960,10 @@ void QSttTestCntrFrameBase::OnCmd_SaveTemplate()
 		}
 
         CString strPath = stt_ui_GetParasFile(g_pTheSttTestApp->m_pTestMacroUI->m_strUI_ParaFile);
+#ifdef USE_ExBaseFile_AutoTrans_BinaryBsttFile
+		CString strPathB = ChangeFilePostfix(strPath, _T("bstt"));
+		dvm_SaveBinaryFile(&oDataGroup, strPathB, true);//dingxy 20240913 改为二进制文件
+#endif
 		oDataGroup.SaveXmlFile(strPath, CDataMngrXmlRWKeys::g_pXmlKeys);
 	}
 
@@ -6310,6 +6998,7 @@ void QSttTestCntrFrameBase::OnCmd_SaveAsTemplate()
 	strFolderPath = _P_GetTemplatePath();
 	astrPostfix<<"*.gbxml";	
 	QSttPopupSaveAsDialog dlg(strFolderPath,astrPostfix, g_pTheSttTestApp->m_pTestMacroUI->m_strID, this);
+	dlg.m_bIsCheckExternalPath = FALSE;
 	dlg.InitUI();
 	QDesktopWidget* desktopWidget = QApplication::desktop(); 
 	QRect rect = desktopWidget->screenGeometry();
@@ -6358,15 +7047,19 @@ void QSttTestCntrFrameBase::OnCmd_SaveAsTemplate()
 	m_pMacroEditView->GetDatas(&oRetParas);
 	SaveUIParaFile(&oRetParas);	//2022-10-16  lijunqing 记录和保存当前页面设置的值：设置为默认值
 
-	CString strFileName, strPath;
+	CString strFileName, strPath,strCurrFileName;
 #ifdef _PSX_QT_LINUX_
     strPath = GetPathFromFilePathName(fileName, '/');
-    strFileName = GetPathFileNameFromFilePathName(fileName, '/');
+    strCurrFileName = GetPathFileNameFromFilePathName(fileName, '/');
 	CreateAllDirectories(strPath);
 #else
 	strPath = GetPathFromFilePathName(fileName);
-	strFileName = GetPathFileNameFromFilePathName(fileName);
+	strCurrFileName = GetPathFileNameFromFilePathName(fileName);
 #endif
+	//20250324 suyang 据要求只取 . 号前面的
+	int nIndex = strCurrFileName.Find(".");
+	strFileName = strCurrFileName.left(nIndex);
+
 	//此处保留传递当前测试参数的形参，以便后面扩展用
 	if (m_pTestCtrlCntrBase->SaveTemplate(strPath, strFileName, &oRetParas))
 	{
@@ -6382,10 +7075,19 @@ void QSttTestCntrFrameBase::OnCmd_SaveAsTemplate()
 	//strPath = _P_GetWorkspacePath();
 	strFileName = ChangeFilePostfix(strFileName, "html");
 
-    //if (m_pSttReportViewHtml != NULL)
-    //{
-    //	m_pSttReportViewHtml->SaveHtmlReportFile(strPath + strFileName);
-    //}
+
+	//chenling 20250116 false需要生成模板，否则报告没数据
+//#ifdef _PSX_QT_LINUX_
+//	if (m_pSttReportViewHtml != NULL && m_pSttReportViewHtml->m_bHasInitFinished == false)
+//	{
+//		m_pSttReportViewHtml->InitReportView();
+//	}
+//#endif
+//
+//	if (m_pSttReportViewHtml != NULL)
+//	{
+//		m_pSttReportViewHtml->SaveHtmlReportFile(strPath + strFileName);
+//	}
 
 	//CLogPrint::LogFormatString(XLOGLEVEL_INFOR,_T("保存网页模板文件(%s%s)成功."),strPath.GetString(),strFileName.GetString());
 	CLogPrint::LogFormatString(XLOGLEVEL_INFOR,g_sLangTxt_Gradient_SavePageSus.GetString(),strPath.GetString(),strFileName.GetString());  //lcq
@@ -6478,6 +7180,7 @@ void QSttTestCntrFrameBase::OnCmd_SaveAsRpt()
 	strFolderPath = /*_P_GetLibraryPath()*/g_oFileMngrTool.GetFolderPath_STD(STT_FILE_MNGR_Workspace);
 	astrPostfix<<"*.html";	
 	QSttPopupSaveAsDialog dlg(strFolderPath, astrPostfix,g_pTheSttTestApp->m_pTestMacroUI->m_strID, this);
+	dlg.m_bIsCheckExternalPath = FALSE;
 	dlg.InitUI();
 	QDesktopWidget* desktopWidget = QApplication::desktop(); 
 	QRect rect = desktopWidget->screenGeometry();
@@ -6786,22 +7489,24 @@ void QSttTestCntrFrameBase::OnCmd_SystemParas()
 	}
 
 //#ifdef _PSX_QT_LINUX_
-    //OpenMenuHtmlFile(STT_MACROPARA_HTML_NAME_SYSCONFIG);
-    //m_pSysParaEditView->m_nSysConfig_Mode = STT_HTML_SYSCONFIG_MODE_UPDATE;
-#ifdef _USE_SoftKeyBoard_
-	QSoftKeyBoard::AttachObj(this);
+//	OpenMenuHtmlFile(STT_MACROPARA_HTML_NAME_SYSCONFIG);
+//	m_pSysParaEditView->m_nSysConfig_Mode = STT_HTML_SYSCONFIG_MODE_UPDATE;
+//#ifdef _USE_SoftKeyBoard_
+//	QSoftKeyBoard::AttachObj(this);
+//#endif
+// #else
+ 	QSysParasDlg oSysParasDlg(this);
+ 	oSysParasDlg.initUI();
+ #ifdef _USE_SoftKeyBoard_
+ 	QSoftKeyBoard::AttachObj(&oSysParasDlg,Keyboard::NUMBER);
+	if (oSysParasDlg.exec() == QDialog::Accepted)
+	{
+		g_oSttTestResourceMngr.UpdateSoftKeyboardType();
+	}
+ 	QSoftKeyBoard::ReAttachObj();
+#else
+ 	oSysParasDlg.exec();
 #endif
-// #else
-// 	QSysParasDlg oSysParasDlg;
-// 	oSysParasDlg.initUI();
-// #ifdef _USE_SoftKeyBoard_
-// 	QSoftKeyBoard::AttachObj(&oSysParasDlg,Keyboard::NUMBER);
-// 	oSysParasDlg.exec();
-// 	QSoftKeyBoard::ReAttachObj();
-// #else
-// 	oSysParasDlg.exec();
-// #endif
-// #endif
 }
 
 void QSttTestCntrFrameBase::OnCmd_GeneralParas()
@@ -6816,11 +7521,11 @@ void QSttTestCntrFrameBase::OnCmd_DcSet()
 void QSttTestCntrFrameBase::OnCmd_OutputPower()
 {
 	QModuleSetDlg oModuleSetDlg(this);
+	m_bUpdateOutputPowerFromRealTime = TRUE;
+	connect(&oModuleSetDlg, SIGNAL(sig_UpdateModulesGear(BOOL, BOOL)), this, SLOT(slot_UpdateModulesGear(BOOL, BOOL)));
+	connect(this, SIGNAL(sig_UpdateModulesGearSwitchInfo()), &oModuleSetDlg, SLOT(slot_UpdateModulesGearSwitchInfo()), Qt::UniqueConnection);
 	oModuleSetDlg.setFont(*g_pSttGlobalFont);
 	oModuleSetDlg.initUI();
-
-	m_bUpdateOutputPowerFromRealTime = false;
-
 // 	if(m_bFirstUpadeIPowerMode)
 // 	{
 // 		if (g_oSystemParas.m_oGearSetCurModules.m_oCurModuleGear[0].m_nIPowerMode != STT_CurrentMODULE_POWER_LOW)
@@ -6831,7 +7536,7 @@ void QSttTestCntrFrameBase::OnCmd_OutputPower()
 // 
 // 	}
 // 	oModuleSetDlg.InitDatas(&g_oSystemParas);
-	connect(&oModuleSetDlg, SIGNAL(sig_UpdateModulesGear(BOOL)), this, SLOT(slot_UpdateModulesGear(BOOL)));
+	m_pTestCtrlCntrBase->Test_GetSystemState();
 #ifdef _USE_SoftKeyBoard_
 	QSoftKeyBoard::AttachObj(&oModuleSetDlg);
 	oModuleSetDlg.exec();
@@ -6839,14 +7544,14 @@ void QSttTestCntrFrameBase::OnCmd_OutputPower()
 #else
 	oModuleSetDlg.exec();
 #endif
-	disconnect(&oModuleSetDlg, SIGNAL(sig_UpdateModulesGear(BOOL)), this, SLOT(slot_UpdateModulesGear(BOOL)));
-
-	m_bUpdateOutputPowerFromRealTime = true;
+	disconnect(&oModuleSetDlg, SIGNAL(sig_UpdateModulesGear(BOOL, BOOL)), this, SLOT(slot_UpdateModulesGear(BOOL, BOOL)));
+	disconnect(this, SIGNAL(sig_UpdateModulesGearSwitchInfo()), &oModuleSetDlg, SLOT(slot_UpdateModulesGearSwitchInfo()));
+	m_bUpdateOutputPowerFromRealTime = FALSE;
 
 //	OpenMenuHtmlFile(STT_MACROPARA_HTML_NAME_POWERGEAR);
 }
 
-void QSttTestCntrFrameBase::slot_UpdateModulesGear(BOOL bMergeCurrHasChanged)
+void QSttTestCntrFrameBase::slot_UpdateModulesGear(BOOL bMergeCurrHasChanged, BOOL bCurrModulePowerHigh)
 {
 	if (bMergeCurrHasChanged)
 	{
@@ -6855,6 +7560,17 @@ void QSttTestCntrFrameBase::slot_UpdateModulesGear(BOOL bMergeCurrHasChanged)
 		if (g_oSystemParas.m_nHasAnalog)//zhouhj 2024.2.26 在有模拟量输出,并且bMergeCurrHasChanged==1,则通道映射已经更新
 		{
 			Cmd_SendChMapsConfig();
+			Cmd_SendSystemConfig();//20241113 suyang 系统参数MergeCurTerminal改变也需要更新
+		}
+	}
+	else
+	{
+		if ((g_pTheSttTestApp->m_pTestMacroUI != NULL) && (m_pMacroEditView!=NULL))//判断当前是否加载了测试功能模块,并判断当前测试功能模块是否为网页
+		{
+			if (g_pTheSttTestApp->m_pTestMacroUI->IsUIOriginal())
+			{
+				m_pMacroEditView->UpdateDCParasByCurrModulePower(bCurrModulePowerHigh);
+			}
 		}
 	}
 
@@ -6945,6 +7661,12 @@ void QSttTestCntrFrameBase::OnCmd_ReportSetting()
 	{
 		
 // 		m_pTestCtrlCntrBase->FillReport(&m_pTestCtrlCntrBase->m_oTestReportHead);//刷新报告头
+
+		CDvmData *pData = (CDvmData *)m_pTestCtrlCntrBase->m_oTestReportHead.FindByID("TestAppInfor");
+		if ((pData != NULL)&&(pData->m_strValue != _T("0")))
+		{
+			m_bHasUpdateRptStartTestTime = FALSE;	
+		}
 
 		if (!dlg.m_bUpataHeadHtml)//只有选中的时候才会插入
 		{
@@ -7141,6 +7863,7 @@ void QSttTestCntrFrameBase::slot_OnUpdateRtSyncTime(CDataGroup *pRtSycTime)
 	//0,0,0,-1,-1,-1,-1,-1,-1
 	long nSyn = 0, nSecond = 0, nNSecend = 0,nTimeZone = 0, n4G = -1,  nWifi = -1,  nBle = -1;
 	long nPowerAC = -1,  nBatCap = -1, nUSB = -1 ;
+	float fUdc = 0.0f;
 
 	// 			long nSecond = 0,nNSecend = 0,nSyn = 0;
 	// 			stt_GetDataValueByID(pRtDataGroup, _T("Sync"), nSyn);
@@ -7155,6 +7878,19 @@ void QSttTestCntrFrameBase::slot_OnUpdateRtSyncTime(CDataGroup *pRtSycTime)
 	// 			stt_GetDataValueByID(pRtDataGroup, _T("BatCap"), nBatCap);
 	// 			stt_GetDataValueByID(pRtDataGroup, _T("USB"), nUSB);
 
+	stt_GetDataValueByID(pRtSycTime, _T("Udc"), fUdc);//dingxy 20250319 从RTDATA中实时获取Udc
+	if (fUdc != m_fUdc)
+	{
+		m_fUdc = fUdc;
+	}
+
+	CString str;
+	if (fUdc != 0)
+		str.Format("%d", STT_LIGHT_BTN_INDEX_Yellow);
+	else
+		str.Format("%d", STT_LIGHT_BTN_INDEX_Red);
+
+	stt_SetDataValueByID(pRtSycTime, _T("Udc"), str);//此处修改读取出Udc的值，将其设置为颜色对应值，否则UpdataDataButtons会将颜色刷新为默认值
 
 	//通过GPS所得的精确时间来同步软件资源内的计时器,尤其是画图计时器
 	if(IsTestStarted() && m_pStateMonitorWidget)
@@ -7230,18 +7966,43 @@ void QSttTestCntrFrameBase::slot_OnUpdateRtSyncTime(CDataGroup *pRtSycTime)
 		}
 	}
 
-	if(m_bUpdateOutputPowerFromRealTime)//更新输出功率
-	{
-	OnUpdateRtCurrModules(pRtSycTime);
-	}
+// 	if(m_bUpdateOutputPowerFromRealTime)//更新输出功率
+// 	{
+// 		OnUpdateRtCurrModules(pRtSycTime);//dingxy 20250320 RTDATA中CurrModules节点迁移到GetSystemState中
+// 	}
 	if(m_bUpdateHardCfgFromRealTime)//更新硬件设置
 	{
 		OnUpdateRtHardConfig(pRtSycTime);
 	}
 
+	//20241113 suyang 与RtDate数据更新后保存系统参数以及更新通道映射数据并下发更新命令
+//-------------------------------------------------------
+// 	if (m_bIsRtDataUpdateChMaps_System)
+// 	{
+// 		if ((g_oSystemParas.m_nHasAnalog == 1)&&(g_oSystemParas.m_nHasDigital == 0)&&(g_oSystemParas.m_nHasWeek == 0))
+// 		{
+// 			m_bIsRtDataUpdateChMaps_System = FALSE;
+// 			g_oSttTestResourceMngr.SaveSystemParasFile();
+// 			g_oSttTestResourceMngr.CreateDefaultChMapsByDevice(&g_oSttTestResourceMngr.m_oChMaps,g_oSystemParas.m_nIecFormat,g_oSystemParas.m_nHasDigital);
+// 			g_oSttTestResourceMngr.SaveCurChMapsFile();
+// 
+// 			Cmd_SendChMapsConfig();
+// 			Cmd_SendSystemConfig();//20241113 suyang 系统参数MergeCurTerminal改变也需要更新
+// 		}
+// 	
+// 	}
+
+//-----------------------------------------------------------------------------------------
+	
 	g_oLocalSysPara.m_nRTData_Num++;
 	OnUpdateRtInputDev(pRtSycTime);
+
+
+	if (pRtSycTime != NULL)
+	{
 	delete pRtSycTime;
+		pRtSycTime = NULL;
+	}
 
 	//各功能的更新参见如下
 	/*
@@ -7459,7 +8220,7 @@ void QSttTestCntrFrameBase::OnUpdateRtInputDev(CDataGroup *pRtSycTime)		//202405
 			if (pMouseData != NULL)
 			{
                 nValue = CString_To_long(pMouseData->m_strValue);
-                qputenv("Mouse", pMouseData->m_strValue.GetString());
+    //            qputenv("Mouse", pMouseData->m_strValue.GetString());
 
 				// 				if (g_oLocalSysPara.m_nTesterHasMouse != nValue)
 				// 				{
@@ -7476,7 +8237,7 @@ void QSttTestCntrFrameBase::OnUpdateRtInputDev(CDataGroup *pRtSycTime)		//202405
 	
 			if (pKeybData != NULL)
 			{
-				qputenv("QWS_KEYBOARD", pKeybData->m_strValue.GetString());
+                //qputenv("QWS_KEYBOARD", pKeybData->m_strValue.GetString());
 
 				// 				if (g_oLocalSysPara.m_strTesterKeyBoardString != pKeybData->m_strValue)
 				// 				{
@@ -7501,25 +8262,33 @@ void QSttTestCntrFrameBase::slot_UpdateAuxDCOutput()
 	stt_xml_serialize_AuxDC(&g_oSystemParas, &oRegister);
 	m_pTestCtrlCntrBase->Ats_SetParameter(STT_MACRO_ID_AuxDCOutput,&oGroup);
 
-// 	emit sig_UpdateAuxDCEdit();//20240603 suyang L336D更新界面辅助直流编辑框
+	if(g_pTheSttTestApp->m_pTestMacroUI)
+	{
+	if (g_pTheSttTestApp->m_pTestMacroUI->IsUIOriginal())
+	{
+		// 	emit sig_UpdateAuxDCEdit();//20240603 suyang L336D更新界面辅助直流编辑框
 	((CSttMacroParaEditViewOriginal*)m_pMacroEditView)->UpdateAuxDCEdit();
-
-//	Ats_SetItemPara(STT_CMD_TYPE_SYSTEM_SystemConfig);
+	}
+		//	Ats_SetItemPara(STT_CMD_TYPE_SYSTEM_SystemConfig);
+	}
 }
 
 void QSttTestCntrFrameBase::slot_UpdateChRsMaps( BOOL bSysParasHasChanged )
 {
-	if (g_pTheSttTestApp->m_pTestMacroUI->IsUIOriginal())
+	if(g_pTheSttTestApp->m_pTestMacroUI)
+	{
+		if(g_pTheSttTestApp->m_pTestMacroUI->IsUIOriginal())
 	{
 		CSttMacroParaEditViewOriginal* pOri = (CSttMacroParaEditViewOriginal*)m_pMacroEditView;
 		pOri->m_bChMapsChanged = TRUE;
 		OnUpdateTestResource(FALSE);
 
-// 		if (bSysParasHasChanged)//2023.7.4 zhouhj 后面已经下发系统参数更新命令,此处无需再标记
-// 		{
-// 			pOri->m_bSystemParasChanged = TRUE;
-// //			pOri->m_bIECParasChanged = TRUE;
-// 		}
+			// 		if (bSysParasHasChanged)//2023.7.4 zhouhj 后面已经下发系统参数更新命令,此处无需再标记
+			// 		{
+			// 			pOri->m_bSystemParasChanged = TRUE;
+			// //			pOri->m_bIECParasChanged = TRUE;
+			// 		}
+		}
 	}
 
 	if (bSysParasHasChanged)
@@ -7594,6 +8363,20 @@ void QSttTestCntrFrameBase::slot_IecCfgDataMngrUpdate()
 	// 
 	// 	strItemPath.Format(_T("%s$%s$%s"),strItemPath.GetString(),STT_ITEMS_ID_BEFORETEST,STT_CMD_TYPE_SYSTEM_IECConfig);
 	// 	m_pTestCtrlCntrBase->Ats_SetItemPara(strItemPath, STT_CMD_TYPE_SYSTEM_IECConfig);
+
+	if (m_pMacroEditView)
+	{
+		int nBeforeParaMode = g_oSystemParas.m_nParaMode;
+		m_pMacroEditView->UpdatePrimParaSetUI();
+		int nParaMode = g_oSystemParas.m_nParaMode;
+		
+		if (nBeforeParaMode != nParaMode)
+		{
+			Ats_SetItemPara(STT_CMD_TYPE_SYSTEM_SystemConfig);
+
+		}
+		
+	}
 }
 
 void QSttTestCntrFrameBase::Cmd_SendChMapsConfig()
@@ -8008,8 +8791,21 @@ void QSttTestCntrFrameBase::OnCmd_Minimize()
 	this->showMinimized();
 }
 
+void QSttTestCntrFrameBase::OnCmd_BinConfig()
+{
+    //QBinReverseCfgDialog oBinReverseCfgDialog;
+    //oBinReverseCfgDialog.exec();
+}
+
 void QSttTestCntrFrameBase::OnCmd_AuxDCOutput()
 {
+	//20240116 suyang 增加延时处理，防止自动测试还没发给底层，底层测试还没更新
+#ifdef _PSX_QT_LINUX_
+	CTickCount32 oTickCount;
+	oTickCount.DoEvents(1000);
+#endif
+
+
 	UpDateUdcVal();
 	if (!xlang_IsCurrXLanguageChinese()/*g_oSttSystemConfig.GetDevModel() == "L336EXi"*/)
 	{
@@ -8149,9 +8945,269 @@ void QSttTestCntrFrameBase::OnUpdateRtHardConfig( CDataGroup *pRtSycTime )
 				pFind = (CDvmData *)p;
 				g_oSystemParas.m_nWindSpeed = CString_To_long(pFind->m_strValue);
 			}
+			//chenling 2024.9.9 屏幕亮度和背光时间与底层绑定
+			else if (p->m_strID == _T("LcdTimes"))
+			{
+				pFind = (CDvmData *)p;
+				g_oSystemParas.m_oPeripheral.m_nLcdTimes = CString_To_long(pFind->m_strValue);
+			}
+			else if (p->m_strID == _T("LcdLight"))
+			{
+				pFind = (CDvmData *)p;
+				g_oSystemParas.m_oPeripheral.m_nLcdLight = CString_To_long(pFind->m_strValue);
+			}
 		}
 
+	}	
+}
+
+
+//2024-9-10 lijunqing 优化系统程序启动的效率
+
+void QSttTestCntrFrameBase::slot_OpenMacroTest(unsigned long nAddrParser)
+{
+
+}
+
+void QSttTestCntrFrameBase::emit_OpenMacroTest(unsigned long nAddrParser)
+{
+	emit sig_OpenMacroTest(nAddrParser);
+}
+
+#ifdef _PSX_QT_LINUX_
+void QSttTestCntrFrameBase::InitMeasServer()
+{
+}
+
+void QSttTestCntrFrameBase::ExitMeasServer()
+{
+}
+
+
+#endif
+
+void QSttTestCntrFrameBase::ShowItems_TreeView(CExBaseList *pCurTestItems)
+{
+	emit sig_ShowItems_TreeView(pCurTestItems);
+}
+
+//void  Stt_Global_SettingSelect(QObject *parent, const CString &sFormat, const CString &sName)
+//{
+////	CXDeviceModel *pXDeviceModel = &((CSttTestCtrlCntrNative*)(g_pTheSttTestApp->m_pTestCtrlCntr))->m_oXrioDeviceModel;
+////	pXDeviceModel->InitDvmDevice(g_theGbSmartGenWzd->m_pDvmDevice);
+////	QDeviceModelDlg_Eng oDeviceModelDlg_Eng(NULL);//定值关联模式
+////	oDeviceModelDlg_Eng.m_nDlgModeType = _FIXED_VALUE_CORRELATION_TYPE_;//定值关联模式
+////
+////	//20240815 huangliang 添加修改定值关联	
+////	oDeviceModelDlg_Eng.m_sEpExpressionFormat = sFormat;
+////	oDeviceModelDlg_Eng.m_sEpExpressionName = sName;
+////
+////	oDeviceModelDlg_Eng.InitXrioDeviceModel(pXDeviceModel);
+////#ifdef _USE_SoftKeyBoard_	
+////	QSoftKeyBoard::AttachObj(/*&oMainWidget*/&oDeviceModelDlg_Eng, Keyboard::NUMBER);
+////#endif
+////
+////	if (oDeviceModelDlg_Eng.exec() == QDialog::Accepted)
+////	{
+////		if (oDeviceModelDlg_Eng.m_sEpExpressionFormat == "")	//20240815 huangliang //为空表示无关联
+////		{
+////			return;
+////		}
+////
+////		if (oDeviceModelDlg_Eng.m_bHasChangedXrio)
+////		{
+////			g_theGbSmartGenWzd->m_pDvmDevice->DeleteAll();
+////			g_theGbSmartGenWzd->m_pDvmDevice->AppendEx(*pXDeviceModel->m_pDvmDevice_Show);
+////			g_theGbSmartGenWzd->m_pDvmDevice->m_strID = pXDeviceModel->m_pDvmDevice_Show->m_strID;
+////			pXDeviceModel->m_pDvmDevice_Show->RemoveAll();
+////		}
+////		else if (oDeviceModelDlg_Eng.m_bHasModifyDevModel)
+////		{
+////			pXDeviceModel->m_pDvmDevice_Show->UpdateChildren(pXDeviceModel->m_pDvmDevice_Global);
+////		}
+////
+////		if (oDeviceModelDlg_Eng.m_bHasChangedXrio || oDeviceModelDlg_Eng.m_bHasModifyDevModel)//设备数据模型被修改后,需要更新给自动测试
+////		{
+////			if (g_pTheSttTestApp->m_pTestCtrlCntr->Ats_ImportDvmFile(g_theGbSmartGenWzd->m_pDvmDevice) == STT_CMD_ExecStatus_SUCCESS)
+////			{
+////				if (oDeviceModelDlg_Eng.m_bHasChangedXrio)
+////				{
+////					//刷新模板树中的名称
+////					CSttGuideBook *pGuideBook = (CSttGuideBook*)g_pTheSttTestApp->m_pTestCtrlCntr->GetGuideBook();
+////					CString strName = GetFileTitleFromFilePath(g_theGbSmartGenWzd->m_pDvmDevice->m_strID, '/');
+////					pGuideBook->SetGuideBookName(strName);
+////
+////					//刷新项目树的根节点名称显示
+////					CSttDevice *pDevice = pGuideBook->GetDevice();
+////					g_theTestCntrFrame->ShowItems_TreeView((CExBaseList *)pDevice);
+////					//emit g_theTestCntrFrame->sig_ShowItems_TreeView((CExBaseList *)pDevice);
+////				}
+////			}
+////			else
+////			{
+////				CLogPrint::LogFormatString(XLOGLEVEL_ERROR, _T("更新测试模型文件(%s)失败."), pXDeviceModel->m_pDvmDevice_Global->m_strID.GetString());
+////			}
+////
+////			CSttMacroParaEditInterface *pSttMacroParaEditInterface = g_theTestCntrFrame->GetCurrMacroParaEditInterface();
+////
+////			if ((pSttMacroParaEditInterface != NULL) && (!pSttMacroParaEditInterface->IsHtmlView()))//zhouhj 2024.11.28 
+////			{
+////				CSttMacroParaEditViewOriginal* pOriginal = (CSttMacroParaEditViewOriginal*)pSttMacroParaEditInterface;
+////				pOriginal->UpdateSettingAttachUI();
+////			}
+////		}
+////
+////		//20240820 huangliang 确定之后传出表达式，调用下面函数
+////		((QSettingGlobal*)parent)->SettingSelect(oDeviceModelDlg_Eng.m_sEpExpressionFormat);
+////	}
+////
+////#ifdef _USE_SoftKeyBoard_
+////	QSoftKeyBoard::ReAttachObj();
+////#endif
+//}
+//
+//20240802 huangliang 设置定值相关的父级
+void Stt_Global_SettingParent(QWidget *parent)
+{
+	if (parent == NULL)	//20241018 huangliang 是否模态对话框
+	{
+		if (g_pQSettingGlobal_Object)//2024-10-29 wuxinyi 修改中断
+		{
+			g_pQSettingGlobal_Object->SetParent(NULL);
+		}
+		return;
+	}	
+
+	if (parent->inherits(STT_SETTING_ORIGINAL_ClassID/*"CSttMacroParaEditViewOriginal"*/))
+	{
+		//设置记录Maps关系的地址
+		g_pCurrTestMacroUI_DataMaps = &(((CSttMacroParaEditViewOriginal*)parent)->m_oDvmDataMaps);
+	}
+
+	//设置父窗口地址，全部取消时遍历此父窗口下所有控件
+	if (g_pQSettingGlobal_Object == NULL)
+	{
+		g_pQSettingGlobal_Object = new QSettingGlobal();
+	}
+	g_pQSettingGlobal_Object->SetParent(parent);
+
+	//设置最新模板地址，方便定值关联中查询名称
+	//g_pDvmDevice_AttachSetting = g_theGbSmartGenWzd->m_pDvmDevice;
+}
+
+void Stt_Global_SettingParent(QWidget *parent, QWidget *pDlgParent)
+{
+	Stt_Global_SettingParent(parent);
+
+	if (pDlgParent != NULL)
+	{
+		if (pDlgParent->inherits(STT_SETTING_ORIGINAL_ClassID/*"CSttMacroParaEditViewOriginal"*/))
+		{
+			//设置记录Maps关系的地址
+			g_pCurrTestMacroUI_DataMaps = &(((CSttMacroParaEditViewOriginal*)pDlgParent)->m_oDvmDataMaps);
+		}
 	}
 }
 
 
+void Stt_Global_NoticeUpdateBinBinary()	//20240912 huangliang 更新通知各界面刷新信息,只去做值的计算，不做界面更新
+{
+	if (!g_HL_bFristShow)	//20241106 huangliang 在映射界面确定后，使用新定位来显示标尺
+		g_HL_bFristShow = true;
+
+	if (g_theTestCntrFrame == NULL)
+		return;
+
+	//20241011 huangliang 不去更新对话框和底部按钮
+	////更新非模态对话框，模态对话框不用处理
+	//g_theTestCntrFrame->UpdateStatusWight_BinBinaryBtns();
+	//
+	////更新底部按钮
+	//g_theTestCntrFrame->UpdateStatusBar_BinBinaryBtns();	
+
+	//更新图表
+	Stt_Global_GetBinBoutMaxWidth();
+	//if (g_pStateMonitorWidget != NULL)
+	//	g_pStateMonitorWidget->UpdateAxisScale();
+
+	////信息图	20241113 huangliang 移到统一的更新接口处理中去
+	//g_theTestCntrFrame->UpdateStatusTable_BinBinaryBtns();	//已修改
+
+	//报告？哪里更新还不知道
+}
+
+
+QString Stt_Global_GetBinBoutNameForIndex(int iBin, int nIndex)	//20240919 huangliang 取出开入开出量名称
+{
+	//return g_oSttTestResourceMngr.m_oChMaps.GetBinBoutNameForIndex(iBin, nIndex);	//20241011 huangliang 此处改为默认值
+	CString szBinoutDesc = "";
+	switch (iBin)
+	{
+	case MAPS_BINARY_TYPE_BIN:
+		szBinoutDesc.Format("%c", (char)(65 + nIndex));
+		break;
+	case MAPS_BINARY_TYPE_EXBIN:
+		szBinoutDesc.Format("%s%d", MAPS_BINARY_ID_BINEX, nIndex + 1);
+		break;
+	case MAPS_BINARY_TYPE_BOUT:
+		szBinoutDesc.Format("%d", nIndex + 1);
+		break;
+	case MAPS_BINARY_TYPE_EXBOUT:
+		szBinoutDesc.Format("%s%d", MAPS_BINARY_ID_BOUTEX, nIndex + 1);
+		break;
+	}
+	return  szBinoutDesc;
+}
+QString Stt_Global_GetBinBoutNameForIndex_NoUseDefault(int iBin, int nIndex)	//20241011 huangliang 获取映射后的开入开出名称
+{
+	return g_oSttTestResourceMngr.m_oChMaps.GetBinBoutNameForIndex(iBin, nIndex);
+}
+void Stt_Global_GetBinBoutMaxWidth()	//20241012 huangliang 获取开入开出映射后的最大宽度
+{
+	QString strWord = "";
+	int iWordWidth = 0;
+	g_nNewPlotWidth = 0;
+	for (int nIndex = 0; nIndex<g_nBinCount; nIndex++)		//开入
+	{
+		strWord = Stt_Global_GetBinBoutNameForIndex_NoUseDefault(MAPS_BINARY_TYPE_BIN, nIndex);
+		iWordWidth = strWord.toLocal8Bit().length();
+		if (iWordWidth > g_nNewPlotWidth)	
+			g_nNewPlotWidth = iWordWidth;
+	}
+	for (int nIndex = 0; nIndex<g_nBoutCount; nIndex++)	//开出
+	{
+		strWord = Stt_Global_GetBinBoutNameForIndex_NoUseDefault(MAPS_BINARY_TYPE_BOUT, nIndex);
+		iWordWidth = strWord.toLocal8Bit().length();
+		if (iWordWidth > g_nNewPlotWidth)	
+			g_nNewPlotWidth = iWordWidth;
+	}
+
+	//	if (g_nNewPlotWidth < g_nUITableWidth)	//和U/I图表中宽度比较
+	//		g_nNewPlotWidth = g_nUITableWidth;
+
+	////更新图表 20241113 huangliang 移到统一的更新接口处理中去
+	//if (g_pStateMonitorWidget != NULL)
+	//	g_pStateMonitorWidget->UpdateAxisScale();
+}
+
+int Stt_Global_GetdesktopWidgetSizeLevel()	//20241107 huangliang 获取分辨率等级
+{
+	int iLevel = 1;
+#ifdef _PSX_QT_WINDOWS_	
+	//2024-8-1 wuxinyi 在2880*1800分辨率显示不全
+	QDesktopWidget* desktopWidget = QApplication::desktop();
+	QRect rect = desktopWidget->screenGeometry();
+	float fWidth = rect.width() * /*GetUIShowCoef()*/g_dUIShowCoef;	
+
+	if (fWidth >= 2880)
+	{
+		iLevel = 3;
+	}
+	else if (fWidth >= 2240)	//20241111 huangliang 2280修改为2240
+	{
+		iLevel = 2;
+	}
+#endif // _PSX_QT_WINDOWS_
+
+	return iLevel;
+}

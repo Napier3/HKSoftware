@@ -63,6 +63,9 @@ private slots:
 	void slot_OnOutCheckChanged();
 	void slot_OnUnEditChanged();
 	void slot_OnInEditChanged();
+protected:
+	bool m_bHasInitFinished;
+	virtual void showEvent(QShowEvent *event);
 };
 
 extern QFont *g_pSttGlobalFont;

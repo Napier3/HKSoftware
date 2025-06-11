@@ -1,14 +1,14 @@
 #include "SttReportHeadSetDlg.h"
 #include "ui_SttReportHeadSetDlg.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/XLanguage/XLanguageMngr.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/XLanguageMngr.h"
 #include "../../XLangResource_Native.h"
 #include "../Module/CommonMethod/commonMethod.h"
 //#include "../SttTestCntrFrameBase.h"
 #include "SttCheckBox.h"
 #include "../Interface/SttHtmlReportVIewInterface.h"
 #include "../../SttTestResourceMngr/SttTestResourceMngr.h"
-#include "../../Module/OSInterface/QT/XMessageBox.h"
+#include "../../../Module/OSInterface/QT/XMessageBox.h"
 
 
 QTreeWidgetItemEx::QTreeWidgetItemEx(QTreeWidget *pParent, CExBaseObject *pDataRef) : QTreeWidgetItem(pParent)

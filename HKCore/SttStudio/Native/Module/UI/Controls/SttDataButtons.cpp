@@ -1,6 +1,6 @@
 #include "SttDataButtons.h"
 #include "../../SttTestSysGlobalPara.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 
 extern long SttFrame_Vert_Gap;  //框架按钮垂直方向上的间隔，系统为工具栏、状态栏绘制边框
 extern long SttFrame_Line_Pix;    //绘制边框的像素点
@@ -199,7 +199,7 @@ QSttLightButton::QSttLightButton(CExBaseObject *pCfgData,QFont font,QWidget *par
 	} 
 	else
 	{
-		SetPic(STT_LIGHT_BTN_INDEX_Red);
+		SetPic(STT_LIGHT_BIN_INDEX_Black);
 	}
 }
 
@@ -218,6 +218,9 @@ void QSttLightButton::SetPic(int nState)
 		break;
 	case STT_LIGHT_BTN_INDEX_Yellow:
 		this->setIcon(g_oSttButtonIconMngr.m_IconLight_Yellow);
+		break;
+	case STT_LIGHT_BIN_INDEX_Black:
+        this->setIcon(g_oSttButtonIconMngr.m_IconLight_Black);
 		break;
     default:
         this->setIcon(g_oSttButtonIconMngr.m_IconLight_ShutOff);

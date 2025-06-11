@@ -1,6 +1,6 @@
 #include "CharEditWidget_Syn.h"
 #include "../../Module/CommonMethod/commonMethod.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../../XLangResource_Native.h"
 
 QCharEditWidget_Syn::QCharEditWidget_Syn(QWidget *parent)

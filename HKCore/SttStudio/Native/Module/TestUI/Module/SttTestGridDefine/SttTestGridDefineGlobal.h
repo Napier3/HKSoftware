@@ -5,7 +5,7 @@
 //SttTestGridDefineGlobal.h
 
 #pragma once
-#include "../../../../../Module/BaseClass/ExBaseList.h"
+#include "../../../Module/BaseClass/ExBaseList.h"
 
 #define MngrCLASSID_BASECLASS       (CLASSID_BASECLASS + 0X00010000)
 #define MngrCLASSID_EXLISTCLASS       (CLASSID_EXLISTCLASS + 0X00010000)

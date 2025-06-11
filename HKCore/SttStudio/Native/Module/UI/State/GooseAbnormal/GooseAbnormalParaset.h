@@ -8,7 +8,7 @@
 #include <QLineEdit>
 #include "../Module/SttTest/Common/tmt_state_test.h"
 #include "../../Controls/SttLineEdit.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgGooseDataBase.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgGooseDataBase.h"
 
 class QGooseAbnormalParaSet : public QWidget
 {

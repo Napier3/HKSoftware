@@ -4,10 +4,10 @@
 #include <QDialog>
 #include <QStyleFactory>
 #include "ui_QZKFeatureAddDig.h"
-#include "../../Module/OSInterface/OSInterface.h"
-#include "../../Module/BaseClass/ExBaseList.h"
-#include "../../AutoTest/Module/Characteristic/Characteristic.h"
-#include "../../AutoTest/Module/Characteristic/CharacteristicLib.h"
+#include "../../../Module/OSInterface/OSInterface.h"
+#include "../../../Module/BaseClass/ExBaseList.h"
+#include "../../../AutoTest/Module/Characteristic/Characteristic.h"
+#include "../../../AutoTest/Module/Characteristic/CharacteristicLib.h"
 
 class QZKFeatureAddDig : public QDialog
 {

@@ -1,11 +1,11 @@
 #include "StateParaTab.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 //#include "../SttTestCntrFrameBase.h"
 #include "../Controls/SttTabWidget.h"
 #include "../../XLangResource_Native.h"
 
 
-QStateParaTab::QStateParaTab(BOOL *pbTmtParaChanged,QWidget *parent)
+QStateParaTab::QStateParaTab(BOOL *pbTmtParaChanged,QWidget *parent, bool bPrimFreqModel)
 	: QWidget(parent)
 {
 	m_tabWidget = NULL;
@@ -25,14 +25,14 @@ QStateParaTab::QStateParaTab(BOOL *pbTmtParaChanged,QWidget *parent)
 	m_tabWidget = new QSttTabWidget(this);
 	connect(m_tabWidget,SIGNAL(currentChanged(int)),this,SLOT(slot_TabPageChanged(int)));
 
-	initUI();
+	initUI(bPrimFreqModel);
 }
 
 QStateParaTab::~QStateParaTab()
 {
 }
 
-void QStateParaTab::initUI()
+void QStateParaTab::initUI(bool bPrimFreqModel)
 {
 	m_pUIParaWidget = new QBasicTestParaSet(this);
 
@@ -47,7 +47,10 @@ void QStateParaTab::initUI()
 	xlang_GetLangStrByFile(strTitle,"State_StateParaSet");
 	//m_tabWidget->addTab(m_pStateParaWidget,strTitle);
 
+	if(!bPrimFreqModel)
+	{
 	AddHarmParaset();  //固定有谐波设置页面
+	}
 
 // 	QFont font = m_tabWidget->font();
 // 	font.setPointSize(20);
@@ -332,7 +335,7 @@ void QStateParaTab::slot_TabPageChanged(int index)
 		{
 			if(m_pUIParaWidget != NULL)
 			{
-				m_pUIParaWidget->initData();
+				m_pUIParaWidget->initData(true);
 			}
 		}
 // 		else if (strName.contains(tr("状态参数")))
@@ -353,7 +356,7 @@ void QStateParaTab::slot_TabPageChanged(int index)
 		{
 			if(m_pHarmParaWidget != NULL)
 			{
-				m_pHarmParaWidget->initData();
+				m_pHarmParaWidget->initData(true);
 			}
 		}
 		else if(strName.contains(/*tr("扩展开入")*/g_sLangTxt_Native_BinEx)) //lcq
@@ -468,5 +471,23 @@ void QStateParaTab::EnableSubParaWidget(bool bEnable)
 			m_pFT3OutParaWidget->SetRunState(STT_UI_RUN_STATE_StateTested_NotEditable);
 			m_pFT3OutParaWidget->SetGooseDisabled(TRUE);
 		}
+	}
+}
+
+void QStateParaTab::SetParaSetSecondValue(int nParaSetSecondValue)
+{
+	if (m_pHarmParaWidget != NULL)
+	{
+		m_pHarmParaWidget->SetParaSetSecondValue(nParaSetSecondValue);
+	}
+
+	if (m_pUIParaWidget != NULL)
+	{
+		m_pUIParaWidget->SetParaSetSecondValue(nParaSetSecondValue);
+	}
+	
+	if (m_pSVParaSet != NULL)
+	{
+		m_pSVParaSet->SetParaSetSecondValue(nParaSetSecondValue);
 	}
 }

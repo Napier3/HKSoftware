@@ -11,7 +11,7 @@
 #include <QPlainTextEdit>
 #include <QTextBrowser>
 
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 
 class QSttEventFilter : public QObject
 {

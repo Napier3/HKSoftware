@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QLabel>
 #include "ui_CharEditWidget_Syn.h"
-#include "../../AutoTest/Module/Characteristic/Characteristic.h"
+#include "../../../AutoTest/Module/Characteristic/Characteristic.h"
 
 #include "CharEditWidgetBase.h"
 

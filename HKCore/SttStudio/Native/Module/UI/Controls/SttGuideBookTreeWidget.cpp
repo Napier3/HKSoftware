@@ -1,14 +1,18 @@
 #include "SttGuideBookTreeWidget.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "SttGbItemsEdit.h"
 #include "../../SttTestCtrl/SttTestAppBase.h"
 #include "../SttTestCntrFrameBase.h"
 #include <QMessageBox>
-#include "../../Module/OSInterface/QT/XMessageBox.h"
+#include "../../../Module/OSInterface/QT/XMessageBox.h"
 
 //2022-12-02 修改功能ID，导致所有的都要编译，效率低下，所以从头文件中去掉，在任何需要包含的地方进行包含
 #include "../SttTestCntrCmdDefine.h" 
+#include "../../SttTestCtrl/SttTestCtrlCntrNative.h"
+#include "../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbSmartGenWzd.h"
+#include "../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdItemSetState.h"
 
+extern CGbSmartGenWzd *g_theGbSmartGenWzd;
 
 QSttGuideBookTreeWidget::QSttGuideBookTreeWidget(CExBaseObject *pSttGuideBook, CSttFrame_GbTree *pTreeParas, QWidget *parent)
     : QWidget(parent)
@@ -45,6 +49,8 @@ QSttGuideBookTreeWidget::QSttGuideBookTreeWidget(CExBaseObject *pSttGuideBook, C
 	m_pTreeCtrl->AttachOptrInterface(this);
 	m_pTreeCtrl->setFont(*g_pSttGlobalFont);
 	m_pTreeCtrl->setSelectionBehavior(QAbstractItemView::SelectItems);
+
+	m_bTreeCheckStateChanging = FALSE;
 }
 
 void QSttGuideBookTreeWidget::ShowBaseList(CExBaseList *pGuideBook)
@@ -200,7 +206,73 @@ void QSttGuideBookTreeWidget::After_SaveCurr(const CString &strRootNodePath)
 
 void QSttGuideBookTreeWidget::ExpandRootNode()
 {
+	CSttGuideBook *pGuideBook = (CSttGuideBook *)g_pTheSttTestApp->m_pTestCtrlCntr->GetGuideBook();
+	CSttDevice *pDevice = pGuideBook->GetDevice();
 
+	if (pDevice->m_dwItemData != 0)
+	{
+		QExBaseTreeWidgetItem* hItem = (QExBaseTreeWidgetItem *)pDevice->m_dwItemData;
+		hItem->setExpanded(true);
+	}
+
+	POS pos = pDevice->GetHeadPosition();
+	CExBaseObject *pObj = NULL;
+	UINT nClassID = 0;
+
+	while (pos != NULL)
+	{
+		pObj = pDevice->GetNext(pos);
+		nClassID = pObj->GetClassID();
+
+		if (nClassID != STTGBXMLCLASSID_CSTTITEMS)
+		{
+			continue;
+		}
+
+		CSttItems *pItems = (CSttItems *)pObj;
+
+		if (pItems->IsTypeRootNode() || pItems->IsTypeItems())
+		{
+			QExBaseTreeWidgetItem* hItem = (QExBaseTreeWidgetItem *)pItems->m_dwItemData;
+			if (hItem)
+			{
+				QSttGuideBookTreeCtrl *pTree = (QSttGuideBookTreeCtrl *)hItem->treeWidget();
+				pTree->setItemExpanded(hItem, true);
+			}
+		}
+
+		ExpandRootNode(pItems);
+	}
+}
+
+void QSttGuideBookTreeWidget::ExpandRootNode(CSttItems *pItems)
+{
+	POS pos = pItems->GetHeadPosition();
+	CExBaseObject *pObj = NULL;
+	UINT nClassID = 0;
+
+	while (pos != NULL)
+	{
+		pObj = pItems->GetNext(pos);
+		nClassID = pObj->GetClassID();
+
+		if (nClassID != STTGBXMLCLASSID_CSTTITEMS)
+		{
+			continue;
+		}
+
+		CSttItems *pChildItems = (CSttItems *)pObj;
+
+		if (pChildItems->IsTypeRootNode() || pChildItems->IsTypeItems())
+		{
+			//rootnode或者人工创建的分类
+			QExBaseTreeWidgetItem* hItem = (QExBaseTreeWidgetItem *)pChildItems->m_dwItemData;
+			QSttGuideBookTreeCtrl *pTree = (QSttGuideBookTreeCtrl *)hItem->treeWidget();
+			pTree->setItemExpanded(hItem, true);
+		}
+
+		ExpandRootNode(pChildItems);
+	}
 }
 
 void QSttGuideBookTreeWidget::slot_ItemStateChanged( CExBaseObject *pCurTestItem )
@@ -208,6 +280,46 @@ void QSttGuideBookTreeWidget::slot_ItemStateChanged( CExBaseObject *pCurTestItem
 	HideAllBtns();
 	m_pTreeCtrl->UpdateItemColour();
 	m_pCurrTestGbItem = pCurTestItem;
+
+	SwitchMacroViewByCurrSel(pCurTestItem);
+
+
+  	if (g_pTheSttTestApp->m_pTestCtrlCntr->IsTestStarted())
+  	{
+ 		QSttGuideBookTreeItem *pGbTreeItem = (QSttGuideBookTreeItem*)pCurTestItem->m_dwItemData;
+		// 确保目标项滚动到可见区域
+ 		m_pTreeCtrl->scrollToItem(pGbTreeItem, QAbstractItemView::PositionAtTop);
+	}
+}
+
+
+void QSttGuideBookTreeWidget::SwitchMacroViewByCurrSel(CExBaseObject *pSel) 
+{
+ 	if (pSel == NULL)
+ 	{
+ 		return;
+ 	}
+ 
+ 	CSttItems *pItems = (CSttItems *)Stt_GetFirstParentItems(pSel, GBITEMS_NODETYPE_ROOTNODE, TRUE);
+ 
+ 	if (pItems == NULL)
+ 	{
+ 		if(!m_pCurrSelRootNode)
+ 		{
+ 			g_theTestCntrFrame->HideCharLib();
+ 		}
+ 		return;
+ 	}
+ 
+ 	if (m_pCurrSelRootNode == pItems)
+ 	{
+ 		return;
+ 	}
+ 
+ 	m_pCurrSelRootNode = pItems;
+ 	m_strCurrSelRootNodePath = m_pCurrSelRootNode->GetIDPathEx(STTGBXMLCLASSID_CSTTDEVICE, FALSE);
+ 
+ 	//g_theTestCntrFrame->SwitchMacroViewByCurrSel(pItems);
 }
 
 void QSttGuideBookTreeWidget::slot_ShowItems( CExBaseList *pCurTestItems )
@@ -256,6 +368,8 @@ void QSttGuideBookTreeWidget::slot_ShowItems( CExBaseList *pCurTestItems )
 
 void QSttGuideBookTreeWidget::slot_OnBtnTestFrom()
 {
+	disconnect(m_pTreeCtrl,SIGNAL(itemChanged(QTreeWidgetItem *, int)),m_pTreeCtrl,SLOT(slot_TreeItemChanged(QTreeWidgetItem *, int)));
+
 	HideAllBtns();
 	CString strItemPath = m_pCurrSelGbItem->GetIDPathEx(STTGBXMLCLASSID_CSTTDEVICE, FALSE);
 	g_theTestCntrFrame->on_UpdateEnableState(STT_TEST_STATE_TESTTING);
@@ -281,6 +395,8 @@ void QSttGuideBookTreeWidget::slot_OnBtnTestFrom()
 
 void QSttGuideBookTreeWidget::slot_OnBtnTestThis()
 {
+	disconnect(m_pTreeCtrl,SIGNAL(itemChanged(QTreeWidgetItem *, int)),m_pTreeCtrl,SLOT(slot_TreeItemChanged(QTreeWidgetItem *, int)));
+
 	HideAllBtns();
 	CString strItemPath = m_pCurrSelGbItem->GetIDPathEx(STTGBXMLCLASSID_CSTTDEVICE, FALSE);
 	g_theTestCntrFrame->on_UpdateEnableState(STT_TEST_STATE_TESTTING);
@@ -315,4 +431,210 @@ CExBaseObject* QSttGuideBookTreeWidget::GetCurrSelectGbItem()
 {
 	m_pCurrSelGbItem = m_pTreeCtrl->GetCurrSelObject();
 	return m_pCurrSelGbItem;
+}
+void QSttGuideBookTreeWidget::OnItemCheckChanged( CExBaseListTreeCtrl *pTreeCtrl, CExBaseObject *pSelObj )
+{
+	if(m_bTreeCheckStateChanging)
+	{
+		return;
+	}
+
+	m_bTreeCheckStateChanging = TRUE;
+	QSttGuideBookTreeItem* pItem = (QSttGuideBookTreeItem*)pSelObj->m_dwItemData;
+	bool bSelect = pItem->checkState(0);
+	long nSelect = pItem->checkState(0);
+	CSttItemBase* pItemBase = (CSttItemBase*)pSelObj;
+
+	if (pItemBase->m_nSelect == nSelect)
+	{
+		UpdateChildCheckState(pItem);
+		UpdateParentCheckState((QSttGuideBookTreeItem*)pItem->parent());
+		m_bTreeCheckStateChanging = FALSE;
+		return;
+	}
+	pItemBase->m_nSelect = bSelect;
+	SendSetItemState(pItemBase);	
+
+	UpdateChildCheckState(pItem);
+	UpdateParentCheckState((QSttGuideBookTreeItem*)pItem->parent());
+	m_bTreeCheckStateChanging = FALSE;
+}
+
+long QSttGuideBookTreeWidget::SendSetItemState(CSttItemBase *pItemBase)
+{
+	if (g_pTheSttTestApp->m_pTestCtrlCntr->IsTestStarted())
+	{
+		return FALSE;
+	}
+
+		
+	//发送自动测试改变测试项
+	CSttTestCtrlCntrNative *pNative = (CSttTestCtrlCntrNative*)g_pTheSttTestApp->m_pTestCtrlCntr;
+	CString strParentItemPath, strItemPath;
+
+	if (pItemBase->GetClassID() != STTGBXMLCLASSID_CSTTDEVICE)
+	{
+		CExBaseObject *pParent = (CExBaseObject *)pItemBase->GetParent();
+		strParentItemPath = pParent->GetIDPathEx(STTGBXMLCLASSID_CSTTDEVICE, FALSE);
+
+		if (strParentItemPath.GetLength() > 0)
+		{
+			strItemPath = strParentItemPath + _T("$");
+			strItemPath += pItemBase->m_strID;
+		}
+		else
+		{
+			strItemPath = pItemBase->m_strID;
+		}
+	}
+	else
+	{
+		strItemPath = pItemBase->m_strID;
+	}
+
+	CSttParas paras;
+	paras.AddNewData("ItemPath", strItemPath);
+	paras.AddNewData("Select", pItemBase->m_nSelect);  //确保此处要么是1  要么是0
+	long nRet = pNative->m_oSttAtsClient.Ats_SetItemState(&paras);
+
+	if (nRet == 3)
+	{
+		CGbWzdItemSetState* pSetState = g_theGbSmartGenWzd->ItemsSetState(strParentItemPath, pItemBase->m_strID, pItemBase->m_strName
+			, pItemBase->m_nSelect, pItemBase->m_nEnable, pItemBase->m_nShow);
+	}
+
+	return nRet;
+}
+
+void QSttGuideBookTreeWidget::SetCheckBoxEnable(BOOL bEnable)
+{
+	CSttGuideBook *pGuideBook = (CSttGuideBook *)g_pTheSttTestApp->m_pTestCtrlCntr->GetGuideBook();
+
+	if (pGuideBook == NULL)
+	{
+		return;
+	}
+
+	CSttDevice* pDevice = (CSttDevice *)pGuideBook->GetDevice(FALSE);
+
+	if (pDevice == NULL)
+	{
+		return;
+	}
+
+	QSttGuideBookTreeItem* pItem = (QSttGuideBookTreeItem*)pDevice->m_dwItemData;
+
+	if (pItem == NULL)
+	{
+		return;
+	}
+
+	if (!bEnable)
+	{
+		pItem->setFlags(pItem->flags() & ~Qt::ItemIsUserCheckable);
+	}
+	else
+	{
+		pItem->setFlags(pItem->flags() | Qt::ItemIsUserCheckable);
+	}
+
+	SetChildCheckBoxEnable(pItem, bEnable);
+}
+
+void QSttGuideBookTreeWidget::SetChildCheckBoxEnable(QSttGuideBookTreeItem* pItem, BOOL bEnable)
+{
+	for (int i = 0; i < pItem->childCount(); i++)
+	{
+		QSttGuideBookTreeItem *pChildItem = (QSttGuideBookTreeItem *)pItem->child(i);
+
+		if (!bEnable)
+		{
+			pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable);
+		}
+		else
+		{
+			pChildItem->setFlags(pChildItem->flags() | Qt::ItemIsUserCheckable);
+		}
+
+		SetChildCheckBoxEnable(pChildItem, bEnable);
+	}
+}
+
+
+void QSttGuideBookTreeWidget::UpdateParentCheckState( QSttGuideBookTreeItem* pParent )
+{
+	if(g_theTestCntrFrame->m_tagAppState == QSttTestCntrFrameBase::APPSTATE_OPENTEMPLATE)
+	{
+		return;
+	}
+	if(pParent)
+	{
+		CSttItemBase *pParentItem = (CSttItemBase *)pParent->m_pItemData;
+		long nCount = 0;
+		long nPartCount = 0;
+		long nChildCount = pParent->childCount();
+		for (int i = 0; i < nChildCount; i++)
+		{
+			QTreeWidgetItem *pChildItem = pParent->child(i);
+			if (pChildItem->checkState(0) == Qt::Checked)
+			{
+				nCount++;
+			}
+			else if (pChildItem->checkState(0) == Qt::PartiallyChecked)
+			{
+				nPartCount++;
+			}
+		}
+		if (nCount == nChildCount)
+		{
+			//选中状态
+			pParent->setCheckState(0, Qt::Checked);
+			pParentItem->m_nSelect = 1;
+		}
+		else if (nCount > 0 || nPartCount > 0)
+		{
+			//部分选中状态
+			pParent->setCheckState(0, Qt::PartiallyChecked);
+			pParentItem->m_nSelect = 1;
+		}
+		else
+		{
+			//未选中状态
+			pParent->setCheckState(0, Qt::Unchecked);
+			pParentItem->m_nSelect = 0;
+		}
+
+		UpdateParentCheckState((QSttGuideBookTreeItem*)pParent->parent());
+	}
+}
+
+void QSttGuideBookTreeWidget::UpdateChildCheckState( QSttGuideBookTreeItem* pItem )
+{
+	if(g_theTestCntrFrame->m_tagAppState == QSttTestCntrFrameBase::APPSTATE_OPENTEMPLATE)
+	{
+		return;
+	}
+
+	CSttItemBase *pItemBase = NULL;
+
+	if(pItem->checkState(0) == Qt::Checked)
+	{
+		for (int i = 0; i < pItem->childCount(); i++)
+		{
+			pItem->child(i)->setCheckState(0, Qt::Checked);
+			pItemBase = (CSttItemBase *)((QSttGuideBookTreeItem*)pItem->child(i))->m_pItemData;
+			pItemBase->m_nSelect = 1;
+			UpdateChildCheckState((QSttGuideBookTreeItem*)pItem->child(i));
+		}
+	}
+	else if(pItem->checkState(0) == Qt::Unchecked)
+	{
+		for (int i = 0; i < pItem->childCount(); i++)
+		{
+			pItem->child(i)->setCheckState(0, Qt::Unchecked);
+			pItemBase = (CSttItemBase *)((QSttGuideBookTreeItem*)pItem->child(i))->m_pItemData;
+			pItemBase->m_nSelect = 0;
+			UpdateChildCheckState((QSttGuideBookTreeItem*)pItem->child(i));
+		}
+	}
 }

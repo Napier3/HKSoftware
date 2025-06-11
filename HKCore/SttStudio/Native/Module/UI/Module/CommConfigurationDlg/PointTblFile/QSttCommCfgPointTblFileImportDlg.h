@@ -13,7 +13,7 @@
 #include <QTimerEvent>
 #include <QLineEdit>
 #include "SttCommCfgPointTblFileImportGrid.h"
-#include "../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/DataMngr/DataGroup.h"
 #include "SttCommCfgPointTblFileImportTreeCtrl.h"
  
 class QSttCommCfgPointTblFileImportDlg : public QDialog, public CExBaseListTreeOptrInterface

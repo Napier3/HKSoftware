@@ -41,7 +41,15 @@ void QInterharmonicsChannelTable::initTable()
 
 	if (m_moudleType==Moudle_U)//U
 	{
+		if (m_nParaSetSecondValue == V_Primary)
+		{	
+			strAmplitude += "(kV)";
+		}
+		else
+		{
 		strAmplitude += "(V)";
+	}
+		
 	}
 	else
 	{
@@ -99,9 +107,50 @@ void QInterharmonicsChannelTable::initTable()
 
 	if (m_pCheckBoxDelegateBase == NULL)
 	{
-		m_pCheckBoxDelegateBase = new QCheckBoxDelegateBase(this);
+	m_pCheckBoxDelegateBase = new QExBaseListCheckBoxDelegate(this);
 		setItemDelegateForColumn(0,m_pCheckBoxDelegateBase);
 	}
+}
+
+void QInterharmonicsChannelTable::SetParaSetSecondValue(int nParaSetSecondValue)
+{
+	m_nParaSetSecondValue = nParaSetSecondValue;
+	QStringList headers;
+	CString strSelect, strChannel, strAmplitude, strPhase, strFreq;
+	xlang_GetLangStrByFile(strSelect, "Harm_Enable");
+	xlang_GetLangStrByFile(strChannel, "Native_Channel");
+	xlang_GetLangStrByFile(strAmplitude, "Native_Amplitude");
+	xlang_GetLangStrByFile(strPhase, "Native_Angle");
+	xlang_GetLangStrByFile(strFreq, "Native_Freq");
+
+#ifndef _PSX_QT_LINUX_
+	strPhase += QString::fromLocal8Bit("(°)");
+#else
+	strPhase += "(°)";
+#endif
+	strFreq += "(Hz)";
+
+	if (m_moudleType==Moudle_U)//U
+	{
+		if (m_nParaSetSecondValue == V_Primary)
+		{	
+			strAmplitude += "(kV)";
+		}
+		else
+		{
+			strAmplitude += "(V)";
+		}
+
+	}
+	else
+	{
+		strAmplitude += "(A)";
+	}
+
+
+	headers << strSelect << strChannel << strAmplitude << strPhase << strFreq;
+
+	setHorizontalHeaderLabels(headers);
 }
 
 void QInterharmonicsChannelTable::UpdateTable()
@@ -145,6 +194,48 @@ void QInterharmonicsChannelTable::UpdateTable()
 		}
 
 		pTableWidgetItem->setText(strChName);
+		float fMaxValue;
+		if (g_oSystemParas.m_nHasWeek)//弱信号限制
+		{
+			if (strChName.Find("U") >= 0 && strChName != _T("U0"))
+			{
+#ifdef _PSX_OS_CENTOS_
+				fMaxValue = 10.000;
+
+#else
+				fMaxValue = 4.200;
+#endif
+			}
+			else if (strChName == _T("U0"))
+			{
+				fMaxValue = 8.300;
+			}
+			else if (strChName.Find("I") >= 0 && strChName != _T("I0"))
+			{
+				fMaxValue = 21.000;
+			}
+			else if (strChName == _T("I0"))
+			{
+				fMaxValue = 4.200;
+			}
+		}
+		else 
+		{
+			if (strChName.Find('U') >= 0)
+			{
+				fMaxValue = g_oLocalSysPara.m_fAC_VolMax;
+			}
+			else
+			{
+				fMaxValue = g_oLocalSysPara.m_fAC_VolMax;
+			}
+		}
+		if (m_pArrUI[nChIndex].InterHarm.fAmp > fMaxValue)
+		{
+			m_pArrUI[nChIndex].InterHarm.fAmp = fMaxValue;
+		}
+
+
 		item(nChIndex,2)->setText(QString::number(m_pArrUI[nChIndex].InterHarm.fAmp,'f',3));
 		item(nChIndex,3)->setText(QString::number(m_pArrUI[nChIndex].InterHarm.fAngle,'f',1));
 		item(nChIndex,4)->setText(QString::number(m_pArrUI[nChIndex].InterHarm.fFreq,'f',3));
@@ -314,8 +405,52 @@ void QInterharmonicsChannelTable::slot_OnCellChanged(int row,int col)
 		break;
 	case 2:
 		{
-			float fAcVMax = g_oLocalSysPara.m_fAC_VolMax;
-			float fAcIMax = g_oLocalSysPara.m_fAC_CurMax;
+			QTableWidgetItem  *pNameWidgetItem  = this->item(row,1);
+			CString strChName = pNameWidgetItem->text();
+
+			float fAcVMax = 0,fAcIMax = 0;
+
+			if (g_oSystemParas.m_nHasWeek)//弱信号限制
+			{
+				if (m_moudleType==Moudle_U)
+				{
+					if (strChName.Find("U") >= 0 && strChName != _T("U0"))
+					{
+#ifdef _PSX_OS_CENTOS_
+						fAcVMax = 10.000;
+
+#else
+						fAcVMax = 4.200;
+#endif
+				}
+				else
+				{
+						fAcVMax = 8.300;
+					}
+				}
+				else
+				{
+					if (strChName.Find("I") >= 0 && strChName != _T("I0"))
+					{
+						fAcIMax = 21.000;
+					}
+					else
+					{
+						fAcIMax = 4.200;
+					}
+				}
+			}
+			else
+			{
+				if (m_moudleType==Moudle_U)
+				{
+					fAcVMax = g_oLocalSysPara.m_fAC_VolMax;
+				}
+				else
+				{
+					fAcIMax = g_oLocalSysPara.m_fAC_CurMax;
+				}
+			}
 			fv = str.toFloat();
 			if (isPosiDigitstr(str))
 			{
@@ -489,11 +624,13 @@ void QInterharmonicsChannelTable::slot_OnCellChanged(int row,int col)
 		long nCol = m_pCurrKeyboardItem->column();
 		emit sig_ChannelValueChanged(m_moudleType,nRow,nCol, m_pCurrKeyboardItem->text().toFloat());//valueFlag=（1:幅值 2:相位 3:频率）
 	}
+	emit sig_updataInterharmonicsChannelParas();
 }
 
 QInterharmonicsImp::QInterharmonicsImp(QWidget *parent) : QBasicTestParaSetImp(parent)
 {
-
+		m_pVolChTable = NULL;
+		m_pCurChTable = NULL;
 }
 
 QInterharmonicsImp::~QInterharmonicsImp()
@@ -510,33 +647,33 @@ void QInterharmonicsImp::initUI(CSttTestResourceBase *pSttTestResource)
 		return;
 	};
 
-	QChannelTable *pVolChTable = NULL,*pCurChTable = NULL;
-	pVolChTable = new QInterharmonicsChannelTable(Moudle_U,&m_pParaSetSttTestResource->m_oVolChRsListRef,m_pArrUIVOL,m_pUWidget);
-	pCurChTable = new QInterharmonicsChannelTable(Moudle_I,&m_pParaSetSttTestResource->m_oCurChRsListRef,m_pArrUICUR,m_pUWidget);
-	pVolChTable->setHarmIndex(NULL/*GetHarmIndex()*/);//间谐波不需要使用HarmIndex
-	pCurChTable->setHarmIndex(NULL/*GetHarmIndex()*/);
-	pVolChTable->setFont(*g_pSttGlobalFont);
-	pVolChTable->horizontalHeader()->setFont(*g_pSttGlobalFont);
-	pCurChTable->setFont(*g_pSttGlobalFont);
-	pCurChTable->horizontalHeader()->setFont(*g_pSttGlobalFont);
+	m_pVolChTable = new QInterharmonicsChannelTable(Moudle_U,&m_pParaSetSttTestResource->m_oVolChRsListRef,m_pArrUIVOL,m_pUWidget);
+	m_pCurChTable = new QInterharmonicsChannelTable(Moudle_I,&m_pParaSetSttTestResource->m_oCurChRsListRef,m_pArrUICUR,m_pUWidget);
+	m_pVolChTable->setHarmIndex(NULL/*GetHarmIndex()*/);//间谐波不需要使用HarmIndex
+	m_pCurChTable->setHarmIndex(NULL/*GetHarmIndex()*/);
+	m_pVolChTable->setFont(*g_pSttGlobalFont);
+	m_pVolChTable->horizontalHeader()->setFont(*g_pSttGlobalFont);
+	m_pCurChTable->setFont(*g_pSttGlobalFont);
+	m_pCurChTable->horizontalHeader()->setFont(*g_pSttGlobalFont);
 	
 
-	if (pVolChTable)
+	if (m_pVolChTable)
 	{
-		pVolChTable->setMacroType(m_MacroType);
-		pVolChTable->m_bDC = false;//间谐波始值不是直流
-		pVolChTable->initTable();
+		m_pVolChTable->setMacroType(m_MacroType);
+		m_pVolChTable->m_bDC = false;//间谐波始值不是直流
+		m_pVolChTable->m_nParaSetSecondValue = m_nParaSetSecondValue;
+		m_pVolChTable->initTable();
 	}
 
-	if (pCurChTable)
+	if (m_pCurChTable)
 	{
-		pCurChTable->setMacroType(m_MacroType);
-		pCurChTable->m_bDC = false;//间谐波始值不是直流
-		pCurChTable->initTable();
+		m_pCurChTable->setMacroType(m_MacroType);
+		m_pCurChTable->m_bDC = false;//间谐波始值不是直流
+		m_pCurChTable->initTable();
 	}
 
-	m_UCHannelTableList.append(pVolChTable);
-	m_ICHannelTableList.append(pCurChTable);
+	m_UCHannelTableList.append(m_pVolChTable);
+	m_ICHannelTableList.append(m_pCurChTable);
 
 	for (int i = 0; i<m_UCHannelTableList.size();i++)
 	{
@@ -597,15 +734,45 @@ void QInterharmonicsImp::initUI(CSttTestResourceBase *pSttTestResource)
 	m_pMainGridLayout->addWidget(m_pIScrollArea,0,1);
 }
 
+void QInterharmonicsImp::SetParaSetSecondValue(int nParaSetSecondValue)
+{
+	m_nParaSetSecondValue = nParaSetSecondValue;
+
+	if (m_UCHannelTableList.size() > 0)
+	{
+		QInterharmonicsChannelTable *pInterharmonicsChannelTable = NULL;
+
+		for (int i = 0; i<m_UCHannelTableList.size();i++)
+		{
+			pInterharmonicsChannelTable = (QInterharmonicsChannelTable *)m_UCHannelTableList.at(i);	
+			pInterharmonicsChannelTable->SetParaSetSecondValue(m_nParaSetSecondValue);
+
+		}
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 QInterharmonicsWidget::QInterharmonicsWidget(tmt_harm_paras* pParas, QWidget* pParent) : QBasicTestParaSet(pParent)
 {
-	m_pParas = NULL;
-	setPropertyOfParaSet(P_Common, g_theTestCntrFrame->GetSttTestResource(), pParas->m_uiVOL, pParas->m_uiCUR);
+	m_pInterharmonicsImp = NULL;
+
+	m_pParas = pParas;
+	setPropertyOfParaSet(P_Common, g_theTestCntrFrame->GetSttTestResource(), m_pParas->m_uiVOL, m_pParas->m_uiCUR);
 }
 
 QInterharmonicsWidget::~QInterharmonicsWidget()
 {
 
+}
+
+void QInterharmonicsWidget::SetParaSetSecondValue(int nParaSetSecondValue)
+{
+	m_nParaSetSecondValue = nParaSetSecondValue;
+	if (m_pInterharmonicsImp != NULL)
+	{
+		m_pInterharmonicsImp->SetParaSetSecondValue(m_nParaSetSecondValue);
+	}
 }
 
 void QInterharmonicsWidget::showEvent(QShowEvent *)
@@ -614,8 +781,8 @@ void QInterharmonicsWidget::showEvent(QShowEvent *)
 	{
 		return;
 	}
-
-	SetBasicTestParaSetImp(new QInterharmonicsImp(this));
+	m_pInterharmonicsImp = new QInterharmonicsImp(this);
+	SetBasicTestParaSetImp(m_pInterharmonicsImp);
 	setMacroType();
 	InitSttInfWidget(GetBasicTestParaSetImp());
 
@@ -624,6 +791,36 @@ void QInterharmonicsWidget::showEvent(QShowEvent *)
 	setPropertyOfParaSet();//20230313 zhouhj 改为先初始化界面,再设置最大最小值
 	setMaxMinAndEDVal();
 
-	initData();
+	m_pInterharmonicsImp->SetParaSetSecondValue(m_nParaSetSecondValue);
+	initData(true);
 	DCStateChanged();
+
+	if (m_pInterharmonicsImp->m_pCurChTable)
+	{
+		//20250120 suyang 增加更新测试过程中修改参数不更新参数下发
+		connect(m_pInterharmonicsImp->m_pCurChTable,SIGNAL(sig_updataInterharmonicsChannelParas()), this, SLOT(slot_updataParas()),Qt::UniqueConnection);
+	}
+
+	if (m_pInterharmonicsImp->m_pVolChTable)
+	{
+		//20250120 suyang 增加更新测试过程中修改参数不更新参数下发
+		 connect(m_pInterharmonicsImp->m_pVolChTable,SIGNAL(sig_updataInterharmonicsChannelParas()), this, SLOT(slot_updataParas()),Qt::UniqueConnection);
+	}
+}
+
+void QInterharmonicsWidget::slot_updataParas()
+{
+	emit sig_updataParas();
+}
+
+void QInterharmonicsWidget::UpdataTableData()
+{
+	setPropertyOfParaSet(P_Common, g_theTestCntrFrame->GetSttTestResource(), m_pParas->m_uiVOL, m_pParas->m_uiCUR);
+	if (m_pInterharmonicsImp)
+	{
+		m_pInterharmonicsImp->m_pCurChTable->UpdateTable();
+		m_pInterharmonicsImp->m_pVolChTable->UpdateTable();
+	}
+	
+
 }

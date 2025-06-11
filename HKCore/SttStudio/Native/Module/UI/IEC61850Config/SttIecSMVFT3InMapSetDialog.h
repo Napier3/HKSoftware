@@ -12,7 +12,7 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QString>
-#include "../../Module/API/GlobalConfigApi.h"	
+#include "../../../Module/API/GlobalConfigApi.h"	
 #define IECCFG_COMMON_FT3_BIT_NUM                16
 
 class QSttIecSMVFT3InMapSetDialog : public QDialog

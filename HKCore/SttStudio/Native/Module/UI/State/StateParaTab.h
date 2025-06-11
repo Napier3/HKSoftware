@@ -16,10 +16,10 @@ class QStateParaTab : public QWidget
 	Q_OBJECT
 
 public:
-	QStateParaTab(BOOL *pbTmtParaChanged, QWidget *parent = 0);
+	QStateParaTab(BOOL *pbTmtParaChanged, QWidget *parent = 0, bool bPrimFreqModel = false);
 	~QStateParaTab();
 
-	void initUI();
+	void initUI(bool bPrimFreqModel = false);
 
 	void AddHarmParaset();
 	void RemoveHarmParaset();
@@ -49,6 +49,9 @@ public:
 	virtual void startInit();
 	virtual void stopInit();
 	void EnableSubParaWidget(bool bEnable);
+	
+	void SetParaSetSecondValue(int nParaSetSecondValue);
+
 public:
 	QTabWidget* m_tabWidget;
 	QBasicTestParaSet* m_pUIParaWidget;		//电压电流设置

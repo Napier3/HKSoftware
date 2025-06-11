@@ -2,7 +2,7 @@
 #define IECCFGSMV92INCHSGRID_H
 
 #include "IecCfgChsGridBase.h"
-#include "../../61850/Module/CfgDataMngr/IecCfg92ChIn.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfg92ChIn.h"
 
 
 #define IECCFGSMV92INCHS_GRID_COLS		5

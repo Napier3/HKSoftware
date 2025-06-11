@@ -6,8 +6,8 @@
 #include "../Module/Engine/SttPowerTestEngineBase.h"
 #include "../Module/SttTestResourceMngr/SttTestResourceMngr.h"
 #include "../CommonMethod/commonMethod.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/XLanguage/XLanguageMngr.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/XLanguageMngr.h"
 #include "../ScrollCtrl/ScrollComboBox.h"
 //#include "../../SttTestCntrFrameBase.h"
 #include "../../Controls/SttCheckBox.h"
@@ -92,15 +92,15 @@ void QChMapsWidget::initUI(STT_SystemParas *pSysParas,CSttChMaps *pChMaps)
 	m_pDigitalType_Combobox->insertItem(0,tr("IEC61850-9-2"));
 	m_pDigitalType_Combobox->insertItem(1,tr("IEC60044-8(FT3)"));
 
-	if (CXLanguageMngr::xlang_IsCurrXLanguageChinese())
-	{
-		//m_pDigitalType_Combobox->insertItem(2,tr("柔直(FT3)"));
-        m_pDigitalType_Combobox->insertItem(2,g_sLangTxt_State_FThreeStraight); //柔直(FT3) lcq 3.14
-	}
-	else
-	{
-		m_pDigitalType_Combobox->insertItem(2,tr("VSC-HVDC(FT3)"));
-	}
+	//if (CXLanguageMngr::xlang_IsCurrXLanguageChinese())
+	//{
+	//	//m_pDigitalType_Combobox->insertItem(2,tr("柔直(FT3)"));
+ //       m_pDigitalType_Combobox->insertItem(2,g_sLangTxt_State_FThreeStraight); //柔直(FT3) lcq 3.14
+	//}
+	//else
+	//{
+	//	m_pDigitalType_Combobox->insertItem(2,tr("VSC-HVDC(FT3)"));
+	//}
 // 	m_pDigitalType_Combobox->insertItem(3,tr("采集器输出(国网)"));
 // 	m_pDigitalType_Combobox->insertItem(4,tr("采集器输出(许继)"));
 	m_pOutputSel_HBoxLayout->addWidget(m_pDigitalType_Combobox);

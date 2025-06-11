@@ -3,8 +3,8 @@
 #include <QMessageBox>
 #include <QDialogButtonBox>
 
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "Grid/SclCtrlsSmvInGrid.h"
 #include "Grid/SclCtrlsSmvOutGrid.h"
 #include "Grid/SclCtrlsGooseInGrid.h"

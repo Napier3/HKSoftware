@@ -1,7 +1,7 @@
 #include "SttMacroParaEditViewGooseAbnormal.h"
 #include "../Module/XLangResource_Native.h"
 #include "../Module/SttTestResourceMngr/TestResource/SttTestResource_Sync.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../../UI/State/CommonValueDialogState.h"
 #include "../../../UI/State/Gradient/GradientSetDlg.h"
 #include "../../SttTestCntrFrameBase.h"
@@ -166,7 +166,7 @@ void QSttMacroParaEditViewGooseAbnormal::SerializeTestParas(CSttXmlSerializeBase
 //		InitGoosePubDataGroups();	//´ÓSttIecGooseCfg.ixmlÎÄ¼þ»ñÈ¡³õÊ¼Öµ£¬Ã¿¸ö×´Ì¬¶ÔÓ¦Ò»¸öCDataGroup,ÐèÒª¿ËÂ¡Gouts¿ØÖÆ¿é,ÔÙ´ò¿ªÄ£°å,½«Ä£°åÖÐµÄÊý¾ÝÖµ¸³Öµµ½¿ØÖÆ¿éÖÐ
 //	}
 //
-//	for (int nIndex=0;nIndex<m_oStateTest.m_oStateParas.m_nStateNumbers;nIndex++)
+//	for (int nIndex=0;nIndex<m_oStateTest->m_oStateParas.m_nStateNumbers;nIndex++)
 //	{
 //		pIecCfgGoutDatas = GetGoutDatas(nIndex);
 //
@@ -196,7 +196,7 @@ void QSttMacroParaEditViewGooseAbnormal::UpdateStateParas()
 
 	if (/*m_pParaTab->*/m_pGooseAbnParaWidget != NULL)
 	{
-		/*m_pParaTab->*/m_pGooseAbnParaWidget->setData(m_pStatePara,&m_oStateTest.m_oStateParas);
+		/*m_pParaTab->*/m_pGooseAbnParaWidget->setData(m_pStatePara,&m_oStateTest->m_oStateParas);
 		m_pGooseAbnParaWidget->UpdateStateTimeUI();
 	}
 
@@ -216,7 +216,7 @@ void QSttMacroParaEditViewGooseAbnormal::UpdateGoutTab(BOOL bUpdateList)
 	{
 		InitGoosePubDataGroups();
 		InitGooseAbnormalTmt();
-		m_pGooseAbnParaWidget->setData(m_pStatePara,&m_oStateTest.m_oStateParas); 
+		m_pGooseAbnParaWidget->setData(m_pStatePara,&m_oStateTest->m_oStateParas); 
 		
 		m_pTrigerWidget->SetData(m_pStatePara);
 	}
@@ -240,7 +240,7 @@ void QSttMacroParaEditViewGooseAbnormal::UpdateFT3Tab(BOOL bUpdateList)
 	{
 		InitFT3PubDataGroups();
 		InitGooseAbnormalTmt();
-		m_pGooseAbnParaWidget->setData(m_pStatePara,&m_oStateTest.m_oStateParas); 
+		m_pGooseAbnParaWidget->setData(m_pStatePara,&m_oStateTest->m_oStateParas); 
 
 		m_pTrigerWidget->SetData(m_pStatePara);
 	}
@@ -258,9 +258,9 @@ void QSttMacroParaEditViewGooseAbnormal::InitGooseAbnormalTmt()//ÓÃIECÖÐGOOSE·¢²
 	//m_listGoosePub.clear();//1£©±éÀú×´Ì¬ÐòÁÐ£¬Ã¿¸ö×´Ì¬ÖÐµÄGOOSEÒì³£Ä£Äâ½á¹¹Ìå£»2£©¸ù¾Ýµ±Ç°GroupIndex²éÕÒIECÖÐÖ¸¶¨Ñ¡ÔñµÄ¿ØÖÆ¿é¸³Öµ£»
 	tmt_StatePara* pStatePara = NULL;
 
-	for(int i=0;i<m_oStateTest.m_oStateParas.m_nStateNumbers;i++)
+	for(int i=0;i<m_oStateTest->m_oStateParas.m_nStateNumbers;i++)
 	{
-		pStatePara = &m_oStateTest.m_oStateParas.m_paraState[i];
+		pStatePara = &m_oStateTest->m_oStateParas.m_paraState[i];
 		
 		CIecCfgGoutDatas *pSourceGoutDatas = g_oSttTestResourceMngr.m_oIecDatasMngr.GetGoutMngr();
 
@@ -288,7 +288,7 @@ void QSttMacroParaEditViewGooseAbnormal::InitGooseAbnormalTmt()//ÓÃIECÖÐGOOSE·¢²
 	}
 
 	/*CIecCfgGoutDatas *pIecCfgGoutDatas = NULL;
-	for (int i=0;i<m_oStateTest.m_oStateParas.m_nStateNumbers;i++)
+	for (int i=0;i<m_oStateTest->m_oStateParas.m_nStateNumbers;i++)
 	{
 		pIecCfgGoutDatas = (CIecCfgGoutDatas*)pSourceGoutDatas->Clone();
 		m_listGoosePub.append(pIecCfgGoutDatas);

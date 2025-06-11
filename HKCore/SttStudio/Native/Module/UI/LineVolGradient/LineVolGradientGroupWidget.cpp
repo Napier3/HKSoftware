@@ -2,7 +2,7 @@
 #include <QGridLayout>
 #include "../../SttTestResourceMngr/SttTestResourceMngr.h"
 #include "../Module/SttUIDefine.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../Module/XLangResource_Native.h"
 #include <QHeaderView>
 
@@ -19,8 +19,17 @@ QLineVolGradientGroupWidget::~QLineVolGradientGroupWidget()
 void QLineVolGradientGroupWidget::InitLineVolChMaps()
 {
 		m_oLineVolChMaps.RemoveAll();
+		if (xlang_IsCurrXLanguageChinese())//dingxy 20250121 英文环境下修改通道映射名称
+		{
 		m_oLineVolChMaps.AddChMap(_T("Uab1"), _T("Uab1"));
 		m_oLineVolChMaps.AddChMap(_T("3U1-0"), _T("3U1-0"));
+		}
+		else
+		{
+			m_oLineVolChMaps.AddChMap(_T("Vab1"), _T("Uab1"));
+			m_oLineVolChMaps.AddChMap(_T("3V1-0"), _T("3U1-0"));
+		}
+		
 //		m_oLineVolChMaps.AddChMap(_T("Uab2"), _T("Uab2"));
 //		m_oLineVolChMaps.AddChMap(_T("3U2-0"), _T("3U2-0"));
 		m_oLineVolChMaps.AddChMap(_T("Ia1"), _T("Ia1"));

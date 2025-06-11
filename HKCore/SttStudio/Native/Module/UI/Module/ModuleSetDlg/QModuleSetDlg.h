@@ -41,12 +41,12 @@ protected:
 
 public:
 signals:
-	void sig_UpdateModulesGear(BOOL bMergeCurrHasChanged);//通知外部模块更新测试仪模块档位信息
+	void sig_UpdateModulesGear(BOOL bMergeCurrHasChanged, BOOL bCurrModulePowerHigh);//通知外部模块更新测试仪模块档位信息
 
 public slots:
 	void slot_OKClicked();
 	void slot_CancelClicked();
-	
+	void slot_UpdateModulesGearSwitchInfo();
 };
 
 #endif // QModuleSetDlg_H

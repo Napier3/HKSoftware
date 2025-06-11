@@ -2,6 +2,8 @@
 #define STTMACROPARAEDITVIEWSTATE_H
 
 
+
+#include <QMainWindow>
 #include <QPushButton>
 #include <QLabel>
 #include <QCheckBox>
@@ -30,7 +32,7 @@ class QSttMacroParaEditViewState: public CSttMacroParaEditViewOriginal
 	Q_OBJECT
 
 public:
-    explicit QSttMacroParaEditViewState(bool bHorizontal = true, QWidget *parent = 0, Qt::WindowFlags flags = 0);
+    explicit QSttMacroParaEditViewState(bool bHorizontal = true,QWidget *parent = 0, Qt::WindowFlags flags = 0);
 	virtual ~QSttMacroParaEditViewState();
 
 	//virtual
@@ -41,14 +43,20 @@ public:
 	//2023-2-4  lijunqing 提高程序界面初始化打开的速度，将矢量图、状态图等的初始化放到线程
 	virtual void InitSpyToolWidget();
 
-	tmt_state_test m_oStateTest;
+	//延迟初始化
+	tmt_state_test *m_oStateTest;  //2024-9-11 lijunqing 优化
+
+	tmt_StateParas *m_pStateParas;//20250313 wuxinyi 为适配子界面，状态序列中改为使用m_pStateParas
+	ShortCalcuPara *m_ShortCalcuPara; //2024-9-11 lijunqing 优化
+	Stt_DiffCurrCalParas *m_oDiffCurrCalParas;//2024-9-11 lijunqing 优化
+	void InitStateTest();//2024-9-11 lijunqing 优化
+
+
 	tmt_StatePara* m_pStatePara;
 	tmt_StatePara* m_pCopyStatePara; //拷贝状态指针
 	CIecCfgGoutDatas* m_pCopyGoutDatas;
 	CIecCfgDatasSMV* m_pCopyFT3Datas;//chenling20230518
 
-	ShortCalcuPara m_ShortCalcuPara;
-	Stt_DiffCurrCalParas m_oDiffCurrCalParas;
 
 	long m_nCircle;
 	void setData(tmt_StatePara* pStatePara);
@@ -74,8 +82,9 @@ public:
 
 	//20230213  zhangyq
 	virtual void ProcessGbAfterGenTemplate(CSttGuideBook *pSttGuideBook);  //测试模板
-    virtual void ProcessRptAfterGenTemplate();//QSttReportViewHtml *pSttReportViewHtml);  //报告模板
+    //virtual void ProcessRptAfterGenTemplate(QSttReportViewHtml *pSttReportViewHtml);  //报告模板
 	virtual CString ProcessItemID(const CString & strItemID,long nLoopIndex);
+	virtual void UpdateDCParasByCurrModulePower(BOOL bCurrModulePowerHigh);
 
 public:
 	bool m_bHorizontal;
@@ -120,7 +129,7 @@ public:
 	CSttTestResourceBase* CreateTestResource();
 	virtual void UpdateTestResource(BOOL bCreateChMaps);
 
-	virtual PTMT_PARAS_HEAD GetTestParas(){ return &m_oStateTest;};
+	virtual PTMT_PARAS_HEAD GetTestParas(){ return m_oStateTest;};
 	virtual char* GetMacroID();/*{ return "StateTest"; }*/
 
 	virtual void SerializeTestParas(CSttXmlSerializeBase *pMacroParas, PTMT_PARAS_HEAD pParas,
@@ -151,6 +160,7 @@ public:
 	virtual void OnViewTestStop();
 
 	virtual void UpdateAuxDCEdit();//20240613 suyang 新增用于更新L336D 状态序列 通用 辅助直流编辑框 
+	virtual void SetPlotAcDcMaxMinValue();
 
 	bool HasHarmParaset(tmt_StatePara* pStatePara);
 	void ClearHarmParaset(tmt_StatePara* pStatePara);
@@ -162,6 +172,9 @@ public:
 	void setDcoffsetEnable();//叠加衰减直流分量可编辑状态
 	void UpdateActValue(CEventResult *pEventInfo);//dingxy 20240520 更新动作值
 	void GetActValue(int nCurStepIndex, int nIndex);
+	
+	virtual void UpdatePrimParaSetUI();
+	void UpdateDCCheckBoxUI(BOOL bCurrModulePowerHigh = FALSE);
 
 //	void GetSMVDataAppIDs(QList<int> &m_olistAppIDs);
 

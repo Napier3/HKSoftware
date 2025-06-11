@@ -1,7 +1,7 @@
 #ifndef QSTTMMSBRCBCTRLWIDGET_H
 #define QSTTMMSBRCBCTRLWIDGET_H
 
-#include "../../../../IotProtoServer/Module/SttPxCommCmdDef.h"
+#include "../../../IotProtoServer/Module/SttPxCommCmdDef.h"
 
 #include <QDialog>
 

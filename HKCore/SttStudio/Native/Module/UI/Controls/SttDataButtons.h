@@ -4,13 +4,14 @@
 #include <QToolButton>
 #include "SttToolButtonBase.h"
 #include "../Config/Frame/SttFrame_Data.h"
-#include "../../Module/DataMngr/DataGroup.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 
 #define STT_LIGHT_BTN_INDEX_ShutOff                        0
 #define STT_LIGHT_BTN_INDEX_Run                            1
 #define STT_LIGHT_BTN_INDEX_Red                            2
 #define STT_LIGHT_BTN_INDEX_Yellow                         3
+#define STT_LIGHT_BIN_INDEX_Black                          4
 
 
 
@@ -33,6 +34,7 @@ struct QSttButtonIconMngr
 	QIcon  m_IconLight_ShutOff;
 	QIcon  m_IconLight_Red;
 	QIcon  m_IconLight_Yellow;
+	QIcon  m_IconLight_Black;
 
 	QIcon  m_IconBin_1;
 	QIcon  m_IconBin_2;
@@ -98,7 +100,9 @@ struct QSttButtonIconMngr
 
 		strName = strPicPath + "circle_yellow.png";
 		m_IconLight_Yellow.addFile(strName);
-		
+
+		strName = strPicPath + "circle_black.png";
+		m_IconLight_Black.addFile(strName);
 
 		strName = strPicPath + "switch_open.png";
 		m_IconBin_1.addFile(strName);
@@ -186,7 +190,9 @@ struct QSttButtonIconMngr
 
 		strPicPath =  ":/ctrls/images/circle_yellow.png";
 		m_IconLight_Yellow.addFile(strPicPath);
-		
+
+		strPicPath =  ":/ctrls/images/circle_black.png";
+		m_IconLight_Black.addFile(strPicPath);
 
 		strPicPath = ":/ctrls/images/switch_open.png";
 		m_IconBin_1.addFile(strPicPath);

@@ -17,7 +17,7 @@
 //#include "../CapGlobalDef.h"
 #include "../../../Record/RtMemBuffer/MemBuffer.h"
 
-#include "../../../../61850/Module/CfgDataMngr/IecCfgDevice.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgDevice.h"
 
 //SOE  lijunqing 2020-6-20
 #include "../../Module/BaseClass/ExBaseCycleArray.h"

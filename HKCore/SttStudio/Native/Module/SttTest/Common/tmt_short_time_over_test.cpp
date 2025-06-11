@@ -4,7 +4,7 @@
 
 
 #include"../../SttCmd/SttTestCmd.h"
-#include"../../../../Module/API/GlobalConfigApi.h"
+#include"../../../Module/API/GlobalConfigApi.h"
 
 void stt_xml_serialize_write_ShortTimeOverTest()
 {

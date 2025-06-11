@@ -898,6 +898,11 @@ void QSttSclIedDrawViewWidget::slot_Subend()
 					}
 				}
 			}
+			else
+			{
+				m_pArrowLine[i]->setHovered(FALSE);
+				m_pArrowLine[i]->update();
+			}
 
 			CString strText = m_pInputRect[i]->getText() + m_pInputBlockRect[i]->getText();
 			QMap<CString, QList<CSclVirtualSubend> >::const_iterator it1;
@@ -956,6 +961,11 @@ void QSttSclIedDrawViewWidget::slot_Subend()
 					found = true; 
 				}
 			}
+		}
+		else
+		{
+			m_pReceiveArrowLine[i]->setHovered(FALSE);
+			m_pReceiveArrowLine[i]->update();
 		}
 	}
 

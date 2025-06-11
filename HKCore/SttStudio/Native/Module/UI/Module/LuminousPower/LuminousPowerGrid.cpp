@@ -1,8 +1,8 @@
 #include "LuminousPowerGrid.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include <QApplication>
 #include "../../SttTestCntrFrameBase.h"
-#include "../../Module/XLanguage/XLanguageResource.h"
+#include "../../../Module/XLanguage/XLanguageResource.h"
 #include "../../../XLangResource_Native.h"
 
 
@@ -40,7 +40,7 @@ void QLuminousPowerGrid::InitGridTitle()
 	astrGridTitle[1]= /*_T("光口")*/g_sLangTxt_IEC_FI;  //lcq
 	astrGridTitle[2]= /*_T("光功率(-dbm)")*/g_sLangTxt_Gradient_FOpticalPower;  //lcq
 
-	int iGridWidth[3]={60, 100, 150};
+	int iGridWidth[3]={/*60*/100, 100, 150};
 	QExBaseListGridBase::InitGridTitle(astrGridTitle, iGridWidth, 3);
 }
 

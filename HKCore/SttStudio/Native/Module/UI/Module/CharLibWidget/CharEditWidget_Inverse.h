@@ -4,8 +4,8 @@
 #include <QWidget>
 #include "ui_CharEditWidget_Inverse.h"
 #include "CharEditWidgetBase.h"
-#include "../../AutoTest/Module/Characteristic/CharElementInverse.h"
-#include "../../AutoTest/Module/Characteristic/Characteristic.h"
+#include "../../../AutoTest/Module/Characteristic/CharElementInverse.h"
+#include "../../../AutoTest/Module/Characteristic/Characteristic.h"
 
 #include <QRadioButton>
 

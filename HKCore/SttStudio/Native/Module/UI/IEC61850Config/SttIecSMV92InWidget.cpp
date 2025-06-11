@@ -5,11 +5,11 @@
 #include <QEvent>
 #include <QKeyEvent>
 #include "SttIecSMV92OtherSetDialog.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../Module/CommonMethod/commonMethod.h"
 #include "../Module/ScrollCtrl/ScrollComboBox.h"]
-//#include "../../61850/Module/CfgDataMngr/IecCfgSmvInDatas.h"
+//#include "../../../61850/Module/CfgDataMngr/IecCfgSmvInDatas.h"
 //#include "../SttTestCntrFrameBase.h"
 
 QSttIecSMV92InWidget::QSttIecSMV92InWidget(QFont oIecFont,QWidget *parent)

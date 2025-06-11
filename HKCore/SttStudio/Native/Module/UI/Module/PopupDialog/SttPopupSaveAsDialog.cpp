@@ -1,8 +1,8 @@
 #include "SttPopupSaveAsDialog.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../../XLangResource_Native.h"
 #include <QStringList>
-#include "../../Module/OSInterface/QT/XMessageBox.h"
+#include "../../../Module/OSInterface/QT/XMessageBox.h"
 
 QSttPopupSaveAsDialog::QSttPopupSaveAsDialog(const CString &strFolderPath,QStringList &astrPostfix,const CString &strDefaultFileName,
 									   QWidget *parent,BOOL UseCodeConversion)
@@ -24,7 +24,7 @@ void QSttPopupSaveAsDialog::InitUI()
 	CString strTitle;
 	strTitle = /*_T("文件另存为")*/g_sLangTxt_IEC_FileSaveAs; //lcq
 	setWindowTitle(strTitle);
-	strTitle = /*_T("文件名称：")*/g_sLangTxt_Gradient_FmFileName;  //lcq
+	strTitle = /*_T("文件名称：")*//*g_sLangTxt_Gradient_FmFileName*/g_sLangTxt_Native_FileName + ":";  //lcq
 	m_pFileName_Label = new QLabel(strTitle,this);
 	m_pFileName_Label->setFont(*g_pSttGlobalFont);
 	m_pFileName_LineEdit = new QSttLineEdit(this);

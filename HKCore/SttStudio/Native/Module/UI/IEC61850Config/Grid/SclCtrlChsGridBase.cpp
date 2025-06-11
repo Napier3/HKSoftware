@@ -1,5 +1,5 @@
 #include "SclCtrlChsGridBase.h"
-#include "../../61850/Module/CfgDataMngr/IecCfg92Ch.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfg92Ch.h"
 #include "../../Module/CommonMethod/commonMethod.h"
 
 QSclCtrlChsGridBase::QSclCtrlChsGridBase(QWidget* pparent):QExBaseListGridBase(pparent)

@@ -2,7 +2,7 @@
 #define IECCFGGOUTCHANNELSGRID_H
 
 #include "IecCfgChsGridBase.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgGoutCh.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgGoutCh.h"
 
 
 #define IECCFGSMVGOUTCHANNELS_GRID_COLS		5

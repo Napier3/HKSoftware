@@ -3,7 +3,7 @@
 #include <QDirIterator>
 #include "../../../SttSystemConfig/SttSystemConfig.h"
 #include "../Module/XLangResource_Native.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../Module/ScrollCtrl/ScrollSlider.h"
 extern QFont *g_pSttGlobalFont;
 
@@ -30,7 +30,7 @@ QAuxDCOutputDlg::~QAuxDCOutputDlg()
 void QAuxDCOutputDlg::initUI()
 {
 	CString strTitle;
-	ReleaseUI();
+	//ReleaseUI();//多余注销
 	resize(240, 300);
 	setMinimumSize(QSize(0, 0));
 	setMaximumSize(QSize(16777215, 16777215));
@@ -50,7 +50,7 @@ void QAuxDCOutputDlg::initUI()
 	m_pScale_VBoxLayout = new QVBoxLayout(this);
 
 	CSttAdjDevice *pCurDevice = &g_oSttTestResourceMngr.m_oCurrDevice;
-	if(pCurDevice->m_strModel.Find(_T("PTU200L")) >= 0) 
+	if(pCurDevice->m_strModel.Find(_T("PTU200L")) >= 0 || pCurDevice->m_strModel.Find(_T("PTU100A")) >= 0) 
 	{
 		QLabel *pScale48V_Label = new QLabel(this);
 		pScale48V_Label->setFont(*g_pSttGlobalFont);
@@ -152,7 +152,7 @@ void QAuxDCOutputDlg::initUI()
 	m_pAuxDC_Vol_LineEdit = new QFloatLineEdit(m_pAuxDC_GroupBox);
 	m_pAuxDC_Vol_HBoxLayout->addWidget(m_pAuxDC_Vol_LineEdit);
 
-	if(pCurDevice->m_strModel.Find(_T("PTU200L")) >= 0) 
+	if(pCurDevice->m_strModel.Find(_T("PTU200L")) >= 0 || pCurDevice->m_strModel.Find(_T("PTU100A")) >= 0) 
 	{
 		m_pAuxDC_Vol_LineEdit->InitCoverage_EditFinished(0,60,2);
 	}
@@ -166,10 +166,13 @@ void QAuxDCOutputDlg::initUI()
         xlang_GetLangStrByFile(strTitle,"sOK");//LCQ
 	m_pOK_PushButton = new QPushButton(this);
 	m_pOK_PushButton->setText(strTitle);
+	CString strImagesPath = _P_GetResourcePath();
 #ifdef _PSX_QT_WINDOWS_
 	m_pOK_PushButton->setIcon (QPixmap( "./images/Check.png"));
 #else
-    m_pOK_PushButton->setIcon (QPixmap( ":/ctrls/images/Check.png"));
+    //m_pOK_PushButton->setIcon (QPixmap( ":/ctrls/images/Check.png"));
+	m_pOK_PushButton->setIcon(QPixmap(strImagesPath + "images/Check.png"));
+
 #endif
 	//strTitle = _T("取消");
 	xlang_GetLangStrByFile(strTitle,"sCancel");//LCQ
@@ -239,7 +242,7 @@ int QAuxDCOutputDlg::SetValueToScaleUI(float fAuxDC_Vol)
 	m_pAuxDC_Vol_LineEdit->setEnabled(false);
 
 	CSttAdjDevice *pCurDevice = &g_oSttTestResourceMngr.m_oCurrDevice;
-	if(pCurDevice->m_strModel.Find(_T("PTU200L")) >= 0) 
+	if(pCurDevice->m_strModel.Find(_T("PTU200L")) >= 0 || pCurDevice->m_strModel.Find(_T("PTU100A")) >= 0) 
 	{
 		if (nValue == 0)
 		{
@@ -304,7 +307,7 @@ void QAuxDCOutputDlg::SetUI_ToScaleValue(int nValue)
 {
 	//chenling 2024.8.21PTU200L只有两个档位24V，48V
 	CSttAdjDevice *pCurDevice = &g_oSttTestResourceMngr.m_oCurrDevice;
-	if(pCurDevice->m_strModel.Find(_T("PTU200L")) >= 0) 
+	if(pCurDevice->m_strModel.Find(_T("PTU200L")) >= 0 || pCurDevice->m_strModel.Find(_T("PTU100A")) >= 0) 
 	{
 		if (nValue == 1)
 		{
@@ -378,9 +381,10 @@ void QAuxDCOutputDlg::slot_ScaleSetValue(int nValue)
 	}
 
 	m_nOldSliderValue = nValue;
-	}
+}
 
 
+#include "../../../Module/OSInterface/QT/XMessageBox.h"
 QAuxDCOutputDlg_L336EXi::QAuxDCOutputDlg_L336EXi(QWidget *parent)
 : QDialog(parent)
 	{
@@ -442,13 +446,13 @@ void QAuxDCOutputDlg_L336EXi::initUI()
 	m_pScale48V_Label->setText(tr("48V"));
 	m_pScale_VBoxLayout->addWidget(m_pScale48V_Label);
 
-	m_pScale24V_Label = new QLabel(this);
-	m_pScale24V_Label->setText(tr("24V"));
-	m_pScale_VBoxLayout->addWidget(m_pScale24V_Label);
-
-	m_pScale15V_Label = new QLabel(this);
-	m_pScale15V_Label->setText(tr("15V"));
-	m_pScale_VBoxLayout->addWidget(m_pScale15V_Label);
+// 	m_pScale24V_Label = new QLabel(this);
+// 	m_pScale24V_Label->setText(tr("24V"));
+// 	m_pScale_VBoxLayout->addWidget(m_pScale24V_Label);//20241107 suyang 根据最新要求注销 48-264V
+// 
+// 	m_pScale15V_Label = new QLabel(this);
+// 	m_pScale15V_Label->setText(tr("15V"));
+// 	m_pScale_VBoxLayout->addWidget(m_pScale15V_Label);
 
 	//strTitle = _T("其它");
 	xlang_GetLangStrByFile(strTitle,"State_Others");//LCQ
@@ -470,7 +474,7 @@ void QAuxDCOutputDlg_L336EXi::initUI()
 	m_pDC_Value_Slider->setOrientation(Qt::Vertical);  // 垂直方向
 
 	m_pDC_Value_Slider->setMinimum(1);  // 最小值
-	m_pDC_Value_Slider->setMaximum(9);  // 最大值
+	m_pDC_Value_Slider->setMaximum(7);  // 最大值
 	m_pDC_Value_Slider->setSingleStep(1);  // 步长
 	m_pDC_Value_Slider->setTickInterval(1);
 	m_pDC_Value_Slider->setMinimumSize(50, 100);
@@ -494,7 +498,7 @@ void QAuxDCOutputDlg_L336EXi::initUI()
 
 	m_pAuxDC_Vol_LineEdit = new QFloatLineEdit(m_pAuxDC_GroupBox);
 	m_pAuxDC_Vol_HBoxLayout->addWidget(m_pAuxDC_Vol_LineEdit);
-	m_pAuxDC_Vol_LineEdit->InitCoverage_EditFinished(12,264,2);
+//	m_pAuxDC_Vol_LineEdit->InitCoverage_EditFinished(/*12*/48,264,2);
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//strTitle = _T("确定");
@@ -530,8 +534,41 @@ void QAuxDCOutputDlg_L336EXi::initUI()
 	connect(m_pCancel_PushButton, SIGNAL(clicked()), this, SLOT(slot_CancelClicked()));
 	connect(m_pDC_Value_Slider, SIGNAL(valueChanged(int)), this, SLOT(slot_ScaleSetValue(int)));
 
+	connect(m_pAuxDC_Vol_LineEdit, SIGNAL(editingFinished()), SLOT(slot_AuxDC_Vol_LineEdit()));
+
 	setDCOutPutFont();
+}
+
+void QAuxDCOutputDlg_L336EXi::slot_AuxDC_Vol_LineEdit()
+{
+	QString str = m_pAuxDC_Vol_LineEdit->text();
+	
+	int nAuxDC_Vol = str.toInt();
+
+	CString strMsgText;
+
+	if (nAuxDC_Vol < 48)
+	{
+        strMsgText = "最小直流设置为48V，强制设置为48V";
+		CXMessageBox::information(this,/* tr("提示")*/g_sLangTxt_Message,strMsgText);
+		m_pAuxDC_Vol_LineEdit->setText("48");
+		m_nOldSliderValue = SetValueToScaleUI(48);
 	}
+	else if(nAuxDC_Vol > 264)
+	{
+        strMsgText = "最大直流设置为264V，强制设置为264V";
+		CXMessageBox::information(this,/* tr("提示")*/g_sLangTxt_Message,strMsgText);
+		m_pAuxDC_Vol_LineEdit->setText("264");
+		m_nOldSliderValue = SetValueToScaleUI(264);
+	}
+	else
+	{
+		m_pAuxDC_Vol_LineEdit->setText(str);
+		m_nOldSliderValue = SetValueToScaleUI(nAuxDC_Vol);
+	}
+
+	//SetUI_ToScaleValue(m_nOldSliderValue);
+}
 
 void QAuxDCOutputDlg_L336EXi::setDCOutPutFont()
 	{
@@ -544,15 +581,15 @@ void QAuxDCOutputDlg_L336EXi::setDCOutPutFont()
 	m_pScale220V_Label->setFont(*g_pSttGlobalFont);
 	m_pScale110V_Label->setFont(*g_pSttGlobalFont);
 	m_pScale48V_Label->setFont(*g_pSttGlobalFont);
-	m_pScale24V_Label->setFont(*g_pSttGlobalFont);
-	m_pScale15V_Label->setFont(*g_pSttGlobalFont);
+// 	m_pScale24V_Label->setFont(*g_pSttGlobalFont);
+// 	m_pScale15V_Label->setFont(*g_pSttGlobalFont);
 	m_pScaleOther_Label->setFont(*g_pSttGlobalFont);
 	m_pScaleClosed_Label->setFont(*g_pSttGlobalFont);
 	}
 
 void QAuxDCOutputDlg_L336EXi::ReleaseUI()
-	{
-	}
+{
+}
 
 void QAuxDCOutputDlg_L336EXi::InitDatas()
 {
@@ -576,40 +613,40 @@ int QAuxDCOutputDlg_L336EXi::SetValueToScaleUI(float fAuxDC_Vol)
 		m_pDC_Value_Slider->setValue(1);
 		return 1;
 	}
-	else if (nValue == 15)
+// 	else if (nValue == 15)
+// 	{
+// 		m_pDC_Value_Slider->setValue(3);
+// 		return 3;
+// 	}
+// 	else if (nValue == 24)
+// 	{
+// 		m_pDC_Value_Slider->setValue(4);
+// 		return 4;
+// 	}
+	else if (nValue == 48)
 	{
 		m_pDC_Value_Slider->setValue(3);
 		return 3;
 	}
-	else if (nValue == 24)
+	else if (nValue == 110)
 	{
 		m_pDC_Value_Slider->setValue(4);
 		return 4;
 	}
-	else if (nValue == 48)
+	else if (nValue == 220)
 	{
 		m_pDC_Value_Slider->setValue(5);
 		return 5;
 	}
-	else if (nValue == 110)
+	else if (nValue == 250)
 	{
 		m_pDC_Value_Slider->setValue(6);
 		return 6;
 	}
-	else if (nValue == 220)
+	else if (nValue == 264)
 	{
 		m_pDC_Value_Slider->setValue(7);
 		return 7;
-	}
-	else if (nValue == 250)
-	{
-		m_pDC_Value_Slider->setValue(8);
-		return 8;
-	}
-	else if (nValue == 264)
-	{
-		m_pDC_Value_Slider->setValue(9);
-		return 9;
 	}
 	else
 	{
@@ -629,31 +666,31 @@ void QAuxDCOutputDlg_L336EXi::SetUI_ToScaleValue(int nValue)
 	{
 		g_oSystemParas.m_fAuxDC_Vol = m_pAuxDC_Vol_LineEdit->GetValue();
 	}
+// 	else if (nValue == 3)
+// 	{
+// 		g_oSystemParas.m_fAuxDC_Vol = 15;
+// 	}
+// 	else if (nValue == 4)
+// 	{
+// 		g_oSystemParas.m_fAuxDC_Vol = 24;
+// 	}
 	else if (nValue == 3)
-	{
-		g_oSystemParas.m_fAuxDC_Vol = 15;
-	}
-	else if (nValue == 4)
-	{
-		g_oSystemParas.m_fAuxDC_Vol = 24;
-	}
-	else if (nValue == 5)
 	{
 		g_oSystemParas.m_fAuxDC_Vol = 48;
 	}
-	else if (nValue == 6)
+	else if (nValue == 4)
 	{
 		g_oSystemParas.m_fAuxDC_Vol = 110;
 	}
-	else if (nValue == 7)
+	else if (nValue == 5)
 	{
 		g_oSystemParas.m_fAuxDC_Vol = 220;
 	}
-	else if (nValue == 8)
+	else if (nValue == 6)
 	{
 		g_oSystemParas.m_fAuxDC_Vol = 250;
 	}
-	else if (nValue == 9)
+	else if (nValue == 7)
 	{
 		g_oSystemParas.m_fAuxDC_Vol = 264;
 	}

@@ -2,7 +2,7 @@
 #include "QCharElementDlg.h"
 //#include "../../SttTestCntrFrameBase.h"
 #include "../Module/XLangResource_Native.h"
-#include "../../Module//OSInterface/QT/XMessageBox.h"
+#include "../../../Module//OSInterface/QT/XMessageBox.h"
 #include "../../../XLangResource_Native.h"
 
 
@@ -382,8 +382,8 @@ void QCharElementDlg::UpdateParaCache()
 			{
 				m_editList[0]->setText(GetImpedanceByXY("Amp",pElementLined->m_strXb,pElementLined->m_strYb));
 				m_editList[1]->setText(GetImpedanceByXY("Angle",pElementLined->m_strXb,pElementLined->m_strYb));
-				m_editList[3]->setText(GetImpedanceByXY("Amp",pElementLined->m_strXe,pElementLined->m_strYe));
-				m_editList[4]->setText(GetImpedanceByXY("Angle",pElementLined->m_strXe,pElementLined->m_strYe));
+				m_editList[2]->setText(GetImpedanceByXY("Amp",pElementLined->m_strXe,pElementLined->m_strYe));
+				m_editList[3]->setText(GetImpedanceByXY("Angle",pElementLined->m_strXe,pElementLined->m_strYe));
 			}
 			else
 			{

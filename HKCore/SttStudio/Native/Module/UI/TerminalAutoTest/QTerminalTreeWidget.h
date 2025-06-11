@@ -5,12 +5,12 @@
 #include <QTreeWidget>
 #include <QCheckBox>
 #include <QPushButton>
-#include "../../Module/OSInterface/QT/CString_QT.h"
-#include "../../Module/BaseClass/QT/ExBaseListTreeCtrl.h"
+#include "../../../Module/OSInterface/QT/CString_QT.h"
+#include "../../../Module/BaseClass/QT/ExBaseListTreeCtrl.h"
 #include "QTerminalSettingTabWidget.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgGoutDatas.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgDatasMngr.h"
-#include "../../61850/Module/CfgDataMngr/IecCfgGoutData.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgGoutDatas.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgDatasMngr.h"
+#include "../../../61850/Module/CfgDataMngr/IecCfgGoutData.h"
 #include "../Module/ScrollCtrl/ScrollTreeWidget.h"
 
 class QTerminalTreeWidget : public QWidget

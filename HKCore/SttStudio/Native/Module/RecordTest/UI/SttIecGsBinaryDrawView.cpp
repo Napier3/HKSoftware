@@ -7,7 +7,7 @@
 
 #include "stdafx.h"
 #include "SttIecGsBinaryDrawView.h"
-#include "../../../../Module/API/GloblaDrawFunctions.h"
+#include "../../../Module/API/GloblaDrawFunctions.h"
 #include "SttIecGsBinaryDraw.h"
 
 //////////////////////////////////////////////////////////////////////////

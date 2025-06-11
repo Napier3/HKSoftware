@@ -1,6 +1,6 @@
 #include "OscillogramGroupWidget.h"
 #include"CString_QT.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include"../Module/XLangResource_Native.h"
 
 
@@ -14,16 +14,33 @@ OscillogramGroupWidget::OscillogramGroupWidget(QWidget *parent ):QWidget(parent)
 	m_nVolCurIndex = 0;
 	m_nVolCurFlag = 0;
 	m_pSttTestResource = NULL;
+	m_nParaSetSecondValue = 1;
 	for(int i = 0; i < TAB_CNT; i++)
 	{
 		m_pOscillogramWidget[i] = NULL;
 		m_nVolChCnt[i] = 0;
 		m_nCurChCnt[i] = 0;
 	}
+
+	m_bHasInitFinished = false;
+}
+
+
+void OscillogramGroupWidget::showEvent(QShowEvent *event)
+{
+	if (!m_bHasInitFinished)
+	{//第一次显示
+		InitOscillogramGroupWidget();
+		ChnIndexChanged();
+	}
+
+	m_bHasInitFinished = true;
+
+	QWidget::showEvent(event);
 }
 OscillogramGroupWidget::~OscillogramGroupWidget()
 {
-
+	Clear();
 }
 
 void OscillogramGroupWidget::Clear()
@@ -49,6 +66,25 @@ void OscillogramGroupWidget::Clear()
 		}
 	}
 }
+
+void OscillogramGroupWidget::SetParaSetSecondValue(int nParaSetSecondValue)
+{
+	if (m_nParaSetSecondValue == nParaSetSecondValue)
+	{
+		return;
+	}
+	m_nParaSetSecondValue = nParaSetSecondValue;
+
+	for  (int i = 0; i < m_nRealGroupCnt; i ++)
+	{
+		if (m_pOscillogramWidget[i])
+		{
+			m_pOscillogramWidget[i]->SetParaSetSecondValue(m_nParaSetSecondValue);
+		}
+
+	}
+}
+
 
 int OscillogramGroupWidget::GetGroupIndexFromChIndex(int nChIndex)
 {
@@ -81,21 +117,24 @@ int OscillogramGroupWidget::GetGroupIndexFromChIndex(int nChIndex)
 
 	return 0;
 }
-void OscillogramGroupWidget::initUI(CSttTestResourceBase *pSttTestResource)
+
+//2024-9-11 lijunqing 优化系统程序启动的效率
+void OscillogramGroupWidget::InitOscillogramGroupWidget()
 {
-	m_pSttTestResource = pSttTestResource;
 	m_pTabWidget = new QTabWidget;
 	m_pTabWidget->setFont(*g_pSttGlobalFont);
 	m_pGridLayout = new QGridLayout;
-	pSttTestResource->GetCurrVolGroupNum(m_nGroupIndexI,m_nGroupIndexV);
-	m_nRealGroupCnt = pSttTestResource->m_oListGroups.GetCount();
+	m_pSttTestResource->GetCurrVolGroupNum(m_nGroupIndexI,m_nGroupIndexV);
+	m_nRealGroupCnt = m_pSttTestResource->m_oListGroups.GetCount();
 	int nVolChCnt = 0;
 	int nCurChCnt = 0;
+
 	for(int nGroupIndex = 0; nGroupIndex < m_nRealGroupCnt; nGroupIndex++)
 	{
 		m_pOscillogramWidget[nGroupIndex] = new QOscillogramWidget(this);
 		m_pOscillogramWidget[nGroupIndex]->m_nGroupIndex = nGroupIndex;
-		m_pOscillogramWidget[nGroupIndex]->setSttTestResource(pSttTestResource);
+		m_pOscillogramWidget[nGroupIndex]->m_nParaSetSecondValue = m_nParaSetSecondValue;
+		m_pOscillogramWidget[nGroupIndex]->setSttTestResource(m_pSttTestResource);
 		m_pOscillogramWidget[nGroupIndex]->getSttChGroupResource_Vol();
 		m_pOscillogramWidget[nGroupIndex]->getSttChGroupResource_Cur();
 
@@ -111,8 +150,10 @@ void OscillogramGroupWidget::initUI(CSttTestResourceBase *pSttTestResource)
 		m_pOscillogramWidget[nGroupIndex]->setArrUICUR(m_pArrUICUR + nCurChCnt);
 		//m_pOscillogramWidget[nGroupIndex]->InitArrUIValue(); //dingxy 20240411 每次读取上一次模板值，不需要初始化
 		m_pOscillogramWidget[nGroupIndex]->InitArrUIContent();//仅初始化基波含有率
-		m_pOscillogramWidget[nGroupIndex]->updateWidget();
-		m_pOscillogramWidget[nGroupIndex]->selectDataChanged();
+		
+		//2024-9-16 lijunqing 优化系统程序启动的效率
+		//m_pOscillogramWidget[nGroupIndex]->updateWidget();
+		//m_pOscillogramWidget[nGroupIndex]->selectDataChanged();
 
 		//QString str = QString::fromLocal8Bit("第%1组");
 		CString strTmp;
@@ -123,7 +164,11 @@ void OscillogramGroupWidget::initUI(CSttTestResourceBase *pSttTestResource)
 	}
 	m_pGridLayout->addWidget(m_pTabWidget);
 	this->setLayout(m_pGridLayout);
-	//setArrUIAdress();
+}
+
+void OscillogramGroupWidget::initUI(CSttTestResourceBase *pSttTestResource)
+{
+	m_pSttTestResource = pSttTestResource;
 }
 
 void OscillogramGroupWidget::slot_ValueChanged(int nVolCurIndex, int nVolCurFlag)
@@ -142,9 +187,8 @@ void OscillogramGroupWidget::setArrUICUR(tmt_channel *pArrUICUR)
 	m_pArrUICUR = pArrUICUR;
 }
 
-void OscillogramGroupWidget::slot_ChnIndexChanged(int nIndex)
+void OscillogramGroupWidget::ChnIndexChanged()
 {
-	m_nGroupIndex = GetGroupIndexFromChIndex(m_nVolCurIndex);
 	if(m_nVolCurFlag == 1)//表示电压
 	{
 		if(m_nGroupIndex >=1)
@@ -155,6 +199,7 @@ void OscillogramGroupWidget::slot_ChnIndexChanged(int nIndex)
 		{
 			m_pOscillogramWidget[m_nGroupIndex]->setArrUIVOL(m_pArrUIVOL);
 		}
+
 		m_pOscillogramWidget[m_nGroupIndex]->selectDataChanged();
 	}
 	else if(m_nVolCurFlag == 2)//表示电流
@@ -167,10 +212,24 @@ void OscillogramGroupWidget::slot_ChnIndexChanged(int nIndex)
 		{
 			m_pOscillogramWidget[m_nGroupIndex]->setArrUICUR(m_pArrUICUR);
 		}
+
 		//m_pOscillogramWidget[0]->setArrUIVOL(m_pArrUIVOL);
 		m_pOscillogramWidget[m_nGroupIndex]->selectDataChanged();
 	}
 }
+
+void OscillogramGroupWidget::slot_ChnIndexChanged(int nIndex)
+{
+	m_nGroupIndex = GetGroupIndexFromChIndex(m_nVolCurIndex);
+
+	if (!m_bHasInitFinished)
+	{
+		return;
+	}
+	
+	ChnIndexChanged();
+}
+
 void OscillogramGroupWidget::slot_updateOscillogramGroup()
 {
 	for(int i = 0;i < m_nRealGroupCnt; i++)
@@ -178,6 +237,7 @@ void OscillogramGroupWidget::slot_updateOscillogramGroup()
 		m_pOscillogramWidget[i]->selectDataChanged();
 	}
 }
+
 void OscillogramGroupWidget::slot_SetToZero()
 {
 	//setArrUIAdress();
@@ -257,6 +317,12 @@ void OscillogramGroupWidget::setArrUIAdress()
 	}
 }
 
+void OscillogramGroupWidget::InitGroupWidget()
+{
+	InitOscillogramGroupWidget();
+	ChnIndexChanged();
+}
+
 void OscillogramGroupWidget::setValue()
 {
 	m_nGroupIndex = GetGroupIndexFromChIndex(m_nVolCurIndex);
@@ -268,43 +334,4 @@ void OscillogramGroupWidget::setValue()
 	{
 		m_pOscillogramWidget[m_nGroupIndex]->selectDataChanged();
 	}
-}void OscillogramGroupWidget::UpdateUI(CSttTestResourceBase *pSttTestResource)
-{
-	QTabWidget *temp = new QTabWidget; 
-	temp->setFont(*g_pSttGlobalFont);
-	QGridLayout * pGL = new QGridLayout;
-	pSttTestResource->GetCurrVolGroupNum(m_nGroupIndexI,m_nGroupIndexV);
-	m_nRealGroupCnt = pSttTestResource->m_oListGroups.GetCount();
-	int nVolChCnt = 0;
-	int nCurChCnt = 0;
-	for(int nGroupIndex = 0; nGroupIndex < m_nRealGroupCnt; nGroupIndex++)
-	{
-		m_pOscillogramWidget[nGroupIndex] = new QOscillogramWidget(this);
-		m_pOscillogramWidget[nGroupIndex]->m_nGroupIndex = nGroupIndex;
-		m_pOscillogramWidget[nGroupIndex]->setSttTestResource(pSttTestResource);
-		m_pOscillogramWidget[nGroupIndex]->getSttChGroupResource_Vol();
-		m_pOscillogramWidget[nGroupIndex]->getSttChGroupResource_Cur();
-
-		if(nGroupIndex >= 1)
-		{
-			nVolChCnt += m_pOscillogramWidget[nGroupIndex-1]->getSttChGroupResource_Vol_ChCnt();
-			nCurChCnt += m_pOscillogramWidget[nGroupIndex-1]->getSttChGroupResource_Cur_ChCnt();
-		}
-
-		m_nVolChCnt[nGroupIndex] = m_pOscillogramWidget[nGroupIndex]->getSttChGroupResource_Vol_ChCnt();
-		m_nCurChCnt[nGroupIndex] = m_pOscillogramWidget[nGroupIndex]->getSttChGroupResource_Cur_ChCnt();
-		m_pOscillogramWidget[nGroupIndex]->setArrUIVOL(m_pArrUIVOL + nVolChCnt);
-		m_pOscillogramWidget[nGroupIndex]->setArrUICUR(m_pArrUICUR + nCurChCnt);
-		m_pOscillogramWidget[nGroupIndex]->InitArrUIValue();
-		m_pOscillogramWidget[nGroupIndex]->updateWidget();
-		m_pOscillogramWidget[nGroupIndex]->selectDataChanged();
-
-		//QString str = QString::fromLocal8Bit("第%1组");
-		xlang_GetLangStrByFile(g_sLangTxt_Manual_FirGroup,"Manual_FirGroup");//LCQ
-		temp->addTab(m_pOscillogramWidget[nGroupIndex],g_sLangTxt_Manual_FirGroup.arg(nGroupIndex+1));
-
-	}
-	pGL->addWidget(temp);
-	this->setLayout(pGL);
-	this->show();
 }

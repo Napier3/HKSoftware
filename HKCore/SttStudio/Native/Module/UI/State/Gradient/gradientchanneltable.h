@@ -7,7 +7,7 @@
 
 #include "../Module/UI/Module/CommonMethod/commonMethod.h"
 #include "../Module/SttTest/Common/tmt_common_def.h"
-#include "../../Module/BaseClass/ExBaseList.h"
+#include "../../../Module/BaseClass/ExBaseList.h"
 #include "../../Module/ScrollCtrl/ScrollTableWidget.h"
 #include "../../Module/QExBaseListGridBase/QExBaseListComBoxDelegBase.h"
  #include "../../Module/CommonCtrl_QT/CommonCtrlInterface.h"
@@ -28,7 +28,7 @@ public:
 	virtual void UpdateTable();
 
 	void setTableData(tmt_channel *pArrUI);
-	void setHeaderOfTable(QStringList strheader);
+	//void setHeaderOfTable(QStringList strheader);
 	void saveTable();
 
 	void InitLinearStepGradient();//在阶梯递变,线性递变切换后,对结构体进行重新初始化
@@ -53,6 +53,10 @@ public:
 //#endif
 
 	BOOL m_bRunning;
+
+	int m_nParaSetSecondValue;
+	void setHeaderOfTable(int nParaSetSecondValue);
+
 
 protected slots:
 	void slot_OnCellChanged(int row,int col);

@@ -83,7 +83,7 @@ void QSysParasDlg::initUI()
 	setWindowFlags(Qt::Dialog | Qt::CustomizeWindowHint | Qt::WindowTitleHint);
 //	setWindowFlags(Qt::NonModal);
 
-	resize(600, 600);
+	resize(800, 600);
 	setMinimumSize(QSize(0, 0));
 	setMaximumSize(QSize(16777215, 16777215));
 
@@ -91,6 +91,7 @@ void QSysParasDlg::initUI()
 	m_tabWidget = new QTabWidget(this);
 //	m_pChMapsWiget = new QChMapsWidget(this);
 	m_pSysParasWiget = new QSysParasWidget(this);
+	m_pSysParasWiget->setFont(*g_pSttGlobalFont);
 //	m_pModuleSetWiget = new QModuleSetWidget(this);
 
 //	m_tabWidget->addTab(m_pChMapsWiget,tr("通道资源映射"));
@@ -103,7 +104,12 @@ void QSysParasDlg::initUI()
 		m_pWeakSetWiget = new QWeakSetWidget(this);
 		m_tabWidget->addTab(m_pWeakSetWiget,/*tr("弱信号设置")*/g_sLangTxt_IEC_IEC_WeakSet); //lcq
 	}
-
+#ifdef IecCfgSysParas_USE_Grid
+	m_pSysParasCfg = new QSysParasCfgWidget(g_oSttTestResourceMngr.m_oIecDatasMngr.GetSysParasMngr(), this);
+#else
+	m_pSysParasCfg = new QSysParasCfgWidget_NoGrid(g_oSttTestResourceMngr.m_oIecDatasMngr.GetSysParasMngr(), this);
+#endif
+	m_tabWidget->addTab(m_pSysParasCfg, /*tr("系统参数配置")*/g_sLangTxt_SystemPara.GetString());
 //	m_tabWidget->addTab(m_pModuleSetWiget,tr("模块设置"));
 	m_pVLayout->addWidget(m_tabWidget);
 
@@ -193,10 +199,12 @@ void QSysParasDlg::slot_OKClicked()
 	}
 
 	m_pSysParasWiget->SaveDatas();
+	m_pSysParasCfg->SaveDatas();
 //	m_pModuleSetWiget->SaveDatas();
 	m_bOutputTypeHasChanged = m_oSysParas.OutputTypeHasChanged(&g_oSystemParas);
 	m_oSysParas.CopyOwn(&g_oSystemParas);
-
+	//chenling 20250212 
+	g_theTestCntrFrame->m_bOutputTypeHasChanged = m_bOutputTypeHasChanged;
 	if (/*(!bOutputTypeHasChanged)&&*/(g_oLocalSysPara.m_nSupportWeakOutput)&&(g_oSystemParas.m_nHasWeek))//如果输出支持弱信号输出,并且当前输出弱信号
 	{
 		g_oSttTestResourceMngr.m_oChMaps.DeleteAll();
@@ -212,6 +220,14 @@ void QSysParasDlg::slot_OKClicked()
 	if ((g_oLocalSysPara.m_nSupportWeakOutput)&&(g_oSystemParas.m_nHasWeek))//20220507 如果支持弱信号输出,则保存弱信号配置
 	{
 		g_oSttTestResourceMngr.SaveCurChMapsFile();
+	}
+
+	g_oSttTestResourceMngr.IecSysParasToTmtSysParas();//dingxy 20250318更新系统参数
+	BOOL bSystemParasIecConfigHasChanged = m_oSysParas.SystemParasIecConfigHasChanged(&g_oSystemParas);
+	if (bSystemParasIecConfigHasChanged)
+	{
+		m_bOutputTypeHasChanged = TRUE;//增加iec系统参数判断
+		g_oSttTestResourceMngr.SaveDefaultIec61850Config();
 	}
 //	emit sig_SysParasHasChanged(bOutputTypeHasChanged);
 	accept();

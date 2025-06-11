@@ -1,7 +1,8 @@
 ﻿#include "WidgetDelegate.h"
 #include <QApplication>
+#include <QtGui>
 #include <QSpinBox>
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../ScrollCtrl/ScrollComboBox.h"
 #pragma execution_character_set("utf-8")
 

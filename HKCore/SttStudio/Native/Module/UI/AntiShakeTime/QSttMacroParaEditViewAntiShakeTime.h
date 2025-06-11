@@ -5,8 +5,8 @@
 #include "Grid/QSttAntiShakeTimeTestItemsGroupGrid.h"
 #include "Grid/QSttAntiShakeTimeDinEventGroupGrid.h"
 #include "../Module/CommonCtrl_QT/QLongLineEdit.h"
-#include "../../Module/BaseClass/QT/ExBaseListComboBox.h"
-
+#include "../../../Module/BaseClass/QT/ExBaseListComboBox.h"
+#include <QPushButton>
 #define STT_ANTISHAKE_TIME_INIT_INTERVAL_SELECT		 "InitIntervalSelect"              //间隔选择
 #define STT_ANTISHAKE_TIME_INIT_TEST_OBJECT			 "InitTestObject"				   //测试对象
 #define STT_ANTISHAKE_TIME_ANTI_SHAKE_TIME             "AntiShakeTime"				   //防抖时间
@@ -57,7 +57,7 @@ public:
 	virtual void OnViewTestStart();
 	virtual void OnViewTestStop();
 	void GetSelectObject();
-	virtual BOOL GetDatas_Reports( CSttReport *pReport,const CString &strItemID = "");
+	virtual BOOL GetDatas_Reports( CSttReport *pReport,CSttItemBase *pSttItem);
 
 
 public:
@@ -99,6 +99,7 @@ public slots:
 
 	void slot_EditAntiShakeTime();
 	void slot_EditSOEResolution();
+	void slot_btn_ClearClearEventRecordsClicked();
 };
 
 

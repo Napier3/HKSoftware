@@ -5,8 +5,8 @@
 #include <QFileDialog>
 #include <QFile>
 #include "../SttTestCntrFrameBase.h"
-#include "../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 #include "../Controls/SttTabWidget.h"
 #include "../Module/SttTestResourceMngr/SttTestResourceMngr.h"
 #include"../../XLangResource_Native.h"
@@ -131,7 +131,15 @@ void QSttIecConfigDialogLinux::CreateNavigationTree(long nTotalFiberNum_LC , lon
 	astrItemDesc<<strTemp;
 	QTreeWidgetItem *pChildItem = new QTreeWidgetItem(astrItemDesc,STT_IECCONFIG_TREE_LEVEL_SECOND);
 	//pChildItem->setCheckState(0, Qt::Checked);
-	pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable);//2023-12-28 suyang 取消树形控件勾选框
+	//pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable);//2023-12-28 suyang 取消树形控件勾选框
+	if(g_oSystemParas.m_nIecFormat == 0)
+	{
+		pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable| Qt::ItemIsEnabled);//2023-12-28 suyang 取消树形控件勾选框
+	}
+	else
+	{
+		pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable & ~Qt::ItemIsEnabled);
+	}
 	if (nTotalFiberNum_LC > 0)
 	{
 	pQTreeTopItem->addChild(pChildItem);
@@ -149,7 +157,15 @@ void QSttIecConfigDialogLinux::CreateNavigationTree(long nTotalFiberNum_LC , lon
 	astrItemDesc<<strTemp;
 	pChildItem = new QTreeWidgetItem(astrItemDesc,STT_IECCONFIG_TREE_LEVEL_SECOND);
 	//pChildItem->setCheckState(0, Qt::Checked);
-	pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable);//2023-12-28 suyang 取消树形控件勾选框
+	//pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable);//2023-12-28 suyang 取消树形控件勾选框
+	if(g_oSystemParas.m_nIecFormat == 0)
+	{
+		pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable & ~Qt::ItemIsEnabled);//2023-12-28 suyang 取消树形控件勾选框
+	}
+	else
+	{
+		pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
+	}
 	if (nTotalFiberNum_STSend > 0)
 	{
 	pQTreeTopItem->addChild(pChildItem);
@@ -176,7 +192,15 @@ void QSttIecConfigDialogLinux::CreateNavigationTree(long nTotalFiberNum_LC , lon
 	astrItemDesc<<strTemp;
 	pChildItem = new QTreeWidgetItem(astrItemDesc,STT_IECCONFIG_TREE_LEVEL_SECOND);
 // 	pChildItem->setCheckState(0, Qt::Checked);
-	pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable);//2023-12-28 suyang 取消树形控件勾选框
+	//pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable);//2023-12-28 suyang 取消树形控件勾选框
+	if(g_oSystemParas.m_nIecFormat == 0)
+	{
+		pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable| Qt::ItemIsEnabled);//2023-12-28 suyang 取消树形控件勾选框
+	}
+	else
+	{
+		pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable & ~Qt::ItemIsEnabled);
+	}
 	if (nTotalFiberNum_LC > 0)
 	{
 	pQTreeTopItem->addChild(pChildItem);
@@ -193,7 +217,16 @@ void QSttIecConfigDialogLinux::CreateNavigationTree(long nTotalFiberNum_LC , lon
 	astrItemDesc<<strTemp;
 	pChildItem = new QTreeWidgetItem(astrItemDesc,STT_IECCONFIG_TREE_LEVEL_SECOND);
 // 	pChildItem->setCheckState(0, Qt::Checked);
-	pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable);//2023-12-28 suyang 取消树形控件勾选框
+	//pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable);//2023-12-28 suyang 取消树形控件勾选框
+	if(g_oSystemParas.m_nIecFormat == 0)
+	{
+		pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable & ~Qt::ItemIsEnabled);//2023-12-28 suyang 取消树形控件勾选框
+	}
+	else
+	{
+		pChildItem->setFlags(pChildItem->flags() & ~Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
+	}
+	
 	if (nTotalFiberNum_STSend > 0)
 	{
 	pQTreeTopItem->addChild(pChildItem);
@@ -261,6 +294,11 @@ void QSttIecConfigDialogLinux::slot_TreeItemClicked(QTreeWidgetItem * pItem, int
 {
 	if(pItem == NULL) 
 		return;
+
+	if ((pItem->flags() & Qt::ItemIsEnabled) == 0)
+	{
+		return;
+	}
 
 	QTreeWidgetItem *pCurSelItem = pItem;
 

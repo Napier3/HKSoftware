@@ -8,7 +8,7 @@
 
 #include "SttTestCtrlFrameCfgMngrGlobal.h"
 #include "SttFrame_GlobalData.h"
-#include "../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/DataMngr/DataGroup.h"
 
 #define    STTFRAME_GLOBALDATA_TabHeight_ID                _T("TabHeight")
 #define    STTFRAME_GLOBALDATA_ComBoxItemHeight_ID         _T("ComBoxItemHeight")

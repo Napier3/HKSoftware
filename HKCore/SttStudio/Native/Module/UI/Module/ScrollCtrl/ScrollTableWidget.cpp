@@ -1,7 +1,7 @@
 #include "ScrollTableWidget.h"
 #include <QApplication>
 #include <QLineEdit>
-#include "../../Module/OSInterface/OSInterface.h"
+#include "../../../Module/OSInterface/OSInterface.h"
 #ifdef _USE_SoftKeyBoard_	
 #include "../../SoftKeyboard/SoftKeyBoard.h"
 #endif

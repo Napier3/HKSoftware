@@ -13,7 +13,7 @@ public:
 	QInterharmonicsChannelTable(MOUDLEType moudleType, CExBaseList *pChList,
 		tmt_channel *pArrUI, QWidget *parent = NULL);
 
-	QCheckBoxDelegateBase *m_pCheckBoxDelegateBase;
+	QExBaseListCheckBoxDelegate *m_pCheckBoxDelegateBase;
 
 	virtual ~QInterharmonicsChannelTable();
 
@@ -26,6 +26,12 @@ public:
 	virtual void Act_setPraseZValue(int nStart,int nEnd, long nCol = 2);
 	virtual void Act_setHzEqualValue(int nStart,int nEnd,float fv, long nCol = 3);
 	virtual void mousePressEvent(QMouseEvent *);
+
+	void SetParaSetSecondValue(int nParaSetSecondValue);
+
+signals:
+	void sig_updataInterharmonicsChannelParas();//用于参数修改后发送信息更新
+
 
 protected slots:
 	virtual void slot_OnCellChanged(int row,int col);
@@ -40,7 +46,10 @@ public:
 	QInterharmonicsImp(QWidget *parent = NULL);
 	virtual ~QInterharmonicsImp();
 
+	QChannelTable *m_pVolChTable ;
+	QChannelTable *m_pCurChTable ;
 	virtual void initUI(CSttTestResourceBase *pSttTestResource);
+	virtual void SetParaSetSecondValue(int nParaSetSecondValue);
 };
 
 class QInterharmonicsWidget : public QBasicTestParaSet
@@ -49,9 +58,20 @@ class QInterharmonicsWidget : public QBasicTestParaSet
 public:
 	tmt_harm_paras* m_pParas;
 
+	QInterharmonicsImp *m_pInterharmonicsImp;
+	virtual void SetParaSetSecondValue(int nParaSetSecondValue);
+
 public:
 	QInterharmonicsWidget(tmt_harm_paras* pParas, QWidget* pParent = NULL);
 	virtual ~QInterharmonicsWidget();
+	void UpdataTableData();
+
+signals:
+	void sig_updataParas();
+
+public slots:
+
+	void slot_updataParas();
 
 public:
 	virtual void showEvent(QShowEvent *);

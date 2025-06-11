@@ -22,15 +22,15 @@ void CSttReplayBoutModuleChWidget::InitUI()
 	setFont(*g_pSttGlobalFont);
 	ui.m_btnClearMap->setFont(*g_pSttGlobalFont);
 	ui.m_btnDisconnectAll->setFont(*g_pSttGlobalFont);
-
+	ui.m_btnClearMap->setText(g_sLangTxt_Replay_ClearMap);
 	QStringList header;  
-	header << _T("开出通道") << _T("状态") << _T("通道映射");  
+	header << /*_T("开出通道")*/g_sLangTxt_Native_BoutChannel << /*_T("状态")*/g_sLangTxt_Status << /*_T("通道映射")*/g_sLangTxt_IEC_ChMaps;  
 	ui.tableWidget->setHorizontalHeaderLabels(header);  
 // 	ui.tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch); // 根据内容自动调整列宽度  
 	ui.tableWidget->setRowCount(m_nBoutCount);  
 
 	QStringList header1;  
-	header1 << _T("开出通道") << _T("状态") << _T("通道映射");  
+	header1 << /*_T("开出通道")*/g_sLangTxt_Native_BoutChannel << /*_T("状态")*/g_sLangTxt_Status << /*_T("通道映射")*/g_sLangTxt_IEC_ChMaps;  
 	ui.tableWidgetIns->setHorizontalHeaderLabels(header1);  
 // 	ui.tableWidgetIns->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch); // 根据内容自动调整列宽度  
 	ui.tableWidgetIns->setRowCount(m_nBoutCount);  
@@ -86,7 +86,7 @@ void CSttReplayBoutModuleChWidget::InitTableUI()
 
 	for (int i = 0; i < m_nBoutCount; i++)
 	{
-		QString strBinOut = QString("开出%1").arg(i + 1);
+		QString strBinOut = /*QString("开出%1").arg(i + 1)*/g_sLangTxt_Native_BoutX + QString::number(i + 1);
 
 		item = new QTableWidgetItem();
 		item->setTextAlignment(Qt::AlignCenter);
@@ -136,6 +136,19 @@ void CSttReplayBoutModuleChWidget::InitTableUI()
 	UpdateChWidget();
 	initSignalSlots();
 	UpdateButtonEnable(FALSE);
+
+	bool isChecked = ui.m_btnDisconnectAll->isChecked();
+	QString strName;
+	if(isChecked)
+	{
+		strName = /*_T("全部断开")*/g_sLangTxt_Native_DisConnectAll;
+	}
+	else
+	{
+		strName = /*_T("全部闭合")*/g_sLangTxt_Native_AllClosed;
+	}
+
+	ui.m_btnDisconnectAll->setText(strName);
 }
 
 void CSttReplayBoutModuleChWidget::UpdateButtonEnable(BOOL state)
@@ -229,11 +242,11 @@ void CSttReplayBoutModuleChWidget::slot_btnDisconnectAll()
 	QString strName;
 	if(isChecked)
 	{
-		strName = _T("全部断开");
+		strName = /*_T("全部断开")*/g_sLangTxt_Native_DisConnectAll;
 	}
 	else
 	{
-		strName = _T("全部闭合");
+		strName = /*_T("全部闭合")*/g_sLangTxt_Native_AllClosed;
 	}
 
 	ui.m_btnDisconnectAll->setText(strName);

@@ -34,7 +34,7 @@ QSttCreateNewTestWidget::QSttCreateNewTestWidget(QFont font, QWidget *parent) :
 	CString strPort;
 	strPort.Format(_T("%d"), g_theGbSmartGenWzd->m_nDevPort);
 	ui->m_edtDevPort->setText(strPort);
-
+	ui->m_edtLocalIP->setText(g_theGbSmartGenWzd->m_strLocalIP);
 	CString strFileName;
 	strFileName = GetFileNameFromFilePath(g_theGbSmartGenWzd->m_strDvmFile, '/');
 	ui->m_edtDvmFile->setText(strFileName);
@@ -49,6 +49,14 @@ QSttCreateNewTestWidget::QSttCreateNewTestWidget(QFont font, QWidget *parent) :
 	//ui->m_cmbProtolID->setCurrentIndex(0);
 	ui->m_cmbProtolID->setCurrentIndex(g_theGbSmartGenWzd->GetEngineProgIDIndex());
 
+	if(g_theGbSmartGenWzd->m_strEngineProgID == STT_IOT_PP_TYPE_PpEngine) //传统规约本地IP开放
+	{
+		ui->m_edtLocalIP->setEnabled(true);
+	}
+	else
+	{
+		ui->m_edtLocalIP->setEnabled(false);
+	}
 	if (g_theGbSmartGenWzd->m_nIsTimeSetsUnit_ms)
 	{
 		ui->m_chkTSettingUnit_ms->setCheckState(Qt::Checked);
@@ -109,6 +117,9 @@ void QSttCreateNewTestWidget::UI_SetFont()
 	ui->m_btnSelFromScl->setFont(m_font);
 	ui->m_btnAdvancedCfg->setFont(m_font);
 	ui->m_btnBrowsePp->setFont(m_font);
+	ui->m_lblLocallIP->setFont(m_font);
+	ui->m_edtLocalIP->setFont(m_font);
+	ui->m_chkAddDevReset->setFont(m_font);
 }
 
 void QSttCreateNewTestWidget::EnableOK()
@@ -212,7 +223,12 @@ void QSttCreateNewTestWidget::slot_SelDvmFileClick()
 		return;
 	}
 
-	g_theGbSmartGenWzd->m_strDvmFile = strFile;
+	//改成相对路径
+	CString strFilePath = _P_GetInstallPath();
+	strFilePath += _T("e-Protocol/Library/");
+	strFilePath = strFile.Mid(strFilePath.GetLength());
+
+	g_theGbSmartGenWzd->m_strDvmFile = strFilePath;
 	CString strFileName;
 	strFileName = GetFileNameFromFilePath(g_theGbSmartGenWzd->m_strDvmFile, '/');
 	ui->m_edtDvmFile->setText(strFileName);
@@ -251,8 +267,12 @@ void QSttCreateNewTestWidget::slot_SelPpFileClick()
 	{
 		return;
 	}
+	//改成相对路径
+	CString strFilePath = _P_GetInstallPath();
+	strFilePath += _T("e-Protocol/Template/");
+	strFilePath = strFile.Mid(strFilePath.GetLength());
 
-	g_theGbSmartGenWzd->m_strPpFile = strFile;
+	g_theGbSmartGenWzd->m_strPpFile = strFilePath;
 	CString strFileName;
 	strFileName = GetFileNameFromFilePath(g_theGbSmartGenWzd->m_strPpFile, '/');
 	ui->m_edtPpFile->setText(strFileName);
@@ -293,7 +313,11 @@ void QSttCreateNewTestWidget::slot_SelIedFromSclClick()
 	}
 	else
 	{
-		if (pIed->m_strDvmFilePath == g_theGbSmartGenWzd->m_strDvmFile)
+		CString strDvmFile =_P_GetInstallPath();
+		strDvmFile += _T("e-Protocol/Library/");
+		strDvmFile += g_theGbSmartGenWzd->m_strDvmFile;
+
+		if (pIed->m_strDvmFilePath == strDvmFile)
 		{
 			//如果已经是已选择的IED，说明是第二次点击该按钮；此时需要重新选择IED
 			if (!bOpenSelIed)
@@ -334,6 +358,12 @@ void QSttCreateNewTestWidget::on_m_edtDevIP_textChanged(const QString &arg1)
     EnableOK();
 }
 
+void QSttCreateNewTestWidget::on_m_edtLocalIP_textChanged( const QString &arg1 )
+{
+	g_theGbSmartGenWzd->m_strLocalIP = arg1;
+	EnableOK();
+}
+
 void QSttCreateNewTestWidget::on_m_edtDevPort_textChanged(const QString &arg1)
 {
 	g_theGbSmartGenWzd->m_nDevPort = CString_To_long(arg1);
@@ -361,6 +391,15 @@ void QSttCreateNewTestWidget::on_m_cmbEngineID_currentIndexChanged(int index)
 	{
 		ui->m_edtPpFile->setDisabled(FALSE);
 		ui->m_btnBrowsePp->setDisabled(FALSE);
+	}
+
+	if(strEngineProgID == STT_IOT_PP_TYPE_PpEngine) //传统规约本地IP开放
+	{
+		ui->m_edtLocalIP->setEnabled(true);
+	}
+	else
+	{
+		ui->m_edtLocalIP->setEnabled(false);
 	}
 }
 

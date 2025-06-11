@@ -4,7 +4,7 @@
 #include <QLineEdit>
 #include <QObject>
 #include <QMouseEvent>
-#include "../../Module/DataMngr/DvmData.h"
+#include "../../../Module/DataMngr/DvmData.h"
 #include "SttLineEdit.h"
 
 class QSttDvmEdit : public QSttLineEdit
