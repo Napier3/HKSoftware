@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "SttTestResourceBase.h"
 #ifndef STT_NOT_TESTCNTRFRAME
 #include "../../XLangResource_Native.h"

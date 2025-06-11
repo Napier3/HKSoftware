@@ -2,7 +2,7 @@
 #include "../../SttTest/Common/tmt_rtdata_def.h"
 #include "../../SttCmd/SttParas.h"
 #include "../../SttCmd/SttChMap.h"
-#include "../../../../Module/MemBuffer/TCycleMemBuffer.h"
+#include "../../../Module/MemBuffer/TCycleMemBuffer.h"
 
 #define STT_RT_DATA_MODE_NONE                                             0
 #define STT_RT_DATA_MODE_ASYN                                             1

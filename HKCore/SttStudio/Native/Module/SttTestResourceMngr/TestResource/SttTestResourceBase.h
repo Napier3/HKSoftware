@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../../../../Module/DataMngr/DvmDataset.h"
-#include "../../../../Module/DataMngr/DataType.h"
+#include "../../../Module/DataMngr/DvmDataset.h"
+#include "../../../Module/DataMngr/DataType.h"
 #include "../../SttTestSysGlobalPara.h"
-#include "../../../../Module/XLanguage/XLanguageMngr.h"
+#include "../../../Module/XLanguage/XLanguageMngr.h"
 
 #define STT_TEST_RESOURCE_TYPE_ASYNC                          0
 #define STT_TEST_RESOURCE_TYPE_SYNC                           1

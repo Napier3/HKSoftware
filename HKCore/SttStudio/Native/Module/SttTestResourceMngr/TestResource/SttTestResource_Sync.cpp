@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "SttTestResource_Sync.h"
 
 CSttTestResource_Sync::CSttTestResource_Sync(void)

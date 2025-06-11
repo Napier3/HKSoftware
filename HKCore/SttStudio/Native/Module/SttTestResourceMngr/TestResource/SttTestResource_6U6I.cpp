@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "SttTestResource_6U6I.h"
 
 CSttTestResource_6U6I::CSttTestResource_6U6I(void)

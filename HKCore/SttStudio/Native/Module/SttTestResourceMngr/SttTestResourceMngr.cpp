@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "SttTestResourceMngr.h"
 #include "../Engine/SttPowerTestEngineBase.h"
 #include "../SttSystemConfig/SttSystemConfig.h"

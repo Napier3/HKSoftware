@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "SttTestResource_Async.h"
 
 CSttTestResource_Async::CSttTestResource_Async(void)
