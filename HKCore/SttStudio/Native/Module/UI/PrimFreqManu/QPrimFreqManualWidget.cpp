@@ -2,7 +2,7 @@
 #include "QPrimFreqManualWidget.h"
 #include "../../../Module/XLangResource_Native.h"
 #include "../Module/CommonMethod/commonMethod.h"
-#include "../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "SttMacroParaEditViewPrimFreqManu.h"
 //#include "QSttManualBinBoutDlg.h"
 #include "../SttTestCntrFrameBase.h"

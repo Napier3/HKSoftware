@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "GbWzdItemsNameLib.h"
 #include "../../../../Module/API/GlobalConfigApi.h"
 

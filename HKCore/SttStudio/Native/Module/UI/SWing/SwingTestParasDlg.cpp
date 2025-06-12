@@ -1,7 +1,7 @@
 ﻿#include "SwingTestParasDlg.h"
 #include "ui_SwingTestParasDlg.h"
 #include "SwingTestCommon.h"
-#include "../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 
 extern QFont *g_pSttGlobalFont;
 
@@ -29,7 +29,7 @@ void QSwingTestParasDlg::InitUI()
 #else
     strPngPath =  ":/ctrls/images/Oscillation.png";
 #endif
-    this->setWindowTitle(/*"通用参数"*/g_sLangTxt_Gradient_CommonParas);
+    this->setWindowTitle("通用参数");
     this->setWindowIcon(QIcon(QPixmap(strPngPath)));
     this->setFont(*g_pSttGlobalFont);
 
@@ -39,20 +39,20 @@ void QSwingTestParasDlg::InitUI()
 // 
 // 	ui->m_editImpTf->setFocusPolicy(Qt::StrongFocus);
     ui->m_cbbCTPos->clear();
-	ui->m_cbbCTPos->addItem(/*"指向母线"*/g_sLangTxt_CBOperate_CTPos1);
-	ui->m_cbbCTPos->addItem(/*"指向线路"*/g_sLangTxt_CBOperate_TPos1);
+    ui->m_cbbCTPos->addItem("指向母线");
+    ui->m_cbbCTPos->addItem("指向线路");
 
 }
 
 void QSwingTestParasDlg::InitLanuage()
 {
-    xlang_SetLangStrToWidget(ui->m_labSwingTime, g_sLangID_Swing_Time, XLang_Ctrls_QLabel);
-    xlang_SetLangStrToWidget(ui->m_labCTPos, g_sLangID_Swing_CTPos, XLang_Ctrls_QLabel);
-    xlang_SetLangStrToWidget(ui->m_labSysZs, g_sLangID_Swing_Zs, XLang_Ctrls_QLabel);
-    xlang_SetLangStrToWidget(ui->m_labSysZsPhi, g_sLangID_Swing_ZsPhi, XLang_Ctrls_QLabel);
-    xlang_SetLangStrToWidget(ui->m_labTransZt, g_sLangID_Swing_Transformer, XLang_Ctrls_QLabel);
-    xlang_SetLangStrToWidget(ui->m_labTransZtPhi, g_sLangID_Swing_Transformer_Phi, XLang_Ctrls_QLabel);
-    xlang_SetLangStrToWidget(ui->m_labImpTs, g_sLangID_Swing_Dynamo, XLang_Ctrls_QLabel);
+    //xlang_SetLangStrToWidget(ui->m_labSwingTime, g_sLangID_Swing_Time, XLang_Ctrls_QLabel);
+    //xlang_SetLangStrToWidget(ui->m_labCTPos, g_sLangID_Swing_CTPos, XLang_Ctrls_QLabel);
+    //xlang_SetLangStrToWidget(ui->m_labSysZs, g_sLangID_Swing_Zs, XLang_Ctrls_QLabel);
+    //xlang_SetLangStrToWidget(ui->m_labSysZsPhi, g_sLangID_Swing_ZsPhi, XLang_Ctrls_QLabel);
+    //xlang_SetLangStrToWidget(ui->m_labTransZt, g_sLangID_Swing_Transformer, XLang_Ctrls_QLabel);
+    //xlang_SetLangStrToWidget(ui->m_labTransZtPhi, g_sLangID_Swing_Transformer_Phi, XLang_Ctrls_QLabel);
+    //xlang_SetLangStrToWidget(ui->m_labImpTs, g_sLangID_Swing_Dynamo, XLang_Ctrls_QLabel);
 
 	xlang_SetLangStrToWidget(ui->m_btnOk, "sOK", XLang_Ctrls_QPushButton);
 	xlang_SetLangStrToWidget(ui->m_btnCancel, "sCancel", XLang_Ctrls_QPushButton);

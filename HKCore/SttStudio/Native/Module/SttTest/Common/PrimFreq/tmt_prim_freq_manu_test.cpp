@@ -456,7 +456,7 @@ void stt_xml_serialize(tmt_PrimFreqManualResult *pResults, CSttXmlSerializeBase 
 #endif
 
 #include"../../../SttCmd/SttTestCmd.h"
-#include"../../../../Module/API/GlobalConfigApi.h"
+#include"../../../Module/API/GlobalConfigApi.h"
 void stt_xml_serialize_write_PrimFreqManuTest()
 {
     tmt_PrimFreqManualTest oManualTest;

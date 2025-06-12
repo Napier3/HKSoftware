@@ -1,7 +1,7 @@
 #include "SttMacroParaEditViewRemote_ShakeTable.h"
 #include <QHeaderView>
 #include "../../../XLangResource_Native.h"
-#include "../../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../..//Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../Module/CommonMethod/commonMethod.h"
 #ifdef _USE_SoftKeyBoard_	
 #include "../../SoftKeyboard/SoftKeyBoard.h"
@@ -28,8 +28,8 @@ void QSttMacroParaEditViewRemote_ShakeTable::InitUI()
 	pLeft->setDefaultSectionSize(36);
 	pLeft->setVisible(false);
 	QHeaderView* pHeadTop =horizontalHeader();
-	pHeadTop->setClickable(false);
-	pHeadTop->setMovable(false);
+    pHeadTop->setSectionsClickable(false);
+    pHeadTop->setSectionsMovable(false);
 	QFont font1 = this->horizontalHeader()->font();
 	font1.setBold(true);
 	this->horizontalHeader()->setFont(font1);

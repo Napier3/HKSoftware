@@ -1,7 +1,7 @@
 #include "WeakSetGrid.h"
 #include <QMenu>
 #include <QAction>
-#include "../../../../../Module/XLanguage/XLanguageResource.h"
+#include "../../../Module/XLanguage/XLanguageResource.h"
 #include "../../../XLangResource_Native.h"
 
 

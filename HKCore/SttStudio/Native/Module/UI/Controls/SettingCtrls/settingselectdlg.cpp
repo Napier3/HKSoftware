@@ -1,6 +1,6 @@
 #include "settingselectdlg.h"
 #include "ui_settingselectdlg.h"
-#include "../../../../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 
 
 //20240820 huangliang ×ªÒÆµ½CSttGlobalModelÖÐ

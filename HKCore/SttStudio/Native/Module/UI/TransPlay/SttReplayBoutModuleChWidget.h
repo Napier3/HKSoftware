@@ -19,6 +19,7 @@
 // #include "../../Module/TestWinFrame/QExBaseListGridBase/QExBaseListGridBase.h"
 //#include "BinaryOutGrid.h"
 #include "../Module/ScrollCtrl/ScrollComboBox.h"
+#include "../../XLangResource_Native.h"
 
 
 #define BOUT_TABLE_BINARYINDEX	0

@@ -1,6 +1,6 @@
 ﻿#include "SttMacroParaEditViewSwing.h"
 #include "ui_SttMacroParaEditViewSwing.h"
-#include "../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "SwingTestCommon.h"
 #include "../SttTestCntrFrameBase.h"
 #include "../SoftKeyboard/SoftKeyBoard.h"
@@ -67,26 +67,26 @@ QSttMacroParaEditViewSwing::~QSttMacroParaEditViewSwing()
 
 void QSttMacroParaEditViewSwing::InitLanuage()
 {
-    xlang_SetLangStrToWidget(ui->m_labPAngleStart, g_sLangID_Swing_PowerAngleBegin, XLang_Ctrls_QLabel);
-    xlang_SetLangStrToWidget(ui->m_labPAngleEnd, g_sLangID_Swing_PowerAngleEnd, XLang_Ctrls_QLabel);
-    xlang_SetLangStrToWidget(ui->m_labSwingCycle, g_sLangID_Swing_SwingPeriod, XLang_Ctrls_QLabel);
-    xlang_SetLangStrToWidget(ui->m_labSwingCount, g_sLangID_Swing_SwingCount, XLang_Ctrls_QLabel);
-    xlang_SetLangStrToWidget(ui->m_labTripPoint, g_sLangID_Swing_TripPoint, XLang_Ctrls_QLabel);
-    xlang_SetLangStrToWidget(ui->m_labTripSpeedUp, g_sLangID_Swing_TripSpeedUp, XLang_Ctrls_QLabel);
-    xlang_SetLangStrToWidget(ui->m_labTripSpeedDown, g_sLangID_Swing_TripSpeedDown, XLang_Ctrls_QLabel);
-    xlang_SetLangStrToWidget(ui->m_labFaultType, g_sLangID_Swing_FaultType, XLang_Ctrls_QLabel);
-    xlang_SetLangStrToWidget(ui->m_labZ1, g_sLangID_Swing_Impedance, XLang_Ctrls_QLabel);
-    xlang_SetLangStrToWidget(ui->m_labISet1, g_sLangID_Swing_SCurrent, XLang_Ctrls_QLabel);
-    xlang_SetLangStrToWidget(ui->m_labFaultTime, g_sLangID_Swing_FaultTime, XLang_Ctrls_QLabel);
-    xlang_SetLangStrToWidget(ui->m_labK0Mode, g_sLangID_Swing_K0CalMode, XLang_Ctrls_QLabel);
-    xlang_SetLangStrToWidget(ui->m_labAmplitude, g_sLangID_Swing_Amplitude, XLang_Ctrls_QLabel);
-    xlang_SetLangStrToWidget(ui->m_labPhase, g_sLangID_Swing_Phase, XLang_Ctrls_QLabel);
-
-    xlang_SetLangStrToWidget(ui->m_rbSpeedUp, g_sLangID_Swing_IncreaseSpeed, XLang_Ctrls_QRadioButton);
-    xlang_SetLangStrToWidget(ui->m_rbSpeedDown, g_sLangID_Swing_Decelerate, XLang_Ctrls_QRadioButton);
-
-    xlang_SetLangStrToWidget(ui->m_cbRefault, g_sLangID_Swing_FaultSwing, XLang_Ctrls_QCheckBox);
-    xlang_SetLangStrToWidget(ui->m_cbReciprocating, g_sLangID_Swing_Reciprocating, XLang_Ctrls_QCheckBox);
+    //xlang_SetLangStrToWidget(ui->m_labPAngleStart, g_sLangID_Swing_PowerAngleBegin, XLang_Ctrls_QLabel);
+    //xlang_SetLangStrToWidget(ui->m_labPAngleEnd, g_sLangID_Swing_PowerAngleEnd, XLang_Ctrls_QLabel);
+    //xlang_SetLangStrToWidget(ui->m_labSwingCycle, g_sLangID_Swing_SwingPeriod, XLang_Ctrls_QLabel);
+    //xlang_SetLangStrToWidget(ui->m_labSwingCount, g_sLangID_Swing_SwingCount, XLang_Ctrls_QLabel);
+    //xlang_SetLangStrToWidget(ui->m_labTripPoint, g_sLangID_Swing_TripPoint, XLang_Ctrls_QLabel);
+    //xlang_SetLangStrToWidget(ui->m_labTripSpeedUp, g_sLangID_Swing_TripSpeedUp, XLang_Ctrls_QLabel);
+    //xlang_SetLangStrToWidget(ui->m_labTripSpeedDown, g_sLangID_Swing_TripSpeedDown, XLang_Ctrls_QLabel);
+    //xlang_SetLangStrToWidget(ui->m_labFaultType, g_sLangID_Swing_FaultType, XLang_Ctrls_QLabel);
+    //xlang_SetLangStrToWidget(ui->m_labZ1, g_sLangID_Swing_Impedance, XLang_Ctrls_QLabel);
+    //xlang_SetLangStrToWidget(ui->m_labISet1, g_sLangID_Swing_SCurrent, XLang_Ctrls_QLabel);
+    //xlang_SetLangStrToWidget(ui->m_labFaultTime, g_sLangID_Swing_FaultTime, XLang_Ctrls_QLabel);
+    //xlang_SetLangStrToWidget(ui->m_labK0Mode, g_sLangID_Swing_K0CalMode, XLang_Ctrls_QLabel);
+    //xlang_SetLangStrToWidget(ui->m_labAmplitude, g_sLangID_Swing_Amplitude, XLang_Ctrls_QLabel);
+    //xlang_SetLangStrToWidget(ui->m_labPhase, g_sLangID_Swing_Phase, XLang_Ctrls_QLabel);
+    //
+    //xlang_SetLangStrToWidget(ui->m_rbSpeedUp, g_sLangID_Swing_IncreaseSpeed, XLang_Ctrls_QRadioButton);
+    //xlang_SetLangStrToWidget(ui->m_rbSpeedDown, g_sLangID_Swing_Decelerate, XLang_Ctrls_QRadioButton);
+    //
+    //xlang_SetLangStrToWidget(ui->m_cbRefault, g_sLangID_Swing_FaultSwing, XLang_Ctrls_QCheckBox);
+    //xlang_SetLangStrToWidget(ui->m_cbReciprocating, g_sLangID_Swing_Reciprocating, XLang_Ctrls_QCheckBox);
 
 	xlang_SetLangStrToWidget(ui->m_btnResultEval, "ResultEstimate", XLang_Ctrls_QPushButton);
     xlang_SetLangStrToWidget(ui->m_btnBinary, "sOutputValue", XLang_Ctrls_QPushButton);
@@ -135,18 +135,18 @@ void QSttMacroParaEditViewSwing::InitUI()
     //this->setFont(*g_pSttGlobalFont);
 	SetSwingFont();
 
-	ui->m_tabWidget->setTabText(0, g_sLangTxt_Swing_OscParaSet);
-	ui->m_tabWidget->setTabText(1, g_sLangTxt_Swing_ImpDiagram);
-	ui->m_tabWidget->setTabText(2, g_sLangTxt_Swing_EquCirSystem);
-
-    ui->m_cbbFaultType->clear();
-	ui->m_cbbFaultType->addItem(g_sLangTxt_Native_GndA);
-	ui->m_cbbFaultType->addItem(g_sLangTxt_Native_GndB);
-	ui->m_cbbFaultType->addItem(g_sLangTxt_Native_GndC);
-	ui->m_cbbFaultType->addItem(g_sLangTxt_Native_ShortAB);
-	ui->m_cbbFaultType->addItem(g_sLangTxt_Native_ShortBC);
-	ui->m_cbbFaultType->addItem(g_sLangTxt_Native_ShortCA);
-	ui->m_cbbFaultType->addItem(g_sLangTxt_Native_ShortABC);
+    //ui->m_tabWidget->setTabText(0, g_sLangTxt_Swing_OscParaSet);
+    //ui->m_tabWidget->setTabText(1, g_sLangTxt_Swing_ImpDiagram);
+    //ui->m_tabWidget->setTabText(2, g_sLangTxt_Swing_EquCirSystem);
+    //
+    //ui->m_cbbFaultType->clear();
+    //ui->m_cbbFaultType->addItem(g_sLangTxt_Native_GndA);
+    //ui->m_cbbFaultType->addItem(g_sLangTxt_Native_GndB);
+    //ui->m_cbbFaultType->addItem(g_sLangTxt_Native_GndC);
+    //ui->m_cbbFaultType->addItem(g_sLangTxt_Native_ShortAB);
+    //ui->m_cbbFaultType->addItem(g_sLangTxt_Native_ShortBC);
+    //ui->m_cbbFaultType->addItem(g_sLangTxt_Native_ShortCA);
+    //ui->m_cbbFaultType->addItem(g_sLangTxt_Native_ShortABC);
 
 
 	m_pImpChart->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);

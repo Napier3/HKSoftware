@@ -19,7 +19,7 @@ CBinBoutMapsGrid::CBinBoutMapsGrid(QWidget* pparent, int iType) :QExBaseListGrid
 	{
 		for (int i = 0; i < 8; i++)
 		{
-			sName = /*g_sLangTxt_Native_Bin*/g_sLangTxt_InputValue + (char)(i + 65);
+            sName = "g_sLangTxt_Native_Bin" + (char)(i + 65);
 			m_oDataType.AddNewValue(sName, i);
 		}
 	}
@@ -28,7 +28,7 @@ CBinBoutMapsGrid::CBinBoutMapsGrid(QWidget* pparent, int iType) :QExBaseListGrid
 		for (int i = 0; i < 8; i++)
 		{
 			str.Format(_T("%d"), i + 1);
-			sName = /*g_sLangTxt_Native_Bout*/g_sLangTxt_OutputValue + str;
+            sName = "g_sLangTxt_Native_Bout" + str;
 			m_oDataType.AddNewValue(sName, i);
 		}
 	}
@@ -62,7 +62,7 @@ void CBinBoutMapsGrid::InitGrid()
 
 void CBinBoutMapsGrid::InitGridTitle()
 {
-	CString astrGridTitle[BINBOUTMAPS_GRID_COLS] = { g_sLangTxt_MappingRelation_Maps_TitleID, g_sLangTxt_MappingRelation_Maps_TitleName };
+    CString astrGridTitle[BINBOUTMAPS_GRID_COLS] = { "g_sLangTxt_MappingRelation_Maps_TitleID", "g_sLangTxt_MappingRelation_Maps_TitleName" };
 	int  iColType[BINBOUTMAPS_GRID_COLS] = { QT_GVET_NOEDIT, QT_GVET_EDITBOX };
 	int iGridWidth[BINBOUTMAPS_GRID_COLS] = { 260, 260 };
 	QExBaseListGridBase::InitGridTitle(astrGridTitle, iGridWidth, BINBOUTMAPS_GRID_COLS);

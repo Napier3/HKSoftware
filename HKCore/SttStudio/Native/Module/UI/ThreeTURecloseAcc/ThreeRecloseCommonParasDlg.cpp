@@ -2,7 +2,7 @@
 #include "../SttTestCntrFrameBase.h"
 #include <QHBoxLayout>
 #include <QVBoxLayout>
-#include "../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 
 
 QThreeRecloseCommonParasDlg::QThreeRecloseCommonParasDlg(CDataGroup* pParas, QWidget* parent ): QDialog(parent)
@@ -28,7 +28,7 @@ void QThreeRecloseCommonParasDlg::InitUI()
 	m_pTableWidget = new QTabWidget(this);
 	m_pTableWidget->setFont(*g_pSttGlobalFont);
 	QWidget *pCommonParasWidget = new QWidget(this); 
-	m_pTableWidget->addTab(pCommonParasWidget, g_sLangTxt_Gradient_CommonParas);
+    m_pTableWidget->addTab(pCommonParasWidget, "g_sLangTxt_Gradient_CommonParas");
 	QLabel *pLabFaultTrigMode = new QLabel(this); 
 	strText = _T("故障触发方式:");
 	pLabFaultTrigMode->setText(strText);
@@ -65,17 +65,17 @@ void QThreeRecloseCommonParasDlg::InitUI()
 
 	m_pCmbFaultTrigMode = new QComboBox(this);   //故障触发方式
 	m_pCmbFaultTrigMode->setFont(*g_pSttGlobalFont);
-	m_pCmbFaultTrigMode->addItem(/*"时间触发"*/g_sLangTxt_State_Trigger_Time);
-	m_pCmbFaultTrigMode->addItem(/*"手动触发"*/g_sLangTxt_State_Trigger_Manu);
-	m_pCmbFaultTrigMode->addItem(/*"开入量触发"*/g_sLangTxt_State_Trigger_Bin);
+    m_pCmbFaultTrigMode->addItem("时间触发");
+    m_pCmbFaultTrigMode->addItem("手动触发");
+    m_pCmbFaultTrigMode->addItem("开入量触发");
 	m_pCmbPTPos = new QComboBox(this);			  //TV安装位置
 	m_pCmbPTPos->setFont(*g_pSttGlobalFont);
-	m_pCmbPTPos->addItem(/*"母线侧"*/g_sLangTxt_CBOperate_PTPos);
-	m_pCmbPTPos->addItem(/*"线路侧"*/g_sLangTxt_CBOperate_TPos);
+    m_pCmbPTPos->addItem("母线侧");
+    m_pCmbPTPos->addItem("线路侧");
 	m_pCmbCTPos = new QComboBox(this);	          //TA正极性
 	m_pCmbCTPos->setFont(*g_pSttGlobalFont);
-	m_pCmbCTPos->addItem(/*"指向母线"*/g_sLangTxt_CBOperate_CTPos1);
-	m_pCmbCTPos->addItem(/*"指向线路"*/g_sLangTxt_CBOperate_TPos1);
+    m_pCmbCTPos->addItem("指向母线");
+    m_pCmbCTPos->addItem("指向线路");
 
 	m_pEditLoadCur = new QSttLineEdit(this);
 	m_pEditLoadCur->setFont(*g_pSttGlobalFont);
@@ -89,8 +89,8 @@ void QThreeRecloseCommonParasDlg::InitUI()
 
 	m_pCmbSimulateBreakerDelay = new QComboBox(this);//断路器模拟
 	m_pCmbSimulateBreakerDelay->setFont(*g_pSttGlobalFont);
-	m_pCmbSimulateBreakerDelay->addItem(/*"不模拟"*/g_sLangTxt_CBOperate_NotSimulated);
-	m_pCmbSimulateBreakerDelay->addItem(/*"模拟"*/g_sLangTxt_ChMaps_Analog);
+    m_pCmbSimulateBreakerDelay->addItem("不模拟");
+    m_pCmbSimulateBreakerDelay->addItem("模拟");
 
 	QGridLayout *pCommonParasLayout = new QGridLayout();
 	pCommonParasWidget->setLayout(pCommonParasLayout);
@@ -118,23 +118,23 @@ void QThreeRecloseCommonParasDlg::InitUI()
 	pBinWidget->setLayout(pBinLayout);
 	QStringList BinList;
 	BinList  << _T("跳闸") << _T("重合");
-	QLabel *pLabBinSelect= new QLabel(/*_T("开入选择")*/g_sLangTxt_CBOperate_BinBoutSelect,this); 
+    QLabel *pLabBinSelect= new QLabel(_T("开入选择"),this);
 	pLabBinSelect->setFont(*g_pSttGlobalFont);
-	QLabel *pLabBinA= new QLabel(/*_T("开入A")*/g_sLangTxt_Manual_InA,this);     
+    QLabel *pLabBinA= new QLabel(_T("开入A"),this);
 	pLabBinA->setFont(*g_pSttGlobalFont);
-	QLabel *pLabBinB= new QLabel(/*_T("开入B")*/g_sLangTxt_Manual_InB,this);    
+    QLabel *pLabBinB= new QLabel(_T("开入B"),this);
 	pLabBinB->setFont(*g_pSttGlobalFont);
-	QLabel *pLabBinC= new QLabel(/*_T("开入C")*/g_sLangTxt_Manual_InC,this);               
+    QLabel *pLabBinC= new QLabel(_T("开入C"),this);
 	pLabBinC->setFont(*g_pSttGlobalFont);
-	QLabel *pLabBinD= new QLabel(/*_T("开入D")*/g_sLangTxt_Manual_InD,this);        
+    QLabel *pLabBinD= new QLabel(_T("开入D"),this);
 	pLabBinD->setFont(*g_pSttGlobalFont);
-	QLabel *pLabBinE= new QLabel(/*_T("开入E")*/g_sLangTxt_Manual_InE,this);           
+    QLabel *pLabBinE= new QLabel(_T("开入E"),this);
 	pLabBinE->setFont(*g_pSttGlobalFont);
-	QLabel *pLabBinF= new QLabel(/*_T("开入F")*/g_sLangTxt_Manual_InF,this);        
+    QLabel *pLabBinF= new QLabel(_T("开入F"),this);
 	pLabBinF->setFont(*g_pSttGlobalFont);
-	QLabel *pLabBinG= new QLabel(/*_T("开入G")*/g_sLangTxt_Manual_InG,this);     
+    QLabel *pLabBinG= new QLabel(_T("开入G"),this);
 	pLabBinG->setFont(*g_pSttGlobalFont);
-	QLabel *pLabBinH= new QLabel(/*_T("开入H")*/g_sLangTxt_Manual_InH,this);     
+    QLabel *pLabBinH= new QLabel(_T("开入H"),this);
 	pLabBinH->setFont(*g_pSttGlobalFont);
 
 	m_pCmbBinSelect = new QComboBox(this);           //开入量选择

@@ -1,14 +1,14 @@
 ﻿#include "SwingImpChartWidget.h"
 #include <QResizeEvent>
 
-#include "../../../../Module/API/GlobalConfigApi.h"
+#include "../../../Module/API/GlobalConfigApi.h"
 
 #include <QCoreApplication>
 //#include <qwt_symbol.h>
 #include <QDir>
 #include <QMessageBox>
 #include "../SttTestCntrFrameBase.h"
-#include "../../../../Module/OSInterface/QT/XMessageBox.h"
+#include "../../../Module/OSInterface/QT/XMessageBox.h"
 #include "../../XLangResource_Native.h"
 #include "../SttTestCntrFrameBase.h"
 

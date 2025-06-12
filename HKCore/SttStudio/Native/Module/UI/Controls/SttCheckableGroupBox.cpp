@@ -1,5 +1,5 @@
 #include "SttCheckableGroupBox.h"
-#include "../../../../Module/OSInterface/OSInterface.h"
+#include "../../../Module/OSInterface/OSInterface.h"
 
 
 QSttCheckableGroupBox::QSttCheckableGroupBox(QWidget *parent)

@@ -60,8 +60,8 @@ void QSttMacroParaEditViewRemoteWidget::InitTable()
 	pLeft->setDefaultSectionSize(36);
 	pLeft->setVisible(false);
 	QHeaderView* pHeadTop = m_pRemoteTable->horizontalHeader();
-	pHeadTop->setClickable(false);
-	pHeadTop->setMovable(false);
+    pHeadTop->setSectionsClickable(false);
+    pHeadTop->setSectionsMovable(false);
 	m_pRemoteTable->horizontalHeader()->setStretchLastSection(true); 
 	m_pRemoteTable->setEditTriggers(QAbstractItemView::DoubleClicked);
 	m_pRemoteTable->setSelectionBehavior(QAbstractItemView::SelectRows);

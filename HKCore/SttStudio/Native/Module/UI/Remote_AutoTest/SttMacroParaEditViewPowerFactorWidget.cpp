@@ -26,8 +26,8 @@ void QSttMacroParaEditViewPowerFactorWidget::InitUI()
 	m_pPFactorTabWidget = new QTableWidget(3, 5); 
 	m_pPFactorTabWidget->verticalHeader()->setVisible(false);
 	m_pPFactorTabWidget->horizontalHeader()->setVisible(false);
-	m_pPFactorTabWidget->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
-	m_pPFactorTabWidget->verticalHeader()->setResizeMode(QHeaderView::Stretch);
+    m_pPFactorTabWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    m_pPFactorTabWidget->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	m_pPFactorTabWidget->setFont(*g_pSttGlobalFont);
 
 	QTableWidgetItem *pItem = NULL;

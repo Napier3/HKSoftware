@@ -1,5 +1,5 @@
 #include "QSysParasDlg.h"
-#include "../../../Module/Engine/SttPowerTestEngineBase.h"
+#include "../Module/Engine/SttPowerTestEngineBase.h"
 //#include "testwinbase.h"
 #include "../../SttTestCntrFrameBase.h"
 #include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
@@ -19,7 +19,7 @@ QSysParasDlg::QSysParasDlg(QWidget *parent)
 	m_pSysParasWiget = NULL;
 //	m_pModuleSetWiget = NULL;
 	m_bOutputTypeHasChanged = FALSE;
-	m_nSysConfig_Mode = STT_HTML_SYSCONFIG_MODE_UPDATE;
+    //m_nSysConfig_Mode = STT_HTML_SYSCONFIG_MODE_UPDATE;
 
 }
 
@@ -238,11 +238,11 @@ void QSysParasDlg::slot_OKClicked()
 
 	g_oSttTestResourceMngr.SaveSystemParasFile();
 
-	if (m_nSysConfig_Mode == STT_HTML_SYSCONFIG_MODE_UPDATE)
-	{
-		g_theTestCntrFrame->UpdateSysConfig();
-	}
-	else
+    //if (m_nSysConfig_Mode == STT_HTML_SYSCONFIG_MODE_UPDATE)
+    //{
+    //	g_theTestCntrFrame->UpdateSysConfig();
+    //}
+    //else
 	{
 		g_theTestCntrFrame->New_SysConfig();
 	}

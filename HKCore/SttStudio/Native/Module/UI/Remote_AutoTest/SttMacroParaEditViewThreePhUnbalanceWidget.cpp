@@ -32,8 +32,8 @@ void QSttMacroParaEditViewThreePhUnbalanceWidget::InitUI()
 	m_pCurTabWidget = new QTableWidget(5, 4); 
 	m_pCurTabWidget->verticalHeader()->setVisible(false);
 	m_pCurTabWidget->horizontalHeader()->setVisible(false);
-	m_pCurTabWidget->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
-	m_pCurTabWidget->verticalHeader()->setResizeMode(QHeaderView::Stretch);
+    m_pCurTabWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    m_pCurTabWidget->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	m_pCurTabWidget->setFont(*g_pSttGlobalFont);
 
 	QTableWidgetItem *pItem = NULL;

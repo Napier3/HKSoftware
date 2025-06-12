@@ -1,7 +1,7 @@
 ﻿#include "SwingTestBinarySignalDlg.h"
 #include "ui_SwingTestBinarySignalDlg.h"
 #include "SwingTestCommon.h"
-#include "../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 
 extern QFont *g_pSttGlobalFont;
 
@@ -29,7 +29,7 @@ void QSwingTestBinarySignalDlg::InitUI()
 #else
     strPngPath =  ":/ctrls/images/Oscillation.png";
 #endif
-    this->setWindowTitle(/*g_sLangTxt_Native_Bout*/g_sLangTxt_OutputValue);
+    this->setWindowTitle("g_sLangTxt_Native_Bout");
     this->setWindowIcon(QIcon(QPixmap(strPngPath)));
     this->setFont(*g_pSttGlobalFont);
 	setWindowFlags(Qt::CustomizeWindowHint|Qt::WindowTitleHint| Qt::Dialog);

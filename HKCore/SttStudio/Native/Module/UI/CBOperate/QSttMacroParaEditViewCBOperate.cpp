@@ -45,7 +45,7 @@ void QSttMacroParaEditViewCBOperate::InitUI()
 		<< /*"BC相接地短路"*/g_sLangTxt_Native_GndShortBC << /*"CA相接地短路"*/g_sLangTxt_Native_GndShortCA <</* "ABC短路"*/g_sLangTxt_Native_ShortABC << /*"单相阻抗"*/g_sLangTxt_State_SinglephaseImpedance;
     ui->m_pCmbFaultType->setMaxVisibleItems(m_ItemsList.count());
     ui->m_pCmbFaultType->addItems(m_ItemsList);
-    ui->m_pLabZ->setText(g_sLangTxt_DistanceSearch_Z + ":");
+    ui->m_pLabZ->setText("|Z|(Ω):");
     ui->m_pLabImpedanceAngle->setText(/*_T("阻抗角(°)")*/g_sLangTxt_Gradient_ImpAngle);
     ui->m_pLabCurLoad->setText(/*_T("负荷电流(A)")*/g_sLangTxt_LoadI);
     ui->m_pLabPowerAngleLoad->setText(/*_T("负荷功角(°)")*/g_sLangTxt_State_LoadAngle);
@@ -62,7 +62,7 @@ void QSttMacroParaEditViewCBOperate::InitUI()
     ui->m_pLabHour->setText(/*_T("时")*/g_sLangTxt_CBOperate_Hour);
     ui->m_pLabMinute->setText(/*_T("分")*/g_sLangTxt_CBOperate_Minute);
     ui->m_pLabSecond->setText(/*_T("秒")*/g_sLangTxt_CBOperate_Second);
-    ui->m_pLabRZ->setText(g_sLangTxt_DistanceSearch_Z + ":");
+    ui->m_pLabRZ->setText("|Z|(Ω):");
     ui->m_pLabImpedanceWay->setText(/*_T("阻抗表示方式：")*/g_sLangTxt_CBOperate_ImpRepre);
     ui->m_pAmpAngleRadio->setText(_T("Z-Phi"));
     ui->m_pRXRadio->setText(_T("R-X"));
@@ -72,7 +72,7 @@ void QSttMacroParaEditViewCBOperate::InitUI()
     ui->m_pCmbRFaultType->addItems(m_ItemsList);
     ui->m_pCmbRFaultType->setMaxVisibleItems(m_ItemsList.count());
     ui->m_pLabRCurShortCircuit->setText(/*_T("短路电流(A)")*/g_sLangTxt_Impedance_ShortCurr /*+ ":"*/);
-    ui->m_pLabRZ->setText(g_sLangTxt_DistanceSearch_Z + ":");
+    ui->m_pLabRZ->setText("|Z|(Ω):");
     ui->m_pLabRVolShortCircuit->setText(/*_T("短路电压(V)")*/g_sLangTxt_Native_ShortCircuitVs);
     ui->m_pLabRImpedanceAngle->setText(/*_T("阻抗角(°)")*/g_sLangTxt_Gradient_ImpAngle);
     ui->m_pLabRFaultDirection->setText(/*_T("故障方向")*/g_sLangTxt_Gradient_FailDirect + ":");
@@ -955,33 +955,33 @@ void QSttMacroParaEditViewCBOperate::slot_updateUIParas()
 
 	if (m_bIsrBtnAmpAngleChecked)
 	{
-		if (ui->m_pLabZ->text() != g_sLangTxt_RecloseAcc_R )
+        if (ui->m_pLabZ->text() != "R(Ω):" )
 		{
-			ui->m_pLabZ->setText(g_sLangTxt_RecloseAcc_R);
+            ui->m_pLabZ->setText("R(Ω):");
 		}
 
-		if (ui->m_pLabImpedanceAngle->text() != g_sLangTxt_RecloseAcc_X)
+        if (ui->m_pLabImpedanceAngle->text() != "X(Ω):")
 		{
-			ui->m_pLabImpedanceAngle->setText(g_sLangTxt_RecloseAcc_X);
+            ui->m_pLabImpedanceAngle->setText("X(Ω):");
 		}
 
-		if (ui->m_pLabRZ->text() != g_sLangTxt_RecloseAcc_R)
+        if (ui->m_pLabRZ->text() != "R(Ω):")
 		{
-			ui->m_pLabRZ->setText(g_sLangTxt_RecloseAcc_R);
+            ui->m_pLabRZ->setText("R(Ω):");
 		}
 
-		if (ui->m_pLabRImpedanceAngle->text() != g_sLangTxt_RecloseAcc_X)
+        if (ui->m_pLabRImpedanceAngle->text() != "X(Ω):")
 		{
-			ui->m_pLabRImpedanceAngle->setText(g_sLangTxt_RecloseAcc_X);
+            ui->m_pLabRImpedanceAngle->setText("X(Ω):");
 		}
 
 		
 	}
 	else
 	{
-		if (ui->m_pLabZ->text() != g_sLangTxt_DistanceSearch_Z + ":")
+        if (ui->m_pLabZ->text() != "|Z|(Ω):")
 		{
-			ui->m_pLabZ->setText(g_sLangTxt_DistanceSearch_Z + ":");
+            ui->m_pLabZ->setText("|Z|(Ω):");
 		}
 
 		if (ui->m_pLabImpedanceAngle->text() != g_sLangTxt_Gradient_ImpAngle)
@@ -989,9 +989,9 @@ void QSttMacroParaEditViewCBOperate::slot_updateUIParas()
 			ui->m_pLabImpedanceAngle->setText(g_sLangTxt_Gradient_ImpAngle);
 		}
 
-		if (ui->m_pLabRZ->text() != g_sLangTxt_DistanceSearch_Z + ":")
+        if (ui->m_pLabRZ->text() != "|Z|(Ω):")
 		{
-			ui->m_pLabRZ->setText(g_sLangTxt_DistanceSearch_Z + ":");
+            ui->m_pLabRZ->setText("|Z|(Ω):");
 		}
 
 		if (ui->m_pLabRImpedanceAngle->text() != g_sLangTxt_Gradient_ImpAngle)

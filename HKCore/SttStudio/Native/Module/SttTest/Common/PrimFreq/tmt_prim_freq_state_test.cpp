@@ -817,7 +817,7 @@ void stt_xml_serialize(tmt_PrimFreqStateResults *pResults,tmt_PrimFreqStateParas
 
 #include"../../../SttCmd/SttTestCmd.h"
 #include"tmt_prim_freq_state_test.h"
-#include"../../../../../Module/API/GlobalConfigApi.h"
+#include"../../../Module/API/GlobalConfigApi.h"
 
 void stt_xml_serialize_write_PrimFreqStateTest()
 {

@@ -9,7 +9,7 @@
 #include "MMS_STACK_CFG.h"
 #include "../../../System/Module/XAtsSysSvrGlobalDef.h"
 #ifdef _PSX_IDE_QT_
-#include "../../../SttStudio/Test_Win/Module/IniFile/IniFile.h"
+//#include "../../../SttStudio/Test_Win/Module/IniFile/IniFile.h"
 #endif
 
 CMMS_STACK_CFG::CMMS_STACK_CFG()
@@ -232,8 +232,8 @@ void CMMS_STACK_CFG::WriteIpToVMDFile()
 		strDevice.Format(_T("DEVICE%d"), nIndex);
 
 #ifdef _PSX_IDE_QT_
-		IniFile::writeInit(strFile, strDevice, strIP, pAddr->GetIP());
-		IniFile::writeInit(strFile, strDevice, strModel, pAddr->m_strModel);
+        //IniFile::writeInit(strFile, strDevice, strIP, pAddr->GetIP());
+        //IniFile::writeInit(strFile, strDevice, strModel, pAddr->m_strModel);
 		nIndex++;
 #else
 #ifdef UNICODE

@@ -11,6 +11,7 @@
 #include "../Controls/SettingCtrls/QSettingLineEdit.h"
 #include "ui_QSttMacroParaEditViewCBOperate.h"
 #include "../Module/GooseParaWidget/qgooseparawidget.h"
+#include "../../XLangResource_Native.h"
 
 namespace Ui {
 class QSttMacroParaEditViewCBOperate;

@@ -26,12 +26,12 @@ void QSttMacroParaEditViewMeasurLimitWidget::InitUI()
 	m_pTabWidget = new QTableWidget(4, 5); 
 	m_pTabWidget->verticalHeader()->setVisible(false);
 	m_pTabWidget->horizontalHeader()->setVisible(false);
-	m_pTabWidget->verticalHeader()->setResizeMode(QHeaderView::Stretch);
+	m_pTabWidget->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	m_pTabWidget->setFont(*g_pSttGlobalFont);
 	m_pTabWidget->setColumnWidth(0, 120);
 	for (int i = 1; i < m_pTabWidget->columnCount(); ++i) 
 	{
-		m_pTabWidget->horizontalHeader()->setResizeMode(i, QHeaderView::Stretch);
+		m_pTabWidget->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
 	}
 
 	QTableWidgetItem *pItem = NULL;

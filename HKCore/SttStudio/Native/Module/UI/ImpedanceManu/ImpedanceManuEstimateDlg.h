@@ -7,6 +7,7 @@
 #include <QTableWidget>
 #include "../../SttTest/Common/Impedance/tmt_manuImped_test.h"
 #include "../Module/ScrollCtrl/ScrollTableWidget.h"
+#include "../../XLangResource_Native.h"
 
 class ImpedanceEstimateGrid : public  QScrollTableWidget //public QTableWidget//20240808 gongyiping
 {

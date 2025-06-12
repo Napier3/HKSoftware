@@ -4,6 +4,7 @@
 
 #include <QWidget>
 #include "../../../Module/DataMngr/DataGroup.h"
+#include "../../../XLangResource_Native.h"
 
 
 namespace Ui{

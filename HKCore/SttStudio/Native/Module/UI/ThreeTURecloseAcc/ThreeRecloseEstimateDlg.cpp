@@ -3,7 +3,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QHeaderView>
-#include "../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #ifdef _USE_SoftKeyBoard_	
 #include "../SoftKeyboard/SoftKeyBoard.h"
 #endif
@@ -21,7 +21,7 @@ QThreeRecloseEstimateDlg::~QThreeRecloseEstimateDlg()
 
 void QThreeRecloseEstimateDlg::InitUI()
 {
-	setWindowTitle(g_sLangTxt_StateEstimate_ResultEstimate);
+    setWindowTitle("g_sLangTxt_StateEstimate_ResultEstimate");
 	setWindowFlags(Qt::CustomizeWindowHint|Qt::WindowTitleHint| Qt::Dialog);
 	QVBoxLayout* pVLayout = new QVBoxLayout(this);
 	setLayout(pVLayout);
@@ -106,13 +106,13 @@ void QThreeRecloseEstimateGrid::InitUI()
 	pLeft->setDefaultSectionSize(36);
 	pLeft->setVisible(false);
 	QHeaderView* pHeadTop = horizontalHeader();
-	pHeadTop->setClickable(false);
-	pHeadTop->setMovable(false);
+    pHeadTop->setSectionsClickable(false);
+    pHeadTop->setSectionsMovable(false);
  	QFont font1 = this->horizontalHeader()->font();
  	font1.setBold(true);
  	this->horizontalHeader()->setFont(font1);
 	horizontalHeader()->setStretchLastSection(true); //ÉèÖÃ³äÂú±í¿í¶È
-	horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+    horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
 	setEditTriggers(QAbstractItemView::DoubleClicked);
 	setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -309,13 +309,13 @@ QComboBox* QThreeRecloseEstimateGrid::NewErrorType()
 {
 	CString strText;
 	QComboBox *pCbbError = new QComboBox(this);
-	pCbbError->addItem(g_sLangTxt_StateEstimate_AbsError);
-	pCbbError->addItem(g_sLangTxt_StateEstimate_RelError);
-	strText = g_sLangTxt_StateEstimate_AbsError +"or"+g_sLangTxt_StateEstimate_RelError;
-	pCbbError->addItem(strText);
-	strText = g_sLangTxt_StateEstimate_AbsError +"&"+g_sLangTxt_StateEstimate_RelError;
-	pCbbError->addItem(strText);
-	pCbbError->addItem(g_sLangTxt_StateEstimate_CombinationError);
+   //pCbbError->addItem("g_sLangTxt_StateEstimate_AbsError");
+   //pCbbError->addItem("g_sLangTxt_StateEstimate_RelError");
+   //strText = "g_sLangTxt_StateEstimate_AbsError" +"or"+"g_sLangTxt_StateEstimate_RelError";
+   //pCbbError->addItem(strText);
+   //strText = "g_sLangTxt_StateEstimate_AbsError" +"&"+"g_sLangTxt_StateEstimate_RelError";
+   //pCbbError->addItem(strText);
+   //pCbbError->addItem("g_sLangTxt_StateEstimate_CombinationError");
 	return pCbbError;
 }
 

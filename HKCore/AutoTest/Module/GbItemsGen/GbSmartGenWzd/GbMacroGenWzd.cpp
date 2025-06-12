@@ -1,12 +1,11 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "GbMacroGenWzd.h"
-#include "../../../../SttStudio/Module/SttGlobalDef.h"
+#include "../Module/SttGlobalDef.h"
 #include "../../../../Module/API/GlobalConfigApi.h"
 
 #include "GbSmartGenWzd.h"
 
-extern CGbSmartGenWzd *g_theGbSmartGenWzd;
-
+extern CGbSmartGenWzd *g_theGbSmartGenWzd = nullptr;
 
 CGbMacroGenWzd* gb_wzd_curr_macro_gen()
 {

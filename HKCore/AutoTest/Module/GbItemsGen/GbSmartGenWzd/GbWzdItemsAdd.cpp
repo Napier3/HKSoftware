@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "GbWzdItemsAdd.h"
 #include "GbSmartGenWzd.h"
 

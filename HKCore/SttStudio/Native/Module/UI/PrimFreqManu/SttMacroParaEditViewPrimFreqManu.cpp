@@ -1,13 +1,13 @@
 #include "SttMacroParaEditViewPrimFreqManu.h"
 #include "../../SmartCap/XSmartCapMngr.h"
-#include "../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../SttTestCntrFrameBase.h"
 #include "../../SttTestResourceMngr/TestResource/SttTestResource_Sync.h"
 #include "../../SttGlobalDef.h"
 #include "../../SttTestCtrl/SttTestCtrlCntrNative.h"
 #include "../Controls/SttCheckBox.h"
 #include "../Controls/SttTabWidget.h"
-#include"../../Module/XLangResource_Native.h"
+#include"../Module/XLangResource_Native.h"
 #include "QDcSignalMapDialog.h"
 
 #ifdef _USE_SoftKeyBoard_	

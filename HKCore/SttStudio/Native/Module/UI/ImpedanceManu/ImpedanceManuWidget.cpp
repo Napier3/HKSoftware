@@ -563,7 +563,7 @@ void QImpedanceManuWidget::slot_CmbCalModeIndexChanged( int index)
 		break;
 	case 1:
 		{
-			ui->m_pDLLabel->setText(/*tr("短路电压（V）")*/g_sLangTxt_Impedance_ShortVol);
+            ui->m_pDLLabel->setText(tr("短路电压（V）"));
 			ui->m_pShortIOrZsAmpEdit->setText(QString::number(m_pManualImpedParas->m_fSCVoltage,'f',3));//短路电压
 			ui->m_pShortIOrZsAngleEdit->setVisible(false);//不显示
 
@@ -604,11 +604,11 @@ void QImpedanceManuWidget::FirstModeListChanged()
 	{
 		if (m_pManualImpedParas->m_nImped==0)//z 
 		{
-			m_FirstModeList << "Z" << /*"短路电压"*/g_sLangTxt_ActionTime_ShortVol;
+            m_FirstModeList << "Z" << "短路电压";
 		}
 		else
 	{
-			m_FirstModeList << "R" << "X" << /*"短路电压"*/g_sLangTxt_ActionTime_ShortVol;
+            m_FirstModeList << "R" << "X" << "短路电压";
 		}
 	}
 	else
@@ -798,7 +798,7 @@ void QImpedanceManuWidget::slot_lneStep_TextKeyBoard()
 	float fDcIMax = g_oLocalSysPara.m_fDC_CurMax;
 
 
-	if (strvar.contains(g_sLangTxt_Native_ShortVolt))
+    if (strvar.contains("短路电压"))
 	{
 		if (fv>fAcVMax)
 		{
@@ -923,7 +923,7 @@ void QImpedanceManuWidget::slot_CmbFirstModeIndexChanged(int index)
 		ui->m_pEndLabel->setText(strEnd + "(" + strUnit[0] + "):");
 		
 	} 
-	else if (ui->m_pCmb_FirstMode->currentText() ==/*"短路电压"*/g_sLangTxt_ActionTime_ShortVol)//除变化时间外，其他三个值变换单位为V
+    else if (ui->m_pCmb_FirstMode->currentText() =="短路电压")//除变化时间外，其他三个值变换单位为V
 	{
 		m_pManualImpedParas->m_nFirstMode = IMPED_MANUL_GRADIENTVHAMMMEL_SCVOLT;
 		ui->m_pStepLabel->setText(strStep + "(" + strUnit[1] + "):");
@@ -978,7 +978,7 @@ void QImpedanceManuWidget::slot_CmbSecondModeIndexChanged(int index)
 			ui->m_pStartLabel->setText(strStart + "(" + strUnit[0] + "):");
 			ui->m_pEndLabel->setText(strEnd + "(" + strUnit[0] + "):");
 	}
-		if (ui->m_pCmb_FirstMode->currentText() ==/*"短路电压"*/g_sLangTxt_ActionTime_ShortVol)
+        if (ui->m_pCmb_FirstMode->currentText() =="短路电压")
 	{
 			ui->m_pStepLabel->setText(strStep + "(" + strUnit[1] + "):");
 			ui->m_pStartLabel->setText(strStart + "(" + strUnit[1] + "):");

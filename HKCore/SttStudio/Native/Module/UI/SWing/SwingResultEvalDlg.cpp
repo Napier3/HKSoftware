@@ -33,9 +33,9 @@ void QSwingResultEvalDlg::InitUI()
 {
 
     this->setFont(*g_pSttGlobalFont);
-    this->setWindowTitle(/*结果评估*/g_sLangTxt_StateEstimate_ResultEstimate);
+    this->setWindowTitle("结果评估");
     QStringList headers;
-    headers << /*"名称"*/g_sLangTxt_Name << g_sLangTxt_SetValue/*"整定值"*/ <</*"误差类型"*/g_sLangTxt_StateEstimate_ErrorType <</* "相对误差(%)"*/g_sLangTxt_StateEstimate_RelError + "(%)" << /*"绝对误差"*/g_sLangTxt_StateEstimate_AbsError << g_sLangTxt_Distance_AbsErrMinus;
+    //headers << "名称" << "整定值" <<"误差类型" <<"相对误差(%)" + "(%)" << "绝对误差" << "g_sLangTxt_Distance_AbsErrMinus";
     ui->m_tableWidget->setHorizontalHeaderLabels(headers);
 	ui->m_btnOk->setText(g_sLangTxt_OK);
 	ui->m_btnCancel->setText(g_sLangTxt_Cancel);
@@ -63,7 +63,7 @@ void QSwingResultEvalDlg::InitUI()
     m_pComboBox->addItem(/*"绝对or相对"*/g_sLangTxt_CBOperate_AbsOrRelative);
     m_pComboBox->addItem(/*"绝对&相对"*/g_sLangTxt_CBOperate_AbsRelative);
     m_pComboBox->addItem(/*"组合误差"*/g_sLangTxt_CBOperate_CombError);
-    m_pComboBox->addItem(/*"不评估"*/g_sLangTxt_Distance_ErrorNot);
+    m_pComboBox->addItem("不评估");
     horizontalLayout_1->addWidget(m_pComboBox);
     m_pComboBox->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     ui->m_tableWidget->setCellWidget(0, 2, containerWidget_1);

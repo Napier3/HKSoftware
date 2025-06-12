@@ -1,6 +1,6 @@
 #include "QSttFAParasSetWidget.h"
 #include "ui_QSttFAParasSetWidget.h"
-#include "../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../../UI/SttTestCntrFrameBase.h"
 #include "../../../../Module/SttGlobalDef.h"
 #include <QComboBox>

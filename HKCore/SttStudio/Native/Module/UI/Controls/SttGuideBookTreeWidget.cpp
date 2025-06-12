@@ -12,7 +12,7 @@
 #include "../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbSmartGenWzd.h"
 #include "../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdItemSetState.h"
 
-extern CGbSmartGenWzd *g_theGbSmartGenWzd;
+//extern CGbSmartGenWzd *g_theGbSmartGenWzd;
 
 QSttGuideBookTreeWidget::QSttGuideBookTreeWidget(CExBaseObject *pSttGuideBook, CSttFrame_GbTree *pTreeParas, QWidget *parent)
     : QWidget(parent)
@@ -497,11 +497,11 @@ long QSttGuideBookTreeWidget::SendSetItemState(CSttItemBase *pItemBase)
 	paras.AddNewData("Select", pItemBase->m_nSelect);  //确保此处要么是1  要么是0
 	long nRet = pNative->m_oSttAtsClient.Ats_SetItemState(&paras);
 
-	if (nRet == 3)
-	{
-		CGbWzdItemSetState* pSetState = g_theGbSmartGenWzd->ItemsSetState(strParentItemPath, pItemBase->m_strID, pItemBase->m_strName
-			, pItemBase->m_nSelect, pItemBase->m_nEnable, pItemBase->m_nShow);
-	}
+    //if (nRet == 3)
+    //{
+    //	CGbWzdItemSetState* pSetState = g_theGbSmartGenWzd->ItemsSetState(strParentItemPath, pItemBase->m_strID, pItemBase->m_strName
+    //		, pItemBase->m_nSelect, pItemBase->m_nEnable, pItemBase->m_nShow);
+    //}
 
 	return nRet;
 }

@@ -1,6 +1,6 @@
 #include "SttMacroParaEditViewManualBase.h"
 #include "../../SmartCap/XSmartCapMngr.h"
-#include "../../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
+#include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../../SttTest/Common/tmt_manu_test.h"
 #include "../SttTestCntrFrameBase.h"
 #include "../../SttTestResourceMngr/TestResource/SttTestResource_Sync.h"
@@ -8,7 +8,7 @@
 #include "../../SttTestCtrl/SttTestCtrlCntrNative.h"
 #include "../Controls/SttCheckBox.h"
 #include "../Controls/SttTabWidget.h"
-#include"../../Module/XLangResource_Native.h"
+#include"../Module/XLangResource_Native.h"
 
 #ifdef _USE_SoftKeyBoard_	
 #include "../SoftKeyboard/SoftKeyBoard.h"

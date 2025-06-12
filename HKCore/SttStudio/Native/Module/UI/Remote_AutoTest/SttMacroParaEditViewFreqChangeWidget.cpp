@@ -32,8 +32,8 @@ void QSttMacroParaEditViewFreqChangeWidget::InitUI()
 	m_pFreqTabWidget = new QTableWidget(4, 4); 
 	m_pFreqTabWidget->verticalHeader()->setVisible(false);
 	m_pFreqTabWidget->horizontalHeader()->setVisible(false);
-	m_pFreqTabWidget->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
-	m_pFreqTabWidget->verticalHeader()->setResizeMode(QHeaderView::Stretch);
+    m_pFreqTabWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    m_pFreqTabWidget->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	m_pFreqTabWidget->setFont(*g_pSttGlobalFont);
 
 	QTableWidgetItem *pItem = NULL;

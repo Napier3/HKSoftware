@@ -6,9 +6,7 @@
 #include <QCheckBox>
 #include <QHeaderView>
 #include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../XLangResource_Native.h"
 #include "SttMacroParaEditViewImpedanceManu.h"
-#include "../../XLangResource_Native.h"
 #include "../../UI/Controls/SettingCtrls/QSettingItem.h"
 #ifdef _PSX_QT_WINDOWS_	
 #include <QApplication>
@@ -81,7 +79,7 @@ QComboBox* ImpedanceEstimateGrid::NewErrorType()
 	pCbbError->addItem(g_sLangTxt_StateEstimate_CombinationError);
 #endif
 
-	pCbbError->addItem(/*"²»ÆÀ¹À"*/g_sLangTxt_Distance_ErrorNot);
+    pCbbError->addItem("²»ÆÀ¹À");
 	return pCbbError;
 }
 
@@ -89,7 +87,7 @@ QComboBox* ImpedanceEstimateGrid::AbsErrorType()
 {
 	QComboBox *pCbbError = new QComboBox(this);
 	pCbbError->addItem(g_sLangTxt_StateEstimate_AbsError);
-	pCbbError->addItem(/*"²»ÆÀ¹À"*/g_sLangTxt_Distance_ErrorNot);
+    pCbbError->addItem("²»ÆÀ¹À");
 	return pCbbError;
 }
 
@@ -456,7 +454,7 @@ void ImpedanceEstimateGrid::CbbErrorType(int nIndex, CString strText)
 		SetItemEnable(nIndex, 4, FALSE);
 		SetItemEnable(nIndex, 5, FALSE);
 	}
-	else if (strText == g_sLangTxt_Distance_ErrorNot)//²»ÆÀ¹À
+    else if (strText == "²»ÆÀ¹À")//²»ÆÀ¹À
 	{
 		SetItemEnable(nIndex, 3, FALSE);
 		SetItemEnable(nIndex, 4, FALSE);
@@ -615,7 +613,7 @@ void ImpedanceEstimateGrid::SetOrGetErrorType(QComboBox *pComboBox, long &nError
 		if (nErrorLogic == 5)
 		{
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
-			pComboBox->setCurrentText(g_sLangTxt_Distance_ErrorNot);
+            pComboBox->setCurrentText("²»ÆÀ¹À");
 #else
 			//Stt_Global_SetComboBoxIndexByText(pComboBox, g_sLangTxt_Distance_ErrorNot);
 #endif
@@ -628,7 +626,7 @@ void ImpedanceEstimateGrid::SetOrGetErrorType(QComboBox *pComboBox, long &nError
 	else
 	{
 		QString strText = pComboBox->currentText();
-		if (strText == g_sLangTxt_Distance_ErrorNot)
+        if (strText == "²»ÆÀ¹À")
 		{
 			nErrorLogic = 5;
 		}

@@ -225,6 +225,7 @@ SOURCES += main.cpp\
     ../Module/SttTest/Common/Impedance/tmt_reclose_acc_test.cpp \
     ../Module/SttTest/Common/SearchBase/tmt_complex_search.cpp \
     ../Module/SttTest/Common/SearchBase/tmt_search_base.cpp \
+    ../Module/SttTest/Common/Swing/tmt_swing_test.cpp \
     ../Module/SttTest/Common/tmt_gradient_test.cpp \
     ../Module/SttTest/Common/tmt_harm_test.cpp \
     ../Module/SttTest/Common/Sequence/tmt_sequence_gradient_test.cpp \
@@ -351,6 +352,12 @@ SOURCES += main.cpp\
     ../Module/UI/Controls/SttGuideBookTreeWidget.cpp \
     ../Module/UI/Controls/SttOutPutWidget.cpp \
     ../Module/UI/Controls/SttLineEdit.cpp \
+    ../Module/UI/Controls/SettingCtrls/QSettingGlobal.cpp \
+    ../Module/UI/Controls/SettingCtrls/QSettingItem.cpp \
+    ../Module/UI/Controls/SettingCtrls/settingselectdlg.cpp \
+    ../Module/UI/Controls/SettingCtrls/SttGlobalModel.cpp \
+    ../Module/UI/Controls/SettingCtrls/QSettingLineEdit.cpp \
+    ../Module/UI/Controls/SettingCtrls/SettingInterface.cpp \
     ../Module/UI/Controls/SttLanguageCfgDialog.cpp \
     ../Module/UI/Controls/SttReportHeadSetDlg.cpp \
     ../Module/UI/Controls/SttDvmEdit.cpp \
@@ -359,6 +366,7 @@ SOURCES += main.cpp\
     ../Module/UI/Controls/SttCustomSetTree.cpp \
     ../Module/UI/Controls/SttCheckBox.cpp \
     ../Module/UI/Controls/SttTabWidget.cpp \
+    ../Module/UI/Controls/SttCheckableGroupBox.cpp \
     ../Module/UI/Controls/FileMngr/SttFileMngrChildren.cpp \
     ../Module/UI/Controls/FileMngr/SttFileMngrDlg.cpp \
     ../Module/UI/Controls/FileMngr/SttFileTypeMngrGrid.cpp \
@@ -397,6 +405,8 @@ SOURCES += main.cpp\
     ../Module/UI/State/StateParaWidget.cpp \
     ../Module/UI/State/SttMacroParaEditViewState.cpp \
     ../Module/UI/TransPlay/SttMacroParaEditViewTransPlay.cpp \
+    ../Module/UI/Module/BinBoutCommMap/QBinBoutCommMapDialog.cpp \
+    ../Module/UI/Module/ChRsMap/BinBoutMapsGrid.cpp \
     ../Module/UI/Module/ChannelParaSet/channelharmtable.cpp \
     ../Module/UI/Module/ChannelParaSet/channeltable.cpp \
     ../Module/UI/Module/ChannelParaSet/QBasicTestParaSet.cpp \
@@ -425,6 +435,7 @@ SOURCES += main.cpp\
     ../Module/UI/Module/GooseParaWidget/WidgetDelegate.cpp \
     ../Module/UI/Module/infoWidget/infowidget.cpp \
     ../Module/UI/Module/QExBaseListGridBase/QExBaseListComBoxDelegBase.cpp \
+    ../Module/UI/Module/QExBaseListGridBase/QExBaseListFloatEditDelegBase.cpp \
     ../Module/UI/Module/QExBaseListGridBase/QExBaseListGridBase.cpp \
     ../Module/UI/Module/QExBaseListGridBase/QGridDefine.cpp \
     ../Module/UI/Harm/HarmParaTable.cpp \
@@ -465,7 +476,12 @@ SOURCES += main.cpp\
     ../Module/UI/Module/PopupDialog/SttFileSelectGrid.cpp \
     ../Module/UI/Module/PopupDialog/SttPopupOpenDialog.cpp \
     ../Module/UI/Module/StateMonitor/StateMonitorBinBout.cpp \
+    ../Module/UI/Module/SysParas/QSysParasDlg.cpp \
+    ../Module/UI/Module/SysParas/WeakSetGrid.cpp \
+    ../Module/UI/Module/SysParas/QWeakSetWidget.cpp\
+    ../Module/UI/Module/SysParas/QSysParasCfgWidget.cpp\
     ../Module/UI/Module/StateMonitor/StateMonitorPlot.cpp \
+    ../Module/UI/Module/SysParas/QSysParasWidget.cpp \
     ../Module/UI/Module/StateMonitor/StateMonitorTab.cpp \
     ../Module/UI/Module/StateMonitor/StateMonitorVoltCur.cpp \
     ../Module/UI/Module/StateMonitor/StateMonitorWidget.cpp \
@@ -530,6 +546,7 @@ SOURCES += main.cpp\
     ../Module/UI/Gradient/GradientSettingDlg.cpp \
     ../Module/UI/Manual/QSttManualBinBoutDlg.cpp \
     ../Module/UI/Manual/SttMacroParaEditViewManual.cpp \
+    ../Module/UI/Manual/SttMacroParaEditViewManualBase.cpp \
     ../Module/UI/SequenceManu/SequenceManualWidget.cpp \
     ../Module/UI/SequenceManu/SttMacroParaEditViewSequenceManu.cpp \
     ../Module/UI/Gradient/GradientGroupWidget.cpp \
@@ -613,9 +630,55 @@ SOURCES += main.cpp\
     ../Module/UI/Remote_AutoTest/SttMacroParaEditViewPowerAccuracyWidget.cpp \
     ../Module/UI/Remote_AutoTest/SttMacroParaEditViewFreqFactorErrorWidget.cpp \
     ../Module/UI/Remote_AutoTest/SttMacroParaEditViewTURecloseAccWidget.cpp \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewFreqChangeWidget.cpp \
     ../Module/UI/Remote_AutoTest/OverCurrTest/SttMacroParaEditViewOverCurrWidget.cpp \
+    ../Module/UI/Remote_AutoTest/OverCurrTest/SttMacroParaEditViewOverCurrTable.cpp \
     ../Module/UI/Remote_AutoTest/ZeroTest/SttMacroParaEditViewZeroWidget.cpp \
+    ../Module/UI/Remote_AutoTest/ZeroTest/SttMacroParaEditViewZeroTable.cpp \
     ../Module/UI/Remote_AutoTest/Remote_Accuracy/SttMacroParaEditViewRemote_AccuracyWidget.cpp \
+    ../Module/UI/Remote_AutoTest/Remote_Accuracy/SttMacroParaEditViewRemote_AccuracyTable.cpp \
+    ../Module/UI/Remote_AutoTest/Remote_PriorityDelivery/SttMacroParaEditViewPriorityDeliverTable.cpp \
+    ../Module/UI/Remote_AutoTest/Remote_DualPosition/SttMacroParaEditViewDualPositionTable.cpp \
+    ../Module/UI/Remote_AutoTest/Remote_Resolution/SttMacroParaEditViewResolutionTable.cpp \
+    ../Module/UI/Remote_AutoTest/Remote_Shake/SttMacroParaEditViewRemote_ShakeTable.cpp \
+    ../Module/UI/Remote_AutoTest/Remote_PriorityDelivery/SttMacroParaEditViewPriorityDeliverWidget.cpp \
+    ../Module/UI/Remote_AutoTest/Remote_DualPosition/SttMacroParaEditViewDualPositionWidget.cpp \
+    ../Module/UI/Remote_AutoTest/Remote_Resolution/SttMacroParaEditViewResolutionWidget.cpp \
+    ../Module/UI/Remote_AutoTest/Remote_Shake/SttMacroParaEditViewRemote_ShakeWidget.cpp \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewMeasurLimitWidget.cpp \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewInputVolWidget.cpp \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewInputCurWidget.cpp \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewRemoteWidget.cpp \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewVolExcLimitWidget.cpp \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewCurExcLimitWidget.cpp \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewLowCurrentWidget.cpp \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewProInrushCurWidget.cpp \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewPTAlarmWidget.cpp \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewFaultResetWidget.cpp \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewDeadZeroDriftWidget.cpp \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewThreePhUnbalanceWidget.cpp \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewPowerFactorWidget.cpp \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewHarmContentWidget.cpp \
+    ../Module/UI/FreqOutputTest/SttMacroParaEditViewFreqOutput.cpp \
+    ../Module/UI/FreqOutputTest/FreqOutPutTable.cpp \
+    ../Module/UI/FreqOutputTest/FreqFileWidget.cpp \
+    ../Module/UI/FreqOutputTest/FreqNewFileDialog.cpp \
+    ../Module/UI/PrimFreqState/SttMacroParaEditViewPrimFreqState.cpp \
+    ../Module/UI/PrimFreqManu/SttMacroParaEditViewPrimFreqManu.cpp \
+    ../Module/UI/PrimFreqManu/QPrimFreqManualWidget.cpp \
+    ../Module/UI/PrimFreqManu/QDcSignalMapDialog.cpp \
+    ../Module/UI/Remote_AutoTest/Remote_TimeSync/SttMacroParaEditViewTimeSyncWidget.cpp \
+    ../Module/UI/Remote_AutoTest/Remote_TimeSync/SttMacroParaEditViewTimeSyncTable.cpp \
+    ../Module/UI/Remote_AutoTest/Remote_ParaRecall/SttMacroParaEditViewParaRecallWidget.cpp \
+    ../Module/UI/Remote_AutoTest/Remote_ParaRecall/SttMacroParaEditViewParaRecallTable.cpp \
+    ../Module/UI/SWing/SttMacroParaEditViewSwing.cpp \
+    ../Module/UI/SWing/SwingTestParasDlg.cpp \
+    ../Module/UI/SWing/SwingTestBinarySignalDlg.cpp \
+    ../Module/UI/SWing/SwingResultEvalDlg.cpp \
+    ../Module/UI/SWing/SwingSysDiagramWidget.cpp \
+    ../Module/UI/SWing/SwingImpChartWidget.cpp \
+    ../Module/UI/SWing/SwingImpChartDrawView.cpp \
+    ../Module/UI/SWing/SwingTestCommon.cpp \
     ../Module/UI/TerminalAutoTest/QTerminalSettingTabWidget.cpp \
     ../Module/UI/TerminalAutoTest/QTerminalTabWidget.cpp \
     ../Module/UI/TerminalAutoTest/QTerminalTreeWidget.cpp \
@@ -626,6 +689,9 @@ SOURCES += main.cpp\
     ../Module/UI/TerminalAutoTest/Grid/QTerminalGoutDataChsGrid.cpp \
     ../Module/UI/TerminalAutoTest/Grid/QTerminalGoutDataGrid.cpp \
     ../Module/UI/ThreeTURecloseAcc/SttMacroParaEditViewThreeTURecloseAcc.cpp \
+    ../Module/UI/ThreeTURecloseAcc/ThreeRecloseAccTable.cpp \
+    ../Module/UI/ThreeTURecloseAcc/ThreeRecloseEstimateDlg.cpp \
+    ../Module/UI/ThreeTURecloseAcc/ThreeRecloseCommonParasDlg.cpp \
     ../Module/UI/RemoteCtrl/RemoteCtrlBtnWidget.cpp \
     ../Module/UI/RemoteCtrl/RemoteCtrlTable.cpp \
     ../Module/UI/RemoteCtrl/SttMacroParaEditViewRemoteCtrl.cpp \
@@ -670,6 +736,7 @@ SOURCES += main.cpp\
     ../Module/UI/Module/FACommonSpyWidget/Grid/QSttFAStateSequenceGroupGrid.cpp \
     ../Module/UI/Module/FACommonSpyWidget/Grid/QSttFATestResultViewGroupGrid.cpp \
     ../Module/UI/Module/FAParasSetWidget/QSttFAParasSetDialog.cpp \
+    ../Module/UI/Module/FAParasSetWidget/QSttFAParasSetWidget.cpp \
     ../Module/UI/FA/QSttMacroParaEditViewVolTimeTypeSec.cpp \
     ../Module/UI/IEC61850Config/SttIecConfigDialog.cpp \
     ../Module/UI/Module/CommConfigurationDlg/PkgMonitor/QSttCommCfgPkgMonitorWidget.cpp \
@@ -772,6 +839,7 @@ SOURCES += main.cpp\
     ../../../Module/API/GlobalApi.cpp \
     ../../../Module/DataMngr/DataGroup.cpp \
     ../../../Module/DataMngr/DataMaps.cpp \
+    ../../../Module/DataMngr/XDataMap.cpp \
     ../../../Module/DataMngr/DataMngrGlobal.cpp \
     ../../../Module/DataMngr/DataType.cpp \
     ../../../Module/DataMngr/DataTypes.cpp \
@@ -854,6 +922,7 @@ SOURCES += main.cpp\
     ../../../Module/XDrawBase/XDrawElements.cpp \
     ../../../Module/XDrawBase/XDrawGlobal.cpp \
     ../../../Module/XDrawBase/XDrawLine.cpp \
+    ../../../Module/XDrawBase/XDrawLineVector.cpp \
     ../../../Module/XDrawBase/XDrawList.cpp \
     ../../../Module/XDrawBase/XDrawMngr.cpp \
     ../../../Module/XDrawBase/XDrawMngrDescartes.cpp \
@@ -896,6 +965,17 @@ SOURCES += main.cpp\
     ../../../61850/Module/IecCfgSclTool/SclToIecCfgTool.cpp \
     ../../../61850/Module/SCL_Qt/QSclFileRead.cpp \
     ../../../61850/Module/SCL/SclIecCfgDatas.cpp \
+    ../../../61850/Module/MMS_STACK_CFG/MMS_STACK_CFG.cpp \
+    ../../../61850/Module/MMS_STACK_CFG/StkCfg_MMS.cpp \
+    ../../../61850/Module/MMS_STACK_CFG/StkCfg_Transport.cpp \
+    ../../../61850/Module/MMS_STACK_CFG/StkCfg_TransportTcp.cpp \
+    ../../../61850/Module/MMS_STACK_CFG/StkCfg_NetworkAddressing.cpp \
+    ../../../61850/Module/MMS_STACK_CFG/StkCfg_LocalAddressList.cpp \
+    ../../../61850/Module/MMS_STACK_CFG/StkCfg_LocalAddress.cpp \
+    ../../../61850/Module/MMS_STACK_CFG/StkCfg_RemoteAddressList.cpp \
+    ../../../61850/Module/MMS_STACK_CFG/StkCfg_RemoteAddress.cpp \
+    ../../../61850/Module/MMS_STACK_CFG/StkCfg_NetAddr.cpp \
+    ../../../61850/Module/MMS_STACK_CFG/MMS_STACK_CFGGlobal.cpp \
     ../../../Module/API/StringConvert/String_Gbk_To_Utf8.cpp \
     ../../../Module/API/StringConvert/String_Utf8_To_Gbk.cpp \
     ../../../Module/BaseClass/QT/ExBaseListTreeCtrl.cpp \
@@ -1080,7 +1160,22 @@ SOURCES += main.cpp\
     ../../../61850/Module/SCL_Qt/QScdFileRWDlg.cpp \
     ../../../Module/DataMngr/DvmValues.cpp \
     ../../../Module/API/StringConvertApi.cpp \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/DvmContents.cpp \
     ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbSmartGenWzd.cpp \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdItemMove.cpp \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdMacroTestAdd.cpp \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdCommCmdAdd.cpp \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdItemsAdd.cpp \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdItemsNameLib.cpp \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdItemRsltExprEdit.cpp \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdSafetyAdd.cpp \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdItemCopy.cpp \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdItemEdit.cpp \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdItemSetState.cpp \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdItemPaste.cpp \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbMacroGenWzd.cpp \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/SttCmdWzd_CmdDataset.cpp \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdXItemBase.cpp \
     ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdAi/GbWzdAiParasBase.cpp \
     ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdAi/GbWzdAiBase.cpp \
     ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdAi/GbWzdAiDO.cpp \
@@ -1173,6 +1268,7 @@ SOURCES += main.cpp\
     ../Module/UI/ADMUAccurAutoTest/ADMUAccurAutoTestParasSetDialog.cpp \
     ../Module/UI/ADMUAccurAutoTest/SttMacroParaEditViewADMUAccurAutoTest.cpp \
     ../Module/UI/AnalogCircuitBreaker/SttMacroParaEditViewAnalogCirBreaker.cpp \
+    ../Module/UI/AnalogCircuitBreaker/AnalogCirBreakerParaset.cpp \
     ../Module/UI/PowerManu/ManualView_PV.cpp \
     ../Module/UI/PowerManu/PowerManualEstimateDlg.cpp \
     ../Module/UI/PowerManu/PowerManualGrid.cpp \
@@ -1211,7 +1307,10 @@ SOURCES += main.cpp\
     ../Module/TestUI/Module/SttTestGridDefine/SttTestGridDefineGlobal.cpp \
     ../Module/TestUI/QSttMultiMacroParaEditViewBase.cpp \
     ../Module/TestUI/Interface/QItemParaEditWidgetBase.cpp \
+    ../Module/SttTest/Common/Distribution/tmt_freqoutput_test.cpp \
     ../Module/SttTest/Common/Power/tmt_power_manu_test.cpp \
+    ../Module/SttTest/Common/PrimFreq/tmt_prim_freq_state_test.cpp \
+    ../Module/SttTest/Common/PrimFreq/tmt_prim_freq_manu_test.cpp \
     ../Module/UI/ImpedanceManu/ImpedanceManuEstimateDlg.cpp \
     ../Module/UI/ImpedanceManu/ImpedanceManuWidget.cpp \
     ../Module/UI/ImpedanceManu/SttMacroParaEditViewImpedanceManu.cpp \
@@ -1422,6 +1521,7 @@ HEADERS  += \
     ../Module/SttTest/Common/Impedance/tmt_reclose_acc_test.h \
     ../Module/SttTest/Common/SearchBase/tmt_complex_search.h \
     ../Module/SttTest/Common/SearchBase/tmt_search_base.h \
+    ../Module/SttTest/Common/Swing/tmt_swing_test.h \
     ../Module/SttTest/Common/tmt_manu_test.h \
     ../Module/SttTest/Common/tmt_gradient_test.h \
     ../Module/SttTest/Common/tmt_harm_test.h \
@@ -1555,6 +1655,12 @@ HEADERS  += \
     ../Module/UI/Controls/FileMngr/SttFileViewGrid.h \
     ../Module/UI/Controls/FileMngr/SttXFolderButton.h \
     ../Module/UI/Controls/SttLineEdit.h \
+    ../Module/UI/Controls/SettingCtrls/QSettingGlobal.h \
+    ../Module/UI/Controls/SettingCtrls/QSettingItem.h \
+    ../Module/UI/Controls/SettingCtrls/settingselectdlg.h \
+    ../Module/UI/Controls/SettingCtrls/SttGlobalModel.h \
+    ../Module/UI/Controls/SettingCtrls/QSettingLineEdit.h \
+    ../Module/UI/Controls/SettingCtrls/SettingInterface.h \
     ../Module/UI/Controls/SttLanguageCfgDialog.h \
     ../Module/UI/Controls/SttReportHeadSetDlg.h \
     ../Module/UI/Controls/SttDvmEdit.h \
@@ -1563,6 +1669,7 @@ HEADERS  += \
     ../Module/UI/Controls/SttCustomSetTree.h \
     ../Module/UI/Controls/SttCheckBox.h \
     ../Module/UI/Controls/SttTabWidget.h \
+    ../Module/UI/Controls/SttCheckableGroupBox.h \
     ../Module/UI/Controls/NetworkConfig/QModifyIPAddrDlg.h \
     ../Module/UI/Controls/SafetyMsgCfg/SttSafetyMsg.h \
     ../Module/UI/Controls/SafetyMsgCfg/SttSafetyMsgCfg.h \
@@ -1598,6 +1705,8 @@ HEADERS  += \
     ../Module/UI/State/StateParaWidget.h \
     ../Module/UI/State/SttMacroParaEditViewState.h \
     ../Module/UI/TransPlay/SttMacroParaEditViewTransPlay.h \
+    ../Module/UI/Module/BinBoutCommMap/QBinBoutCommMapDialog.h \
+    ../Module/UI/Module/ChRsMap/BinBoutMapsGrid.h \
     ../Module/UI/Module/ChannelParaSet/channelharmtable.h \
     ../Module/UI/Module/ChannelParaSet/channeltable.h \
     ../Module/UI/Module/ChannelParaSet/QBasicTestParaSet.h \
@@ -1626,6 +1735,7 @@ HEADERS  += \
     ../Module/UI/Module/GooseParaWidget/WidgetDelegate.h \
     ../Module/UI/Module/infoWidget/infowidget.h \
     ../Module/UI/Module/QExBaseListGridBase/QExBaseListComBoxDelegBase.h \
+    ../Module/UI/Module/QExBaseListGridBase/QExBaseListFloatEditDelegBase.h \
     ../Module/UI/Module/QExBaseListGridBase/QExBaseListGridBase.h \
     ../Module/UI/Module/QExBaseListGridBase/QGridDefine.h \
     ../Module/UI/Module/SttUIDefine.h \
@@ -1673,6 +1783,11 @@ HEADERS  += \
     ../Module/UI/IEC61850Config/SttIecQualitySetDialog.h \
     ../Module/UI/Module/PopupDialog/SttFileSelectGrid.h \
     ../Module/UI/Module/StateMonitor/StateMonitorBinBout.h \
+    ../Module/UI/Module/SysParas/QSysParasDlg.h \
+    ../Module/UI/Module/SysParas/WeakSetGrid.h \
+    ../Module/UI/Module/SysParas/QSysParasWidget.h \
+    ../Module/UI/Module/SysParas/QWeakSetWidget.h \
+    ../Module/UI/Module/SysParas/QSysParasCfgWidget.h\
     ../Module/UI/Module/StateMonitor/StateMonitorPlot.h \
     ../Module/UI/Module/StateMonitor/StateMonitorTab.h \
     ../Module/UI/Module/StateMonitor/StateMonitorVoltCur.h \
@@ -1739,6 +1854,7 @@ HEADERS  += \
     ../Module/UI/Gradient/GradientSettingDlg.h \
     ../Module/UI/Manual/QSttManualBinBoutDlg.h \
     ../Module/UI/Manual/SttMacroParaEditViewManual.h \
+    ../Module/UI/Manual/SttMacroParaEditViewManualBase.h \
     ../Module/UI/SequenceManu/SequenceManualWidget.h \
     ../Module/UI/SequenceManu/SttMacroParaEditViewSequenceManu.h \
     ../Module/UI/Gradient/GradientGroupWidget.h \
@@ -1822,9 +1938,55 @@ HEADERS  += \
     ../Module/UI/Remote_AutoTest/SttMacroParaEditViewPowerAccuracyWidget.h \
     ../Module/UI/Remote_AutoTest/SttMacroParaEditViewFreqFactorErrorWidget.h \
     ../Module/UI/Remote_AutoTest/SttMacroParaEditViewTURecloseAccWidget.h \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewFreqChangeWidget.h \
     ../Module/UI/Remote_AutoTest/OverCurrTest/SttMacroParaEditViewOverCurrWidget.h\
+    ../Module/UI/Remote_AutoTest/OverCurrTest/SttMacroParaEditViewOverCurrTable.h \
     ../Module/UI/Remote_AutoTest/ZeroTest/SttMacroParaEditViewZeroWidget.h \
+    ../Module/UI/Remote_AutoTest/ZeroTest/SttMacroParaEditViewZeroTable.h \
     ../Module/UI/Remote_AutoTest/Remote_Accuracy/SttMacroParaEditViewRemote_AccuracyWidget.h \
+    ../Module/UI/Remote_AutoTest/Remote_Accuracy/SttMacroParaEditViewRemote_AccuracyTable.h \
+    ../Module/UI/Remote_AutoTest/Remote_PriorityDelivery/SttMacroParaEditViewPriorityDeliverTable.h \
+    ../Module/UI/Remote_AutoTest/Remote_DualPosition/SttMacroParaEditViewDualPositionTable.h \
+    ../Module/UI/Remote_AutoTest/Remote_Resolution/SttMacroParaEditViewResolutionTable.h \
+    ../Module/UI/Remote_AutoTest/Remote_Shake/SttMacroParaEditViewRemote_ShakeTable.h \
+    ../Module/UI/Remote_AutoTest/Remote_PriorityDelivery/SttMacroParaEditViewPriorityDeliverWidget.h \
+    ../Module/UI/Remote_AutoTest/Remote_DualPosition/SttMacroParaEditViewDualPositionWidget.h \
+    ../Module/UI/Remote_AutoTest/Remote_Resolution/SttMacroParaEditViewResolutionWidget.h \
+    ../Module/UI/Remote_AutoTest/Remote_Shake/SttMacroParaEditViewRemote_ShakeWidget.h \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewMeasurLimitWidget.h \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewInputVolWidget.h \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewInputCurWidget.h \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewRemoteWidget.h \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewVolExcLimitWidget.h \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewCurExcLimitWidget.h \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewLowCurrentWidget.h \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewProInrushCurWidget.h \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewPTAlarmWidget.h \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewFaultResetWidget.h \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewDeadZeroDriftWidget.h \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewThreePhUnbalanceWidget.h \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewPowerFactorWidget.h \
+    ../Module/UI/Remote_AutoTest/SttMacroParaEditViewHarmContentWidget.h \
+    ../Module/UI/FreqOutputTest/SttMacroParaEditViewFreqOutput.h \
+    ../Module/UI/FreqOutputTest/FreqOutPutTable.h \
+    ../Module/UI/FreqOutputTest/FreqFileWidget.h \
+    ../Module/UI/FreqOutputTest/FreqNewFileDialog.h \
+    ../Module/UI/PrimFreqState/SttMacroParaEditViewPrimFreqState.h \
+    ../Module/UI/PrimFreqManu/SttMacroParaEditViewPrimFreqManu.h \
+    ../Module/UI/PrimFreqManu/QPrimFreqManualWidget.h \
+    ../Module/UI/PrimFreqManu/QDcSignalMapDialog.h \
+    ../Module/UI/Remote_AutoTest/Remote_TimeSync/SttMacroParaEditViewTimeSyncWidget.h \
+    ../Module/UI/Remote_AutoTest/Remote_TimeSync/SttMacroParaEditViewTimeSyncTable.h \
+    ../Module/UI/Remote_AutoTest/Remote_ParaRecall/SttMacroParaEditViewParaRecallWidget.h \
+    ../Module/UI/Remote_AutoTest/Remote_ParaRecall/SttMacroParaEditViewParaRecallTable.h \
+    ../Module/UI/SWing/SttMacroParaEditViewSwing.h \
+    ../Module/UI/SWing/SwingTestParasDlg.h \
+    ../Module/UI/SWing/SwingTestBinarySignalDlg.h \
+    ../Module/UI/SWing/SwingResultEvalDlg.h \
+    ../Module/UI/SWing/SwingSysDiagramWidget.h \
+    ../Module/UI/SWing/SwingImpChartWidget.h \
+    ../Module/UI/SWing/SwingImpChartDrawView.h \
+    ../Module/UI/SWing/SwingTestCommon.h \
     ../Module/UI/TerminalAutoTest/QTerminalSettingTabWidget.h \
     ../Module/UI/TerminalAutoTest/QTerminalTabWidget.h \
     ../Module/UI/TerminalAutoTest/QTerminalTreeWidget.h \
@@ -1835,6 +1997,9 @@ HEADERS  += \
     ../Module/UI/TerminalAutoTest/Grid/QTerminalGoutDataChsGrid.h \
     ../Module/UI/TerminalAutoTest/Grid/QTerminalGoutDataGrid.h \
     ../Module/UI/ThreeTURecloseAcc/SttMacroParaEditViewThreeTURecloseAcc.h \
+    ../Module/UI/ThreeTURecloseAcc/ThreeRecloseAccTable.h \
+    ../Module/UI/ThreeTURecloseAcc/ThreeRecloseEstimateDlg.h \
+    ../Module/UI/ThreeTURecloseAcc/ThreeRecloseCommonParasDlg.h \
     ../Module/UI/RemoteCtrl/RemoteCtrlBtnWidget.h \
     ../Module/UI/RemoteCtrl/RemoteCtrlTable.h \
     ../Module/UI/RemoteCtrl/SttMacroParaEditViewRemoteCtrl.h \
@@ -1879,6 +2044,7 @@ HEADERS  += \
     ../Module/UI/Module/FACommonSpyWidget/Grid/QSttFAStateSequenceGroupGrid.h \
     ../Module/UI/Module/FACommonSpyWidget/Grid/QSttFATestResultViewGroupGrid.h \
     ../Module/UI/Module/FAParasSetWidget/QSttFAParasSetDialog.h \
+    ../Module/UI/Module/FAParasSetWidget/QSttFAParasSetWidget.h \
     ../Module/UI/FA/QSttMacroParaEditViewVolTimeTypeSec.h \
     ../Module/UI/Module/CommConfigurationDlg/PkgMonitor/QSttCommCfgPkgMonitorWidget.h \
     ../../../61850/Module/CfgDataMngr/IecCfgDatasMngr.h \
@@ -1980,6 +2146,7 @@ HEADERS  += \
     ../../../Module/API/GlobalApi.h \
     ../../../Module/DataMngr/DataGroup.h \
     ../../../Module/DataMngr/DataMaps.h \
+    ../../../Module/DataMngr/XDataMap.h \
     ../../../Module/DataMngr/DataMngrGlobal.h \
     ../../../Module/DataMngr/DataType.h \
     ../../../Module/DataMngr/DataTypes.h \
@@ -2057,6 +2224,7 @@ HEADERS  += \
     ../../../Module/XDrawBase/XDrawElements.h \
     ../../../Module/XDrawBase/XDrawGlobal.h \
     ../../../Module/XDrawBase/XDrawLine.h \
+    ../../../Module/XDrawBase/XDrawLineVector.h \
     ../../../Module/XDrawBase/XDrawList.h \
     ../../../Module/XDrawBase/XDrawMngr.h \
     ../../../Module/XDrawBase/XDrawMngrDescartes.h \
@@ -2103,6 +2271,17 @@ HEADERS  += \
     ../../../61850/Module/IecCfgSclTool/SclToIecCfgTool.h \
     ../../../61850/Module/SCL_Qt/QSclFileRead.h \
     ../../../61850/Module/SCL/SclIecCfgDatas.h \
+    ../../../61850/Module/MMS_STACK_CFG/MMS_STACK_CFG.h \
+    ../../../61850/Module/MMS_STACK_CFG/StkCfg_MMS.h \
+    ../../../61850/Module/MMS_STACK_CFG/StkCfg_Transport.h \
+    ../../../61850/Module/MMS_STACK_CFG/StkCfg_TransportTcp.h \
+    ../../../61850/Module/MMS_STACK_CFG/StkCfg_NetworkAddressing.h \
+    ../../../61850/Module/MMS_STACK_CFG/StkCfg_LocalAddressList.h \
+    ../../../61850/Module/MMS_STACK_CFG/StkCfg_LocalAddress.h \
+    ../../../61850/Module/MMS_STACK_CFG/StkCfg_RemoteAddressList.h \
+    ../../../61850/Module/MMS_STACK_CFG/StkCfg_RemoteAddress.h \
+    ../../../61850/Module/MMS_STACK_CFG/StkCfg_NetAddr.h \
+    ../../../61850/Module/MMS_STACK_CFG/MMS_STACK_CFGGlobal.h \
     ../../../Module/API/StringConvert/String_Gbk_To_Utf8.h \
     ../../../Module/API/StringConvert/String_Utf8_To_Gbk.h \
     ../../../Module/BaseClass/QT/ExBaseListTreeCtrl.h \
@@ -2297,7 +2476,22 @@ HEADERS  += \
     ../../../61850/Module/SCL_Qt/QScdFileRWDlg.h \
     ../../../Module/DataMngr/DvmValues.h \
     ../../../Module/API/StringConvertApi.h \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/DvmContents.h \
     ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbSmartGenWzd.h \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdItemMove.h \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdMacroTestAdd.h \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdCommCmdAdd.h \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdItemsAdd.h \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdItemsNameLib.h \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdItemRsltExprEdit.h \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdSafetyAdd.h \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdItemCopy.h \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdItemEdit.h \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdItemSetState.h \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdItemPaste.h \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbMacroGenWzd.h \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/SttCmdWzd_CmdDataset.h \
+    ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdXItemBase.h \
     ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdAi/GbWzdAiParasBase.h \
     ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdAi/GbWzdAiBase.h \
     ../../../AutoTest/Module/GbItemsGen/GbSmartGenWzd/GbWzdAi/GbWzdAiDO.h \
@@ -2391,6 +2585,7 @@ HEADERS  += \
     ../Module/UI/ADMUAccurAutoTest/ADMUAccurAutoTestParasSetDialog.h \
     ../Module/UI/ADMUAccurAutoTest/SttMacroParaEditViewADMUAccurAutoTest.h \
     ../Module/UI/AnalogCircuitBreaker/SttMacroParaEditViewAnalogCirBreaker.h \
+    ../Module/UI/AnalogCircuitBreaker/AnalogCirBreakerParaset.h \
     ../Module/UI/PowerManu/ManualView_PV.h \
     ../Module/UI/PowerManu/PowerManualEstimateDlg.h \
     ../Module/UI/PowerManu/PowerManualGrid.h \
@@ -2430,7 +2625,10 @@ HEADERS  += \
     ../Module/TestUI/Module/SttTestGridDefine/SttTestGridDefineGlobal.h \
     ../Module/TestUI/QSttMultiMacroParaEditViewBase.h \
     ../Module/TestUI/Interface/QItemParaEditWidgetBase.h \
+    ../Module/SttTest/Common/Distribution/tmt_freqoutput_test.h \
     ../Module/SttTest/Common/Power/tmt_power_manu_test.h \
+    ../Module/SttTest/Common/PrimFreq/tmt_prim_freq_state_test.h \
+    ../Module/SttTest/Common/PrimFreq/tmt_prim_freq_manu_test.h \
     ../Module/UI/ImpedanceManu/ImpedanceManuEstimateDlg.h \
     ../Module/UI/ImpedanceManu/ImpedanceManuWidget.h \
     ../Module/UI/ImpedanceManu/SttMacroParaEditViewImpedanceManu.h \
@@ -2464,6 +2662,7 @@ FORMS += \
     ../Module/UI/Controls/SttFileSaveAsDlg.ui \
     ../Module/UI/Controls/SttCustomSetDlg.ui \
     ../Module/UI/Controls/NetworkConfig/qnetworkconfigwidget.ui \
+    ../Module/UI/Controls/SettingCtrls/settingselectdlg.ui \
     ../Module/UI/Module/ZKCharaCurve/QCIFeatureAddDig.ui \
     ../Module/UI/Module/ZKCharaCurve/QZKFeatureAddDig.ui \
     ../Module/UI/Module/ZKCharaCurve/ZKFeatureDig.ui \
@@ -2495,6 +2694,7 @@ FORMS += \
     ../Module/UI/FaultGradient/FaultGradientEstimateDlg.ui \
     ../Module/UI/FaultGradient/CFaultGradientSetting.ui \
     ../Module/UI/Module/FAParasSetWidget/QSttFAParasSetDialog.ui \
+    ../Module/UI/Module/FAParasSetWidget/QSttFAParasSetWidget.ui \
     ../Module/UI/SoftKeyboard/Keyboard/Keyboard.ui \
     ../Module/UI/TransPlay/SttReplayWaveformEditWidget.ui \
     ../Module/TestUI/Distance/DistanceAddMultDlg.ui \
@@ -2505,6 +2705,11 @@ FORMS += \
     ../Module/UI/TransPlay/SttReplayBoutModuleChWidget.ui \
     ../Module/UI/CBOperate/QSttMacroParaEditViewCBOperate.ui \
     ../Module/UI/ImpedanceManu/ImpedanceManuWidget.ui \
+    ../Module/UI/SWing/SttMacroParaEditViewSwing.ui \
+    ../Module/UI/SWing/SwingTestParasDlg.ui \
+    ../Module/UI/SWing/SwingTestBinarySignalDlg.ui \
+    ../Module/UI/SWing/SwingResultEvalDlg.ui \
+    ../Module/UI/SWing/SwingSysDiagramWidget.ui \
     ../Module/UI/TransPlay/SttReplayParaSetWidget.ui
 
 RESOURCES += \

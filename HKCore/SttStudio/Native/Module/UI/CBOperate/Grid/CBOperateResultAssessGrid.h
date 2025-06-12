@@ -13,6 +13,7 @@
 #include "../../../UI/Module/QExBaseListGridBase/QExBaseListComBoxDelegBase.h"
 #include "../../../UI/Controls/SettingCtrls/QSettingLineEdit.h"
 #include "../../../TestUI/Interface/QModalDlgInterface.h"
+#include "../../../XLangResource_Native.h"
 
 class CBOperateResultAssessGrid : public QDialog
 {

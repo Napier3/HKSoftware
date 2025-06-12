@@ -6,9 +6,7 @@
 #include <QCheckBox>
 #include <QHeaderView>
 #include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
-#include "../../XLangResource_Native.h"
 #include "SttMacroParaEditViewPowerManu.h"
-// #include "../../XLangResource_Native.h"
 #include <QApplication>
 #include "../SttTestCntrFrameBase.h"
 #include "../../UI/Controls/SettingCtrls/QSettingItem.h"
@@ -101,23 +99,12 @@ void PowerEstimateGrid::SetItemEnable(int nRow, int nCol, BOOL bEnable)
 }
 QComboBox* PowerEstimateGrid::NewErrorType()
 {
-	CString strText;
-
 	QComboBox *pCbbError = new QComboBox(this);
-	
-	pCbbError->addItem(/*"绝对误差"*/g_sLangTxt_StateEstimate_AbsError);
-	pCbbError->addItem(/*"相对误差"*/g_sLangTxt_StateEstimate_RelError);
-
-	strText = g_sLangTxt_StateEstimate_AbsError +"or"+g_sLangTxt_StateEstimate_RelError;
-	pCbbError->addItem(/*"相对误差or绝对误差"*/strText);
-
-	strText = g_sLangTxt_StateEstimate_AbsError +"&"+g_sLangTxt_StateEstimate_RelError;
-	pCbbError->addItem(/*"相对误差&绝对误差"*/strText);
-
-//#ifdef _Use_Combination_Error //del wangtao 20241106 暂时注释，没有用这个宏
-	//pCbbError->addItem(g_sLangTxt_StateEstimate_CombinationError);
-//#endif
-	pCbbError->addItem(/*"不评估"*/g_sLangTxt_Distance_ErrorNot);
+    pCbbError->addItem("绝对误差");
+    pCbbError->addItem("相对误差");
+    pCbbError->addItem("相对误差or绝对误差");
+    pCbbError->addItem("相对误差&绝对误差");
+    pCbbError->addItem("不评估");
 	return pCbbError;
 }
 
@@ -136,7 +123,7 @@ QComboBox* PowerEstimateGrid::AmpErrorType()
 	strText = g_sLangTxt_StateEstimate_AbsError + "&" + g_sLangTxt_StateEstimate_RelError;
 	pCbbError->addItem(/*"相对误差&绝对误差"*/strText);
 
-	pCbbError->addItem(/*"不评估"*/g_sLangTxt_Distance_ErrorNot);
+    pCbbError->addItem("不评估");
 	return pCbbError;
 }
 
@@ -170,7 +157,7 @@ void PowerEstimateGrid::InitData(tmt_PowerManuParas* pParas)
 	CString strText; 
 	strText = /*"动作时间(s)"*/g_sLangTxt_Native_ActionTime;
 	setItem(0, POWERESTIMATE_COL_NAME, new QTableWidgetItem(strText));
-	strText = /*"功率动作值"*/g_sLangTxt_PowerManu_PowerAct;
+    strText = "功率动作值";
 	setItem(1, POWERESTIMATE_COL_NAME, new QTableWidgetItem(strText));
 	//strText = "P(W)";
 	//setItem(2, POWERESTIMATE_COL_NAME, new QTableWidgetItem(strText));
@@ -195,7 +182,7 @@ void PowerEstimateGrid::InitData(tmt_PowerManuParas* pParas)
 	if (pParas->m_nSpowerValue_ErrorLogic == 5)//不评估
 	{
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
-		pCbbError2->setCurrentText(g_sLangTxt_Distance_ErrorNot);
+        pCbbError2->setCurrentText("不评估");
 #else
 		//Stt_Global_SetComboBoxIndexByText(pCbbError2,g_sLangTxt_Distance_ErrorNot);
 #endif
@@ -329,7 +316,7 @@ void PowerEstimateGrid::InitData(tmt_PowerManuParas* pParas)
 
 void PowerEstimateGrid::CbbErrorType(int nIndex, CString strText)
 {
-	if (strText == g_sLangTxt_Distance_ErrorNot)//不评估
+    if (strText == "不评估")//不评估
 	{
 		//item(nIndex, POWERESTIMATE_COL_RELERROR)->setFlags(item(nIndex, POWERESTIMATE_COL_RELERROR)->flags() & ~Qt::ItemIsEditable);
 		//item(nIndex, POWERESTIMATE_COL_ABSERRORPOS)->setFlags(item(nIndex, POWERESTIMATE_COL_ABSERRORPOS)->flags() & ~Qt::ItemIsEditable);
@@ -610,7 +597,7 @@ void PowerManualEstimateDlg::slot_btnOK_Clicked()
 
 // 	m_pParas->m_nTimeValue_ErrorLogic = ((QComboBox*)m_pGrid->cellWidget(0, POWERESTIMATE_COL_ERRORTYPE))->currentIndex();
 	QString strText = ((QComboBox*)m_pGrid->cellWidget(0, POWERESTIMATE_COL_ERRORTYPE))->currentText();
-	if (strText == g_sLangTxt_Distance_ErrorNot)
+    if (strText == "不评估")
 	{
 		m_pParas->m_nTimeValue_ErrorLogic = 5;
 	}

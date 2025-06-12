@@ -7,6 +7,7 @@
 #include <QTableWidget>
 #include "../../SttTest/Common/Power/tmt_power_manu_test.h"
 #include "../Module/ScrollCtrl/ScrollTableWidget.h"
+#include "../../XLangResource_Native.h"
 
 class PowerEstimateGrid : public  QScrollTableWidget //public QTableWidget//20240808 gongyiping
 {

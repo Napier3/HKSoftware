@@ -31,7 +31,7 @@ public:
 	void DisEnableWeekUI();
 
 	BOOL m_bOutputTypeHasChanged;
-	UINT m_nSysConfig_Mode;
+    //UINT m_nSysConfig_Mode;
 
 protected:
 	void InitDatas();

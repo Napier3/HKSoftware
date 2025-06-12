@@ -5,7 +5,7 @@
 #ifdef _USE_SoftKeyBoard_	
 #include "../SoftKeyboard/SoftKeyBoard.h"
 #endif
-#include "../../../../Module/OSInterface/QT/XMessageBox.h"
+#include "../../../Module/OSInterface/QT/XMessageBox.h"
 #ifdef _PSX_QT_LINUX_
 #include "../Module/PopupDialog/SttPopupOpenDialog.h"
 #include "../Module/PopupDialog/SttPopupSaveAsDialog.h"
@@ -120,14 +120,14 @@ void QFreqFileWidget::InitTable()
 	m_pFreqFileTableWidget->setColumnCount(4);
 	m_pFreqFileTableWidget->setFont(*g_pSttGlobalFont);
 	m_pFreqFileTableWidget->horizontalHeader()->setFont(*g_pSttGlobalFont);
-	m_pFreqFileTableWidget->horizontalHeader()->setClickable(false);
+    m_pFreqFileTableWidget->horizontalHeader()->setSectionsClickable(false);
 	m_pFreqFileTableWidget->verticalHeader()->setVisible(false);
 	QStringList  HStrList;
 	HStrList << _T("序号") << _T("持续时间(ms)") << _T("频率(Hz)") << _T("直流电流(mA)");
 	m_pFreqFileTableWidget->setHorizontalHeaderLabels(HStrList); 
 	m_pFreqFileTableWidget->horizontalHeader()->setStyleSheet("QHeaderView::section{background:skyblue;}"); //设置表头背景色
 	m_pFreqFileTableWidget->horizontalHeader()->setStretchLastSection(true); 
-	m_pFreqFileTableWidget->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+    m_pFreqFileTableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	m_pFreqFileTableWidget->setEditTriggers(QAbstractItemView::DoubleClicked);
 	m_pFreqFileTableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
 	m_pFreqFileTableWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);

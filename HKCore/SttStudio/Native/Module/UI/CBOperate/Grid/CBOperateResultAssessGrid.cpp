@@ -11,7 +11,6 @@
 #include "../../Module/CommonMethod/commonMethod.h"
 #include "../../Interface/SttMacroParaEditViewOriginal.h"
 #include "../../Controls/SettingCtrls/QSettingItem.h"
-#include "../../../XLangResource_Native.h"
 #include <QDesktopWidget>
 #include <QApplication>
 
@@ -60,7 +59,7 @@ void CBOperateResultAssessGrid::InitUI()
 	m_pResultTableWidget->setEditTriggers(QAbstractItemView::CurrentChanged);
 
     QStringList headers;
-	headers << /*"名称"*/g_sLangTxt_Name << g_sLangTxt_SetValue/*"整定值"*/ <</*"误差类型"*/g_sLangTxt_StateEstimate_ErrorType <</* "相对误差(%)"*/g_sLangTxt_StateEstimate_RelError + "(%)" << /*"绝对误差"*/g_sLangTxt_StateEstimate_AbsError << g_sLangTxt_Distance_AbsErrMinus;
+    headers << /*"名称"*/g_sLangTxt_Name << g_sLangTxt_SetValue/*"整定值"*/ <</*"误差类型"*/g_sLangTxt_StateEstimate_ErrorType <</* "相对误差(%)"*/g_sLangTxt_StateEstimate_RelError + "(%)" << /*"绝对误差"*/g_sLangTxt_StateEstimate_AbsError << "g_sLangTxt_Distance_AbsErrMinus";
     m_pResultTableWidget->setHorizontalHeaderLabels(headers);
     m_pResultTableWidget->horizontalHeader()->setStyleSheet("QHeaderView::section{background: skyblue;}"); // 设置表头背景色
 	m_pResultTableWidget->setStyleSheet("selection-background-color: grey;selection-color: black");
@@ -95,7 +94,7 @@ void CBOperateResultAssessGrid::InitUI()
 	m_pCmbAccTime = new QComboBox();
 
 	QStringList headers1;
-	headers1 << /*"绝对误差"*/g_sLangTxt_StateEstimate_AbsError << /*"相对误差"*/g_sLangTxt_StateEstimate_RelError << /*"绝对or相对"*/g_sLangTxt_CBOperate_AbsOrRelative << /*"绝对&相对"*/g_sLangTxt_CBOperate_AbsRelative << /*"组合误差"*/g_sLangTxt_CBOperate_CombError << /*"不评估"*/g_sLangTxt_Distance_ErrorNot;
+    headers1 << /*"绝对误差"*/g_sLangTxt_StateEstimate_AbsError << /*"相对误差"*/g_sLangTxt_StateEstimate_RelError << /*"绝对or相对"*/g_sLangTxt_CBOperate_AbsOrRelative << /*"绝对&相对"*/g_sLangTxt_CBOperate_AbsRelative << /*"组合误差"*/g_sLangTxt_CBOperate_CombError << "不评估";
 	m_pCmbActionTime->addItems(headers1);
 	m_pCmbTtripTime->addItems(headers1);
 	m_pCmbAccTime->addItems(headers1);

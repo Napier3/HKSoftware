@@ -3619,13 +3619,13 @@ void QSttTestCntrFrameBase::LogString(long nLevel, const CString &strMsg)
 	else if (nLevel == XLOGLEVEL_ASSIST)
 	{
 #ifndef NOT_USE_ASSIST
-		if (g_oSttSystemConfig.IsAssist())
-		{
-		if (g_theAssistWndDynEffExecTool != NULL)
-		{
-			g_theAssistWndDynEffExecTool->ShowMsg(strMsg,6000);
-		}
-		}
+        //if (g_oSttSystemConfig.IsAssist())
+        //{
+        //if (g_theAssistWndDynEffExecTool != NULL)
+        //{
+        //	g_theAssistWndDynEffExecTool->ShowMsg(strMsg,6000);
+        //}
+        //}
 		
 #endif
 	}

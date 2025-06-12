@@ -25,8 +25,8 @@ void QSttMacroParaEditViewHarmContentWidget::InitUI()
 	m_pHarmTabWidget = new QTableWidget(7, 11); 
 	m_pHarmTabWidget->verticalHeader()->setVisible(false);
 	m_pHarmTabWidget->horizontalHeader()->setVisible(false);
-	m_pHarmTabWidget->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
-	m_pHarmTabWidget->verticalHeader()->setResizeMode(QHeaderView::Stretch);
+    m_pHarmTabWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    m_pHarmTabWidget->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	m_pHarmTabWidget->setFont(*g_pSttGlobalFont);
 
 

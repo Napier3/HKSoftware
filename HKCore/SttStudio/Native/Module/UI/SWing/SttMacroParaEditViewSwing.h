@@ -10,6 +10,7 @@
 #include "SwingImpChartWidget.h"
 #include "../../SttTest/Common/Swing/tmt_swing_test.h"
 #include "../Module/GooseParaWidget/qgooseparawidget.h"
+#include "../Module/XLangResource_Native.h"
 
 #define PANGLESTART_MIN 0
 #define PANGLESTART_MAX 360

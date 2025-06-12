@@ -1,6 +1,6 @@
 #include "SttMacroParaEditViewPrimFreqState.h"
-#include "../../Module/XLangResource_Native.h"
-#include "../../Module/SttTestResourceMngr/TestResource/SttTestResource_Sync.h"
+#include "../Module/XLangResource_Native.h"
+#include "../Module/SttTestResourceMngr/TestResource/SttTestResource_Sync.h"
 #include "../../../Module/XLanguage/QT/XLanguageAPI_QT.h"
 #include "../SttTestCntrFrameBase.h"
 #include "../../SttGlobalDef.h"

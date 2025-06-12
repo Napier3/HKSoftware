@@ -26,8 +26,8 @@ void QSttMacroParaEditViewInputVolWidget::InitUI()
 	m_pTabWidget = new QTableWidget(3, 4); 
 	m_pTabWidget->verticalHeader()->setVisible(false);
 	m_pTabWidget->horizontalHeader()->setVisible(false);
-	m_pTabWidget->verticalHeader()->setResizeMode(QHeaderView::Stretch);
-	m_pTabWidget->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+	m_pTabWidget->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+	m_pTabWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	m_pTabWidget->setFont(*g_pSttGlobalFont);
 
 	QTableWidgetItem *pItem = NULL;

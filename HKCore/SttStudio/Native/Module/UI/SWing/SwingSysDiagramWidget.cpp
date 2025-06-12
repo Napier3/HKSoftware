@@ -43,10 +43,10 @@ void QSwingSysDiagramWidget::InitUI()
     ui->m_tableWidget->setFixedSize(502,162);
     ui->m_tableWidget->setColumnWidth(0, 250);
     ui->m_tableWidget->setColumnWidth(1, 250);
-    ui->m_tableWidget->item(0, 0)->setText(g_sLangTxt_Swing_MinSwingVol);
-    ui->m_tableWidget->item(1, 0)->setText(g_sLangTxt_Swing_MaxSwingCur);
-    ui->m_tableWidget->item(2, 0)->setText(g_sLangTxt_Swing_CenterSwing);
-    ui->m_tableWidget->item(3, 0)->setText(g_sLangTxt_Swing_Powerangle);
+    ui->m_tableWidget->item(0, 0)->setText("g_sLangTxt_Swing_MinSwingVol");
+    ui->m_tableWidget->item(1, 0)->setText("g_sLangTxt_Swing_MaxSwingCur");
+    ui->m_tableWidget->item(2, 0)->setText("g_sLangTxt_Swing_CenterSwing");
+    ui->m_tableWidget->item(3, 0)->setText("g_sLangTxt_Swing_Powerangle");
 //	ui->m_tableWidget->setStyleSheet("QTableWidget { background-color: lightblue; }"
 //		"QHeaderView::section { background-color: lightblue; }");
 

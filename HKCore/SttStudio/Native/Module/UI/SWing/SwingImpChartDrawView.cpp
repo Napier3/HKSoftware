@@ -1,8 +1,8 @@
 ﻿#include "SwingImpChartDrawView.h"
-#include "../../../../Module/API/GloblaDrawFunctions.h"
-#include "../../../../Module/XDrawBase/XDrawMngrDescartes.h"
-#include "../../../../Module/XDrawBase/XDrawMngrLogarithm.h"
-#include "../../../../Module/DataMngr/DataGroup.h"
+#include "../../../Module/API/GloblaDrawFunctions.h"
+#include "../../../Module/XDrawBase/XDrawMngrDescartes.h"
+#include "../../../Module/XDrawBase/XDrawMngrLogarithm.h"
+#include "../../../Module/DataMngr/DataGroup.h"
 #include "../../XLangResource_Native.h"
 #include "../../../Module/SttTest/Common/tmt_system_config.h"
 #include <math.h>
