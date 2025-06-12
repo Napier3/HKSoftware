@@ -32,7 +32,8 @@ public:
 	long m_nFt3_Prim_Code_Value;
 	long m_nLockMaps;//20240507 wangtao 锁定映射，当值为0时，连接网络后自动生成缺省通道映射
 	long m_nSel_Sys_Pata;
-	long m_nHasFT3;/// suyang 20240711 增加用于系统参数报文类型是否显示柔直FT3 0显示 1不显示
+    long m_nHasFT3;// suyang 20240711 增加用于系统参数报文类型是否显示柔直FT3 0显示 1不显示
+    long m_nIsAssist;//suyang 20241128 ?????????????ú????·????? 0?????? 1????
 //重载函数
 public:
 	virtual UINT GetClassID() {    return MNGRCLASSID_CSTTDEVCONFIG;   }
